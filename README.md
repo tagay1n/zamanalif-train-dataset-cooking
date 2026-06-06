@@ -28,6 +28,14 @@ samples(id, source_id, text)
 Annotation state is tracked separately in `preannotation_state`. If the output
 database already exists, pass `--force` to replace it.
 
+The current local converted queue is `data/selected.sqlite` with 30,000 selected
+sentences. Inspect the live state with:
+
+```bash
+sqlite3 data/selected.sqlite \
+  "SELECT COUNT(*) FROM samples; SELECT status, COUNT(*) FROM preannotation_state GROUP BY status;"
+```
+
 `prepare` uses bounded windowed harvesting by default. It samples windows from
 large documents, prioritizes conditional-letter and mixed-vowel-harmony
 sentences, requires at least two Tatar-specific Cyrillic letters (`ә ө ү җ ң һ`)
@@ -57,9 +65,27 @@ Create a private `config.yaml` from `config.example.yaml`. The config must
 contain `gemini.model`, `gemini.api_keys`, and all `preannotation` settings.
 Missing values fail fast; API keys are not read from environment variables.
 
+Required config shape:
+
+```yaml
+gemini:
+  model: "gemini-2.5-flash"
+  api_keys:
+    - "your-key"
+
+preannotation:
+  exhausted_keys_path: "data/exhausted_gemini_keys.json"
+  initial_batch_size: 30
+  request_timeout_seconds: 120
+  overload_sleep_seconds: 60
+  target_annotated_count: 1000
+```
+
 ```bash
 python -m tatar_preannotator annotate
 ```
+
+By default, the command reads `config.yaml` and `data/selected.sqlite`.
 
 The annotator reads pending samples from SQLite, sends adaptive batches to
 Gemini, validates the returned JSON schema, and saves valid pre-annotations in
@@ -73,6 +99,17 @@ exhausted for the current run.
 Quota/rate-limited Gemini keys are written to
 `preannotation.exhausted_keys_path` immediately and skipped on the next run.
 Remove that JSON file manually when you want to retry those keys.
+
+Successful batch logs print one JSON-like block per sentence. The `tokens`
+array stays on one line for readability:
+
+```json
+{
+  "id": "sent_000001",
+  "tatar": true,
+  "tokens": [{"text":"Казан","label":"N"},{"text":"проект","label":"RL"}]
+}
+```
 
 ## Tests
 
