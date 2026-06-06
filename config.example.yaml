@@ -1,0 +1,11 @@
+gemini:
+  model: "gemini-2.5-flash"
+  api_keys:
+    - "put-key-1-here"
+    - "put-key-2-here"
+
+preannotation:
+  initial_batch_size: 30
+  request_timeout_seconds: 120
+  overload_sleep_seconds: 60
+  target_annotated_count: 1000
