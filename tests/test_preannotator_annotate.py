@@ -4,6 +4,7 @@ import json
 import sqlite3
 import tempfile
 import unittest
+from pathlib import Path
 
 from tatar_preannotator.annotate import run_annotation
 from tatar_preannotator.gemini_client import GeminiFatalError, GeminiOverloadedError, GeminiQuotaError
@@ -67,6 +68,7 @@ class AnnotateTests(unittest.TestCase):
 
     def test_quota_rotates_to_next_key(self) -> None:
         with _db_path([{"id": "doc-a", "sentence": "Казан."}]) as path:
+            exhausted_path = str(Path(path).parent / "exhausted_keys.json")
             client = FakeClient(
                 [
                     GeminiQuotaError("quota"),
@@ -84,13 +86,56 @@ class AnnotateTests(unittest.TestCase):
 
             summary = run_annotation(
                 db_path=path,
-                config=_config(target=1, batch_size=1, keys=("key-a", "key-b")),
+                config=_config(
+                    target=1,
+                    batch_size=1,
+                    keys=("key-a", "key-b"),
+                    exhausted_keys_path=exhausted_path,
+                ),
+                client=client,
+                sleep=lambda seconds: None,
+            )
+            exhausted_data = json.loads(Path(exhausted_path).read_text(encoding="utf-8"))
+
+        self.assertEqual(summary.stopped_reason, "target_reached")
+        self.assertEqual(client.calls, [("key-a", "model-a"), ("key-b", "model-a")])
+        self.assertEqual(exhausted_data, {"exhausted_keys": ["key-a"]})
+
+    def test_startup_excludes_persisted_exhausted_keys(self) -> None:
+        with _db_path([{"id": "doc-a", "sentence": "Казан."}]) as path:
+            exhausted_path = Path(path).parent / "exhausted_keys.json"
+            exhausted_path.write_text(
+                json.dumps({"exhausted_keys": ["key-a"]}),
+                encoding="utf-8",
+            )
+            client = FakeClient(
+                [
+                    _response(
+                        [
+                            {
+                                "id": "sent_000001",
+                                "tatar": True,
+                                "tokens": [{"text": "Казан", "label": "N"}],
+                            }
+                        ]
+                    )
+                ]
+            )
+
+            summary = run_annotation(
+                db_path=path,
+                config=_config(
+                    target=1,
+                    batch_size=1,
+                    keys=("key-a", "key-b"),
+                    exhausted_keys_path=str(exhausted_path),
+                ),
                 client=client,
                 sleep=lambda seconds: None,
             )
 
         self.assertEqual(summary.stopped_reason, "target_reached")
-        self.assertEqual(client.calls, [("key-a", "model-a"), ("key-b", "model-a")])
+        self.assertEqual(client.calls, [("key-b", "model-a")])
 
     def test_overload_sleeps_and_retries_without_exhausting_key(self) -> None:
         sleeps: list[int] = []
@@ -159,10 +204,12 @@ def _config(
     target: int,
     batch_size: int,
     keys: tuple[str, ...] = ("key-a",),
+    exhausted_keys_path: str = "exhausted_keys.json",
 ) -> PreannotationConfig:
     return PreannotationConfig(
         model="model-a",
         api_keys=keys,
+        exhausted_keys_path=exhausted_keys_path,
         initial_batch_size=batch_size,
         request_timeout_seconds=5,
         overload_sleep_seconds=7,

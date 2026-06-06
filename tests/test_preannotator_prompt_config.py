@@ -31,6 +31,7 @@ gemini:
   api_keys:
     - key-a
 preannotation:
+  exhausted_keys_path: exhausted.json
   initial_batch_size: 30
   request_timeout_seconds: 120
   overload_sleep_seconds: 60
@@ -42,6 +43,7 @@ preannotation:
 
             self.assertEqual(config.model, "gemini-2.5-flash")
             self.assertEqual(config.api_keys, ("key-a",))
+            self.assertEqual(config.exhausted_keys_path, "exhausted.json")
             self.assertEqual(config.initial_batch_size, 30)
 
     def test_config_fails_fast_on_missing_model(self) -> None:
@@ -54,6 +56,7 @@ gemini:
   api_keys:
     - key-a
 preannotation:
+  exhausted_keys_path: exhausted.json
   initial_batch_size: 30
   request_timeout_seconds: 120
   overload_sleep_seconds: 60

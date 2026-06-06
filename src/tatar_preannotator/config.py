@@ -30,6 +30,9 @@ def load_config(path: str | Path) -> PreannotationConfig:
     return PreannotationConfig(
         model=model,
         api_keys=api_keys,
+        exhausted_keys_path=_required_str(
+            preannotation, "exhausted_keys_path", "preannotation.exhausted_keys_path"
+        ),
         initial_batch_size=_required_positive_int(
             preannotation, "initial_batch_size", "preannotation.initial_batch_size"
         ),
@@ -63,4 +66,3 @@ def _required_positive_int(data: dict[str, Any], key: str, path: str) -> int:
     if not isinstance(value, int) or value <= 0:
         raise ValueError(f"{path} must be a positive integer")
     return value
-

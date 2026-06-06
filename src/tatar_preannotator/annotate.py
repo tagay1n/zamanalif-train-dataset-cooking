@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import math
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Callable
 
 from . import db
@@ -38,9 +39,20 @@ def run_annotation(
     """Run adaptive Gemini pre-annotation until the configured stop condition is reached."""
     batch_size = config.initial_batch_size
     consecutive_successes = 0
-    keys = KeyRing(config.api_keys)
     with db.connect(db_path) as conn:
         db.reset_processing(conn)
+        exhausted_keys_result = _read_exhausted_keys(config.exhausted_keys_path)
+        if isinstance(exhausted_keys_result, str):
+            error = f"exhausted key file error: {exhausted_keys_result}"
+            _log(log, error)
+            return _summary(conn, "fatal_error", error=error)
+        keys = KeyRing(config.api_keys, exhausted_keys=exhausted_keys_result)
+        if exhausted_keys_result:
+            _log(
+                log,
+                "loaded exhausted Gemini keys: "
+                f"count={len(exhausted_keys_result)} path={config.exhausted_keys_path}",
+            )
         while True:
             current_annotated = db.annotated_count(conn)
             if current_annotated >= config.target_annotated_count:
@@ -80,7 +92,17 @@ def run_annotation(
                 continue
             except GeminiQuotaError as exc:
                 _log(log, f"Gemini key exhausted: {_safe_error(exc)}")
-                keys.mark_exhausted()
+                exhausted_key = keys.mark_exhausted()
+                if exhausted_key is not None:
+                    write_error = _write_exhausted_key(
+                        config.exhausted_keys_path, exhausted_key
+                    )
+                    if write_error is not None:
+                        error = f"exhausted key file error: {write_error}"
+                        _log(log, error)
+                        db.mark_pending(conn, samples, error)
+                        return _summary(conn, "fatal_error", error=error)
+                    _log(log, f"persisted exhausted Gemini key to {config.exhausted_keys_path}")
                 db.mark_pending(conn, samples, f"Gemini key exhausted: {_safe_error(exc)}")
                 if keys.current() is None:
                     return _summary(conn, "all_keys_exhausted")
@@ -160,6 +182,47 @@ def _format_annotation_log_item(item: dict) -> str:
         f'  "tokens": {tokens}\n'
         "}"
     )
+
+
+def _read_exhausted_keys(path: str) -> set[str] | str:
+    key_path = Path(path)
+    if not key_path.exists():
+        return set()
+    try:
+        data = json.loads(key_path.read_text(encoding="utf-8"))
+    except OSError as exc:
+        return str(exc)
+    except json.JSONDecodeError as exc:
+        return f"invalid JSON in {key_path}: {exc}"
+    if not isinstance(data, dict):
+        return f"{key_path} must contain a JSON object"
+    keys = data.get("exhausted_keys")
+    if not isinstance(keys, list):
+        return f"{key_path} must contain an exhausted_keys list"
+    exhausted = {key for key in keys if isinstance(key, str) and key}
+    if len(exhausted) != len(keys):
+        return f"{key_path} exhausted_keys must contain only non-empty strings"
+    return exhausted
+
+
+def _write_exhausted_key(path: str, key: str) -> str | None:
+    existing = _read_exhausted_keys(path)
+    if isinstance(existing, str):
+        return existing
+    existing.add(key)
+    key_path = Path(path)
+    try:
+        key_path.parent.mkdir(parents=True, exist_ok=True)
+        tmp_path = key_path.with_suffix(key_path.suffix + ".tmp")
+        tmp_path.write_text(
+            json.dumps({"exhausted_keys": sorted(existing)}, ensure_ascii=False, indent=2)
+            + "\n",
+            encoding="utf-8",
+        )
+        tmp_path.replace(key_path)
+    except OSError as exc:
+        return str(exc)
+    return None
 
 
 def _log(log: Callable[[str], None] | None, message: str) -> None:

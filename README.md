@@ -70,6 +70,10 @@ The command stops when `preannotation.target_annotated_count` is reached, when
 there are no pending samples left, or when all configured Gemini keys are
 exhausted for the current run.
 
+Quota/rate-limited Gemini keys are written to
+`preannotation.exhausted_keys_path` immediately and skipped on the next run.
+Remove that JSON file manually when you want to retry those keys.
+
 ## Tests
 
 ```bash

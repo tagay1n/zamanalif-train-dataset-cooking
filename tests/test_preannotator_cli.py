@@ -35,6 +35,7 @@ gemini:
   api_keys:
     - key-a
 preannotation:
+  exhausted_keys_path: exhausted_keys.json
   initial_batch_size: 1
   request_timeout_seconds: 5
   overload_sleep_seconds: 7

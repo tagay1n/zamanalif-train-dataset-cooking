@@ -78,10 +78,13 @@ def _classify_exception(exc: Exception) -> GeminiError:
 class KeyRing:
     """Rotate through configured keys and remember exhausted keys for this run."""
 
-    def __init__(self, keys: tuple[str, ...]):
+    def __init__(self, keys: tuple[str, ...], exhausted_keys: set[str] | None = None):
         self._keys = keys
         self._index = 0
-        self._exhausted: set[int] = set()
+        exhausted_keys = exhausted_keys or set()
+        self._exhausted: set[int] = {
+            index for index, key in enumerate(keys) if key in exhausted_keys
+        }
 
     def current(self) -> str | None:
         if len(self._exhausted) >= len(self._keys):
@@ -92,6 +95,10 @@ class KeyRing:
             self._index = (self._index + 1) % len(self._keys)
         return None
 
-    def mark_exhausted(self) -> None:
+    def mark_exhausted(self) -> str | None:
+        if not self._keys:
+            return None
+        key = self._keys[self._index]
         self._exhausted.add(self._index)
         self._index = (self._index + 1) % len(self._keys)
+        return key
