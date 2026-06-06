@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import math
 import json
+import math
 from dataclasses import dataclass
 from typing import Callable
 
@@ -112,7 +112,8 @@ def run_annotation(
                 continue
             db.save_annotations(conn, validation.items)
             _log(log, f"batch annotated: count={len(validation.items)}")
-            _log(log, json.dumps(validation.items, ensure_ascii=False, indent=2))
+            for item in validation.items:
+                _log(log, _format_annotation_log_item(item))
             if validation.warnings:
                 _log(log, "validation warnings: " + "; ".join(validation.warnings))
             consecutive_successes += 1
@@ -148,6 +149,17 @@ def _summary(conn, reason: str, *, error: str | None = None) -> AnnotateSummary:
 
 def _safe_error(exc: Exception) -> str:
     return str(exc).replace("\n", " ")[:500]
+
+
+def _format_annotation_log_item(item: dict) -> str:
+    tokens = json.dumps(item.get("tokens") or [], ensure_ascii=False, separators=(",", ":"))
+    return (
+        "{\n"
+        f'  "id": {json.dumps(item["id"], ensure_ascii=False)},\n'
+        f'  "tatar": {str(item["tatar"]).lower()},\n'
+        f'  "tokens": {tokens}\n'
+        "}"
+    )
 
 
 def _log(log: Callable[[str], None] | None, message: str) -> None:

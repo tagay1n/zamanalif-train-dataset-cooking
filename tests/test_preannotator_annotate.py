@@ -60,7 +60,10 @@ class AnnotateTests(unittest.TestCase):
         self.assertIn("batch start: size=2", joined_logs)
         self.assertIn("batch annotated: count=2", joined_logs)
         self.assertIn('"id": "sent_000001"', joined_logs)
-        self.assertIn('"text": "Казан"', joined_logs)
+        self.assertIn('"tatar": true', joined_logs)
+        self.assertIn('"tokens": [{"text":"Казан","label":"N"}]', joined_logs)
+        self.assertIn('"tokens": [{"text":"Проект","label":"RL"}]', joined_logs)
+        self.assertNotIn("sentence:", joined_logs)
 
     def test_quota_rotates_to_next_key(self) -> None:
         with _db_path([{"id": "doc-a", "sentence": "Казан."}]) as path:
