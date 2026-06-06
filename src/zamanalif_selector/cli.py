@@ -74,14 +74,6 @@ def main(argv: list[str] | None = None) -> int:
     report.add_argument("--seed", type=int, default=13)
     report.add_argument("--quiet", action="store_true", help="Disable progress output.")
 
-    migrate = subparsers.add_parser(
-        "export-parquet-to-sqlite",
-        help="Export existing selected Parquet rows to the minimal SQLite annotation queue.",
-    )
-    migrate.add_argument("--input", required=True)
-    migrate.add_argument("--output", default="data/selected.sqlite")
-    migrate.add_argument("--force", action="store_true", help="Overwrite an existing SQLite output.")
-
     args = parser.parse_args(argv)
     if args.command == "prepare":
         return _prepare(args)
@@ -89,8 +81,6 @@ def main(argv: list[str] | None = None) -> int:
         return _select(args)
     if args.command == "report":
         return _report(args)
-    if args.command == "export-parquet-to-sqlite":
-        return _export_parquet_to_sqlite(args)
     raise AssertionError(args.command)
 
 
@@ -356,14 +346,6 @@ def _read_parquet(path: str | Path) -> list[dict[str, Any]]:
         raise SystemExit("Install pandas and pyarrow before reading Parquet.") from exc
 
     return pd.read_parquet(path).to_dict(orient="records")
-
-
-def _export_parquet_to_sqlite(args: argparse.Namespace) -> int:
-    rows = _read_parquet(args.input)
-    rows.sort(key=lambda row: int(row.get("selected_rank") or 0))
-    _write_selected_sqlite(args.output, rows, force=args.force)
-    print(f"wrote {len(rows)} selected sentences to {args.output}")
-    return 0
 
 
 def _write_selected_sqlite(path: str | Path, rows: list[dict[str, Any]], *, force: bool) -> None:

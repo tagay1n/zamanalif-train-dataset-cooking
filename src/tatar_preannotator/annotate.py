@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+import json
 from dataclasses import dataclass
 from typing import Callable
 
@@ -23,6 +24,7 @@ class AnnotateSummary:
     annotated_count: int
     pending_count: int
     stopped_reason: str
+    error: str | None = None
 
 
 def run_annotation(
@@ -31,6 +33,7 @@ def run_annotation(
     config: PreannotationConfig,
     client: GeminiClientProtocol,
     sleep: Callable[[int], None],
+    log: Callable[[str], None] | None = None,
 ) -> AnnotateSummary:
     """Run adaptive Gemini pre-annotation until the configured stop condition is reached."""
     batch_size = config.initial_batch_size
@@ -52,6 +55,13 @@ def run_annotation(
             if key is None:
                 db.mark_pending(conn, samples, "all Gemini keys exhausted")
                 return _summary(conn, "all_keys_exhausted")
+            _log(
+                log,
+                "batch start: "
+                f"size={len(samples)} batch_size={batch_size} "
+                f"annotated={current_annotated}/{config.target_annotated_count} "
+                f"first_id={samples[0].id} last_id={samples[-1].id}",
+            )
             prompt = build_prompt(samples)
             try:
                 raw = client.generate(
@@ -61,26 +71,36 @@ def run_annotation(
                     timeout_seconds=config.request_timeout_seconds,
                 )
             except GeminiOverloadedError as exc:
+                _log(
+                    log,
+                    f"batch overloaded: sleep={config.overload_sleep_seconds}s error={_safe_error(exc)}",
+                )
                 sleep(config.overload_sleep_seconds)
                 db.mark_pending(conn, samples, f"Gemini overloaded: {_safe_error(exc)}")
                 continue
             except GeminiQuotaError as exc:
+                _log(log, f"Gemini key exhausted: {_safe_error(exc)}")
                 keys.mark_exhausted()
                 db.mark_pending(conn, samples, f"Gemini key exhausted: {_safe_error(exc)}")
                 if keys.current() is None:
                     return _summary(conn, "all_keys_exhausted")
                 continue
             except GeminiTimeoutError as exc:
+                _log(log, f"batch timeout: {_safe_error(exc)}")
                 batch_size, consecutive_successes = _handle_batch_failure(
                     conn, samples, batch_size, "timeout", exc
                 )
+                _log(log, f"batch size reduced to {batch_size}")
                 continue
             except GeminiFatalError as exc:
-                db.mark_pending(conn, samples, f"fatal Gemini error: {_safe_error(exc)}")
-                return _summary(conn, "fatal_error")
+                error = f"fatal Gemini error: {_safe_error(exc)}"
+                _log(log, error)
+                db.mark_pending(conn, samples, error)
+                return _summary(conn, "fatal_error", error=error)
 
             validation = validate_response(raw, samples)
             if not validation.ok:
+                _log(log, "invalid Gemini response: " + "; ".join(validation.errors))
                 batch_size, consecutive_successes = _handle_batch_failure(
                     conn,
                     samples,
@@ -88,11 +108,17 @@ def run_annotation(
                     "invalid response: " + "; ".join(validation.errors),
                     None,
                 )
+                _log(log, f"batch size reduced to {batch_size}")
                 continue
             db.save_annotations(conn, validation.items)
+            _log(log, f"batch annotated: count={len(validation.items)}")
+            _log(log, json.dumps(validation.items, ensure_ascii=False, indent=2))
+            if validation.warnings:
+                _log(log, "validation warnings: " + "; ".join(validation.warnings))
             consecutive_successes += 1
             if consecutive_successes >= 3:
                 batch_size = max(1, math.ceil(batch_size * 1.5))
+                _log(log, f"batch size increased to {batch_size}")
                 consecutive_successes = 0
 
 
@@ -111,14 +137,19 @@ def _handle_batch_failure(
     return max(1, math.ceil(batch_size / 2)), 0
 
 
-def _summary(conn, reason: str) -> AnnotateSummary:
+def _summary(conn, reason: str, *, error: str | None = None) -> AnnotateSummary:
     return AnnotateSummary(
         annotated_count=db.annotated_count(conn),
         pending_count=db.pending_count(conn),
         stopped_reason=reason,
+        error=error,
     )
 
 
 def _safe_error(exc: Exception) -> str:
     return str(exc).replace("\n", " ")[:500]
 
+
+def _log(log: Callable[[str], None] | None, message: str) -> None:
+    if log is not None:
+        log(message)

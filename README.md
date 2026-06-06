@@ -51,14 +51,6 @@ Use `--exhaustive` only when you intentionally want to scan full document texts.
 
 The selector is deterministic for the same input and `--seed`.
 
-To convert an older selected Parquet file into the same SQLite queue:
-
-```bash
-zamanalif-select export-parquet-to-sqlite \
-  --input data/selected_30k_tatar.parquet \
-  --output data/selected.sqlite
-```
-
 ## Gemini Pre-Annotation
 
 Create a private `config.yaml` from `config.example.yaml`. The config must
@@ -66,9 +58,7 @@ contain `gemini.model`, `gemini.api_keys`, and all `preannotation` settings.
 Missing values fail fast; API keys are not read from environment variables.
 
 ```bash
-python -m tatar_preannotator annotate \
-  --db data/selected.sqlite \
-  --config config.yaml
+python -m tatar_preannotator annotate
 ```
 
 The annotator reads pending samples from SQLite, sends adaptive batches to

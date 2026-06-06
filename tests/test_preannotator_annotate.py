@@ -6,7 +6,7 @@ import tempfile
 import unittest
 
 from tatar_preannotator.annotate import run_annotation
-from tatar_preannotator.gemini_client import GeminiOverloadedError, GeminiQuotaError
+from tatar_preannotator.gemini_client import GeminiFatalError, GeminiOverloadedError, GeminiQuotaError
 from tatar_preannotator.schema import PreannotationConfig
 from zamanalif_selector.cli import _write_selected_sqlite
 
@@ -26,6 +26,7 @@ class FakeClient:
 
 class AnnotateTests(unittest.TestCase):
     def test_successful_run_saves_annotations(self) -> None:
+        logs: list[str] = []
         with _db_path(
             [
                 {"id": "doc-a", "sentence": "Казан."},
@@ -47,6 +48,7 @@ class AnnotateTests(unittest.TestCase):
                 config=_config(target=2, batch_size=2),
                 client=FakeClient([response]),
                 sleep=lambda seconds: None,
+                log=logs.append,
             )
 
             rows = _states(path)
@@ -54,6 +56,11 @@ class AnnotateTests(unittest.TestCase):
         self.assertEqual(summary.stopped_reason, "target_reached")
         self.assertEqual([row["status"] for row in rows], ["annotated", "annotated"])
         self.assertEqual(json.loads(rows[0]["tokens_json"]), [{"label": "N", "text": "Казан"}])
+        joined_logs = "\n".join(logs)
+        self.assertIn("batch start: size=2", joined_logs)
+        self.assertIn("batch annotated: count=2", joined_logs)
+        self.assertIn('"id": "sent_000001"', joined_logs)
+        self.assertIn('"text": "Казан"', joined_logs)
 
     def test_quota_rotates_to_next_key(self) -> None:
         with _db_path([{"id": "doc-a", "sentence": "Казан."}]) as path:
@@ -124,6 +131,20 @@ class AnnotateTests(unittest.TestCase):
         self.assertEqual(summary.stopped_reason, "no_pending")
         self.assertEqual(rows[0]["status"], "unprocessable")
         self.assertIn("invalid JSON", rows[0]["last_error"])
+
+    def test_fatal_error_is_returned_in_summary(self) -> None:
+        with _db_path([{"id": "doc-a", "sentence": "Казан."}]) as path:
+            summary = run_annotation(
+                db_path=path,
+                config=_config(target=1, batch_size=1),
+                client=FakeClient([GeminiFatalError("google-genai is not installed")]),
+                sleep=lambda seconds: None,
+            )
+            rows = _states(path)
+
+        self.assertEqual(summary.stopped_reason, "fatal_error")
+        self.assertEqual(summary.error, "fatal Gemini error: google-genai is not installed")
+        self.assertIn("google-genai is not installed", rows[0]["last_error"])
 
 
 def _response(items: list[dict]) -> str:

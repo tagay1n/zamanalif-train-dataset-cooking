@@ -9,12 +9,19 @@ from .gemini_client import GoogleGeminiClient
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="tatar_preannotator")
+    parser = argparse.ArgumentParser(
+        prog="tatar_preannotator",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    annotate = subparsers.add_parser("annotate", help="Run Gemini pre-annotation.")
-    annotate.add_argument("--db", required=True)
-    annotate.add_argument("--config", required=True)
+    annotate = subparsers.add_parser(
+        "annotate",
+        help="Run Gemini pre-annotation.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    annotate.add_argument("--db", default="data/selected.sqlite", help="SQLite annotation queue.")
+    annotate.add_argument("--config", default="config.yaml", help="YAML config file.")
 
     args = parser.parse_args(argv)
     if args.command == "annotate":
@@ -34,9 +41,14 @@ def _annotate(args: argparse.Namespace) -> int:
         config=config,
         client=GoogleGeminiClient(),
         sleep=lambda seconds: __import__("time").sleep(seconds),
+        log=print,
     )
     print(
         "annotation stopped: "
         f"{summary.stopped_reason}; annotated={summary.annotated_count}; pending={summary.pending_count}"
     )
+    if summary.error:
+        print(f"error: {summary.error}")
+    if summary.stopped_reason in {"fatal_error", "all_keys_exhausted"}:
+        return 1
     return 0
