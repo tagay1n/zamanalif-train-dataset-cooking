@@ -4,11 +4,18 @@ import argparse
 from dataclasses import replace
 from pathlib import Path
 import signal
+import sqlite3
 from time import monotonic, sleep as real_sleep
 
 from .annotate import run_annotation
 from .config import load_config
 from .gemini_client import GoogleGeminiClient
+from .word_export import (
+    export_labelstudio_tasks,
+    load_exported_words,
+    mark_exported_words,
+    write_outputs,
+)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -30,9 +37,39 @@ def main(argv: list[str] | None = None) -> int:
         help="Gemini model to use; overrides gemini.model from config.",
     )
 
+    export_words = subparsers.add_parser(
+        "annotation-export",
+        help="Export unique word forms for Label Studio Project 1 review.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    export_words.add_argument("--input", required=True, help="Preannotated JSONL input.")
+    export_words.add_argument("--output", required=True, help="Label Studio JSON output.")
+    export_words.add_argument("--max-items", type=int, help="Maximum exported words.")
+    export_words.add_argument("--include-rl", action=argparse.BooleanOptionalAction, default=True)
+    export_words.add_argument(
+        "--include-unknown",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+    )
+    export_words.add_argument("--min-frequency", type=int, default=1)
+    export_words.add_argument(
+        "--sort-by",
+        choices=["frequency_desc", "word"],
+        default="frequency_desc",
+    )
+    export_words.add_argument("--report-output", help="Report JSON output path.")
+    export_words.add_argument(
+        "--track-exported",
+        action="store_true",
+        help="Skip and persist exported words in --state-db.",
+    )
+    export_words.add_argument("--state-db", help="SQLite DB for exported-word state.")
+
     args = parser.parse_args(argv)
     if args.command == "annotate":
         return _annotate(args)
+    if args.command == "annotation-export":
+        return _annotation_export(args)
     raise AssertionError(args.command)
 
 
@@ -70,6 +107,39 @@ def _annotate(args: argparse.Namespace) -> int:
         return 1
     if summary.stopped_reason == "forced_shutdown":
         return 130
+    return 0
+
+
+def _annotation_export(args: argparse.Namespace) -> int:
+    if args.track_exported and not args.state_db:
+        raise SystemExit("--track-exported requires --state-db")
+    if args.max_items is not None and args.max_items < 1:
+        raise SystemExit("--max-items must be positive")
+    if args.min_frequency < 1:
+        raise SystemExit("--min-frequency must be positive")
+
+    already_exported = load_exported_words(args.state_db) if args.track_exported else set()
+    try:
+        result = export_labelstudio_tasks(
+            args.input,
+            max_items=args.max_items,
+            include_rl=args.include_rl,
+            include_unknown=args.include_unknown,
+            min_frequency=args.min_frequency,
+            sort_by=args.sort_by,
+            already_exported=already_exported,
+        )
+        report_path = write_outputs(result, args.output, report_output=args.report_output)
+        if args.track_exported:
+            mark_exported_words(args.state_db, result.exported_words)
+    except (OSError, ValueError, sqlite3.Error) as exc:
+        print(f"annotation export failed: {exc}")
+        return 1
+
+    print(
+        "annotation export complete: "
+        f"exported={len(result.tasks)} output={args.output} report={report_path}"
+    )
     return 0
 
 
