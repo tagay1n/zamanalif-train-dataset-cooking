@@ -132,7 +132,7 @@ review:
 
 ```bash
 python -m tatar_preannotator annotation-export \
-  --input gemini_preannotated.jsonl \
+  --db data/selected.sqlite \
   --output labelstudio_word_review.json \
   --max-items 5000
 ```
@@ -142,7 +142,7 @@ already exported normalized words:
 
 ```bash
 python -m tatar_preannotator annotation-export \
-  --input gemini_preannotated.jsonl \
+  --db data/selected.sqlite \
   --output labelstudio_word_review_001.json \
   --max-items 5000 \
   --track-exported \
@@ -151,6 +151,8 @@ python -m tatar_preannotator annotation-export \
 
 Selection rules:
 
+- read annotated Gemini results from `samples` and `preannotation_state` in
+  SQLite;
 - ignore records with `"tatar": false`;
 - export words containing conditional letters `у ү г к в я ю е ц`;
 - export `"U"` words even without conditional letters;

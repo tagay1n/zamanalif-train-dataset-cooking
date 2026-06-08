@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 import re
 import sqlite3
-from typing import Any
+from typing import Any, Iterable
 
 
 CONDITIONAL_LETTERS = frozenset("уүгквяюец")
@@ -84,6 +84,49 @@ def export_labelstudio_tasks(
     already_exported: set[str] | None = None,
 ) -> ExportResult:
     """Build Label Studio word-review tasks from preannotated JSONL."""
+    return _export_from_records(
+        _jsonl_records(input_path),
+        max_items=max_items,
+        include_rl=include_rl,
+        include_unknown=include_unknown,
+        min_frequency=min_frequency,
+        sort_by=sort_by,
+        already_exported=already_exported,
+    )
+
+
+def export_labelstudio_tasks_from_db(
+    db_path: str | Path,
+    *,
+    max_items: int | None = None,
+    include_rl: bool = True,
+    include_unknown: bool = True,
+    min_frequency: int = 1,
+    sort_by: str = "frequency_desc",
+    already_exported: set[str] | None = None,
+) -> ExportResult:
+    """Build Label Studio word-review tasks from annotated SQLite rows."""
+    return _export_from_records(
+        _sqlite_records(db_path),
+        max_items=max_items,
+        include_rl=include_rl,
+        include_unknown=include_unknown,
+        min_frequency=min_frequency,
+        sort_by=sort_by,
+        already_exported=already_exported,
+    )
+
+
+def _export_from_records(
+    records: Iterable[dict[str, Any]],
+    *,
+    max_items: int | None,
+    include_rl: bool,
+    include_unknown: bool,
+    min_frequency: int,
+    sort_by: str,
+    already_exported: set[str] | None,
+) -> ExportResult:
     stats: dict[str, WordStats] = {}
     total_sentences = 0
     total_tokens = 0
@@ -91,57 +134,50 @@ def export_labelstudio_tasks(
     already_exported_skipped = 0
     already_exported = already_exported or set()
 
-    with Path(input_path).open("r", encoding="utf-8") as file:
-        for line_number, line in enumerate(file, start=1):
-            if not line.strip():
+    for record in records:
+        total_sentences += 1
+        if record.get("tatar") is not True:
+            continue
+        tokens = record.get("tokens")
+        if not isinstance(tokens, list):
+            continue
+        for token in tokens:
+            if not isinstance(token, dict):
                 continue
-            try:
-                record = json.loads(line)
-            except json.JSONDecodeError as exc:
-                raise ValueError(f"invalid JSON on line {line_number}: {exc}") from exc
-            total_sentences += 1
-            if record.get("tatar") is not True:
+            text = token.get("text")
+            if not isinstance(text, str):
                 continue
-            tokens = record.get("tokens")
-            if not isinstance(tokens, list):
+            label = token.get("label", "U")
+            if label not in {"N", "RL", "U"}:
+                label = "U"
+            total_tokens += 1
+            normalized = normalize_word(text)
+            if not normalized:
                 continue
-            for token in tokens:
-                if not isinstance(token, dict):
-                    continue
-                text = token.get("text")
-                if not isinstance(text, str):
-                    continue
-                label = token.get("label", "U")
-                if label not in {"N", "RL", "U"}:
-                    label = "U"
-                total_tokens += 1
-                normalized = normalize_word(text)
-                if not normalized:
-                    continue
 
-                has_conditional = contains_conditional_letter(normalized)
-                if label == "RL" and (not include_rl or not has_conditional):
-                    continue
-                if label == "U" and not include_unknown:
-                    continue
-                if label == "N" and not has_conditional:
-                    continue
-                if label == "N" and vowel_harmony_class(normalized) == "mixed_front_back":
-                    mixed_harmony_n_skipped += 1
-                    continue
-                if normalized in already_exported:
-                    already_exported_skipped += 1
-                    continue
+            has_conditional = contains_conditional_letter(normalized)
+            if label == "RL" and (not include_rl or not has_conditional):
+                continue
+            if label == "U" and not include_unknown:
+                continue
+            if label == "N" and not has_conditional:
+                continue
+            if label == "N" and vowel_harmony_class(normalized) == "mixed_front_back":
+                mixed_harmony_n_skipped += 1
+                continue
+            if normalized in already_exported:
+                already_exported_skipped += 1
+                continue
 
-                entry = stats.get(normalized)
-                if entry is None:
-                    entry = WordStats(normalized=normalized, display=_display_word(text, normalized))
-                    stats[normalized] = entry
-                entry.frequency += 1
-                entry.label_counts[label] += 1
-                entry.conditional_letters.update(
-                    char for char in normalized if char in CONDITIONAL_LETTERS
-                )
+            entry = stats.get(normalized)
+            if entry is None:
+                entry = WordStats(normalized=normalized, display=_display_word(text, normalized))
+                stats[normalized] = entry
+            entry.frequency += 1
+            entry.label_counts[label] += 1
+            entry.conditional_letters.update(
+                char for char in normalized if char in CONDITIONAL_LETTERS
+            )
 
     candidates = [
         entry
@@ -181,6 +217,43 @@ def export_labelstudio_tasks(
         ),
         exported_words=[entry.normalized for entry in candidates],
     )
+
+
+def _jsonl_records(input_path: str | Path) -> Iterable[dict[str, Any]]:
+    with Path(input_path).open("r", encoding="utf-8") as file:
+        for line_number, line in enumerate(file, start=1):
+            if not line.strip():
+                continue
+            try:
+                yield json.loads(line)
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"invalid JSON on line {line_number}: {exc}") from exc
+
+
+def _sqlite_records(db_path: str | Path) -> Iterable[dict[str, Any]]:
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        rows = conn.execute(
+            """
+            select s.id, s.text, p.tatar, p.tokens_json
+            from preannotation_state p
+            join samples s on s.id = p.sample_id
+            where p.status = 'annotated'
+              and p.tokens_json is not null
+            order by s.id
+            """
+        ).fetchall()
+    for row in rows:
+        try:
+            tokens = json.loads(row["tokens_json"])
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"invalid tokens_json for {row['id']}: {exc}") from exc
+        yield {
+            "id": row["id"],
+            "text": row["text"],
+            "tatar": bool(row["tatar"]),
+            "tokens": tokens,
+        }
 
 
 def convert_for_annotation(word: str, label: str) -> str:

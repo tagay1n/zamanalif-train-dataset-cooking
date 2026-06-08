@@ -13,6 +13,7 @@ from tatar_preannotator.word_export import (
     contains_conditional_letter,
     convert_for_annotation,
     export_labelstudio_tasks,
+    export_labelstudio_tasks_from_db,
     load_exported_words,
     mark_exported_words,
     normalize_word,
@@ -222,6 +223,64 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(set(data[0]["data"]), {"id", "cyrl_word", "auto_zamanalif", "hints_html"})
         self.assertEqual(report["exported_word_count"], 1)
         self.assertIn("annotation export complete", output.getvalue())
+
+    def test_exports_from_sqlite_annotation_database(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = Path(tmpdir) / "selected.sqlite"
+            with sqlite3.connect(db_path) as conn:
+                conn.execute(
+                    """
+                    create table samples (
+                        id text primary key,
+                        source_id text,
+                        text text not null
+                    )
+                    """
+                )
+                conn.execute(
+                    """
+                    create table preannotation_state (
+                        sample_id text primary key references samples(id),
+                        status text not null,
+                        tatar integer,
+                        tokens_json text,
+                        attempts integer not null default 0,
+                        last_error text,
+                        updated_at text not null
+                    )
+                    """
+                )
+                conn.execute(
+                    "insert into samples(id, source_id, text) values (?, ?, ?)",
+                    ("sent_1", "src", "Мин вакыт турында әйттем."),
+                )
+                conn.execute(
+                    """
+                    insert into preannotation_state(
+                        sample_id, status, tatar, tokens_json, updated_at
+                    ) values (?, ?, ?, ?, ?)
+                    """,
+                    (
+                        "sent_1",
+                        "annotated",
+                        1,
+                        json.dumps(
+                            [
+                                {"text": "вакыт", "label": "N"},
+                                {"text": "турында", "label": "N"},
+                            ],
+                            ensure_ascii=False,
+                        ),
+                        "2026-01-01T00:00:00+00:00",
+                    ),
+                )
+
+            result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
+
+        self.assertEqual(
+            [task["data"]["cyrl_word"] for task in result.tasks],
+            ["вакыт", "турында"],
+        )
 
     def test_sqlite_tracking_skips_previously_exported_words(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

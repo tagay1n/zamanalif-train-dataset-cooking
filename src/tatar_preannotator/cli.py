@@ -12,6 +12,7 @@ from .config import load_config
 from .gemini_client import GoogleGeminiClient
 from .word_export import (
     export_labelstudio_tasks,
+    export_labelstudio_tasks_from_db,
     load_exported_words,
     mark_exported_words,
     write_outputs,
@@ -42,7 +43,8 @@ def main(argv: list[str] | None = None) -> int:
         help="Export unique word forms for Label Studio Project 1 review.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    export_words.add_argument("--input", required=True, help="Preannotated JSONL input.")
+    export_words.add_argument("--db", default="data/selected.sqlite", help="SQLite annotation database.")
+    export_words.add_argument("--input", help="Optional preannotated JSONL input instead of --db.")
     export_words.add_argument("--output", required=True, help="Label Studio JSON output.")
     export_words.add_argument("--max-items", type=int, help="Maximum exported words.")
     export_words.add_argument("--include-rl", action=argparse.BooleanOptionalAction, default=True)
@@ -120,15 +122,18 @@ def _annotation_export(args: argparse.Namespace) -> int:
 
     already_exported = load_exported_words(args.state_db) if args.track_exported else set()
     try:
-        result = export_labelstudio_tasks(
-            args.input,
-            max_items=args.max_items,
-            include_rl=args.include_rl,
-            include_unknown=args.include_unknown,
-            min_frequency=args.min_frequency,
-            sort_by=args.sort_by,
-            already_exported=already_exported,
-        )
+        export_kwargs = {
+            "max_items": args.max_items,
+            "include_rl": args.include_rl,
+            "include_unknown": args.include_unknown,
+            "min_frequency": args.min_frequency,
+            "sort_by": args.sort_by,
+            "already_exported": already_exported,
+        }
+        if args.input:
+            result = export_labelstudio_tasks(args.input, **export_kwargs)
+        else:
+            result = export_labelstudio_tasks_from_db(args.db, **export_kwargs)
         report_path = write_outputs(result, args.output, report_output=args.report_output)
         if args.track_exported:
             mark_exported_words(args.state_db, result.exported_words)
