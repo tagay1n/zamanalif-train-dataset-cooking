@@ -10,10 +10,8 @@ import re
 import sqlite3
 from typing import Any, Iterable
 
+from zamanalif_selector.features import BACK_VOWELS, CONDITIONAL_LETTERS, FRONT_VOWELS
 
-CONDITIONAL_LETTERS = frozenset("уүгквяюец")
-FRONT_VOWELS = frozenset("әеөүи")
-BACK_VOWELS = frozenset("аоуы")
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
 ALLOWED_ZAMANALIF = frozenset(
     "abcdefghijklmnopqrstuvwxyz"
@@ -71,28 +69,6 @@ def vowel_harmony_class(word: str) -> str:
     if has_back:
         return "back_only"
     return "no_vowels"
-
-
-def export_labelstudio_tasks(
-    input_path: str | Path,
-    *,
-    max_items: int | None = None,
-    include_rl: bool = True,
-    include_unknown: bool = True,
-    min_frequency: int = 1,
-    sort_by: str = "frequency_desc",
-    already_exported: set[str] | None = None,
-) -> ExportResult:
-    """Build Label Studio word-review tasks from preannotated JSONL."""
-    return _export_from_records(
-        _jsonl_records(input_path),
-        max_items=max_items,
-        include_rl=include_rl,
-        include_unknown=include_unknown,
-        min_frequency=min_frequency,
-        sort_by=sort_by,
-        already_exported=already_exported,
-    )
 
 
 def export_labelstudio_tasks_from_db(
@@ -217,17 +193,6 @@ def _export_from_records(
         ),
         exported_words=[entry.normalized for entry in candidates],
     )
-
-
-def _jsonl_records(input_path: str | Path) -> Iterable[dict[str, Any]]:
-    with Path(input_path).open("r", encoding="utf-8") as file:
-        for line_number, line in enumerate(file, start=1):
-            if not line.strip():
-                continue
-            try:
-                yield json.loads(line)
-            except json.JSONDecodeError as exc:
-                raise ValueError(f"invalid JSON on line {line_number}: {exc}") from exc
 
 
 def _sqlite_records(db_path: str | Path) -> Iterable[dict[str, Any]]:

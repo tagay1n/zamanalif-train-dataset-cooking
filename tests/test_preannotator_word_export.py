@@ -12,7 +12,6 @@ from tatar_preannotator.cli import main
 from tatar_preannotator.word_export import (
     contains_conditional_letter,
     convert_for_annotation,
-    export_labelstudio_tasks,
     export_labelstudio_tasks_from_db,
     load_exported_words,
     mark_exported_words,
@@ -39,53 +38,48 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_export_filters_deduplicates_and_generates_decisions(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
-            input_path = Path(tmpdir) / "input.jsonl"
-            input_path.write_text(
-                "\n".join(
-                    json.dumps(row, ensure_ascii=False)
-                    for row in [
-                        {
-                            "id": "sent_1",
-                            "tatar": True,
-                            "tokens": [
-                                {"text": "Мин", "label": "N"},
-                                {"text": "вакытында", "label": "N"},
-                                {"text": "Вакытында", "label": "N"},
-                                {"text": "яңа", "label": "N"},
-                                {"text": "проект", "label": "RL"},
-                                {"text": "турында", "label": "N"},
-                                {"text": "әйттем", "label": "N"},
-                            ],
-                        },
-                        {
-                            "id": "sent_2",
-                            "tatar": True,
-                            "tokens": [
-                                {"text": "Гадел", "label": "N"},
-                                {"text": "сүз", "label": "U"},
-                                {"text": "сер", "label": "N"},
-                            ],
-                        },
-                        {
-                            "id": "sent_3",
-                            "tatar": True,
-                            "tokens": [
-                                {"text": "позиция", "label": "RL"},
-                                {"text": "дөрес", "label": "N"},
-                            ],
-                        },
-                        {
-                            "id": "sent_4",
-                            "tatar": False,
-                            "tokens": [{"text": "вакыт", "label": "N"}],
-                        },
-                    ]
-                )
-                + "\n",
-                encoding="utf-8",
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "selected.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "Мин", "label": "N"},
+                            {"text": "вакытында", "label": "N"},
+                            {"text": "Вакытында", "label": "N"},
+                            {"text": "яңа", "label": "N"},
+                            {"text": "проект", "label": "RL"},
+                            {"text": "турында", "label": "N"},
+                            {"text": "әйттем", "label": "N"},
+                        ],
+                    },
+                    {
+                        "id": "sent_2",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "Гадел", "label": "N"},
+                            {"text": "сүз", "label": "U"},
+                            {"text": "сер", "label": "N"},
+                        ],
+                    },
+                    {
+                        "id": "sent_3",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "позиция", "label": "RL"},
+                            {"text": "дөрес", "label": "N"},
+                        ],
+                    },
+                    {
+                        "id": "sent_4",
+                        "tatar": False,
+                        "tokens": [{"text": "вакыт", "label": "N"}],
+                    },
+                ],
             )
 
-            result = export_labelstudio_tasks(input_path, sort_by="word")
+            result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
 
         words = [task["data"]["cyrl_word"] for task in result.tasks]
         self.assertEqual(
@@ -116,9 +110,9 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_mixed_harmony_rl_is_kept_and_rl_without_conditional_is_skipped(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
-            input_path = Path(tmpdir) / "input.jsonl"
-            input_path.write_text(
-                json.dumps(
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "selected.sqlite",
+                [
                     {
                         "id": "sent_1",
                         "tatar": True,
@@ -128,22 +122,19 @@ class PreannotatorWordExportTests(unittest.TestCase):
                             {"text": "спорт", "label": "RL"},
                         ],
                     },
-                    ensure_ascii=False,
-                )
-                + "\n",
-                encoding="utf-8",
+                ],
             )
 
-            result = export_labelstudio_tasks(input_path, sort_by="word")
+            result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
 
         self.assertEqual([task["data"]["cyrl_word"] for task in result.tasks], ["банк", "проект"])
         self.assertEqual(result.tasks[1]["data"]["auto_zamanalif"], "proyekt")
 
     def test_include_unknown_and_include_rl_flags(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
-            input_path = Path(tmpdir) / "input.jsonl"
-            input_path.write_text(
-                json.dumps(
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "selected.sqlite",
+                [
                     {
                         "id": "sent_1",
                         "tatar": True,
@@ -152,13 +143,14 @@ class PreannotatorWordExportTests(unittest.TestCase):
                             {"text": "проект", "label": "RL"},
                         ],
                     },
-                    ensure_ascii=False,
-                )
-                + "\n",
-                encoding="utf-8",
+                ],
             )
 
-            result = export_labelstudio_tasks(input_path, include_unknown=False, include_rl=False)
+            result = export_labelstudio_tasks_from_db(
+                db_path,
+                include_unknown=False,
+                include_rl=False,
+            )
 
         self.assertEqual(result.tasks, [])
 
@@ -169,47 +161,42 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_sorting_frequency_limit_and_min_frequency(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
-            input_path = Path(tmpdir) / "input.jsonl"
-            rows = [
-                {"id": "1", "tatar": True, "tokens": [{"text": "юл", "label": "N"}]},
-                {"id": "2", "tatar": True, "tokens": [{"text": "юл", "label": "N"}]},
-                {"id": "3", "tatar": True, "tokens": [{"text": "вакыт", "label": "N"}]},
-            ]
-            input_path.write_text(
-                "\n".join(json.dumps(row, ensure_ascii=False) for row in rows) + "\n",
-                encoding="utf-8",
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "selected.sqlite",
+                [
+                    {"id": "1", "tatar": True, "tokens": [{"text": "юл", "label": "N"}]},
+                    {"id": "2", "tatar": True, "tokens": [{"text": "юл", "label": "N"}]},
+                    {"id": "3", "tatar": True, "tokens": [{"text": "вакыт", "label": "N"}]},
+                ],
             )
 
-            limited = export_labelstudio_tasks(input_path, max_items=1)
-            frequent = export_labelstudio_tasks(input_path, min_frequency=2)
+            limited = export_labelstudio_tasks_from_db(db_path, max_items=1)
+            frequent = export_labelstudio_tasks_from_db(db_path, min_frequency=2)
 
         self.assertEqual([task["data"]["cyrl_word"] for task in limited.tasks], ["юл"])
         self.assertEqual([task["data"]["cyrl_word"] for task in frequent.tasks], ["юл"])
 
     def test_cli_writes_labelstudio_json_and_report(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
-            input_path = Path(tmpdir) / "input.jsonl"
-            output_path = Path(tmpdir) / "out.json"
-            input_path.write_text(
-                json.dumps(
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "selected.sqlite",
+                [
                     {
                         "id": "sent_1",
                         "tatar": True,
                         "tokens": [{"text": "вакыт", "label": "N"}],
-                    },
-                    ensure_ascii=False,
-                )
-                + "\n",
-                encoding="utf-8",
+                    }
+                ],
             )
+            output_path = Path(tmpdir) / "out.json"
 
             output = StringIO()
             with redirect_stdout(output):
                 exit_code = main(
                     [
                         "annotation-export",
-                        "--input",
-                        str(input_path),
+                        "--db",
+                        str(db_path),
                         "--output",
                         str(output_path),
                     ]
@@ -226,54 +213,19 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_exports_from_sqlite_annotation_database(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
-            db_path = Path(tmpdir) / "selected.sqlite"
-            with sqlite3.connect(db_path) as conn:
-                conn.execute(
-                    """
-                    create table samples (
-                        id text primary key,
-                        source_id text,
-                        text text not null
-                    )
-                    """
-                )
-                conn.execute(
-                    """
-                    create table preannotation_state (
-                        sample_id text primary key references samples(id),
-                        status text not null,
-                        tatar integer,
-                        tokens_json text,
-                        attempts integer not null default 0,
-                        last_error text,
-                        updated_at text not null
-                    )
-                    """
-                )
-                conn.execute(
-                    "insert into samples(id, source_id, text) values (?, ?, ?)",
-                    ("sent_1", "src", "Мин вакыт турында әйттем."),
-                )
-                conn.execute(
-                    """
-                    insert into preannotation_state(
-                        sample_id, status, tatar, tokens_json, updated_at
-                    ) values (?, ?, ?, ?, ?)
-                    """,
-                    (
-                        "sent_1",
-                        "annotated",
-                        1,
-                        json.dumps(
-                            [
-                                {"text": "вакыт", "label": "N"},
-                                {"text": "турында", "label": "N"},
-                            ],
-                            ensure_ascii=False,
-                        ),
-                        "2026-01-01T00:00:00+00:00",
-                    ),
-                )
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "selected.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "вакыт", "label": "N"},
+                            {"text": "турында", "label": "N"},
+                        ],
+                    }
+                ],
+            )
 
             result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
 
@@ -284,10 +236,9 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_sqlite_tracking_skips_previously_exported_words(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
-            input_path = Path(tmpdir) / "input.jsonl"
-            db_path = Path(tmpdir) / "state.sqlite"
-            input_path.write_text(
-                json.dumps(
+            selected_db = _write_annotation_db(
+                Path(tmpdir) / "selected.sqlite",
+                [
                     {
                         "id": "sent_1",
                         "tatar": True,
@@ -295,16 +246,14 @@ class PreannotatorWordExportTests(unittest.TestCase):
                             {"text": "вакыт", "label": "N"},
                             {"text": "яңа", "label": "N"},
                         ],
-                    },
-                    ensure_ascii=False,
-                )
-                + "\n",
-                encoding="utf-8",
+                    }
+                ],
             )
+            db_path = Path(tmpdir) / "state.sqlite"
             mark_exported_words(db_path, ["вакыт"])
 
-            result = export_labelstudio_tasks(
-                input_path,
+            result = export_labelstudio_tasks_from_db(
+                selected_db,
                 sort_by="word",
                 already_exported=load_exported_words(db_path),
             )
@@ -315,6 +264,53 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual([task["data"]["cyrl_word"] for task in result.tasks], ["яңа"])
         self.assertEqual(result.report["already_exported_skipped_count"], 1)
         self.assertEqual(count, 1)
+
+
+def _write_annotation_db(path: Path, rows: list[dict]) -> Path:
+    with sqlite3.connect(path) as conn:
+        conn.execute(
+            """
+            create table samples (
+                id text primary key,
+                source_id text,
+                text text not null
+            )
+            """
+        )
+        conn.execute(
+            """
+            create table preannotation_state (
+                sample_id text primary key references samples(id),
+                status text not null,
+                tatar integer,
+                tokens_json text,
+                attempts integer not null default 0,
+                last_error text,
+                updated_at text not null
+            )
+            """
+        )
+        for row in rows:
+            sample_id = row["id"]
+            conn.execute(
+                "insert into samples(id, source_id, text) values (?, ?, ?)",
+                (sample_id, "src", row.get("text", "")),
+            )
+            conn.execute(
+                """
+                insert into preannotation_state(
+                    sample_id, status, tatar, tokens_json, updated_at
+                ) values (?, ?, ?, ?, ?)
+                """,
+                (
+                    sample_id,
+                    row.get("status", "annotated"),
+                    1 if row.get("tatar") else 0,
+                    json.dumps(row.get("tokens", []), ensure_ascii=False),
+                    "2026-01-01T00:00:00+00:00",
+                ),
+            )
+    return path
 
 
 if __name__ == "__main__":

@@ -11,7 +11,6 @@ from .annotate import run_annotation
 from .config import load_config
 from .gemini_client import GoogleGeminiClient
 from .word_export import (
-    export_labelstudio_tasks,
     export_labelstudio_tasks_from_db,
     load_exported_words,
     mark_exported_words,
@@ -44,7 +43,6 @@ def main(argv: list[str] | None = None) -> int:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     export_words.add_argument("--db", default="data/selected.sqlite", help="SQLite annotation database.")
-    export_words.add_argument("--input", help="Optional preannotated JSONL input instead of --db.")
     export_words.add_argument("--output", required=True, help="Label Studio JSON output.")
     export_words.add_argument("--max-items", type=int, help="Maximum exported words.")
     export_words.add_argument("--include-rl", action=argparse.BooleanOptionalAction, default=True)
@@ -130,10 +128,7 @@ def _annotation_export(args: argparse.Namespace) -> int:
             "sort_by": args.sort_by,
             "already_exported": already_exported,
         }
-        if args.input:
-            result = export_labelstudio_tasks(args.input, **export_kwargs)
-        else:
-            result = export_labelstudio_tasks_from_db(args.db, **export_kwargs)
+        result = export_labelstudio_tasks_from_db(args.db, **export_kwargs)
         report_path = write_outputs(result, args.output, report_output=args.report_output)
         if args.track_exported:
             mark_exported_words(args.state_db, result.exported_words)
