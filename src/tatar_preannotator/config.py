@@ -33,6 +33,14 @@ def load_config(path: str | Path) -> PreannotationConfig:
         exhausted_keys_path=_required_str(
             preannotation, "exhausted_keys_path", "preannotation.exhausted_keys_path"
         ),
+        requests_per_minute=_required_positive_int(
+            preannotation, "requests_per_minute", "preannotation.requests_per_minute"
+        ),
+        graceful_shutdown_timeout_seconds=_required_positive_int(
+            preannotation,
+            "graceful_shutdown_timeout_seconds",
+            "preannotation.graceful_shutdown_timeout_seconds",
+        ),
         initial_batch_size=_required_positive_int(
             preannotation, "initial_batch_size", "preannotation.initial_batch_size"
         ),

@@ -6,6 +6,8 @@ gemini:
 
 preannotation:
   exhausted_keys_path: "data/exhausted_gemini_keys.json"
+  requests_per_minute: 5
+  graceful_shutdown_timeout_seconds: 300
   initial_batch_size: 30
   request_timeout_seconds: 120
   overload_sleep_seconds: 60

@@ -11,6 +11,8 @@ class PreannotationConfig:
     model: str
     api_keys: tuple[str, ...]
     exhausted_keys_path: str
+    requests_per_minute: int
+    graceful_shutdown_timeout_seconds: int
     initial_batch_size: int
     request_timeout_seconds: int
     overload_sleep_seconds: int

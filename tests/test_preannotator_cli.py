@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import patch
 
 from tatar_preannotator.annotate import AnnotateSummary
-from tatar_preannotator.cli import main
+from tatar_preannotator.cli import ShutdownController, main
 
 
 class PreannotatorCliTests(unittest.TestCase):
@@ -22,6 +22,7 @@ class PreannotatorCliTests(unittest.TestCase):
         self.assertIn("data/selected.sqlite", help_text)
         self.assertIn("--config", help_text)
         self.assertIn("config.yaml", help_text)
+        self.assertIn("--model", help_text)
 
     def test_fatal_annotation_error_is_printed_and_exits_nonzero(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -36,6 +37,8 @@ gemini:
     - key-a
 preannotation:
   exhausted_keys_path: exhausted_keys.json
+  requests_per_minute: 5
+  graceful_shutdown_timeout_seconds: 300
   initial_batch_size: 1
   request_timeout_seconds: 5
   overload_sleep_seconds: 7
@@ -61,6 +64,140 @@ preannotation:
         self.assertEqual(exit_code, 1)
         self.assertIn("fatal_error", output.getvalue())
         self.assertIn("google-genai is not installed", output.getvalue())
+
+    def test_forced_shutdown_summary_exits_130(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = Path(tmpdir) / "selected.sqlite"
+            config_path = Path(tmpdir) / "config.yaml"
+            db_path.touch()
+            config_path.write_text(
+                """
+gemini:
+  model: model-a
+  api_keys:
+    - key-a
+preannotation:
+  exhausted_keys_path: exhausted_keys.json
+  requests_per_minute: 5
+  graceful_shutdown_timeout_seconds: 300
+  initial_batch_size: 1
+  request_timeout_seconds: 5
+  overload_sleep_seconds: 7
+  target_annotated_count: 1
+""",
+                encoding="utf-8",
+            )
+            with patch(
+                "tatar_preannotator.cli.run_annotation",
+                return_value=AnnotateSummary(
+                    annotated_count=0,
+                    pending_count=1,
+                    stopped_reason="forced_shutdown",
+                    error="forced shutdown requested",
+                ),
+            ):
+                output = StringIO()
+                with redirect_stdout(output):
+                    exit_code = main(
+                        ["annotate", "--db", str(db_path), "--config", str(config_path)]
+                    )
+
+        self.assertEqual(exit_code, 130)
+
+    def test_model_cli_option_overrides_config_model(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = Path(tmpdir) / "selected.sqlite"
+            config_path = Path(tmpdir) / "config.yaml"
+            db_path.touch()
+            config_path.write_text(
+                """
+gemini:
+  model: config-model
+  api_keys:
+    - key-a
+preannotation:
+  exhausted_keys_path: exhausted_keys.json
+  requests_per_minute: 5
+  graceful_shutdown_timeout_seconds: 300
+  initial_batch_size: 1
+  request_timeout_seconds: 5
+  overload_sleep_seconds: 7
+  target_annotated_count: 1
+""",
+                encoding="utf-8",
+            )
+            with patch(
+                "tatar_preannotator.cli.run_annotation",
+                return_value=AnnotateSummary(
+                    annotated_count=1,
+                    pending_count=0,
+                    stopped_reason="target_reached",
+                ),
+            ) as run_annotation:
+                output = StringIO()
+                with redirect_stdout(output):
+                    exit_code = main(
+                        [
+                            "annotate",
+                            "--db",
+                            str(db_path),
+                            "--config",
+                            str(config_path),
+                            "--model",
+                            "cli-model",
+                        ]
+                    )
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(run_annotation.call_args.kwargs["config"].model, "cli-model")
+
+    def test_blank_model_cli_option_fails_fast(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = Path(tmpdir) / "selected.sqlite"
+            config_path = Path(tmpdir) / "config.yaml"
+            db_path.touch()
+            config_path.write_text(
+                """
+gemini:
+  model: config-model
+  api_keys:
+    - key-a
+preannotation:
+  exhausted_keys_path: exhausted_keys.json
+  requests_per_minute: 5
+  graceful_shutdown_timeout_seconds: 300
+  initial_batch_size: 1
+  request_timeout_seconds: 5
+  overload_sleep_seconds: 7
+  target_annotated_count: 1
+""",
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(SystemExit, "--model must be a non-empty string"):
+                main(
+                    [
+                        "annotate",
+                        "--db",
+                        str(db_path),
+                        "--config",
+                        str(config_path),
+                        "--model",
+                        " ",
+                    ]
+                )
+
+    def test_shutdown_controller_first_and_second_sigint(self) -> None:
+        messages: list[str] = []
+        controller = ShutdownController(300, log=messages.append)
+
+        controller._handle_sigint(None, None)
+        controller._handle_sigint(None, None)
+
+        self.assertTrue(controller.requested())
+        self.assertTrue(controller.forced())
+        self.assertIn("shutdown requested", messages[0])
+        self.assertIn("forced shutdown requested", messages[1])
 
 
 if __name__ == "__main__":

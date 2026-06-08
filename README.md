@@ -69,16 +69,18 @@ Required config shape:
 
 ```yaml
 gemini:
-  model: "gemini-2.5-flash"
+  model: "gemini-3.5-flash"
   api_keys:
     - "your-key"
 
 preannotation:
   exhausted_keys_path: "data/exhausted_gemini_keys.json"
+  requests_per_minute: 5
+  graceful_shutdown_timeout_seconds: 300
   initial_batch_size: 30
   request_timeout_seconds: 120
   overload_sleep_seconds: 60
-  target_annotated_count: 1000
+  target_annotated_count: 5000
 ```
 
 ```bash
@@ -86,11 +88,23 @@ python -m tatar_preannotator annotate
 ```
 
 By default, the command reads `config.yaml` and `data/selected.sqlite`.
+To override only the configured Gemini model for one run:
+
+```bash
+python -m tatar_preannotator annotate --model gemini-2.5-flash
+```
 
 The annotator reads pending samples from SQLite, sends adaptive batches to
 Gemini, validates the returned JSON schema, and saves valid pre-annotations in
 SQLite. Timeouts and invalid JSON shrink the batch size; 503 overload sleeps
-and retries; quota/rate-limit errors rotate to the next configured key.
+and retries; short-window rate-limit errors sleep and retry; quota exhaustion
+rotates to the next configured key.
+`preannotation.requests_per_minute` controls global request pacing; `5` means
+the command waits at least 12 seconds between Gemini request starts.
+On first Ctrl+C, the command waits up to
+`preannotation.graceful_shutdown_timeout_seconds` for the current Gemini request
+to finish, writes normal DB/key state, and exits. Press Ctrl+C again to force
+stop immediately.
 
 The command stops when `preannotation.target_annotated_count` is reached, when
 there are no pending samples left, or when all configured Gemini keys are

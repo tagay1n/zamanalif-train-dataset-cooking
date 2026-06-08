@@ -32,6 +32,8 @@ gemini:
     - key-a
 preannotation:
   exhausted_keys_path: exhausted.json
+  requests_per_minute: 5
+  graceful_shutdown_timeout_seconds: 300
   initial_batch_size: 30
   request_timeout_seconds: 120
   overload_sleep_seconds: 60
@@ -44,6 +46,8 @@ preannotation:
             self.assertEqual(config.model, "gemini-2.5-flash")
             self.assertEqual(config.api_keys, ("key-a",))
             self.assertEqual(config.exhausted_keys_path, "exhausted.json")
+            self.assertEqual(config.requests_per_minute, 5)
+            self.assertEqual(config.graceful_shutdown_timeout_seconds, 300)
             self.assertEqual(config.initial_batch_size, 30)
 
     def test_config_fails_fast_on_missing_model(self) -> None:
@@ -57,6 +61,8 @@ gemini:
     - key-a
 preannotation:
   exhausted_keys_path: exhausted.json
+  requests_per_minute: 5
+  graceful_shutdown_timeout_seconds: 300
   initial_batch_size: 30
   request_timeout_seconds: 120
   overload_sleep_seconds: 60
@@ -65,6 +71,53 @@ preannotation:
                 )
 
             with self.assertRaisesRegex(ValueError, "gemini.model"):
+                load_config(path)
+
+    def test_config_fails_fast_on_missing_requests_per_minute(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            path = f"{tmpdir}/config.yaml"
+            with open(path, "w", encoding="utf-8") as handle:
+                handle.write(
+                    """
+gemini:
+  model: gemini-2.5-flash
+  api_keys:
+    - key-a
+preannotation:
+  exhausted_keys_path: exhausted.json
+  initial_batch_size: 30
+  request_timeout_seconds: 120
+  overload_sleep_seconds: 60
+  target_annotated_count: 1000
+"""
+                )
+
+            with self.assertRaisesRegex(ValueError, "preannotation.requests_per_minute"):
+                load_config(path)
+
+    def test_config_fails_fast_on_missing_graceful_shutdown_timeout(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            path = f"{tmpdir}/config.yaml"
+            with open(path, "w", encoding="utf-8") as handle:
+                handle.write(
+                    """
+gemini:
+  model: gemini-2.5-flash
+  api_keys:
+    - key-a
+preannotation:
+  exhausted_keys_path: exhausted.json
+  requests_per_minute: 5
+  initial_batch_size: 30
+  request_timeout_seconds: 120
+  overload_sleep_seconds: 60
+  target_annotated_count: 1000
+"""
+                )
+
+            with self.assertRaisesRegex(
+                ValueError, "preannotation.graceful_shutdown_timeout_seconds"
+            ):
                 load_config(path)
 
 

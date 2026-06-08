@@ -9,9 +9,12 @@ from typing import Callable
 from . import db
 from .gemini_client import (
     GeminiClientProtocol,
+    GeminiEmptyResponseError,
     GeminiFatalError,
     GeminiOverloadedError,
     GeminiQuotaError,
+    GeminiRateLimitError,
+    GeminiShutdownError,
     GeminiTimeoutError,
     KeyRing,
 )
@@ -28,18 +31,35 @@ class AnnotateSummary:
     error: str | None = None
 
 
+RATE_LIMIT_RETRY_SLEEP_SECONDS = 60
+
+
 def run_annotation(
     *,
     db_path: str,
     config: PreannotationConfig,
     client: GeminiClientProtocol,
-    sleep: Callable[[int], None],
+    sleep: Callable[[float], None],
     log: Callable[[str], None] | None = None,
+    now: Callable[[], float] | None = None,
+    shutdown_requested: Callable[[], bool] | None = None,
+    force_shutdown: Callable[[], bool] | None = None,
+    shutdown_deadline: Callable[[], float | None] | None = None,
 ) -> AnnotateSummary:
     """Run adaptive Gemini pre-annotation until the configured stop condition is reached."""
+    if now is None:
+        from time import monotonic
+
+        now = monotonic
+    shutdown_requested = shutdown_requested or (lambda: False)
+    force_shutdown = force_shutdown or (lambda: False)
+    shutdown_deadline = shutdown_deadline or (lambda: None)
     batch_size = config.initial_batch_size
     consecutive_successes = 0
-    with db.connect(db_path) as conn:
+    last_request_started_at: float | None = None
+    minimum_request_interval = 60 / config.requests_per_minute
+    conn = db.connect(db_path)
+    try:
         db.reset_processing(conn)
         exhausted_keys_result = _read_exhausted_keys(config.exhausted_keys_path)
         if isinstance(exhausted_keys_result, str):
@@ -57,16 +77,30 @@ def run_annotation(
             current_annotated = db.annotated_count(conn)
             if current_annotated >= config.target_annotated_count:
                 return _summary(conn, "target_reached")
+            if force_shutdown():
+                return _summary(conn, "forced_shutdown", error="forced shutdown requested")
+            if shutdown_requested():
+                return _summary(conn, "shutdown_requested")
             remaining = config.target_annotated_count - current_annotated
             request_size = min(batch_size, remaining)
             samples = db.next_pending(conn, request_size)
             if not samples:
                 return _summary(conn, "no_pending")
-            db.mark_processing(conn, samples)
             key = keys.current()
             if key is None:
-                db.mark_pending(conn, samples, "all Gemini keys exhausted")
                 return _summary(conn, "all_keys_exhausted")
+            last_request_started_at = _throttle_requests(
+                last_request_started_at,
+                minimum_request_interval,
+                sleep=sleep,
+                now=now,
+                log=log,
+            )
+            if force_shutdown():
+                return _summary(conn, "forced_shutdown", error="forced shutdown requested")
+            if shutdown_requested():
+                return _summary(conn, "shutdown_requested")
+            db.mark_processing(conn, samples)
             _log(
                 log,
                 "batch start: "
@@ -81,6 +115,10 @@ def run_annotation(
                     model=config.model,
                     prompt=prompt,
                     timeout_seconds=config.request_timeout_seconds,
+                    shutdown_requested=shutdown_requested,
+                    force_shutdown=force_shutdown,
+                    shutdown_deadline=shutdown_deadline,
+                    now=now,
                 )
             except GeminiOverloadedError as exc:
                 _log(
@@ -89,6 +127,14 @@ def run_annotation(
                 )
                 sleep(config.overload_sleep_seconds)
                 db.mark_pending(conn, samples, f"Gemini overloaded: {_safe_error(exc)}")
+                continue
+            except GeminiRateLimitError as exc:
+                _log(
+                    log,
+                    f"Gemini rate limit: sleep={RATE_LIMIT_RETRY_SLEEP_SECONDS}s error={_safe_error(exc)}",
+                )
+                db.mark_pending(conn, samples, f"Gemini rate limit: {_safe_error(exc)}")
+                sleep(RATE_LIMIT_RETRY_SLEEP_SECONDS)
                 continue
             except GeminiQuotaError as exc:
                 _log(log, f"Gemini key exhausted: {_safe_error(exc)}")
@@ -111,6 +157,20 @@ def run_annotation(
                 _log(log, f"batch timeout: {_safe_error(exc)}")
                 batch_size, consecutive_successes = _handle_batch_failure(
                     conn, samples, batch_size, "timeout", exc
+                )
+                _log(log, f"batch size reduced to {batch_size}")
+                continue
+            except GeminiShutdownError as exc:
+                error = _safe_error(exc)
+                _log(log, error)
+                db.mark_pending(conn, samples, error)
+                if exc.forced:
+                    return _summary(conn, "forced_shutdown", error=error)
+                return _summary(conn, "shutdown_requested", error=error)
+            except GeminiEmptyResponseError as exc:
+                _log(log, f"empty Gemini response: {_safe_error(exc)}")
+                batch_size, consecutive_successes = _handle_batch_failure(
+                    conn, samples, batch_size, "empty response", exc
                 )
                 _log(log, f"batch size reduced to {batch_size}")
                 continue
@@ -143,6 +203,12 @@ def run_annotation(
                 batch_size = max(1, math.ceil(batch_size * 1.5))
                 _log(log, f"batch size increased to {batch_size}")
                 consecutive_successes = 0
+            if force_shutdown():
+                return _summary(conn, "forced_shutdown", error="forced shutdown requested")
+            if shutdown_requested():
+                return _summary(conn, "shutdown_requested")
+    finally:
+        conn.close()
 
 
 def _handle_batch_failure(
@@ -158,6 +224,26 @@ def _handle_batch_failure(
         return 1, 0
     db.mark_pending(conn, samples, error)
     return max(1, math.ceil(batch_size / 2)), 0
+
+
+def _throttle_requests(
+    last_request_started_at: float | None,
+    minimum_request_interval: float,
+    *,
+    sleep: Callable[[float], None],
+    now: Callable[[], float],
+    log: Callable[[str], None] | None,
+) -> float:
+    current_time = now()
+    if last_request_started_at is None:
+        return current_time
+    elapsed = current_time - last_request_started_at
+    wait_seconds = minimum_request_interval - elapsed
+    if wait_seconds > 0:
+        _log(log, f"rate limit: sleeping {wait_seconds:.1f}s before next Gemini request")
+        sleep(wait_seconds)
+        current_time = now()
+    return current_time
 
 
 def _summary(conn, reason: str, *, error: str | None = None) -> AnnotateSummary:
