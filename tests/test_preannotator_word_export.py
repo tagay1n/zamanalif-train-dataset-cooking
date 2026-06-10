@@ -160,7 +160,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("проект", "RL"), "proyekt")
         self.assertEqual(convert_for_annotation("яңа", "N"), "yaña")
 
-    def test_ya_yu_and_e_hints_are_compact(self) -> None:
+    def test_conditional_letter_hints_do_not_include_origin_reason(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
                 Path(tmpdir) / "selected.sqlite",
@@ -168,6 +168,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     {"id": "1", "tatar": True, "tokens": [{"text": "юл", "label": "N"}]},
                     {"id": "2", "tatar": True, "tokens": [{"text": "яңа", "label": "N"}]},
                     {"id": "3", "tatar": True, "tokens": [{"text": "проект", "label": "RL"}]},
+                    {"id": "4", "tatar": True, "tokens": [{"text": "вакыт", "label": "N"}]},
+                    {"id": "5", "tatar": True, "tokens": [{"text": "гасыр", "label": "N"}]},
+                    {"id": "6", "tatar": True, "tokens": [{"text": "күрү", "label": "N"}]},
+                    {"id": "7", "tatar": True, "tokens": [{"text": "позиция", "label": "RL"}]},
                 ],
             )
 
@@ -179,6 +183,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertIn("<b>ю</b> -> <b>yu</b>", html_by_word["юл"])
         self.assertIn("<b>я</b> -> <b>ya</b>", html_by_word["яңа"])
         self.assertIn("<b>е</b> -> <b>ye</b>", html_by_word["проект"])
+        self.assertIn("<b>в</b> -> <b>w</b>", html_by_word["вакыт"])
+        self.assertIn("<b>г</b> -> <b>ğ</b>", html_by_word["гасыр"])
+        self.assertIn("<b>к</b> -> <b>k</b>", html_by_word["күрү"])
+        self.assertIn("<b>ц</b> -> <b>ts</b>", html_by_word["позиция"])
         for html in html_by_word.values():
             self.assertNotIn("because of", html)
 
