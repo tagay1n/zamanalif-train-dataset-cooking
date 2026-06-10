@@ -104,8 +104,9 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(result.report["u_exported_word_count"], 1)
 
         html = result.tasks[0]["data"]["hints_html"]
-        self.assertIn("<b>в</b> -> <b>w</b> because of native word", html)
-        self.assertIn("<b>к</b> -> <b>q</b> because of native word", html)
+        self.assertIn("<b>в</b> -> <b>w</b>", html)
+        self.assertIn("<b>к</b> -> <b>q</b>", html)
+        self.assertIn("Gemini's origin prediction: <b>native</b>", html)
         self.assertIn("Frequency for <b><i>вакытында</i></b>: <b>2</b>", html)
 
     def test_mixed_harmony_rl_is_kept_and_rl_without_conditional_is_skipped(self) -> None:

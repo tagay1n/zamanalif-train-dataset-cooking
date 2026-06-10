@@ -244,10 +244,7 @@ def decision_html(entry: WordStats) -> str:
             converted = _deterministic_char(char)
             if converted:
                 items.append(f"<b>{escape(char)}</b> -> <b>{escape(converted)}</b>")
-    if entry.label == "U":
-        items.append("Gemini label: <b>U</b>, origin unknown")
-    elif entry.label == "RL":
-        items.append("Gemini label: <b>RL</b>, loanword")
+    items.append(f"Gemini's origin prediction: <b>{_origin_prediction(entry.label)}</b>")
     if not convert_for_annotation(entry.normalized, entry.label):
         items.append("Automatic converter produced no clean Latin suggestion")
     items.append(
@@ -307,10 +304,17 @@ def _display_word(surface: str, normalized: str) -> str:
 
 def _conditional_decision(char: str, word: str, index: int, label: str) -> str:
     converted = _conditional_char_conversion(char, word, index, label)
-    reason = {"N": "native word", "RL": "loanword", "U": "origin unknown"}[label]
     if converted:
-        return f"<b>{escape(char)}</b> -> <b>{escape(converted)}</b> because of {reason}"
-    return f"<b>{escape(char)}</b> has conditional conversion because of {reason}"
+        return f"<b>{escape(char)}</b> -> <b>{escape(converted)}</b>"
+    return f"<b>{escape(char)}</b> -> conditional"
+
+
+def _origin_prediction(label: str) -> str:
+    return {
+        "N": "native",
+        "RL": "loanword",
+        "U": "unknown",
+    }.get(label, "unknown")
 
 
 def _char_conversion(char: str, word: str, index: int, label: str) -> str:

@@ -168,7 +168,7 @@ The output is a Label Studio JSON array:
     "id": "word_000001",
     "cyrl_word": "вакытында",
     "auto_zamanalif": "waqıtında",
-    "hints_html": "<ul><li><b>в</b> -> <b>w</b> because of native word</li></ul>"
+    "hints_html": "<ul><li><b>в</b> -> <b>w</b></li><li>Gemini's origin prediction: <b>native</b></li></ul>"
   }
 }
 ```
