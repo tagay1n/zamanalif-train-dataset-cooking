@@ -160,6 +160,28 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("проект", "RL"), "proyekt")
         self.assertEqual(convert_for_annotation("яңа", "N"), "yaña")
 
+    def test_ya_yu_and_e_hints_are_compact(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "selected.sqlite",
+                [
+                    {"id": "1", "tatar": True, "tokens": [{"text": "юл", "label": "N"}]},
+                    {"id": "2", "tatar": True, "tokens": [{"text": "яңа", "label": "N"}]},
+                    {"id": "3", "tatar": True, "tokens": [{"text": "проект", "label": "RL"}]},
+                ],
+            )
+
+            result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
+
+        html_by_word = {
+            task["data"]["cyrl_word"]: task["data"]["hints_html"] for task in result.tasks
+        }
+        self.assertIn("<b>ю</b> -> <b>yu</b>", html_by_word["юл"])
+        self.assertIn("<b>я</b> -> <b>ya</b>", html_by_word["яңа"])
+        self.assertIn("<b>е</b> -> <b>ye</b>", html_by_word["проект"])
+        for html in html_by_word.values():
+            self.assertNotIn("because of", html)
+
     def test_sorting_frequency_limit_and_min_frequency(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
