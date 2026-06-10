@@ -11,6 +11,7 @@ import unittest
 from tatar_preannotator.cli import main
 from tatar_preannotator.word_export import (
     contains_conditional_letter,
+    contains_rl_review_letter,
     convert_for_annotation,
     export_labelstudio_tasks_from_db,
     load_exported_words,
@@ -25,11 +26,16 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(normalize_word("«Вакытында!»"), "вакытында")
         self.assertEqual(normalize_word("..."), "")
         self.assertEqual(normalize_word("сүз-сүз"), "сүз-сүз")
+        self.assertEqual(normalize_word("Шофёр"), "шофёр")
 
     def test_conditional_letter_detection(self) -> None:
         self.assertTrue(contains_conditional_letter("вакыт"))
         self.assertTrue(contains_conditional_letter("позиция"))
         self.assertFalse(contains_conditional_letter("шәһәр"))
+        self.assertFalse(contains_conditional_letter("сыр"))
+        self.assertTrue(contains_rl_review_letter("сыр"))
+        self.assertTrue(contains_rl_review_letter("роль"))
+        self.assertTrue(contains_rl_review_letter("шофёр"))
 
     def test_vowel_harmony_classification(self) -> None:
         self.assertEqual(vowel_harmony_class("күрә"), "front_only")
@@ -130,6 +136,37 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual([task["data"]["cyrl_word"] for task in result.tasks], ["банк", "проект"])
         self.assertEqual(result.tasks[1]["data"]["auto_zamanalif"], "proyekt")
+
+    def test_russian_loanword_review_letters_are_exported_for_rl_only(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "selected.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "сыр", "label": "RL"},
+                            {"text": "роль", "label": "RL"},
+                            {"text": "шофёр", "label": "RL"},
+                            {"text": "тын", "label": "N"},
+                            {"text": "щетка", "label": "RL"},
+                        ],
+                    },
+                ],
+            )
+
+            result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
+
+        words = [task["data"]["cyrl_word"] for task in result.tasks]
+        self.assertEqual(words, ["роль", "сыр", "шофёр", "щетка"])
+        by_word = {task["data"]["cyrl_word"]: task["data"] for task in result.tasks}
+        self.assertEqual(by_word["сыр"]["auto_zamanalif"], "sıyr")
+        self.assertEqual(by_word["роль"]["auto_zamanalif"], "rol'")
+        self.assertEqual(by_word["шофёр"]["auto_zamanalif"], "şofyor")
+        self.assertIn("<b>ы</b> -> <b>ıy</b>", by_word["сыр"]["hints_html"])
+        self.assertIn("<b>ь</b> -> <b>&#x27;</b>", by_word["роль"]["hints_html"])
+        self.assertIn("<b>ё</b> -> <b>yo</b>", by_word["шофёр"]["hints_html"])
 
     def test_include_unknown_and_include_rl_flags(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

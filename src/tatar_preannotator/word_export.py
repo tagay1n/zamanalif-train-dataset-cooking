@@ -13,6 +13,7 @@ from typing import Any, Iterable
 from zamanalif_selector.features import BACK_VOWELS, CONDITIONAL_LETTERS, FRONT_VOWELS
 
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
+RL_REVIEW_LETTERS = frozenset("ёыьъщ")
 ALLOWED_ZAMANALIF = frozenset(
     "abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -50,12 +51,17 @@ def normalize_word(token: str) -> str:
     matches = list(CYRILLIC_RE.finditer(token or ""))
     if not matches:
         return ""
-    return token[matches[0].start() : matches[-1].end()].lower().replace("ё", "е")
+    return token[matches[0].start() : matches[-1].end()].lower()
 
 
 def contains_conditional_letter(word: str) -> bool:
     """Return true when a normalized word contains a conditional Cyrillic letter."""
     return any(char in CONDITIONAL_LETTERS for char in word)
+
+
+def contains_rl_review_letter(word: str) -> bool:
+    """Return true when a loanword has a non-deterministic review letter."""
+    return any(char in CONDITIONAL_LETTERS or char in RL_REVIEW_LETTERS for char in word)
 
 
 def vowel_harmony_class(word: str) -> str:
@@ -132,7 +138,8 @@ def _export_from_records(
                 continue
 
             has_conditional = contains_conditional_letter(normalized)
-            if label == "RL" and (not include_rl or not has_conditional):
+            has_rl_review = contains_rl_review_letter(normalized)
+            if label == "RL" and (not include_rl or not has_rl_review):
                 continue
             if label == "U" and not include_unknown:
                 continue
@@ -159,7 +166,11 @@ def _export_from_records(
         entry
         for entry in stats.values()
         if entry.frequency >= min_frequency
-        and (contains_conditional_letter(entry.normalized) or entry.label == "U")
+        and (
+            contains_conditional_letter(entry.normalized)
+            or entry.label == "U"
+            or (entry.label == "RL" and contains_rl_review_letter(entry.normalized))
+        )
     ]
     if sort_by == "frequency_desc":
         candidates.sort(key=lambda item: (-item.frequency, item.normalized))
@@ -241,7 +252,7 @@ def decision_html(entry: WordStats) -> str:
         if char in CONDITIONAL_LETTERS:
             items.append(_conditional_decision(char, entry.normalized, index, entry.label))
         else:
-            converted = _deterministic_char(char)
+            converted = _char_conversion(char, entry.normalized, index, entry.label)
             if converted:
                 items.append(f"<b>{escape(char)}</b> -> <b>{escape(converted)}</b>")
     items.append(f"Gemini's origin prediction: <b>{_origin_prediction(entry.label)}</b>")
@@ -320,6 +331,10 @@ def _origin_prediction(label: str) -> str:
 def _char_conversion(char: str, word: str, index: int, label: str) -> str:
     if char in CONDITIONAL_LETTERS:
         return _conditional_char_conversion(char, word, index, label)
+    if label == "RL" and char == "ы":
+        return "ıy"
+    if label == "RL" and char in {"ь", "ъ"}:
+        return "'"
     return _deterministic_char(char)
 
 
@@ -414,6 +429,8 @@ def _deterministic_char(char: str) -> str:
         "х": "x",
         "й": "y",
         "з": "z",
+        "ё": "yo",
+        "щ": "şç",
         "ь": "",
         "ъ": "",
     }.get(char, "")

@@ -156,7 +156,8 @@ Selection rules:
 - ignore records with `"tatar": false`;
 - export words containing conditional letters `у ү г к в я ю е ц`;
 - export `"U"` words even without conditional letters;
-- export `"RL"` words only when they contain conditional letters;
+- export `"RL"` words only when they contain conditional letters or
+  Russian-loan review letters `ё ы ь ъ щ`;
 - skip native-looking `"N"` words with mixed front/back vowel harmony;
 - deduplicate by lowercase normalized Cyrillic word form.
 
@@ -198,85 +199,12 @@ Label Studio layout:
 </View>
 ```
 
-## Conversion Rules Reference
+## Conversion Rules
 
-The Latin output should use real Unicode Zamanalif characters:
-
-```text
-a b c ç d e f g ğ h i ı j k l m n ñ o ö p q r s ş t u ü v w x y z
-A B C Ç D E F G Ğ H İ I J K L M N Ñ O Ö P Q R S Ş T U Ü V W X Y Z
-```
-
-Important Unicode caveat:
-
-- `ı` is Latin small dotless i, U+0131.
-- `İ` is Latin capital I with dot, U+0130.
-- `ş`, `ç`, `ğ`, `ñ`, `ä`, `ö`, `ü` must be Latin letters, not Cyrillic
-  lookalikes.
-
-Deterministic mappings normally do not need human review:
-
-| Cyrillic | Zamanalif | Example |
-| --- | --- | --- |
-| А а | A a | азатлык -> azatlıq |
-| Ә ә | Ä ä | әни -> äni |
-| О о | O o | болыт -> bolıt |
-| Ө ө | Ö ö | төтен -> töten |
-| Ы ы | I ı | ылыс -> ılıs |
-| Э э | E e | эт -> et |
-| И и | İ i | китап -> kitap |
-| Б б | B b | бабай -> babay |
-| Җ җ | C c | җир -> cir |
-| Ч ч | Ç ç | ачкыч -> açqıç |
-| Д д | D d | давыл -> dawıl |
-| Ф ф | F f | фонд -> fond |
-| Һ һ | H h | шәһәр -> şähär |
-| Ж ж | J j | журнал -> jurnal |
-| Л л | L l | гөлләр -> göllär |
-| М м | M m | малай -> malay |
-| Н н | N n | төн -> tön |
-| Ң ң | Ñ ñ | зәңгәр -> zäñgär |
-| П п | P p | туп -> tup |
-| Р р | R r | рәхәт -> räxät |
-| С с | S s | мисал -> misal |
-| Ш ш | Ş ş | буш -> buş |
-| Т т | T t | тар -> tar |
-| Х х | X x | хат -> xat |
-| Й й | Y y | йокы -> yokı, ай -> ay |
-| З з | Z z | зур -> zur |
-
-Conditional letters are the main annotation target:
-
-```text
-У у, Ү ү, Г г, К к, В в, Я я, Ю ю, Е е, Ц ц
-```
-
-- `в`: native `w`, loanword `v`.
-- `г`: native front-vowel `g`, native back-vowel `ğ`, loanword `g`.
-- `к`: native front-vowel `k`, native back-vowel `q`, loanword `k`.
-- `у`: usually `u`; final native `ау/әү` may become `aw/äw`.
-- `ү`: usually `ü`, but still reviewed because it interacts with harmony and
-  nearby conditional letters.
-- `я`: native back-vowel `ya`, native front-vowel `yä`, after `и` may be `a`
-  or `ä`, loanword usually `ya`.
-- `ю`: native back-vowel `yu`, native front-vowel `yü`, after `и` is `iü`,
-  loanword usually `yu`.
-- `е`: initial native back-vowel `yı`, initial native front-vowel `ye`,
-  internal native after consonant `e`, after `и` `e`, loanword auto-suggestion
-  currently `ye`.
-- `ц`: loanword `s` at word start/end or after consonants, `ts` after vowels.
-
-Vowel harmony used by the exporter:
-
-- front vowels: `ә е ө ү и`;
-- back vowels: `а о у ы`;
-- `mixed_front_back` means the normalized word has at least one front and one
-  back vowel.
-
-Project 1 skips mixed-harmony `N` words, but keeps matching `RL` and `U` words.
-The Gemini token label is used as a weak origin signal for auto-suggestions:
-`N` uses native-style decisions, `RL` uses loanword-style decisions, and `U`
-uses best effort with blank output if no clean Zamanalif suggestion is possible.
+The conversion and annotator reference lives in
+[docs/zamanalif_conversion_rules.md](docs/zamanalif_conversion_rules.md).
+It is plain Markdown, so it can also be copied into Label Studio project
+instructions.
 
 ## Tests
 
