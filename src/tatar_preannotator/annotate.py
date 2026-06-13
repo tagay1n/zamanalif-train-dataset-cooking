@@ -45,6 +45,7 @@ def run_annotation(
     shutdown_requested: Callable[[], bool] | None = None,
     force_shutdown: Callable[[], bool] | None = None,
     shutdown_deadline: Callable[[], float | None] | None = None,
+    key_shuffle: Callable[[list[str]], None] | None = None,
 ) -> AnnotateSummary:
     """Run adaptive Gemini pre-annotation until the configured stop condition is reached."""
     if now is None:
@@ -66,7 +67,11 @@ def run_annotation(
             error = f"exhausted key file error: {exhausted_keys_result}"
             _log(log, error)
             return _summary(conn, "fatal_error", error=error)
-        keys = KeyRing(config.api_keys, exhausted_keys=exhausted_keys_result)
+        keys = KeyRing(
+            config.api_keys,
+            exhausted_keys=exhausted_keys_result,
+            shuffle=key_shuffle,
+        )
         if exhausted_keys_result:
             _log(
                 log,

@@ -237,7 +237,7 @@ class CliTests(unittest.TestCase):
             {"id": "doc-b", "sentence": "Әни шәһәргә бара."},
         ]
         with tempfile.TemporaryDirectory() as tmpdir:
-            path = f"{tmpdir}/selected.sqlite"
+            path = f"{tmpdir}/zamanalif.sqlite"
 
             _write_selected_sqlite(path, rows, force=False)
 
@@ -272,6 +272,43 @@ class CliTests(unittest.TestCase):
 
             with self.assertRaises(SystemExit):
                 _write_selected_sqlite(path, rows, force=False)
+
+    def test_write_selected_sqlite_force_preserves_reference_tables(self) -> None:
+        rows = [{"id": "doc-a", "sentence": "Әни шәһәргә бара."}]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            path = f"{tmpdir}/zamanalif.sqlite"
+            with sqlite3.connect(path) as conn:
+                conn.execute(
+                    """
+                    CREATE TABLE antat_listing_entries (
+                        source_id INTEGER,
+                        page INTEGER,
+                        position INTEGER,
+                        entry_id TEXT,
+                        headword TEXT,
+                        entry_url TEXT
+                    )
+                    """
+                )
+                conn.execute(
+                    """
+                    INSERT INTO antat_listing_entries (
+                        source_id, page, position, entry_id, headword, entry_url
+                    ) VALUES (29, 1, 1, '278928', 'ABANDON', 'url')
+                    """
+                )
+
+            _write_selected_sqlite(path, rows, force=False)
+            _write_selected_sqlite(path, rows, force=True)
+
+            with sqlite3.connect(path) as conn:
+                antat_count = conn.execute(
+                    "SELECT COUNT(*) FROM antat_listing_entries"
+                ).fetchone()[0]
+                sample_count = conn.execute("SELECT COUNT(*) FROM samples").fetchone()[0]
+
+        self.assertEqual(antat_count, 1)
+        self.assertEqual(sample_count, 1)
 
 
 if __name__ == "__main__":

@@ -25,6 +25,7 @@ from .selector import select_candidates_streaming
 
 
 DATASET_NAME = "yasalma/tt-structured-content"
+DEFAULT_DB_PATH = "data/zamanalif.sqlite"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -55,7 +56,7 @@ def main(argv: list[str] | None = None) -> int:
 
     select = subparsers.add_parser("select", help="Select weighted sentence examples.")
     select.add_argument("--candidates", default="data/candidates.jsonl")
-    select.add_argument("--output", default="data/selected.sqlite")
+    select.add_argument("--output", default=DEFAULT_DB_PATH)
     select.add_argument("--target-size", type=int, default=10_000)
     select.add_argument("--seed", type=int, default=13)
     select.add_argument("--min-word-frequency", type=int, default=2)
@@ -65,7 +66,7 @@ def main(argv: list[str] | None = None) -> int:
     select.add_argument("--shortlist-size", type=int, default=250_000)
     select.add_argument("--source-penalty", type=float, default=0.15)
     select.add_argument("--min-tatar-specific-letters", type=int, default=2)
-    select.add_argument("--force", action="store_true", help="Overwrite an existing SQLite output.")
+    select.add_argument("--force", action="store_true", help="Replace selected sample tables in the SQLite output.")
     select.add_argument("--quiet", action="store_true", help="Disable progress output.")
 
     report = subparsers.add_parser("report", help="Regenerate report from selected Parquet.")
@@ -350,13 +351,16 @@ def _read_parquet(path: str | Path) -> list[dict[str, Any]]:
 
 def _write_selected_sqlite(path: str | Path, rows: list[dict[str, Any]], *, force: bool) -> None:
     path = Path(path)
-    if path.exists():
-        if not force:
-            raise SystemExit(f"{path} already exists; pass --force to overwrite it.")
-        path.unlink()
     path.parent.mkdir(parents=True, exist_ok=True)
     with sqlite3.connect(path) as conn:
         conn.execute("PRAGMA foreign_keys = ON")
+        has_samples = _sqlite_table_exists(conn, "samples")
+        has_state = _sqlite_table_exists(conn, "preannotation_state")
+        if (has_samples or has_state) and not force:
+            raise SystemExit(f"{path} already has selected samples; pass --force to replace them.")
+        if force:
+            conn.execute("DROP TABLE IF EXISTS preannotation_state")
+            conn.execute("DROP TABLE IF EXISTS samples")
         conn.execute(
             """
             CREATE TABLE samples (
@@ -399,6 +403,18 @@ def _write_selected_sqlite(path: str | Path, rows: list[dict[str, Any]], *, forc
             """,
             state_rows,
         )
+
+
+def _sqlite_table_exists(conn: sqlite3.Connection, table_name: str) -> bool:
+    row = conn.execute(
+        """
+        SELECT COUNT(*) AS count
+        FROM sqlite_master
+        WHERE type='table' AND name=?
+        """,
+        (table_name,),
+    ).fetchone()
+    return int(row[0]) > 0
 
 
 def _utc_now() -> str:

@@ -179,13 +179,22 @@ def _describe_empty_response(response: object) -> str:
 class KeyRing:
     """Rotate through configured keys and remember exhausted keys for this run."""
 
-    def __init__(self, keys: tuple[str, ...], exhausted_keys: set[str] | None = None):
-        self._keys = keys
+    def __init__(
+        self,
+        keys: tuple[str, ...],
+        exhausted_keys: set[str] | None = None,
+        shuffle: Callable[[list[str]], None] | None = None,
+    ):
         self._index = 0
         exhausted_keys = exhausted_keys or set()
-        self._exhausted: set[int] = {
-            index for index, key in enumerate(keys) if key in exhausted_keys
-        }
+        available_keys = [key for key in keys if key not in exhausted_keys]
+        if shuffle is None:
+            from random import shuffle as random_shuffle
+
+            shuffle = random_shuffle
+        shuffle(available_keys)
+        self._keys = tuple(available_keys)
+        self._exhausted: set[int] = set()
 
     def current(self) -> str | None:
         if len(self._exhausted) >= len(self._keys):

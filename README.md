@@ -15,24 +15,24 @@ python3 -m venv .venv
 
 ```bash
 zamanalif-select prepare --output data/candidates.jsonl
-zamanalif-select select --candidates data/candidates.jsonl --output data/selected.sqlite
+zamanalif-select select --candidates data/candidates.jsonl --output data/zamanalif.sqlite
 ```
 
-`select` writes a SQLite database instead of Parquet. The selected sample table
-is intentionally minimal:
+`select` writes selected samples into the shared SQLite application database.
+The selected sample table is intentionally minimal:
 
 ```sql
 samples(id, source_id, text)
 ```
 
-Annotation state is tracked separately in `preannotation_state`. If the output
-database already exists, pass `--force` to replace it.
+Annotation state is tracked separately in `preannotation_state`. If selected
+sample tables already exist, pass `--force` to replace those tables.
 
-The current local converted queue is `data/selected.sqlite` with 30,000 selected
-sentences. Inspect the live state with:
+The current local application database is `data/zamanalif.sqlite` with 30,000
+selected sentences. Inspect the live annotation state with:
 
 ```bash
-sqlite3 data/selected.sqlite \
+sqlite3 data/zamanalif.sqlite \
   "SELECT COUNT(*) FROM samples; SELECT status, COUNT(*) FROM preannotation_state GROUP BY status;"
 ```
 
@@ -87,7 +87,7 @@ preannotation:
 python -m tatar_preannotator annotate
 ```
 
-By default, the command reads `config.yaml` and `data/selected.sqlite`.
+By default, the command reads `config.yaml` and `data/zamanalif.sqlite`.
 To override only the configured Gemini model for one run:
 
 ```bash
@@ -125,6 +125,23 @@ array stays on one line for readability:
 }
 ```
 
+## Antat Dictionary Reference
+
+Download the Antat English-Tatar dictionary reference into the shared SQLite
+database:
+
+```bash
+python -m tatar_preannotator download-antat-reference
+```
+
+The command downloads source `29` for Cyrillic Tatar meanings and source `30`
+for Zamanalif meanings, stores the entry HTML and cleaned text, aligns both
+sources by page and position, and always shows a progress bar. By default it
+uses `data/zamanalif.sqlite`; pass `--db` only when using another database path.
+
+If Antat reference rows already exist, continue with `--resume` or replace just
+the Antat reference tables with `--force`.
+
 ## Label Studio Project 1: Word Dictionary Review
 
 After Gemini pre-annotation, export unique word forms for dictionary-level human
@@ -132,7 +149,7 @@ review:
 
 ```bash
 python -m tatar_preannotator annotation-export \
-  --db data/selected.sqlite \
+  --db data/zamanalif.sqlite \
   --output labelstudio_word_review.json \
   --max-items 5000
 ```
@@ -142,7 +159,7 @@ already exported normalized words:
 
 ```bash
 python -m tatar_preannotator annotation-export \
-  --db data/selected.sqlite \
+  --db data/zamanalif.sqlite \
   --output labelstudio_word_review_001.json \
   --max-items 5000 \
   --track-exported \

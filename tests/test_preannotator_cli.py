@@ -19,14 +19,14 @@ class PreannotatorCliTests(unittest.TestCase):
 
         help_text = output.getvalue()
         self.assertIn("--db", help_text)
-        self.assertIn("data/selected.sqlite", help_text)
+        self.assertIn("data/zamanalif.sqlite", help_text)
         self.assertIn("--config", help_text)
         self.assertIn("config.yaml", help_text)
         self.assertIn("--model", help_text)
 
     def test_fatal_annotation_error_is_printed_and_exits_nonzero(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
-            db_path = Path(tmpdir) / "selected.sqlite"
+            db_path = Path(tmpdir) / "zamanalif.sqlite"
             config_path = Path(tmpdir) / "config.yaml"
             db_path.touch()
             config_path.write_text(
@@ -67,7 +67,7 @@ preannotation:
 
     def test_forced_shutdown_summary_exits_130(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
-            db_path = Path(tmpdir) / "selected.sqlite"
+            db_path = Path(tmpdir) / "zamanalif.sqlite"
             config_path = Path(tmpdir) / "config.yaml"
             db_path.touch()
             config_path.write_text(
@@ -106,7 +106,7 @@ preannotation:
 
     def test_model_cli_option_overrides_config_model(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
-            db_path = Path(tmpdir) / "selected.sqlite"
+            db_path = Path(tmpdir) / "zamanalif.sqlite"
             config_path = Path(tmpdir) / "config.yaml"
             db_path.touch()
             config_path.write_text(
@@ -153,7 +153,7 @@ preannotation:
 
     def test_blank_model_cli_option_fails_fast(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
-            db_path = Path(tmpdir) / "selected.sqlite"
+            db_path = Path(tmpdir) / "zamanalif.sqlite"
             config_path = Path(tmpdir) / "config.yaml"
             db_path.touch()
             config_path.write_text(

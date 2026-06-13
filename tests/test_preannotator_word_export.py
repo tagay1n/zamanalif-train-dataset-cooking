@@ -45,7 +45,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_export_filters_deduplicates_and_generates_decisions(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
-                Path(tmpdir) / "selected.sqlite",
+                Path(tmpdir) / "zamanalif.sqlite",
                 [
                     {
                         "id": "sent_1",
@@ -118,7 +118,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_mixed_harmony_rl_is_kept_and_rl_without_conditional_is_skipped(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
-                Path(tmpdir) / "selected.sqlite",
+                Path(tmpdir) / "zamanalif.sqlite",
                 [
                     {
                         "id": "sent_1",
@@ -140,7 +140,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_russian_loanword_review_letters_are_exported_for_rl_only(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
-                Path(tmpdir) / "selected.sqlite",
+                Path(tmpdir) / "zamanalif.sqlite",
                 [
                     {
                         "id": "sent_1",
@@ -171,7 +171,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_include_unknown_and_include_rl_flags(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
-                Path(tmpdir) / "selected.sqlite",
+                Path(tmpdir) / "zamanalif.sqlite",
                 [
                     {
                         "id": "sent_1",
@@ -200,7 +200,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_conditional_letter_hints_do_not_include_origin_reason(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
-                Path(tmpdir) / "selected.sqlite",
+                Path(tmpdir) / "zamanalif.sqlite",
                 [
                     {"id": "1", "tatar": True, "tokens": [{"text": "юл", "label": "N"}]},
                     {"id": "2", "tatar": True, "tokens": [{"text": "яңа", "label": "N"}]},
@@ -230,7 +230,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_sorting_frequency_limit_and_min_frequency(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
-                Path(tmpdir) / "selected.sqlite",
+                Path(tmpdir) / "zamanalif.sqlite",
                 [
                     {"id": "1", "tatar": True, "tokens": [{"text": "юл", "label": "N"}]},
                     {"id": "2", "tatar": True, "tokens": [{"text": "юл", "label": "N"}]},
@@ -247,7 +247,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_cli_writes_labelstudio_json_and_report(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
-                Path(tmpdir) / "selected.sqlite",
+                Path(tmpdir) / "zamanalif.sqlite",
                 [
                     {
                         "id": "sent_1",
@@ -282,7 +282,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_exports_from_sqlite_annotation_database(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
-                Path(tmpdir) / "selected.sqlite",
+                Path(tmpdir) / "zamanalif.sqlite",
                 [
                     {
                         "id": "sent_1",
@@ -305,7 +305,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_sqlite_tracking_skips_previously_exported_words(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             selected_db = _write_annotation_db(
-                Path(tmpdir) / "selected.sqlite",
+                Path(tmpdir) / "zamanalif.sqlite",
                 [
                     {
                         "id": "sent_1",

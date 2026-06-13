@@ -14,6 +14,7 @@ from tatar_preannotator.gemini_client import (
     GeminiQuotaError,
     GeminiRateLimitError,
     GeminiShutdownError,
+    KeyRing,
     _classify_exception,
 )
 from tatar_preannotator.schema import PreannotationConfig
@@ -141,6 +142,7 @@ class AnnotateTests(unittest.TestCase):
                 ),
                 client=client,
                 sleep=lambda seconds: None,
+                key_shuffle=_keep_key_order,
             )
             exhausted_data = json.loads(Path(exhausted_path).read_text(encoding="utf-8"))
 
@@ -179,10 +181,29 @@ class AnnotateTests(unittest.TestCase):
                 ),
                 client=client,
                 sleep=lambda seconds: None,
+                key_shuffle=_keep_key_order,
             )
 
         self.assertEqual(summary.stopped_reason, "target_reached")
         self.assertEqual(client.calls, [("key-b", "model-a")])
+
+    def test_key_ring_shuffles_available_non_exhausted_keys(self) -> None:
+        seen_available: list[list[str]] = []
+
+        def reverse(keys: list[str]) -> None:
+            seen_available.append(list(keys))
+            keys.reverse()
+
+        keys = KeyRing(
+            ("key-a", "key-b", "key-c"),
+            exhausted_keys={"key-b"},
+            shuffle=reverse,
+        )
+
+        self.assertEqual(seen_available, [["key-a", "key-c"]])
+        self.assertEqual(keys.current(), "key-c")
+        self.assertEqual(keys.mark_exhausted(), "key-c")
+        self.assertEqual(keys.current(), "key-a")
 
     def test_overload_sleeps_and_retries_without_exhausting_key(self) -> None:
         sleeps: list[int] = []
@@ -207,6 +228,7 @@ class AnnotateTests(unittest.TestCase):
                 config=_config(target=1, batch_size=1, keys=("key-a", "key-b")),
                 client=client,
                 sleep=sleeps.append,
+                key_shuffle=_keep_key_order,
             )
 
         self.assertEqual(summary.stopped_reason, "target_reached")
@@ -477,6 +499,10 @@ def _response(items: list[dict]) -> str:
     return json.dumps(items, ensure_ascii=False)
 
 
+def _keep_key_order(keys: list[str]) -> None:
+    return None
+
+
 def _config(
     *,
     target: int,
@@ -520,7 +546,7 @@ class _db_path:
 
     def __enter__(self) -> str:
         self._tmpdir = tempfile.TemporaryDirectory()
-        self.path = f"{self._tmpdir.name}/selected.sqlite"
+        self.path = f"{self._tmpdir.name}/zamanalif.sqlite"
         _write_selected_sqlite(self.path, self._rows, force=False)
         return self.path
 

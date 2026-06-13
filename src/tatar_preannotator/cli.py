@@ -7,7 +7,10 @@ import signal
 import sqlite3
 from time import monotonic, sleep as real_sleep
 
+from zamanalif_selector.progress import RichCliProgress
+
 from .annotate import run_annotation
+from .antat_reference import download_antat_reference
 from .config import load_config
 from .gemini_client import GoogleGeminiClient
 from .word_export import (
@@ -16,6 +19,9 @@ from .word_export import (
     mark_exported_words,
     write_outputs,
 )
+
+
+DEFAULT_DB_PATH = "data/zamanalif.sqlite"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -30,7 +36,7 @@ def main(argv: list[str] | None = None) -> int:
         help="Run Gemini pre-annotation.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    annotate.add_argument("--db", default="data/selected.sqlite", help="SQLite annotation queue.")
+    annotate.add_argument("--db", default=DEFAULT_DB_PATH, help="SQLite application database.")
     annotate.add_argument("--config", default="config.yaml", help="YAML config file.")
     annotate.add_argument(
         "--model",
@@ -42,7 +48,7 @@ def main(argv: list[str] | None = None) -> int:
         help="Export unique word forms for Label Studio Project 1 review.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    export_words.add_argument("--db", default="data/selected.sqlite", help="SQLite annotation database.")
+    export_words.add_argument("--db", default=DEFAULT_DB_PATH, help="SQLite application database.")
     export_words.add_argument("--output", required=True, help="Label Studio JSON output.")
     export_words.add_argument("--max-items", type=int, help="Maximum exported words.")
     export_words.add_argument("--include-rl", action=argparse.BooleanOptionalAction, default=True)
@@ -65,11 +71,22 @@ def main(argv: list[str] | None = None) -> int:
     )
     export_words.add_argument("--state-db", help="SQLite DB for exported-word state.")
 
+    antat = subparsers.add_parser(
+        "download-antat-reference",
+        help="Download Antat English-Tatar Cyrillic/Zamanalif dictionary into SQLite.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    antat.add_argument("--db", default=DEFAULT_DB_PATH, help="SQLite application database.")
+    antat.add_argument("--resume", action="store_true", help="Continue existing Antat reference rows.")
+    antat.add_argument("--force", action="store_true", help="Replace existing Antat reference tables.")
+
     args = parser.parse_args(argv)
     if args.command == "annotate":
         return _annotate(args)
     if args.command == "annotation-export":
         return _annotation_export(args)
+    if args.command == "download-antat-reference":
+        return _download_antat_reference(args)
     raise AssertionError(args.command)
 
 
@@ -139,6 +156,35 @@ def _annotation_export(args: argparse.Namespace) -> int:
     print(
         "annotation export complete: "
         f"exported={len(result.tasks)} output={args.output} report={report_path}"
+    )
+    return 0
+
+
+def _download_antat_reference(args: argparse.Namespace) -> int:
+    if args.resume and args.force:
+        raise SystemExit("--resume and --force cannot be used together")
+    try:
+        with RichCliProgress() as progress:
+            summary = download_antat_reference(
+                args.db,
+                resume=args.resume,
+                force=args.force,
+                progress=progress,
+                log=print,
+            )
+    except (OSError, ValueError, RuntimeError, sqlite3.Error) as exc:
+        print(f"Antat reference download failed: {exc}")
+        return 1
+
+    print(
+        "Antat reference download complete: "
+        f"output={summary.output_path} "
+        f"listing_rows={summary.listing_rows} "
+        f"entry_pages={summary.entry_pages} "
+        f"skipped_entry_pages={summary.skipped_entry_pages} "
+        f"aligned={summary.aligned_rows} "
+        f"mismatches={summary.mismatch_rows} "
+        f"missing_side={summary.missing_side_rows}"
     )
     return 0
 
