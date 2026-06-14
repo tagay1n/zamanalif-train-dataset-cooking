@@ -384,8 +384,12 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
     if char == "к":
         return "k" if harmony == "front_only" else "q" if harmony == "back_only" else ""
     if char == "у":
-        return "w" if word.endswith(("ау", "әу")) else "u"
+        if index > 0 and word[index - 1] in {"а", "ә"}:
+            return "w"
+        return "u"
     if char == "ү":
+        if index > 0 and word[index - 1] in {"а", "ә"}:
+            return "w"
         return "ü"
     if char == "я":
         if index > 0 and word[index - 1] == "и":

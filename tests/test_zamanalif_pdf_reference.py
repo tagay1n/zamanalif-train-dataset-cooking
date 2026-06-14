@@ -451,7 +451,7 @@ PDF_GENERATED_WORD_CASES = [
     ('бозылырга', 'bozılırğa', 'N'),
     ('брак', 'brak', 'N'),
     ('брацк', 'bratsk', 'RL'),
-    ('браун', 'braun', 'N'),
+    ('браун', 'braun', 'RL'),
     ('буарга', 'buarğa', 'N'),
     ('була', 'bula', 'N'),
     ('буларак', 'bularaq', 'N'),
