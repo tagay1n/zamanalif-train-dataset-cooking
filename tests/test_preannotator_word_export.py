@@ -222,6 +222,15 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("бөек", "N"), "böyek")
         self.assertEqual(convert_for_annotation("төен-төйнә", "N"), "töyen-töynä")
 
+    def test_surname_v_endings_are_converted_as_v(self) -> None:
+        self.assertEqual(convert_for_annotation("мәһдиев", "N"), "mähdiev")
+        self.assertEqual(convert_for_annotation("әлмиев", "N"), "älmiev")
+        self.assertEqual(convert_for_annotation("әлмиевкә", "N"), "älmievkä")
+        self.assertEqual(convert_for_annotation("вәлиев", "RL"), "wäliev")
+        self.assertEqual(convert_for_annotation("вәлиева", "RL"), "wälieva")
+        self.assertEqual(convert_for_annotation("вакыт", "N"), "waqıt")
+        self.assertEqual(convert_for_annotation("актив", "RL"), "aktiv")
+
     def test_native_k_g_use_local_vowel_context(self) -> None:
         self.assertEqual(convert_for_annotation("китап", "N"), "kitap")
         self.assertEqual(convert_for_annotation("мәктәп", "N"), "mäktäp")

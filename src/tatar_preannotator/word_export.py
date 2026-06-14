@@ -345,7 +345,12 @@ def _convert_known_label(word: str, label: str) -> str:
     index = 0
     while index < len(word):
         char = word[index]
-        if char == "ц" and index + 1 < len(word) and word[index + 1] == "ц":
+        surname_conversion = _surname_sequence_conversion(word, index)
+        if surname_conversion is not None:
+            latin, consumed = surname_conversion
+            converted.append(latin)
+            index += consumed - 1
+        elif char == "ц" and index + 1 < len(word) and word[index + 1] == "ц":
             while index + 1 < len(word) and word[index + 1] == "ц":
                 index += 1
             converted.append("ts")
@@ -353,6 +358,18 @@ def _convert_known_label(word: str, label: str) -> str:
             converted.append(_char_conversion(char, word, index, label))
         index += 1
     return "".join(converted)
+
+
+def _surname_sequence_conversion(word: str, index: int) -> tuple[str, int] | None:
+    for cyrillic, latin in (
+        ("иева", "ieva"),
+        ("әева", "äyeva"),
+        ("иев", "iev"),
+        ("әев", "äyev"),
+    ):
+        if word.startswith(cyrillic, index):
+            return latin, len(cyrillic)
+    return None
 
 
 def _conditional_char_conversion(char: str, word: str, index: int, label: str) -> str:
@@ -368,6 +385,8 @@ def _conditional_char_conversion(char: str, word: str, index: int, label: str) -
 def _loanword_conditional_char(char: str, word: str, index: int) -> str:
     if char == "е":
         return _e_conversion(word, index, "RL")
+    if char == "в" and index == 0 and word.startswith("вәлиев"):
+        return "w"
     return {
         "в": "v",
         "г": "g",
