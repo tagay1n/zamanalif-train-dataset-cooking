@@ -327,6 +327,8 @@ def _origin_prediction(label: str) -> str:
 
 
 def _char_conversion(char: str, word: str, index: int, label: str) -> str:
+    if char == "-":
+        return "-"
     if char in CONDITIONAL_LETTERS:
         return _conditional_char_conversion(char, word, index, label)
     if label == "RL" and char == "ы":
