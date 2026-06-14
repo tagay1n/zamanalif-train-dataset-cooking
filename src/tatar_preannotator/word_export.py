@@ -332,7 +332,7 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
     if char in CONDITIONAL_LETTERS:
         return _conditional_char_conversion(char, word, index, label)
     if label == "RL" and char == "ы":
-        return "ıy"
+        return _loanword_y_conversion(word)
     if label == "RL" and char in {"ь", "ъ"}:
         if index + 1 < len(word) and word[index + 1] == "е":
             return ""
@@ -341,10 +341,17 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
 
 
 def _convert_known_label(word: str, label: str) -> str:
+    month_conversion = _month_name_conversion(word)
+    if month_conversion is not None:
+        return month_conversion
+
     converted: list[str] = []
     index = 0
     while index < len(word):
         char = word[index]
+        if char in {"ь", "ъ"} and index + 1 < len(word) and word[index + 1] == "я":
+            index += 1
+            continue
         surname_conversion = _surname_sequence_conversion(word, index)
         if surname_conversion is not None:
             latin, consumed = surname_conversion
@@ -360,6 +367,38 @@ def _convert_known_label(word: str, label: str) -> str:
     return "".join(converted)
 
 
+def _month_name_conversion(word: str) -> str | None:
+    for cyrillic, latin in (
+        ("гыйнвар", "ğinwar"),
+        ("февраль", "fevral"),
+        ("июнь", "iyün"),
+        ("июль", "iyül"),
+        ("сентябрь", "sentäbr"),
+        ("сентябр", "sentäbr"),
+        ("октябрь", "oktäbr"),
+        ("октябр", "oktäbr"),
+        ("ноябрь", "noyäbr"),
+        ("ноябр", "noyäbr"),
+        ("декабрь", "dekäbr"),
+        ("декабр", "dekäbr"),
+    ):
+        if word.startswith(cyrillic):
+            return latin + _month_suffix_conversion(word[len(cyrillic) :])
+    return None
+
+
+def _month_suffix_conversion(suffix: str) -> str:
+    if not suffix:
+        return ""
+    converted: list[str] = []
+    for index, char in enumerate(suffix):
+        if index == 0 and char == "е":
+            converted.append("e")
+        else:
+            converted.append(_char_conversion(char, suffix, index, "N"))
+    return "".join(converted)
+
+
 def _surname_sequence_conversion(word: str, index: int) -> tuple[str, int] | None:
     for cyrillic, latin in (
         ("иева", "ieva"),
@@ -370,6 +409,12 @@ def _surname_sequence_conversion(word: str, index: int) -> tuple[str, int] | Non
         if word.startswith(cyrillic, index):
             return latin, len(cyrillic)
     return None
+
+
+def _loanword_y_conversion(word: str) -> str:
+    if word.startswith(("музы", "посыл", "выш", "сыр")):
+        return "ıy"
+    return "ı"
 
 
 def _conditional_char_conversion(char: str, word: str, index: int, label: str) -> str:
@@ -387,11 +432,12 @@ def _loanword_conditional_char(char: str, word: str, index: int) -> str:
         return _e_conversion(word, index, "RL")
     if char == "в" and index == 0 and word.startswith("вәлиев"):
         return "w"
+    if char == "я":
+        return _ya_conversion(word, index, "RL")
     return {
         "в": "v",
         "г": "g",
         "к": "k",
-        "я": "ya",
         "ю": "yu",
         "у": "u",
         "ү": "ü",
@@ -426,11 +472,7 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
             return "w"
         return "ü"
     if char == "я":
-        if index > 0 and word[index - 1] == "и":
-            return "ä" if harmony == "front_only" else "a" if harmony == "back_only" else ""
-        if harmony == "no_vowels":
-            return "ya"
-        return "yä" if harmony == "front_only" else "ya" if harmony == "back_only" else ""
+        return _ya_conversion(word, index, "N")
     if char == "ю":
         if index > 0 and word[index - 1] == "и":
             return "iü"
@@ -448,6 +490,31 @@ def _ts_conversion(word: str, index: int) -> str:
     if index > 0 and word[index - 1] in FRONT_VOWELS | BACK_VOWELS:
         return "ts"
     return "s"
+
+
+def _ya_conversion(word: str, index: int, label: str) -> str:
+    previous = word[index - 1] if index > 0 else ""
+    if previous == "и":
+        return "ä"
+    if previous in {"ь", "ъ"}:
+        return "ya"
+    if label == "RL" and index > 0:
+        return "ya"
+
+    context = _local_vowel_context(word, index)
+    if context == "front":
+        return "yä"
+    if context == "back":
+        return "ya"
+
+    harmony = _vowel_harmony_without_index(word, index)
+    if harmony == "front_only":
+        return "yä"
+    if harmony == "back_only":
+        return "ya"
+    if harmony == "no_vowels":
+        return "yä"
+    return ""
 
 
 def _e_conversion(word: str, index: int, label: str) -> str:

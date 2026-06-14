@@ -1205,7 +1205,10 @@ PDF_GENERATED_WORD_CASES = [
     ('ничек', 'niçek', 'N'),
     ('нигмәтуллин', 'niğmätullin', 'N'),
     ('нокта', 'noqta', 'N'),
-    ('норматив-хокукый', 'normativ-xoquqıy', 'RL'),
+    ('норматив', 'normativ', 'RL'),
+    ('хокукый', 'xoquqıy', 'N'),
+    ('канат', 'kanat', ' RL'),
+    ('канат', 'qanat', 'N'),
     ('ноя', 'noyä', 'N'),
     ('ноябрь', 'noyäbr', 'N'),
     ('нури', 'nuri', 'N'),
@@ -2221,7 +2224,7 @@ PDF_GENERATED_WORD_CASES = [
     ('әбҗәлилев', 'äbcälilev', 'RL'),
     ('әбелхарис', 'äbelxaris', 'N'),
     ('әдәби', 'ädäbi', 'N'),
-    ('әдәбият', 'ädäbiyat', 'N'),
+    ('әдәбият', 'ädäbiät', 'N'),
     ('әгәр', 'ägär', 'N'),
     ('әкият', 'äkiät', 'N'),
     ('әкиятләрдә', 'äkiätlärdä', 'N'),
@@ -2495,7 +2498,7 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
             ("борщ", "RL", "borşç"),
             ("цинк", "RL", "sink"),
             ("кварц", "RL", "kvars"),
-            ("позиция", "RL", "pozitsiya"),
+            ("позиция", "RL", "pozitsiä"),
         ]
 
         self.assert_conversions(cases)
@@ -2573,7 +2576,7 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
                 ("интермеццо", "RL", "intermetso"),
                 ("папарацци", "RL", "paparatsi"),
                 ("лаццарони", "RL", "latsaroni"),
-                ("пиццерия", "RL", "pitseriya"),
+                ("пиццерия", "RL", "pitseriä"),
             ]
         )
 

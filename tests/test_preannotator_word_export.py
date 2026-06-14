@@ -103,7 +103,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ],
         )
         self.assertEqual(result.tasks[0]["data"]["auto_zamanalif"], "waqıtında")
-        self.assertEqual(result.tasks[2]["data"]["auto_zamanalif"], "pozitsiya")
+        self.assertEqual(result.tasks[2]["data"]["auto_zamanalif"], "pozitsiä")
         self.assertEqual(result.tasks[3]["data"]["auto_zamanalif"], "proekt")
         self.assertEqual(result.tasks[7]["data"]["auto_zamanalif"], "yaña")
         self.assertEqual(result.report["mixed_harmony_n_word_skipped_count"], 1)
@@ -197,6 +197,30 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("проект", "RL"), "proekt")
         self.assertEqual(convert_for_annotation("яңа", "N"), "yaña")
 
+    def test_ya_conversion_context_rules(self) -> None:
+        self.assertEqual(convert_for_annotation("әдәбият", "N"), "ädäbiät")
+        self.assertEqual(convert_for_annotation("позиция", "RL"), "pozitsiä")
+        self.assertEqual(convert_for_annotation("фамилия", "N"), "familiä")
+        self.assertEqual(convert_for_annotation("яңалиф", "N"), "yañalif")
+        self.assertEqual(convert_for_annotation("яшь", "N"), "yäş")
+        self.assertEqual(convert_for_annotation("яки", "RL"), "yäki")
+        self.assertEqual(convert_for_annotation("дөнья", "N"), "dönya")
+        self.assertEqual(convert_for_annotation("көньяк", "N"), "könyaq")
+        self.assertEqual(convert_for_annotation("һәръяклап", "N"), "häryaqlap")
+        self.assertEqual(convert_for_annotation("ладья", "RL"), "ladya")
+
+    def test_month_names_follow_pdf_reference_spellings(self) -> None:
+        self.assertEqual(convert_for_annotation("гыйнвар", "N"), "ğinwar")
+        self.assertEqual(convert_for_annotation("февраль", "RL"), "fevral")
+        self.assertEqual(convert_for_annotation("июнь", "N"), "iyün")
+        self.assertEqual(convert_for_annotation("июль", "N"), "iyül")
+        self.assertEqual(convert_for_annotation("октябрь", "RL"), "oktäbr")
+        self.assertEqual(convert_for_annotation("октябрендә", "RL"), "oktäbrendä")
+        self.assertEqual(convert_for_annotation("сентябрь", "RL"), "sentäbr")
+        self.assertEqual(convert_for_annotation("сентябреннән", "RL"), "sentäbrennän")
+        self.assertEqual(convert_for_annotation("ноябрь", "N"), "noyäbr")
+        self.assertEqual(convert_for_annotation("декабрь", "N"), "dekäbr")
+
     def test_e_conversion_uses_pdf_context_rules(self) -> None:
         self.assertEqual(convert_for_annotation("электр", "RL"), "elektr")
         self.assertEqual(convert_for_annotation("телефон", "RL"), "telefon")
@@ -230,6 +254,16 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("вәлиева", "RL"), "wälieva")
         self.assertEqual(convert_for_annotation("вакыт", "N"), "waqıt")
         self.assertEqual(convert_for_annotation("актив", "RL"), "aktiv")
+
+    def test_loanword_yerı_uses_short_i_by_default(self) -> None:
+        self.assertEqual(convert_for_annotation("алфавиты", "RL"), "alfavitı")
+        self.assertEqual(convert_for_annotation("классы", "RL"), "klassı")
+        self.assertEqual(convert_for_annotation("руханый", "RL"), "ruxanıy")
+        self.assertEqual(convert_for_annotation("сыйр", "RL"), "sıyr")
+        self.assertEqual(convert_for_annotation("сыр", "RL"), "sıyr")
+        self.assertEqual(convert_for_annotation("музыка", "RL"), "muzıyka")
+        self.assertEqual(convert_for_annotation("посылка", "RL"), "posıylka")
+        self.assertEqual(convert_for_annotation("вышка", "RL"), "vıyşka")
 
     def test_native_k_g_use_local_vowel_context(self) -> None:
         self.assertEqual(convert_for_annotation("китап", "N"), "kitap")
