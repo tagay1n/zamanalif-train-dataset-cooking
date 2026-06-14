@@ -210,6 +210,18 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("килүе", "N"), "kilüe")
         self.assertEqual(convert_for_annotation("пьеса", "N"), "pyesa")
 
+    def test_native_vowel_before_e_uses_y_glide_vowel_harmony(self) -> None:
+        self.assertEqual(convert_for_annotation("аерым", "N"), "ayırım")
+        self.assertEqual(convert_for_annotation("оешма", "N"), "oyışma")
+        self.assertEqual(convert_for_annotation("куеп", "N"), "quyıp")
+        self.assertEqual(convert_for_annotation("буенча", "N"), "buyınça")
+        self.assertEqual(convert_for_annotation("кыен", "N"), "qıyın")
+        self.assertEqual(convert_for_annotation("сыеп", "N"), "sıyıp")
+        self.assertEqual(convert_for_annotation("җыенам", "N"), "cıyınam")
+        self.assertEqual(convert_for_annotation("гәет", "N"), "gäyet")
+        self.assertEqual(convert_for_annotation("бөек", "N"), "böyek")
+        self.assertEqual(convert_for_annotation("төен-төйнә", "N"), "töyen-töynä")
+
     def test_native_k_g_use_local_vowel_context(self) -> None:
         self.assertEqual(convert_for_annotation("китап", "N"), "kitap")
         self.assertEqual(convert_for_annotation("мәктәп", "N"), "mäktäp")

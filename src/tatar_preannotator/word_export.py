@@ -445,7 +445,20 @@ def _e_conversion(word: str, index: int, label: str) -> str:
         return "e"
     if index == 0:
         return _initial_e_conversion(word, index)
+    if previous in FRONT_VOWELS | BACK_VOWELS:
+        return _native_vowel_e_conversion(previous)
     return "e"
+
+
+def _native_vowel_e_conversion(previous: str) -> str:
+    return {
+        "а": "yı",
+        "о": "yı",
+        "у": "yı",
+        "ы": "yı",
+        "ә": "ye",
+        "ө": "ye",
+    }.get(previous, "e")
 
 
 def _initial_e_conversion(word: str, index: int) -> str:
