@@ -291,6 +291,23 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("килгән", "N"), "kilğän")
         self.assertEqual(convert_for_annotation("елга", "N"), "yılğa")
 
+    def test_reviewed_q_words_override_context_rules(self) -> None:
+        self.assertEqual(convert_for_annotation("принципка", "RL"), "prinsipqa")
+        self.assertEqual(convert_for_annotation("объектка", "RL"), "obyektqa")
+        self.assertEqual(convert_for_annotation("беркая", "N"), "berqaya")
+        self.assertEqual(convert_for_annotation("кәдер", "N"), "qäder")
+        self.assertEqual(convert_for_annotation("салихка", "N"), "salixqa")
+        self.assertEqual(convert_for_annotation("закончалыклар", "RL"), "zakonçalıqlar")
+
+    def test_reviewed_k_words_override_context_rules(self) -> None:
+        self.assertEqual(convert_for_annotation("башка", "N"), "başka")
+        self.assertEqual(convert_for_annotation("башкисәр", "N"), "başkisär")
+        self.assertEqual(convert_for_annotation("ияк", "N"), "iäk")
+        self.assertEqual(convert_for_annotation("камали", "N"), "kamali")
+        self.assertEqual(convert_for_annotation("карават", "N"), "karawat")
+        self.assertEqual(convert_for_annotation("каз", "N"), "kaz")
+        self.assertEqual(convert_for_annotation("дөньякүләм", "N"), "dönyaküläm")
+
     def test_conditional_letter_hints_do_not_include_origin_reason(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(

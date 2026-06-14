@@ -47,6 +47,58 @@ REVIEWED_GH_SEQUENCES = (
     ("килгәндә", "гән"),
     ("сингармонизмга", "га"),
 )
+REVIEWED_Q_WORDS = frozenset(
+    {
+        "берникәдәр",
+        "беркатлы",
+        "беркая",
+        "беркайчан",
+        "һичкайда",
+        "һәркайсында",
+        "икътисади",
+        "мәкәләмдә",
+        "мәхкүл",
+        "кдпуда",
+        "кәбәхәтлеге",
+        "кәдер",
+        "кәдими",
+        "кәдәр",
+        "көдрәт",
+        "күәт",
+        "рак",
+        "тәкъдим",
+        "тәшрик",
+        "халикны",
+        "өскорма",
+    }
+)
+REVIEWED_Q_SEQUENCES = (
+    ("алфавитка", "ка"),
+    ("интернетка", "ка"),
+    ("объектка", "ка"),
+    ("принципка", "ка"),
+    ("кубка", "ка"),
+    ("салихка", "ка"),
+    ("тарихка", "ка"),
+    ("ёлку", "ку"),
+    ("закончалыклар", "клар"),
+    ("закончалыклары", "клары"),
+)
+REVIEWED_K_WORDS = frozenset(
+    {
+        "башка",
+        "башкисәр",
+        "башкисәрләрне",
+        "дөньякүләм",
+        "ияк",
+        "камали",
+        "камилләштерүгә",
+        "камзул",
+        "карават",
+        "каз",
+        "ком",
+    }
+)
 
 
 @dataclass
@@ -461,11 +513,12 @@ def _loanword_conditional_char(char: str, word: str, index: int) -> str:
         return "w"
     if char == "г":
         return _reviewed_gh_conversion(word, index) or "g"
+    if char == "к":
+        return _reviewed_k_conversion(word, index) or "k"
     if char == "я":
         return _ya_conversion(word, index, "RL")
     return {
         "в": "v",
-        "к": "k",
         "ю": "yu",
         "у": "u",
         "ү": "ü",
@@ -488,6 +541,9 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
             return "ğ"
         return "g" if harmony == "front_only" else "ğ" if harmony == "back_only" else ""
     if char == "к":
+        reviewed = _reviewed_k_conversion(word, index)
+        if reviewed:
+            return reviewed
         context = _local_vowel_context(word, index)
         if context == "front":
             return "k"
@@ -529,6 +585,17 @@ def _reviewed_gh_conversion(word: str, index: int) -> str:
     for cyrillic, sequence in REVIEWED_GH_SEQUENCES:
         if word == cyrillic and word.rfind(sequence) == index:
             return "ğ"
+    return ""
+
+
+def _reviewed_k_conversion(word: str, index: int) -> str:
+    if word in REVIEWED_Q_WORDS:
+        return "q"
+    for cyrillic, sequence in REVIEWED_Q_SEQUENCES:
+        if word == cyrillic and word.rfind(sequence) == index:
+            return "q"
+    if word in REVIEWED_K_WORDS:
+        return "k"
     return ""
 
 

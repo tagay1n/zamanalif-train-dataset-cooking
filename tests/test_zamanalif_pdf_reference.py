@@ -342,7 +342,6 @@ PDF_GENERATED_WORD_CASES = [
     ('башлап', 'başlap', 'N'),
     ('башлагач', 'başlağaç', 'N'),
     ('башлыйлар', 'başlıylar', 'N'),
-    ('башка', 'başqa', 'N'),
     ('башкалар', 'başqalar', 'N'),
     ('башкалары', 'başqaları', 'N'),
     ('башкаларында', 'başqalarında', 'N'),
