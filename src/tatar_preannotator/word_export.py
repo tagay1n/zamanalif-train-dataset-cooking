@@ -334,6 +334,8 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
     if label == "RL" and char == "ы":
         return "ıy"
     if label == "RL" and char in {"ь", "ъ"}:
+        if index + 1 < len(word) and word[index + 1] == "е":
+            return ""
         return "'"
     return _deterministic_char(char)
 
@@ -364,13 +366,14 @@ def _conditional_char_conversion(char: str, word: str, index: int, label: str) -
 
 
 def _loanword_conditional_char(char: str, word: str, index: int) -> str:
+    if char == "е":
+        return _e_conversion(word, index, "RL")
     return {
         "в": "v",
         "г": "g",
         "к": "k",
         "я": "ya",
         "ю": "yu",
-        "е": "ye",
         "у": "u",
         "ү": "ü",
         "ц": _ts_conversion(word, index),
@@ -416,9 +419,7 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
             return "yu"
         return "yü" if harmony == "front_only" else "yu" if harmony == "back_only" else ""
     if char == "е":
-        if index > 0:
-            return "e"
-        return "ye" if harmony == "front_only" else "yı" if harmony == "back_only" else ""
+        return _e_conversion(word, index, "N")
     if char == "ц":
         return _ts_conversion(word, index)
     return ""
@@ -428,6 +429,46 @@ def _ts_conversion(word: str, index: int) -> str:
     if index > 0 and word[index - 1] in FRONT_VOWELS | BACK_VOWELS:
         return "ts"
     return "s"
+
+
+def _e_conversion(word: str, index: int, label: str) -> str:
+    previous = word[index - 1] if index > 0 else ""
+    if previous in {"и", "ү"}:
+        return "e"
+    if previous in {"ь", "ъ"}:
+        return "ye"
+    if label == "RL":
+        if index == 0:
+            return _initial_e_conversion(word, index)
+        if previous == "ә" and index + 1 < len(word) and word[index + 1] == "в":
+            return "ye"
+        return "e"
+    if index == 0:
+        return _initial_e_conversion(word, index)
+    return "e"
+
+
+def _initial_e_conversion(word: str, index: int) -> str:
+    harmony = _vowel_harmony_without_index(word, index)
+    if harmony == "front_only":
+        return "ye"
+    if harmony in {"back_only", "no_vowels"}:
+        return "yı"
+    return ""
+
+
+def _vowel_harmony_without_index(word: str, index: int) -> str:
+    front_vowels = FRONT_VOWELS | {"э"}
+    back_vowels = BACK_VOWELS
+    has_front = any(i != index and char in front_vowels for i, char in enumerate(word))
+    has_back = any(i != index and char in back_vowels for i, char in enumerate(word))
+    if has_front and has_back:
+        return "mixed_front_back"
+    if has_front:
+        return "front_only"
+    if has_back:
+        return "back_only"
+    return "no_vowels"
 
 
 def _local_vowel_context(word: str, index: int) -> str:
