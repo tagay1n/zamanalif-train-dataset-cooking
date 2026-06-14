@@ -237,9 +237,7 @@ def convert_for_annotation(word: str, label: str) -> str:
     if label not in {"N", "RL"}:
         converted = _best_effort_unknown(word)
     else:
-        converted = "".join(
-            _char_conversion(char, word, index, label) for index, char in enumerate(word)
-        )
+        converted = _convert_known_label(word, label)
     return converted if _is_clean_zamanalif(converted) else ""
 
 
@@ -336,6 +334,21 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
     if label == "RL" and char in {"ь", "ъ"}:
         return "'"
     return _deterministic_char(char)
+
+
+def _convert_known_label(word: str, label: str) -> str:
+    converted: list[str] = []
+    index = 0
+    while index < len(word):
+        char = word[index]
+        if char == "ц" and index + 1 < len(word) and word[index + 1] == "ц":
+            while index + 1 < len(word) and word[index + 1] == "ц":
+                index += 1
+            converted.append("ts")
+        else:
+            converted.append(_char_conversion(char, word, index, label))
+        index += 1
+    return "".join(converted)
 
 
 def _conditional_char_conversion(char: str, word: str, index: int, label: str) -> str:

@@ -2552,14 +2552,12 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
             with self.subTest(zamanalif=zamanalif):
                 self.assertEqual(reverse_zamanalif_for_review(zamanalif), cyrillic)
 
-    @unittest.skip("Generated PDF word pairs are for manual review before enforcing.")
     def test_generated_pdf_word_cases_for_manual_review(self) -> None:
         self.assertGreater(len(PDF_GENERATED_WORD_CASES), 2000)
         self.assert_conversions(
             [(cyrillic, label, zamanalif) for cyrillic, zamanalif, label in PDF_GENERATED_WORD_CASES]
         )
 
-    @unittest.skip("TODO: PDF says Russian-loan е can be plain e in these words.")
     def test_todo_russian_loanword_e_from_pdf(self) -> None:
         self.assert_conversions(
             [
@@ -2569,15 +2567,23 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
             ]
         )
 
-    @unittest.skip("TODO: current per-letter ц rule overproduces ts in пицца.")
     def test_todo_pizza_ts_is_written_once(self) -> None:
-        self.assert_conversions([("пицца", "RL", "pitsa")])
+        self.assert_conversions(
+            [
+                ("пицца", "RL", "pitsa"),
+                ("моццарелла", "RL", "motsarella"),
+                ("палаццо", "RL", "palatso"),
+                ("меццо", "RL", "metso"),
+                ("интермеццо", "RL", "intermetso"),
+                ("папарацци", "RL", "paparatsi"),
+                ("лаццарони", "RL", "latsaroni"),
+                ("пиццерия", "RL", "pitseriya"),
+            ]
+        )
 
-    @unittest.skip("TODO: final -әү verbal-noun pattern needs a narrower w rule.")
     def test_todo_final_aw_aw_umlaut_verbal_noun(self) -> None:
         self.assert_conversions([("сөйләү", "N", "söyläw")])
 
-    @unittest.skip("TODO: k/q dictionary decisions should not be tested as deterministic yet.")
     def test_todo_native_k_dictionary_review_examples(self) -> None:
         self.assert_conversions([("китап", "N", "kitap")])
 
