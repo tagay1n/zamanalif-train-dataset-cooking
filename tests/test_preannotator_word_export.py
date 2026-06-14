@@ -273,6 +273,24 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("гасыр", "N"), "ğasır")
         self.assertEqual(convert_for_annotation("гөл", "N"), "göl")
 
+    def test_loanword_g_stems_use_plain_g(self) -> None:
+        self.assertEqual(convert_for_annotation("гараж", "RL"), "garaj")
+        self.assertEqual(convert_for_annotation("газет", "RL"), "gazet")
+        self.assertEqual(convert_for_annotation("график", "RL"), "grafik")
+        self.assertEqual(convert_for_annotation("дифтонг", "RL"), "diftong")
+        self.assertEqual(convert_for_annotation("джунгли", "RL"), "djungli")
+        self.assertEqual(convert_for_annotation("географик", "RL"), "geografik")
+
+    def test_suffix_g_uses_gh_for_native_and_inflected_loanwords(self) -> None:
+        self.assertEqual(convert_for_annotation("законга", "RL"), "zakonğa")
+        self.assertEqual(convert_for_annotation("принципларга", "RL"), "prinsiplarğa")
+        self.assertEqual(convert_for_annotation("аббревиатурадагы", "RL"), "abbreviaturadağı")
+        self.assertEqual(convert_for_annotation("әсәрләрдәге", "N"), "äsärlärdäğe")
+        self.assertEqual(convert_for_annotation("куелган", "N"), "quyılğan")
+        self.assertEqual(convert_for_annotation("белдергән", "N"), "belderğän")
+        self.assertEqual(convert_for_annotation("килгән", "N"), "kilğän")
+        self.assertEqual(convert_for_annotation("елга", "N"), "yılğa")
+
     def test_conditional_letter_hints_do_not_include_origin_reason(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(

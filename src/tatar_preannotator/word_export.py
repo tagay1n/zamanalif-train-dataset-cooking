@@ -20,6 +20,33 @@ ALLOWED_ZAMANALIF = frozenset(
     "äÄöÖüÜñÑıİğĞşŞçÇ"
     "-—'’"
 )
+REVIEWED_GH_WORDS = frozenset(
+    {
+        "аббревиатурадагы",
+        "бгә",
+        "елга",
+        "законга",
+        "закондагы",
+        "йолдызлыгы",
+        "киловатт-сәгәт",
+        "кириллицадагы",
+        "куелган",
+        "латиницадагы",
+        "принципларга",
+        "томски-томскига",
+        "цифрларга",
+        "әсәрләрдәге",
+    }
+)
+REVIEWED_GH_SEQUENCES = (
+    ("агентлыгы", "гы"),
+    ("белдергән", "гән"),
+    ("белдергәндә", "гән"),
+    ("белдергәнгә", "гән"),
+    ("килгән", "гән"),
+    ("килгәндә", "гән"),
+    ("сингармонизмга", "га"),
+)
 
 
 @dataclass
@@ -432,11 +459,12 @@ def _loanword_conditional_char(char: str, word: str, index: int) -> str:
         return _e_conversion(word, index, "RL")
     if char == "в" and index == 0 and word.startswith("вәлиев"):
         return "w"
+    if char == "г":
+        return _reviewed_gh_conversion(word, index) or "g"
     if char == "я":
         return _ya_conversion(word, index, "RL")
     return {
         "в": "v",
-        "г": "g",
         "к": "k",
         "ю": "yu",
         "у": "u",
@@ -450,6 +478,9 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
     if char == "в":
         return "w"
     if char == "г":
+        suffix = _reviewed_gh_conversion(word, index)
+        if suffix:
+            return suffix
         context = _local_vowel_context(word, index)
         if context == "front":
             return "g"
@@ -490,6 +521,15 @@ def _ts_conversion(word: str, index: int) -> str:
     if index > 0 and word[index - 1] in FRONT_VOWELS | BACK_VOWELS:
         return "ts"
     return "s"
+
+
+def _reviewed_gh_conversion(word: str, index: int) -> str:
+    if word in REVIEWED_GH_WORDS:
+        return "ğ"
+    for cyrillic, sequence in REVIEWED_GH_SEQUENCES:
+        if word == cyrillic and word.rfind(sequence) == index:
+            return "ğ"
+    return ""
 
 
 def _ya_conversion(word: str, index: int, label: str) -> str:
