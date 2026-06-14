@@ -382,8 +382,18 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
     if char == "в":
         return "w"
     if char == "г":
+        context = _local_vowel_context(word, index)
+        if context == "front":
+            return "g"
+        if context == "back":
+            return "ğ"
         return "g" if harmony == "front_only" else "ğ" if harmony == "back_only" else ""
     if char == "к":
+        context = _local_vowel_context(word, index)
+        if context == "front":
+            return "k"
+        if context == "back":
+            return "q"
         return "k" if harmony == "front_only" else "q" if harmony == "back_only" else ""
     if char == "у":
         if index > 0 and word[index - 1] in {"а", "ә"}:
@@ -418,6 +428,26 @@ def _ts_conversion(word: str, index: int) -> str:
     if index > 0 and word[index - 1] in FRONT_VOWELS | BACK_VOWELS:
         return "ts"
     return "s"
+
+
+def _local_vowel_context(word: str, index: int) -> str:
+    local_front_vowels = FRONT_VOWELS | {"э"}
+    local_back_vowels = BACK_VOWELS | {"я"}
+    for char in reversed(word[:index]):
+        if char == "-":
+            break
+        if char in local_front_vowels:
+            return "front"
+        if char in local_back_vowels:
+            return "back"
+    for char in word[index + 1 :]:
+        if char == "-":
+            break
+        if char in local_front_vowels:
+            return "front"
+        if char in local_back_vowels:
+            return "back"
+    return ""
 
 
 def _deterministic_char(char: str) -> str:

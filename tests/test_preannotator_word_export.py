@@ -197,6 +197,14 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("проект", "RL"), "proyekt")
         self.assertEqual(convert_for_annotation("яңа", "N"), "yaña")
 
+    def test_native_k_g_use_local_vowel_context(self) -> None:
+        self.assertEqual(convert_for_annotation("китап", "N"), "kitap")
+        self.assertEqual(convert_for_annotation("мәктәп", "N"), "mäktäp")
+        self.assertEqual(convert_for_annotation("актүш", "N"), "aqtüş")
+        self.assertEqual(convert_for_annotation("бакыр", "N"), "baqır")
+        self.assertEqual(convert_for_annotation("гасыр", "N"), "ğasır")
+        self.assertEqual(convert_for_annotation("гөл", "N"), "göl")
+
     def test_conditional_letter_hints_do_not_include_origin_reason(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
