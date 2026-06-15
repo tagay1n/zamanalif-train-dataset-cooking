@@ -15,6 +15,7 @@ from tatar_preannotator.antat_sanity import (
     infer_antat_label,
 )
 from tatar_preannotator.antat_reference import ensure_schema
+from tatar_preannotator.antat_gold import build_antat_gold_cases
 
 
 CYRILLIC_HTML = """
@@ -114,6 +115,29 @@ class AntatSanityTests(unittest.TestCase):
                 "total": 3,
             },
         )
+
+    def test_build_antat_gold_cases_deduplicates_pairs_and_keeps_conflicts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = Path(tmpdir) / "zamanalif.sqlite"
+            _write_antat_fixture(
+                db_path,
+                cyrillic_html="""
+                <html><body><p><b>sample</b> <i>n</i>
+                канат, канат, канат, сүз</p></body></html>
+                """,
+                zamanalif_html="""
+                <html><body><p><b>sample</b> <i>n</i>
+                qanat, qanat, kanat, səz</p></body></html>
+                """,
+            )
+
+            result = build_antat_gold_cases(db_path)
+
+        self.assertEqual(
+            [(case.cyrillic_word, case.expected_zamanalif) for case in result.cases],
+            [("канат", "kanat"), ("канат", "qanat")],
+        )
+        self.assertEqual(result.skipped_non_zamanalif, 1)
 
     def test_downloaded_antat_pairs_are_covered_by_some_converter_branch(self) -> None:
         if os.environ.get("RUN_ANTAT_FULL_COVERAGE") != "1":
