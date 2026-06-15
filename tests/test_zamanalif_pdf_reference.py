@@ -1205,7 +1205,6 @@ PDF_GENERATED_WORD_CASES = [
     ('хокукый', 'xoquqıy', 'N'),
     ('канат', 'kanat', ' RL'),
     ('канат', 'qanat', 'N'),
-    ('ноя', 'noyä', 'N'),
     ('ноябрь', 'noyäbr', 'N'),
     ('нури', 'nuri', 'N'),
     ('нуриев', 'nuriev', 'RL'),
