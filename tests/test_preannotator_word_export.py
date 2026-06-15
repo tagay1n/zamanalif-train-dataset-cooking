@@ -308,6 +308,28 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("каз", "N"), "kaz")
         self.assertEqual(convert_for_annotation("дөньякүләм", "N"), "dönyaküläm")
 
+    def test_reviewed_apostrophe_and_sign_conversions(self) -> None:
+        self.assertEqual(convert_for_annotation("д'артаньян", "RL"), "d'artanyan")
+        self.assertEqual(convert_for_annotation("коръән", "N"), "qor'än")
+        self.assertEqual(convert_for_annotation("таэмин", "N"), "tä'min")
+        self.assertEqual(convert_for_annotation("тәэсир", "N"), "tä'sir")
+        self.assertEqual(convert_for_annotation("маэмай", "N"), "ma'may")
+        self.assertEqual(convert_for_annotation("мәсьәлә", "N"), "mäs'älä")
+        self.assertEqual(convert_for_annotation("мәсьүл", "N"), "mäs'ül")
+        self.assertEqual(convert_for_annotation("роль", "RL"), "rol'")
+        self.assertEqual(convert_for_annotation("культура", "RL"), "kul'tura")
+        self.assertEqual(convert_for_annotation("коньяк", "RL"), "kon'yak")
+        self.assertEqual(convert_for_annotation("секретарь", "RL"), "sekretar'")
+        self.assertEqual(convert_for_annotation("тальян", "RL"), "tal'yan")
+
+    def test_reviewed_silent_sign_conversions(self) -> None:
+        self.assertEqual(convert_for_annotation("автомобиль", "RL"), "avtomobil")
+        self.assertEqual(convert_for_annotation("компьютер", "RL"), "kompyuter")
+        self.assertEqual(convert_for_annotation("нью-йорк", "RL"), "nyu-york")
+        self.assertEqual(convert_for_annotation("кремль", "RL"), "kreml")
+        self.assertEqual(convert_for_annotation("медаль", "RL"), "medal")
+        self.assertEqual(convert_for_annotation("стиль", "RL"), "stil")
+
     def test_conditional_letter_hints_do_not_include_origin_reason(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(

@@ -99,6 +99,26 @@ REVIEWED_K_WORDS = frozenset(
         "ком",
     }
 )
+REVIEWED_SIGN_CONVERSIONS = {
+    "автомобиль": "avtomobil",
+    "д'артаньян": "d'artanyan",
+    "компьютер": "kompyuter",
+    "компьютерлар": "kompyuterlar",
+    "коньяк": "kon'yak",
+    "кремль": "kreml",
+    "маэмай": "ma'may",
+    "медаль": "medal",
+    "мәсьәлә": "mäs'älä",
+    "мәсьүл": "mäs'ül",
+    "нью-йорк": "nyu-york",
+    "коръән": "qor'än",
+    "статья": "stat'ya",
+    "стиль": "stil",
+    "тальян": "tal'yan",
+    "таэмин": "tä'min",
+    "тәэсир": "tä'sir",
+    "тәэсирендә": "tä'sirendä",
+}
 
 
 @dataclass
@@ -408,6 +428,8 @@ def _origin_prediction(label: str) -> str:
 def _char_conversion(char: str, word: str, index: int, label: str) -> str:
     if char == "-":
         return "-"
+    if char in {"'", "’"}:
+        return "'"
     if char in CONDITIONAL_LETTERS:
         return _conditional_char_conversion(char, word, index, label)
     if label == "RL" and char == "ы":
@@ -420,6 +442,9 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
 
 
 def _convert_known_label(word: str, label: str) -> str:
+    if word in REVIEWED_SIGN_CONVERSIONS:
+        return REVIEWED_SIGN_CONVERSIONS[word]
+
     month_conversion = _month_name_conversion(word)
     if month_conversion is not None:
         return month_conversion
