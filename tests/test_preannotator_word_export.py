@@ -330,6 +330,17 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("медаль", "RL"), "medal")
         self.assertEqual(convert_for_annotation("стиль", "RL"), "stil")
 
+    def test_reviewed_yu_conversions(self) -> None:
+        self.assertEqual(convert_for_annotation("берьюлы", "N"), "beryulı")
+        self.assertEqual(convert_for_annotation("июнендә", "RL"), "iyünendä")
+        self.assertEqual(convert_for_annotation("революция", "RL"), "revolyutsiä")
+        self.assertEqual(convert_for_annotation("революциясе", "RL"), "revolyutsiäse")
+        self.assertEqual(convert_for_annotation("тимерьюл", "N"), "timeryul")
+        self.assertEqual(convert_for_annotation("тию", "N"), "tiyü")
+        self.assertEqual(convert_for_annotation("юк", "N"), "yuq")
+        self.assertEqual(convert_for_annotation("юхиди", "N"), "yuxidi")
+        self.assertEqual(convert_for_annotation("ю", "N"), "yü")
+
     def test_conditional_letter_hints_do_not_include_origin_reason(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(

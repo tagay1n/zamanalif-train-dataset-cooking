@@ -119,6 +119,15 @@ REVIEWED_SIGN_CONVERSIONS = {
     "тәэсир": "tä'sir",
     "тәэсирендә": "tä'sirendä",
 }
+REVIEWED_YU_CONVERSIONS = {
+    "берьюлы": "beryulı",
+    "тимерьюл": "timeryul",
+    "революция": "revolyutsiä",
+    "революциясе": "revolyutsiäse",
+    "юк": "yuq",
+    "юхиди": "yuxidi",
+    "ю": "yü",
+}
 
 
 @dataclass
@@ -444,6 +453,8 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
 def _convert_known_label(word: str, label: str) -> str:
     if word in REVIEWED_SIGN_CONVERSIONS:
         return REVIEWED_SIGN_CONVERSIONS[word]
+    if word in REVIEWED_YU_CONVERSIONS:
+        return REVIEWED_YU_CONVERSIONS[word]
 
     month_conversion = _month_name_conversion(word)
     if month_conversion is not None:
@@ -475,6 +486,7 @@ def _month_name_conversion(word: str) -> str | None:
     for cyrillic, latin in (
         ("гыйнвар", "ğinwar"),
         ("февраль", "fevral"),
+        ("июн", "iyün"),
         ("июнь", "iyün"),
         ("июль", "iyül"),
         ("сентябрь", "sentäbr"),
@@ -587,7 +599,7 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
         return _ya_conversion(word, index, "N")
     if char == "ю":
         if index > 0 and word[index - 1] == "и":
-            return "iü"
+            return "yü"
         if harmony == "no_vowels":
             return "yu"
         return "yü" if harmony == "front_only" else "yu" if harmony == "back_only" else ""
