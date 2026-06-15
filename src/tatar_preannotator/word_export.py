@@ -38,6 +38,37 @@ REVIEWED_GH_WORDS = frozenset(
         "әсәрләрдәге",
     }
 )
+REVIEWED_GH_CONVERSIONS = {
+    "аергыч": "ayırğıç",
+    "җәмигъ": "cämiğ",
+    "эшләргә": "eşlärğä",
+    "игтибарлы": "iğtibarlı",
+    "ишетелгән": "işetelğän",
+    "кияргә": "kiärgä",
+    "мәгънә": "mäğnä",
+    "мәгънәгә": "mäğnägä",
+    "мәгънәле": "mäğnäle",
+    "мәгънәләре": "mäğnäläre",
+    "мәгънәсен": "mäğnäsen",
+    "мәгънәсендә": "mäğnäsendä",
+    "мәгънәви": "mäğnäwi",
+    "мәгәриф": "mäğärif",
+    "нигмәтуллин": "niğmätullin",
+    "нәгим": "näğim",
+    "сарсаз-баграж": "sarsaz-bagraj",
+    "сәмигулла": "sämiğulla",
+    "сәнгәт": "sänğät",
+    "сәгит": "säğit",
+    "табиги": "tabiği",
+    "гилемханов": "ğilemxanov",
+    "гилмиев": "ğilmiev",
+    "гәлимов": "ğälimov",
+    "гәрәпчә-татарча": "ğäräpçä-tatarça",
+    "гөмер": "ğömer",
+    "гөмуми": "ğömumi",
+    "гөмәр": "ğömär",
+    "шигъри": "şiğri",
+}
 REVIEWED_GH_SEQUENCES = (
     ("агентлыгы", "гы"),
     ("белдергән", "гән"),
@@ -451,6 +482,8 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
 
 
 def _convert_known_label(word: str, label: str) -> str:
+    if word in REVIEWED_GH_CONVERSIONS:
+        return REVIEWED_GH_CONVERSIONS[word]
     if word in REVIEWED_SIGN_CONVERSIONS:
         return REVIEWED_SIGN_CONVERSIONS[word]
     if word in REVIEWED_YU_CONVERSIONS:
