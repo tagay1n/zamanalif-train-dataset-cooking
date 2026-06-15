@@ -84,6 +84,12 @@ REVIEWED_Y_CONVERSIONS = {
     "гыйльми": "ğilmi",
     "шагыйрь": "şağir",
 }
+REVIEWED_U_CONVERSIONS = {
+    "мияубикә": "miyawbikä",
+    "мәгъсум": "mäğsüm",
+    "мәшгуль": "mäşğül",
+    "сорау": "soraw",
+}
 REVIEWED_GH_SEQUENCES = (
     ("агентлыгы", "гы"),
     ("белдергән", "гән"),
@@ -501,6 +507,8 @@ def _convert_known_label(word: str, label: str) -> str:
         return REVIEWED_GH_CONVERSIONS[word]
     if word in REVIEWED_Y_CONVERSIONS:
         return REVIEWED_Y_CONVERSIONS[word]
+    if word in REVIEWED_U_CONVERSIONS:
+        return REVIEWED_U_CONVERSIONS[word]
     if word in REVIEWED_SIGN_CONVERSIONS:
         return REVIEWED_SIGN_CONVERSIONS[word]
     if word in REVIEWED_YU_CONVERSIONS:

@@ -1603,7 +1603,7 @@ PDF_GENERATED_WORD_CASES = [
     ('сишәмбе', 'sişämbe', 'N'),
     ('смотр', 'smotr', 'N'),
     ('сорала', 'sorala', 'N'),
-    ('сорау', 'soraw', 'RL'),
+    ('сорау', 'soraw', 'N'),
     ('состав', 'sostav', 'RL'),
     ('советы', 'sovetı', 'RL'),
     ('соң', 'soñ', 'N'),

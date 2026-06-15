@@ -372,6 +372,12 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("гыйльми", "N"), "ğilmi")
         self.assertEqual(convert_for_annotation("шагыйрь", "N"), "şağir")
 
+    def test_reviewed_u_lexical_conversions(self) -> None:
+        self.assertEqual(convert_for_annotation("мияубикә", "N"), "miyawbikä")
+        self.assertEqual(convert_for_annotation("мәгъсум", "N"), "mäğsüm")
+        self.assertEqual(convert_for_annotation("мәшгуль", "N"), "mäşğül")
+        self.assertEqual(convert_for_annotation("сорау", "N"), "soraw")
+
     def test_conditional_letter_hints_do_not_include_origin_reason(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
