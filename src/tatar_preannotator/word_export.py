@@ -95,6 +95,13 @@ REVIEWED_YA_CONVERSIONS = {
     "ял": "yal",
     "яз": "yaz",
 }
+REVIEWED_E_CONVERSIONS = {
+    "бакырелан": "baqıryılan",
+    "беркадәр": "berqädär",
+    "фигыльләрнең": "fiğellärneñ",
+    "немецләрне": "nemeslärne",
+    "кәгазъләрендә": "qäğäzlärendä",
+}
 REVIEWED_GH_SEQUENCES = (
     ("агентлыгы", "гы"),
     ("белдергән", "гән"),
@@ -516,6 +523,8 @@ def _convert_known_label(word: str, label: str) -> str:
         return REVIEWED_U_CONVERSIONS[word]
     if word in REVIEWED_YA_CONVERSIONS:
         return REVIEWED_YA_CONVERSIONS[word]
+    if word in REVIEWED_E_CONVERSIONS:
+        return REVIEWED_E_CONVERSIONS[word]
     if word in REVIEWED_SIGN_CONVERSIONS:
         return REVIEWED_SIGN_CONVERSIONS[word]
     if word in REVIEWED_YU_CONVERSIONS:
@@ -676,6 +685,8 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
 
 
 def _ts_conversion(word: str, index: int) -> str:
+    if index == len(word) - 1:
+        return "s"
     if index > 0 and word[index - 1] in FRONT_VOWELS | BACK_VOWELS:
         return "ts"
     return "s"
@@ -736,6 +747,12 @@ def _e_conversion(word: str, index: int, label: str) -> str:
         if index == 0:
             return _initial_e_conversion(word, index)
         if previous == "ә" and index + 1 < len(word) and word[index + 1] == "в":
+            return "ye"
+        if previous == "у":
+            return "e"
+        if previous in BACK_VOWELS and index == len(word) - 1:
+            return "yı"
+        if previous in FRONT_VOWELS | BACK_VOWELS:
             return "ye"
         return "e"
     if index == 0:

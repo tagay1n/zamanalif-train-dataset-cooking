@@ -104,7 +104,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         )
         self.assertEqual(result.tasks[0]["data"]["auto_zamanalif"], "waqıtında")
         self.assertEqual(result.tasks[2]["data"]["auto_zamanalif"], "pozitsiä")
-        self.assertEqual(result.tasks[3]["data"]["auto_zamanalif"], "proekt")
+        self.assertEqual(result.tasks[3]["data"]["auto_zamanalif"], "proyekt")
         self.assertEqual(result.tasks[7]["data"]["auto_zamanalif"], "yaña")
         self.assertEqual(result.report["mixed_harmony_n_word_skipped_count"], 1)
         self.assertEqual(result.report["u_exported_word_count"], 1)
@@ -135,7 +135,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
 
         self.assertEqual([task["data"]["cyrl_word"] for task in result.tasks], ["банк", "проект"])
-        self.assertEqual(result.tasks[1]["data"]["auto_zamanalif"], "proekt")
+        self.assertEqual(result.tasks[1]["data"]["auto_zamanalif"], "proyekt")
 
     def test_russian_loanword_review_letters_are_exported_for_rl_only(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -194,7 +194,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_converter_integration_and_clean_zamanalif_letters(self) -> None:
         self.assertEqual(convert_for_annotation("шәһәр", "N"), "şähär")
-        self.assertEqual(convert_for_annotation("проект", "RL"), "proekt")
+        self.assertEqual(convert_for_annotation("проект", "RL"), "proyekt")
         self.assertEqual(convert_for_annotation("яңа", "N"), "yaña")
 
     def test_ya_conversion_context_rules(self) -> None:
@@ -225,8 +225,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("электр", "RL"), "elektr")
         self.assertEqual(convert_for_annotation("телефон", "RL"), "telefon")
         self.assertEqual(convert_for_annotation("билет", "RL"), "bilet")
+        self.assertEqual(convert_for_annotation("поездан", "RL"), "poyezdan")
+        self.assertEqual(convert_for_annotation("проекты", "RL"), "proyektı")
+        self.assertEqual(convert_for_annotation("крае", "RL"), "krayı")
+        self.assertEqual(convert_for_annotation("бодуен", "RL"), "boduen")
         self.assertEqual(convert_for_annotation("нуриев", "RL"), "nuriev")
         self.assertEqual(convert_for_annotation("объект", "RL"), "obyekt")
+        self.assertEqual(convert_for_annotation("съезда", "N"), "syezda")
         self.assertEqual(convert_for_annotation("гәрәев", "RL"), "gäräyev")
         self.assertEqual(convert_for_annotation("егет", "N"), "yeget")
         self.assertEqual(convert_for_annotation("ел", "N"), "yıl")
@@ -383,6 +388,12 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("ял", "N"), "yal")
         self.assertEqual(convert_for_annotation("яз", "N"), "yaz")
 
+    def test_reviewed_e_lexical_conversions(self) -> None:
+        self.assertEqual(convert_for_annotation("бакырелан", "N"), "baqıryılan")
+        self.assertEqual(convert_for_annotation("беркадәр", "N"), "berqädär")
+        self.assertEqual(convert_for_annotation("фигыльләрнең", "N"), "fiğellärneñ")
+        self.assertEqual(convert_for_annotation("кәгазъләрендә", "N"), "qäğäzlärendä")
+
     def test_conditional_letter_hints_do_not_include_origin_reason(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
@@ -405,7 +416,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         }
         self.assertIn("<b>ю</b> -> <b>yu</b>", html_by_word["юл"])
         self.assertIn("<b>я</b> -> <b>ya</b>", html_by_word["яңа"])
-        self.assertIn("<b>е</b> -> <b>e</b>", html_by_word["проект"])
+        self.assertIn("<b>е</b> -> <b>ye</b>", html_by_word["проект"])
         self.assertIn("<b>в</b> -> <b>w</b>", html_by_word["вакыт"])
         self.assertIn("<b>г</b> -> <b>ğ</b>", html_by_word["гасыр"])
         self.assertIn("<b>к</b> -> <b>k</b>", html_by_word["күрү"])
