@@ -69,6 +69,21 @@ REVIEWED_GH_CONVERSIONS = {
     "гөмәр": "ğömär",
     "шигъри": "şiğri",
 }
+REVIEWED_Y_CONVERSIONS = {
+    "җәмгыяте": "cämğiäte",
+    "мөстәкыйль": "möstäqil",
+    "кагыйдә": "qağidä",
+    "кагыйдәләр": "qağidälär",
+    "кагыйдәләре": "qağidäläre",
+    "кагыйдәсенә": "qağidäsenä",
+    "кыямәт": "qiämät",
+    "тәнкыйди": "tänqidi",
+    "тәрәккый": "täräqqi",
+    "вакыйга": "waqiğa",
+    "хыянәт": "xıyänät",
+    "гыйльми": "ğilmi",
+    "шагыйрь": "şağir",
+}
 REVIEWED_GH_SEQUENCES = (
     ("агентлыгы", "гы"),
     ("белдергән", "гән"),
@@ -484,6 +499,8 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
 def _convert_known_label(word: str, label: str) -> str:
     if word in REVIEWED_GH_CONVERSIONS:
         return REVIEWED_GH_CONVERSIONS[word]
+    if word in REVIEWED_Y_CONVERSIONS:
+        return REVIEWED_Y_CONVERSIONS[word]
     if word in REVIEWED_SIGN_CONVERSIONS:
         return REVIEWED_SIGN_CONVERSIONS[word]
     if word in REVIEWED_YU_CONVERSIONS:
