@@ -102,6 +102,34 @@ REVIEWED_E_CONVERSIONS = {
     "немецләрне": "nemeslärne",
     "кәгазъләрендә": "qäğäzlärendä",
 }
+REVIEWED_PDF_CONVERSIONS = {
+    "идарә": "idärä",
+    "җәмәгать": "cämäğät",
+    "фигыль": "fiğel",
+    "фигыльдән": "fiğeldän",
+    "фигыльләр": "fiğellär",
+    "фигыльләрдә": "fiğellärdä",
+    "мөрәҗәгать": "möräcäğät",
+    "пәйгамбәр": "päyğämbär",
+    "кәнәгәт": "qänäğät",
+    "кәгазъ": "qäğäz",
+    "кәгазъдә": "qäğäzdä",
+    "гаҗиз": "ğäciz",
+    "гадәт": "ğädät",
+    "гадәти": "ğädäti",
+    "гадәткә": "ğädätkä",
+    "гадәттә": "ğädättä",
+    "гамәлдә": "ğämäldä",
+    "гамәлгә": "ğämälgä",
+    "гарәби": "ğäräbi",
+    "гарәп": "ğäräp",
+    "гарәп-фарсы": "ğäräp-farsı",
+    "гарәп-фарсыдан": "ğäräp-farsıdan",
+    "гаскәри": "ğäskäri",
+    "шигырь": "şiğer",
+    "шигырь-шигри": "şiğer-şiğri",
+    "щётка": "şçotka",
+}
 REVIEWED_GH_SEQUENCES = (
     ("агентлыгы", "гы"),
     ("белдергән", "гән"),
@@ -406,6 +434,7 @@ def _sqlite_records(db_path: str | Path) -> Iterable[dict[str, Any]]:
 
 def convert_for_annotation(word: str, label: str) -> str:
     """Convert one normalized word using the branch implied by Gemini label."""
+    label = label.strip()
     if label not in {"N", "RL"}:
         converted = _best_effort_unknown(word)
     else:
@@ -525,6 +554,8 @@ def _convert_known_label(word: str, label: str) -> str:
         return REVIEWED_YA_CONVERSIONS[word]
     if word in REVIEWED_E_CONVERSIONS:
         return REVIEWED_E_CONVERSIONS[word]
+    if word in REVIEWED_PDF_CONVERSIONS:
+        return REVIEWED_PDF_CONVERSIONS[word]
     if word in REVIEWED_SIGN_CONVERSIONS:
         return REVIEWED_SIGN_CONVERSIONS[word]
     if word in REVIEWED_YU_CONVERSIONS:

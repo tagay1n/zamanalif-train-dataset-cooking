@@ -196,6 +196,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("шәһәр", "N"), "şähär")
         self.assertEqual(convert_for_annotation("проект", "RL"), "proyekt")
         self.assertEqual(convert_for_annotation("яңа", "N"), "yaña")
+        self.assertEqual(convert_for_annotation("канат", " RL"), "kanat")
 
     def test_ya_conversion_context_rules(self) -> None:
         self.assertEqual(convert_for_annotation("әдәбият", "N"), "ädäbiät")
@@ -393,6 +394,26 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("беркадәр", "N"), "berqädär")
         self.assertEqual(convert_for_annotation("фигыльләрнең", "N"), "fiğellärneñ")
         self.assertEqual(convert_for_annotation("кәгазъләрендә", "N"), "qäğäzlärendä")
+
+    def test_reviewed_pdf_lexical_conversions(self) -> None:
+        self.assertEqual(convert_for_annotation("җәмәгать", "N"), "cämäğät")
+        self.assertEqual(convert_for_annotation("идарә", "N"), "idärä")
+        self.assertEqual(convert_for_annotation("фигыль", "N"), "fiğel")
+        self.assertEqual(convert_for_annotation("фигыльдән", "N"), "fiğeldän")
+        self.assertEqual(convert_for_annotation("фигыльләр", "N"), "fiğellär")
+        self.assertEqual(convert_for_annotation("мөрәҗәгать", "N"), "möräcäğät")
+        self.assertEqual(convert_for_annotation("пәйгамбәр", "N"), "päyğämbär")
+        self.assertEqual(convert_for_annotation("кәнәгәт", "N"), "qänäğät")
+        self.assertEqual(convert_for_annotation("кәгазъ", "N"), "qäğäz")
+        self.assertEqual(convert_for_annotation("гаҗиз", "N"), "ğäciz")
+        self.assertEqual(convert_for_annotation("гадәт", "N"), "ğädät")
+        self.assertEqual(convert_for_annotation("гамәлдә", "N"), "ğämäldä")
+        self.assertEqual(convert_for_annotation("гарәп", "N"), "ğäräp")
+        self.assertEqual(convert_for_annotation("гарәп-фарсы", "N"), "ğäräp-farsı")
+        self.assertEqual(convert_for_annotation("гаскәри", "RL"), "ğäskäri")
+        self.assertEqual(convert_for_annotation("шигырь", "N"), "şiğer")
+        self.assertEqual(convert_for_annotation("шигырь-шигри", "N"), "şiğer-şiğri")
+        self.assertEqual(convert_for_annotation("щётка", "RL"), "şçotka")
 
     def test_conditional_letter_hints_do_not_include_origin_reason(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
