@@ -58,6 +58,26 @@ class AnnotateTests(unittest.TestCase):
             GeminiQuotaError,
         )
 
+    def test_network_errors_are_retryable_like_overload(self) -> None:
+        class ConnectionReset(Exception):
+            pass
+
+        class DnsError(Exception):
+            pass
+
+        self.assertIsInstance(
+            _classify_exception(ConnectionReset("connection reset by peer")),
+            GeminiOverloadedError,
+        )
+        self.assertIsInstance(
+            _classify_exception(DnsError("temporary failure in name resolution")),
+            GeminiOverloadedError,
+        )
+        self.assertIsInstance(
+            _classify_exception(RuntimeError("bad request payload")),
+            GeminiFatalError,
+        )
+
     def test_successful_run_saves_annotations(self) -> None:
         logs: list[str] = []
         with _db_path(

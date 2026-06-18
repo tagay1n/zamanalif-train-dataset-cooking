@@ -139,6 +139,8 @@ def _classify_exception(exc: Exception) -> GeminiError:
         return GeminiQuotaError(str(exc))
     if status == 429:
         return GeminiRateLimitError(str(exc))
+    if _looks_like_transient_network_error(exc, text):
+        return GeminiOverloadedError(str(exc))
     if status == 503 or "overloaded" in text or "unavailable" in text:
         return GeminiOverloadedError(str(exc))
     if isinstance(status, int) and 500 <= status < 600:
@@ -152,6 +154,40 @@ def _looks_like_rate_limit(text: str) -> bool:
         or "requests per minute" in text
         or "per minute" in text
         or "rpm" in text
+    )
+
+
+def _looks_like_transient_network_error(exc: Exception, text: str) -> bool:
+    exc_type = type(exc)
+    type_text = f"{exc_type.__module__}.{exc_type.__name__}".lower()
+    combined = f"{type_text} {text}"
+    return any(
+        marker in combined
+        for marker in (
+            "connection reset",
+            "connection refused",
+            "connection aborted",
+            "connection error",
+            "connectionerror",
+            "connecterror",
+            "network is unreachable",
+            "network unreachable",
+            "networkerror",
+            "temporary failure in name resolution",
+            "name resolution",
+            "nodename nor servname",
+            "dns",
+            "resolve",
+            "gaierror",
+            "ssl eof",
+            "sslerror",
+            "eof occurred",
+            "remote end closed connection",
+            "server disconnected",
+            "read timed out",
+            "connect timed out",
+            "timed out",
+        )
     )
 
 
