@@ -12,6 +12,7 @@ from tatar_preannotator.cli import main
 from tatar_preannotator.word_export import (
     contains_conditional_letter,
     contains_rl_review_letter,
+    conversion_branches,
     convert_for_annotation,
     convert_for_annotation_dsl,
     export_labelstudio_tasks_from_db,
@@ -69,6 +70,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                         "tokens": [
                             {"text": "Гадел", "label": "N"},
                             {"text": "сүз", "label": "U"},
+                            {"text": "торак", "label": "U"},
                             {"text": "сер", "label": "N"},
                         ],
                     },
@@ -93,28 +95,16 @@ class PreannotatorWordExportTests(unittest.TestCase):
         words = [task["data"]["cyrl_word"] for task in result.tasks]
         self.assertEqual(
             words,
-            [
-                "вакытында",
-                "дөрес",
-                "позиция",
-                "проект",
-                "сер",
-                "сүз",
-                "турында",
-                "яңа",
-                "әйттем",
-            ],
+            ["вакытында", "проект", "торак"],
         )
         self.assertEqual(result.tasks[0]["data"]["auto_zamanalif"], "waqıtında")
-        self.assertEqual(
-            result.tasks[2]["data"]["auto_zamanalif"],
-            "pozitsi{{IYA|compact=ä|explicit=yä}}",
-        )
-        self.assertEqual(result.tasks[3]["data"]["auto_zamanalif"], "proyekt")
-        self.assertEqual(result.tasks[7]["data"]["auto_zamanalif"], "yaña")
-        self.assertEqual(result.tasks[2]["data"]["gemini_origin"], "RL")
+        self.assertEqual(result.tasks[1]["data"]["auto_zamanalif"], "proyekt")
+        self.assertEqual(result.tasks[2]["data"]["auto_zamanalif"], "")
+        self.assertEqual(result.tasks[1]["data"]["gemini_origin"], "RL")
         self.assertEqual(result.report["mixed_harmony_n_word_skipped_count"], 1)
         self.assertEqual(result.report["u_exported_word_count"], 1)
+        self.assertGreater(result.report["origin_independent_word_count"], 0)
+        self.assertGreater(result.report["origin_dependent_word_count"], 0)
 
         html = result.tasks[0]["data"]["hints_html"]
         self.assertIn("<b>в</b> -> <b>w</b>", html)
@@ -166,14 +156,27 @@ class PreannotatorWordExportTests(unittest.TestCase):
             result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
 
         words = [task["data"]["cyrl_word"] for task in result.tasks]
-        self.assertEqual(words, ["роль", "сыр", "шофёр", "щетка"])
+        self.assertEqual(words, ["роль", "сыр"])
         by_word = {task["data"]["cyrl_word"]: task["data"] for task in result.tasks}
         self.assertEqual(by_word["сыр"]["auto_zamanalif"], "sıyr")
         self.assertEqual(by_word["роль"]["auto_zamanalif"], "rol'")
-        self.assertEqual(by_word["шофёр"]["auto_zamanalif"], "şofyor")
         self.assertIn("<b>ы</b> -> <b>ıy</b>", by_word["сыр"]["hints_html"])
         self.assertIn("<b>ь</b> -> <b>&#x27;</b>", by_word["роль"]["hints_html"])
-        self.assertIn("<b>ё</b> -> <b>yo</b>", by_word["шофёр"]["hints_html"])
+
+    def test_branch_analysis_only_reviews_origin_dependent_conversion(self) -> None:
+        independent = conversion_branches("белән")
+        dependent = conversion_branches("авыл")
+        unavailable = conversion_branches("к")
+
+        self.assertEqual(independent.state, "origin_independent")
+        self.assertEqual(independent.native_dsl, "belän")
+        self.assertEqual(independent.loanword_dsl, "belän")
+        self.assertEqual(dependent.state, "origin_dependent")
+        self.assertEqual(dependent.native_dsl, "awıl")
+        self.assertEqual(dependent.loanword_dsl, "avıl")
+        self.assertEqual(unavailable.state, "unconvertible")
+        self.assertEqual(unavailable.native_dsl, "")
+        self.assertEqual(unavailable.loanword_dsl, "k")
 
     def test_include_unknown_and_include_rl_flags(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -253,6 +256,25 @@ class PreannotatorWordExportTests(unittest.TestCase):
             reviewed["орфография"].zamanalif_dsl,
             "orfografi{{IYA|compact=ä|explicit=yä}}",
         )
+
+    def test_reviewed_word_never_reappears_without_export_tracking(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [{"text": "авыл", "label": "N"}],
+                    }
+                ],
+            )
+            save_reviewed_word(db_path, "авыл", "awıl", "N")
+
+            result = export_labelstudio_tasks_from_db(db_path)
+
+        self.assertEqual(result.tasks, [])
+        self.assertEqual(result.report["reviewed_words_skipped_count"], 1)
 
     def test_ya_conversion_context_rules(self) -> None:
         self.assertEqual(convert_for_annotation("әдәбият", "N"), "ädäbiät")
@@ -471,18 +493,14 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("шигырь-шигри", "N"), "şiğer-şiğri")
         self.assertEqual(convert_for_annotation("щётка", "RL"), "şçotka")
 
-    def test_conditional_letter_hints_do_not_include_origin_reason(self) -> None:
+    def test_origin_dependent_hints_show_both_branches(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
                 Path(tmpdir) / "zamanalif.sqlite",
                 [
-                    {"id": "1", "tatar": True, "tokens": [{"text": "юл", "label": "N"}]},
-                    {"id": "2", "tatar": True, "tokens": [{"text": "яңа", "label": "N"}]},
-                    {"id": "3", "tatar": True, "tokens": [{"text": "проект", "label": "RL"}]},
-                    {"id": "4", "tatar": True, "tokens": [{"text": "вакыт", "label": "N"}]},
-                    {"id": "5", "tatar": True, "tokens": [{"text": "гасыр", "label": "N"}]},
-                    {"id": "6", "tatar": True, "tokens": [{"text": "күрү", "label": "N"}]},
-                    {"id": "7", "tatar": True, "tokens": [{"text": "позиция", "label": "RL"}]},
+                    {"id": "1", "tatar": True, "tokens": [{"text": "проект", "label": "RL"}]},
+                    {"id": "2", "tatar": True, "tokens": [{"text": "вакыт", "label": "N"}]},
+                    {"id": "3", "tatar": True, "tokens": [{"text": "гасыр", "label": "N"}]},
                 ],
             )
 
@@ -491,13 +509,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
         html_by_word = {
             task["data"]["cyrl_word"]: task["data"]["hints_html"] for task in result.tasks
         }
-        self.assertIn("<b>ю</b> -> <b>yu</b>", html_by_word["юл"])
-        self.assertIn("<b>я</b> -> <b>ya</b>", html_by_word["яңа"])
         self.assertIn("<b>е</b> -> <b>ye</b>", html_by_word["проект"])
         self.assertIn("<b>в</b> -> <b>w</b>", html_by_word["вакыт"])
         self.assertIn("<b>г</b> -> <b>ğ</b>", html_by_word["гасыр"])
-        self.assertIn("<b>к</b> -> <b>k</b>", html_by_word["күрү"])
-        self.assertIn("<b>ц</b> -> <b>ts</b>", html_by_word["позиция"])
+        self.assertIn("Native branch: <b>waqıt</b>", html_by_word["вакыт"])
+        self.assertIn("Loanword branch: <b>vakıt</b>", html_by_word["вакыт"])
         for html in html_by_word.values():
             self.assertNotIn("because of", html)
 
@@ -506,8 +522,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
             db_path = _write_annotation_db(
                 Path(tmpdir) / "zamanalif.sqlite",
                 [
-                    {"id": "1", "tatar": True, "tokens": [{"text": "юл", "label": "N"}]},
-                    {"id": "2", "tatar": True, "tokens": [{"text": "юл", "label": "N"}]},
+                    {"id": "1", "tatar": True, "tokens": [{"text": "авыл", "label": "N"}]},
+                    {"id": "2", "tatar": True, "tokens": [{"text": "авыл", "label": "N"}]},
                     {"id": "3", "tatar": True, "tokens": [{"text": "вакыт", "label": "N"}]},
                 ],
             )
@@ -515,8 +531,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
             limited = export_labelstudio_tasks_from_db(db_path, max_items=1)
             frequent = export_labelstudio_tasks_from_db(db_path, min_frequency=2)
 
-        self.assertEqual([task["data"]["cyrl_word"] for task in limited.tasks], ["юл"])
-        self.assertEqual([task["data"]["cyrl_word"] for task in frequent.tasks], ["юл"])
+        self.assertEqual([task["data"]["cyrl_word"] for task in limited.tasks], ["авыл"])
+        self.assertEqual([task["data"]["cyrl_word"] for task in frequent.tasks], ["авыл"])
 
     def test_cli_writes_labelstudio_json_and_report(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -576,7 +592,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual(
             [task["data"]["cyrl_word"] for task in result.tasks],
-            ["вакыт", "турында"],
+            ["вакыт"],
         )
 
     def test_sqlite_tracking_skips_previously_exported_words(self) -> None:
@@ -589,7 +605,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                         "tatar": True,
                         "tokens": [
                             {"text": "вакыт", "label": "N"},
-                            {"text": "яңа", "label": "N"},
+                            {"text": "авыл", "label": "N"},
                         ],
                     }
                 ],
@@ -606,7 +622,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             with sqlite3.connect(db_path) as conn:
                 count = conn.execute("select count(*) from exported_words").fetchone()[0]
 
-        self.assertEqual([task["data"]["cyrl_word"] for task in result.tasks], ["яңа"])
+        self.assertEqual([task["data"]["cyrl_word"] for task in result.tasks], ["авыл"])
         self.assertEqual(result.report["already_exported_skipped_count"], 1)
         self.assertEqual(count, 1)
 

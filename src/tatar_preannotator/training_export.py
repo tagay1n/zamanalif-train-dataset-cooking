@@ -14,10 +14,9 @@ from typing import Iterable
 from .conversion import DslError, RULES, parse_dsl, resolve_dsl
 from .word_export import (
     ReviewedWord,
-    convert_for_annotation_dsl,
+    conversion_branches,
     load_reviewed_words,
     normalize_word,
-    requires_dictionary_review,
     vowel_harmony_class,
 )
 
@@ -243,9 +242,10 @@ def _convert_sentence(
         else:
             if label == "N" and vowel_harmony_class(normalized) == "mixed_front_back":
                 return _NotReady("mixed_harmony_word")
-            if requires_dictionary_review(normalized, label):
+            branches = conversion_branches(normalized)
+            if branches.state != "origin_independent":
                 return _NotReady("unreviewed_word")
-            dsl = convert_for_annotation_dsl(normalized, label)
+            dsl = branches.suggestion(label)
             if not dsl:
                 raise TrainingExportError(
                     f"{record.sample_id}: converter failed for token {text!r}"

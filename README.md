@@ -171,14 +171,20 @@ Selection rules:
 - read annotated Gemini results from `samples` and `preannotation_state` in
   SQLite;
 - ignore records with `"tatar": false`;
-- export words containing conditional letters `у ү г к в я ю е ц`;
-- export `"U"` words even without conditional letters;
-- export `"RL"` words only when they contain conditional letters or
-  Russian-loan review letters `ё ы ь ъ щ`;
+- compute canonical native (`N`) and loanword (`RL`) DSL for every normalized
+  word form;
+- export the word only when those branches differ or one branch is unavailable;
+- skip words whose conversion is identical under both origins, including `U`
+  words, because origin cannot change their target text;
 - skip native-looking `"N"` words with mixed front/back vowel harmony;
 - defer every normalized word that Gemini marked as a homonym to the later
   sentence-context project;
+- always skip forms already approved in `reviewed_words`;
 - deduplicate by lowercase normalized Cyrillic word form.
+
+At 20,211 annotated database rows, this decision-based selection produces
+45,940 tasks instead of the previous 88,280 letter-based tasks. The report
+includes origin-independent, origin-dependent, and unavailable-branch counts.
 
 The output is a Label Studio JSON array:
 
@@ -189,7 +195,7 @@ The output is a Label Studio JSON array:
     "cyrl_word": "вакытында",
     "auto_zamanalif": "waqıtında",
     "gemini_origin": "N",
-    "hints_html": "<ul><li><b>в</b> -> <b>w</b></li><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    "hints_html": "<ul><li>Native branch: <b>waqıtında</b></li><li>Loanword branch: <b>vakıtında</b></li><li>Gemini's origin prediction: <b>native</b></li></ul>"
   }
 }
 ```
@@ -293,9 +299,11 @@ The exporter:
 
 - reads `tatar=true` Gemini-annotated sentences from SQLite;
 - uses approved `reviewed_words` entries before automatic conversion;
+- automatically converts words whose native and loanword branches are
+  identical;
 - preserves sentence punctuation, whitespace, and ordinary word casing;
-- skips sentences that still contain unreviewed words, mixed-harmony native
-  review cases, or contextual homonyms;
+- skips sentences that still contain unreviewed origin-dependent words,
+  mixed-harmony native review cases, or contextual homonyms;
 - fails without replacing the existing output on malformed DSL, invalid
   policy choices, converter failures, or token alignment errors;
 - rejects any final target containing DSL delimiters or Cyrillic letters.

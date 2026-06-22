@@ -4,6 +4,7 @@ from collections import Counter
 from contextlib import closing
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from functools import lru_cache
 from html import escape
 import json
 from pathlib import Path
@@ -260,6 +261,31 @@ class ReviewedWord:
     origin: str
 
 
+@dataclass(frozen=True)
+class ConversionBranches:
+    """Canonical native and loanword outputs for one normalized word."""
+
+    native_dsl: str
+    loanword_dsl: str
+
+    @property
+    def state(self) -> str:
+        if self.native_dsl and self.loanword_dsl and self.native_dsl == self.loanword_dsl:
+            return "origin_independent"
+        if not self.native_dsl or not self.loanword_dsl:
+            return "unconvertible"
+        return "origin_dependent"
+
+    def suggestion(self, label: str) -> str:
+        if label == "N":
+            return self.native_dsl
+        if label == "RL":
+            return self.loanword_dsl
+        if self.state == "origin_independent":
+            return self.native_dsl
+        return ""
+
+
 def normalize_word(token: str) -> str:
     """Normalize a token for word-form deduplication."""
     matches = list(CYRILLIC_RE.finditer(token or ""))
@@ -280,13 +306,8 @@ def contains_rl_review_letter(word: str) -> bool:
 
 def requires_dictionary_review(word: str, label: str) -> bool:
     """Return whether a word needs Project 1 approval before dataset export."""
-    if label == "U":
-        return True
-    if label == "RL":
-        return contains_rl_review_letter(word)
-    if label == "N":
-        return contains_conditional_letter(word)
-    return True
+    del label
+    return conversion_branches(word).state != "origin_independent"
 
 
 def vowel_harmony_class(word: str) -> str:
@@ -311,8 +332,11 @@ def export_labelstudio_tasks_from_db(
     min_frequency: int = 1,
     sort_by: str = "frequency_desc",
     already_exported: set[str] | None = None,
+    reviewed_words: set[str] | None = None,
 ) -> ExportResult:
     """Build Label Studio word-review tasks from annotated SQLite rows."""
+    if reviewed_words is None:
+        reviewed_words = set(load_reviewed_words(db_path))
     return _export_from_records(
         _sqlite_records(db_path),
         max_items=max_items,
@@ -321,6 +345,7 @@ def export_labelstudio_tasks_from_db(
         min_frequency=min_frequency,
         sort_by=sort_by,
         already_exported=already_exported,
+        reviewed_words=reviewed_words,
     )
 
 
@@ -333,12 +358,11 @@ def _export_from_records(
     min_frequency: int,
     sort_by: str,
     already_exported: set[str] | None,
+    reviewed_words: set[str],
 ) -> ExportResult:
     stats: dict[str, WordStats] = {}
     total_sentences = 0
     total_tokens = 0
-    mixed_harmony_n_skipped = 0
-    already_exported_skipped = 0
     homonym_words: set[str] = set()
     word_occurrences: Counter[str] = Counter()
     already_exported = already_exported or set()
@@ -366,24 +390,6 @@ def _export_from_records(
             word_occurrences[normalized] += 1
             if token.get("homonym") is True:
                 homonym_words.add(normalized)
-                stats.pop(normalized, None)
-                continue
-            if normalized in homonym_words:
-                continue
-
-            needs_review = requires_dictionary_review(normalized, label)
-            if label == "RL" and not include_rl:
-                continue
-            if label == "U" and not include_unknown:
-                continue
-            if not needs_review:
-                continue
-            if label == "N" and vowel_harmony_class(normalized) == "mixed_front_back":
-                mixed_harmony_n_skipped += 1
-                continue
-            if normalized in already_exported:
-                already_exported_skipped += 1
-                continue
 
             entry = stats.get(normalized)
             if entry is None:
@@ -395,16 +401,34 @@ def _export_from_records(
                 char for char in normalized if char in CONDITIONAL_LETTERS
             )
 
-    candidates = [
-        entry
-        for entry in stats.values()
-        if entry.frequency >= min_frequency
-        and entry.normalized not in homonym_words
-        and (
-            requires_dictionary_review(entry.normalized, entry.label)
-            or _has_policy_choice(entry)
-        )
-    ]
+    decision_counts: Counter[str] = Counter()
+    candidates: list[WordStats] = []
+    mixed_harmony_n_skipped = 0
+    already_exported_skipped = 0
+    reviewed_words_skipped = 0
+    for entry in stats.values():
+        branches = conversion_branches(entry.normalized)
+        decision_counts[branches.state] += 1
+        if entry.normalized in homonym_words:
+            continue
+        if entry.normalized in reviewed_words:
+            reviewed_words_skipped += 1
+            continue
+        if entry.normalized in already_exported:
+            already_exported_skipped += 1
+            continue
+        if entry.label == "RL" and not include_rl:
+            continue
+        if entry.label == "U" and not include_unknown:
+            continue
+        if entry.label == "N" and vowel_harmony_class(entry.normalized) == "mixed_front_back":
+            mixed_harmony_n_skipped += 1
+            continue
+        if branches.state == "origin_independent":
+            continue
+        if entry.frequency < min_frequency:
+            continue
+        candidates.append(entry)
     if sort_by == "frequency_desc":
         candidates.sort(key=lambda item: (-item.frequency, item.normalized))
     elif sort_by == "word":
@@ -419,7 +443,7 @@ def _export_from_records(
             "data": {
                 "id": f"word_{index:06d}",
                 "cyrl_word": entry.display,
-                "auto_zamanalif": convert_for_annotation_dsl(entry.normalized, entry.label),
+                "auto_zamanalif": conversion_branches(entry.normalized).suggestion(entry.label),
                 "gemini_origin": entry.label,
                 "hints_html": decision_html(entry),
             }
@@ -435,10 +459,12 @@ def _export_from_records(
             exported=candidates,
             mixed_harmony_n_skipped=mixed_harmony_n_skipped,
             already_exported_skipped=already_exported_skipped,
+            reviewed_words_skipped=reviewed_words_skipped,
             homonym_occurrences_skipped=sum(
                 word_occurrences[word] for word in homonym_words
             ),
             homonym_words_skipped=len(homonym_words),
+            decision_counts=decision_counts,
         ),
         exported_words=[entry.normalized for entry in candidates],
     )
@@ -494,9 +520,13 @@ def convert_for_annotation_dsl(word: str, label: str) -> str:
     return result.to_dsl() if result is not None else ""
 
 
-def _has_policy_choice(entry: WordStats) -> bool:
-    result = conversion_result_for_annotation(entry.normalized, entry.label)
-    return result is not None and result.has_choices
+@lru_cache(maxsize=200_000)
+def conversion_branches(word: str) -> ConversionBranches:
+    """Return canonical outputs for both possible origin classifications."""
+    return ConversionBranches(
+        native_dsl=convert_for_annotation_dsl(word, "N"),
+        loanword_dsl=convert_for_annotation_dsl(word, "RL"),
+    )
 
 
 def decision_html(entry: WordStats) -> str:
@@ -505,6 +535,14 @@ def decision_html(entry: WordStats) -> str:
     result = conversion_result_for_annotation(entry.normalized, entry.label)
     if result is not None and "IYA" in result.rule_ids:
         items.append("<b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)")
+    branches = conversion_branches(entry.normalized)
+    if branches.state != "origin_independent":
+        items.append(
+            "Native branch: " + _branch_suggestion_html(branches.native_dsl)
+        )
+        items.append(
+            "Loanword branch: " + _branch_suggestion_html(branches.loanword_dsl)
+        )
     for index, char in enumerate(entry.normalized):
         if not CYRILLIC_RE.fullmatch(char):
             continue
@@ -521,6 +559,12 @@ def decision_html(entry: WordStats) -> str:
         f"Frequency for <b><i>{escape(entry.normalized)}</i></b>: <b>{entry.frequency}</b>"
     )
     return "<ul>" + "".join(f"<li>{item}</li>" for item in items) + "</ul>"
+
+
+def _branch_suggestion_html(value: str) -> str:
+    if not value:
+        return "<b>unavailable</b>"
+    return f"<b>{escape(value)}</b>"
 
 
 def write_outputs(
@@ -1031,8 +1075,10 @@ def _report(
     exported: list[WordStats],
     mixed_harmony_n_skipped: int,
     already_exported_skipped: int,
+    reviewed_words_skipped: int,
     homonym_occurrences_skipped: int,
     homonym_words_skipped: int,
+    decision_counts: Counter[str],
 ) -> dict[str, Any]:
     conditional_counts = Counter()
     dsl_rule_occurrence_count = 0
@@ -1051,8 +1097,12 @@ def _report(
         "u_exported_word_count": sum(entry.label == "U" for entry in exported),
         "mixed_harmony_n_word_skipped_count": mixed_harmony_n_skipped,
         "already_exported_skipped_count": already_exported_skipped,
+        "reviewed_words_skipped_count": reviewed_words_skipped,
         "homonym_occurrences_skipped_count": homonym_occurrences_skipped,
         "homonym_words_deferred_count": homonym_words_skipped,
+        "origin_independent_word_count": decision_counts["origin_independent"],
+        "origin_dependent_word_count": decision_counts["origin_dependent"],
+        "unconvertible_word_count": decision_counts["unconvertible"],
         "dsl_rule_occurrence_count": dsl_rule_occurrence_count,
         "top_50_exported_words_by_frequency": [
             {"word": entry.normalized, "frequency": entry.frequency}

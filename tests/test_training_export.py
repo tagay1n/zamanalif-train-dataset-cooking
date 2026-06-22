@@ -187,6 +187,29 @@ class TrainingExportTests(unittest.TestCase):
             self.assertEqual(output.read_text(encoding="utf-8"), "")
             self.assertEqual(manifest["counts"]["non_tatar_sentences_ignored"], 1)
 
+    def test_origin_independent_conditional_words_need_no_review(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(
+                root / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "text": "Бу юл.",
+                        "tokens": [
+                            {"text": "Бу", "label": "U"},
+                            {"text": "юл", "label": "U"},
+                        ],
+                    }
+                ],
+            )
+            output = root / "train.jsonl"
+
+            export_training_dataset(db_path, output)
+            rows = _read_jsonl(output)
+
+        self.assertEqual(rows[0]["zamanalif"], "Bu yul.")
+
     def test_malformed_reviewed_dsl_preserves_existing_output(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

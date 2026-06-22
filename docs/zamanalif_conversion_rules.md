@@ -89,13 +89,13 @@ These mappings normally do not need human review by themselves:
 
 ## Conditional Letters
 
-Conditional letters are a broad, inexpensive annotation prefilter:
+Conditional letters are a broad, inexpensive sentence-selection prefilter:
 
 ```text
 У у, Ү ү, Г г, К к, В в, Я я, Ю ю, Е е, Ц ц
 ```
 
-Review words containing these letters carefully:
+Words containing these letters deserve converter analysis:
 
 - `в`: native `w`, loanword `v`.
 - `г`: native front-vowel `g`, native back-vowel `ğ`, loanword `g`.
@@ -112,10 +112,11 @@ Review words containing these letters carefully:
   review.
 - `ц`: loanword `s` at word start/end or after consonants, `ts` after vowels.
 
-This list is not the final definition of ambiguity. Sequence rules, signs,
-suffix boundaries, stems, origin, and policy choices can also require review.
-The converter's structured decisions are the authoritative signal as rules are
-migrated to the new engine.
+This list does not determine Project 1 export. The word exporter computes both
+the native and loanword conversion branches. A form needs dictionary review
+only when those canonical DSL outputs differ or one branch is unavailable.
+Identical branches are safe regardless of whether Gemini predicted `N`, `RL`,
+or `U`.
 
 ## Russian-Loan Review Cases
 
@@ -180,6 +181,8 @@ dataset policy during this transition.
 Project 1 is word dictionary review:
 
 - annotate one normalized word form only once;
+- review every native/loanword branch disagreement, without a frequency cutoff;
+- never re-export a form already stored in `reviewed_words`;
 - correct the suggested Zamanalif form when it is wrong;
 - trust deterministic letters more than conditional letters;
 - use Gemini origin prediction as a weak hint, not final truth;
