@@ -34,6 +34,10 @@ The first registered convention choice is Cyrillic `ия`:
 Rule and option names are stable API identifiers. DSL choices cover only the
 substring that differs.
 
+DSL is never part of the model-training target. The final training exporter
+resolves every choice through a registered default or explicit CLI policy and
+rejects output in which DSL delimiters remain.
+
 ## Zamanalif Alphabet and Unicode
 
 Use real Unicode Zamanalif Latin characters:

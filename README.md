@@ -261,6 +261,50 @@ The public DSL helpers are in `tatar_preannotator.conversion`:
 Malformed syntax, unknown rules, unknown options, and non-Zamanalif output fail
 with an explicit `DslError`.
 
+## Training Dataset Export
+
+DSL is internal annotation data. Final model-training records contain only
+ordinary Cyrillic and resolved Zamanalif text.
+
+Export JSONL with the registered default for every DSL rule:
+
+```bash
+python -m tatar_preannotator training-export \
+  --db data/zamanalif.sqlite \
+  --output data/training.jsonl
+```
+
+Override a convention with a repeatable `--choice RULE=OPTION` argument:
+
+```bash
+python -m tatar_preannotator training-export \
+  --db data/zamanalif.sqlite \
+  --output data/training_compact.jsonl \
+  --choice IYA=compact
+```
+
+Each output line has only the sentence ID and the text pair:
+
+```json
+{"id":"sent_000001","cyrillic":"Орфография.","zamanalif":"Orfografiyä."}
+```
+
+The exporter:
+
+- reads `tatar=true` Gemini-annotated sentences from SQLite;
+- uses approved `reviewed_words` entries before automatic conversion;
+- preserves sentence punctuation, whitespace, and ordinary word casing;
+- skips sentences that still contain unreviewed words, mixed-harmony native
+  review cases, or contextual homonyms;
+- fails without replacing the existing output on malformed DSL, invalid
+  policy choices, converter failures, or token alignment errors;
+- rejects any final target containing DSL delimiters or Cyrillic letters.
+
+It automatically writes `<output>.manifest.json` with the effective policy,
+CLI overrides, exported counts, and not-ready skip counts. Abbreviation-specific
+letter-by-letter conversion such as `ЦК -> TsK` is deliberately deferred; this
+command currently applies normal word conversion and casing rules.
+
 ## Conversion Rules
 
 The conversion and annotator reference lives in

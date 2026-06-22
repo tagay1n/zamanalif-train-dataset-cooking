@@ -278,6 +278,17 @@ def contains_rl_review_letter(word: str) -> bool:
     return any(char in CONDITIONAL_LETTERS or char in RL_REVIEW_LETTERS for char in word)
 
 
+def requires_dictionary_review(word: str, label: str) -> bool:
+    """Return whether a word needs Project 1 approval before dataset export."""
+    if label == "U":
+        return True
+    if label == "RL":
+        return contains_rl_review_letter(word)
+    if label == "N":
+        return contains_conditional_letter(word)
+    return True
+
+
 def vowel_harmony_class(word: str) -> str:
     """Classify simple front/back vowel harmony for one word."""
     has_front = any(char in FRONT_VOWELS for char in word)
@@ -360,13 +371,12 @@ def _export_from_records(
             if normalized in homonym_words:
                 continue
 
-            has_conditional = contains_conditional_letter(normalized)
-            has_rl_review = contains_rl_review_letter(normalized)
-            if label == "RL" and (not include_rl or not has_rl_review):
+            needs_review = requires_dictionary_review(normalized, label)
+            if label == "RL" and not include_rl:
                 continue
             if label == "U" and not include_unknown:
                 continue
-            if label == "N" and not has_conditional:
+            if not needs_review:
                 continue
             if label == "N" and vowel_harmony_class(normalized) == "mixed_front_back":
                 mixed_harmony_n_skipped += 1
@@ -391,10 +401,8 @@ def _export_from_records(
         if entry.frequency >= min_frequency
         and entry.normalized not in homonym_words
         and (
-            _has_policy_choice(entry)
-            or contains_conditional_letter(entry.normalized)
-            or entry.label == "U"
-            or (entry.label == "RL" and contains_rl_review_letter(entry.normalized))
+            requires_dictionary_review(entry.normalized, entry.label)
+            or _has_policy_choice(entry)
         )
     ]
     if sort_by == "frequency_desc":

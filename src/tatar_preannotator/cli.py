@@ -13,6 +13,7 @@ from .annotate import run_annotation
 from .antat_reference import download_antat_reference
 from .config import load_config
 from .gemini_client import GoogleGeminiClient
+from .training_export import TrainingExportError, export_training_dataset
 from .word_export import (
     export_labelstudio_tasks_from_db,
     load_exported_words,
@@ -74,6 +75,25 @@ def main(argv: list[str] | None = None) -> int:
         help="SQLite DB for export state; defaults to --db.",
     )
 
+    training_export = subparsers.add_parser(
+        "training-export",
+        help="Export resolved Cyrillic/Zamanalif training pairs.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    training_export.add_argument(
+        "--db",
+        default=DEFAULT_DB_PATH,
+        help="SQLite application database.",
+    )
+    training_export.add_argument("--output", required=True, help="Training JSONL output.")
+    training_export.add_argument(
+        "--choice",
+        action="append",
+        default=[],
+        metavar="RULE=OPTION",
+        help="Override one registered DSL rule; repeat for multiple rules.",
+    )
+
     antat = subparsers.add_parser(
         "download-antat-reference",
         help="Download Antat English-Tatar Cyrillic/Zamanalif dictionary into SQLite.",
@@ -88,6 +108,8 @@ def main(argv: list[str] | None = None) -> int:
         return _annotate(args)
     if args.command == "annotation-export":
         return _annotation_export(args)
+    if args.command == "training-export":
+        return _training_export(args)
     if args.command == "download-antat-reference":
         return _download_antat_reference(args)
     raise AssertionError(args.command)
@@ -158,6 +180,27 @@ def _annotation_export(args: argparse.Namespace) -> int:
     print(
         "annotation export complete: "
         f"exported={len(result.tasks)} output={args.output} report={report_path}"
+    )
+    return 0
+
+
+def _training_export(args: argparse.Namespace) -> int:
+    try:
+        summary = export_training_dataset(
+            args.db,
+            args.output,
+            choice_overrides=args.choice,
+        )
+    except (OSError, sqlite3.Error, TrainingExportError) as exc:
+        print(f"training export failed: {exc}")
+        return 1
+
+    print(
+        "training export complete: "
+        f"exported={summary.exported_count} "
+        f"skipped={summary.skipped_count} "
+        f"output={summary.output_path} "
+        f"manifest={summary.manifest_path}"
     )
     return 0
 
