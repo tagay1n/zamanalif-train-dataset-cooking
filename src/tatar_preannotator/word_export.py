@@ -590,7 +590,7 @@ def write_outputs(
 def load_exported_words(db_path: str | Path) -> set[str]:
     """Read normalized words already exported to Label Studio."""
     with closing(sqlite3.connect(db_path)) as conn, conn:
-        _ensure_state_schema(conn)
+        ensure_review_state_schema(conn)
         rows = conn.execute("select normalized_word from exported_words").fetchall()
     return {row[0] for row in rows}
 
@@ -599,7 +599,7 @@ def mark_exported_words(db_path: str | Path, words: list[str]) -> None:
     """Persist normalized words exported in a successful batch."""
     now = datetime.now(timezone.utc).isoformat()
     with closing(sqlite3.connect(db_path)) as conn, conn:
-        _ensure_state_schema(conn)
+        ensure_review_state_schema(conn)
         conn.executemany(
             """
             insert or ignore into exported_words(normalized_word, exported_at)
@@ -628,7 +628,7 @@ def save_reviewed_word(
 
     now = datetime.now(timezone.utc).isoformat()
     with closing(sqlite3.connect(db_path)) as conn, conn:
-        _ensure_state_schema(conn)
+        ensure_review_state_schema(conn)
         conn.execute(
             """
             insert into reviewed_words(normalized_word, zamanalif_dsl, origin, updated_at)
@@ -645,7 +645,7 @@ def save_reviewed_word(
 def load_reviewed_words(db_path: str | Path) -> dict[str, ReviewedWord]:
     """Load the human-approved word dictionary keyed by normalized Cyrillic form."""
     with closing(sqlite3.connect(db_path)) as conn, conn:
-        _ensure_state_schema(conn)
+        ensure_review_state_schema(conn)
         rows = conn.execute(
             """
             select normalized_word, zamanalif_dsl, origin
@@ -1046,7 +1046,8 @@ def _is_clean_zamanalif(value: str | None) -> bool:
     return all(char in ALLOWED_ZAMANALIF for char in value)
 
 
-def _ensure_state_schema(conn: sqlite3.Connection) -> None:
+def ensure_review_state_schema(conn: sqlite3.Connection) -> None:
+    """Create SQLite tables used by word-review export and import."""
     conn.execute(
         """
         create table if not exists exported_words (

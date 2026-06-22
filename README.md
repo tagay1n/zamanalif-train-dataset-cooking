@@ -244,10 +244,26 @@ Label Studio layout:
 </View>
 ```
 
-The shared SQLite schema includes `reviewed_words` for approved DSL conversion
-and reviewed origin. The current increment provides the storage API; importing
-completed Label Studio exports into that table is the next annotation-pipeline
-step.
+Export completed Label Studio tasks as a JSON array, then import them into the
+shared reviewed-word dictionary:
+
+```bash
+python -m tatar_preannotator annotation-import \
+  --db data/zamanalif.sqlite \
+  --input labelstudio_word_review_export.json
+```
+
+The importer reads the `reviewed_origin` and `corrected_zamanalif` controls,
+validates every completed task, and writes approved conversion/origin pairs to
+`reviewed_words` in one transaction. Unannotated and cancelled tasks are
+skipped. Importing the same decision again is idempotent; a different decision
+for an already reviewed word fails instead of silently replacing the final
+approval. Remove the existing `reviewed_words` row explicitly before importing
+a deliberate correction.
+
+Malformed DSL, missing controls, duplicate word tasks, conflicting annotations,
+or invalid origins abort the whole import without partial writes. After a
+successful import, approved words no longer appear in `annotation-export`.
 
 ## Conversion DSL
 

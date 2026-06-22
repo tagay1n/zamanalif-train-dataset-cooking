@@ -13,6 +13,7 @@ from .annotate import run_annotation
 from .antat_reference import download_antat_reference
 from .config import load_config
 from .gemini_client import GoogleGeminiClient
+from .labelstudio_import import LabelStudioImportError, import_labelstudio_annotations
 from .training_export import TrainingExportError, export_training_dataset
 from .word_export import (
     export_labelstudio_tasks_from_db,
@@ -94,6 +95,22 @@ def main(argv: list[str] | None = None) -> int:
         help="Override one registered DSL rule; repeat for multiple rules.",
     )
 
+    annotation_import = subparsers.add_parser(
+        "annotation-import",
+        help="Import completed Label Studio word annotations into SQLite.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    annotation_import.add_argument(
+        "--db",
+        default=DEFAULT_DB_PATH,
+        help="SQLite application database.",
+    )
+    annotation_import.add_argument(
+        "--input",
+        required=True,
+        help="Label Studio JSON export.",
+    )
+
     antat = subparsers.add_parser(
         "download-antat-reference",
         help="Download Antat English-Tatar Cyrillic/Zamanalif dictionary into SQLite.",
@@ -110,6 +127,8 @@ def main(argv: list[str] | None = None) -> int:
         return _annotation_export(args)
     if args.command == "training-export":
         return _training_export(args)
+    if args.command == "annotation-import":
+        return _annotation_import(args)
     if args.command == "download-antat-reference":
         return _download_antat_reference(args)
     raise AssertionError(args.command)
@@ -201,6 +220,24 @@ def _training_export(args: argparse.Namespace) -> int:
         f"skipped={summary.skipped_count} "
         f"output={summary.output_path} "
         f"manifest={summary.manifest_path}"
+    )
+    return 0
+
+
+def _annotation_import(args: argparse.Namespace) -> int:
+    try:
+        summary = import_labelstudio_annotations(args.db, args.input)
+    except (OSError, sqlite3.Error, LabelStudioImportError) as exc:
+        print(f"annotation import failed: {exc}")
+        return 1
+
+    print(
+        "annotation import complete: "
+        f"tasks={summary.total_tasks} "
+        f"completed={summary.completed_tasks} "
+        f"imported={summary.imported_words} "
+        f"unchanged={summary.unchanged_words} "
+        f"unannotated={summary.skipped_unannotated_tasks}"
     )
     return 0
 
