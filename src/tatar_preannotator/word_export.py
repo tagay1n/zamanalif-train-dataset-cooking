@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import Counter
+from contextlib import closing
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from html import escape
@@ -10,6 +11,12 @@ import re
 import sqlite3
 from typing import Any, Iterable
 
+from tatar_preannotator.conversion import (
+    ConversionResult,
+    DslError,
+    parse_dsl,
+    result_with_iya_choices,
+)
 from zamanalif_selector.features import BACK_VOWELS, CONDITIONAL_LETTERS, FRONT_VOWELS
 
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
@@ -246,6 +253,13 @@ class ExportResult:
     exported_words: list[str]
 
 
+@dataclass(frozen=True)
+class ReviewedWord:
+    normalized_word: str
+    zamanalif_dsl: str
+    origin: str
+
+
 def normalize_word(token: str) -> str:
     """Normalize a token for word-form deduplication."""
     matches = list(CYRILLIC_RE.finditer(token or ""))
@@ -314,6 +328,8 @@ def _export_from_records(
     total_tokens = 0
     mixed_harmony_n_skipped = 0
     already_exported_skipped = 0
+    homonym_words: set[str] = set()
+    word_occurrences: Counter[str] = Counter()
     already_exported = already_exported or set()
 
     for record in records:
@@ -335,6 +351,13 @@ def _export_from_records(
             total_tokens += 1
             normalized = normalize_word(text)
             if not normalized:
+                continue
+            word_occurrences[normalized] += 1
+            if token.get("homonym") is True:
+                homonym_words.add(normalized)
+                stats.pop(normalized, None)
+                continue
+            if normalized in homonym_words:
                 continue
 
             has_conditional = contains_conditional_letter(normalized)
@@ -366,8 +389,10 @@ def _export_from_records(
         entry
         for entry in stats.values()
         if entry.frequency >= min_frequency
+        and entry.normalized not in homonym_words
         and (
-            contains_conditional_letter(entry.normalized)
+            _has_policy_choice(entry)
+            or contains_conditional_letter(entry.normalized)
             or entry.label == "U"
             or (entry.label == "RL" and contains_rl_review_letter(entry.normalized))
         )
@@ -386,7 +411,8 @@ def _export_from_records(
             "data": {
                 "id": f"word_{index:06d}",
                 "cyrl_word": entry.display,
-                "auto_zamanalif": convert_for_annotation(entry.normalized, entry.label),
+                "auto_zamanalif": convert_for_annotation_dsl(entry.normalized, entry.label),
+                "gemini_origin": entry.label,
                 "hints_html": decision_html(entry),
             }
         }
@@ -401,13 +427,17 @@ def _export_from_records(
             exported=candidates,
             mixed_harmony_n_skipped=mixed_harmony_n_skipped,
             already_exported_skipped=already_exported_skipped,
+            homonym_occurrences_skipped=sum(
+                word_occurrences[word] for word in homonym_words
+            ),
+            homonym_words_skipped=len(homonym_words),
         ),
         exported_words=[entry.normalized for entry in candidates],
     )
 
 
 def _sqlite_records(db_path: str | Path) -> Iterable[dict[str, Any]]:
-    with sqlite3.connect(db_path) as conn:
+    with closing(sqlite3.connect(db_path)) as conn:
         conn.row_factory = sqlite3.Row
         rows = conn.execute(
             """
@@ -442,9 +472,31 @@ def convert_for_annotation(word: str, label: str) -> str:
     return converted if _is_clean_zamanalif(converted) else ""
 
 
+def conversion_result_for_annotation(word: str, label: str) -> ConversionResult | None:
+    """Return structured annotation output with accepted convention choices."""
+    compact = convert_for_annotation(word, label)
+    if not compact:
+        return None
+    return result_with_iya_choices(word, compact)
+
+
+def convert_for_annotation_dsl(word: str, label: str) -> str:
+    """Return canonical DSL for Label Studio, or an empty string on conversion failure."""
+    result = conversion_result_for_annotation(word, label)
+    return result.to_dsl() if result is not None else ""
+
+
+def _has_policy_choice(entry: WordStats) -> bool:
+    result = conversion_result_for_annotation(entry.normalized, entry.label)
+    return result is not None and result.has_choices
+
+
 def decision_html(entry: WordStats) -> str:
     """Build compact vertical conversion-decision HTML for Label Studio."""
     items: list[str] = []
+    result = conversion_result_for_annotation(entry.normalized, entry.label)
+    if result is not None and "IYA" in result.rule_ids:
+        items.append("<b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)")
     for index, char in enumerate(entry.normalized):
         if not CYRILLIC_RE.fullmatch(char):
             continue
@@ -455,7 +507,7 @@ def decision_html(entry: WordStats) -> str:
             if converted:
                 items.append(f"<b>{escape(char)}</b> -> <b>{escape(converted)}</b>")
     items.append(f"Gemini's origin prediction: <b>{_origin_prediction(entry.label)}</b>")
-    if not convert_for_annotation(entry.normalized, entry.label):
+    if result is None:
         items.append("Automatic converter produced no clean Latin suggestion")
     items.append(
         f"Frequency for <b><i>{escape(entry.normalized)}</i></b>: <b>{entry.frequency}</b>"
@@ -485,7 +537,7 @@ def write_outputs(
 
 def load_exported_words(db_path: str | Path) -> set[str]:
     """Read normalized words already exported to Label Studio."""
-    with sqlite3.connect(db_path) as conn:
+    with closing(sqlite3.connect(db_path)) as conn, conn:
         _ensure_state_schema(conn)
         rows = conn.execute("select normalized_word from exported_words").fetchall()
     return {row[0] for row in rows}
@@ -494,7 +546,7 @@ def load_exported_words(db_path: str | Path) -> set[str]:
 def mark_exported_words(db_path: str | Path, words: list[str]) -> None:
     """Persist normalized words exported in a successful batch."""
     now = datetime.now(timezone.utc).isoformat()
-    with sqlite3.connect(db_path) as conn:
+    with closing(sqlite3.connect(db_path)) as conn, conn:
         _ensure_state_schema(conn)
         conn.executemany(
             """
@@ -503,6 +555,56 @@ def mark_exported_words(db_path: str | Path, words: list[str]) -> None:
             """,
             [(word, now) for word in words],
         )
+
+
+def save_reviewed_word(
+    db_path: str | Path,
+    normalized_word: str,
+    zamanalif_dsl: str,
+    origin: str,
+) -> None:
+    """Store one human-approved word conversion in the shared SQLite dictionary."""
+    normalized = normalize_word(normalized_word)
+    if not normalized or normalized != normalized_word:
+        raise ValueError("normalized_word must be a lowercase normalized Cyrillic word")
+    if origin not in {"N", "RL", "U"}:
+        raise ValueError("origin must be one of: N, RL, U")
+    try:
+        parse_dsl(zamanalif_dsl)
+    except DslError as exc:
+        raise ValueError(f"invalid reviewed Zamanalif DSL: {exc}") from exc
+
+    now = datetime.now(timezone.utc).isoformat()
+    with closing(sqlite3.connect(db_path)) as conn, conn:
+        _ensure_state_schema(conn)
+        conn.execute(
+            """
+            insert into reviewed_words(normalized_word, zamanalif_dsl, origin, updated_at)
+            values (?, ?, ?, ?)
+            on conflict(normalized_word) do update set
+                zamanalif_dsl=excluded.zamanalif_dsl,
+                origin=excluded.origin,
+                updated_at=excluded.updated_at
+            """,
+            (normalized, zamanalif_dsl, origin, now),
+        )
+
+
+def load_reviewed_words(db_path: str | Path) -> dict[str, ReviewedWord]:
+    """Load the human-approved word dictionary keyed by normalized Cyrillic form."""
+    with closing(sqlite3.connect(db_path)) as conn, conn:
+        _ensure_state_schema(conn)
+        rows = conn.execute(
+            """
+            select normalized_word, zamanalif_dsl, origin
+            from reviewed_words
+            order by normalized_word
+            """
+        ).fetchall()
+    return {
+        row[0]: ReviewedWord(normalized_word=row[0], zamanalif_dsl=row[1], origin=row[2])
+        for row in rows
+    }
 
 
 def _display_word(surface: str, normalized: str) -> str:
@@ -901,6 +1003,16 @@ def _ensure_state_schema(conn: sqlite3.Connection) -> None:
         )
         """
     )
+    conn.execute(
+        """
+        create table if not exists reviewed_words (
+            normalized_word text primary key,
+            zamanalif_dsl text not null,
+            origin text not null check(origin in ('N', 'RL', 'U')),
+            updated_at text not null
+        )
+        """
+    )
 
 
 def _report(
@@ -911,10 +1023,16 @@ def _report(
     exported: list[WordStats],
     mixed_harmony_n_skipped: int,
     already_exported_skipped: int,
+    homonym_occurrences_skipped: int,
+    homonym_words_skipped: int,
 ) -> dict[str, Any]:
     conditional_counts = Counter()
+    dsl_rule_occurrence_count = 0
     for entry in exported:
         conditional_counts.update(entry.conditional_letters)
+        result = conversion_result_for_annotation(entry.normalized, entry.label)
+        if result is not None:
+            dsl_rule_occurrence_count += len(result.rule_ids)
     return {
         "total_input_sentences": total_sentences,
         "total_tokens": total_tokens,
@@ -925,6 +1043,9 @@ def _report(
         "u_exported_word_count": sum(entry.label == "U" for entry in exported),
         "mixed_harmony_n_word_skipped_count": mixed_harmony_n_skipped,
         "already_exported_skipped_count": already_exported_skipped,
+        "homonym_occurrences_skipped_count": homonym_occurrences_skipped,
+        "homonym_words_deferred_count": homonym_words_skipped,
+        "dsl_rule_occurrence_count": dsl_rule_occurrence_count,
         "top_50_exported_words_by_frequency": [
             {"word": entry.normalized, "frequency": entry.frequency}
             for entry in sorted(exported, key=lambda item: (-item.frequency, item.normalized))[:50]

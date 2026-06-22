@@ -67,9 +67,12 @@ def main(argv: list[str] | None = None) -> int:
     export_words.add_argument(
         "--track-exported",
         action="store_true",
-        help="Skip and persist exported words in --state-db.",
+        help="Skip and persist exported words in SQLite.",
     )
-    export_words.add_argument("--state-db", help="SQLite DB for exported-word state.")
+    export_words.add_argument(
+        "--state-db",
+        help="SQLite DB for export state; defaults to --db.",
+    )
 
     antat = subparsers.add_parser(
         "download-antat-reference",
@@ -128,14 +131,13 @@ def _annotate(args: argparse.Namespace) -> int:
 
 
 def _annotation_export(args: argparse.Namespace) -> int:
-    if args.track_exported and not args.state_db:
-        raise SystemExit("--track-exported requires --state-db")
     if args.max_items is not None and args.max_items < 1:
         raise SystemExit("--max-items must be positive")
     if args.min_frequency < 1:
         raise SystemExit("--min-frequency must be positive")
 
-    already_exported = load_exported_words(args.state_db) if args.track_exported else set()
+    state_db = args.state_db or args.db
+    already_exported = load_exported_words(state_db) if args.track_exported else set()
     try:
         export_kwargs = {
             "max_items": args.max_items,
@@ -148,7 +150,7 @@ def _annotation_export(args: argparse.Namespace) -> int:
         result = export_labelstudio_tasks_from_db(args.db, **export_kwargs)
         report_path = write_outputs(result, args.output, report_output=args.report_output)
         if args.track_exported:
-            mark_exported_words(args.state_db, result.exported_words)
+            mark_exported_words(state_db, result.exported_words)
     except (OSError, ValueError, sqlite3.Error) as exc:
         print(f"annotation export failed: {exc}")
         return 1

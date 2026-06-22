@@ -3,7 +3,8 @@ from __future__ import annotations
 import re
 import unittest
 
-from tatar_preannotator.word_export import convert_for_annotation
+from tatar_preannotator.conversion import PDF_COMPACT_POLICY, resolve_dsl
+from tatar_preannotator.word_export import convert_for_annotation, convert_for_annotation_dsl
 
 
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
@@ -2505,6 +2506,20 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
         ]
 
         self.assert_conversions(cases)
+
+    def test_iya_cases_are_reachable_through_compact_pdf_policy(self) -> None:
+        cases = [
+            ("ия", "N", "iä"),
+            ("әдәбият", "N", "ädäbiät"),
+            ("орфография", "RL", "orfografiä"),
+            ("позиция", "RL", "pozitsiä"),
+        ]
+
+        for source, label, expected in cases:
+            with self.subTest(source=source):
+                dsl = convert_for_annotation_dsl(source, label)
+                self.assertIn("{{IYA|compact=ä|explicit=yä}}", dsl)
+                self.assertEqual(resolve_dsl(dsl, PDF_COMPACT_POLICY), expected)
 
     def test_outputs_use_clean_zamanalif_unicode(self) -> None:
         cases = [

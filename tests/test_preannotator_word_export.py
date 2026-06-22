@@ -13,10 +13,13 @@ from tatar_preannotator.word_export import (
     contains_conditional_letter,
     contains_rl_review_letter,
     convert_for_annotation,
+    convert_for_annotation_dsl,
     export_labelstudio_tasks_from_db,
     load_exported_words,
+    load_reviewed_words,
     mark_exported_words,
     normalize_word,
+    save_reviewed_word,
     vowel_harmony_class,
 )
 
@@ -103,9 +106,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ],
         )
         self.assertEqual(result.tasks[0]["data"]["auto_zamanalif"], "waqıtında")
-        self.assertEqual(result.tasks[2]["data"]["auto_zamanalif"], "pozitsiä")
+        self.assertEqual(
+            result.tasks[2]["data"]["auto_zamanalif"],
+            "pozitsi{{IYA|compact=ä|explicit=yä}}",
+        )
         self.assertEqual(result.tasks[3]["data"]["auto_zamanalif"], "proyekt")
         self.assertEqual(result.tasks[7]["data"]["auto_zamanalif"], "yaña")
+        self.assertEqual(result.tasks[2]["data"]["gemini_origin"], "RL")
         self.assertEqual(result.report["mixed_harmony_n_word_skipped_count"], 1)
         self.assertEqual(result.report["u_exported_word_count"], 1)
 
@@ -197,6 +204,55 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("проект", "RL"), "proyekt")
         self.assertEqual(convert_for_annotation("яңа", "N"), "yaña")
         self.assertEqual(convert_for_annotation("канат", " RL"), "kanat")
+        self.assertEqual(
+            convert_for_annotation_dsl("фамилия", "N"),
+            "famili{{IYA|compact=ä|explicit=yä}}",
+        )
+
+    def test_homonym_word_is_deferred_even_if_another_occurrence_is_unmarked(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [{"text": "сер", "label": "RL", "homonym": True}],
+                    },
+                    {
+                        "id": "sent_2",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "сер", "label": "N"},
+                            {"text": "вакыт", "label": "N"},
+                        ],
+                    },
+                ],
+            )
+
+            result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
+
+        self.assertEqual([task["data"]["cyrl_word"] for task in result.tasks], ["вакыт"])
+        self.assertEqual(result.report["homonym_words_deferred_count"], 1)
+        self.assertEqual(result.report["homonym_occurrences_skipped_count"], 2)
+
+    def test_reviewed_word_dictionary_persists_dsl_and_origin(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = Path(tmpdir) / "zamanalif.sqlite"
+
+            save_reviewed_word(
+                db_path,
+                "орфография",
+                "orfografi{{IYA|compact=ä|explicit=yä}}",
+                "RL",
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(reviewed["орфография"].origin, "RL")
+        self.assertEqual(
+            reviewed["орфография"].zamanalif_dsl,
+            "orfografi{{IYA|compact=ä|explicit=yä}}",
+        )
 
     def test_ya_conversion_context_rules(self) -> None:
         self.assertEqual(convert_for_annotation("әдәбият", "N"), "ädäbiät")
@@ -493,7 +549,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual(exit_code, 0)
         self.assertEqual(data[0]["data"]["cyrl_word"], "вакыт")
-        self.assertEqual(set(data[0]["data"]), {"id", "cyrl_word", "auto_zamanalif", "hints_html"})
+        self.assertEqual(
+            set(data[0]["data"]),
+            {"id", "cyrl_word", "auto_zamanalif", "gemini_origin", "hints_html"},
+        )
         self.assertEqual(report["exported_word_count"], 1)
         self.assertIn("annotation export complete", output.getvalue())
 

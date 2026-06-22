@@ -155,15 +155,15 @@ python -m tatar_preannotator annotation-export \
 ```
 
 For real annotation batches, enable SQLite tracking so the next export skips
-already exported normalized words:
+already exported normalized words. Export state is stored in the shared
+database by default:
 
 ```bash
 python -m tatar_preannotator annotation-export \
   --db data/zamanalif.sqlite \
   --output labelstudio_word_review_001.json \
   --max-items 5000 \
-  --track-exported \
-  --state-db data/word_export_state.sqlite
+  --track-exported
 ```
 
 Selection rules:
@@ -176,6 +176,8 @@ Selection rules:
 - export `"RL"` words only when they contain conditional letters or
   Russian-loan review letters `ё ы ь ъ щ`;
 - skip native-looking `"N"` words with mixed front/back vowel harmony;
+- defer every normalized word that Gemini marked as a homonym to the later
+  sentence-context project;
 - deduplicate by lowercase normalized Cyrillic word form.
 
 The output is a Label Studio JSON array:
@@ -186,10 +188,23 @@ The output is a Label Studio JSON array:
     "id": "word_000001",
     "cyrl_word": "вакытында",
     "auto_zamanalif": "waqıtında",
+    "gemini_origin": "N",
     "hints_html": "<ul><li><b>в</b> -> <b>w</b></li><li>Gemini's origin prediction: <b>native</b></li></ul>"
   }
 }
 ```
+
+Accepted convention choices are represented in `auto_zamanalif` with inline
+DSL. For example:
+
+```text
+orfografi{{IYA|compact=ä|explicit=yä}}
+```
+
+`IYA` is the stable rule identifier. `compact` and `explicit` are named
+options. The preferred policy currently resolves it to `orfografiyä`; the
+compact PDF policy resolves it to `orfografiä`. The DSL marks only the
+differing substring.
 
 The command also writes a report JSON. By default it is written as
 `<output>.report.json`.
@@ -204,6 +219,13 @@ Label Studio layout:
   <Header value="Hints"/>
   <HyperText name="hints" value="$hints_html"/>
 
+  <Header value="Correct Gemini origin prediction if necessary"/>
+  <Choices name="reviewed_origin" toName="cyrl_word" choice="single" required="true">
+    <Choice value="N"/>
+    <Choice value="RL"/>
+    <Choice value="U"/>
+  </Choices>
+
   <Header value="Correct if necessary | ä Ä | ö Ö | ü Ü | ñ Ñ | ı I | ğ Ğ | ş Ş | ç Ç"/>
   <TextArea
     name="corrected_zamanalif"
@@ -215,6 +237,29 @@ Label Studio layout:
   />
 </View>
 ```
+
+The shared SQLite schema includes `reviewed_words` for approved DSL conversion
+and reviewed origin. The current increment provides the storage API; importing
+completed Label Studio exports into that table is the next annotation-pipeline
+step.
+
+## Conversion DSL
+
+The DSL is reserved for competing accepted conventions. It is not used for:
+
+- lexical uncertainty such as deciding `в -> w/v` for a particular word;
+- converter uncertainty;
+- Russian/Tatar homonyms that require sentence context.
+
+The public DSL helpers are in `tatar_preannotator.conversion`:
+
+- `parse_dsl(value)` validates and parses DSL;
+- `resolve_dsl(value, policy)` produces plain Zamanalif;
+- `PREFERRED_POLICY` currently selects `IYA=explicit`;
+- `PDF_COMPACT_POLICY` selects `IYA=compact`.
+
+Malformed syntax, unknown rules, unknown options, and non-Zamanalif output fail
+with an explicit `DslError`.
 
 ## Conversion Rules
 

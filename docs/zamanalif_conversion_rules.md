@@ -9,6 +9,31 @@ especially carefully when the word contains conditional letters or when Gemini
 marked the word as a Russian/Russian-international loanword (`RL`) or unknown
 (`U`).
 
+## Conversion Decision Types
+
+The pipeline distinguishes four cases:
+
+- **deterministic conversion**: one mechanical Zamanalif output;
+- **convention choice**: multiple accepted writing policies, represented by DSL;
+- **lexical choice**: one correct result for a word after origin and identity are
+  known, resolved by Project 1 review;
+- **contextual homonym**: conversion depends on sentence meaning, deferred to
+  Project 2.
+
+Converter uncertainty is not an accepted variant. It must remain a review item.
+
+The first registered convention choice is Cyrillic `ия`:
+
+```text
+орфография -> orfografi{{IYA|compact=ä|explicit=yä}}
+```
+
+- preferred policy: `IYA=explicit` -> `orfografiyä`;
+- compact PDF policy: `IYA=compact` -> `orfografiä`.
+
+Rule and option names are stable API identifiers. DSL choices cover only the
+substring that differs.
+
 ## Zamanalif Alphabet and Unicode
 
 Use real Unicode Zamanalif Latin characters:
@@ -60,7 +85,7 @@ These mappings normally do not need human review by themselves:
 
 ## Conditional Letters
 
-Conditional letters are the main annotation target:
+Conditional letters are a broad, inexpensive annotation prefilter:
 
 ```text
 У у, Ү ү, Г г, К к, В в, Я я, Ю ю, Е е, Ц ц
@@ -82,6 +107,11 @@ Review words containing these letters carefully:
   internal native after consonant `e`, after `и` `e`. Loanword behavior needs
   review.
 - `ц`: loanword `s` at word start/end or after consonants, `ts` after vowels.
+
+This list is not the final definition of ambiguity. Sequence rules, signs,
+suffix boundaries, stems, origin, and policy choices can also require review.
+The converter's structured decisions are the authoritative signal as rules are
+migrated to the new engine.
 
 ## Russian-Loan Review Cases
 
@@ -118,6 +148,28 @@ Important caveats:
   are why these letters remain dictionary-review targets.
 - Arabic-Persian loans include lexical exceptions, so dictionary review is
   still useful even when the automatic suggestion looks plausible.
+
+## Deliberately Excluded PDF Policies
+
+The target dataset will not use deliberate vowel-harmony restoration for words
+that are disharmonic in Cyrillic, and it will not use the PDF's rewritten month
+names. These are not registered DSL alternatives.
+
+The legacy converter and generated PDF fixture still contain reviewed cases
+from both groups. They remain in place until their triplets are inspected and
+commented out interactively; they must not be interpreted as the preferred
+dataset policy during this transition.
+
+## Reference Status
+
+- The PDF is a rule reference, but some policies are intentionally excluded.
+- ANTAT is evidence for another convention profile, not universal gold truth.
+- A reference mismatch should become a reviewed rule, a documented exclusion,
+  or an annotation decision. It should not automatically become a whole-word
+  converter override.
+- Existing exact-word overrides are legacy compatibility data. New converter
+  rules should prefer general context rules or reviewed stems; approved
+  word-level results belong in the SQLite reviewed dictionary.
 
 ## Label Studio Project 1 Guidance
 
