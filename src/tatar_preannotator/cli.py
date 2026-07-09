@@ -44,6 +44,11 @@ def main(argv: list[str] | None = None) -> int:
         "--model",
         help="Gemini model to use; overrides gemini.model from config.",
     )
+    annotate.add_argument(
+        "--retry-unprocessable",
+        action="store_true",
+        help="Requeue all unprocessable samples before annotation.",
+    )
 
     export_words = subparsers.add_parser(
         "annotation-export",
@@ -157,6 +162,7 @@ def _annotate(args: argparse.Namespace) -> int:
             shutdown_requested=shutdown.requested,
             force_shutdown=shutdown.forced,
             shutdown_deadline=shutdown.deadline,
+            retry_unprocessable=args.retry_unprocessable,
         )
     print(
         "annotation stopped: "

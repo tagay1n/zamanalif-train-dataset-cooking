@@ -46,6 +46,7 @@ def run_annotation(
     force_shutdown: Callable[[], bool] | None = None,
     shutdown_deadline: Callable[[], float | None] | None = None,
     key_shuffle: Callable[[list[str]], None] | None = None,
+    retry_unprocessable: bool = False,
 ) -> AnnotateSummary:
     """Run adaptive Gemini pre-annotation until the configured stop condition is reached."""
     if now is None:
@@ -61,7 +62,11 @@ def run_annotation(
     minimum_request_interval = 60 / config.requests_per_minute
     conn = db.connect(db_path)
     try:
+        db.ensure_preannotation_schema(conn)
         db.reset_processing(conn)
+        if retry_unprocessable:
+            retry_count = db.retry_unprocessable(conn)
+            _log(log, f"requeued unprocessable samples: count={retry_count}")
         exhausted_keys_result = _read_exhausted_keys(config.exhausted_keys_path)
         if isinstance(exhausted_keys_result, str):
             error = f"exhausted key file error: {exhausted_keys_result}"
@@ -197,7 +202,7 @@ def run_annotation(
                 )
                 _log(log, f"batch size reduced to {batch_size}")
                 continue
-            db.save_annotations(conn, validation.items)
+            db.save_annotations(conn, validation.items, model=config.model)
             _log(log, f"batch annotated: count={len(validation.items)}")
             for item in validation.items:
                 _log(log, _format_annotation_log_item(item))

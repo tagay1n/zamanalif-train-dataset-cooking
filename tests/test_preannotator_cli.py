@@ -23,6 +23,7 @@ class PreannotatorCliTests(unittest.TestCase):
         self.assertIn("--config", help_text)
         self.assertIn("config.yaml", help_text)
         self.assertIn("--model", help_text)
+        self.assertIn("--retry-unprocessable", help_text)
 
     def test_fatal_annotation_error_is_printed_and_exits_nonzero(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -145,11 +146,13 @@ preannotation:
                             str(config_path),
                             "--model",
                             "cli-model",
+                            "--retry-unprocessable",
                         ]
                     )
 
         self.assertEqual(exit_code, 0)
         self.assertEqual(run_annotation.call_args.kwargs["config"].model, "cli-model")
+        self.assertTrue(run_annotation.call_args.kwargs["retry_unprocessable"])
 
     def test_blank_model_cli_option_fails_fast(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

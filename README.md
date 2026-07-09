@@ -59,6 +59,9 @@ Use `--exhaustive` only when you intentionally want to scan full document texts.
 
 The selector is deterministic for the same input and `--seed`.
 
+Current annotation inclusion/exclusion decisions are documented in
+[docs/annotation_scope.md](docs/annotation_scope.md).
+
 ## Gemini Pre-Annotation
 
 Create a private `config.yaml` from `config.example.yaml`. The config must
@@ -93,6 +96,20 @@ To override only the configured Gemini model for one run:
 ```bash
 python -m tatar_preannotator annotate --model gemini-2.5-flash
 ```
+
+To retry every sample previously marked `unprocessable` with another model:
+
+```bash
+python -m tatar_preannotator annotate \
+  --retry-unprocessable \
+  --model <alternative-gemini-model>
+```
+
+Retry mode requeues only terminal failures. Existing successful annotations are
+not changed. Samples that fail again return to `unprocessable`; successful
+retries are saved normally. The database records the successful model in
+`preannotation_state.annotated_by_model`. Existing annotations created before
+this migration keep a null model value.
 
 The annotator reads pending samples from SQLite, sends adaptive batches to
 Gemini, validates the returned JSON schema, and saves valid pre-annotations in

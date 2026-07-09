@@ -17,12 +17,38 @@ def connect(path: str | Path) -> sqlite3.Connection:
     return conn
 
 
+def ensure_preannotation_schema(conn: sqlite3.Connection) -> None:
+    """Apply additive pre-annotation state migrations."""
+    columns = {
+        str(row["name"]) for row in conn.execute("PRAGMA table_info(preannotation_state)")
+    }
+    if not columns:
+        raise sqlite3.OperationalError("preannotation_state table does not exist")
+    if "annotated_by_model" not in columns:
+        conn.execute("ALTER TABLE preannotation_state ADD COLUMN annotated_by_model TEXT")
+        conn.commit()
+
+
 def reset_processing(conn: sqlite3.Connection) -> None:
     conn.execute(
         "UPDATE preannotation_state SET status='pending', updated_at=? WHERE status='processing'",
         (_now(),),
     )
     conn.commit()
+
+
+def retry_unprocessable(conn: sqlite3.Connection) -> int:
+    """Move all terminal failures back to pending and return the affected count."""
+    cursor = conn.execute(
+        """
+        UPDATE preannotation_state
+        SET status='pending', updated_at=?
+        WHERE status='unprocessable'
+        """,
+        (_now(),),
+    )
+    conn.commit()
+    return int(cursor.rowcount)
 
 
 def annotated_count(conn: sqlite3.Connection) -> int:
@@ -80,18 +106,25 @@ def mark_pending(conn: sqlite3.Connection, samples: Iterable[Sample], error: str
     conn.commit()
 
 
-def save_annotations(conn: sqlite3.Connection, items: Iterable[dict]) -> None:
+def save_annotations(
+    conn: sqlite3.Connection,
+    items: Iterable[dict],
+    *,
+    model: str,
+) -> None:
     now = _now()
     conn.executemany(
         """
         UPDATE preannotation_state
-        SET status='annotated', tatar=?, tokens_json=?, last_error=NULL, updated_at=?
+        SET status='annotated', tatar=?, tokens_json=?, last_error=NULL,
+            annotated_by_model=?, updated_at=?
         WHERE sample_id=?
         """,
         [
             (
                 1 if item["tatar"] else 0,
                 json.dumps(item["tokens"], ensure_ascii=False, sort_keys=True),
+                model,
                 now,
                 item["id"],
             )
@@ -115,4 +148,3 @@ def mark_unprocessable(conn: sqlite3.Connection, sample: Sample, error: str) -> 
 
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
-

@@ -397,6 +397,74 @@ class AnnotateTests(unittest.TestCase):
         self.assertEqual(rows[0]["status"], "unprocessable")
         self.assertIn("invalid JSON", rows[0]["last_error"])
 
+    def test_retry_unprocessable_preserves_successes_and_records_models(self) -> None:
+        logs: list[str] = []
+        with _db_path(
+            [
+                {"id": "doc-a", "sentence": "Казан."},
+                {"id": "doc-b", "sentence": "Проект."},
+            ]
+        ) as path:
+            first_summary = run_annotation(
+                db_path=path,
+                config=_config(target=2, batch_size=1, model="model-a"),
+                client=FakeClient(
+                    [
+                        _response(
+                            [
+                                {
+                                    "id": "sent_000001",
+                                    "tatar": True,
+                                    "tokens": [{"text": "Казан", "label": "N"}],
+                                }
+                            ]
+                        ),
+                        "not-json",
+                    ]
+                ),
+                sleep=lambda seconds: None,
+            )
+            before_retry = _states(path)
+
+            second_summary = run_annotation(
+                db_path=path,
+                config=_config(target=2, batch_size=1, model="model-b"),
+                client=FakeClient(
+                    [
+                        _response(
+                            [
+                                {
+                                    "id": "sent_000002",
+                                    "tatar": True,
+                                    "tokens": [{"text": "Проект", "label": "RL"}],
+                                }
+                            ]
+                        )
+                    ]
+                ),
+                sleep=lambda seconds: None,
+                log=logs.append,
+                retry_unprocessable=True,
+            )
+            after_retry = _states(path)
+
+        self.assertEqual(first_summary.stopped_reason, "no_pending")
+        self.assertEqual(
+            [row["status"] for row in before_retry],
+            ["annotated", "unprocessable"],
+        )
+        self.assertEqual(second_summary.stopped_reason, "target_reached")
+        self.assertEqual(
+            [row["status"] for row in after_retry],
+            ["annotated", "annotated"],
+        )
+        self.assertEqual(
+            [row["annotated_by_model"] for row in after_retry],
+            ["model-a", "model-b"],
+        )
+        self.assertEqual([row["attempts"] for row in after_retry], [1, 2])
+        self.assertIn("requeued unprocessable samples: count=1", "\n".join(logs))
+
     def test_empty_response_reduces_batch_instead_of_stopping(self) -> None:
         logs: list[str] = []
         with _db_path(
@@ -531,9 +599,10 @@ def _config(
     exhausted_keys_path: str = "exhausted_keys.json",
     requests_per_minute: int = 1_000_000,
     graceful_shutdown_timeout_seconds: int = 300,
+    model: str = "model-a",
 ) -> PreannotationConfig:
     return PreannotationConfig(
-        model="model-a",
+        model=model,
         api_keys=keys,
         exhausted_keys_path=exhausted_keys_path,
         requests_per_minute=requests_per_minute,
@@ -579,7 +648,12 @@ def _states(path: str) -> list[sqlite3.Row]:
     with sqlite3.connect(path) as conn:
         conn.row_factory = sqlite3.Row
         return conn.execute(
-            "SELECT sample_id, status, tatar, tokens_json, last_error FROM preannotation_state ORDER BY sample_id"
+            """
+            SELECT sample_id, status, tatar, tokens_json, attempts, last_error,
+                   annotated_by_model
+            FROM preannotation_state
+            ORDER BY sample_id
+            """
         ).fetchall()
 
 
