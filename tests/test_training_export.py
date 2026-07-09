@@ -62,6 +62,7 @@ class TrainingExportTests(unittest.TestCase):
             manifest["effective_policy"],
             {
                 "IYA": "explicit",
+                "ARABIC_INITIAL_GA": "plain",
                 "IE_GLIDE": "plain",
                 "RUS_SIGN_GLIDE": "omit",
                 "RUS_SOFT_SIGN": "preserve",
@@ -285,6 +286,7 @@ class TrainingExportTests(unittest.TestCase):
             effective,
             {
                 "IYA": "compact",
+                "ARABIC_INITIAL_GA": "plain",
                 "IE_GLIDE": "plain",
                 "RUS_SIGN_GLIDE": "omit",
                 "RUS_SOFT_SIGN": "preserve",

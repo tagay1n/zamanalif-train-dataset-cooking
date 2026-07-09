@@ -150,6 +150,15 @@ class ConversionDslTests(unittest.TestCase):
         self.assertEqual(resolve_dsl(value, {"RL_FINAL_KA": "suffix"}), "bulavqa")
         self.assertEqual(resolve_dsl(value, {"RL_FINAL_KA": "stem"}), "bulavka")
 
+    def test_arabic_initial_ga_rule_accepts_custom_option_text(self) -> None:
+        value = "{{ARABIC_INITIAL_GA|plain=ğayı|front=ğäye}}p"
+
+        self.assertEqual(resolve_dsl(value), "ğayıp")
+        self.assertEqual(
+            resolve_dsl(value, {"ARABIC_INITIAL_GA": "front"}),
+            "ğäyep",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

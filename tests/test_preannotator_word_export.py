@@ -407,6 +407,24 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     stem,
                 )
 
+    def test_arabic_initial_ga_fronting_is_policy_dsl(self) -> None:
+        cases = [
+            ("гадел", "{{ARABIC_INITIAL_GA|plain=ğa|front=ğä}}del", "ğadel", "ğädel"),
+            ("гадәт", "{{ARABIC_INITIAL_GA|plain=ğa|front=ğä}}dät", "ğadät", "ğädät"),
+            ("гаеп", "{{ARABIC_INITIAL_GA|plain=ğayı|front=ğäye}}p", "ğayıp", "ğäyep"),
+            ("гаскәр", "{{ARABIC_INITIAL_GA|plain=ğasq|front=ğäsk}}är", "ğasqär", "ğäskär"),
+        ]
+
+        for word, expected_dsl, plain, front in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "N")
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl), plain)
+                self.assertEqual(
+                    resolve_dsl(dsl, {"ARABIC_INITIAL_GA": "front"}),
+                    front,
+                )
+
     def test_general_apostrophe_and_sign_conversions(self) -> None:
         self.assertEqual(convert_for_annotation("роль", "RL"), "rol'")
         self.assertEqual(convert_for_annotation("культура", "RL"), "kul'tura")

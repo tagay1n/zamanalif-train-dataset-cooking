@@ -68,12 +68,19 @@ class RuleDefinition:
     rule_id: str
     options: tuple[tuple[str, str], ...]
     default_option: str
+    allow_custom_option_text: bool = False
 
 
 IYA_RULE = RuleDefinition(
     rule_id="IYA",
     options=(("compact", "ä"), ("explicit", "yä")),
     default_option="explicit",
+)
+ARABIC_INITIAL_GA_RULE = RuleDefinition(
+    rule_id="ARABIC_INITIAL_GA",
+    options=(("plain", "a"), ("front", "ä")),
+    default_option="plain",
+    allow_custom_option_text=True,
 )
 IE_GLIDE_RULE = RuleDefinition(
     rule_id="IE_GLIDE",
@@ -109,6 +116,7 @@ NATIVE_UW_RULE = RuleDefinition(
 RULES: Mapping[str, RuleDefinition] = MappingProxyType(
     {
         IYA_RULE.rule_id: IYA_RULE,
+        ARABIC_INITIAL_GA_RULE.rule_id: ARABIC_INITIAL_GA_RULE,
         IE_GLIDE_RULE.rule_id: IE_GLIDE_RULE,
         RUS_SIGN_GLIDE_RULE.rule_id: RUS_SIGN_GLIDE_RULE,
         RUS_SOFT_SIGN_RULE.rule_id: RUS_SOFT_SIGN_RULE,
@@ -120,6 +128,7 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
 PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
     {
         "IYA": "explicit",
+        "ARABIC_INITIAL_GA": "plain",
         "IE_GLIDE": "plain",
         "RUS_SIGN_GLIDE": "omit",
         "RUS_SOFT_SIGN": "preserve",
@@ -131,6 +140,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
 PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
     {
         "IYA": "compact",
+        "ARABIC_INITIAL_GA": "plain",
         "IE_GLIDE": "plain",
         "RUS_SIGN_GLIDE": "omit",
         "RUS_SOFT_SIGN": "omit",
@@ -282,6 +292,15 @@ def _validated_choice(choice: Choice) -> Choice:
     if choice.rule_id not in RULES:
         raise DslError(f"unknown rule id: {choice.rule_id}")
     definition = RULES[choice.rule_id]
+    if definition.allow_custom_option_text:
+        expected_option_ids = tuple(option_id for option_id, _ in definition.options)
+        actual_option_ids = tuple(option_id for option_id, _ in choice.options)
+        if actual_option_ids != expected_option_ids:
+            raise DslError(
+                f"options for {choice.rule_id} must be "
+                + ", ".join(expected_option_ids)
+            )
+        return choice
     if choice.options != definition.options:
         raise DslError(
             f"options for {choice.rule_id} must be "
