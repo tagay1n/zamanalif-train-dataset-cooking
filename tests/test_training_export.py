@@ -66,6 +66,7 @@ class TrainingExportTests(unittest.TestCase):
                 "RUS_SIGN_GLIDE": "omit",
                 "RUS_SOFT_SIGN": "preserve",
                 "RUS_JOTATED_SOFTENING": "glide",
+                "RL_FINAL_KA": "suffix",
                 "NATIVE_UW": "glide",
             },
         )
@@ -288,6 +289,7 @@ class TrainingExportTests(unittest.TestCase):
                 "RUS_SIGN_GLIDE": "omit",
                 "RUS_SOFT_SIGN": "preserve",
                 "RUS_JOTATED_SOFTENING": "glide",
+                "RL_FINAL_KA": "suffix",
                 "NATIVE_UW": "glide",
             },
         )

@@ -143,6 +143,13 @@ class ConversionDslTests(unittest.TestCase):
         self.assertEqual(resolve_dsl(value, {"IE_GLIDE": "glide"}), "tiyeş")
         self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "tieş")
 
+    def test_loanword_final_ka_rule_resolves_by_policy(self) -> None:
+        value = "bulav{{RL_FINAL_KA|suffix=q|stem=k}}a"
+
+        self.assertEqual(resolve_dsl(value), "bulavqa")
+        self.assertEqual(resolve_dsl(value, {"RL_FINAL_KA": "suffix"}), "bulavqa")
+        self.assertEqual(resolve_dsl(value, {"RL_FINAL_KA": "stem"}), "bulavka")
+
 
 if __name__ == "__main__":
     unittest.main()

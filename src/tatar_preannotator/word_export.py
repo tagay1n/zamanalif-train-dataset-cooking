@@ -20,6 +20,7 @@ from tatar_preannotator.conversion import (
     IYA_RULE,
     Literal,
     NATIVE_UW_RULE,
+    RL_FINAL_KA_RULE,
     RUS_JOTATED_SOFTENING_RULE,
     RUS_SOFT_SIGN_RULE,
     RUS_SIGN_GLIDE_RULE,
@@ -326,6 +327,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     if result.has_choices:
         return result_with_ie_glide_choices(word, result_with_iya_choices(word, result))
     result = result_with_russian_jotated_softening_choices(word, compact, label)
+    result = result_with_loanword_final_ka_choices(word, result, label)
     result = result_with_iya_choices(word, result)
     return result_with_ie_glide_choices(word, result)
 
@@ -527,6 +529,32 @@ def _is_russian_jotated_softening_position(source: str, index: int) -> bool:
     if previous in FRONT_VOWELS | BACK_VOWELS | {"е", "ё", "ю", "я", "ь", "ъ", "-", "'"}:
         return False
     return bool(CYRILLIC_RE.fullmatch(previous))
+
+
+def result_with_loanword_final_ka_choices(
+    source: str,
+    result: ConversionResult,
+    label: str,
+) -> ConversionResult:
+    """Annotate RL final ``-ка`` as Tatar suffix ``q`` vs loanword stem ``k``."""
+    if label != "RL" or not source.endswith("ка"):
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in result.segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        if not changed and text.endswith("qa"):
+            _append_literal_segment(segments, text[:-2])
+            segments.append(Choice(RL_FINAL_KA_RULE.rule_id, RL_FINAL_KA_RULE.options))
+            _append_literal_segment(segments, "a")
+            changed = True
+            continue
+        _append_literal_segment(segments, text)
+    return ConversionResult(tuple(segments)) if changed else result
 
 
 def result_with_native_uw_choices(

@@ -95,6 +95,11 @@ RUS_JOTATED_SOFTENING_RULE = RuleDefinition(
     options=(("glide", "y"), ("apostrophe", "'")),
     default_option="glide",
 )
+RL_FINAL_KA_RULE = RuleDefinition(
+    rule_id="RL_FINAL_KA",
+    options=(("suffix", "q"), ("stem", "k")),
+    default_option="suffix",
+)
 NATIVE_UW_RULE = RuleDefinition(
     rule_id="NATIVE_UW",
     options=(("plain", ""), ("glide", "w")),
@@ -108,6 +113,7 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         RUS_SIGN_GLIDE_RULE.rule_id: RUS_SIGN_GLIDE_RULE,
         RUS_SOFT_SIGN_RULE.rule_id: RUS_SOFT_SIGN_RULE,
         RUS_JOTATED_SOFTENING_RULE.rule_id: RUS_JOTATED_SOFTENING_RULE,
+        RL_FINAL_KA_RULE.rule_id: RL_FINAL_KA_RULE,
         NATIVE_UW_RULE.rule_id: NATIVE_UW_RULE,
     }
 )
@@ -118,6 +124,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "RUS_SIGN_GLIDE": "omit",
         "RUS_SOFT_SIGN": "preserve",
         "RUS_JOTATED_SOFTENING": "glide",
+        "RL_FINAL_KA": "suffix",
         "NATIVE_UW": "glide",
     }
 )
@@ -128,6 +135,7 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "RUS_SIGN_GLIDE": "omit",
         "RUS_SOFT_SIGN": "omit",
         "RUS_JOTATED_SOFTENING": "glide",
+        "RL_FINAL_KA": "suffix",
         "NATIVE_UW": "plain",
     }
 )

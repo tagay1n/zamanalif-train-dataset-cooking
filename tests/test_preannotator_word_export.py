@@ -378,6 +378,35 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("джунгли", "RL"), "djungli")
         self.assertEqual(convert_for_annotation("географик", "RL"), "geografik")
 
+    def test_loanword_final_ka_is_policy_dsl(self) -> None:
+        cases = [
+            ("булавка", "bulav{{RL_FINAL_KA|suffix=q|stem=k}}a", "bulavqa", "bulavka"),
+            ("палатка", "palat{{RL_FINAL_KA|suffix=q|stem=k}}a", "palatqa", "palatka"),
+            ("форсунка", "forsun{{RL_FINAL_KA|suffix=q|stem=k}}a", "forsunqa", "forsunka"),
+            (
+                "фотоплёнка",
+                "fotopl{{RUS_JOTATED_SOFTENING|glide=y|apostrophe='}}on{{RL_FINAL_KA|suffix=q|stem=k}}a",
+                "fotoplyonqa",
+                "fotopl'onka",
+            ),
+        ]
+
+        for word, expected_dsl, suffix, stem in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "RL")
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl), suffix)
+                self.assertEqual(
+                    resolve_dsl(
+                        dsl,
+                        {
+                            "RUS_JOTATED_SOFTENING": "apostrophe",
+                            "RL_FINAL_KA": "stem",
+                        },
+                    ),
+                    stem,
+                )
+
     def test_general_apostrophe_and_sign_conversions(self) -> None:
         self.assertEqual(convert_for_annotation("роль", "RL"), "rol'")
         self.assertEqual(convert_for_annotation("культура", "RL"), "kul'tura")
