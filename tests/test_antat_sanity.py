@@ -103,15 +103,15 @@ class AntatSanityTests(unittest.TestCase):
 
         self.assertEqual([pair.cyrillic_word for pair in coverage.matched_native], ["вакыт"])
         self.assertEqual([pair.cyrillic_word for pair in coverage.matched_loanword], ["проект"])
-        self.assertEqual([pair.cyrillic_word for pair in coverage.matched_both], ["мәгънәле"])
-        self.assertEqual(coverage.rule_gaps, [])
+        self.assertEqual(coverage.matched_both, [])
+        self.assertEqual([gap.pair.cyrillic_word for gap in coverage.rule_gaps], ["мәгънәле"])
         self.assertEqual(
             coverage.summary(),
             {
                 "matched_native": 1,
                 "matched_loanword": 1,
-                "matched_both": 1,
-                "rule_gaps": 0,
+                "matched_both": 0,
+                "rule_gaps": 1,
                 "total": 3,
             },
         )

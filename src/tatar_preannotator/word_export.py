@@ -28,208 +28,6 @@ ALLOWED_ZAMANALIF = frozenset(
     "äÄöÖüÜñÑıİğĞşŞçÇ"
     "-—'’"
 )
-REVIEWED_GH_WORDS = frozenset(
-    {
-        "аббревиатурадагы",
-        "бгә",
-        "елга",
-        "законга",
-        "закондагы",
-        "йолдызлыгы",
-        "киловатт-сәгәт",
-        "кириллицадагы",
-        "куелган",
-        "латиницадагы",
-        "принципларга",
-        "томски-томскига",
-        "цифрларга",
-        "әсәрләрдәге",
-    }
-)
-REVIEWED_GH_CONVERSIONS = {
-    "аергыч": "ayırğıç",
-    "җәмигъ": "cämiğ",
-    "эшләргә": "eşlärğä",
-    "игтибарлы": "iğtibarlı",
-    "ишетелгән": "işetelğän",
-    "кияргә": "kiärgä",
-    "мәгънә": "mäğnä",
-    "мәгънәгә": "mäğnägä",
-    "мәгънәле": "mäğnäle",
-    "мәгънәләре": "mäğnäläre",
-    "мәгънәсен": "mäğnäsen",
-    "мәгънәсендә": "mäğnäsendä",
-    "мәгънәви": "mäğnäwi",
-    "мәгәриф": "mäğärif",
-    "нигмәтуллин": "niğmätullin",
-    "нәгим": "näğim",
-    "сарсаз-баграж": "sarsaz-bagraj",
-    "сәмигулла": "sämiğulla",
-    "сәнгәт": "sänğät",
-    "сәгит": "säğit",
-    "табиги": "tabiği",
-    "гилемханов": "ğilemxanov",
-    "гилмиев": "ğilmiev",
-    "гәлимов": "ğälimov",
-    "гәрәпчә-татарча": "ğäräpçä-tatarça",
-    "гөмер": "ğömer",
-    "гөмуми": "ğömumi",
-    "гөмәр": "ğömär",
-    "шигъри": "şiğri",
-}
-REVIEWED_Y_CONVERSIONS = {
-    "җәмгыяте": "cämğiäte",
-    "мөстәкыйль": "möstäqil",
-    "кагыйдә": "qağidä",
-    "кагыйдәләр": "qağidälär",
-    "кагыйдәләре": "qağidäläre",
-    "кагыйдәсенә": "qağidäsenä",
-    "кыямәт": "qiämät",
-    "тәнкыйди": "tänqidi",
-    "тәрәккый": "täräqqi",
-    "вакыйга": "waqiğa",
-    "хыянәт": "xıyänät",
-    "гыйльми": "ğilmi",
-    "шагыйрь": "şağir",
-}
-REVIEWED_U_CONVERSIONS = {
-    "мияубикә": "miyawbikä",
-    "мәгъсум": "mäğsüm",
-    "мәшгуль": "mäşğül",
-    "сорау": "soraw",
-}
-REVIEWED_YA_CONVERSIONS = {
-    "мордва-ерзя": "mordva-erzä",
-    "ял": "yal",
-    "яз": "yaz",
-}
-REVIEWED_E_CONVERSIONS = {
-    "бакырелан": "baqıryılan",
-    "беркадәр": "berqädär",
-    "фигыльләрнең": "fiğellärneñ",
-    "немецләрне": "nemeslärne",
-    "кәгазъләрендә": "qäğäzlärendä",
-}
-REVIEWED_PDF_CONVERSIONS = {
-    "идарә": "idärä",
-    "җәмәгать": "cämäğät",
-    "фигыль": "fiğel",
-    "фигыльдән": "fiğeldän",
-    "фигыльләр": "fiğellär",
-    "фигыльләрдә": "fiğellärdä",
-    "мөрәҗәгать": "möräcäğät",
-    "пәйгамбәр": "päyğämbär",
-    "кәнәгәт": "qänäğät",
-    "кәгазъ": "qäğäz",
-    "кәгазъдә": "qäğäzdä",
-    "гаҗиз": "ğäciz",
-    "гадәт": "ğädät",
-    "гадәти": "ğädäti",
-    "гадәткә": "ğädätkä",
-    "гадәттә": "ğädättä",
-    "гамәлдә": "ğämäldä",
-    "гамәлгә": "ğämälgä",
-    "гарәби": "ğäräbi",
-    "гарәп": "ğäräp",
-    "гарәп-фарсы": "ğäräp-farsı",
-    "гарәп-фарсыдан": "ğäräp-farsıdan",
-    "гаскәри": "ğäskäri",
-    "шигырь": "şiğer",
-    "шигырь-шигри": "şiğer-şiğri",
-    "щётка": "şçotka",
-}
-REVIEWED_GH_SEQUENCES = (
-    ("агентлыгы", "гы"),
-    ("белдергән", "гән"),
-    ("белдергәндә", "гән"),
-    ("белдергәнгә", "гән"),
-    ("килгән", "гән"),
-    ("килгәндә", "гән"),
-    ("сингармонизмга", "га"),
-)
-REVIEWED_Q_WORDS = frozenset(
-    {
-        "берникәдәр",
-        "беркатлы",
-        "беркая",
-        "беркайчан",
-        "һичкайда",
-        "һәркайсында",
-        "икътисади",
-        "мәкәләмдә",
-        "мәхкүл",
-        "кдпуда",
-        "кәбәхәтлеге",
-        "кәдер",
-        "кәдими",
-        "кәдәр",
-        "көдрәт",
-        "күәт",
-        "рак",
-        "тәкъдим",
-        "тәшрик",
-        "халикны",
-        "өскорма",
-    }
-)
-REVIEWED_Q_SEQUENCES = (
-    ("алфавитка", "ка"),
-    ("интернетка", "ка"),
-    ("объектка", "ка"),
-    ("принципка", "ка"),
-    ("кубка", "ка"),
-    ("салихка", "ка"),
-    ("тарихка", "ка"),
-    ("ёлку", "ку"),
-    ("закончалыклар", "клар"),
-    ("закончалыклары", "клары"),
-)
-REVIEWED_K_WORDS = frozenset(
-    {
-        "башка",
-        "башкисәр",
-        "башкисәрләрне",
-        "дөньякүләм",
-        "ияк",
-        "камали",
-        "камилләштерүгә",
-        "камзул",
-        "карават",
-        "каз",
-        "ком",
-    }
-)
-REVIEWED_SIGN_CONVERSIONS = {
-    "автомобиль": "avtomobil",
-    "д'артаньян": "d'artanyan",
-    "компьютер": "kompyuter",
-    "компьютерлар": "kompyuterlar",
-    "коньяк": "kon'yak",
-    "кремль": "kreml",
-    "маэмай": "ma'may",
-    "медаль": "medal",
-    "мәсьәлә": "mäs'älä",
-    "мәсьүл": "mäs'ül",
-    "нью-йорк": "nyu-york",
-    "коръән": "qor'än",
-    "статья": "stat'ya",
-    "стиль": "stil",
-    "тальян": "tal'yan",
-    "таэмин": "tä'min",
-    "тәэсир": "tä'sir",
-    "тәэсирендә": "tä'sirendä",
-}
-REVIEWED_YU_CONVERSIONS = {
-    "берьюлы": "beryulı",
-    "тимерьюл": "timeryul",
-    "революция": "revolyutsiä",
-    "революциясе": "revolyutsiäse",
-    "юк": "yuq",
-    "юхиди": "yuxidi",
-    "ю": "yü",
-}
-
-
 @dataclass
 class WordStats:
     normalized: str
@@ -698,34 +496,10 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
 
 
 def _convert_known_label(word: str, label: str) -> str:
-    if word in REVIEWED_GH_CONVERSIONS:
-        return REVIEWED_GH_CONVERSIONS[word]
-    if word in REVIEWED_Y_CONVERSIONS:
-        return REVIEWED_Y_CONVERSIONS[word]
-    if word in REVIEWED_U_CONVERSIONS:
-        return REVIEWED_U_CONVERSIONS[word]
-    if word in REVIEWED_YA_CONVERSIONS:
-        return REVIEWED_YA_CONVERSIONS[word]
-    if word in REVIEWED_E_CONVERSIONS:
-        return REVIEWED_E_CONVERSIONS[word]
-    if word in REVIEWED_PDF_CONVERSIONS:
-        return REVIEWED_PDF_CONVERSIONS[word]
-    if word in REVIEWED_SIGN_CONVERSIONS:
-        return REVIEWED_SIGN_CONVERSIONS[word]
-    if word in REVIEWED_YU_CONVERSIONS:
-        return REVIEWED_YU_CONVERSIONS[word]
-
-    month_conversion = _month_name_conversion(word)
-    if month_conversion is not None:
-        return month_conversion
-
     converted: list[str] = []
     index = 0
     while index < len(word):
         char = word[index]
-        if char in {"ь", "ъ"} and index + 1 < len(word) and word[index + 1] == "я":
-            index += 1
-            continue
         surname_conversion = _surname_sequence_conversion(word, index)
         if surname_conversion is not None:
             latin, consumed = surname_conversion
@@ -738,39 +512,6 @@ def _convert_known_label(word: str, label: str) -> str:
         else:
             converted.append(_char_conversion(char, word, index, label))
         index += 1
-    return "".join(converted)
-
-
-def _month_name_conversion(word: str) -> str | None:
-    for cyrillic, latin in (
-        ("гыйнвар", "ğinwar"),
-        ("февраль", "fevral"),
-        ("июн", "iyün"),
-        ("июнь", "iyün"),
-        ("июль", "iyül"),
-        ("сентябрь", "sentäbr"),
-        ("сентябр", "sentäbr"),
-        ("октябрь", "oktäbr"),
-        ("октябр", "oktäbr"),
-        ("ноябрь", "noyäbr"),
-        ("ноябр", "noyäbr"),
-        ("декабрь", "dekäbr"),
-        ("декабр", "dekäbr"),
-    ):
-        if word.startswith(cyrillic):
-            return latin + _month_suffix_conversion(word[len(cyrillic) :])
-    return None
-
-
-def _month_suffix_conversion(suffix: str) -> str:
-    if not suffix:
-        return ""
-    converted: list[str] = []
-    for index, char in enumerate(suffix):
-        if index == 0 and char == "е":
-            converted.append("e")
-        else:
-            converted.append(_char_conversion(char, suffix, index, "N"))
     return "".join(converted)
 
 
@@ -805,12 +546,10 @@ def _conditional_char_conversion(char: str, word: str, index: int, label: str) -
 def _loanword_conditional_char(char: str, word: str, index: int) -> str:
     if char == "е":
         return _e_conversion(word, index, "RL")
-    if char == "в" and index == 0 and word.startswith("вәлиев"):
-        return "w"
     if char == "г":
-        return _reviewed_gh_conversion(word, index) or "g"
+        return "g"
     if char == "к":
-        return _reviewed_k_conversion(word, index) or "k"
+        return "k"
     if char == "я":
         return _ya_conversion(word, index, "RL")
     return {
@@ -827,9 +566,6 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
     if char == "в":
         return "w"
     if char == "г":
-        suffix = _reviewed_gh_conversion(word, index)
-        if suffix:
-            return suffix
         context = _local_vowel_context(word, index)
         if context == "front":
             return "g"
@@ -837,9 +573,6 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
             return "ğ"
         return "g" if harmony == "front_only" else "ğ" if harmony == "back_only" else ""
     if char == "к":
-        reviewed = _reviewed_k_conversion(word, index)
-        if reviewed:
-            return reviewed
         context = _local_vowel_context(word, index)
         if context == "front":
             return "k"
@@ -872,29 +605,9 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
 def _ts_conversion(word: str, index: int) -> str:
     if index == len(word) - 1:
         return "s"
-    if index > 0 and word[index - 1] in FRONT_VOWELS | BACK_VOWELS:
+    if index > 0 and word[index - 1] in FRONT_VOWELS | BACK_VOWELS | {"е", "ё", "ю", "я"}:
         return "ts"
     return "s"
-
-
-def _reviewed_gh_conversion(word: str, index: int) -> str:
-    if word in REVIEWED_GH_WORDS:
-        return "ğ"
-    for cyrillic, sequence in REVIEWED_GH_SEQUENCES:
-        if word == cyrillic and word.rfind(sequence) == index:
-            return "ğ"
-    return ""
-
-
-def _reviewed_k_conversion(word: str, index: int) -> str:
-    if word in REVIEWED_Q_WORDS:
-        return "q"
-    for cyrillic, sequence in REVIEWED_Q_SEQUENCES:
-        if word == cyrillic and word.rfind(sequence) == index:
-            return "q"
-    if word in REVIEWED_K_WORDS:
-        return "k"
-    return ""
 
 
 def _ya_conversion(word: str, index: int, label: str) -> str:

@@ -160,10 +160,9 @@ The target dataset will not use deliberate vowel-harmony restoration for words
 that are disharmonic in Cyrillic, and it will not use the PDF's rewritten month
 names. These are not registered DSL alternatives.
 
-The legacy converter and generated PDF fixture still contain reviewed cases
-from both groups. They remain in place until their triplets are inspected and
-commented out interactively; they must not be interpreted as the preferred
-dataset policy during this transition.
+The generated PDF fixture still contains examples from both groups for audit
+purposes. They must not be interpreted as the preferred dataset policy during
+this transition.
 
 ## Reference Status
 
@@ -172,9 +171,9 @@ dataset policy during this transition.
 - A reference mismatch should become a reviewed rule, a documented exclusion,
   or an annotation decision. It should not automatically become a whole-word
   converter override.
-- Existing exact-word overrides are legacy compatibility data. New converter
-  rules should prefer general context rules or reviewed stems; approved
-  word-level results belong in the SQLite reviewed dictionary.
+- Exact-word converter overrides are intentionally avoided. New converter rules
+  should prefer general context rules or reviewed stems; approved word-level
+  results belong in the SQLite reviewed dictionary.
 
 ## Label Studio Project 1 Guidance
 

@@ -286,19 +286,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("дөнья", "N"), "dönya")
         self.assertEqual(convert_for_annotation("көньяк", "N"), "könyaq")
         self.assertEqual(convert_for_annotation("һәръяклап", "N"), "häryaqlap")
-        self.assertEqual(convert_for_annotation("ладья", "RL"), "ladya")
-
-    def test_month_names_follow_pdf_reference_spellings(self) -> None:
-        self.assertEqual(convert_for_annotation("гыйнвар", "N"), "ğinwar")
-        self.assertEqual(convert_for_annotation("февраль", "RL"), "fevral")
-        self.assertEqual(convert_for_annotation("июнь", "N"), "iyün")
-        self.assertEqual(convert_for_annotation("июль", "N"), "iyül")
-        self.assertEqual(convert_for_annotation("октябрь", "RL"), "oktäbr")
-        self.assertEqual(convert_for_annotation("октябрендә", "RL"), "oktäbrendä")
-        self.assertEqual(convert_for_annotation("сентябрь", "RL"), "sentäbr")
-        self.assertEqual(convert_for_annotation("сентябреннән", "RL"), "sentäbrennän")
-        self.assertEqual(convert_for_annotation("ноябрь", "N"), "noyäbr")
-        self.assertEqual(convert_for_annotation("декабрь", "N"), "dekäbr")
+        self.assertEqual(convert_for_annotation("ладья", "RL"), "lad'ya")
 
     def test_e_conversion_uses_pdf_context_rules(self) -> None:
         self.assertEqual(convert_for_annotation("электр", "RL"), "elektr")
@@ -334,8 +322,6 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("мәһдиев", "N"), "mähdiev")
         self.assertEqual(convert_for_annotation("әлмиев", "N"), "älmiev")
         self.assertEqual(convert_for_annotation("әлмиевкә", "N"), "älmievkä")
-        self.assertEqual(convert_for_annotation("вәлиев", "RL"), "wäliev")
-        self.assertEqual(convert_for_annotation("вәлиева", "RL"), "wälieva")
         self.assertEqual(convert_for_annotation("вакыт", "N"), "waqıt")
         self.assertEqual(convert_for_annotation("актив", "RL"), "aktiv")
 
@@ -365,133 +351,17 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("джунгли", "RL"), "djungli")
         self.assertEqual(convert_for_annotation("географик", "RL"), "geografik")
 
-    def test_suffix_g_uses_gh_for_native_and_inflected_loanwords(self) -> None:
-        self.assertEqual(convert_for_annotation("законга", "RL"), "zakonğa")
-        self.assertEqual(convert_for_annotation("принципларга", "RL"), "prinsiplarğa")
-        self.assertEqual(convert_for_annotation("аббревиатурадагы", "RL"), "abbreviaturadağı")
-        self.assertEqual(convert_for_annotation("әсәрләрдәге", "N"), "äsärlärdäğe")
-        self.assertEqual(convert_for_annotation("куелган", "N"), "quyılğan")
-        self.assertEqual(convert_for_annotation("белдергән", "N"), "belderğän")
-        self.assertEqual(convert_for_annotation("килгән", "N"), "kilğän")
-        self.assertEqual(convert_for_annotation("елга", "N"), "yılğa")
-
-    def test_reviewed_q_words_override_context_rules(self) -> None:
-        self.assertEqual(convert_for_annotation("принципка", "RL"), "prinsipqa")
-        self.assertEqual(convert_for_annotation("объектка", "RL"), "obyektqa")
-        self.assertEqual(convert_for_annotation("беркая", "N"), "berqaya")
-        self.assertEqual(convert_for_annotation("кәдер", "N"), "qäder")
-        self.assertEqual(convert_for_annotation("салихка", "N"), "salixqa")
-        self.assertEqual(convert_for_annotation("закончалыклар", "RL"), "zakonçalıqlar")
-
-    def test_reviewed_k_words_override_context_rules(self) -> None:
-        self.assertEqual(convert_for_annotation("башка", "N"), "başka")
-        self.assertEqual(convert_for_annotation("башкисәр", "N"), "başkisär")
-        self.assertEqual(convert_for_annotation("ияк", "N"), "iäk")
-        self.assertEqual(convert_for_annotation("камали", "N"), "kamali")
-        self.assertEqual(convert_for_annotation("карават", "N"), "karawat")
-        self.assertEqual(convert_for_annotation("каз", "N"), "kaz")
-        self.assertEqual(convert_for_annotation("дөньякүләм", "N"), "dönyaküläm")
-
-    def test_reviewed_apostrophe_and_sign_conversions(self) -> None:
-        self.assertEqual(convert_for_annotation("д'артаньян", "RL"), "d'artanyan")
-        self.assertEqual(convert_for_annotation("коръән", "N"), "qor'än")
-        self.assertEqual(convert_for_annotation("таэмин", "N"), "tä'min")
-        self.assertEqual(convert_for_annotation("тәэсир", "N"), "tä'sir")
-        self.assertEqual(convert_for_annotation("маэмай", "N"), "ma'may")
-        self.assertEqual(convert_for_annotation("мәсьәлә", "N"), "mäs'älä")
-        self.assertEqual(convert_for_annotation("мәсьүл", "N"), "mäs'ül")
+    def test_general_apostrophe_and_sign_conversions(self) -> None:
         self.assertEqual(convert_for_annotation("роль", "RL"), "rol'")
         self.assertEqual(convert_for_annotation("культура", "RL"), "kul'tura")
         self.assertEqual(convert_for_annotation("коньяк", "RL"), "kon'yak")
         self.assertEqual(convert_for_annotation("секретарь", "RL"), "sekretar'")
         self.assertEqual(convert_for_annotation("тальян", "RL"), "tal'yan")
 
-    def test_reviewed_silent_sign_conversions(self) -> None:
-        self.assertEqual(convert_for_annotation("автомобиль", "RL"), "avtomobil")
-        self.assertEqual(convert_for_annotation("компьютер", "RL"), "kompyuter")
-        self.assertEqual(convert_for_annotation("нью-йорк", "RL"), "nyu-york")
-        self.assertEqual(convert_for_annotation("кремль", "RL"), "kreml")
-        self.assertEqual(convert_for_annotation("медаль", "RL"), "medal")
-        self.assertEqual(convert_for_annotation("стиль", "RL"), "stil")
-
     def test_reviewed_yu_conversions(self) -> None:
-        self.assertEqual(convert_for_annotation("берьюлы", "N"), "beryulı")
-        self.assertEqual(convert_for_annotation("июнендә", "RL"), "iyünendä")
         self.assertEqual(convert_for_annotation("революция", "RL"), "revolyutsiä")
         self.assertEqual(convert_for_annotation("революциясе", "RL"), "revolyutsiäse")
-        self.assertEqual(convert_for_annotation("тимерьюл", "N"), "timeryul")
         self.assertEqual(convert_for_annotation("тию", "N"), "tiyü")
-        self.assertEqual(convert_for_annotation("юк", "N"), "yuq")
-        self.assertEqual(convert_for_annotation("юхиди", "N"), "yuxidi")
-        self.assertEqual(convert_for_annotation("ю", "N"), "yü")
-
-    def test_reviewed_gh_lexical_conversions(self) -> None:
-        self.assertEqual(convert_for_annotation("мәгънә", "N"), "mäğnä")
-        self.assertEqual(convert_for_annotation("мәгънәгә", "N"), "mäğnägä")
-        self.assertEqual(convert_for_annotation("җәмигъ", "N"), "cämiğ")
-        self.assertEqual(convert_for_annotation("игтибарлы", "N"), "iğtibarlı")
-        self.assertEqual(convert_for_annotation("сәгит", "N"), "säğit")
-        self.assertEqual(convert_for_annotation("табиги", "N"), "tabiği")
-        self.assertEqual(convert_for_annotation("гилемханов", "RL"), "ğilemxanov")
-        self.assertEqual(convert_for_annotation("гәлимов", "RL"), "ğälimov")
-        self.assertEqual(convert_for_annotation("гөмер", "N"), "ğömer")
-        self.assertEqual(convert_for_annotation("шигъри", "N"), "şiğri")
-        self.assertEqual(convert_for_annotation("аергыч", "N"), "ayırğıç")
-        self.assertEqual(convert_for_annotation("эшләргә", "N"), "eşlärğä")
-        self.assertEqual(convert_for_annotation("ишетелгән", "N"), "işetelğän")
-        self.assertEqual(convert_for_annotation("кияргә", "N"), "kiärgä")
-
-    def test_reviewed_y_lexical_conversions(self) -> None:
-        self.assertEqual(convert_for_annotation("җәмгыяте", "N"), "cämğiäte")
-        self.assertEqual(convert_for_annotation("мөстәкыйль", "N"), "möstäqil")
-        self.assertEqual(convert_for_annotation("кагыйдә", "N"), "qağidä")
-        self.assertEqual(convert_for_annotation("кагыйдәләр", "N"), "qağidälär")
-        self.assertEqual(convert_for_annotation("кагыйдәләре", "N"), "qağidäläre")
-        self.assertEqual(convert_for_annotation("кагыйдәсенә", "N"), "qağidäsenä")
-        self.assertEqual(convert_for_annotation("кыямәт", "N"), "qiämät")
-        self.assertEqual(convert_for_annotation("тәнкыйди", "N"), "tänqidi")
-        self.assertEqual(convert_for_annotation("тәрәккый", "N"), "täräqqi")
-        self.assertEqual(convert_for_annotation("вакыйга", "N"), "waqiğa")
-        self.assertEqual(convert_for_annotation("хыянәт", "N"), "xıyänät")
-        self.assertEqual(convert_for_annotation("гыйльми", "N"), "ğilmi")
-        self.assertEqual(convert_for_annotation("шагыйрь", "N"), "şağir")
-
-    def test_reviewed_u_lexical_conversions(self) -> None:
-        self.assertEqual(convert_for_annotation("мияубикә", "N"), "miyawbikä")
-        self.assertEqual(convert_for_annotation("мәгъсум", "N"), "mäğsüm")
-        self.assertEqual(convert_for_annotation("мәшгуль", "N"), "mäşğül")
-        self.assertEqual(convert_for_annotation("сорау", "N"), "soraw")
-
-    def test_reviewed_ya_lexical_conversions(self) -> None:
-        self.assertEqual(convert_for_annotation("мордва-ерзя", "RL"), "mordva-erzä")
-        self.assertEqual(convert_for_annotation("ял", "N"), "yal")
-        self.assertEqual(convert_for_annotation("яз", "N"), "yaz")
-
-    def test_reviewed_e_lexical_conversions(self) -> None:
-        self.assertEqual(convert_for_annotation("бакырелан", "N"), "baqıryılan")
-        self.assertEqual(convert_for_annotation("беркадәр", "N"), "berqädär")
-        self.assertEqual(convert_for_annotation("фигыльләрнең", "N"), "fiğellärneñ")
-        self.assertEqual(convert_for_annotation("кәгазъләрендә", "N"), "qäğäzlärendä")
-
-    def test_reviewed_pdf_lexical_conversions(self) -> None:
-        self.assertEqual(convert_for_annotation("җәмәгать", "N"), "cämäğät")
-        self.assertEqual(convert_for_annotation("идарә", "N"), "idärä")
-        self.assertEqual(convert_for_annotation("фигыль", "N"), "fiğel")
-        self.assertEqual(convert_for_annotation("фигыльдән", "N"), "fiğeldän")
-        self.assertEqual(convert_for_annotation("фигыльләр", "N"), "fiğellär")
-        self.assertEqual(convert_for_annotation("мөрәҗәгать", "N"), "möräcäğät")
-        self.assertEqual(convert_for_annotation("пәйгамбәр", "N"), "päyğämbär")
-        self.assertEqual(convert_for_annotation("кәнәгәт", "N"), "qänäğät")
-        self.assertEqual(convert_for_annotation("кәгазъ", "N"), "qäğäz")
-        self.assertEqual(convert_for_annotation("гаҗиз", "N"), "ğäciz")
-        self.assertEqual(convert_for_annotation("гадәт", "N"), "ğädät")
-        self.assertEqual(convert_for_annotation("гамәлдә", "N"), "ğämäldä")
-        self.assertEqual(convert_for_annotation("гарәп", "N"), "ğäräp")
-        self.assertEqual(convert_for_annotation("гарәп-фарсы", "N"), "ğäräp-farsı")
-        self.assertEqual(convert_for_annotation("гаскәри", "RL"), "ğäskäri")
-        self.assertEqual(convert_for_annotation("шигырь", "N"), "şiğer")
-        self.assertEqual(convert_for_annotation("шигырь-шигри", "N"), "şiğer-şiğri")
-        self.assertEqual(convert_for_annotation("щётка", "RL"), "şçotka")
 
     def test_origin_dependent_hints_show_both_branches(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
