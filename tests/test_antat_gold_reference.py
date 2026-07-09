@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 import unittest
 
-from tatar_preannotator.conversion import PDF_COMPACT_POLICY, PREFERRED_POLICY, resolve_dsl
+from tatar_preannotator.conversion import Choice, Literal, parse_dsl, resolve_dsl
 from tatar_preannotator.word_export import convert_for_annotation_dsl
 
 
@@ -26,6 +26,23 @@ def _normalize_gold_zamanalif(value: str) -> str:
     return value.replace("’", "'").casefold()
 
 
+def _all_supported_resolutions(value: str) -> set[str]:
+    outputs = [""]
+    for segment in parse_dsl(value).segments:
+        if isinstance(segment, Literal):
+            outputs = [output + segment.text for output in outputs]
+            continue
+        if isinstance(segment, Choice):
+            outputs = [
+                output + option_text
+                for output in outputs
+                for _, option_text in segment.options
+            ]
+            continue
+        raise AssertionError(f"unknown DSL segment: {segment!r}")
+    return {_normalize_gold_zamanalif(output) for output in outputs}
+
+
 class AntatGoldReferenceTests(unittest.TestCase):
     def assert_antat_gold_conversions(self, cases: list[tuple[str, str, str, int]]) -> None:
         failures: list[str] = []
@@ -37,8 +54,7 @@ class AntatGoldReferenceTests(unittest.TestCase):
                 if not dsl:
                     continue
                 rendered[origin] = dsl
-                possible.add(_normalize_gold_zamanalif(resolve_dsl(dsl, PDF_COMPACT_POLICY)))
-                possible.add(_normalize_gold_zamanalif(resolve_dsl(dsl, PREFERRED_POLICY)))
+                possible.update(_all_supported_resolutions(dsl))
             if _normalize_gold_zamanalif(expected) not in possible:
                 failures.append(
                     f"{cyrillic!r} -> expected {expected!r}, "
@@ -56,7 +72,12 @@ class AntatGoldReferenceTests(unittest.TestCase):
     def test_antat_iya_variant_is_covered_by_preferred_policy(self) -> None:
         dsl = convert_for_annotation_dsl("академия", "RL")
 
-        self.assertEqual(resolve_dsl(dsl, PREFERRED_POLICY), "akademiyä")
+        self.assertEqual(resolve_dsl(dsl), "akademiyä")
+
+    def test_antat_audit_checks_every_dsl_option(self) -> None:
+        dsl = "atel{{RUS_SIGN_GLIDE|omit=|preserve='}}ye"
+
+        self.assertEqual(_all_supported_resolutions(dsl), {"atelye", "atel'ye"})
 
     def test_generated_antat_word_cases_for_manual_review(self) -> None:
         if os.environ.get("RUN_ANTAT_GOLD_COVERAGE") != "1":
