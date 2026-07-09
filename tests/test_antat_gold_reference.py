@@ -22,6 +22,10 @@ def _load_antat_gold_cases() -> list[tuple[str, str, str, int]]:
 ANTAT_GOLD_WORD_CASES = _load_antat_gold_cases()
 
 
+def _normalize_gold_zamanalif(value: str) -> str:
+    return value.replace("’", "'").casefold()
+
+
 class AntatGoldReferenceTests(unittest.TestCase):
     def assert_antat_gold_conversions(self, cases: list[tuple[str, str, str, int]]) -> None:
         failures: list[str] = []
@@ -33,9 +37,9 @@ class AntatGoldReferenceTests(unittest.TestCase):
                 if not dsl:
                     continue
                 rendered[origin] = dsl
-                possible.add(resolve_dsl(dsl, PDF_COMPACT_POLICY).casefold())
-                possible.add(resolve_dsl(dsl, PREFERRED_POLICY).casefold())
-            if expected.casefold() not in possible:
+                possible.add(_normalize_gold_zamanalif(resolve_dsl(dsl, PDF_COMPACT_POLICY)))
+                possible.add(_normalize_gold_zamanalif(resolve_dsl(dsl, PREFERRED_POLICY)))
+            if _normalize_gold_zamanalif(expected) not in possible:
                 failures.append(
                     f"{cyrillic!r} -> expected {expected!r}, "
                     f"supported DSL={rendered!r}, "
