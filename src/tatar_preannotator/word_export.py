@@ -547,9 +547,9 @@ def _loanword_conditional_char(char: str, word: str, index: int) -> str:
     if char == "е":
         return _e_conversion(word, index, "RL")
     if char == "г":
-        return "g"
+        return _loanword_suffix_gk_conversion(char, word, index) or "g"
     if char == "к":
-        return "k"
+        return _loanword_suffix_gk_conversion(char, word, index) or "k"
     if char == "я":
         return _ya_conversion(word, index, "RL")
     return {
@@ -559,6 +559,36 @@ def _loanword_conditional_char(char: str, word: str, index: int) -> str:
         "ү": "ü",
         "ц": _ts_conversion(word, index),
     }.get(char, "")
+
+
+def _loanword_suffix_gk_conversion(char: str, word: str, index: int) -> str:
+    suffix = word[index:]
+    prefix = word[:index]
+    if char == "г" and suffix in {
+        "га",
+        "гә",
+        "ларга",
+        "ләргә",
+    } and len(prefix) >= 5:
+        return "ğ" if suffix in {"га", "дагы", "ларга"} else "g"
+    if char == "г" and index == len(word) - 2 and word.endswith(("дагы", "дәге")):
+        stem = word[: -4]
+        if len(stem) >= 5:
+            return "ğ" if word.endswith("дагы") else "g"
+    if char == "к" and suffix in {
+        "ка",
+        "кә",
+    } and len(prefix) >= 5:
+        if prefix.endswith("л"):
+            return ""
+        return "q" if suffix.startswith(("ка", "лык")) else "k"
+    if char == "к" and index == len(word) - 1 and word.endswith(
+        ("лык", "лек", "лыкка", "леккә", "лыгын", "леген")
+    ):
+        stem = word[: -3]
+        if len(stem) >= 5:
+            return "q" if word.endswith(("лык", "лыкка", "лыгын")) else "k"
+    return ""
 
 
 def _native_conditional_char(char: str, word: str, index: int) -> str:

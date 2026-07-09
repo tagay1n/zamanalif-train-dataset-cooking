@@ -66,6 +66,31 @@ class ConditionalConversionDslTests(unittest.TestCase):
             with self.subTest(word=word, label=label):
                 self.assertEqual(convert_for_annotation(word, label), expected)
 
+    def test_loanword_stems_use_tatar_g_k_suffix_conversion(self) -> None:
+        cases = [
+            ("законга", "zakonğa"),
+            ("принципларга", "prinsiplarğa"),
+            ("аббревиатурадагы", "abbreviaturadağı"),
+            ("архивка", "arxivqa"),
+            ("алфавитка", "alfavitqa"),
+            ("авторлык", "avtorlıq"),
+            ("адвокатлык", "advokatlıq"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "RL"), expected)
+
+    def test_loanword_stem_g_k_still_uses_plain_letters(self) -> None:
+        for word, expected in [
+            ("банк", "bank"),
+            ("газет", "gazet"),
+            ("график", "grafik"),
+            ("кодекс", "kodeks"),
+        ]:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "RL"), expected)
+
     def test_deterministic_words_are_origin_independent(self) -> None:
         for word, expected in [
             ("шәһәр", "şähär"),
