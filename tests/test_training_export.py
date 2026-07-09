@@ -60,7 +60,7 @@ class TrainingExportTests(unittest.TestCase):
         self.assertNotIn("{{", rows[0]["zamanalif"])
         self.assertEqual(
             manifest["effective_policy"],
-            {"IYA": "explicit", "RUS_SIGN_GLIDE": "omit"},
+            {"IYA": "explicit", "RUS_SIGN_GLIDE": "omit", "RUS_SOFT_SIGN": "preserve"},
         )
         self.assertEqual(manifest["overrides"], {})
         self.assertEqual(manifest["counts"]["exported_sentences"], 1)
@@ -273,7 +273,10 @@ class TrainingExportTests(unittest.TestCase):
 
     def test_policy_override_validation(self) -> None:
         effective, overrides = parse_policy_overrides(["IYA=compact"])
-        self.assertEqual(effective, {"IYA": "compact", "RUS_SIGN_GLIDE": "omit"})
+        self.assertEqual(
+            effective,
+            {"IYA": "compact", "RUS_SIGN_GLIDE": "omit", "RUS_SOFT_SIGN": "preserve"},
+        )
         self.assertEqual(overrides, {"IYA": "compact"})
 
         with self.assertRaisesRegex(TrainingExportError, "duplicate"):

@@ -80,18 +80,24 @@ RUS_SIGN_GLIDE_RULE = RuleDefinition(
     options=(("omit", ""), ("preserve", "'")),
     default_option="omit",
 )
+RUS_SOFT_SIGN_RULE = RuleDefinition(
+    rule_id="RUS_SOFT_SIGN",
+    options=(("omit", ""), ("preserve", "'")),
+    default_option="preserve",
+)
 
 RULES: Mapping[str, RuleDefinition] = MappingProxyType(
     {
         IYA_RULE.rule_id: IYA_RULE,
         RUS_SIGN_GLIDE_RULE.rule_id: RUS_SIGN_GLIDE_RULE,
+        RUS_SOFT_SIGN_RULE.rule_id: RUS_SOFT_SIGN_RULE,
     }
 )
 PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
-    {"IYA": "explicit", "RUS_SIGN_GLIDE": "omit"}
+    {"IYA": "explicit", "RUS_SIGN_GLIDE": "omit", "RUS_SOFT_SIGN": "preserve"}
 )
 PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
-    {"IYA": "compact", "RUS_SIGN_GLIDE": "omit"}
+    {"IYA": "compact", "RUS_SIGN_GLIDE": "omit", "RUS_SOFT_SIGN": "omit"}
 )
 
 

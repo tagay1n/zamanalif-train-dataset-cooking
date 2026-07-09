@@ -159,7 +159,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(words, ["роль", "сыр"])
         by_word = {task["data"]["cyrl_word"]: task["data"] for task in result.tasks}
         self.assertEqual(by_word["сыр"]["auto_zamanalif"], "sıyr")
-        self.assertEqual(by_word["роль"]["auto_zamanalif"], "rol'")
+        self.assertEqual(
+            by_word["роль"]["auto_zamanalif"],
+            "rol{{RUS_SOFT_SIGN|omit=|preserve='}}",
+        )
         self.assertIn("<b>ы</b> -> <b>ıy</b>", by_word["сыр"]["hints_html"])
         self.assertIn("<b>ь</b> -> <b>&#x27;</b>", by_word["роль"]["hints_html"])
 
@@ -358,6 +361,18 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("роль", "RL"), "rol'")
         self.assertEqual(convert_for_annotation("культура", "RL"), "kul'tura")
         self.assertEqual(convert_for_annotation("секретарь", "RL"), "sekretar'")
+        self.assertEqual(
+            convert_for_annotation_dsl("роль", "RL"),
+            "rol{{RUS_SOFT_SIGN|omit=|preserve='}}",
+        )
+        self.assertEqual(
+            convert_for_annotation_dsl("культура", "RL"),
+            "kul{{RUS_SOFT_SIGN|omit=|preserve='}}tura",
+        )
+        self.assertEqual(
+            convert_for_annotation_dsl("секретарь", "RL"),
+            "sekretar{{RUS_SOFT_SIGN|omit=|preserve='}}",
+        )
         self.assertEqual(
             convert_for_annotation_dsl("коньяк", "RL"),
             "kon{{RUS_SIGN_GLIDE|omit=|preserve='}}yak",

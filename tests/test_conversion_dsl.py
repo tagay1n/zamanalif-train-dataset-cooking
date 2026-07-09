@@ -105,6 +105,14 @@ class ConversionDslTests(unittest.TestCase):
             "komp'yuter",
         )
 
+    def test_russian_soft_sign_rule_resolves_by_policy(self) -> None:
+        value = "rol{{RUS_SOFT_SIGN|omit=|preserve='}}"
+
+        self.assertEqual(resolve_dsl(value), "rol'")
+        self.assertEqual(resolve_dsl(value, {"RUS_SOFT_SIGN": "omit"}), "rol")
+        self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "rol")
+        self.assertEqual(resolve_dsl(value, PREFERRED_POLICY), "rol'")
+
 
 if __name__ == "__main__":
     unittest.main()

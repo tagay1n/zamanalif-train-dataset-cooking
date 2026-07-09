@@ -17,6 +17,7 @@ from tatar_preannotator.conversion import (
     ConversionResult,
     DslError,
     Literal,
+    RUS_SOFT_SIGN_RULE,
     RUS_SIGN_GLIDE_RULE,
     parse_dsl,
     result_with_iya_choices,
@@ -315,6 +316,9 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_russian_sign_glide_choices(word, compact, label)
     if result.has_choices:
         return result
+    result = result_with_russian_soft_sign_choices(word, compact, label)
+    if result.has_choices:
+        return result
     return result_with_iya_choices(word, result.to_dsl())
 
 
@@ -347,6 +351,49 @@ def result_with_russian_sign_glide_choices(
         if latin and converted.startswith(latin, converted_index):
             segments.append(Literal(latin))
             converted_index += len(latin)
+        else:
+            return ConversionResult((Literal(converted),))
+        source_index += 1
+
+    if converted_index != len(converted):
+        return ConversionResult((Literal(converted),))
+    return ConversionResult(tuple(segments))
+
+
+def result_with_russian_soft_sign_choices(
+    source: str,
+    converted: str,
+    label: str,
+) -> ConversionResult:
+    """Annotate ordinary Russian soft/hard signs as a preserve-vs-omit choice."""
+    if label != "RL" or not any(sign in source for sign in "ьъ") or "'" not in converted:
+        return ConversionResult((Literal(converted),))
+    if "ия" in source and "iä" in converted:
+        return ConversionResult((Literal(converted),))
+
+    segments: list[Literal | Choice] = []
+    source_index = 0
+    converted_index = 0
+    while source_index < len(source):
+        char = source[source_index]
+        if char in {"ь", "ъ"}:
+            if (
+                source_index + 1 < len(source)
+                and source[source_index + 1] in {"я", "ю", "е"}
+            ):
+                return ConversionResult((Literal(converted),))
+            if converted.startswith("'", converted_index):
+                segments.append(Choice(RUS_SOFT_SIGN_RULE.rule_id, RUS_SOFT_SIGN_RULE.options))
+                converted_index += 1
+                source_index += 1
+                continue
+
+        latin = _char_conversion(char, source, source_index, label)
+        if latin and converted.startswith(latin, converted_index):
+            segments.append(Literal(latin))
+            converted_index += len(latin)
+        elif not latin:
+            pass
         else:
             return ConversionResult((Literal(converted),))
         source_index += 1
