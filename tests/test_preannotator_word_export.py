@@ -317,6 +317,22 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("килүе", "N"), "kilüe")
         self.assertEqual(convert_for_annotation("пьеса", "N"), "pyesa")
 
+    def test_ie_glide_is_policy_dsl(self) -> None:
+        cases = [
+            ("тиеш", "N", "ti{{IE_GLIDE|plain=e|glide=ye}}ş", "tieş", "tiyeş"),
+            ("тиен", "N", "ti{{IE_GLIDE|plain=e|glide=ye}}n", "tien", "tiyen"),
+            ("мие", "N", "mi{{IE_GLIDE|plain=e|glide=ye}}", "mie", "miye"),
+            ("задание", "RL", "zadani{{IE_GLIDE|plain=e|glide=ye}}", "zadanie", "zadaniye"),
+            ("имение", "RL", "imeni{{IE_GLIDE|plain=e|glide=ye}}", "imenie", "imeniye"),
+        ]
+
+        for word, label, expected_dsl, plain, glide in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, label)
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl), plain)
+                self.assertEqual(resolve_dsl(dsl, {"IE_GLIDE": "glide"}), glide)
+
     def test_native_vowel_before_e_uses_y_glide_vowel_harmony(self) -> None:
         self.assertEqual(convert_for_annotation("аерым", "N"), "ayırım")
         self.assertEqual(convert_for_annotation("оешма", "N"), "oyışma")

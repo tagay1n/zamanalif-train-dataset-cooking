@@ -75,6 +75,11 @@ IYA_RULE = RuleDefinition(
     options=(("compact", "ä"), ("explicit", "yä")),
     default_option="explicit",
 )
+IE_GLIDE_RULE = RuleDefinition(
+    rule_id="IE_GLIDE",
+    options=(("plain", "e"), ("glide", "ye")),
+    default_option="plain",
+)
 RUS_SIGN_GLIDE_RULE = RuleDefinition(
     rule_id="RUS_SIGN_GLIDE",
     options=(("omit", ""), ("preserve", "'")),
@@ -99,6 +104,7 @@ NATIVE_UW_RULE = RuleDefinition(
 RULES: Mapping[str, RuleDefinition] = MappingProxyType(
     {
         IYA_RULE.rule_id: IYA_RULE,
+        IE_GLIDE_RULE.rule_id: IE_GLIDE_RULE,
         RUS_SIGN_GLIDE_RULE.rule_id: RUS_SIGN_GLIDE_RULE,
         RUS_SOFT_SIGN_RULE.rule_id: RUS_SOFT_SIGN_RULE,
         RUS_JOTATED_SOFTENING_RULE.rule_id: RUS_JOTATED_SOFTENING_RULE,
@@ -108,6 +114,7 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
 PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
     {
         "IYA": "explicit",
+        "IE_GLIDE": "plain",
         "RUS_SIGN_GLIDE": "omit",
         "RUS_SOFT_SIGN": "preserve",
         "RUS_JOTATED_SOFTENING": "glide",
@@ -117,6 +124,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
 PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
     {
         "IYA": "compact",
+        "IE_GLIDE": "plain",
         "RUS_SIGN_GLIDE": "omit",
         "RUS_SOFT_SIGN": "omit",
         "RUS_JOTATED_SOFTENING": "glide",

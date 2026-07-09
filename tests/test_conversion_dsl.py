@@ -135,6 +135,14 @@ class ConversionDslTests(unittest.TestCase):
         self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "bua")
         self.assertEqual(resolve_dsl(value, PREFERRED_POLICY), "buwa")
 
+    def test_ie_glide_rule_resolves_by_policy(self) -> None:
+        value = "ti{{IE_GLIDE|plain=e|glide=ye}}ş"
+
+        self.assertEqual(resolve_dsl(value), "tieş")
+        self.assertEqual(resolve_dsl(value, {"IE_GLIDE": "plain"}), "tieş")
+        self.assertEqual(resolve_dsl(value, {"IE_GLIDE": "glide"}), "tiyeş")
+        self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "tieş")
+
 
 if __name__ == "__main__":
     unittest.main()

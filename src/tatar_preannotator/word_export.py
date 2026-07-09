@@ -16,6 +16,7 @@ from tatar_preannotator.conversion import (
     Choice,
     ConversionResult,
     DslError,
+    IE_GLIDE_RULE,
     IYA_RULE,
     Literal,
     NATIVE_UW_RULE,
@@ -323,9 +324,10 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
         return result
     result = result_with_native_uw_choices(word, compact, label)
     if result.has_choices:
-        return result_with_iya_choices(word, result)
+        return result_with_ie_glide_choices(word, result_with_iya_choices(word, result))
     result = result_with_russian_jotated_softening_choices(word, compact, label)
-    return result_with_iya_choices(word, result)
+    result = result_with_iya_choices(word, result)
+    return result_with_ie_glide_choices(word, result)
 
 
 def result_with_iya_choices(source: str, result: ConversionResult) -> ConversionResult:
@@ -348,6 +350,31 @@ def result_with_iya_choices(source: str, result: ConversionResult) -> Conversion
         for match in re.finditer("iä", segment.text, flags=re.IGNORECASE):
             _append_literal_segment(segments, segment.text[start : match.start() + 1])
             segments.append(Choice(IYA_RULE.rule_id, IYA_RULE.options))
+            start = match.end()
+        _append_literal_segment(segments, segment.text[start:])
+    return ConversionResult(tuple(segments))
+
+
+def result_with_ie_glide_choices(source: str, result: ConversionResult) -> ConversionResult:
+    """Annotate Cyrillic ``ие`` as a plain ``ie`` vs glide ``iye`` convention."""
+    source_count = source.casefold().count("ие")
+    output_count = sum(
+        segment.text.casefold().count("ie")
+        for segment in result.segments
+        if isinstance(segment, Literal)
+    )
+    if source_count == 0 or source_count != output_count:
+        return result
+
+    segments: list[Literal | Choice] = []
+    for segment in result.segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        start = 0
+        for match in re.finditer("ie", segment.text, flags=re.IGNORECASE):
+            _append_literal_segment(segments, segment.text[start : match.start() + 1])
+            segments.append(Choice(IE_GLIDE_RULE.rule_id, IE_GLIDE_RULE.options))
             start = match.end()
         _append_literal_segment(segments, segment.text[start:])
     return ConversionResult(tuple(segments))
