@@ -64,6 +64,7 @@ class TrainingExportTests(unittest.TestCase):
                 "IYA": "explicit",
                 "RUS_SIGN_GLIDE": "omit",
                 "RUS_SOFT_SIGN": "preserve",
+                "RUS_JOTATED_SOFTENING": "glide",
                 "NATIVE_UW": "glide",
             },
         )
@@ -284,6 +285,7 @@ class TrainingExportTests(unittest.TestCase):
                 "IYA": "compact",
                 "RUS_SIGN_GLIDE": "omit",
                 "RUS_SOFT_SIGN": "preserve",
+                "RUS_JOTATED_SOFTENING": "glide",
                 "NATIVE_UW": "glide",
             },
         )

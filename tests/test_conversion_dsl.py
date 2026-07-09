@@ -113,6 +113,20 @@ class ConversionDslTests(unittest.TestCase):
         self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "rol")
         self.assertEqual(resolve_dsl(value, PREFERRED_POLICY), "rol'")
 
+    def test_russian_jotated_softening_rule_resolves_by_policy(self) -> None:
+        value = "b{{RUS_JOTATED_SOFTENING|glide=y|apostrophe='}}uro"
+
+        self.assertEqual(resolve_dsl(value), "byuro")
+        self.assertEqual(
+            resolve_dsl(value, {"RUS_JOTATED_SOFTENING": "glide"}),
+            "byuro",
+        )
+        self.assertEqual(
+            resolve_dsl(value, {"RUS_JOTATED_SOFTENING": "apostrophe"}),
+            "b'uro",
+        )
+        self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "byuro")
+
     def test_native_uw_rule_resolves_by_policy(self) -> None:
         value = "bu{{NATIVE_UW|plain=|glide=w}}a"
 

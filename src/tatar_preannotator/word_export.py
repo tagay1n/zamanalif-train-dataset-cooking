@@ -16,12 +16,13 @@ from tatar_preannotator.conversion import (
     Choice,
     ConversionResult,
     DslError,
+    IYA_RULE,
     Literal,
     NATIVE_UW_RULE,
+    RUS_JOTATED_SOFTENING_RULE,
     RUS_SOFT_SIGN_RULE,
     RUS_SIGN_GLIDE_RULE,
     parse_dsl,
-    result_with_iya_choices,
 )
 from zamanalif_selector.features import BACK_VOWELS, CONDITIONAL_LETTERS, FRONT_VOWELS
 
@@ -323,7 +324,42 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_native_uw_choices(word, compact, label)
     if result.has_choices:
         return result
-    return result_with_iya_choices(word, result.to_dsl())
+    result = result_with_russian_jotated_softening_choices(word, compact, label)
+    return result_with_iya_choices(word, result)
+
+
+def result_with_iya_choices(source: str, result: ConversionResult) -> ConversionResult:
+    """Annotate aligned Cyrillic ``ия`` / compact ``iä`` spans in a result."""
+    source_count = source.casefold().count("ия")
+    output_count = sum(
+        segment.text.casefold().count("iä")
+        for segment in result.segments
+        if isinstance(segment, Literal)
+    )
+    if source_count == 0 or source_count != output_count:
+        return result
+
+    segments: list[Literal | Choice] = []
+    for segment in result.segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        start = 0
+        for match in re.finditer("iä", segment.text, flags=re.IGNORECASE):
+            _append_literal_segment(segments, segment.text[start : match.start() + 1])
+            segments.append(Choice(IYA_RULE.rule_id, IYA_RULE.options))
+            start = match.end()
+        _append_literal_segment(segments, segment.text[start:])
+    return ConversionResult(tuple(segments))
+
+
+def _append_literal_segment(segments: list[Literal | Choice], text: str) -> None:
+    if not text:
+        return
+    if segments and isinstance(segments[-1], Literal):
+        segments[-1] = Literal(segments[-1].text + text)
+        return
+    segments.append(Literal(text))
 
 
 def result_with_russian_sign_glide_choices(
@@ -405,6 +441,65 @@ def result_with_russian_soft_sign_choices(
     if converted_index != len(converted):
         return ConversionResult((Literal(converted),))
     return ConversionResult(tuple(segments))
+
+
+def result_with_russian_jotated_softening_choices(
+    source: str,
+    converted: str,
+    label: str,
+) -> ConversionResult:
+    """Annotate RL consonant + ``я/ю/ё`` as y-glide vs apostrophe convention."""
+    if label != "RL" or not any(char in source for char in "яюё"):
+        return ConversionResult((Literal(converted),))
+    if "ерзя" in source:
+        return ConversionResult((Literal(converted),))
+
+    segments: list[Literal | Choice] = []
+    source_index = 0
+    converted_index = 0
+    while source_index < len(source):
+        char = source[source_index]
+        latin = _char_conversion(char, source, source_index, label)
+        if not latin:
+            source_index += 1
+            continue
+
+        if (
+            char in {"я", "ю", "ё"}
+            and _is_russian_jotated_softening_position(source, source_index)
+            and latin.startswith("y")
+            and converted.startswith(latin, converted_index)
+        ):
+            segments.append(
+                Choice(
+                    RUS_JOTATED_SOFTENING_RULE.rule_id,
+                    RUS_JOTATED_SOFTENING_RULE.options,
+                )
+            )
+            _append_literal_segment(segments, latin[1:])
+            converted_index += len(latin)
+            source_index += 1
+            continue
+
+        if converted.startswith(latin, converted_index):
+            _append_literal_segment(segments, latin)
+            converted_index += len(latin)
+        else:
+            return ConversionResult((Literal(converted),))
+        source_index += 1
+
+    if converted_index != len(converted):
+        return ConversionResult((Literal(converted),))
+    return ConversionResult(tuple(segments))
+
+
+def _is_russian_jotated_softening_position(source: str, index: int) -> bool:
+    if index == 0:
+        return False
+    previous = source[index - 1]
+    if previous in FRONT_VOWELS | BACK_VOWELS | {"е", "ё", "ю", "я", "ь", "ъ", "-", "'"}:
+        return False
+    return bool(CYRILLIC_RE.fullmatch(previous))
 
 
 def result_with_native_uw_choices(

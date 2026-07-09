@@ -9,6 +9,7 @@ import tempfile
 import unittest
 
 from tatar_preannotator.cli import main
+from tatar_preannotator.conversion import resolve_dsl
 from tatar_preannotator.word_export import (
     contains_conditional_letter,
     contains_rl_review_letter,
@@ -156,12 +157,16 @@ class PreannotatorWordExportTests(unittest.TestCase):
             result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
 
         words = [task["data"]["cyrl_word"] for task in result.tasks]
-        self.assertEqual(words, ["роль", "сыр"])
+        self.assertEqual(words, ["роль", "сыр", "шофёр"])
         by_word = {task["data"]["cyrl_word"]: task["data"] for task in result.tasks}
         self.assertEqual(by_word["сыр"]["auto_zamanalif"], "sıyr")
         self.assertEqual(
             by_word["роль"]["auto_zamanalif"],
             "rol{{RUS_SOFT_SIGN|omit=|preserve='}}",
+        )
+        self.assertEqual(
+            by_word["шофёр"]["auto_zamanalif"],
+            "şof{{RUS_JOTATED_SOFTENING|glide=y|apostrophe='}}or",
         )
         self.assertIn("<b>ы</b> -> <b>ıy</b>", by_word["сыр"]["hints_html"])
         self.assertIn("<b>ь</b> -> <b>&#x27;</b>", by_word["роль"]["hints_html"])
@@ -380,6 +385,39 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(
             convert_for_annotation_dsl("тальян", "RL"),
             "tal{{RUS_SIGN_GLIDE|omit=|preserve='}}yan",
+        )
+
+    def test_russian_jotated_softening_is_policy_dsl(self) -> None:
+        cases = [
+            ("бюро", "b{{RUS_JOTATED_SOFTENING|glide=y|apostrophe='}}uro", "byuro", "b'uro"),
+            ("вафля", "vafl{{RUS_JOTATED_SOFTENING|glide=y|apostrophe='}}a", "vaflya", "vafl'a"),
+            ("шофёр", "şof{{RUS_JOTATED_SOFTENING|glide=y|apostrophe='}}or", "şofyor", "şof'or"),
+        ]
+
+        for word, expected_dsl, glide, apostrophe in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "RL")
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl), glide)
+                self.assertEqual(
+                    resolve_dsl(dsl, {"RUS_JOTATED_SOFTENING": "apostrophe"}),
+                    apostrophe,
+                )
+
+    def test_russian_jotated_softening_composes_with_iya(self) -> None:
+        dsl = convert_for_annotation_dsl("бюрократия", "RL")
+
+        self.assertEqual(
+            dsl,
+            "b{{RUS_JOTATED_SOFTENING|glide=y|apostrophe='}}urokrati{{IYA|compact=ä|explicit=yä}}",
+        )
+        self.assertEqual(resolve_dsl(dsl), "byurokratiyä")
+        self.assertEqual(
+            resolve_dsl(
+                dsl,
+                {"RUS_JOTATED_SOFTENING": "apostrophe", "IYA": "explicit"},
+            ),
+            "b'urokratiyä",
         )
 
     def test_reviewed_yu_conversions(self) -> None:
