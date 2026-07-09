@@ -216,6 +216,9 @@ class ConditionalConversionDslTests(unittest.TestCase):
             ("булуы", "bulu{{NATIVE_UW|plain=|glide=w}}ı", "buluı", "buluwı"),
             ("атуы", "atu{{NATIVE_UW|plain=|glide=w}}ı", "atuı", "atuwı"),
             ("куыш", "qu{{NATIVE_UW|plain=|glide=w}}ış", "quış", "quwış"),
+            ("юа", "yu{{NATIVE_UW|plain=|glide=w}}a", "yua", "yuwa"),
+            ("юу", "yu{{NATIVE_UW|plain=|glide=w}}u", "yuu", "yuwu"),
+            ("китүе", "kitü{{NATIVE_UW|plain=|glide=w}}e", "kitüe", "kitüwe"),
         ]
 
         for word, expected_dsl, plain, glide in cases:
@@ -227,6 +230,20 @@ class ConditionalConversionDslTests(unittest.TestCase):
 
     def test_native_u_before_e_keeps_existing_e_glide_rule(self) -> None:
         self.assertEqual(convert_for_annotation("куелган", "N"), "quyılğan")
+
+    def test_native_ya_u_glide_is_deterministic(self) -> None:
+        cases = [
+            ("буяу", "buyaw"),
+            ("яуган", "yawğan"),
+            ("уяу", "uyaw"),
+            ("җәяү", "cäyäw"),
+            ("төяү", "töyäw"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertNotIn("{{", convert_for_annotation_dsl(word, "N"))
 
 
 if __name__ == "__main__":

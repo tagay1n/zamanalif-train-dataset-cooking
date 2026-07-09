@@ -323,7 +323,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
         return result
     result = result_with_native_uw_choices(word, compact, label)
     if result.has_choices:
-        return result
+        return result_with_iya_choices(word, result)
     result = result_with_russian_jotated_softening_choices(word, compact, label)
     return result_with_iya_choices(word, result)
 
@@ -507,8 +507,8 @@ def result_with_native_uw_choices(
     converted: str,
     label: str,
 ) -> ConversionResult:
-    """Annotate native ``у`` before non-``е`` vowels as a plain-vs-glide choice."""
-    if label != "N" or "у" not in source:
+    """Annotate native ``у/ү/ю`` glide conventions as plain-vs-glide choices."""
+    if label != "N" or not any(char in source for char in "уүю"):
         return ConversionResult((Literal(converted),))
 
     segments: list[Literal | Choice] = []
@@ -518,14 +518,14 @@ def result_with_native_uw_choices(
         char = source[source_index]
         latin = _char_conversion(char, source, source_index, label)
         if latin and converted.startswith(latin, converted_index):
-            segments.append(Literal(latin))
+            _append_literal_segment(segments, latin)
             converted_index += len(latin)
         elif not latin:
             pass
         else:
             return ConversionResult((Literal(converted),))
 
-        if char == "у" and _native_u_before_vowel_needs_choice(source, source_index):
+        if _native_uw_insertion_needs_choice(source, source_index):
             segments.append(Choice(NATIVE_UW_RULE.rule_id, NATIVE_UW_RULE.options))
         source_index += 1
 
@@ -844,11 +844,11 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
             return "q"
         return "k" if harmony == "front_only" else "q" if harmony == "back_only" else ""
     if char == "у":
-        if index > 0 and word[index - 1] in {"а", "ә"}:
+        if index > 0 and word[index - 1] in {"а", "ә", "я"}:
             return "w"
         return "u"
     if char == "ү":
-        if index > 0 and word[index - 1] in {"а", "ә"}:
+        if index > 0 and word[index - 1] in {"а", "ә", "я"}:
             return "w"
         return "ü"
     if char == "я":
@@ -987,8 +987,16 @@ def _right_vowel_context(word: str, index: int) -> str:
     return ""
 
 
-def _native_u_before_vowel_needs_choice(word: str, index: int) -> bool:
-    return _next_char(word, index) in (FRONT_VOWELS | BACK_VOWELS) - {"е"}
+def _native_uw_insertion_needs_choice(word: str, index: int) -> bool:
+    char = word[index]
+    next_char = _next_char(word, index)
+    if char == "у":
+        return next_char in (FRONT_VOWELS | BACK_VOWELS) - {"е"}
+    if char == "ү":
+        return next_char == "е" or next_char in (FRONT_VOWELS | BACK_VOWELS) - {"е"}
+    if char == "ю":
+        return next_char in FRONT_VOWELS | BACK_VOWELS
+    return False
 
 
 def _deterministic_char(char: str) -> str:
