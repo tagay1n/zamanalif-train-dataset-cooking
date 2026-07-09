@@ -412,6 +412,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("гадел", "{{ARABIC_INITIAL_GA|plain=ğa|front=ğä}}del", "ğadel", "ğädel"),
             ("гадәт", "{{ARABIC_INITIAL_GA|plain=ğa|front=ğä}}dät", "ğadät", "ğädät"),
             ("гаеп", "{{ARABIC_INITIAL_GA|plain=ğayı|front=ğäye}}p", "ğayıp", "ğäyep"),
+            ("гаярь", "{{ARABIC_INITIAL_GA|plain=ğaya|front=ğäyä}}r", "ğayar", "ğäyär"),
+            ("гаять", "{{ARABIC_INITIAL_GA|plain=ğaya|front=ğäyä}}t", "ğayat", "ğäyät"),
             ("гаскәр", "{{ARABIC_INITIAL_GA|plain=ğasq|front=ğäsk}}är", "ğasqär", "ğäskär"),
         ]
 

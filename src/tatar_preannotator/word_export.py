@@ -387,6 +387,7 @@ def result_with_ie_glide_choices(source: str, result: ConversionResult) -> Conve
 ARABIC_INITIAL_GA_PREFIX_CHOICES: tuple[tuple[str, str, str], ...] = (
     ("гаеп", "ğayı", "ğäye"),
     ("гаск", "ğasq", "ğäsk"),
+    ("гая", "ğaya", "ğäyä"),
     ("га", "ğa", "ğä"),
 )
 
