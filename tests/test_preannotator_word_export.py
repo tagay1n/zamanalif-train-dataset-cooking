@@ -286,7 +286,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("дөнья", "N"), "dönya")
         self.assertEqual(convert_for_annotation("көньяк", "N"), "könyaq")
         self.assertEqual(convert_for_annotation("һәръяклап", "N"), "häryaqlap")
-        self.assertEqual(convert_for_annotation("ладья", "RL"), "lad'ya")
+        self.assertEqual(
+            convert_for_annotation_dsl("ладья", "RL"),
+            "lad{{RUS_SIGN_GLIDE|omit=|preserve='}}ya",
+        )
 
     def test_e_conversion_uses_pdf_context_rules(self) -> None:
         self.assertEqual(convert_for_annotation("электр", "RL"), "elektr")
@@ -354,9 +357,15 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_general_apostrophe_and_sign_conversions(self) -> None:
         self.assertEqual(convert_for_annotation("роль", "RL"), "rol'")
         self.assertEqual(convert_for_annotation("культура", "RL"), "kul'tura")
-        self.assertEqual(convert_for_annotation("коньяк", "RL"), "kon'yak")
         self.assertEqual(convert_for_annotation("секретарь", "RL"), "sekretar'")
-        self.assertEqual(convert_for_annotation("тальян", "RL"), "tal'yan")
+        self.assertEqual(
+            convert_for_annotation_dsl("коньяк", "RL"),
+            "kon{{RUS_SIGN_GLIDE|omit=|preserve='}}yak",
+        )
+        self.assertEqual(
+            convert_for_annotation_dsl("тальян", "RL"),
+            "tal{{RUS_SIGN_GLIDE|omit=|preserve='}}yan",
+        )
 
     def test_reviewed_yu_conversions(self) -> None:
         self.assertEqual(convert_for_annotation("революция", "RL"), "revolyutsiä")

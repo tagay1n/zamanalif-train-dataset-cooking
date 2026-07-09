@@ -95,6 +95,16 @@ class ConversionDslTests(unittest.TestCase):
         with self.assertRaisesRegex(DslError, "unknown option"):
             result.resolve({"IYA": "other"})
 
+    def test_russian_sign_glide_rule_resolves_by_policy(self) -> None:
+        value = "komp{{RUS_SIGN_GLIDE|omit=|preserve='}}yuter"
+
+        self.assertEqual(resolve_dsl(value), "kompyuter")
+        self.assertEqual(resolve_dsl(value, {"RUS_SIGN_GLIDE": "omit"}), "kompyuter")
+        self.assertEqual(
+            resolve_dsl(value, {"RUS_SIGN_GLIDE": "preserve"}),
+            "komp'yuter",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

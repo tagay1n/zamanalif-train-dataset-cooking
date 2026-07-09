@@ -144,6 +144,33 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 for label in ("N", "RL"):
                     self.assertNotIn("{{", convert_for_annotation_dsl(word, label))
 
+    def test_russian_sign_before_glide_is_policy_dsl(self) -> None:
+        cases = [
+            ("компьютер", "komp{{RUS_SIGN_GLIDE|omit=|preserve='}}yuter", "kompyuter", "komp'yuter"),
+            ("нью-йорк", "n{{RUS_SIGN_GLIDE|omit=|preserve='}}yu-york", "nyu-york", "n'yu-york"),
+            ("барьер", "bar{{RUS_SIGN_GLIDE|omit=|preserve='}}yer", "baryer", "bar'yer"),
+        ]
+
+        for word, expected_dsl, omitted, preserved in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "RL")
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl), omitted)
+                self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN_GLIDE": "preserve"}), preserved)
+
+    def test_arabic_persian_g_hard_sign_and_k_hard_sign_are_general_rules(self) -> None:
+        cases = [
+            ("мәгънә", "mäğnä"),
+            ("игътибар", "iğtibar"),
+            ("тәкъдим", "täqdim"),
+            ("микъдар", "miqdar"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertNotIn("{{", convert_for_annotation_dsl(word, "N"))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -75,10 +75,24 @@ IYA_RULE = RuleDefinition(
     options=(("compact", "ä"), ("explicit", "yä")),
     default_option="explicit",
 )
+RUS_SIGN_GLIDE_RULE = RuleDefinition(
+    rule_id="RUS_SIGN_GLIDE",
+    options=(("omit", ""), ("preserve", "'")),
+    default_option="omit",
+)
 
-RULES: Mapping[str, RuleDefinition] = MappingProxyType({IYA_RULE.rule_id: IYA_RULE})
-PREFERRED_POLICY: Mapping[str, str] = MappingProxyType({"IYA": "explicit"})
-PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType({"IYA": "compact"})
+RULES: Mapping[str, RuleDefinition] = MappingProxyType(
+    {
+        IYA_RULE.rule_id: IYA_RULE,
+        RUS_SIGN_GLIDE_RULE.rule_id: RUS_SIGN_GLIDE_RULE,
+    }
+)
+PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
+    {"IYA": "explicit", "RUS_SIGN_GLIDE": "omit"}
+)
+PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
+    {"IYA": "compact", "RUS_SIGN_GLIDE": "omit"}
+)
 
 
 def result_with_iya_choices(source: str, compact_zamanalif: str) -> ConversionResult:

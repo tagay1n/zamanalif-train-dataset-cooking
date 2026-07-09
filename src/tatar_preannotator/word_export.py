@@ -13,8 +13,11 @@ import sqlite3
 from typing import Any, Iterable
 
 from tatar_preannotator.conversion import (
+    Choice,
     ConversionResult,
     DslError,
+    Literal,
+    RUS_SIGN_GLIDE_RULE,
     parse_dsl,
     result_with_iya_choices,
 )
@@ -309,7 +312,48 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     compact = convert_for_annotation(word, label)
     if not compact:
         return None
-    return result_with_iya_choices(word, compact)
+    result = result_with_russian_sign_glide_choices(word, compact, label)
+    if result.has_choices:
+        return result
+    return result_with_iya_choices(word, result.to_dsl())
+
+
+def result_with_russian_sign_glide_choices(
+    source: str,
+    converted: str,
+    label: str,
+) -> ConversionResult:
+    """Annotate Russian soft/hard signs before glide letters as a policy choice."""
+    if label != "RL" or not any(sign in source for sign in "ьъ"):
+        return ConversionResult((Literal(converted),))
+
+    segments: list[Literal | Choice] = []
+    source_index = 0
+    converted_index = 0
+    while source_index < len(source):
+        char = source[source_index]
+        if (
+            char in {"ь", "ъ"}
+            and source_index + 1 < len(source)
+            and source[source_index + 1] in {"я", "ю", "е"}
+        ):
+            if converted.startswith("'", converted_index):
+                converted_index += 1
+            segments.append(Choice(RUS_SIGN_GLIDE_RULE.rule_id, RUS_SIGN_GLIDE_RULE.options))
+            source_index += 1
+            continue
+
+        latin = _char_conversion(char, source, source_index, label)
+        if latin and converted.startswith(latin, converted_index):
+            segments.append(Literal(latin))
+            converted_index += len(latin)
+        else:
+            return ConversionResult((Literal(converted),))
+        source_index += 1
+
+    if converted_index != len(converted):
+        return ConversionResult((Literal(converted),))
+    return ConversionResult(tuple(segments))
 
 
 def convert_for_annotation_dsl(word: str, label: str) -> str:
@@ -505,6 +549,9 @@ def _convert_known_label(word: str, label: str) -> str:
             latin, consumed = surname_conversion
             converted.append(latin)
             index += consumed - 1
+        elif label == "N" and char in {"г", "к"} and _next_char(word, index) == "ъ":
+            converted.append("ğ" if char == "г" else "q")
+            index += 1
         elif char == "ц" and index + 1 < len(word) and word[index + 1] == "ц":
             while index + 1 < len(word) and word[index + 1] == "ц":
                 index += 1
@@ -513,6 +560,10 @@ def _convert_known_label(word: str, label: str) -> str:
             converted.append(_char_conversion(char, word, index, label))
         index += 1
     return "".join(converted)
+
+
+def _next_char(word: str, index: int) -> str:
+    return word[index + 1] if index + 1 < len(word) else ""
 
 
 def _surname_sequence_conversion(word: str, index: int) -> tuple[str, int] | None:
