@@ -647,6 +647,11 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
     if char == "в":
         return "w"
     if char == "г":
+        right_context = _right_vowel_context(word, index)
+        if right_context == "front":
+            return "g"
+        if right_context == "back":
+            return "ğ"
         context = _local_vowel_context(word, index)
         if context == "front":
             return "g"
@@ -792,6 +797,15 @@ def _local_vowel_context(word: str, index: int) -> str:
             return "front"
         if char in local_back_vowels:
             return "back"
+    return ""
+
+
+def _right_vowel_context(word: str, index: int) -> str:
+    next_char = word[index + 1] if index + 1 < len(word) else ""
+    if next_char in FRONT_VOWELS | {"э"}:
+        return "front"
+    if next_char in BACK_VOWELS | {"я"}:
+        return "back"
     return ""
 
 

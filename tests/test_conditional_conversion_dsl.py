@@ -171,6 +171,26 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertNotIn("{{", convert_for_annotation_dsl(word, "N"))
 
+    def test_native_g_follows_immediate_right_vowel_when_available(self) -> None:
+        cases = [
+            ("аергыч", "ayırğıç"),
+            ("куелган", "quyılğan"),
+            ("тыелган", "tıyılğan"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+
+    def test_disputed_front_g_suffixes_remain_plain_without_policy_dsl(self) -> None:
+        for word, expected in [
+            ("биргән", "birgän"),
+            ("эшләргә", "eşlärgä"),
+        ]:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertNotIn("{{", convert_for_annotation_dsl(word, "N"))
+
 
 if __name__ == "__main__":
     unittest.main()
