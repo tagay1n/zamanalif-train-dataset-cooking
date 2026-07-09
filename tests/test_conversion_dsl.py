@@ -113,6 +113,14 @@ class ConversionDslTests(unittest.TestCase):
         self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "rol")
         self.assertEqual(resolve_dsl(value, PREFERRED_POLICY), "rol'")
 
+    def test_native_uw_rule_resolves_by_policy(self) -> None:
+        value = "bu{{NATIVE_UW|plain=|glide=w}}a"
+
+        self.assertEqual(resolve_dsl(value), "buwa")
+        self.assertEqual(resolve_dsl(value, {"NATIVE_UW": "plain"}), "bua")
+        self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "bua")
+        self.assertEqual(resolve_dsl(value, PREFERRED_POLICY), "buwa")
+
 
 if __name__ == "__main__":
     unittest.main()

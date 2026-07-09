@@ -17,6 +17,7 @@ from tatar_preannotator.conversion import (
     ConversionResult,
     DslError,
     Literal,
+    NATIVE_UW_RULE,
     RUS_SOFT_SIGN_RULE,
     RUS_SIGN_GLIDE_RULE,
     parse_dsl,
@@ -319,6 +320,9 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_russian_soft_sign_choices(word, compact, label)
     if result.has_choices:
         return result
+    result = result_with_native_uw_choices(word, compact, label)
+    if result.has_choices:
+        return result
     return result_with_iya_choices(word, result.to_dsl())
 
 
@@ -396,6 +400,38 @@ def result_with_russian_soft_sign_choices(
             pass
         else:
             return ConversionResult((Literal(converted),))
+        source_index += 1
+
+    if converted_index != len(converted):
+        return ConversionResult((Literal(converted),))
+    return ConversionResult(tuple(segments))
+
+
+def result_with_native_uw_choices(
+    source: str,
+    converted: str,
+    label: str,
+) -> ConversionResult:
+    """Annotate native ``у`` before non-``е`` vowels as a plain-vs-glide choice."""
+    if label != "N" or "у" not in source:
+        return ConversionResult((Literal(converted),))
+
+    segments: list[Literal | Choice] = []
+    source_index = 0
+    converted_index = 0
+    while source_index < len(source):
+        char = source[source_index]
+        latin = _char_conversion(char, source, source_index, label)
+        if latin and converted.startswith(latin, converted_index):
+            segments.append(Literal(latin))
+            converted_index += len(latin)
+        elif not latin:
+            pass
+        else:
+            return ConversionResult((Literal(converted),))
+
+        if char == "у" and _native_u_before_vowel_needs_choice(source, source_index):
+            segments.append(Choice(NATIVE_UW_RULE.rule_id, NATIVE_UW_RULE.options))
         source_index += 1
 
     if converted_index != len(converted):
@@ -854,6 +890,10 @@ def _right_vowel_context(word: str, index: int) -> str:
     if next_char in BACK_VOWELS | {"я"}:
         return "back"
     return ""
+
+
+def _native_u_before_vowel_needs_choice(word: str, index: int) -> bool:
+    return _next_char(word, index) in (FRONT_VOWELS | BACK_VOWELS) - {"е"}
 
 
 def _deterministic_char(char: str) -> str:
