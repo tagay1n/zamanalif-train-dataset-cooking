@@ -63,6 +63,7 @@ class TrainingExportTests(unittest.TestCase):
             {
                 "IYA": "explicit",
                 "ARABIC_INITIAL_GA": "plain",
+                "GIY_COMPACT": "plain",
                 "IE_GLIDE": "plain",
                 "RUS_SIGN_GLIDE": "omit",
                 "RUS_SOFT_SIGN": "preserve",
@@ -287,6 +288,7 @@ class TrainingExportTests(unittest.TestCase):
             {
                 "IYA": "compact",
                 "ARABIC_INITIAL_GA": "plain",
+                "GIY_COMPACT": "plain",
                 "IE_GLIDE": "plain",
                 "RUS_SIGN_GLIDE": "omit",
                 "RUS_SOFT_SIGN": "preserve",

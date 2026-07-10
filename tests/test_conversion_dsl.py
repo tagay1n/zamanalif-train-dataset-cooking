@@ -159,6 +159,15 @@ class ConversionDslTests(unittest.TestCase):
             "ğäyep",
         )
 
+    def test_giy_compact_rule_accepts_custom_option_text(self) -> None:
+        value = "{{GIY_COMPACT|plain=ğıybad|compact=ğibäd}}ät"
+
+        self.assertEqual(resolve_dsl(value), "ğıybadät")
+        self.assertEqual(
+            resolve_dsl(value, {"GIY_COMPACT": "compact"}),
+            "ğibädät",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

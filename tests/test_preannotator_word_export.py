@@ -427,6 +427,35 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     front,
                 )
 
+    def test_selected_giy_compaction_is_policy_dsl(self) -> None:
+        cases = [
+            ("гыйбадәт", "{{GIY_COMPACT|plain=ğıybad|compact=ğibäd}}ät", "ğıybadät", "ğibädät"),
+            (
+                "гыйбадәтханә",
+                "{{GIY_COMPACT|plain=ğıybad|compact=ğibäd}}ätxanä",
+                "ğıybadätxanä",
+                "ğibädätxanä",
+            ),
+            ("гыйбарә", "{{GIY_COMPACT|plain=ğıybar|compact=ğibär}}ä", "ğıybarä", "ğibärä"),
+            ("гыйльми", "{{GIY_COMPACT|plain=ğıylm|compact=ğilm}}i", "ğıylmi", "ğilmi"),
+            ("зәгыйфь", "{{GIY_COMPACT|plain=zäğıyf|compact=zäğif}}", "zäğıyf", "zäğif"),
+            ("шагыйрь", "{{GIY_COMPACT|plain=şağıyr|compact=şağir}}", "şağıyr", "şağir"),
+            ("кагыйдә", "{{GIY_COMPACT|plain=qağıydä|compact=qağidä}}", "qağıydä", "qağidä"),
+            ("табигый", "{{GIY_COMPACT|plain=tabiğıy|compact=tabiği}}", "tabiğıy", "tabiği"),
+        ]
+
+        for word, expected_dsl, plain, compact in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "N")
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl), plain)
+                self.assertEqual(resolve_dsl(dsl, {"GIY_COMPACT": "compact"}), compact)
+
+    def test_non_compacting_giy_words_stay_plain(self) -> None:
+        self.assertEqual(convert_for_annotation_dsl("гыйбрәтле", "N"), "ğıybrätle")
+        self.assertEqual(convert_for_annotation_dsl("гыйсъян", "N"), "ğıysyan")
+        self.assertEqual(convert_for_annotation_dsl("гыйшык", "N"), "ğıyşıq")
+
     def test_general_apostrophe_and_sign_conversions(self) -> None:
         self.assertEqual(convert_for_annotation("роль", "RL"), "rol'")
         self.assertEqual(convert_for_annotation("культура", "RL"), "kul'tura")
