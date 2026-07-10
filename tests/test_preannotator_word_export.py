@@ -589,6 +589,26 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
+    def test_selected_arabic_hamza_stems_are_deterministic(self) -> None:
+        cases = [
+            ("таэмин", "tä'min"),
+            ("тәэмин", "tä'min"),
+            ("тәэсир", "tä'sir"),
+            ("тәэсирендә", "tä'sirendä"),
+            ("тәэсиргә", "tä'sirgä"),
+            ("тәэсирле", "tä'sirle"),
+            ("тәэсирлелек", "tä'sirlelek"),
+            ("тәэсирләнергә", "tä'sirlänergä"),
+            ("тәэсирләнүчән", "tä'sirlänüçän"),
+            ("тәэсирләнүчәнлек", "tä'sirlänüçänlek"),
+            ("тәэсирсез", "tä'sirsez"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
+
     def test_native_ek_to_iyq_words_are_deterministic(self) -> None:
         cases = [
             ("аек", "ayıq"),
