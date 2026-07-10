@@ -660,6 +660,9 @@ class PreannotatorWordExportTests(unittest.TestCase):
         cases = [
             ("дикъкать", "diqqat"),
             ("дикъкатьсез", "diqqatsez"),
+            ("инкыйлаб", "inqıylab"),
+            ("каракүл", "qarakül"),
+            ("каракүлдән", "qaraküldän"),
             ("мәкаль", "mäqal"),
             ("мәкалә", "mäqalä"),
             ("мөкатдәс", "möqatdäs"),
@@ -673,6 +676,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("сәркатиплек", "särqatiplek"),
             ("тәкать", "täqat"),
             ("тәкатьле", "täqatle"),
+            ("тәнкыйть", "tänqıyt"),
+            ("тәнкыйтьләргә", "tänqıytlärgä"),
+            ("тәнкыйтьче", "tänqıytçe"),
+            ("фәкать", "fäqat"),
+            ("фәкыйрь", "fäqıyr"),
+            ("фәкыйрьлеккә", "fäqıyrlekkä"),
+            ("фәкыйрьләнү", "fäqıyrlänü"),
         ]
 
         for word, expected in cases:
