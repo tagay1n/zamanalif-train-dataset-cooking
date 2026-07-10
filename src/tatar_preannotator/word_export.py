@@ -1001,6 +1001,7 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("тәнкыйть", "tänkıyt", "tänqıyt"),
     ("фәкать", "fäkat", "fäqat"),
     ("фәкыйрь", "fäkıyr", "fäqıyr"),
+    ("хыянәт", "xıyanät", "xıyänät"),
 )
 
 NATIVE_FRAGMENT_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (

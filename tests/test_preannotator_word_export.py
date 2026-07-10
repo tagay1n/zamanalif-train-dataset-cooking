@@ -699,6 +699,9 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("кыяфәте", "qıyäfäte"),
             ("кыяфәтле", "qıyäfätle"),
             ("кыяфәттә", "qıyäfättä"),
+            ("хыянәт", "xıyänät"),
+            ("хыянәтче", "xıyänätçe"),
+            ("хыянәтчеләрчә", "xıyänätçelärçä"),
         ]
 
         for word, expected in cases:
