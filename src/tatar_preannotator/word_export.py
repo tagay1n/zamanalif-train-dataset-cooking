@@ -948,12 +948,15 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("кыяфәт", "qıyafät", "qıyäfät"),
     ("лаек", "layık", "layıq"),
     ("мыек", "mıyık", "mıyıq"),
+    ("мөкатдәс", "mökatdäs", "möqatdäs"),
     ("мәкал", "mäkal", "mäqal"),
     ("мәшәкать", "mäşäkat", "mäşäqat"),
+    ("нәкыш", "näkış", "näqış"),
     ("сыек", "sıyık", "sıyıq"),
     ("сөякк", "söyäqq", "söyäkk"),
     ("сөяк", "söyäq", "söyäk"),
     ("сәркатип", "särkatip", "särqatip"),
+    ("тәкать", "täkat", "täqat"),
 )
 
 NATIVE_FRAGMENT_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
