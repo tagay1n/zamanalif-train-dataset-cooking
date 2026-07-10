@@ -395,6 +395,35 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 )
                 self.assertEqual(resolve_dsl(dsl), long)
 
+    def test_mostaqil_is_policy_dsl(self) -> None:
+        cases = [
+            (
+                "мөстәкыйль",
+                "möstä{{MOSTAQIL|pdf=qil|antat=qıyl}}",
+                "möstäqil",
+                "möstäqıyl",
+            ),
+            (
+                "мөстәкыйльлеге",
+                "möstä{{MOSTAQIL|pdf=qil|antat=qıyl'}}lege",
+                "möstäqillege",
+                "möstäqıyl'lege",
+            ),
+            (
+                "мөстәкыйльлек",
+                "möstä{{MOSTAQIL|pdf=qil|antat=qıyl'}}lek",
+                "möstäqillek",
+                "möstäqıyl'lek",
+            ),
+        ]
+
+        for word, expected_dsl, pdf, antat in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "N")
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl, {"MOSTAQIL": "pdf"}), pdf)
+                self.assertEqual(resolve_dsl(dsl), antat)
+
     def test_native_vowel_before_e_uses_y_glide_vowel_harmony(self) -> None:
         self.assertEqual(convert_for_annotation("аерым", "N"), "ayırım")
         self.assertEqual(convert_for_annotation("оешма", "N"), "oyışma")

@@ -159,6 +159,15 @@ class ConversionDslTests(unittest.TestCase):
             "ğäyep",
         )
 
+    def test_mostaqil_rule_accepts_custom_option_text(self) -> None:
+        base = "möstä{{MOSTAQIL|pdf=qil|antat=qıyl}}"
+        suffixed = "möstä{{MOSTAQIL|pdf=qil|antat=qıyl'}}lege"
+
+        self.assertEqual(resolve_dsl(base), "möstäqıyl")
+        self.assertEqual(resolve_dsl(base, {"MOSTAQIL": "pdf"}), "möstäqil")
+        self.assertEqual(resolve_dsl(suffixed), "möstäqıyl'lege")
+        self.assertEqual(resolve_dsl(suffixed, {"MOSTAQIL": "pdf"}), "möstäqillege")
+
 
 if __name__ == "__main__":
     unittest.main()

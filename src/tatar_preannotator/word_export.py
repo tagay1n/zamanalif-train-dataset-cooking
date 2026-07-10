@@ -21,6 +21,7 @@ from tatar_preannotator.conversion import (
     IYA_RULE,
     Literal,
     MUSIC_Y_RULE,
+    MOSTAQIL_RULE,
     NATIVE_UW_RULE,
     PROJECT_E_RULE,
     RL_FINAL_KA_RULE,
@@ -335,7 +336,8 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_music_y_choices(word, result, label)
     result = result_with_iya_choices(word, result)
     result = result_with_ie_glide_choices(word, result)
-    return result_with_arabic_initial_ga_choices(word, result, label)
+    result = result_with_arabic_initial_ga_choices(word, result, label)
+    return result_with_mostaqil_choices(word, result, label)
 
 
 def result_with_iya_choices(source: str, result: ConversionResult) -> ConversionResult:
@@ -433,6 +435,37 @@ def result_with_music_y_choices(
             start = match.end()
             changed = True
         _append_literal_segment(segments, text[start:])
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+def result_with_mostaqil_choices(
+    source: str, result: ConversionResult, label: str
+) -> ConversionResult:
+    """Annotate the attested ``мөстәкыйль`` convention as PDF vs ANTAT policy."""
+    if label != "N" or not source.casefold().startswith("мөстәкыйль"):
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in result.segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        if not changed and text.startswith("möstäkıyl"):
+            suffix = text[len("möstäkıyl") :]
+            _append_literal_segment(segments, "möstä")
+            antat_text = "qıyl'" if suffix else "qıyl"
+            segments.append(
+                Choice(
+                    MOSTAQIL_RULE.rule_id,
+                    (("pdf", "qil"), ("antat", antat_text)),
+                )
+            )
+            _append_literal_segment(segments, suffix)
+            changed = True
+            continue
+        _append_literal_segment(segments, text)
     return ConversionResult(tuple(segments)) if changed else result
 
 

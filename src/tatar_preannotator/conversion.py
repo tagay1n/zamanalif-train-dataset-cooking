@@ -97,6 +97,12 @@ MUSIC_Y_RULE = RuleDefinition(
     options=(("short", "ı"), ("long", "ıy")),
     default_option="long",
 )
+MOSTAQIL_RULE = RuleDefinition(
+    rule_id="MOSTAQIL",
+    options=(("pdf", "qil"), ("antat", "qıyl")),
+    default_option="antat",
+    allow_custom_option_text=True,
+)
 RUS_SIGN_GLIDE_RULE = RuleDefinition(
     rule_id="RUS_SIGN_GLIDE",
     options=(("omit", ""), ("preserve", "'")),
@@ -130,6 +136,7 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         IE_GLIDE_RULE.rule_id: IE_GLIDE_RULE,
         PROJECT_E_RULE.rule_id: PROJECT_E_RULE,
         MUSIC_Y_RULE.rule_id: MUSIC_Y_RULE,
+        MOSTAQIL_RULE.rule_id: MOSTAQIL_RULE,
         RUS_SIGN_GLIDE_RULE.rule_id: RUS_SIGN_GLIDE_RULE,
         RUS_SOFT_SIGN_RULE.rule_id: RUS_SOFT_SIGN_RULE,
         RUS_JOTATED_SOFTENING_RULE.rule_id: RUS_JOTATED_SOFTENING_RULE,
@@ -144,6 +151,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "IE_GLIDE": "plain",
         "PROJECT_E": "glide",
         "MUSIC_Y": "long",
+        "MOSTAQIL": "antat",
         "RUS_SIGN_GLIDE": "omit",
         "RUS_SOFT_SIGN": "preserve",
         "RUS_JOTATED_SOFTENING": "glide",
@@ -158,6 +166,7 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "IE_GLIDE": "plain",
         "PROJECT_E": "glide",
         "MUSIC_Y": "long",
+        "MOSTAQIL": "pdf",
         "RUS_SIGN_GLIDE": "omit",
         "RUS_SOFT_SIGN": "omit",
         "RUS_JOTATED_SOFTENING": "glide",
