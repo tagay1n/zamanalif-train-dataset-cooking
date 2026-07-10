@@ -987,6 +987,8 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("мөгаллим", "möğallim", "möğällim"),
     ("мөгамәлә", "möğamälä", "möğämälä"),
     ("нәкыш", "näkış", "näqış"),
+    ("оек", "oyık", "oyıq"),
+    ("оеш", "oyışk", "oyışq"),
     ("пәйгамбәр", "päyğambär", "päyğämbär"),
     ("сыек", "sıyık", "sıyıq"),
     ("сөякк", "söyäqq", "söyäkk"),
