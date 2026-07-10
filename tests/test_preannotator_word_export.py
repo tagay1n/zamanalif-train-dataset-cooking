@@ -456,6 +456,35 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation_dsl("гыйсъян", "N"), "ğıysyan")
         self.assertEqual(convert_for_annotation_dsl("гыйшык", "N"), "ğıyşıq")
 
+    def test_selected_arabic_final_at_fronting_is_policy_dsl(self) -> None:
+        cases = [
+            ("васыять", "{{ARABIC_FINAL_AT|plain=wasıyat|front=wasıyät}}", "wasıyat", "wasıyät"),
+            ("итагатьсез", "{{ARABIC_FINAL_AT|plain=itağat|front=itağät}}sez", "itağatsez", "itağätsez"),
+            (
+                "канәгатьләндерергә",
+                "{{ARABIC_FINAL_AT|plain=qanäğat|front=qanäğät}}länderergä",
+                "qanäğatländerergä",
+                "qanäğätländerergä",
+            ),
+            ("риваять", "{{ARABIC_FINAL_AT|plain=riwayat|front=riwayät}}", "riwayat", "riwayät"),
+            ("сәгать", "{{ARABIC_FINAL_AT|plain=säğat|front=säğät}}", "säğat", "säğät"),
+            ("сәнгате", "{{ARABIC_FINAL_AT|plain=sänğat|front=sänğät}}e", "sänğate", "sänğäte"),
+            ("табигатьтән", "{{ARABIC_FINAL_AT|plain=tabiğat|front=tabiğät}}tän", "tabiğattän", "tabiğättän"),
+            (
+                "җинаятьчелек",
+                "{{ARABIC_FINAL_AT|plain=cinayat|front=cinayät}}çelek",
+                "cinayatçelek",
+                "cinayätçelek",
+            ),
+        ]
+
+        for word, expected_dsl, plain, front in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "N")
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl), plain)
+                self.assertEqual(resolve_dsl(dsl, {"ARABIC_FINAL_AT": "front"}), front)
+
     def test_general_apostrophe_and_sign_conversions(self) -> None:
         self.assertEqual(convert_for_annotation("роль", "RL"), "rol'")
         self.assertEqual(convert_for_annotation("культура", "RL"), "kul'tura")

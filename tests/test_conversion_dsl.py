@@ -168,6 +168,15 @@ class ConversionDslTests(unittest.TestCase):
             "ğibädät",
         )
 
+    def test_arabic_final_at_rule_accepts_custom_option_text(self) -> None:
+        value = "{{ARABIC_FINAL_AT|plain=qanäğat|front=qanäğät}}lek"
+
+        self.assertEqual(resolve_dsl(value), "qanäğatlek")
+        self.assertEqual(
+            resolve_dsl(value, {"ARABIC_FINAL_AT": "front"}),
+            "qanäğätlek",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

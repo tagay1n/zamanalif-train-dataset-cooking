@@ -14,6 +14,7 @@ from typing import Any, Iterable
 
 from tatar_preannotator.conversion import (
     ARABIC_INITIAL_GA_RULE,
+    ARABIC_FINAL_AT_RULE,
     Choice,
     ConversionResult,
     DslError,
@@ -333,6 +334,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_iya_choices(word, result)
     result = result_with_ie_glide_choices(word, result)
     result = result_with_giy_compact_choices(word, result, label)
+    result = result_with_arabic_final_at_choices(word, result, label)
     return result_with_arabic_initial_ga_choices(word, result, label)
 
 
@@ -438,6 +440,62 @@ def _giy_compact_choice(source: str) -> tuple[str, str, str] | None:
     for cyrillic_fragment, plain_text, compact_text in GIY_COMPACT_CHOICES:
         if cyrillic_fragment in folded:
             return cyrillic_fragment, plain_text, compact_text
+    return None
+
+
+ARABIC_FINAL_AT_CHOICES: tuple[tuple[str, str, str], ...] = (
+    ("васыять", "wasıyat", "wasıyät"),
+    ("итагать", "itağat", "itağät"),
+    ("канәгать", "qanäğat", "qanäğät"),
+    ("риваять", "riwayat", "riwayät"),
+    ("сәгать", "säğat", "säğät"),
+    ("сәнгат", "sänğat", "sänğät"),
+    ("табигать", "tabiğat", "tabiğät"),
+    ("җинаять", "cinayat", "cinayät"),
+)
+
+
+def result_with_arabic_final_at_choices(
+    source: str,
+    result: ConversionResult,
+    label: str,
+) -> ConversionResult:
+    """Annotate selected Arabic/Persian final ``at`` fronting conventions."""
+    if label != "N":
+        return result
+    matched = _arabic_final_at_choice(source)
+    if matched is None:
+        return result
+    _, plain_text, front_text = matched
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in result.segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        if not changed and plain_text in text:
+            before, after = text.split(plain_text, 1)
+            _append_literal_segment(segments, before)
+            segments.append(
+                Choice(
+                    ARABIC_FINAL_AT_RULE.rule_id,
+                    (("plain", plain_text), ("front", front_text)),
+                )
+            )
+            _append_literal_segment(segments, after)
+            changed = True
+            continue
+        _append_literal_segment(segments, text)
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+def _arabic_final_at_choice(source: str) -> tuple[str, str, str] | None:
+    folded = source.casefold()
+    for cyrillic_fragment, plain_text, front_text in ARABIC_FINAL_AT_CHOICES:
+        if cyrillic_fragment in folded:
+            return cyrillic_fragment, plain_text, front_text
     return None
 
 
