@@ -953,6 +953,7 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("сыек", "sıyık", "sıyıq"),
     ("сөякк", "söyäqq", "söyäkk"),
     ("сөяк", "söyäq", "söyäk"),
+    ("сәркатип", "särkatip", "särqatip"),
 )
 
 NATIVE_FRAGMENT_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (

@@ -632,6 +632,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("мәшәкатьләр", "mäşäqatlär"),
             ("мәшәкатьләргә", "mäşäqatlärgä"),
             ("мәшәкатьләре", "mäşäqatläre"),
+            ("сәркатип", "särqatip"),
+            ("сәркатиплек", "särqatiplek"),
         ]
 
         for word, expected in cases:
