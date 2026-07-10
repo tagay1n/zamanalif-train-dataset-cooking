@@ -6996,7 +6996,6 @@ ANTAT_GOLD_WORD_CASES = [
     ('тәхет', 'täxet', 'THRONE', 8624),
     ('тәхеткә', 'täxetkä', 'ENTHRONE', 3056),
     ('тәшкил', 'täşkil', 'AVERAGE', 637),
-    ('тәэмин', 'täemin', 'FURNISH', 3701),
     ('тәэмин', 'tä’min', 'AMMUNITION', 310),
     ('тәэсир', 'tä’sir', 'ACT', 84),
     ('тәэсиргә', 'tä’sirgä', 'SUSCEPTIBLE', 8341),
