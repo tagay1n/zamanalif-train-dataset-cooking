@@ -658,6 +658,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_arabic_persian_k_to_q_stems_are_deterministic(self) -> None:
         cases = [
+            ("дикъкать", "diqqat"),
+            ("дикъкатьсез", "diqqatsez"),
             ("мәкаль", "mäqal"),
             ("мәкалә", "mäqalä"),
             ("мөкатдәс", "möqatdäs"),
