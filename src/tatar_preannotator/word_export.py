@@ -849,6 +849,8 @@ def _convert_known_label(word: str, label: str) -> str:
 
 
 NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
+    ("аек", "ayık", "ayıq"),
+    ("боек", "boyık", "boyıq"),
     ("гадел", "ğadel", "ğädel"),
     ("гадәт", "ğadät", "ğädät"),
     ("гаеп", "ğayıp", "ğäyep"),
@@ -865,6 +867,11 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("газиз", "ğaziz", "ğäziz"),
     ("гаилә", "ğailä", "ğäilä"),
     ("гай", "ğay", "ğäy"),
+    ("каек", "qayık", "qayıq"),
+    ("кыек", "qıyık", "qıyıq"),
+    ("лаек", "layık", "layıq"),
+    ("мыек", "mıyık", "mıyıq"),
+    ("сыек", "sıyık", "sıyıq"),
 )
 
 NATIVE_FRAGMENT_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
