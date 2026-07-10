@@ -407,14 +407,15 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     stem,
                 )
 
-    def test_arabic_initial_ga_fronting_is_policy_dsl(self) -> None:
+    def test_conflicting_arabic_initial_ga_stays_policy_dsl(self) -> None:
         cases = [
-            ("гадел", "{{ARABIC_INITIAL_GA|plain=ğa|front=ğä}}del", "ğadel", "ğädel"),
-            ("гадәт", "{{ARABIC_INITIAL_GA|plain=ğa|front=ğä}}dät", "ğadät", "ğädät"),
-            ("гаеп", "{{ARABIC_INITIAL_GA|plain=ğayı|front=ğäye}}p", "ğayıp", "ğäyep"),
-            ("гаярь", "{{ARABIC_INITIAL_GA|plain=ğaya|front=ğäyä}}r", "ğayar", "ğäyär"),
-            ("гаять", "{{ARABIC_INITIAL_GA|plain=ğaya|front=ğäyä}}t", "ğayat", "ğäyät"),
-            ("гаскәр", "{{ARABIC_INITIAL_GA|plain=ğasq|front=ğäsk}}är", "ğasqär", "ğäskär"),
+            ("гади", "{{ARABIC_INITIAL_GA|plain=ğadi|front=ğädi}}", "ğadi", "ğädi"),
+            (
+                "гадиләштерергә",
+                "{{ARABIC_INITIAL_GA|plain=ğadiläşter|front=ğädiläşter}}ergä",
+                "ğadiläşterergä",
+                "ğädiläşterergä",
+            ),
         ]
 
         for word, expected_dsl, plain, front in cases:
@@ -427,63 +428,61 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     front,
                 )
 
-    def test_selected_giy_compaction_is_policy_dsl(self) -> None:
+    def test_coherent_arabic_initial_ga_fronting_is_deterministic(self) -> None:
         cases = [
-            ("гыйбадәт", "{{GIY_COMPACT|plain=ğıybad|compact=ğibäd}}ät", "ğıybadät", "ğibädät"),
-            (
-                "гыйбадәтханә",
-                "{{GIY_COMPACT|plain=ğıybad|compact=ğibäd}}ätxanä",
-                "ğıybadätxanä",
-                "ğibädätxanä",
-            ),
-            ("гыйбарә", "{{GIY_COMPACT|plain=ğıybar|compact=ğibär}}ä", "ğıybarä", "ğibärä"),
-            ("гыйльми", "{{GIY_COMPACT|plain=ğıylm|compact=ğilm}}i", "ğıylmi", "ğilmi"),
-            ("зәгыйфь", "{{GIY_COMPACT|plain=zäğıyf|compact=zäğif}}", "zäğıyf", "zäğif"),
-            ("шагыйрь", "{{GIY_COMPACT|plain=şağıyr|compact=şağir}}", "şağıyr", "şağir"),
-            ("кагыйдә", "{{GIY_COMPACT|plain=qağıydä|compact=qağidä}}", "qağıydä", "qağidä"),
-            ("табигый", "{{GIY_COMPACT|plain=tabiğıy|compact=tabiği}}", "tabiğıy", "tabiği"),
+            ("гадәт", "ğädät"),
+            ("гаеп", "ğäyep"),
+            ("гаярь", "ğäyär"),
+            ("гаять", "ğäyät"),
+            ("гаскәр", "ğäskär"),
+            ("гамәлдә", "ğämäldä"),
+            ("гарип", "ğärip"),
+            ("гасыр", "ğasır"),
         ]
 
-        for word, expected_dsl, plain, compact in cases:
+        for word, expected in cases:
             with self.subTest(word=word):
-                dsl = convert_for_annotation_dsl(word, "N")
-                self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl), plain)
-                self.assertEqual(resolve_dsl(dsl, {"GIY_COMPACT": "compact"}), compact)
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
+
+    def test_selected_giy_compaction_is_deterministic(self) -> None:
+        cases = [
+            ("гыйбадәт", "ğibädät"),
+            ("гыйбадәтханә", "ğibädätxanä"),
+            ("гыйбарә", "ğibärä"),
+            ("гыйльми", "ğilmi"),
+            ("зәгыйфь", "zäğif"),
+            ("шагыйрь", "şağir"),
+            ("кагыйдә", "qağidä"),
+            ("табигый", "tabiği"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
     def test_non_compacting_giy_words_stay_plain(self) -> None:
         self.assertEqual(convert_for_annotation_dsl("гыйбрәтле", "N"), "ğıybrätle")
         self.assertEqual(convert_for_annotation_dsl("гыйсъян", "N"), "ğıysyan")
         self.assertEqual(convert_for_annotation_dsl("гыйшык", "N"), "ğıyşıq")
 
-    def test_selected_arabic_final_at_fronting_is_policy_dsl(self) -> None:
+    def test_selected_arabic_final_at_fronting_is_deterministic(self) -> None:
         cases = [
-            ("васыять", "{{ARABIC_FINAL_AT|plain=wasıyat|front=wasıyät}}", "wasıyat", "wasıyät"),
-            ("итагатьсез", "{{ARABIC_FINAL_AT|plain=itağat|front=itağät}}sez", "itağatsez", "itağätsez"),
-            (
-                "канәгатьләндерергә",
-                "{{ARABIC_FINAL_AT|plain=qanäğat|front=qanäğät}}länderergä",
-                "qanäğatländerergä",
-                "qanäğätländerergä",
-            ),
-            ("риваять", "{{ARABIC_FINAL_AT|plain=riwayat|front=riwayät}}", "riwayat", "riwayät"),
-            ("сәгать", "{{ARABIC_FINAL_AT|plain=säğat|front=säğät}}", "säğat", "säğät"),
-            ("сәнгате", "{{ARABIC_FINAL_AT|plain=sänğat|front=sänğät}}e", "sänğate", "sänğäte"),
-            ("табигатьтән", "{{ARABIC_FINAL_AT|plain=tabiğat|front=tabiğät}}tän", "tabiğattän", "tabiğättän"),
-            (
-                "җинаятьчелек",
-                "{{ARABIC_FINAL_AT|plain=cinayat|front=cinayät}}çelek",
-                "cinayatçelek",
-                "cinayätçelek",
-            ),
+            ("васыять", "wasıyät"),
+            ("итагатьсез", "itağätsez"),
+            ("канәгатьләндерергә", "qanäğätländerergä"),
+            ("риваять", "riwayät"),
+            ("сәгать", "säğät"),
+            ("сәнгате", "sänğäte"),
+            ("табигатьтән", "tabiğättän"),
+            ("җинаятьчелек", "cinayätçelek"),
         ]
 
-        for word, expected_dsl, plain, front in cases:
+        for word, expected in cases:
             with self.subTest(word=word):
-                dsl = convert_for_annotation_dsl(word, "N")
-                self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl), plain)
-                self.assertEqual(resolve_dsl(dsl, {"ARABIC_FINAL_AT": "front"}), front)
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
     def test_general_apostrophe_and_sign_conversions(self) -> None:
         self.assertEqual(convert_for_annotation("роль", "RL"), "rol'")
