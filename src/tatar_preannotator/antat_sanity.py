@@ -7,9 +7,11 @@ import re
 import sqlite3
 from typing import Iterable
 
+from tatar_preannotator.conversion import Choice, Literal, parse_dsl
 from tatar_preannotator.word_export import (
     contains_rl_review_letter,
     convert_for_annotation,
+    convert_for_annotation_dsl,
     vowel_harmony_class,
 )
 
@@ -155,11 +157,11 @@ def antat_rule_coverage(pairs: Iterable[AntatWordPair]) -> AntatCoverage:
     matched_both: list[AntatWordPair] = []
     rule_gaps: list[AntatRuleGap] = []
     for pair in pairs:
-        native = convert_for_annotation(pair.cyrillic_word, "N")
-        loanword = convert_for_annotation(pair.cyrillic_word, "RL")
-        expected = pair.expected_zamanalif.casefold()
-        native_matches = native.casefold() == expected
-        loanword_matches = loanword.casefold() == expected
+        native = convert_for_annotation_dsl(pair.cyrillic_word, "N")
+        loanword = convert_for_annotation_dsl(pair.cyrillic_word, "RL")
+        expected = _normalize_zamanalif(pair.expected_zamanalif)
+        native_matches = expected in _dsl_resolutions(native)
+        loanword_matches = expected in _dsl_resolutions(loanword)
         if native_matches and loanword_matches:
             matched_both.append(pair)
         elif native_matches:
@@ -180,6 +182,27 @@ def antat_rule_coverage(pairs: Iterable[AntatWordPair]) -> AntatCoverage:
         matched_both=matched_both,
         rule_gaps=rule_gaps,
     )
+
+
+def _normalize_zamanalif(value: str) -> str:
+    return value.replace("’", "'").casefold()
+
+
+def _dsl_resolutions(value: str) -> set[str]:
+    if not value:
+        return set()
+
+    outputs = [""]
+    for segment in parse_dsl(value).segments:
+        if isinstance(segment, Literal):
+            outputs = [output + segment.text for output in outputs]
+        elif isinstance(segment, Choice):
+            outputs = [
+                output + option_text
+                for output in outputs
+                for _, option_text in segment.options
+            ]
+    return {_normalize_zamanalif(output) for output in outputs}
 
 
 def format_mismatches(mismatches: list[AntatMismatch], *, limit: int = 50) -> str:

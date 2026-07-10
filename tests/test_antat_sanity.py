@@ -90,11 +90,11 @@ class AntatSanityTests(unittest.TestCase):
                 db_path,
                 cyrillic_html="""
                 <html><body><p><b>sample</b> <i>n</i>
-                вакыт, проект, мәгънәле</p></body></html>
+                вакыт, проект, мәгънәле, фамилия</p></body></html>
                 """,
                 zamanalif_html="""
                 <html><body><p><b>sample</b> <i>n</i>
-                waqıt, proyekt, mäğnäle</p></body></html>
+                waqıt, proyekt, mäğnäle, familiyä</p></body></html>
                 """,
             )
             pairs = extract_antat_word_pairs(db_path)
@@ -106,16 +106,16 @@ class AntatSanityTests(unittest.TestCase):
             ["вакыт", "мәгънәле"],
         )
         self.assertEqual([pair.cyrillic_word for pair in coverage.matched_loanword], ["проект"])
-        self.assertEqual(coverage.matched_both, [])
+        self.assertEqual([pair.cyrillic_word for pair in coverage.matched_both], ["фамилия"])
         self.assertEqual(coverage.rule_gaps, [])
         self.assertEqual(
             coverage.summary(),
             {
                 "matched_native": 2,
                 "matched_loanword": 1,
-                "matched_both": 0,
+                "matched_both": 1,
                 "rule_gaps": 0,
-                "total": 3,
+                "total": 4,
             },
         )
 
