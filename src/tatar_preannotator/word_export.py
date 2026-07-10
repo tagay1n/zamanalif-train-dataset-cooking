@@ -1002,6 +1002,7 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("фәкать", "fäkat", "fäqat"),
     ("фәкыйрь", "fäkıyr", "fäqıyr"),
     ("хыянәт", "xıyanät", "xıyänät"),
+    ("шәфкать", "şäfkat", "şäfqat"),
     ("һичкая", "hiçkaya", "hiçqaya"),
     ("һичкай", "hiçkay", "hiçqay"),
     ("һәркай", "härkay", "härqay"),

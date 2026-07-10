@@ -698,6 +698,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("фәкыйрь", "fäqıyr"),
             ("фәкыйрьлеккә", "fäqıyrlekkä"),
             ("фәкыйрьләнү", "fäqıyrlänü"),
+            ("шәфкать", "şäfqat"),
+            ("шәфкатьле", "şäfqatle"),
+            ("шәфкатьлелек", "şäfqatlelek"),
+            ("шәфкатьсез", "şäfqatsez"),
         ]
 
         for word, expected in cases:
