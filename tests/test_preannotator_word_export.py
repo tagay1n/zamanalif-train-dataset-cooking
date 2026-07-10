@@ -505,6 +505,21 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
+    def test_ber_q_compounds_are_deterministic(self) -> None:
+        cases = [
+            ("беркайда", "berqayda"),
+            ("беркайчан", "berqayçan"),
+            ("беркая", "berqaya"),
+            ("беркатлы", "berqatlı"),
+            ("беркатлылык", "berqatlılıq"),
+            ("берникадәр", "berniqadär"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
+
     def test_arabic_persian_k_to_q_stems_are_deterministic(self) -> None:
         cases = [
             ("мәкаль", "mäqal"),

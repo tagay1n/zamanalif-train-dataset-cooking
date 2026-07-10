@@ -850,6 +850,10 @@ def _convert_known_label(word: str, label: str) -> str:
 
 NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("аек", "ayık", "ayıq"),
+    ("беркай", "berkay", "berqay"),
+    ("беркая", "berkaya", "berqaya"),
+    ("беркат", "berkat", "berqat"),
+    ("берникадәр", "bernikadär", "berniqadär"),
     ("боек", "boyık", "boyıq"),
     ("гадел", "ğadel", "ğädel"),
     ("гадәт", "ğadät", "ğädät"),
