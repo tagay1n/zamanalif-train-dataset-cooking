@@ -106,7 +106,7 @@ class ConditionalConversionDslTests(unittest.TestCase):
             ("авыл", "awıl", "avıl"),
             ("актив", "aqtiw", "aktiv"),
             ("вакыт", "waqıt", "vakıt"),
-            ("проект", "proyıkt", "proyekt"),
+            ("проект", "proyıkt", "pro{{PROJECT_E|plain=e|glide=ye}}kt"),
         ]
 
         for word, native, loanword in cases:

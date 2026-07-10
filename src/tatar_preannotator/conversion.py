@@ -87,6 +87,11 @@ IE_GLIDE_RULE = RuleDefinition(
     options=(("plain", "e"), ("glide", "ye")),
     default_option="plain",
 )
+PROJECT_E_RULE = RuleDefinition(
+    rule_id="PROJECT_E",
+    options=(("plain", "e"), ("glide", "ye")),
+    default_option="glide",
+)
 RUS_SIGN_GLIDE_RULE = RuleDefinition(
     rule_id="RUS_SIGN_GLIDE",
     options=(("omit", ""), ("preserve", "'")),
@@ -118,6 +123,7 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         IYA_RULE.rule_id: IYA_RULE,
         ARABIC_INITIAL_GA_RULE.rule_id: ARABIC_INITIAL_GA_RULE,
         IE_GLIDE_RULE.rule_id: IE_GLIDE_RULE,
+        PROJECT_E_RULE.rule_id: PROJECT_E_RULE,
         RUS_SIGN_GLIDE_RULE.rule_id: RUS_SIGN_GLIDE_RULE,
         RUS_SOFT_SIGN_RULE.rule_id: RUS_SOFT_SIGN_RULE,
         RUS_JOTATED_SOFTENING_RULE.rule_id: RUS_JOTATED_SOFTENING_RULE,
@@ -130,6 +136,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "IYA": "explicit",
         "ARABIC_INITIAL_GA": "plain",
         "IE_GLIDE": "plain",
+        "PROJECT_E": "glide",
         "RUS_SIGN_GLIDE": "omit",
         "RUS_SOFT_SIGN": "preserve",
         "RUS_JOTATED_SOFTENING": "glide",
@@ -142,6 +149,7 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "IYA": "compact",
         "ARABIC_INITIAL_GA": "plain",
         "IE_GLIDE": "plain",
+        "PROJECT_E": "glide",
         "RUS_SIGN_GLIDE": "omit",
         "RUS_SOFT_SIGN": "omit",
         "RUS_JOTATED_SOFTENING": "glide",

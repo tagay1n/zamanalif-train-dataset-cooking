@@ -99,7 +99,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ["вакытында", "проект", "торак"],
         )
         self.assertEqual(result.tasks[0]["data"]["auto_zamanalif"], "waqıtında")
-        self.assertEqual(result.tasks[1]["data"]["auto_zamanalif"], "proyekt")
+        self.assertEqual(
+            result.tasks[1]["data"]["auto_zamanalif"],
+            "pro{{PROJECT_E|plain=e|glide=ye}}kt",
+        )
         self.assertEqual(result.tasks[2]["data"]["auto_zamanalif"], "")
         self.assertEqual(result.tasks[1]["data"]["gemini_origin"], "RL")
         self.assertEqual(result.report["mixed_harmony_n_word_skipped_count"], 1)
@@ -133,7 +136,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
             result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
 
         self.assertEqual([task["data"]["cyrl_word"] for task in result.tasks], ["банк", "проект"])
-        self.assertEqual(result.tasks[1]["data"]["auto_zamanalif"], "proyekt")
+        self.assertEqual(
+            result.tasks[1]["data"]["auto_zamanalif"],
+            "pro{{PROJECT_E|plain=e|glide=ye}}kt",
+        )
 
     def test_russian_loanword_review_letters_are_exported_for_rl_only(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -332,6 +338,26 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(dsl, expected_dsl)
                 self.assertEqual(resolve_dsl(dsl), plain)
                 self.assertEqual(resolve_dsl(dsl, {"IE_GLIDE": "glide"}), glide)
+
+    def test_project_e_is_policy_dsl(self) -> None:
+        cases = [
+            ("проект", "pro{{PROJECT_E|plain=e|glide=ye}}kt", "proekt", "proyekt"),
+            ("проекты", "pro{{PROJECT_E|plain=e|glide=ye}}ktı", "proektı", "proyektı"),
+            ("проектын", "pro{{PROJECT_E|plain=e|glide=ye}}ktın", "proektın", "proyektın"),
+            (
+                "проектының",
+                "pro{{PROJECT_E|plain=e|glide=ye}}ktınıñ",
+                "proektınıñ",
+                "proyektınıñ",
+            ),
+        ]
+
+        for word, expected_dsl, plain, glide in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "RL")
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl, {"PROJECT_E": "plain"}), plain)
+                self.assertEqual(resolve_dsl(dsl), glide)
 
     def test_native_vowel_before_e_uses_y_glide_vowel_harmony(self) -> None:
         self.assertEqual(convert_for_annotation("аерым", "N"), "ayırım")

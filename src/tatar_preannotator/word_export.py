@@ -21,6 +21,7 @@ from tatar_preannotator.conversion import (
     IYA_RULE,
     Literal,
     NATIVE_UW_RULE,
+    PROJECT_E_RULE,
     RL_FINAL_KA_RULE,
     RUS_JOTATED_SOFTENING_RULE,
     RUS_SOFT_SIGN_RULE,
@@ -329,6 +330,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
         return result_with_ie_glide_choices(word, result_with_iya_choices(word, result))
     result = result_with_russian_jotated_softening_choices(word, compact, label)
     result = result_with_loanword_final_ka_choices(word, result, label)
+    result = result_with_project_e_choices(word, result, label)
     result = result_with_iya_choices(word, result)
     result = result_with_ie_glide_choices(word, result)
     return result_with_arabic_initial_ga_choices(word, result, label)
@@ -382,6 +384,30 @@ def result_with_ie_glide_choices(source: str, result: ConversionResult) -> Conve
             start = match.end()
         _append_literal_segment(segments, segment.text[start:])
     return ConversionResult(tuple(segments))
+
+
+def result_with_project_e_choices(
+    source: str, result: ConversionResult, label: str
+) -> ConversionResult:
+    """Annotate the attested ``проект`` / ``proekt`` vs ``proyekt`` convention."""
+    if label != "RL" or not source.casefold().startswith("проект"):
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in result.segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        if not changed and text.startswith("proyekt"):
+            _append_literal_segment(segments, "pro")
+            segments.append(Choice(PROJECT_E_RULE.rule_id, PROJECT_E_RULE.options))
+            _append_literal_segment(segments, text[len("proye") :])
+            changed = True
+            continue
+        _append_literal_segment(segments, text)
+    return ConversionResult(tuple(segments)) if changed else result
 
 
 ARABIC_INITIAL_GA_PREFIX_CHOICES: tuple[tuple[str, str, str], ...] = (
