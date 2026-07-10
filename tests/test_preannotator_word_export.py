@@ -362,6 +362,20 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("посылка", "RL"), "posıylka")
         self.assertEqual(convert_for_annotation("вышка", "RL"), "vıyşka")
 
+    def test_loanword_final_ets_is_deterministic(self) -> None:
+        cases = [
+            ("индеец", "RL", "indeyets"),
+            ("леденец", "RL", "ledenets"),
+            ("новобранец", "RL", "novobranets"),
+            ("полководец", "RL", "polkovodets"),
+            ("ранец", "RL", "ranets"),
+        ]
+
+        for word, label, expected in cases:
+            with self.subTest(word=word, label=label):
+                self.assertEqual(convert_for_annotation(word, label), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, label), expected)
+
     def test_native_k_g_use_local_vowel_context(self) -> None:
         self.assertEqual(convert_for_annotation("китап", "N"), "kitap")
         self.assertEqual(convert_for_annotation("мәктәп", "N"), "mäktäp")

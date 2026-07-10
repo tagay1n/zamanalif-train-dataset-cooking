@@ -827,8 +827,13 @@ def _convert_known_label(word: str, label: str) -> str:
     index = 0
     while index < len(word):
         char = word[index]
+        loanword_ets_conversion = _loanword_final_ets_sequence_conversion(word, index, label)
         surname_conversion = _surname_sequence_conversion(word, index)
-        if surname_conversion is not None:
+        if loanword_ets_conversion is not None:
+            latin, consumed = loanword_ets_conversion
+            converted.append(latin)
+            index += consumed - 1
+        elif surname_conversion is not None:
             latin, consumed = surname_conversion
             converted.append(latin)
             index += consumed - 1
@@ -846,6 +851,19 @@ def _convert_known_label(word: str, label: str) -> str:
     if label == "N":
         output = _apply_native_lexical_conventions(word, output)
     return output
+
+
+def _loanword_final_ets_sequence_conversion(
+    word: str, index: int, label: str
+) -> tuple[str, int] | None:
+    if label != "RL":
+        return None
+    suffix = word[index:]
+    if suffix == "еец":
+        return "eyets", 3
+    if suffix == "ец":
+        return "ets", 2
+    return None
 
 
 NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
