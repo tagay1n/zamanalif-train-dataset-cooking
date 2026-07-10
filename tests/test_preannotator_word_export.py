@@ -359,6 +359,42 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(resolve_dsl(dsl, {"PROJECT_E": "plain"}), plain)
                 self.assertEqual(resolve_dsl(dsl), glide)
 
+    def test_music_y_is_policy_dsl(self) -> None:
+        cases = [
+            ("музыка", "muz{{MUSIC_Y|short=ı|long=ıy}}ka", "muzıka", "muzıyka"),
+            (
+                "музыкаль",
+                "muz{{MUSIC_Y|short=ı|long=ıy}}kal{{RUS_SOFT_SIGN|omit=|preserve='}}",
+                "muzıkal",
+                "muzıykal'",
+            ),
+            (
+                "музыкасын",
+                "muz{{MUSIC_Y|short=ı|long=ıy}}kas{{MUSIC_Y|short=ı|long=ıy}}n",
+                "muzıkasın",
+                "muzıykasıyn",
+            ),
+            (
+                "музыкасына",
+                "muz{{MUSIC_Y|short=ı|long=ıy}}kas{{MUSIC_Y|short=ı|long=ıy}}na",
+                "muzıkasına",
+                "muzıykasıyna",
+            ),
+        ]
+
+        for word, expected_dsl, short, long in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "RL")
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(
+                    resolve_dsl(
+                        dsl,
+                        {"MUSIC_Y": "short", "RUS_SOFT_SIGN": "omit"},
+                    ),
+                    short,
+                )
+                self.assertEqual(resolve_dsl(dsl), long)
+
     def test_native_vowel_before_e_uses_y_glide_vowel_harmony(self) -> None:
         self.assertEqual(convert_for_annotation("аерым", "N"), "ayırım")
         self.assertEqual(convert_for_annotation("оешма", "N"), "oyışma")

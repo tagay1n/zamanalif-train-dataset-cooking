@@ -20,6 +20,7 @@ from tatar_preannotator.conversion import (
     IE_GLIDE_RULE,
     IYA_RULE,
     Literal,
+    MUSIC_Y_RULE,
     NATIVE_UW_RULE,
     PROJECT_E_RULE,
     RL_FINAL_KA_RULE,
@@ -321,16 +322,17 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
         return None
     result = result_with_russian_sign_glide_choices(word, compact, label)
     if result.has_choices:
-        return result
+        return result_with_music_y_choices(word, result, label)
     result = result_with_russian_soft_sign_choices(word, compact, label)
     if result.has_choices:
-        return result
+        return result_with_music_y_choices(word, result, label)
     result = result_with_native_uw_choices(word, compact, label)
     if result.has_choices:
         return result_with_ie_glide_choices(word, result_with_iya_choices(word, result))
     result = result_with_russian_jotated_softening_choices(word, compact, label)
     result = result_with_loanword_final_ka_choices(word, result, label)
     result = result_with_project_e_choices(word, result, label)
+    result = result_with_music_y_choices(word, result, label)
     result = result_with_iya_choices(word, result)
     result = result_with_ie_glide_choices(word, result)
     return result_with_arabic_initial_ga_choices(word, result, label)
@@ -407,6 +409,30 @@ def result_with_project_e_choices(
             changed = True
             continue
         _append_literal_segment(segments, text)
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+def result_with_music_y_choices(
+    source: str, result: ConversionResult, label: str
+) -> ConversionResult:
+    """Annotate the attested ``музыка`` / ``muzıka`` vs ``muzıyka`` convention."""
+    if label != "RL" or not source.casefold().startswith("музык"):
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in result.segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        start = 0
+        for match in re.finditer("ıy", text):
+            _append_literal_segment(segments, text[start : match.start()])
+            segments.append(Choice(MUSIC_Y_RULE.rule_id, MUSIC_Y_RULE.options))
+            start = match.end()
+            changed = True
+        _append_literal_segment(segments, text[start:])
     return ConversionResult(tuple(segments)) if changed else result
 
 
