@@ -855,6 +855,7 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("беркат", "berkat", "berqat"),
     ("берникадәр", "bernikadär", "berniqadär"),
     ("боек", "boyık", "boyıq"),
+    ("вазифа", "wazifa", "wazıyfa"),
     ("гадел", "ğadel", "ğädel"),
     ("гадәт", "ğadät", "ğädät"),
     ("гаеп", "ğayıp", "ğäyep"),

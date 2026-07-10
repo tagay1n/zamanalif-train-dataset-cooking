@@ -520,6 +520,20 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
+    def test_vazifa_arabic_stem_is_deterministic(self) -> None:
+        cases = [
+            ("вазифа", "wazıyfa"),
+            ("вазифага", "wazıyfağa"),
+            ("вазифалары", "wazıyfaları"),
+            ("вазифаны", "wazıyfanı"),
+            ("вазифасы", "wazıyfası"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
+
     def test_arabic_persian_k_to_q_stems_are_deterministic(self) -> None:
         cases = [
             ("мәкаль", "mäqal"),
