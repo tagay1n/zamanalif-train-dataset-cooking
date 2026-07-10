@@ -661,6 +661,20 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
+    def test_arabic_persian_gha_fronting_stems_are_deterministic(self) -> None:
+        cases = [
+            ("мөгаллим", "möğällim"),
+            ("мөгамәлә", "möğämälä"),
+            ("мөгамәләле", "möğämäläle"),
+            ("пәйгамбәр", "päyğämbär"),
+            ("пәйгамбәрлек", "päyğämbärlek"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
+
     def test_general_apostrophe_and_sign_conversions(self) -> None:
         self.assertEqual(convert_for_annotation("роль", "RL"), "rol'")
         self.assertEqual(convert_for_annotation("культура", "RL"), "kul'tura")
