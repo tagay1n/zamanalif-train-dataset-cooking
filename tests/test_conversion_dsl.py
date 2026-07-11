@@ -150,6 +150,15 @@ class ConversionDslTests(unittest.TestCase):
         self.assertEqual(resolve_dsl(value, {"RL_FINAL_KA": "suffix"}), "bulavqa")
         self.assertEqual(resolve_dsl(value, {"RL_FINAL_KA": "stem"}), "bulavka")
 
+    def test_final_double_l_rule_resolves_by_policy(self) -> None:
+        value = "meta{{FINAL_DOUBLE_L|single=l|double=ll}}ğa"
+
+        self.assertEqual(resolve_dsl(value), "metalğa")
+        self.assertEqual(resolve_dsl(value, {"FINAL_DOUBLE_L": "single"}), "metalğa")
+        self.assertEqual(resolve_dsl(value, {"FINAL_DOUBLE_L": "double"}), "metallğa")
+        self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "metallğa")
+        self.assertEqual(resolve_dsl(value, PREFERRED_POLICY), "metalğa")
+
     def test_arabic_initial_ga_rule_accepts_custom_option_text(self) -> None:
         value = "{{ARABIC_INITIAL_GA|plain=ğayı|front=ğäye}}p"
 

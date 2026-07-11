@@ -17,6 +17,7 @@ from tatar_preannotator.conversion import (
     Choice,
     ConversionResult,
     DslError,
+    FINAL_DOUBLE_L_RULE,
     IE_GLIDE_RULE,
     IYA_RULE,
     Literal,
@@ -334,6 +335,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_loanword_final_ka_choices(word, result, label)
     result = result_with_project_e_choices(word, result, label)
     result = result_with_music_y_choices(word, result, label)
+    result = result_with_final_double_l_choices(word, result)
     result = result_with_iya_choices(word, result)
     result = result_with_ie_glide_choices(word, result)
     result = result_with_arabic_initial_ga_choices(word, result, label)
@@ -435,6 +437,28 @@ def result_with_music_y_choices(
             start = match.end()
             changed = True
         _append_literal_segment(segments, text[start:])
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+def result_with_final_double_l_choices(source: str, result: ConversionResult) -> ConversionResult:
+    """Annotate the attested ``металл`` / ``metal`` vs ``metall`` convention."""
+    if not source.casefold().startswith("металл"):
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in result.segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        if not changed and text.startswith("metall"):
+            _append_literal_segment(segments, "meta")
+            segments.append(Choice(FINAL_DOUBLE_L_RULE.rule_id, FINAL_DOUBLE_L_RULE.options))
+            _append_literal_segment(segments, text[len("metall") :])
+            changed = True
+            continue
+        _append_literal_segment(segments, text)
     return ConversionResult(tuple(segments)) if changed else result
 
 
