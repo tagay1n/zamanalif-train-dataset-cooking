@@ -328,6 +328,20 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("гәрәев", "RL"), "gäräyev")
         self.assertEqual(convert_for_annotation("егет", "N"), "yeget")
         self.assertEqual(convert_for_annotation("ел", "N"), "yıl")
+        self.assertEqual(convert_for_annotation("ерак", "N"), "yıraq")
+        self.assertEqual(convert_for_annotation("еш", "N"), "yış")
+        self.assertEqual(convert_for_annotation("европа", "RL"), "yevropa")
+        self.assertEqual(convert_for_annotation("европалы", "RL"), "yevropalı")
+        self.assertEqual(convert_for_annotation("евразияле", "N"), "yewraziäle")
+        self.assertEqual(convert_for_annotation("епископ", "RL"), "yepiskop")
+        self.assertEqual(
+            resolve_dsl(
+                convert_for_annotation_dsl("епископаль", "RL"),
+                {"RUS_SOFT_SIGN": "omit"},
+            ),
+            "yepiskopal",
+        )
+        self.assertEqual(convert_for_annotation("ефәксыман", "N"), "yefäksıman")
         self.assertEqual(convert_for_annotation("е", "N"), "yı")
         self.assertEqual(convert_for_annotation("килүе", "N"), "kilüe")
         self.assertEqual(convert_for_annotation("пьеса", "N"), "pyesa")

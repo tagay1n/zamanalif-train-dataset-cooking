@@ -1270,6 +1270,8 @@ def _native_vowel_e_conversion(previous: str) -> str:
 
 
 def _initial_e_conversion(word: str, index: int) -> str:
+    if word.startswith(("европ", "евраз", "епископ", "ефәк")):
+        return "ye"
     harmony = _vowel_harmony_without_index(word, index)
     if harmony == "front_only":
         return "ye"

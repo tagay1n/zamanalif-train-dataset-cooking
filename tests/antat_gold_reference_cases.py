@@ -2041,7 +2041,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('дөресләү', 'döresläw', 'ATTESTATION', 596),
     ('дөресрәге', 'döresräge', 'NAMELY', 5593),
     ('дөя', 'döyä', 'CAMEL', 1366),
-    ('евразияле', 'yıwraziyäle', 'EURASIAN', 3150),
+    ('евразияле', 'yewraziyäle', 'EURASIAN', 3150),
     ('еврей', 'yevrey', 'JEW', 4986),
     ('европа', 'yevropa', 'EUROPEAN', 3151),
     ('европалы', 'yevropalı', 'EUROPEAN', 3151),
