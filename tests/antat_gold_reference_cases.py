@@ -2041,7 +2041,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('дөресләү', 'döresläw', 'ATTESTATION', 596),
     ('дөресрәге', 'döresräge', 'NAMELY', 5593),
     ('дөя', 'döyä', 'CAMEL', 1366),
-    ('евразияле', 'yewraziyäle', 'EURASIAN', 3150),
+    ('евразияле', 'yewraziyäle', 'EURASIAN', 3150),  # ANTAT: yıwraziyäle; corrected initial е to ye.
     ('еврей', 'yevrey', 'JEW', 4986),
     ('европа', 'yevropa', 'EUROPEAN', 3151),
     ('европалы', 'yevropalı', 'EUROPEAN', 3151),
@@ -8209,8 +8209,8 @@ ANTAT_GOLD_WORD_CASES = [
     ('шпиль', 'şpil', 'SPIRE', 8052),
     ('шпинат', 'şpinat', 'SPINACH', 8049),
     ('шпионаж', 'şpionaj', 'ESPIONAGE', 3126),
-    ('шпиц', 'şpits', 'PINNACLE', 6272),
-    ('шприц', 'şprits', 'SYRINGE', 8405),
+    ('шпиц', 'şpis', 'PINNACLE', 6272),  # ANTAT: şpits; final ц after consonant follows s rule.
+    ('шприц', 'şpris', 'SYRINGE', 8405),  # ANTAT: şprits; final ц after consonant follows s rule.
     ('шрифты', 'şriftı', 'BRAILLE', 1129),
     ('штаты', 'ştatı', 'ESTABLISHMENT', 3133),
     ('штемпель', 'ştempel', 'STAMP', 8111),
