@@ -494,6 +494,20 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("посылка", "RL"), "posıylka")
         self.assertEqual(convert_for_annotation("вышка", "RL"), "vıyşka")
 
+    def test_loanword_tatar_law_suffix_is_deterministic(self) -> None:
+        cases = [
+            ("граверлау", "RL", "graverlaw"),
+            ("консервлау", "RL", "konservlaw"),
+            ("страховкалау", "RL", "straxovkalaw"),
+            ("боулинг", "RL", "bouling"),
+            ("культура", "RL", "kul'tura"),
+        ]
+
+        for word, label, expected in cases:
+            with self.subTest(word=word, label=label):
+                self.assertEqual(convert_for_annotation(word, label), expected)
+                self.assertEqual(resolve_dsl(convert_for_annotation_dsl(word, label)), expected)
+
     def test_loanword_final_ets_is_deterministic(self) -> None:
         cases = [
             ("индеец", "RL", "indeyets"),

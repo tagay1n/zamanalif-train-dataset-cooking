@@ -959,7 +959,16 @@ def _convert_known_label(word: str, label: str) -> str:
     output = "".join(converted)
     if label == "N":
         output = _apply_native_lexical_conventions(word, output)
+    if label == "RL":
+        output = _apply_loanword_lexical_conventions(word, output)
     return output
+
+
+def _apply_loanword_lexical_conventions(word: str, converted: str) -> str:
+    folded = word.casefold()
+    if folded.endswith("лау") and converted.endswith("lau"):
+        return converted[:-3] + "law"
+    return converted
 
 
 def _loanword_final_ets_sequence_conversion(
