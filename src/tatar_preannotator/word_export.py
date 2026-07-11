@@ -1187,6 +1187,11 @@ def _ya_conversion(word: str, index: int, label: str) -> str:
         return "ya"
     if label == "RL" and index > 0:
         return "ya"
+    if index == 0:
+        if word == "я" or word.startswith("яшь"):
+            return "yä"
+        if word == "ящик":
+            return "ya"
 
     context = _local_vowel_context(word, index)
     if context == "front":
@@ -1200,7 +1205,7 @@ def _ya_conversion(word: str, index: int, label: str) -> str:
     if harmony == "back_only":
         return "ya"
     if harmony == "no_vowels":
-        return "yä"
+        return "ya"
     return ""
 
 
