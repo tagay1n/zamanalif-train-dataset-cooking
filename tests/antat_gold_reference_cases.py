@@ -1529,7 +1529,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('велосипедта', 'velosipedta', 'BICYCLE', 912),
     ('велюр', 'vel’ur', 'VELOURS', 9153),
     ('венок', 'venoq', 'GARLAND', 3755),
-    ('вербовать', 'werbowat', 'ENROL', 3042),
+    ('вербовать', 'verbovat', 'ENROL', 3042),  # ANTAT: werbowat; aligned to strict RL в -> v.
     ('вербовкаларга', 'verbovkalarğa', 'ENLIST', 3034),
     ('верстак', 'verstak', 'BENCH', 869),
     ('вертикаль', 'vertikal', 'UPRIGHT', 9051),
@@ -1548,7 +1548,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('витрина', 'vitrina', 'GLASS-CASE', 3848),
     ('вклад', 'vklad', 'INVESTMENT', 4923),
     ('водолаз', 'vodolaz', 'DIVER', 2683),
-    ('вокабуляр', 'wokabulyar', 'VOCABULARY', 9244),
+    ('вокабуляр', 'vokabulyar', 'VOCABULARY', 9244),  # ANTAT: wokabulyar; aligned to strict RL в -> v.
     ('волейбол', 'voleybol', 'VOLLEY-BALL', 9252),
     ('волонтёр', 'volont’or', 'VOLUNTEER', 9257),
     ('ворвань', 'vorvan', 'BLUBBER I', 1006),
