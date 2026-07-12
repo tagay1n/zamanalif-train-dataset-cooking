@@ -1027,6 +1027,8 @@ def _apply_loanword_lexical_conventions(word: str, converted: str) -> str:
     folded = word.casefold()
     if folded.endswith("лау") and converted.endswith("lau"):
         return converted[:-3] + "law"
+    if folded.endswith("ләү") and converted.endswith("läü"):
+        return converted[:-3] + "läw"
     return converted
 
 

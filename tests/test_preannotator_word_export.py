@@ -1012,6 +1012,18 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("революциясе", "RL"), "revolyutsiäse")
         self.assertEqual(convert_for_annotation("тию", "N"), "tiyü")
 
+    def test_loanword_stems_with_native_lau_suffix_use_w(self) -> None:
+        cases = [
+            ("аннотацияләү", "annotatsi{{IYA|compact=ä|explicit=yä}}läw"),
+            ("реабилитацияләү", "reabilitatsi{{IYA|compact=ä|explicit=yä}}läw"),
+            ("регистрацияләү", "registratsi{{IYA|compact=ä|explicit=yä}}läw"),
+            ("колонизацияләү", "kolonizatsi{{IYA|compact=ä|explicit=yä}}läw"),
+        ]
+
+        for word, expected_dsl in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation_dsl(word, "RL"), expected_dsl)
+
     def test_native_yu_uses_local_vowel_context(self) -> None:
         cases = [
             ("ерагаю", "yırağayu"),
