@@ -958,6 +958,29 @@ class PreannotatorWordExportTests(unittest.TestCase):
             "b'urokratiyä",
         )
 
+    def test_native_miyaw_stem_is_deterministic(self) -> None:
+        cases = [
+            ("мияубикә", "miyawbikä"),
+            ("мияулап", "miyawlap"),
+            ("мияуларга", "miyawlarğa"),
+            ("мияулау", "miyawlaw"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
+
+    def test_miyaw_stem_rule_does_not_rewrite_other_iya_u_words(self) -> None:
+        self.assertEqual(
+            convert_for_annotation_dsl("кияү", "N"),
+            "ki{{IYA|compact=ä|explicit=yä}}w",
+        )
+        self.assertEqual(
+            convert_for_annotation_dsl("тәрбияви", "N"),
+            "tärbi{{IYA|compact=ä|explicit=yä}}wi",
+        )
+
     def test_reviewed_yu_conversions(self) -> None:
         self.assertEqual(convert_for_annotation("революция", "RL"), "revolyutsiä")
         self.assertEqual(convert_for_annotation("революциясе", "RL"), "revolyutsiäse")
