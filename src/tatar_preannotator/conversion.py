@@ -75,6 +75,7 @@ IYA_RULE = RuleDefinition(
     rule_id="IYA",
     options=(("compact", "ä"), ("explicit", "yä")),
     default_option="explicit",
+    allow_custom_option_text=True,
 )
 ARABIC_INITIAL_GA_RULE = RuleDefinition(
     rule_id="ARABIC_INITIAL_GA",

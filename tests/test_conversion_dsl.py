@@ -56,7 +56,7 @@ class ConversionDslTests(unittest.TestCase):
     def test_annotation_converter_emits_iya_dsl(self) -> None:
         self.assertEqual(
             convert_for_annotation_dsl("әдәбият", "N"),
-            "ädäbi{{IYA|compact=ä|explicit=yä}}t",
+            "ädäbi{{IYA|compact=a|explicit=ya}}t",
         )
 
     def test_uncertain_alignment_does_not_invent_choice(self) -> None:
@@ -73,9 +73,10 @@ class ConversionDslTests(unittest.TestCase):
         with self.assertRaisesRegex(DslError, "duplicate option"):
             parse_dsl("x{{IYA|compact=ä|compact=yä}}")
 
-    def test_rejects_noncanonical_registered_options(self) -> None:
-        with self.assertRaisesRegex(DslError, "options for IYA must be"):
-            parse_dsl("x{{IYA|compact=ä|explicit=ya}}")
+    def test_accepts_custom_iya_vowel_quality_with_canonical_option_ids(self) -> None:
+        value = "x{{IYA|compact=a|explicit=ya}}"
+
+        self.assertEqual(parse_dsl(value).to_dsl(), value)
 
     def test_rejects_nested_and_unclosed_choices(self) -> None:
         with self.assertRaisesRegex(DslError, "nested choices"):

@@ -362,6 +362,35 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(resolve_dsl(dsl), plain)
                 self.assertEqual(resolve_dsl(dsl, {"IE_GLIDE": "glide"}), glide)
 
+    def test_hard_iya_stems_use_hard_iya_policy_text(self) -> None:
+        cases = [
+            ("әдәбият", "ädäbi{{IYA|compact=a|explicit=ya}}t", "ädäbiyat", "ädäbiat"),
+            ("әүлия", "äwli{{IYA|compact=a|explicit=ya}}", "äwliya", "äwlia"),
+            (
+                "әүлиялек",
+                "äwli{{IYA|compact=a|explicit=ya}}lek",
+                "äwliyalek",
+                "äwlialek",
+            ),
+            ("риялы", "ri{{IYA|compact=a|explicit=ya}}lı", "riyalı", "rialı"),
+        ]
+
+        for word, expected_dsl, explicit, compact in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "N")
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl), explicit)
+                self.assertEqual(resolve_dsl(dsl, {"IYA": "compact"}), compact)
+
+        self.assertEqual(
+            convert_for_annotation_dsl("риясыз", "N"),
+            "ri{{IYA|compact=ä|explicit=yä}}sız",
+        )
+        self.assertEqual(
+            convert_for_annotation_dsl("риялану", "N"),
+            "ri{{IYA|compact=ä|explicit=yä}}lanu",
+        )
+
     def test_project_e_is_policy_dsl(self) -> None:
         cases = [
             ("проект", "pro{{PROJECT_E|plain=e|glide=ye}}kt", "proekt", "proyekt"),

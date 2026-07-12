@@ -2510,7 +2510,6 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
     def test_iya_cases_are_reachable_through_compact_pdf_policy(self) -> None:
         cases = [
             ("ия", "N", "iä"),
-            ("әдәбият", "N", "ädäbiät"),
             ("орфография", "RL", "orfografiä"),
             ("позиция", "RL", "pozitsiä"),
         ]
@@ -2520,6 +2519,10 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
                 dsl = convert_for_annotation_dsl(source, label)
                 self.assertIn("{{IYA|compact=ä|explicit=yä}}", dsl)
                 self.assertEqual(resolve_dsl(dsl, PDF_COMPACT_POLICY), expected)
+
+        dsl = convert_for_annotation_dsl("әдәбият", "N")
+        self.assertIn("{{IYA|compact=a|explicit=ya}}", dsl)
+        self.assertEqual(resolve_dsl(dsl, PDF_COMPACT_POLICY), "ädäbiat")
 
     def test_outputs_use_clean_zamanalif_unicode(self) -> None:
         cases = [

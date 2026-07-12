@@ -35,9 +35,9 @@ class ConditionalConversionDslTests(unittest.TestCase):
     def test_iya_dsl_marks_only_the_differing_span(self) -> None:
         dsl = convert_for_annotation_dsl("әдәбият", "N")
 
-        self.assertEqual(dsl, "ädäbi{{IYA|compact=ä|explicit=yä}}t")
-        self.assertEqual(resolve_dsl(dsl, PREFERRED_POLICY), "ädäbiyät")
-        self.assertEqual(resolve_dsl(dsl, PDF_COMPACT_POLICY), "ädäbiät")
+        self.assertEqual(dsl, "ädäbi{{IYA|compact=a|explicit=ya}}t")
+        self.assertEqual(resolve_dsl(dsl, PREFERRED_POLICY), "ädäbiyat")
+        self.assertEqual(resolve_dsl(dsl, PDF_COMPACT_POLICY), "ädäbiat")
 
     def test_origin_branch_difference_is_not_inline_dsl(self) -> None:
         branches = conversion_branches("авыл")

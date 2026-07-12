@@ -355,6 +355,7 @@ def result_with_iya_choices(source: str, result: ConversionResult) -> Conversion
     if source_count == 0 or source_count != output_count:
         return result
 
+    options = _iya_options_for_source(source)
     segments: list[Literal | Choice] = []
     for segment in result.segments:
         if isinstance(segment, Choice):
@@ -363,10 +364,17 @@ def result_with_iya_choices(source: str, result: ConversionResult) -> Conversion
         start = 0
         for match in re.finditer("iä", segment.text, flags=re.IGNORECASE):
             _append_literal_segment(segments, segment.text[start : match.start() + 1])
-            segments.append(Choice(IYA_RULE.rule_id, IYA_RULE.options))
+            segments.append(Choice(IYA_RULE.rule_id, options))
             start = match.end()
         _append_literal_segment(segments, segment.text[start:])
     return ConversionResult(tuple(segments))
+
+
+def _iya_options_for_source(source: str) -> tuple[tuple[str, str], ...]:
+    folded = source.casefold()
+    if folded.startswith(("әдәбия", "әүлия", "риялы")):
+        return (("compact", "a"), ("explicit", "ya"))
+    return IYA_RULE.options
 
 
 def result_with_ie_glide_choices(source: str, result: ConversionResult) -> ConversionResult:
