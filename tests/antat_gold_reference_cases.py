@@ -1528,7 +1528,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('велосипед', 'velosiped', 'BICYCLE', 912),
     ('велосипедта', 'velosipedta', 'BICYCLE', 912),
     ('велюр', 'vel’ur', 'VELOURS', 9153),
-    ('венок', 'venoq', 'GARLAND', 3755),
+    ('венок', 'venok', 'GARLAND', 3755),  # ANTAT: venoq; aligned to strict RL к -> k.
     ('вербовать', 'verbovat', 'ENROL', 3042),  # ANTAT: werbowat; aligned to strict RL в -> v.
     ('вербовкаларга', 'verbovkalarğa', 'ENLIST', 3034),
     ('верстак', 'verstak', 'BENCH', 869),
@@ -6951,7 +6951,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('тәмләткечләр', 'tämlätkeçlär', 'KITCHEN HERBS', 5054),
     ('тәмсез', 'tämsez', 'UNPALATABLE', 8973),
     ('тәмуг', 'tämuğ', 'INFERNAL', 4741),
-    ('өстәмә', 'öctämä', 'ANNEX', 357),
+    ('өстәмә', 'östämä', 'ANNEX', 357),  # ANTAT: öctämä; aligned with өстәмә -> östämä.
     ('тәмәке', 'tämäke', 'BUTT I', 1312),
     ('тән', 'tän', 'BODY-GUARD', 1038),
     ('тәнкыйть', 'tänqıyt', 'ASSAIL', 550),
