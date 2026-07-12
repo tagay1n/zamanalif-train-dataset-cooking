@@ -1166,11 +1166,15 @@ def _loanword_suffix_gk_conversion(char: str, word: str, index: int) -> str:
         "ларга",
         "ләргә",
     } and len(prefix) >= 5:
-        return "ğ" if suffix in {"га", "дагы", "ларга"} else "g"
-    if char == "г" and index == len(word) - 2 and word.endswith(("дагы", "дәге")):
+        return "ğ" if suffix in {"га", "ларга"} else "g"
+    if char == "г" and suffix in {"ган", "гән", "гын", "ген"} and len(prefix) >= 5:
+        return "ğ" if suffix in {"ган", "гын"} else "g"
+    if char == "г" and index == len(word) - 2 and word.endswith(
+        ("дагы", "дәге", "тагы", "тәге")
+    ):
         stem = word[: -4]
         if len(stem) >= 5:
-            return "ğ" if word.endswith("дагы") else "g"
+            return "ğ" if word.endswith(("дагы", "тагы")) else "g"
     if char == "к" and suffix in {
         "ка",
         "кә",
@@ -1182,7 +1186,7 @@ def _loanword_suffix_gk_conversion(char: str, word: str, index: int) -> str:
         ("лык", "лек", "лыкка", "леккә", "лыгын", "леген")
     ):
         stem = word[: -3]
-        if len(stem) >= 5:
+        if len(stem) >= 4:
             return "q" if word.endswith(("лык", "лыкка", "лыгын")) else "k"
     return ""
 

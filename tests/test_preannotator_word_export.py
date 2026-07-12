@@ -538,6 +538,19 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("джунгли", "RL"), "djungli")
         self.assertEqual(convert_for_annotation("географик", "RL"), "geografik")
 
+    def test_loanword_stems_with_tatar_suffixes_use_suffix_gk(self) -> None:
+        cases = [
+            ("авторлыгын", "avtorlığın"),
+            ("графлык", "graflıq"),
+            ("коллективтагы", "kollektivtağı"),
+            ("маскировкаланмаган", "maskirovkalanmağan"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "RL"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "RL"), expected)
+
     def test_loanword_final_ka_is_policy_dsl(self) -> None:
         cases = [
             ("булавка", "bulav{{RL_FINAL_KA|suffix=q|stem=k}}a", "bulavqa", "bulavka"),
