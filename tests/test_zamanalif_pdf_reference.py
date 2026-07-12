@@ -4,7 +4,11 @@ import re
 import os
 import unittest
 
-from tatar_preannotator.conversion import PDF_COMPACT_POLICY, resolve_dsl
+from tatar_preannotator.conversion import (
+    PDF_COMPACT_POLICY,
+    ZAMANALIF_APOSTROPHE,
+    resolve_dsl,
+)
 from tatar_preannotator.word_export import convert_for_annotation, convert_for_annotation_dsl
 
 
@@ -13,7 +17,7 @@ ALLOWED_ZAMANALIF = frozenset(
     "abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     "äÄöÖüÜñÑıİğĞşŞçÇ"
-    "-—'’"
+    f"-—{ZAMANALIF_APOSTROPHE}"
 )
 
 
@@ -53,6 +57,7 @@ REVERSE_TRANSLITERATION_MAP = {
     "y": "й",
     "z": "з",
     "'": "ь",
+    "ʼ": "ь",
     "-": "-",
 }
 
@@ -211,7 +216,7 @@ PDF_GENERATED_WORD_CASES = [
     ('арга', 'arğa', 'N'),
     ('арырга', 'arırğa', 'N'),
     ('аса', 'asa', 'N'),
-    ('асфальт', "asfal't", 'RL'),
+    ('асфальт', "asfalʼt", 'RL'),
     ('асия', 'asiä', 'N'),
     ('астрономик', 'astronomik', 'N'),
     ('астрономия', 'astronomiä', 'N'),
@@ -546,7 +551,7 @@ PDF_GENERATED_WORD_CASES = [
     ('җырлый-җырлый', 'cırlıy-cırlıy', 'N'),
     ('җыры', 'cırı', 'N'),
     ('җыенам', 'cıyınam', 'N'),
-    ("д'артаньян", "d'artanyan", 'RL'),
+    ("д'артаньян", "dʼartanyan", 'RL'),
     ('даһи', 'dahi', 'N'),
     ('даими', 'daimi', 'N'),
     ('дан', 'dan', 'N'),
@@ -943,7 +948,7 @@ PDF_GENERATED_WORD_CASES = [
     ('компоненты', 'komponentı', 'RL'),
     ('компьютер', 'kompyuter', 'RL'),
     ('компьютерлар', 'kompyuterlar', 'RL'),
-    ('коньяк', "kon'yak", 'RL'),
+    ('коньяк', "konʼyak", 'RL'),
     ('конвенция', 'konvensiä', 'RL'),
     ('кораб', 'korab', 'RL'),
     ('корол', 'korol', 'RL'),
@@ -958,7 +963,7 @@ PDF_GENERATED_WORD_CASES = [
     ('куб', 'kub', 'RL'),
     ('кубка', 'kubqa', 'RL'),
     ('кул', 'kul', 'RL'),
-    ('культура', "kul'tura", 'RL'),
+    ('культура', "kulʼtura", 'RL'),
     ('куртене', 'kurtene', 'RL'),
     ('квадрат', 'kvadrat', 'RL'),
     ('кварц', 'kvars', 'RL'),
@@ -1057,11 +1062,11 @@ PDF_GENERATED_WORD_CASES = [
     ('ләбаса', 'läbasa', 'N'),
     ('ләкин', 'läkin', 'N'),
     ('ләр', 'lär', 'N'),
-    ('маэмай', "ma'may", 'N'),
+    ('маэмай', "maʼmay", 'N'),
     ('магазин', 'magazin', 'RL'),
     ('магазинда', 'magazinda', 'RL'),
     ('магазиннан', 'magazinnan', 'RL'),
-    ('макдональдс', "makdonal'ds", 'RL'),
+    ('макдональдс', "makdonalʼds", 'RL'),
     ('малай', 'malay', 'N'),
     ('мантыйкый', 'mantıyqıy', 'N'),
     ('максатлардан', 'maqsatlardan', 'N'),
@@ -1128,8 +1133,8 @@ PDF_GENERATED_WORD_CASES = [
     ('мәллә', 'mällä', 'N'),
     ('мәкәләмдә', 'mäqälämdä', 'N'),
     ('мәс', 'mäs', 'N'),
-    ('мәсьәлә', "mäs'älä", 'N'),
-    ('мәсьүл', "mäs'ül", 'N'),
+    ('мәсьәлә', "mäsʼälä", 'N'),
+    ('мәсьүл', "mäsʼül", 'N'),
     ('мәскәүдә', 'mäskäwdä', 'N'),
     ('мәсәлләрдә', 'mäsällärdä', 'N'),
     ('мәсәлән', 'mäsälän', 'N'),
@@ -1280,7 +1285,7 @@ PDF_GENERATED_WORD_CASES = [
     ('планета', 'planeta', 'RL'),
     ('планеталар', 'planetalar', 'RL'),
     ('поэма', 'poema', 'RL'),
-    ('польша', "pol'şa", 'RL'),
+    ('польша', "polʼşa", 'RL'),
     ('полициядә', 'politsiädä', 'RL'),
     ('политуку', 'polituqu', 'N'),
     ('посылка', 'posıylka', 'RL'),
@@ -1302,7 +1307,7 @@ PDF_GENERATED_WORD_CASES = [
     ('принциплары', 'prinsipları', 'RL'),
     ('принципка', 'prinsipqa', 'RL'),
     ('принциптан', 'prinsiptan', 'RL'),
-    ('пристаньдә', "pristan'dä", 'RL'),
+    ('пристаньдә', "pristanʼdä", 'RL'),
     ('проектны', 'proyektnı', 'RL'),  # Deliberately differs from the PDF spelling; keep consistent with проект -> proyekt.
     ('проектының', 'proyektınıñ', 'RL'),  # Deliberately differs from the PDF spelling; keep consistent with проект -> proyekt.
     ('проф', 'prof', 'RL'),
@@ -1389,7 +1394,7 @@ PDF_GENERATED_WORD_CASES = [
     ('кол', 'qol', 'N'),
     ('колга', 'qolğa', 'N'),
     ('кор', 'qor', 'N'),
-    ('коръән', "qor'än", 'N'),
+    ('коръән', "qorʼän", 'N'),
     ('кот', 'qot', 'N'),
     ('котлыйбыз', 'qotlıybız', 'N'),
     ('коточкыч', 'qotoçqıç', 'N'),
@@ -1502,12 +1507,12 @@ PDF_GENERATED_WORD_CASES = [
     ('рио-де-жанейро', 'rio-de-janeyro', 'RL'),
     ('рио-гранде', 'rio-grande', 'RL'),
     ('рол', 'rol', 'RL'),
-    ('рольдә', "rol'dä", 'RL'),
+    ('рольдә', "rolʼdä", 'RL'),
     ('ролендә', 'rolendä', 'RL'),
     ('роман', 'roman', 'RL'),
     ('россия', 'rossiä', 'RL'),
     ('россиядәге', 'rossiädäge', 'RL'),
-    ('рульдә', "rul'dä", 'RL'),
+    ('рульдә', "rulʼdä", 'RL'),
     ('рус', 'rus', 'RL'),
     ('рус-япон', 'rus-yapon', 'RL'),
     ('рустан', 'rustan', 'RL'),
@@ -1563,7 +1568,7 @@ PDF_GENERATED_WORD_CASES = [
     ('саңгыраулашып', 'sañğırawlaşıp', 'N'),
     ('сагыз', 'sağız', 'N'),
     ('себер', 'seber', 'N'),
-    ('секретарь', "sekretar'", 'RL'),
+    ('секретарь', "sekretarʼ", 'RL'),
     ('секунд', 'sekund', 'N'),
     ('селек-селки', 'selek-selki', 'N'),
     ('сен-симон', 'sen-simon', 'RL'),
@@ -1611,7 +1616,7 @@ PDF_GENERATED_WORD_CASES = [
     ('стандарт', 'standart', 'N'),
     ('станция', 'stansiä', 'RL'),
     ('станциясе', 'stansiäse', 'RL'),
-    ('статья', "stat'ya", 'RL'),
+    ('статья', "statʼya", 'RL'),
     ('стерео', 'stereo', 'RL'),
     ('стереокөчәйткеч', 'stereoköçäytkeç', 'RL'),
     ('стиль', 'stil', 'RL'),
@@ -1698,7 +1703,7 @@ PDF_GENERATED_WORD_CASES = [
     ('табиги', 'tabiği', 'N'),
     ('табылды', 'tabıldı', 'N'),
     ('табыйгый', 'tabıyğıy', 'N'),
-    ('тальян', "tal'yan", 'RL'),
+    ('тальян', "talʼyan", 'RL'),
     ('талип', 'talip', 'N'),
     ('талиплар', 'taliplar', 'N'),
     ('талипов', 'talipov', 'RL'),
@@ -1855,9 +1860,9 @@ PDF_GENERATED_WORD_CASES = [
     ('туы', 'tuı', 'N'),
     ('туш', 'tuş', 'N'),
     ('тягач', 'tyagaç', 'RL'),
-    ('таэмин', "tä'min", 'N'),
-    ('тәэсир', "tä'sir", 'N'),
-    ('тәэсирендә', "tä'sirendä", 'N'),
+    ('таэмин', "täʼmin", 'N'),
+    ('тәэсир', "täʼsir", 'N'),
+    ('тәэсирендә', "täʼsirendä", 'N'),
     ('тәҗрибә', 'täcribä', 'N'),
     ('тәһси', 'tähsi', 'N'),
     ('тәмам', 'tämam', 'N'),
@@ -1999,7 +2004,7 @@ PDF_GENERATED_WORD_CASES = [
     ('хан', 'xan', 'N'),
     ('ханә', 'xanä', 'N'),
     ('хакыйкый', 'xaqıyqıy', 'N'),
-    ('харьков', "xar'kov", 'RL'),
+    ('харьков', "xarʼkov", 'RL'),
     ('хат', 'xat', 'N'),
     ('хата', 'xata', 'N'),
     ('хатирә', 'xatirä', 'N'),
@@ -2482,7 +2487,7 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
             ("мотор", "RL", "motor"),
             ("шофёр", "RL", "şofyor"),
             ("сыр", "RL", "sıyr"),
-            ("роль", "RL", "rol'"),
+            ("роль", "RL", "rolʼ"),
             ("борщ", "RL", "borşç"),
             ("цинк", "RL", "sink"),
             ("кварц", "RL", "kvars"),
@@ -2549,7 +2554,7 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
             "zäñgär": "зәңгәр",
             "şofyor": "шофёр",
             "pozitsiä": "позиция",
-            "Qor'än".lower(): "корьән",
+            "Qorʼän".lower(): "корьән",
         }
         for zamanalif, cyrillic in examples.items():
             with self.subTest(zamanalif=zamanalif):

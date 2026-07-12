@@ -149,8 +149,8 @@ class ConditionalConversionDslTests(unittest.TestCase):
 
     def test_russian_sign_before_glide_is_policy_dsl(self) -> None:
         cases = [
-            ("компьютер", "komp{{RUS_SIGN_GLIDE|omit=|preserve='}}yuter", "kompyuter", "komp'yuter"),
-            ("нью-йорк", "n{{RUS_SIGN_GLIDE|omit=|preserve='}}yu-york", "nyu-york", "n'yu-york"),
+            ("компьютер", "komp{{RUS_SIGN_GLIDE|omit=|preserve=ʼ}}yuter", "kompyuter", "kompʼyuter"),
+            ("нью-йорк", "n{{RUS_SIGN_GLIDE|omit=|preserve=ʼ}}yu-york", "nyu-york", "nʼyu-york"),
         ]
 
         for word, expected_dsl, omitted, preserved in cases:
@@ -161,16 +161,16 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN_GLIDE": "preserve"}), preserved)
 
         dsl = convert_for_annotation_dsl("барьер", "RL")
-        self.assertEqual(dsl, "bar{{RUS_SIGN_E|glide=y|apostrophe='|apostrophe_glide='y}}er")
+        self.assertEqual(dsl, "bar{{RUS_SIGN_E|glide=y|apostrophe=ʼ|apostrophe_glide=ʼy}}er")
         self.assertEqual(resolve_dsl(dsl), "baryer")
-        self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN_E": "apostrophe_glide"}), "bar'yer")
+        self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN_E": "apostrophe_glide"}), "barʼyer")
 
     def test_russian_soft_sign_is_policy_dsl(self) -> None:
         cases = [
-            ("роль", "rol{{RUS_SOFT_SIGN|omit=|preserve='}}", "rol", "rol'"),
-            ("культура", "kul{{RUS_SOFT_SIGN|omit=|preserve='}}tura", "kultura", "kul'tura"),
-            ("секретарь", "sekretar{{RUS_SOFT_SIGN|omit=|preserve='}}", "sekretar", "sekretar'"),
-            ("автомобиль", "avtomobil{{RUS_SOFT_SIGN|omit=|preserve='}}", "avtomobil", "avtomobil'"),
+            ("роль", "rol{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}", "rol", "rolʼ"),
+            ("культура", "kul{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}tura", "kultura", "kulʼtura"),
+            ("секретарь", "sekretar{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}", "sekretar", "sekretarʼ"),
+            ("автомобиль", "avtomobil{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}", "avtomobil", "avtomobilʼ"),
         ]
 
         for word, expected_dsl, omitted, preserved in cases:

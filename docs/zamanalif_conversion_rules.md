@@ -127,8 +127,9 @@ These cases are especially relevant for words marked by Gemini as `RL`:
 - Russian/Russian-through-Russian `ы` can become `ıy`: `сыр -> sıyr`,
   `вышка -> vıyşka`, `музыка -> muzıyka`. Native `ы` remains `ı`.
 - `ь` and `ъ` are not Zamanalif letters. In Russian loanwords with softened
-  consonants after back vowels, apostrophe may be used:
-  `роль -> rol'`, `культура -> kul'tura`.
+  consonants after back vowels, apostrophe may be used. Use the Turkic-style
+  modifier letter apostrophe `ʼ` (U+02BC), not ASCII `'` or curly `’`:
+  `роль -> rolʼ`, `культура -> kulʼtura`.
 - `щ` becomes `şç`.
 
 ## Vowel Harmony and Known Caveats

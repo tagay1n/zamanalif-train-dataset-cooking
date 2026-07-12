@@ -13,6 +13,7 @@ import sqlite3
 from typing import Any, Iterable
 
 from tatar_preannotator.conversion import (
+    APOSTROPHE_VARIANTS,
     ARABIC_INITIAL_GA_RULE,
     Choice,
     ConversionResult,
@@ -31,6 +32,8 @@ from tatar_preannotator.conversion import (
     RUS_SOFT_SIGN_RULE,
     RUS_SOFT_SIGN_O_RULE,
     RUS_SIGN_GLIDE_RULE,
+    ZAMANALIF_APOSTROPHE,
+    normalize_zamanalif_apostrophes,
     parse_dsl,
 )
 from zamanalif_selector.features import BACK_VOWELS, CONDITIONAL_LETTERS, FRONT_VOWELS
@@ -41,7 +44,7 @@ ALLOWED_ZAMANALIF = frozenset(
     "abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     "äÄöÖüÜñÑıİğĞşŞçÇ"
-    "-—'’"
+    f"-—{ZAMANALIF_APOSTROPHE}"
 )
 @dataclass
 class WordStats:
@@ -492,7 +495,7 @@ def result_with_mostaqil_choices(
         if not changed and text.startswith("möstäkıyl"):
             suffix = text[len("möstäkıyl") :]
             _append_literal_segment(segments, "möstä")
-            antat_text = "qıyl'" if suffix else "qıyl"
+            antat_text = "qıyl" + ZAMANALIF_APOSTROPHE if suffix else "qıyl"
             segments.append(
                 Choice(
                     MOSTAQIL_RULE.rule_id,
@@ -587,7 +590,7 @@ def result_with_russian_sign_glide_choices(
             if next_char == "е":
                 if converted.startswith("y", converted_index):
                     converted_index += 1
-                elif converted.startswith("'", converted_index):
+                elif converted.startswith(ZAMANALIF_APOSTROPHE, converted_index):
                     converted_index += 1
                 else:
                     return ConversionResult((Literal(converted),))
@@ -596,16 +599,16 @@ def result_with_russian_sign_glide_choices(
                 source_index += 1
                 continue
             if next_char == "о":
-                if converted.startswith("'y", converted_index):
+                if converted.startswith(ZAMANALIF_APOSTROPHE + "y", converted_index):
                     converted_index += 2
-                elif converted.startswith("'", converted_index):
+                elif converted.startswith(ZAMANALIF_APOSTROPHE, converted_index):
                     converted_index += 1
                 segments.append(
                     Choice(RUS_SOFT_SIGN_O_RULE.rule_id, RUS_SOFT_SIGN_O_RULE.options)
                 )
                 source_index += 1
                 continue
-            if converted.startswith("'", converted_index):
+            if converted.startswith(ZAMANALIF_APOSTROPHE, converted_index):
                 converted_index += 1
             segments.append(Choice(RUS_SIGN_GLIDE_RULE.rule_id, RUS_SIGN_GLIDE_RULE.options))
             source_index += 1
@@ -634,7 +637,11 @@ def result_with_russian_soft_sign_choices(
     label: str,
 ) -> ConversionResult:
     """Annotate ordinary Russian soft/hard signs as a preserve-vs-omit choice."""
-    if label != "RL" or not any(sign in source for sign in "ьъ") or "'" not in converted:
+    if (
+        label != "RL"
+        or not any(sign in source for sign in "ьъ")
+        or ZAMANALIF_APOSTROPHE not in converted
+    ):
         return ConversionResult((Literal(converted),))
     if "ия" in source and "iä" in converted:
         return ConversionResult((Literal(converted),))
@@ -650,7 +657,7 @@ def result_with_russian_soft_sign_choices(
                 and source[source_index + 1] in {"я", "ю", "е"}
             ):
                 return ConversionResult((Literal(converted),))
-            if converted.startswith("'", converted_index):
+            if converted.startswith(ZAMANALIF_APOSTROPHE, converted_index):
                 segments.append(Choice(RUS_SOFT_SIGN_RULE.rule_id, RUS_SOFT_SIGN_RULE.options))
                 converted_index += 1
                 source_index += 1
@@ -725,7 +732,16 @@ def _is_russian_jotated_softening_position(source: str, index: int) -> bool:
     if index == 0:
         return False
     previous = source[index - 1]
-    if previous in FRONT_VOWELS | BACK_VOWELS | {"е", "ё", "ю", "я", "ь", "ъ", "-", "'"}:
+    if previous in FRONT_VOWELS | BACK_VOWELS | {
+        "е",
+        "ё",
+        "ю",
+        "я",
+        "ь",
+        "ъ",
+        "-",
+        ZAMANALIF_APOSTROPHE,
+    }:
         return False
     return bool(CYRILLIC_RE.fullmatch(previous))
 
@@ -977,8 +993,8 @@ def _origin_prediction(label: str) -> str:
 def _char_conversion(char: str, word: str, index: int, label: str) -> str:
     if char == "-":
         return "-"
-    if char in {"'", "’"}:
-        return "'"
+    if char in APOSTROPHE_VARIANTS:
+        return ZAMANALIF_APOSTROPHE
     if char in CONDITIONAL_LETTERS:
         return _conditional_char_conversion(char, word, index, label)
     if label == "RL" and char == "ы":
@@ -986,7 +1002,7 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
     if label == "RL" and char in {"ь", "ъ"}:
         if index + 1 < len(word) and word[index + 1] == "е":
             return ""
-        return "'"
+        return ZAMANALIF_APOSTROPHE
     return _deterministic_char(char)
 
 
@@ -1095,10 +1111,10 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("сөякк", "söyäqq", "söyäkk"),
     ("сөяк", "söyäq", "söyäk"),
     ("сәркатип", "särkatip", "särqatip"),
-    ("таэмин", "taemin", "tä'min"),
+    ("таэмин", "taemin", "täʼmin"),
     ("тәкать", "täkat", "täqat"),
-    ("тәэмин", "täemin", "tä'min"),
-    ("тәэсир", "täesir", "tä'sir"),
+    ("тәэмин", "täemin", "täʼmin"),
+    ("тәэсир", "täesir", "täʼsir"),
     ("тәнкыйть", "tänkıyt", "tänqıyt"),
     ("фәкать", "fäkat", "fäqat"),
     ("фәкыйрь", "fäkıyr", "fäqıyr"),
@@ -1468,6 +1484,7 @@ def _best_effort_unknown(word: str) -> str:
 def _is_clean_zamanalif(value: str | None) -> bool:
     if not value:
         return False
+    value = normalize_zamanalif_apostrophes(value)
     return all(char in ALLOWED_ZAMANALIF for char in value)
 
 

@@ -97,25 +97,25 @@ class ConversionDslTests(unittest.TestCase):
             result.resolve({"IYA": "other"})
 
     def test_russian_sign_glide_rule_resolves_by_policy(self) -> None:
-        value = "komp{{RUS_SIGN_GLIDE|omit=|preserve='}}yuter"
+        value = "komp{{RUS_SIGN_GLIDE|omit=|preserve=ʼ}}yuter"
 
         self.assertEqual(resolve_dsl(value), "kompyuter")
         self.assertEqual(resolve_dsl(value, {"RUS_SIGN_GLIDE": "omit"}), "kompyuter")
         self.assertEqual(
             resolve_dsl(value, {"RUS_SIGN_GLIDE": "preserve"}),
-            "komp'yuter",
+            "kompʼyuter",
         )
 
     def test_russian_soft_sign_rule_resolves_by_policy(self) -> None:
-        value = "rol{{RUS_SOFT_SIGN|omit=|preserve='}}"
+        value = "rol{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}"
 
-        self.assertEqual(resolve_dsl(value), "rol'")
+        self.assertEqual(resolve_dsl(value), "rolʼ")
         self.assertEqual(resolve_dsl(value, {"RUS_SOFT_SIGN": "omit"}), "rol")
         self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "rol")
-        self.assertEqual(resolve_dsl(value, PREFERRED_POLICY), "rol'")
+        self.assertEqual(resolve_dsl(value, PREFERRED_POLICY), "rolʼ")
 
     def test_russian_jotated_softening_rule_resolves_by_policy(self) -> None:
-        value = "b{{RUS_JOTATED_SOFTENING|glide=y|apostrophe='}}uro"
+        value = "b{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}uro"
 
         self.assertEqual(resolve_dsl(value), "byuro")
         self.assertEqual(
@@ -124,7 +124,7 @@ class ConversionDslTests(unittest.TestCase):
         )
         self.assertEqual(
             resolve_dsl(value, {"RUS_JOTATED_SOFTENING": "apostrophe"}),
-            "b'uro",
+            "bʼuro",
         )
         self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "byuro")
 
@@ -171,11 +171,11 @@ class ConversionDslTests(unittest.TestCase):
 
     def test_mostaqil_rule_accepts_custom_option_text(self) -> None:
         base = "möstä{{MOSTAQIL|pdf=qil|antat=qıyl}}"
-        suffixed = "möstä{{MOSTAQIL|pdf=qil|antat=qıyl'}}lege"
+        suffixed = "möstä{{MOSTAQIL|pdf=qil|antat=qıylʼ}}lege"
 
         self.assertEqual(resolve_dsl(base), "möstäqıyl")
         self.assertEqual(resolve_dsl(base, {"MOSTAQIL": "pdf"}), "möstäqil")
-        self.assertEqual(resolve_dsl(suffixed), "möstäqıyl'lege")
+        self.assertEqual(resolve_dsl(suffixed), "möstäqıylʼlege")
         self.assertEqual(resolve_dsl(suffixed, {"MOSTAQIL": "pdf"}), "möstäqillege")
 
 

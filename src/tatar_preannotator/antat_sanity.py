@@ -7,7 +7,13 @@ import re
 import sqlite3
 from typing import Iterable
 
-from tatar_preannotator.conversion import Choice, Literal, parse_dsl
+from tatar_preannotator.conversion import (
+    Choice,
+    Literal,
+    ZAMANALIF_APOSTROPHE,
+    normalize_zamanalif_apostrophes,
+    parse_dsl,
+)
 from tatar_preannotator.word_export import (
     contains_rl_review_letter,
     convert_for_annotation,
@@ -17,16 +23,18 @@ from tatar_preannotator.word_export import (
 
 
 CYRILLIC_TOKEN_RE = re.compile(
-    r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]+(?:[-'’][А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]+)*"
+    rf"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]+(?:[-'’{ZAMANALIF_APOSTROPHE}][А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]+)*"
 )
 ZAMANALIF_TOKEN_RE = re.compile(
-    r"[A-Za-zÄÖÜÑĞŞÇİıäöüñğşçƏə]+(?:[-'’][A-Za-zÄÖÜÑĞŞÇİıäöüñğşçƏə]+)*"
+    rf"[A-Za-zÄÖÜÑĞŞÇİıäöüñğşçƏə]+(?:[-'’{ZAMANALIF_APOSTROPHE}][A-Za-zÄÖÜÑĞŞÇİıäöüñğşçƏə]+)*"
 )
 POS_RE = re.compile(
     r"\b(?:n|v|a|adv|pref|pron|pl|gr|reflex|past|prep|cj|conj|int|num)\.?\b",
     flags=re.IGNORECASE,
 )
-LATIN_PREFIX_RE = re.compile(r"^[A-Za-zÄÖÜÑĞŞÇİıäöüñğşçƏə,.'’\-\s]+")
+LATIN_PREFIX_RE = re.compile(
+    rf"^[A-Za-zÄÖÜÑĞŞÇİıäöüñğşçƏə,.'’{ZAMANALIF_APOSTROPHE}\-\s]+"
+)
 ENGLISH_NOISE = {
     "against",
     "as",
@@ -185,7 +193,7 @@ def antat_rule_coverage(pairs: Iterable[AntatWordPair]) -> AntatCoverage:
 
 
 def _normalize_zamanalif(value: str) -> str:
-    return value.replace("’", "'").casefold()
+    return normalize_zamanalif_apostrophes(value).casefold()
 
 
 def _dsl_resolutions(value: str) -> set[str]:

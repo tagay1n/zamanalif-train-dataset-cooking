@@ -5,13 +5,17 @@ from pathlib import Path
 import sys
 
 from tatar_preannotator.antat_sanity import AntatWordPair, extract_antat_word_pairs
+from tatar_preannotator.conversion import (
+    ZAMANALIF_APOSTROPHE,
+    normalize_zamanalif_apostrophes,
+)
 
 
 ALLOWED_ZAMANALIF = frozenset(
     "abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     "äÄöÖüÜñÑıİğĞşŞçÇ"
-    "-—'’"
+    f"-—{ZAMANALIF_APOSTROPHE}"
 )
 
 
@@ -30,14 +34,23 @@ def build_antat_gold_cases(db_path: str | Path) -> AntatGoldBuildResult:
     cases: list[AntatWordPair] = []
     skipped_non_zamanalif = 0
     for pair in pairs:
-        if not _is_clean_zamanalif(pair.expected_zamanalif):
+        expected_zamanalif = normalize_zamanalif_apostrophes(pair.expected_zamanalif)
+        if not _is_clean_zamanalif(expected_zamanalif):
             skipped_non_zamanalif += 1
             continue
-        key = (pair.cyrillic_word, pair.expected_zamanalif.casefold())
+        key = (pair.cyrillic_word, expected_zamanalif.casefold())
         if key in seen:
             continue
         seen.add(key)
-        cases.append(pair)
+        cases.append(
+            AntatWordPair(
+                cyrillic_word=pair.cyrillic_word,
+                expected_zamanalif=expected_zamanalif,
+                label=pair.label,
+                headword=pair.headword,
+                align_id=pair.align_id,
+            )
+        )
     cases.sort(
         key=lambda pair: (
             pair.cyrillic_word,
@@ -85,6 +98,7 @@ def write_antat_gold_fixture(db_path: str | Path, output_path: str | Path) -> An
 
 
 def _is_clean_zamanalif(value: str) -> bool:
+    value = normalize_zamanalif_apostrophes(value)
     return bool(value) and all(char in ALLOWED_ZAMANALIF for char in value)
 
 

@@ -6,11 +6,14 @@ from types import MappingProxyType
 from typing import Iterable, Mapping
 
 
+ZAMANALIF_APOSTROPHE = "ʼ"
+APOSTROPHE_VARIANTS = frozenset({"'", "’", ZAMANALIF_APOSTROPHE})
+
 ZAMANALIF_CHARACTERS = frozenset(
     "abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     "äÄöÖüÜñÑıİğĞşŞçÇ"
-    "-'’—"
+    f"-{ZAMANALIF_APOSTROPHE}—"
 )
 IDENTIFIER_RE = re.compile(r"[A-Z][A-Z0-9_]*")
 OPTION_RE = re.compile(r"[a-z][a-z0-9_]*")
@@ -111,27 +114,35 @@ FINAL_DOUBLE_L_RULE = RuleDefinition(
 )
 RUS_SIGN_GLIDE_RULE = RuleDefinition(
     rule_id="RUS_SIGN_GLIDE",
-    options=(("omit", ""), ("preserve", "'")),
+    options=(("omit", ""), ("preserve", ZAMANALIF_APOSTROPHE)),
     default_option="omit",
 )
 RUS_SIGN_E_RULE = RuleDefinition(
     rule_id="RUS_SIGN_E",
-    options=(("glide", "y"), ("apostrophe", "'"), ("apostrophe_glide", "'y")),
+    options=(
+        ("glide", "y"),
+        ("apostrophe", ZAMANALIF_APOSTROPHE),
+        ("apostrophe_glide", ZAMANALIF_APOSTROPHE + "y"),
+    ),
     default_option="glide",
 )
 RUS_SOFT_SIGN_O_RULE = RuleDefinition(
     rule_id="RUS_SOFT_SIGN_O",
-    options=(("omit", ""), ("preserve", "'"), ("apostrophe_y", "'y")),
+    options=(
+        ("omit", ""),
+        ("preserve", ZAMANALIF_APOSTROPHE),
+        ("apostrophe_y", ZAMANALIF_APOSTROPHE + "y"),
+    ),
     default_option="preserve",
 )
 RUS_SOFT_SIGN_RULE = RuleDefinition(
     rule_id="RUS_SOFT_SIGN",
-    options=(("omit", ""), ("preserve", "'")),
+    options=(("omit", ""), ("preserve", ZAMANALIF_APOSTROPHE)),
     default_option="preserve",
 )
 RUS_JOTATED_SOFTENING_RULE = RuleDefinition(
     rule_id="RUS_JOTATED_SOFTENING",
-    options=(("glide", "y"), ("apostrophe", "'")),
+    options=(("glide", "y"), ("apostrophe", ZAMANALIF_APOSTROPHE)),
     default_option="glide",
 )
 RL_FINAL_KA_RULE = RuleDefinition(
@@ -228,6 +239,7 @@ def parse_dsl(value: str) -> ConversionResult:
     """Parse and validate canonical inline conversion DSL."""
     if not isinstance(value, str) or not value:
         raise DslError("conversion DSL must be a non-empty string")
+    value = normalize_zamanalif_apostrophes(value)
 
     segments: list[Segment] = []
     position = 0
@@ -265,8 +277,9 @@ def serialize_dsl(result: ConversionResult) -> str:
     parts: list[str] = []
     for segment in result.segments:
         if isinstance(segment, Literal):
-            _validate_zamanalif(segment.text, "literal")
-            parts.append(segment.text)
+            text = normalize_zamanalif_apostrophes(segment.text)
+            _validate_zamanalif(text, "literal")
+            parts.append(text)
             continue
         rule = _validated_choice(segment)
         options = "|".join(f"{option_id}={text}" for option_id, text in rule.options)
@@ -295,8 +308,9 @@ def resolve_result(
     parts: list[str] = []
     for segment in result.segments:
         if isinstance(segment, Literal):
-            _validate_zamanalif(segment.text, "literal")
-            parts.append(segment.text)
+            text = normalize_zamanalif_apostrophes(segment.text)
+            _validate_zamanalif(text, "literal")
+            parts.append(text)
             continue
         choice = _validated_choice(segment)
         definition = RULES[choice.rule_id]
@@ -328,6 +342,7 @@ def _parse_choice(body: str) -> Choice:
         if "=" not in field:
             raise DslError(f"invalid option in rule {rule_id}: {field!r}")
         option_id, text = field.split("=", 1)
+        text = normalize_zamanalif_apostrophes(text)
         if not OPTION_RE.fullmatch(option_id):
             raise DslError(f"invalid option id in rule {rule_id}: {option_id!r}")
         if option_id in seen:
@@ -339,6 +354,13 @@ def _parse_choice(body: str) -> Choice:
 
 
 def _validated_choice(choice: Choice) -> Choice:
+    choice = Choice(
+        choice.rule_id,
+        tuple(
+            (option_id, normalize_zamanalif_apostrophes(text))
+            for option_id, text in choice.options
+        ),
+    )
     if choice.rule_id not in RULES:
         raise DslError(f"unknown rule id: {choice.rule_id}")
     definition = RULES[choice.rule_id]
@@ -360,10 +382,19 @@ def _validated_choice(choice: Choice) -> Choice:
 
 
 def _validate_zamanalif(value: str, context: str) -> None:
+    value = normalize_zamanalif_apostrophes(value)
     invalid = sorted(set(value) - ZAMANALIF_CHARACTERS)
     if invalid:
         rendered = " ".join(repr(char) for char in invalid)
         raise DslError(f"invalid characters in {context}: {rendered}")
+
+
+def normalize_zamanalif_apostrophes(value: str) -> str:
+    """Normalize legacy apostrophe-like marks to Zamanalif U+02BC."""
+    return "".join(
+        ZAMANALIF_APOSTROPHE if char in APOSTROPHE_VARIANTS else char
+        for char in value
+    )
 
 
 def _append_literal(segments: list[Segment], text: str) -> None:

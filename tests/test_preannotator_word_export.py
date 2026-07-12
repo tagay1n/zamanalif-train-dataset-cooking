@@ -168,14 +168,14 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(by_word["сыр"]["auto_zamanalif"], "sıyr")
         self.assertEqual(
             by_word["роль"]["auto_zamanalif"],
-            "rol{{RUS_SOFT_SIGN|omit=|preserve='}}",
+            "rol{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}",
         )
         self.assertEqual(
             by_word["шофёр"]["auto_zamanalif"],
-            "şof{{RUS_JOTATED_SOFTENING|glide=y|apostrophe='}}or",
+            "şof{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}or",
         )
         self.assertIn("<b>ы</b> -> <b>ıy</b>", by_word["сыр"]["hints_html"])
-        self.assertIn("<b>ь</b> -> <b>&#x27;</b>", by_word["роль"]["hints_html"])
+        self.assertIn("<b>ь</b> -> <b>ʼ</b>", by_word["роль"]["hints_html"])
 
     def test_branch_analysis_only_reviews_origin_dependent_conversion(self) -> None:
         independent = conversion_branches("белән")
@@ -311,7 +311,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("һәръяклап", "N"), "häryaqlap")
         self.assertEqual(
             convert_for_annotation_dsl("ладья", "RL"),
-            "lad{{RUS_SIGN_GLIDE|omit=|preserve='}}ya",
+            "lad{{RUS_SIGN_GLIDE|omit=|preserve=ʼ}}ya",
         )
 
     def test_e_conversion_uses_pdf_context_rules(self) -> None:
@@ -416,9 +416,9 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("музыка", "muz{{MUSIC_Y|short=ı|long=ıy}}ka", "muzıka", "muzıyka"),
             (
                 "музыкаль",
-                "muz{{MUSIC_Y|short=ı|long=ıy}}kal{{RUS_SOFT_SIGN|omit=|preserve='}}",
+                "muz{{MUSIC_Y|short=ı|long=ıy}}kal{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}",
                 "muzıkal",
-                "muzıykal'",
+                "muzıykalʼ",
             ),
             (
                 "музыкасын",
@@ -457,15 +457,15 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ),
             (
                 "мөстәкыйльлеге",
-                "möstä{{MOSTAQIL|pdf=qil|antat=qıyl'}}lege",
+                "möstä{{MOSTAQIL|pdf=qil|antat=qıylʼ}}lege",
                 "möstäqillege",
-                "möstäqıyl'lege",
+                "möstäqıylʼlege",
             ),
             (
                 "мөстәкыйльлек",
-                "möstä{{MOSTAQIL|pdf=qil|antat=qıyl'}}lek",
+                "möstä{{MOSTAQIL|pdf=qil|antat=qıylʼ}}lek",
                 "möstäqillek",
-                "möstäqıyl'lek",
+                "möstäqıylʼlek",
             ),
         ]
 
@@ -529,7 +529,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("консервлау", "RL", "konservlaw"),
             ("страховкалау", "RL", "straxovkalaw"),
             ("боулинг", "RL", "bouling"),
-            ("культура", "RL", "kul'tura"),
+            ("культура", "RL", "kulʼtura"),
         ]
 
         for word, label, expected in cases:
@@ -590,9 +590,9 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("форсунка", "forsun{{RL_FINAL_KA|suffix=q|stem=k}}a", "forsunqa", "forsunka"),
             (
                 "фотоплёнка",
-                "fotopl{{RUS_JOTATED_SOFTENING|glide=y|apostrophe='}}on{{RL_FINAL_KA|suffix=q|stem=k}}a",
+                "fotopl{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}on{{RL_FINAL_KA|suffix=q|stem=k}}a",
                 "fotoplyonqa",
-                "fotopl'onka",
+                "fotoplʼonka",
             ),
         ]
 
@@ -694,17 +694,17 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_selected_arabic_hamza_stems_are_deterministic(self) -> None:
         cases = [
-            ("таэмин", "tä'min"),
-            ("тәэмин", "tä'min"),
-            ("тәэсир", "tä'sir"),
-            ("тәэсирендә", "tä'sirendä"),
-            ("тәэсиргә", "tä'sirgä"),
-            ("тәэсирле", "tä'sirle"),
-            ("тәэсирлелек", "tä'sirlelek"),
-            ("тәэсирләнергә", "tä'sirlänergä"),
-            ("тәэсирләнүчән", "tä'sirlänüçän"),
-            ("тәэсирләнүчәнлек", "tä'sirlänüçänlek"),
-            ("тәэсирсез", "tä'sirsez"),
+            ("таэмин", "täʼmin"),
+            ("тәэмин", "täʼmin"),
+            ("тәэсир", "täʼsir"),
+            ("тәэсирендә", "täʼsirendä"),
+            ("тәэсиргә", "täʼsirgä"),
+            ("тәэсирле", "täʼsirle"),
+            ("тәэсирлелек", "täʼsirlelek"),
+            ("тәэсирләнергә", "täʼsirlänergä"),
+            ("тәэсирләнүчән", "täʼsirlänüçän"),
+            ("тәэсирләнүчәнлек", "täʼsirlänüçänlek"),
+            ("тәэсирсез", "täʼsirsez"),
         ]
 
         for word, expected in cases:
@@ -891,72 +891,72 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
     def test_general_apostrophe_and_sign_conversions(self) -> None:
-        self.assertEqual(convert_for_annotation("роль", "RL"), "rol'")
-        self.assertEqual(convert_for_annotation("культура", "RL"), "kul'tura")
-        self.assertEqual(convert_for_annotation("секретарь", "RL"), "sekretar'")
+        self.assertEqual(convert_for_annotation("роль", "RL"), "rolʼ")
+        self.assertEqual(convert_for_annotation("культура", "RL"), "kulʼtura")
+        self.assertEqual(convert_for_annotation("секретарь", "RL"), "sekretarʼ")
         self.assertEqual(
             convert_for_annotation_dsl("роль", "RL"),
-            "rol{{RUS_SOFT_SIGN|omit=|preserve='}}",
+            "rol{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}",
         )
         self.assertEqual(
             convert_for_annotation_dsl("культура", "RL"),
-            "kul{{RUS_SOFT_SIGN|omit=|preserve='}}tura",
+            "kul{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}tura",
         )
         self.assertEqual(
             convert_for_annotation_dsl("секретарь", "RL"),
-            "sekretar{{RUS_SOFT_SIGN|omit=|preserve='}}",
+            "sekretar{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}",
         )
         self.assertEqual(
             convert_for_annotation_dsl("коньяк", "RL"),
-            "kon{{RUS_SIGN_GLIDE|omit=|preserve='}}yak",
+            "kon{{RUS_SIGN_GLIDE|omit=|preserve=ʼ}}yak",
         )
         self.assertEqual(
             convert_for_annotation_dsl("тальян", "RL"),
-            "tal{{RUS_SIGN_GLIDE|omit=|preserve='}}yan",
+            "tal{{RUS_SIGN_GLIDE|omit=|preserve=ʼ}}yan",
         )
         self.assertEqual(
             convert_for_annotation_dsl("объективлык", "RL"),
-            "ob{{RUS_SIGN_E|glide=y|apostrophe='|apostrophe_glide='y}}ektivlıq",
+            "ob{{RUS_SIGN_E|glide=y|apostrophe=ʼ|apostrophe_glide=ʼy}}ektivlıq",
         )
         self.assertEqual(
             resolve_dsl(
                 convert_for_annotation_dsl("объективлык", "RL"),
                 {"RUS_SIGN_E": "apostrophe"},
             ),
-            "ob'ektivlıq",
+            "obʼektivlıq",
         )
         self.assertEqual(
             resolve_dsl(
                 convert_for_annotation_dsl("ателье", "RL"),
                 {"RUS_SIGN_E": "apostrophe_glide"},
             ),
-            "atel'ye",
+            "atelʼye",
         )
         self.assertEqual(
             convert_for_annotation_dsl("батальон", "RL"),
-            "batal{{RUS_SOFT_SIGN_O|omit=|preserve='|apostrophe_y='y}}on",
+            "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}on",
         )
-        self.assertEqual(resolve_dsl(convert_for_annotation_dsl("батальон", "RL")), "batal'on")
+        self.assertEqual(resolve_dsl(convert_for_annotation_dsl("батальон", "RL")), "batalʼon")
         self.assertEqual(
             resolve_dsl(
                 convert_for_annotation_dsl("батальон", "RL"),
                 {"RUS_SOFT_SIGN_O": "apostrophe_y"},
             ),
-            "batal'yon",
+            "batalʼyon",
         )
         self.assertEqual(
             resolve_dsl(
                 convert_for_annotation_dsl("почтальон", "RL"),
                 {"RUS_SOFT_SIGN_O": "apostrophe_y"},
             ),
-            "poçtal'yon",
+            "poçtalʼyon",
         )
 
     def test_russian_jotated_softening_is_policy_dsl(self) -> None:
         cases = [
-            ("бюро", "b{{RUS_JOTATED_SOFTENING|glide=y|apostrophe='}}uro", "byuro", "b'uro"),
-            ("вафля", "vafl{{RUS_JOTATED_SOFTENING|glide=y|apostrophe='}}a", "vaflya", "vafl'a"),
-            ("шофёр", "şof{{RUS_JOTATED_SOFTENING|glide=y|apostrophe='}}or", "şofyor", "şof'or"),
+            ("бюро", "b{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}uro", "byuro", "bʼuro"),
+            ("вафля", "vafl{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}a", "vaflya", "vaflʼa"),
+            ("шофёр", "şof{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}or", "şofyor", "şofʼor"),
         ]
 
         for word, expected_dsl, glide, apostrophe in cases:
@@ -974,7 +974,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual(
             dsl,
-            "b{{RUS_JOTATED_SOFTENING|glide=y|apostrophe='}}urokrati{{IYA|compact=ä|explicit=yä}}",
+            "b{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}urokrati{{IYA|compact=ä|explicit=yä}}",
         )
         self.assertEqual(resolve_dsl(dsl), "byurokratiyä")
         self.assertEqual(
@@ -982,7 +982,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 dsl,
                 {"RUS_JOTATED_SOFTENING": "apostrophe", "IYA": "explicit"},
             ),
-            "b'urokratiyä",
+            "bʼurokratiyä",
         )
 
     def test_native_miyaw_stem_is_deterministic(self) -> None:

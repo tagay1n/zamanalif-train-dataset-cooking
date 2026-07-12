@@ -5,7 +5,13 @@ import os
 from pathlib import Path
 import unittest
 
-from tatar_preannotator.conversion import Choice, Literal, parse_dsl, resolve_dsl
+from tatar_preannotator.conversion import (
+    Choice,
+    Literal,
+    normalize_zamanalif_apostrophes,
+    parse_dsl,
+    resolve_dsl,
+)
 from tatar_preannotator.word_export import convert_for_annotation_dsl
 
 
@@ -23,7 +29,7 @@ ANTAT_GOLD_WORD_CASES = _load_antat_gold_cases()
 
 
 def _normalize_gold_zamanalif(value: str) -> str:
-    return value.replace("’", "'").casefold()
+    return normalize_zamanalif_apostrophes(value).casefold()
 
 
 def _all_supported_resolutions(value: str) -> set[str]:
@@ -75,9 +81,9 @@ class AntatGoldReferenceTests(unittest.TestCase):
         self.assertEqual(resolve_dsl(dsl), "akademiyä")
 
     def test_antat_audit_checks_every_dsl_option(self) -> None:
-        dsl = "atel{{RUS_SIGN_E|glide=y|apostrophe='|apostrophe_glide='y}}e"
+        dsl = "atel{{RUS_SIGN_E|glide=y|apostrophe=ʼ|apostrophe_glide=ʼy}}e"
 
-        self.assertEqual(_all_supported_resolutions(dsl), {"atelye", "atel'e", "atel'ye"})
+        self.assertEqual(_all_supported_resolutions(dsl), {"atelye", "atelʼe", "atelʼye"})
 
     def test_generated_antat_word_cases_for_manual_review(self) -> None:
         if os.environ.get("RUN_ANTAT_GOLD_COVERAGE") != "1":
