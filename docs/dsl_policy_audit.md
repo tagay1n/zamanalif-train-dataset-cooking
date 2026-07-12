@@ -15,7 +15,9 @@ of a DSL choice.
 - `RUS_SIGN_GLIDE`, `RUS_SOFT_SIGN`, `RUS_JOTATED_SOFTENING`: kept for Russian
   sign/apostrophe policy differences.
 - `RL_FINAL_KA`: kept pending a separate morphology audit.
-- `NATIVE_UW`: kept pending a separate `u/ü + vowel` glide audit.
+- `NATIVE_UW`: kept pending a separate `u/ü + vowel` glide audit. For
+  `җилкуар`-style stems, the base is normalized to `q` first, then the same
+  policy is reused: `cilqu{{NATIVE_UW|plain=|glide=w}}ar`.
 
 ## Converted Back To Deterministic Rules
 

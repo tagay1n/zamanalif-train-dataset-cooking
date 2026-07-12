@@ -232,6 +232,29 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 self.assertEqual(resolve_dsl(dsl, {"NATIVE_UW": "plain"}), plain)
                 self.assertEqual(resolve_dsl(dsl, {"NATIVE_UW": "glide"}), glide)
 
+    def test_cilquar_stem_reuses_native_uw_policy_dsl(self) -> None:
+        cases = [
+            (
+                "җилкуар",
+                "cilqu{{NATIVE_UW|plain=|glide=w}}ar",
+                "cilquar",
+                "cilquwar",
+            ),
+            (
+                "җилкуарлык",
+                "cilqu{{NATIVE_UW|plain=|glide=w}}arlıq",
+                "cilquarlıq",
+                "cilquwarlıq",
+            ),
+        ]
+
+        for word, expected_dsl, plain, glide in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "N")
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl, {"NATIVE_UW": "plain"}), plain)
+                self.assertEqual(resolve_dsl(dsl, {"NATIVE_UW": "glide"}), glide)
+
     def test_native_u_before_e_keeps_existing_e_glide_rule(self) -> None:
         self.assertEqual(convert_for_annotation("куелган", "N"), "quyılğan")
 

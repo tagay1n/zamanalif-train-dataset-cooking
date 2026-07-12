@@ -330,6 +330,9 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_russian_soft_sign_choices(word, compact, label)
     if result.has_choices:
         return result_with_music_y_choices(word, result, label)
+    result = result_with_cilquar_native_uw_choices(word, compact, label)
+    if result.has_choices:
+        return result
     result = result_with_native_uw_choices(word, compact, label)
     if result.has_choices:
         return result_with_ie_glide_choices(word, result_with_iya_choices(word, result))
@@ -753,6 +756,25 @@ def result_with_loanword_final_ka_choices(
     return ConversionResult(tuple(segments)) if changed else result
 
 
+def result_with_cilquar_native_uw_choices(
+    source: str,
+    converted: str,
+    label: str,
+) -> ConversionResult:
+    """Annotate ``җилкуар`` after deterministic ``k -> q`` stem normalization."""
+    if label != "N" or not source.casefold().startswith("җилкуар"):
+        return ConversionResult((Literal(converted),))
+    if not converted.startswith("cilquar"):
+        return ConversionResult((Literal(converted),))
+    return ConversionResult(
+        (
+            Literal("cilqu"),
+            Choice(NATIVE_UW_RULE.rule_id, NATIVE_UW_RULE.options),
+            Literal(converted[len("cilqu") :]),
+        )
+    )
+
+
 def result_with_native_uw_choices(
     source: str,
     converted: str,
@@ -1092,6 +1114,7 @@ NATIVE_FRAGMENT_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("гүяки", "güyäqi", "güyäki"),
     ("өянке", "öyänqe", "öyänke"),
     ("мияу", "miäw", "miyaw"),
+    ("җилкуар", "cilkuar", "cilquar"),
     ("гыйбад", "ğıybad", "ğibäd"),
     ("гыйбар", "ğıybar", "ğibär"),
     ("гыйльм", "ğıylm", "ğilm"),
