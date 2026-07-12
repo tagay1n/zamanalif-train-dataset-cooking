@@ -9151,11 +9151,11 @@ ANTAT_GOLD_WORD_CASES = [
     ('җәнҗаллы', 'cäncallı', 'SHAMEFUL', 7738),
     ('җәнҗалчы', 'cäncalçı', 'ROWDY', 7244),
     ('җәрәхәтләргә', 'cäräxätlärgä', 'INJURE', 4786),
-    ('җәфа', 'cafa', 'ANGUISH', 349),
-    ('җәфалана', 'cafalana', 'COLOUR-BLIND', 1805),
-    ('җәфаланган', 'cafalanğan', 'HAGGARD', 4036),
-    ('җәфаландыру', 'cafalandıru', 'INFLICTION', 4754),
-    ('җәфаланып', 'cafalanıp', 'CARE-WORN', 1415),
+    ('җәфа', 'cäfa', 'ANGUISH', 349),  # ANTAT: cafa; keep Cyrillic ә as ä, no deliberate harmonization.
+    ('җәфалана', 'cäfalana', 'COLOUR-BLIND', 1805),  # ANTAT: cafalana; keep Cyrillic ә as ä.
+    ('җәфаланган', 'cäfalanğan', 'HAGGARD', 4036),  # ANTAT: cafalanğan; keep Cyrillic ә as ä.
+    ('җәфаландыру', 'cäfalandıru', 'INFLICTION', 4754),  # ANTAT: cafalandıru; keep Cyrillic ә as ä.
+    ('җәфаланып', 'cäfalanıp', 'CARE-WORN', 1415),  # ANTAT: cafalanıp; keep Cyrillic ә as ä.
     ('җәфаланырга', 'cäfalanırğa', 'SUFFER', 8280),
     ('җәфалаучы', 'cäfalawçı', 'TYRANNICAL', 8876),
     ('җәфалы', 'cäfalı', 'POIGNANT', 6364),
