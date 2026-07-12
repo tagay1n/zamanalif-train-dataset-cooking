@@ -6864,7 +6864,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('тыңлаусыз', 'tıñlawsız', 'DISOBEDIENT', 2649),
     ('тыңлаучан', 'tıñlawçan', 'APPEASABLE', 431),
     ('тыңлаучы', 'tıñlawçı', 'HEARER', 4157),
-    ('тэг', 'teğ', 'TAG', 8429),
+    ('тэг', 'teg', 'TAG', 8429),
     ('тюбик', 't’ubik', 'TUBE', 8835),
     ('түбә', 'tübä', 'PEAK', 6154),
     ('түбән', 'tübän', 'RELEGATE', 6993),

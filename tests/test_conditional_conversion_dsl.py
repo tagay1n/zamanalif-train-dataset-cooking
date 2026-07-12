@@ -86,6 +86,7 @@ class ConditionalConversionDslTests(unittest.TestCase):
             ("банк", "bank"),
             ("газет", "gazet"),
             ("график", "grafik"),
+            ("интрига", "intriga"),
             ("кодекс", "kodeks"),
         ]:
             with self.subTest(word=word):

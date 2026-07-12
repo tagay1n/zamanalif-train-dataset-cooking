@@ -568,6 +568,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("дифтонг", "RL"), "diftong")
         self.assertEqual(convert_for_annotation("джунгли", "RL"), "djungli")
         self.assertEqual(convert_for_annotation("географик", "RL"), "geografik")
+        self.assertEqual(convert_for_annotation("интрига", "RL"), "intriga")
 
     def test_loanword_stems_with_tatar_suffixes_use_suffix_gk(self) -> None:
         cases = [

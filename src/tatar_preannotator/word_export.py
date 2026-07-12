@@ -1025,6 +1025,8 @@ def _convert_known_label(word: str, label: str) -> str:
 
 def _apply_loanword_lexical_conventions(word: str, converted: str) -> str:
     folded = word.casefold()
+    if folded.startswith("интриг") and converted.startswith("intriğ"):
+        return "intrig" + converted[len("intriğ") :]
     if folded.endswith("лау") and converted.endswith("lau"):
         return converted[:-3] + "law"
     if folded.endswith("ләү") and converted.endswith("läü"):
