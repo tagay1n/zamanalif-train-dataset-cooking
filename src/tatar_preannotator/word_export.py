@@ -1077,10 +1077,12 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("фәкать", "fäkat", "fäqat"),
     ("фәкыйрь", "fäkıyr", "fäqıyr"),
     ("хыянәт", "xıyanät", "xıyänät"),
+    ("югыйсә", "yuğıysä", "yuğisä"),
     ("шәфкать", "şäfkat", "şäfqat"),
     ("һичкая", "hiçkaya", "hiçqaya"),
     ("һичкай", "hiçkay", "hiçqay"),
     ("һәркай", "härkay", "härqay"),
+    ("юкә", "yüqä", "yükä"),
 )
 
 NATIVE_FRAGMENT_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
@@ -1241,6 +1243,11 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
     if char == "ю":
         if index > 0 and word[index - 1] == "и":
             return "yü"
+        context = _local_vowel_context(word, index)
+        if context == "front":
+            return "yü"
+        if context == "back":
+            return "yu"
         if harmony == "no_vowels":
             return "yu"
         return "yü" if harmony == "front_only" else "yu" if harmony == "back_only" else ""
@@ -1352,7 +1359,7 @@ def _vowel_harmony_without_index(word: str, index: int) -> str:
 
 def _local_vowel_context(word: str, index: int) -> str:
     local_front_vowels = FRONT_VOWELS | {"э"}
-    local_back_vowels = BACK_VOWELS | {"я"}
+    local_back_vowels = BACK_VOWELS | {"ю", "я"}
     for char in reversed(word[:index]):
         if char == "-":
             break

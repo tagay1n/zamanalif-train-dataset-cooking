@@ -1009,6 +1009,21 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("революциясе", "RL"), "revolyutsiäse")
         self.assertEqual(convert_for_annotation("тию", "N"), "tiyü")
 
+    def test_native_yu_uses_local_vowel_context(self) -> None:
+        cases = [
+            ("ерагаю", "yırağayu"),
+            ("югыйсә", "yuğisä"),
+            ("юк", "yuq"),
+            ("юк-бар", "yuq-bar"),
+            ("юка", "yuqa"),
+            ("юкә", "yükä"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
+
     def test_origin_dependent_hints_show_both_branches(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(

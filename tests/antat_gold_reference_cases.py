@@ -7215,7 +7215,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('уникенче', 'unikençe', 'L, L', 5079),
     ('унификация', 'unifikatsiyä', 'UNIFICATION', 8945),
     ('униформа', 'uniforma', 'UNIFORM', 8946),
-    ('унъеллык', 'nyıllıq', 'DECADE', 2363),
+    ('унъеллык', 'unyellıq', 'DECADE', 2363),
     ('унынчы', 'unınçı', 'J, J', 4966),
     ('унҗиденче', 'uncidençe', 'Q Q', 6730),
     ('унөченче', 'unöçençe', 'M M', 5288),
