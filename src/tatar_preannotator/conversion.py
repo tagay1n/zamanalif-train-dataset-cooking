@@ -113,6 +113,16 @@ RUS_SIGN_GLIDE_RULE = RuleDefinition(
     options=(("omit", ""), ("preserve", "'")),
     default_option="omit",
 )
+RUS_SIGN_E_RULE = RuleDefinition(
+    rule_id="RUS_SIGN_E",
+    options=(("glide", "y"), ("apostrophe", "'"), ("apostrophe_glide", "'y")),
+    default_option="glide",
+)
+RUS_SOFT_SIGN_O_RULE = RuleDefinition(
+    rule_id="RUS_SOFT_SIGN_O",
+    options=(("omit", ""), ("preserve", "'"), ("apostrophe_y", "'y")),
+    default_option="preserve",
+)
 RUS_SOFT_SIGN_RULE = RuleDefinition(
     rule_id="RUS_SOFT_SIGN",
     options=(("omit", ""), ("preserve", "'")),
@@ -144,6 +154,8 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         MOSTAQIL_RULE.rule_id: MOSTAQIL_RULE,
         FINAL_DOUBLE_L_RULE.rule_id: FINAL_DOUBLE_L_RULE,
         RUS_SIGN_GLIDE_RULE.rule_id: RUS_SIGN_GLIDE_RULE,
+        RUS_SIGN_E_RULE.rule_id: RUS_SIGN_E_RULE,
+        RUS_SOFT_SIGN_O_RULE.rule_id: RUS_SOFT_SIGN_O_RULE,
         RUS_SOFT_SIGN_RULE.rule_id: RUS_SOFT_SIGN_RULE,
         RUS_JOTATED_SOFTENING_RULE.rule_id: RUS_JOTATED_SOFTENING_RULE,
         RL_FINAL_KA_RULE.rule_id: RL_FINAL_KA_RULE,
@@ -160,6 +172,8 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "MOSTAQIL": "antat",
         "FINAL_DOUBLE_L": "single",
         "RUS_SIGN_GLIDE": "omit",
+        "RUS_SIGN_E": "glide",
+        "RUS_SOFT_SIGN_O": "preserve",
         "RUS_SOFT_SIGN": "preserve",
         "RUS_JOTATED_SOFTENING": "glide",
         "RL_FINAL_KA": "suffix",
@@ -176,6 +190,8 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "MOSTAQIL": "pdf",
         "FINAL_DOUBLE_L": "double",
         "RUS_SIGN_GLIDE": "omit",
+        "RUS_SIGN_E": "glide",
+        "RUS_SOFT_SIGN_O": "preserve",
         "RUS_SOFT_SIGN": "omit",
         "RUS_JOTATED_SOFTENING": "glide",
         "RL_FINAL_KA": "suffix",

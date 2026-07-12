@@ -27,7 +27,9 @@ from tatar_preannotator.conversion import (
     PROJECT_E_RULE,
     RL_FINAL_KA_RULE,
     RUS_JOTATED_SOFTENING_RULE,
+    RUS_SIGN_E_RULE,
     RUS_SOFT_SIGN_RULE,
+    RUS_SOFT_SIGN_O_RULE,
     RUS_SIGN_GLIDE_RULE,
     parse_dsl,
 )
@@ -562,20 +564,47 @@ def result_with_russian_sign_glide_choices(
     segments: list[Literal | Choice] = []
     source_index = 0
     converted_index = 0
+    previous_sign_before_e = False
     while source_index < len(source):
         char = source[source_index]
         if (
             char in {"ь", "ъ"}
             and source_index + 1 < len(source)
-            and source[source_index + 1] in {"я", "ю", "е"}
+            and source[source_index + 1] in {"я", "ю", "е", "о"}
         ):
+            next_char = source[source_index + 1]
+            if next_char == "е":
+                if converted.startswith("y", converted_index):
+                    converted_index += 1
+                elif converted.startswith("'", converted_index):
+                    converted_index += 1
+                else:
+                    return ConversionResult((Literal(converted),))
+                segments.append(Choice(RUS_SIGN_E_RULE.rule_id, RUS_SIGN_E_RULE.options))
+                previous_sign_before_e = True
+                source_index += 1
+                continue
+            if next_char == "о":
+                if converted.startswith("'y", converted_index):
+                    converted_index += 2
+                elif converted.startswith("'", converted_index):
+                    converted_index += 1
+                segments.append(
+                    Choice(RUS_SOFT_SIGN_O_RULE.rule_id, RUS_SOFT_SIGN_O_RULE.options)
+                )
+                source_index += 1
+                continue
             if converted.startswith("'", converted_index):
                 converted_index += 1
             segments.append(Choice(RUS_SIGN_GLIDE_RULE.rule_id, RUS_SIGN_GLIDE_RULE.options))
             source_index += 1
             continue
 
-        latin = _char_conversion(char, source, source_index, label)
+        if char == "е" and previous_sign_before_e:
+            latin = "e"
+            previous_sign_before_e = False
+        else:
+            latin = _char_conversion(char, source, source_index, label)
         if latin and converted.startswith(latin, converted_index):
             segments.append(Literal(latin))
             converted_index += len(latin)

@@ -75,9 +75,9 @@ class AntatGoldReferenceTests(unittest.TestCase):
         self.assertEqual(resolve_dsl(dsl), "akademiyä")
 
     def test_antat_audit_checks_every_dsl_option(self) -> None:
-        dsl = "atel{{RUS_SIGN_GLIDE|omit=|preserve='}}ye"
+        dsl = "atel{{RUS_SIGN_E|glide=y|apostrophe='|apostrophe_glide='y}}e"
 
-        self.assertEqual(_all_supported_resolutions(dsl), {"atelye", "atel'ye"})
+        self.assertEqual(_all_supported_resolutions(dsl), {"atelye", "atel'e", "atel'ye"})
 
     def test_generated_antat_word_cases_for_manual_review(self) -> None:
         if os.environ.get("RUN_ANTAT_GOLD_COVERAGE") != "1":

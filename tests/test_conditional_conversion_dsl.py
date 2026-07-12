@@ -150,7 +150,6 @@ class ConditionalConversionDslTests(unittest.TestCase):
         cases = [
             ("компьютер", "komp{{RUS_SIGN_GLIDE|omit=|preserve='}}yuter", "kompyuter", "komp'yuter"),
             ("нью-йорк", "n{{RUS_SIGN_GLIDE|omit=|preserve='}}yu-york", "nyu-york", "n'yu-york"),
-            ("барьер", "bar{{RUS_SIGN_GLIDE|omit=|preserve='}}yer", "baryer", "bar'yer"),
         ]
 
         for word, expected_dsl, omitted, preserved in cases:
@@ -159,6 +158,11 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 self.assertEqual(dsl, expected_dsl)
                 self.assertEqual(resolve_dsl(dsl), omitted)
                 self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN_GLIDE": "preserve"}), preserved)
+
+        dsl = convert_for_annotation_dsl("барьер", "RL")
+        self.assertEqual(dsl, "bar{{RUS_SIGN_E|glide=y|apostrophe='|apostrophe_glide='y}}er")
+        self.assertEqual(resolve_dsl(dsl), "baryer")
+        self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN_E": "apostrophe_glide"}), "bar'yer")
 
     def test_russian_soft_sign_is_policy_dsl(self) -> None:
         cases = [

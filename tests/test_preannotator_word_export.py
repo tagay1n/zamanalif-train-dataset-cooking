@@ -841,6 +841,43 @@ class PreannotatorWordExportTests(unittest.TestCase):
             convert_for_annotation_dsl("тальян", "RL"),
             "tal{{RUS_SIGN_GLIDE|omit=|preserve='}}yan",
         )
+        self.assertEqual(
+            convert_for_annotation_dsl("объективлык", "RL"),
+            "ob{{RUS_SIGN_E|glide=y|apostrophe='|apostrophe_glide='y}}ektivlıq",
+        )
+        self.assertEqual(
+            resolve_dsl(
+                convert_for_annotation_dsl("объективлык", "RL"),
+                {"RUS_SIGN_E": "apostrophe"},
+            ),
+            "ob'ektivlıq",
+        )
+        self.assertEqual(
+            resolve_dsl(
+                convert_for_annotation_dsl("ателье", "RL"),
+                {"RUS_SIGN_E": "apostrophe_glide"},
+            ),
+            "atel'ye",
+        )
+        self.assertEqual(
+            convert_for_annotation_dsl("батальон", "RL"),
+            "batal{{RUS_SOFT_SIGN_O|omit=|preserve='|apostrophe_y='y}}on",
+        )
+        self.assertEqual(resolve_dsl(convert_for_annotation_dsl("батальон", "RL")), "batal'on")
+        self.assertEqual(
+            resolve_dsl(
+                convert_for_annotation_dsl("батальон", "RL"),
+                {"RUS_SOFT_SIGN_O": "apostrophe_y"},
+            ),
+            "batal'yon",
+        )
+        self.assertEqual(
+            resolve_dsl(
+                convert_for_annotation_dsl("почтальон", "RL"),
+                {"RUS_SOFT_SIGN_O": "apostrophe_y"},
+            ),
+            "poçtal'yon",
+        )
 
     def test_russian_jotated_softening_is_policy_dsl(self) -> None:
         cases = [
