@@ -525,6 +525,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_native_k_g_use_local_vowel_context(self) -> None:
         self.assertEqual(convert_for_annotation("китап", "N"), "kitap")
         self.assertEqual(convert_for_annotation("мәктәп", "N"), "mäktäp")
+        self.assertEqual(convert_for_annotation("икмәк", "N"), "ikmäk")
+        self.assertEqual(convert_for_annotation("икмәге", "N"), "ikmäge")
         self.assertEqual(convert_for_annotation("актүш", "N"), "aqtüş")
         self.assertEqual(convert_for_annotation("бакыр", "N"), "baqır")
         self.assertEqual(convert_for_annotation("гасыр", "N"), "ğasır")
@@ -763,6 +765,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
         cases = [
             ("дикъкать", "diqqat"),
             ("дикъкатьсез", "diqqatsez"),
+            ("вәкаләт", "wäqalät"),
+            ("инкарь", "inqar"),
             ("инкыйлаб", "inqıylab"),
             ("каракүл", "qarakül"),
             ("каракүлдән", "qaraküldän"),

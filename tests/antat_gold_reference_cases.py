@@ -2242,7 +2242,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('икенчегә', 'ikençegä', 'EQUIVOCATION', 3101),
     ('икенчедән', 'ikençedän', 'SECONDLY', 7563),
     ('икетелле', 'iketelle', 'BILINGUAL', 919),
-    ('икмәге', 'iqmäge', 'AMBROSIA', 296),
+    ('икмәге', 'ikmäge', 'AMBROSIA', 296),  # ANTAT: iqmäge; aligned with икмәк -> ikmäk.
     ('икмәк', 'ikmäk', 'BAKER', 689),
     ('икона', 'ikona', 'ICON', 4436),
     ('икърар', 'iqrar', 'ACCEPT', 52),
