@@ -758,6 +758,17 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
+    def test_front_ya_k_stems_keep_k_deterministically(self) -> None:
+        cases = [
+            ("гүяки", "güyäki"),
+            ("өянке", "öyänke"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
+
     def test_har_hich_qay_stems_are_deterministic(self) -> None:
         cases = [
             ("һичкайда", "hiçqayda"),

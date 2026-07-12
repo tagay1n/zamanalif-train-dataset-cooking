@@ -1087,6 +1087,8 @@ NATIVE_FRAGMENT_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("сөякк", "söyäqq", "söyäkk"),
     ("сөяк", "söyäq", "söyäk"),
     ("төяк", "töyäq", "töyäk"),
+    ("гүяки", "güyäqi", "güyäki"),
+    ("өянке", "öyänqe", "öyänke"),
     ("мияу", "miäw", "miyaw"),
     ("гыйбад", "ğıybad", "ğibäd"),
     ("гыйбар", "ğıybar", "ğibär"),
