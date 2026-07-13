@@ -993,6 +993,22 @@ class PreannotatorWordExportTests(unittest.TestCase):
             "bʼurokratiyä",
         )
 
+    def test_russian_jotated_softening_composes_with_iya_and_suffixes(self) -> None:
+        dsl = convert_for_annotation_dsl("изоляцияләү", "RL")
+
+        self.assertEqual(
+            dsl,
+            "izol{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}atsi{{IYA|compact=ä|explicit=yä}}läw",
+        )
+        self.assertEqual(resolve_dsl(dsl), "izolyatsiyäläw")
+        self.assertEqual(
+            resolve_dsl(
+                dsl,
+                {"RUS_JOTATED_SOFTENING": "apostrophe", "IYA": "explicit"},
+            ),
+            "izolʼatsiyäläw",
+        )
+
     def test_russian_bu_front_policy_composes_with_soft_sign(self) -> None:
         dsl = convert_for_annotation_dsl("вестибюль", "RL")
 

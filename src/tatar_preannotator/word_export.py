@@ -345,7 +345,9 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_native_uw_choices(word, compact, label)
     if result.has_choices:
         return result_with_ie_glide_choices(word, result_with_iya_choices(word, result))
-    result = result_with_russian_jotated_softening_choices(word, compact, label)
+    result = result_with_russian_jotated_softening_result(
+        word, ConversionResult((Literal(compact),)), label
+    )
     result = result_with_loanword_final_ka_choices(word, result, label)
     result = result_with_kts_after_k_choices(word, result, label)
     result = result_with_ou_loanword_choices(word, result, label)
@@ -772,6 +774,8 @@ def result_with_russian_jotated_softening_result(
 ) -> ConversionResult:
     """Compose consonant + RL ``я/ю/ё`` softening with existing sign choices."""
     if label != "RL" or not any(char in source for char in "яюё"):
+        return result
+    if "ерзя" in source:
         return result
 
     replacements: list[tuple[str, str]] = []
