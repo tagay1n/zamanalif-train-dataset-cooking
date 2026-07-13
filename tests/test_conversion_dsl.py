@@ -128,6 +128,13 @@ class ConversionDslTests(unittest.TestCase):
         )
         self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "byuro")
 
+    def test_russian_shch_yo_rule_resolves_by_policy(self) -> None:
+        value = "şç{{RUS_SHCH_YO|glide=y|apostrophe=ʼ|plain=}}otka"
+
+        self.assertEqual(resolve_dsl(value), "şçyotka")
+        self.assertEqual(resolve_dsl(value, {"RUS_SHCH_YO": "apostrophe"}), "şçʼotka")
+        self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "şçotka")
+
     def test_native_uw_rule_resolves_by_policy(self) -> None:
         value = "bu{{NATIVE_UW|plain=|glide=w}}a"
 

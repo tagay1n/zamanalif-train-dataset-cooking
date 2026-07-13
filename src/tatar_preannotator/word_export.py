@@ -38,6 +38,7 @@ from tatar_preannotator.conversion import (
     RL_FINAL_KA_RULE,
     RUS_JOTATED_SOFTENING_RULE,
     RUS_BU_FRONT_RULE,
+    RUS_SHCH_YO_RULE,
     RUS_SIGN_E_RULE,
     RUS_SOFT_SIGN_RULE,
     RUS_SOFT_SIGN_O_RULE,
@@ -357,6 +358,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     if result.has_choices:
         return result_with_ie_glide_choices(word, result_with_iya_choices(word, result))
     result = result_with_month_name_choices(word, ConversionResult((Literal(compact),)))
+    result = result_with_russian_shch_yo_choices(word, result, label)
     result = result_with_russian_jotated_softening_result(word, result, label)
     result = result_with_loanword_final_ka_choices(word, result, label)
     result = result_with_kts_after_k_choices(word, result, label)
@@ -1105,6 +1107,36 @@ def result_with_russian_bu_front_choices(
     return ConversionResult(tuple(segments)) if changed else result
 
 
+def result_with_russian_shch_yo_choices(
+    source: str, result: ConversionResult, label: str
+) -> ConversionResult:
+    """Annotate Russian loanword ``щё`` after ``щ`` as y/apostrophe/plain policy."""
+    if label != "RL" or "щё" not in source.casefold():
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    pending_count = source.casefold().count("щё")
+    for segment in _merge_adjacent_literals(result).segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        start = 0
+        while pending_count:
+            match_index = text.find("şçy", start)
+            if match_index < 0:
+                break
+            choice_index = match_index + len("şç")
+            _append_literal_segment(segments, text[start:choice_index])
+            segments.append(Choice(RUS_SHCH_YO_RULE.rule_id, RUS_SHCH_YO_RULE.options))
+            start = choice_index + 1
+            pending_count -= 1
+            changed = True
+        _append_literal_segment(segments, text[start:])
+    return ConversionResult(tuple(segments)) if changed else result
+
+
 def result_with_russian_jotated_softening_result(
     source: str, result: ConversionResult, label: str
 ) -> ConversionResult:
@@ -1117,6 +1149,8 @@ def result_with_russian_jotated_softening_result(
     replacements: list[tuple[str, str]] = []
     for index, char in enumerate(source):
         if char not in {"я", "ю", "ё"} or not _is_russian_jotated_softening_position(source, index):
+            continue
+        if char == "ё" and source[index - 1].casefold() == "щ":
             continue
         previous = source[index - 1]
         previous_latin = _char_conversion(previous, source, index - 1, label)
@@ -1191,6 +1225,7 @@ def result_with_russian_jotated_softening_choices(
         if (
             char in {"я", "ю", "ё"}
             and _is_russian_jotated_softening_position(source, source_index)
+            and not (char == "ё" and source[source_index - 1].casefold() == "щ")
             and latin.startswith("y")
             and converted.startswith(latin, converted_index)
         ):

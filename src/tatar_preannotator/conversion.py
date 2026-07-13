@@ -201,6 +201,11 @@ RUS_JOTATED_SOFTENING_RULE = RuleDefinition(
     options=(("glide", "y"), ("apostrophe", ZAMANALIF_APOSTROPHE)),
     default_option="glide",
 )
+RUS_SHCH_YO_RULE = RuleDefinition(
+    rule_id="RUS_SHCH_YO",
+    options=(("glide", "y"), ("apostrophe", ZAMANALIF_APOSTROPHE), ("plain", "")),
+    default_option="glide",
+)
 RUS_BU_FRONT_RULE = RuleDefinition(
     rule_id="RUS_BU_FRONT",
     options=(("yu", "yu"), ("apostrophe_front", ZAMANALIF_APOSTROPHE + "ü")),
@@ -242,6 +247,7 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         RUS_SOFT_SIGN_O_RULE.rule_id: RUS_SOFT_SIGN_O_RULE,
         RUS_SOFT_SIGN_RULE.rule_id: RUS_SOFT_SIGN_RULE,
         RUS_JOTATED_SOFTENING_RULE.rule_id: RUS_JOTATED_SOFTENING_RULE,
+        RUS_SHCH_YO_RULE.rule_id: RUS_SHCH_YO_RULE,
         RUS_BU_FRONT_RULE.rule_id: RUS_BU_FRONT_RULE,
         RL_FINAL_KA_RULE.rule_id: RL_FINAL_KA_RULE,
         NATIVE_UW_RULE.rule_id: NATIVE_UW_RULE,
@@ -272,6 +278,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "RUS_SOFT_SIGN_O": "preserve",
         "RUS_SOFT_SIGN": "preserve",
         "RUS_JOTATED_SOFTENING": "glide",
+        "RUS_SHCH_YO": "glide",
         "RUS_BU_FRONT": "yu",
         "RL_FINAL_KA": "suffix",
         "NATIVE_UW": "glide",
@@ -302,6 +309,7 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "RUS_SOFT_SIGN_O": "preserve",
         "RUS_SOFT_SIGN": "omit",
         "RUS_JOTATED_SOFTENING": "glide",
+        "RUS_SHCH_YO": "plain",
         "RUS_BU_FRONT": "yu",
         "RL_FINAL_KA": "suffix",
         "NATIVE_UW": "plain",

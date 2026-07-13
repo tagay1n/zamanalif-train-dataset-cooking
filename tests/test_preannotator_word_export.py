@@ -1070,6 +1070,14 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     apostrophe,
                 )
 
+    def test_russian_shch_yo_is_narrow_policy_dsl(self) -> None:
+        dsl = convert_for_annotation_dsl("щётка", "RL")
+
+        self.assertEqual(dsl, "şç{{RUS_SHCH_YO|glide=y|apostrophe=ʼ|plain=}}otka")
+        self.assertEqual(resolve_dsl(dsl), "şçyotka")
+        self.assertEqual(resolve_dsl(dsl, {"RUS_SHCH_YO": "apostrophe"}), "şçʼotka")
+        self.assertEqual(resolve_dsl(dsl, {"RUS_SHCH_YO": "plain"}), "şçotka")
+
     def test_russian_jotated_softening_composes_with_iya(self) -> None:
         dsl = convert_for_annotation_dsl("бюрократия", "RL")
 
