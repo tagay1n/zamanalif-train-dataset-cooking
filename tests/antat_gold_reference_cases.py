@@ -2308,8 +2308,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('инертлык', 'inertlıq', 'STAGNANCY', 8103),
     ('инеш', 'ineş', 'BROOK', 1216),
     ('инициатор', 'initsiator', 'AUTHOR', 621),
-    ('инкарь', 'inkʼar', 'DENIAL', 2454),
-    ('инкарь', 'inqar', 'ALTERNATIVE', 277),
+    ('инкарь', 'inqar', 'DENIAL', 2454),  # ANTAT also has inkʼar; use normalized native к/ь -> q.
     ('инкубатор', 'inkubator', 'HATCHER', 4122),
     ('инкыйлаб', 'inqıylab', 'REVOLUTION I', 7144),
     ('инсаният', 'insaniyät', 'HUMANKIND', 4389),
@@ -7397,7 +7396,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('фиаско', 'fiasko', 'FIASCO', 3391),
     ('фигура', 'figura', 'FIGURE', 3410),
     ('фигурасы', 'figurası', 'CHESS-MAN', 1556),
-    ('фигыльләрдә', 'fiğılʼlärdä', 'ANTE-', 379),
+    ('фигыльләрдә', 'fiğıllärdä', 'ANTE-', 379),  # ANTAT: fiğılʼlärdä; omit unclear native apostrophe.
     ('фида', 'fida', 'SELF-SACRIFICE', 7632),
     ('физик', 'fizik', 'PHYSICAL', 6230),
     ('физика', 'fizika', 'PHYSICS', 6232),
@@ -8284,7 +8283,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('шөбһәсез', 'şöbhäsez', 'EXPLICIT', 3229),
     ('шөбһәчел', 'şöbhäçel', 'SCEPTICAL', 7459),
     ('шөгыль', 'şöğıl', 'AFFAIR', 156),
-    ('шөгыльләнергә', 'şöğılʼlänergä', 'BOX II', 1118),
+    ('шөгыльләнергә', 'şöğıllänergä', 'BOX II', 1118),  # ANTAT: şöğılʼlänergä; omit unclear native apostrophe.
     ('шөет', 'şöyet', 'DILL', 2578),
     ('шөлдер', 'şölder', 'HANDBELL', 4071),
     ('шөпшә', 'şöpşä', 'WASP', 9324),
