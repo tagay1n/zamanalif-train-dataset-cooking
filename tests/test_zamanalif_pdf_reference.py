@@ -1388,7 +1388,7 @@ PDF_GENERATED_WORD_CASES = [
     ('кагыйдәләре', 'qağidäläre', 'N'),
     ('кдпуда', 'qdpuda', 'RL'),
     ('кду', 'qdu', 'N'),
-    ('кыямәт', 'qiämät', 'N'),
+    ('кыямәт', 'qıyamät', 'N'),  # PDF extraction had qiämät; keep кыя as qıya, aligned with кыяфәт/qıyäfät.
     ('кол', 'qol', 'N'),
     ('колга', 'qolğa', 'N'),
     ('кор', 'qor', 'N'),
