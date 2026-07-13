@@ -19,6 +19,7 @@ from tatar_preannotator.conversion import (
     ConversionResult,
     DslError,
     FINAL_DOUBLE_L_RULE,
+    FRONT_G_SUFFIX_RULE,
     IE_GLIDE_RULE,
     IYA_RULE,
     KTS_AFTER_K_RULE,
@@ -357,6 +358,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_iya_choices(word, result)
     result = result_with_ie_glide_choices(word, result)
     result = result_with_arabic_initial_ga_choices(word, result, label)
+    result = result_with_front_g_suffix_choices(word, result, label)
     return result_with_mostaqil_choices(word, result, label)
 
 
@@ -497,6 +499,49 @@ def result_with_project_e_choices(
             changed = True
             continue
         _append_literal_segment(segments, text)
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+def result_with_front_g_suffix_choices(
+    source: str, result: ConversionResult, label: str
+) -> ConversionResult:
+    """Annotate disputed native front-vowel suffix ``г`` as ``g`` vs PDF ``ğ``."""
+    if label != "N":
+        return result
+    folded = source.casefold()
+    wrap_gan = "гән" in folded
+    wrap_final_ga = folded.endswith("гә") and not wrap_gan
+    if not wrap_gan and not wrap_final_ga:
+        return result
+    if _arabic_initial_ga_prefix_choice(source) is not None:
+        return result
+    if any(folded.startswith(prefix) for prefix, _, _ in NATIVE_PREFIX_REPLACEMENTS):
+        return result
+    if any(fragment in folded for fragment, _, _ in NATIVE_FRAGMENT_REPLACEMENTS):
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in result.segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        start = 0
+        if wrap_gan:
+            for match in re.finditer("gän", text):
+                _append_literal_segment(segments, text[start : match.start()])
+                segments.append(Choice(FRONT_G_SUFFIX_RULE.rule_id, FRONT_G_SUFFIX_RULE.options))
+                _append_literal_segment(segments, "än")
+                start = match.end()
+                changed = True
+        if wrap_final_ga and text.endswith("gä") and len(text) - 2 >= start:
+            _append_literal_segment(segments, text[start:-2])
+            segments.append(Choice(FRONT_G_SUFFIX_RULE.rule_id, FRONT_G_SUFFIX_RULE.options))
+            _append_literal_segment(segments, "ä")
+            changed = True
+            continue
+        _append_literal_segment(segments, text[start:])
     return ConversionResult(tuple(segments)) if changed else result
 
 
