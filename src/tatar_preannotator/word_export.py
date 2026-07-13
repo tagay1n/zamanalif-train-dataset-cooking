@@ -18,6 +18,7 @@ from tatar_preannotator.conversion import (
     Choice,
     ConversionResult,
     DslError,
+    ERZYA_STEM_RULE,
     FIGYL_STEM_RULE,
     FINAL_TS_SUFFIX_RULE,
     FINAL_DOUBLE_L_RULE,
@@ -364,6 +365,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_final_double_l_choices(word, result)
     result = result_with_figyl_stem_choices(word, result)
     result = result_with_ijtimagiy_stem_choices(word, result)
+    result = result_with_erzya_stem_choices(word, result)
     result = result_with_kagaz_stem_choices(word, result)
     result = result_with_mashgul_stem_choices(word, result)
     result = result_with_iya_choices(word, result)
@@ -758,6 +760,29 @@ def result_with_ijtimagiy_stem_choices(source: str, result: ConversionResult) ->
         if not changed and text.startswith("ictimaği"):
             segments.append(Choice(IJTIMAGIY_STEM_RULE.rule_id, IJTIMAGIY_STEM_RULE.options))
             _append_literal_segment(segments, text[len("ictimaği") :])
+            changed = True
+            continue
+        _append_literal_segment(segments, text)
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+def result_with_erzya_stem_choices(source: str, result: ConversionResult) -> ConversionResult:
+    """Annotate ``ерзя`` source-style vs localized spelling."""
+    if "ерзя" not in source.casefold():
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in _merge_adjacent_literals(result).segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        if not changed and "erzya" in text:
+            prefix, suffix = text.split("erzya", 1)
+            _append_literal_segment(segments, prefix)
+            segments.append(Choice(ERZYA_STEM_RULE.rule_id, ERZYA_STEM_RULE.options))
+            _append_literal_segment(segments, suffix)
             changed = True
             continue
         _append_literal_segment(segments, text)
@@ -1168,6 +1193,9 @@ def result_with_loanword_final_ka_choices(
     """Annotate RL final ``-ка`` as Tatar suffix ``q`` vs loanword stem ``k``."""
     if label != "RL" or not source.endswith("ка"):
         return result
+    short_result = result_with_short_loanword_final_ka_choices(source, result)
+    if short_result != result:
+        return short_result
 
     segments: list[Literal | Choice] = []
     changed = False
@@ -1177,6 +1205,33 @@ def result_with_loanword_final_ka_choices(
             continue
         text = segment.text
         if not changed and text.endswith("qa"):
+            _append_literal_segment(segments, text[:-2])
+            segments.append(Choice(RL_FINAL_KA_RULE.rule_id, RL_FINAL_KA_RULE.options))
+            _append_literal_segment(segments, "a")
+            changed = True
+            continue
+        _append_literal_segment(segments, text)
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+SHORT_LOANWORD_FINAL_KA_CHOICES = frozenset({"кубка"})
+
+
+def result_with_short_loanword_final_ka_choices(
+    source: str, result: ConversionResult
+) -> ConversionResult:
+    """Annotate known short RL stems where final ``-ка`` is a Tatar suffix."""
+    if source.casefold() not in SHORT_LOANWORD_FINAL_KA_CHOICES:
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in _merge_adjacent_literals(result).segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        if not changed and text.endswith("ka"):
             _append_literal_segment(segments, text[:-2])
             segments.append(Choice(RL_FINAL_KA_RULE.rule_id, RL_FINAL_KA_RULE.options))
             _append_literal_segment(segments, "a")

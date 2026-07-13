@@ -152,7 +152,6 @@ class ConditionalConversionDslTests(unittest.TestCase):
             ("мәгънә", "N"),
             ("җәмәгать", "N"),
             ("шигырь", "N"),
-            ("мордва-ерзя", "RL"),
         ]:
             with self.subTest(word=word, label=label):
                 dsl = convert_for_annotation_dsl(word, label)
@@ -209,17 +208,25 @@ class ConditionalConversionDslTests(unittest.TestCase):
         cases = [
             (
                 "иҗтимагый",
+                "N",
                 "{{IJTIMAGIY_STEM|antat=ictimağıy|pdf=ictimaği}}",
                 "ictimağıy",
                 "ictimaği",
             ),
-            ("кәгазъдә", "{{KAGAZ_STEM|antat=käğaz|pdf=qäğäz}}dä", "käğazdä", "qäğäzdä"),
-            ("мәшгуль", "{{MASHGUL_STEM|antat=mäşğul|pdf=mäşğül}}", "mäşğul", "mäşğül"),
+            (
+                "мордва-ерзя",
+                "RL",
+                "mordva-{{ERZYA_STEM|source=erzya|localized=erzä}}",
+                "mordva-erzya",
+                "mordva-erzä",
+            ),
+            ("кәгазъдә", "N", "{{KAGAZ_STEM|antat=käğaz|pdf=qäğäz}}dä", "käğazdä", "qäğäzdä"),
+            ("мәшгуль", "N", "{{MASHGUL_STEM|antat=mäşğul|pdf=mäşğül}}", "mäşğul", "mäşğül"),
         ]
 
-        for word, expected_dsl, antat, pdf in cases:
+        for word, label, expected_dsl, antat, pdf in cases:
             with self.subTest(word=word):
-                dsl = convert_for_annotation_dsl(word, "N")
+                dsl = convert_for_annotation_dsl(word, label)
                 self.assertEqual(dsl, expected_dsl)
                 self.assertEqual(resolve_dsl(dsl), antat)
                 self.assertEqual(
@@ -227,6 +234,7 @@ class ConditionalConversionDslTests(unittest.TestCase):
                         dsl,
                         {
                             "IJTIMAGIY_STEM": "pdf",
+                            "ERZYA_STEM": "localized",
                             "KAGAZ_STEM": "pdf",
                             "MASHGUL_STEM": "pdf",
                         },

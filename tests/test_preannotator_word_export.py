@@ -613,6 +613,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_loanword_final_ka_is_policy_dsl(self) -> None:
         cases = [
+            ("кубка", "kub{{RL_FINAL_KA|suffix=q|stem=k}}a", "kubqa", "kubka"),
             ("булавка", "bulav{{RL_FINAL_KA|suffix=q|stem=k}}a", "bulavqa", "bulavka"),
             ("палатка", "palat{{RL_FINAL_KA|suffix=q|stem=k}}a", "palatqa", "palatka"),
             ("форсунка", "forsun{{RL_FINAL_KA|suffix=q|stem=k}}a", "forsunqa", "forsunka"),
@@ -639,6 +640,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     ),
                     stem,
                 )
+
+    def test_short_loanword_final_ka_policy_is_narrow(self) -> None:
+        for word in ["маска", "папка", "рамка"]:
+            with self.subTest(word=word):
+                self.assertNotIn("RL_FINAL_KA", convert_for_annotation_dsl(word, "RL"))
 
     def test_conflicting_arabic_initial_ga_stays_policy_dsl(self) -> None:
         cases = [
