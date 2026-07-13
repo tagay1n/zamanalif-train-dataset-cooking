@@ -2468,7 +2468,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('ихтирамлы', 'ixtiramlı', 'BLAND', 965),
     ('ихтирамсыз', 'ixtiramsız', 'IMPOLITE', 4530),
     ('ихтыяр', 'ixtıyar', 'VOLITION', 9251),
-    ('ихтыяри', 'ıxtıyari', 'OPTIONAL', 5888),
+    ('ихтыяри', 'ixtıyari', 'OPTIONAL', 5888),  # ANTAT: ıxtıyari; align with same-stem ихтыяр* rows and deterministic и -> i.
     ('ихтыярсыз', 'ixtıyarsız', 'UNWILLED', 9032),
     ('ихтыяры', 'ixtıyarı', 'SELF-DETERMINED', 7613),
     ('ихтыяҗ', 'ixtıyac', 'REQUIRE', 7079),
