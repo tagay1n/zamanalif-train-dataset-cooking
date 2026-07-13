@@ -14,7 +14,8 @@ from .antat_reference import download_antat_reference
 from .config import load_config
 from .gemini_client import GoogleGeminiClient
 from .labelstudio_import import LabelStudioImportError, import_labelstudio_annotations
-from .manual_preannotate import ManualPreannotateError, run_manual_preannotation
+from .manual_preannotate import ManualPreannotateError
+from .manual_preannotate_web import serve_manual_preannotation_web
 from .training_export import TrainingExportError, export_training_dataset
 from .word_export import (
     export_labelstudio_tasks_from_db,
@@ -128,10 +129,12 @@ def main(argv: list[str] | None = None) -> int:
 
     manual = subparsers.add_parser(
         "manual-preannotate",
-        help="Interactively repair unprocessable sentence preannotations.",
+        help="Run a local browser UI for unprocessable sentence preannotations.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     manual.add_argument("--db", default=DEFAULT_DB_PATH, help="SQLite application database.")
+    manual.add_argument("--host", default="127.0.0.1", help="Local bind host.")
+    manual.add_argument("--port", type=int, default=8765, help="Local bind port.")
     manual.add_argument("--limit", type=int, help="Maximum unprocessable rows to review.")
 
     args = parser.parse_args(argv)
@@ -291,23 +294,22 @@ def _download_antat_reference(args: argparse.Namespace) -> int:
 def _manual_preannotate(args: argparse.Namespace) -> int:
     if args.limit is not None and args.limit < 1:
         raise SystemExit("--limit must be positive")
+    if args.port < 1 or args.port > 65535:
+        raise SystemExit("--port must be between 1 and 65535")
     try:
-        summary = run_manual_preannotation(args.db, limit=args.limit)
+        serve_manual_preannotation_web(
+            args.db,
+            host=args.host,
+            port=args.port,
+            limit=args.limit,
+            log=print,
+        )
     except KeyboardInterrupt:
-        print("\nmanual preannotation interrupted; saved rows remain saved.")
+        print("\nmanual preannotation web UI stopped.")
         return 130
     except (OSError, sqlite3.Error, ManualPreannotateError) as exc:
-        print(f"manual preannotation failed: {exc}")
+        print(f"manual preannotation web UI failed: {exc}")
         return 1
-
-    print(
-        "manual preannotation complete: "
-        f"reviewed={summary.reviewed} "
-        f"tatar={summary.saved_tatar} "
-        f"non_tatar={summary.saved_non_tatar} "
-        f"skipped={summary.skipped} "
-        f"remaining={summary.remaining}"
-    )
     return 0
 
 

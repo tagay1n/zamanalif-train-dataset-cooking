@@ -9,7 +9,6 @@ from unittest.mock import patch
 
 from tatar_preannotator.annotate import AnnotateSummary
 from tatar_preannotator.cli import ShutdownController, main
-from tatar_preannotator.manual_preannotate import ManualPreannotateSummary
 
 
 class PreannotatorCliTests(unittest.TestCase):
@@ -34,32 +33,37 @@ class PreannotatorCliTests(unittest.TestCase):
         help_text = output.getvalue()
         self.assertIn("--db", help_text)
         self.assertIn("data/zamanalif.sqlite", help_text)
+        self.assertIn("--host", help_text)
+        self.assertIn("127.0.0.1", help_text)
+        self.assertIn("--port", help_text)
+        self.assertIn("8765", help_text)
         self.assertIn("--limit", help_text)
 
-    def test_manual_preannotate_cli_prints_summary(self) -> None:
-        with patch(
-            "tatar_preannotator.cli.run_manual_preannotation",
-            return_value=ManualPreannotateSummary(
-                reviewed=2,
-                saved_tatar=1,
-                saved_non_tatar=1,
-                skipped=3,
-                remaining=429,
-            ),
-        ) as run_manual:
-            output = StringIO()
-            with redirect_stdout(output):
-                exit_code = main(["manual-preannotate", "--db", "custom.sqlite", "--limit", "5"])
+    def test_manual_preannotate_cli_passes_server_args(self) -> None:
+        with patch("tatar_preannotator.cli.serve_manual_preannotation_web") as serve:
+            exit_code = main(
+                [
+                    "manual-preannotate",
+                    "--db",
+                    "custom.sqlite",
+                    "--host",
+                    "127.0.0.2",
+                    "--port",
+                    "8766",
+                    "--limit",
+                    "5",
+                ]
+            )
 
         self.assertEqual(exit_code, 0)
-        self.assertEqual(run_manual.call_args.args[0], "custom.sqlite")
-        self.assertEqual(run_manual.call_args.kwargs["limit"], 5)
-        self.assertIn("reviewed=2", output.getvalue())
-        self.assertIn("remaining=429", output.getvalue())
+        self.assertEqual(serve.call_args.args[0], "custom.sqlite")
+        self.assertEqual(serve.call_args.kwargs["host"], "127.0.0.2")
+        self.assertEqual(serve.call_args.kwargs["port"], 8766)
+        self.assertEqual(serve.call_args.kwargs["limit"], 5)
 
     def test_manual_preannotate_ctrl_c_exits_cleanly(self) -> None:
         with patch(
-            "tatar_preannotator.cli.run_manual_preannotation",
+            "tatar_preannotator.cli.serve_manual_preannotation_web",
             side_effect=KeyboardInterrupt,
         ):
             output = StringIO()
@@ -67,7 +71,11 @@ class PreannotatorCliTests(unittest.TestCase):
                 exit_code = main(["manual-preannotate"])
 
         self.assertEqual(exit_code, 130)
-        self.assertIn("interrupted", output.getvalue())
+        self.assertIn("stopped", output.getvalue())
+
+    def test_manual_preannotate_invalid_port_fails_fast(self) -> None:
+        with self.assertRaisesRegex(SystemExit, "--port"):
+            main(["manual-preannotate", "--port", "70000"])
 
     def test_fatal_annotation_error_is_printed_and_exits_nonzero(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
