@@ -436,6 +436,8 @@ def result_with_jamgiyat_iya_choices(
 
 def result_with_ie_glide_choices(source: str, result: ConversionResult) -> ConversionResult:
     """Annotate Cyrillic ``ие`` as a plain ``ie`` vs glide ``iye`` convention."""
+    if source.casefold().endswith(("иев", "иева", "әев", "әева")):
+        return result
     source_count = source.casefold().count("ие")
     output_count = sum(
         segment.text.casefold().count("ie")
@@ -1612,6 +1614,9 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("газиз", "ğaziz", "ğäziz"),
     ("гаилә", "ğailä", "ğäilä"),
     ("гай", "ğay", "ğäy"),
+    ("гәлим", "gälim", "ğälim"),
+    ("гилем", "gilem", "ğilem"),
+    ("гилм", "gilm", "ğilm"),
     ("дикъкать", "diqkat", "diqqat"),
     ("инкыйлаб", "inkıylab", "inqıylab"),
     ("инкар", "inkar", "inqar"),
@@ -1650,6 +1655,7 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("фәкать", "fäkat", "fäqat"),
     ("фәкыйрь", "fäkıyr", "fäqıyr"),
     ("хыянәт", "xıyanät", "xıyänät"),
+    ("әхлак", "äxlak", "äxlaq"),
     ("югыйсә", "yuğıysä", "yuğisä"),
     ("шәфкать", "şäfkat", "şäfqat"),
     ("нигмәт", "nigmät", "niğmät"),
@@ -1701,12 +1707,31 @@ def _apply_native_lexical_conventions(word: str, converted: str) -> str:
     for cyrillic_prefix, plain_text, expected_text in NATIVE_PREFIX_REPLACEMENTS:
         if not folded.startswith(cyrillic_prefix) or not converted.startswith(plain_text):
             continue
-        return expected_text + converted[len(plain_text) :]
+        return _apply_native_surname_suffix_conventions(
+            folded,
+            expected_text + converted[len(plain_text) :],
+        )
     for cyrillic_fragment, plain_text, expected_text in NATIVE_FRAGMENT_REPLACEMENTS:
         if cyrillic_fragment not in folded or plain_text not in converted:
             continue
-        return converted.replace(plain_text, expected_text, 1)
+        return _apply_native_surname_suffix_conventions(
+            folded,
+            converted.replace(plain_text, expected_text, 1),
+        )
+    return _apply_native_surname_suffix_conventions(folded, converted)
+
+
+def _apply_native_surname_suffix_conventions(folded: str, converted: str) -> str:
+    if not folded.startswith(NATIVE_SURNAME_V_PREFIXES):
+        return converted
+    if folded.endswith("ова") and converted.endswith("owa"):
+        return converted[:-3] + "ova"
+    if folded.endswith("ов") and converted.endswith("ow"):
+        return converted[:-2] + "ov"
     return converted
+
+
+NATIVE_SURNAME_V_PREFIXES = ("гәлим", "гилем")
 
 
 def _next_char(word: str, index: int) -> str:

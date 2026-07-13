@@ -578,6 +578,31 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("күрсәткеч", "N"), "kürsätkeç")
         self.assertEqual(convert_for_annotation("хәлиткеч", "N"), "xälitkeç")
 
+    def test_native_exlaq_stem_keeps_q_in_derivatives(self) -> None:
+        cases = [
+            ("әхлак", "äxlaq"),
+            ("әхлаки", "äxlaqi"),
+            ("әхлаксыз", "äxlaqsız"),
+            ("әхлаксызлык", "äxlaqsızlıq"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
+
+    def test_native_surname_stems_keep_origin_stem_and_surname_v(self) -> None:
+        cases = [
+            ("гилемханов", "ğilemxanov"),
+            ("гилмиев", "ğilmiev"),
+            ("гәлимов", "ğälimov"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
+
     def test_loanword_g_stems_use_plain_g(self) -> None:
         self.assertEqual(convert_for_annotation("гараж", "RL"), "garaj")
         self.assertEqual(convert_for_annotation("газет", "RL"), "gazet")
