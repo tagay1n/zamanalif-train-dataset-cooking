@@ -30,6 +30,7 @@ from tatar_preannotator.conversion import (
     PROJECT_E_RULE,
     RL_FINAL_KA_RULE,
     RUS_JOTATED_SOFTENING_RULE,
+    RUS_BU_FRONT_RULE,
     RUS_SIGN_E_RULE,
     RUS_SOFT_SIGN_RULE,
     RUS_SOFT_SIGN_O_RULE,
@@ -334,6 +335,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
         return result_with_music_y_choices(word, result, label)
     result = result_with_russian_soft_sign_choices(word, compact, label)
     if result.has_choices:
+        result = result_with_russian_bu_front_choices(word, result, label)
         return result_with_music_y_choices(word, result, label)
     result = result_with_cilquar_native_uw_choices(word, compact, label)
     if result.has_choices:
@@ -737,6 +739,39 @@ def result_with_russian_soft_sign_choices(
 
     if converted_index != len(converted):
         return ConversionResult((Literal(converted),))
+    return ConversionResult(tuple(segments))
+
+
+def result_with_russian_bu_front_choices(
+    source: str, result: ConversionResult, label: str
+) -> ConversionResult:
+    """Annotate exceptional RL ``бю`` as ``byu`` vs ``bʼü`` before soft endings."""
+    if label != "RL" or "бю" not in source.casefold():
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in _merge_adjacent_literals(result).segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        start = 0
+        for match in re.finditer("byu", segment.text, flags=re.IGNORECASE):
+            _append_literal_segment(segments, segment.text[start : match.start() + 1])
+            segments.append(Choice(RUS_BU_FRONT_RULE.rule_id, RUS_BU_FRONT_RULE.options))
+            start = match.end()
+            changed = True
+        _append_literal_segment(segments, segment.text[start:])
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+def _merge_adjacent_literals(result: ConversionResult) -> ConversionResult:
+    segments: list[Literal | Choice] = []
+    for segment in result.segments:
+        if isinstance(segment, Literal):
+            _append_literal_segment(segments, segment.text)
+        else:
+            segments.append(segment)
     return ConversionResult(tuple(segments))
 
 

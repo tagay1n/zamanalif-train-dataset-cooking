@@ -987,6 +987,19 @@ class PreannotatorWordExportTests(unittest.TestCase):
             "bʼurokratiyä",
         )
 
+    def test_russian_bu_front_policy_composes_with_soft_sign(self) -> None:
+        dsl = convert_for_annotation_dsl("вестибюль", "RL")
+
+        self.assertEqual(
+            dsl,
+            "vestib{{RUS_BU_FRONT|yu=yu|apostrophe_front=ʼü}}l{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}",
+        )
+        self.assertEqual(resolve_dsl(dsl), "vestibyulʼ")
+        self.assertEqual(
+            resolve_dsl(dsl, {"RUS_BU_FRONT": "apostrophe_front", "RUS_SOFT_SIGN": "omit"}),
+            "vestibʼül",
+        )
+
     def test_native_miyaw_stem_is_deterministic(self) -> None:
         cases = [
             ("мияубикә", "miyawbikä"),
