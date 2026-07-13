@@ -12,6 +12,7 @@ from zamanalif_selector.progress import RichCliProgress
 from .annotate import run_annotation
 from .antat_reference import download_antat_reference
 from .config import load_config
+from .conflict_resolver import ConflictResolverError, serve_conflict_resolver_web
 from .gemini_client import GoogleGeminiClient
 from .labelstudio_import import LabelStudioImportError, import_labelstudio_annotations
 from .manual_preannotate import ManualPreannotateError
@@ -137,6 +138,16 @@ def main(argv: list[str] | None = None) -> int:
     manual.add_argument("--port", type=int, default=8765, help="Local bind port.")
     manual.add_argument("--limit", type=int, help="Maximum unprocessable rows to review.")
 
+    conflicts = subparsers.add_parser(
+        "resolve-conflicts",
+        help="Run a local browser UI for word-origin and homonym conflicts.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    conflicts.add_argument("--db", default=DEFAULT_DB_PATH, help="SQLite application database.")
+    conflicts.add_argument("--host", default="127.0.0.1", help="Local bind host.")
+    conflicts.add_argument("--port", type=int, default=8766, help="Local bind port.")
+    conflicts.add_argument("--limit", type=int, help="Maximum conflict rows to review.")
+
     args = parser.parse_args(argv)
     if args.command == "annotate":
         return _annotate(args)
@@ -150,6 +161,8 @@ def main(argv: list[str] | None = None) -> int:
         return _download_antat_reference(args)
     if args.command == "manual-preannotate":
         return _manual_preannotate(args)
+    if args.command == "resolve-conflicts":
+        return _resolve_conflicts(args)
     raise AssertionError(args.command)
 
 
@@ -309,6 +322,28 @@ def _manual_preannotate(args: argparse.Namespace) -> int:
         return 130
     except (OSError, sqlite3.Error, ManualPreannotateError) as exc:
         print(f"manual preannotation web UI failed: {exc}")
+        return 1
+    return 0
+
+
+def _resolve_conflicts(args: argparse.Namespace) -> int:
+    if args.limit is not None and args.limit < 1:
+        raise SystemExit("--limit must be positive")
+    if args.port < 1 or args.port > 65535:
+        raise SystemExit("--port must be between 1 and 65535")
+    try:
+        serve_conflict_resolver_web(
+            args.db,
+            host=args.host,
+            port=args.port,
+            limit=args.limit,
+            log=print,
+        )
+    except KeyboardInterrupt:
+        print("\nword conflict resolver web UI stopped.")
+        return 130
+    except (OSError, sqlite3.Error, ConflictResolverError) as exc:
+        print(f"word conflict resolver web UI failed: {exc}")
         return 1
     return 0
 

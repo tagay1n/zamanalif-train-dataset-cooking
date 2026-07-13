@@ -12,6 +12,7 @@ import tempfile
 from typing import Iterable
 
 from .conversion import DslError, RULES, parse_dsl, resolve_dsl
+from .conflict_resolver import load_word_resolutions
 from .word_export import (
     ReviewedWord,
     conversion_branches,
@@ -93,6 +94,10 @@ def export_training_dataset(
 
     effective_policy, overrides = parse_policy_overrides(choice_overrides)
     reviewed = load_reviewed_words(database)
+    word_resolutions = {
+        word: resolution.decision
+        for word, resolution in load_word_resolutions(database).items()
+    }
     _validate_reviewed_dictionary(reviewed)
 
     output = Path(output_path)
@@ -114,7 +119,12 @@ def export_training_dataset(
                     non_tatar_sentences += 1
                     continue
                 tatar_sentences += 1
-                converted = _convert_sentence(record, reviewed, effective_policy)
+                converted = _convert_sentence(
+                    record,
+                    reviewed,
+                    effective_policy,
+                    word_resolutions,
+                )
                 if isinstance(converted, _NotReady):
                     skipped[converted.reason] += 1
                     continue
@@ -203,6 +213,7 @@ def _convert_sentence(
     record: _SentenceRecord,
     reviewed: dict[str, ReviewedWord],
     policy: dict[str, str],
+    word_resolutions: dict[str, str],
 ) -> str | _NotReady:
     pieces: list[str] = []
     cursor = 0
@@ -233,19 +244,23 @@ def _convert_sentence(
             pieces.append(text)
             cursor = found + len(text)
             continue
-        if token.get("homonym") is True:
+        resolution = word_resolutions.get(normalized)
+        if resolution == "contextual_homonym":
+            return _NotReady("contextual_homonym")
+        effective_label = resolution if resolution in {"N", "RL", "U"} else label
+        if token.get("homonym") is True and resolution not in {"N", "RL", "U"}:
             return _NotReady("contextual_homonym")
 
         approved = reviewed.get(normalized)
         if approved is not None:
             dsl = approved.zamanalif_dsl
         else:
-            if label == "N" and vowel_harmony_class(normalized) == "mixed_front_back":
+            if effective_label == "N" and vowel_harmony_class(normalized) == "mixed_front_back":
                 return _NotReady("mixed_harmony_word")
             branches = conversion_branches(normalized)
             if branches.state != "origin_independent":
                 return _NotReady("unreviewed_word")
-            dsl = branches.suggestion(label)
+            dsl = branches.suggestion(effective_label)
             if not dsl:
                 raise TrainingExportError(
                     f"{record.sample_id}: converter failed for token {text!r}"

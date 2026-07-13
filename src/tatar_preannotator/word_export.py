@@ -163,10 +163,18 @@ def export_labelstudio_tasks_from_db(
     sort_by: str = "frequency_desc",
     already_exported: set[str] | None = None,
     reviewed_words: set[str] | None = None,
+    word_resolutions: dict[str, str] | None = None,
 ) -> ExportResult:
     """Build Label Studio word-review tasks from annotated SQLite rows."""
     if reviewed_words is None:
         reviewed_words = set(load_reviewed_words(db_path))
+    if word_resolutions is None:
+        from .conflict_resolver import load_word_resolutions
+
+        word_resolutions = {
+            word: resolution.decision
+            for word, resolution in load_word_resolutions(db_path).items()
+        }
     return _export_from_records(
         _sqlite_records(db_path),
         max_items=max_items,
@@ -176,6 +184,7 @@ def export_labelstudio_tasks_from_db(
         sort_by=sort_by,
         already_exported=already_exported,
         reviewed_words=reviewed_words,
+        word_resolutions=word_resolutions,
     )
 
 
@@ -189,6 +198,7 @@ def _export_from_records(
     sort_by: str,
     already_exported: set[str] | None,
     reviewed_words: set[str],
+    word_resolutions: dict[str, str],
 ) -> ExportResult:
     stats: dict[str, WordStats] = {}
     total_sentences = 0
@@ -218,7 +228,8 @@ def _export_from_records(
             if not normalized:
                 continue
             word_occurrences[normalized] += 1
-            if token.get("homonym") is True:
+            resolution = word_resolutions.get(normalized)
+            if token.get("homonym") is True and resolution not in {"N", "RL", "U"}:
                 homonym_words.add(normalized)
 
             entry = stats.get(normalized)
@@ -226,7 +237,8 @@ def _export_from_records(
                 entry = WordStats(normalized=normalized, display=_display_word(text, normalized))
                 stats[normalized] = entry
             entry.frequency += 1
-            entry.label_counts[label] += 1
+            effective_label = resolution if resolution in {"N", "RL", "U"} else label
+            entry.label_counts[effective_label] += 1
             entry.conditional_letters.update(
                 char for char in normalized if char in CONDITIONAL_LETTERS
             )
@@ -239,6 +251,9 @@ def _export_from_records(
     for entry in stats.values():
         branches = conversion_branches(entry.normalized)
         decision_counts[branches.state] += 1
+        resolution = word_resolutions.get(entry.normalized)
+        if resolution == "contextual_homonym":
+            continue
         if entry.normalized in homonym_words:
             continue
         if entry.normalized in reviewed_words:

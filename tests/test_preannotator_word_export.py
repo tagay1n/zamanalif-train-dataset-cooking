@@ -9,6 +9,7 @@ import tempfile
 import unittest
 
 from tatar_preannotator.cli import main
+from tatar_preannotator.conflict_resolver import save_word_resolution
 from tatar_preannotator.conversion import resolve_dsl
 from tatar_preannotator.word_export import (
     contains_conditional_letter,
@@ -257,6 +258,59 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual([task["data"]["cyrl_word"] for task in result.tasks], ["вакыт"])
         self.assertEqual(result.report["homonym_words_deferred_count"], 1)
         self.assertEqual(result.report["homonym_occurrences_skipped_count"], 2)
+
+    def test_word_resolution_clears_bad_homonym_and_sets_effective_origin(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "һәм", "label": "N"},
+                            {"text": "авыл", "label": "RL", "homonym": True},
+                        ],
+                    },
+                    {
+                        "id": "sent_2",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "авыл", "label": "N"},
+                        ],
+                    },
+                ],
+            )
+            with sqlite3.connect(db_path) as conn:
+                save_word_resolution(conn, "авыл", "N")
+
+            result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
+
+        self.assertEqual([task["data"]["cyrl_word"] for task in result.tasks], ["авыл"])
+        self.assertEqual(result.tasks[0]["data"]["gemini_origin"], "N")
+        self.assertEqual(result.report["homonym_words_deferred_count"], 0)
+
+    def test_contextual_homonym_resolution_remains_deferred(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "сер", "label": "RL", "homonym": True},
+                            {"text": "вакыт", "label": "N"},
+                        ],
+                    },
+                ],
+            )
+            with sqlite3.connect(db_path) as conn:
+                save_word_resolution(conn, "сер", "contextual_homonym")
+
+            result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
+
+        self.assertEqual([task["data"]["cyrl_word"] for task in result.tasks], ["вакыт"])
 
     def test_reviewed_word_dictionary_persists_dsl_and_origin(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

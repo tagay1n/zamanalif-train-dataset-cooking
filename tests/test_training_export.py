@@ -9,6 +9,7 @@ import tempfile
 import unittest
 
 from tatar_preannotator.cli import main
+from tatar_preannotator.conflict_resolver import save_word_resolution
 from tatar_preannotator.conversion import PREFERRED_POLICY
 from tatar_preannotator.training_export import (
     TrainingExportError,
@@ -210,6 +211,55 @@ class TrainingExportTests(unittest.TestCase):
             rows = _read_jsonl(output)
 
         self.assertEqual(rows[0]["zamanalif"], "Bu yul.")
+
+    def test_word_resolution_clears_bad_homonym_for_origin_independent_word(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(
+                root / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "text": "Һәм килде.",
+                        "tokens": [
+                            {"text": "Һәм", "label": "RL", "homonym": True},
+                            {"text": "килде", "label": "N"},
+                        ],
+                    }
+                ],
+            )
+            with sqlite3.connect(db_path) as conn:
+                save_word_resolution(conn, "һәм", "N")
+            output = root / "train.jsonl"
+
+            export_training_dataset(db_path, output)
+            rows = _read_jsonl(output)
+
+        self.assertEqual(rows[0]["zamanalif"], "Häm kilde.")
+
+    def test_word_resolution_does_not_approve_origin_dependent_conversion(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(
+                root / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "text": "Авыл килде.",
+                        "tokens": [{"text": "Авыл", "label": "RL", "homonym": True}],
+                    }
+                ],
+            )
+            with sqlite3.connect(db_path) as conn:
+                save_word_resolution(conn, "авыл", "N")
+            output = root / "train.jsonl"
+
+            summary = export_training_dataset(db_path, output)
+            manifest = json.loads(summary.manifest_path.read_text(encoding="utf-8"))
+            output_text = output.read_text(encoding="utf-8")
+
+        self.assertEqual(output_text, "")
+        self.assertEqual(manifest["skipped_by_reason"], {"unreviewed_word": 1})
 
     def test_malformed_reviewed_dsl_preserves_existing_output(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

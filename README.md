@@ -157,6 +157,28 @@ It provides Tatar/non-Tatar controls, per-token `N`/`RL`/`U` radio buttons,
 homonym checkboxes, and keyboard shortcuts: arrows move token selection, `1`,
 `2`, `3` set labels, Space toggles homonym, and Enter saves.
 
+### Word conflict resolver
+
+Gemini and manual sentence repair can disagree about the same normalized word,
+for example a word marked `N` in most sentences but `RL` or `homonym` in a few
+noisy rows. Review these conflicts in a separate local browser UI:
+
+```bash
+python -m tatar_preannotator resolve-conflicts
+```
+
+The command starts at `http://127.0.0.1:8766` by default. It shows each
+conflicting normalized word, label counts, homonym counts, and example sentence
+IDs. Save one word-level decision: `N`, `RL`, `U`, or `contextual_homonym`.
+Decisions are stored in `word_resolutions`; original Gemini/manual
+`tokens_json` rows are not rewritten.
+
+Resolved `N`/`RL`/`U` decisions are used as cleaned preannotation input for
+word-review export. They do not approve final Zamanalif conversion by
+themselves; origin-dependent words still need `reviewed_words` approval from
+Label Studio Project 1. `contextual_homonym` keeps the word deferred for the
+later sentence-context review project.
+
 ## Antat Dictionary Reference
 
 Download the Antat English-Tatar dictionary reference into the shared SQLite

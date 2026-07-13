@@ -77,6 +77,40 @@ class PreannotatorCliTests(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, "--port"):
             main(["manual-preannotate", "--port", "70000"])
 
+    def test_resolve_conflicts_help_shows_default_db_and_port(self) -> None:
+        output = StringIO()
+        with self.assertRaises(SystemExit), redirect_stdout(output):
+            main(["resolve-conflicts", "--help"])
+
+        help_text = output.getvalue()
+        self.assertIn("--db", help_text)
+        self.assertIn("data/zamanalif.sqlite", help_text)
+        self.assertIn("--port", help_text)
+        self.assertIn("8766", help_text)
+        self.assertIn("--limit", help_text)
+
+    def test_resolve_conflicts_cli_passes_server_args(self) -> None:
+        with patch("tatar_preannotator.cli.serve_conflict_resolver_web") as serve:
+            exit_code = main(
+                [
+                    "resolve-conflicts",
+                    "--db",
+                    "custom.sqlite",
+                    "--host",
+                    "127.0.0.2",
+                    "--port",
+                    "8767",
+                    "--limit",
+                    "5",
+                ]
+            )
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(serve.call_args.args[0], "custom.sqlite")
+        self.assertEqual(serve.call_args.kwargs["host"], "127.0.0.2")
+        self.assertEqual(serve.call_args.kwargs["port"], 8767)
+        self.assertEqual(serve.call_args.kwargs["limit"], 5)
+
     def test_fatal_annotation_error_is_printed_and_exits_nonzero(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = Path(tmpdir) / "zamanalif.sqlite"
