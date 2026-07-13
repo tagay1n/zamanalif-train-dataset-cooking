@@ -9,6 +9,7 @@ import tempfile
 import unittest
 
 from tatar_preannotator.cli import main
+from tatar_preannotator.conversion import PREFERRED_POLICY
 from tatar_preannotator.training_export import (
     TrainingExportError,
     export_training_dataset,
@@ -58,25 +59,7 @@ class TrainingExportTests(unittest.TestCase):
             ],
         )
         self.assertNotIn("{{", rows[0]["zamanalif"])
-        self.assertEqual(
-            manifest["effective_policy"],
-            {
-                "IYA": "explicit",
-                "ARABIC_INITIAL_GA": "plain",
-                "IE_GLIDE": "plain",
-                "PROJECT_E": "glide",
-                "MUSIC_Y": "long",
-                "MOSTAQIL": "antat",
-                "FINAL_DOUBLE_L": "single",
-                "RUS_SIGN_GLIDE": "omit",
-                "RUS_SIGN_E": "glide",
-                "RUS_SOFT_SIGN_O": "preserve",
-                "RUS_SOFT_SIGN": "preserve",
-                "RUS_JOTATED_SOFTENING": "glide",
-                "RL_FINAL_KA": "suffix",
-                "NATIVE_UW": "glide",
-            },
-        )
+        self.assertEqual(manifest["effective_policy"], dict(PREFERRED_POLICY))
         self.assertEqual(manifest["overrides"], {})
         self.assertEqual(manifest["counts"]["exported_sentences"], 1)
 
@@ -288,25 +271,7 @@ class TrainingExportTests(unittest.TestCase):
 
     def test_policy_override_validation(self) -> None:
         effective, overrides = parse_policy_overrides(["IYA=compact"])
-        self.assertEqual(
-            effective,
-            {
-                "IYA": "compact",
-                "ARABIC_INITIAL_GA": "plain",
-                "IE_GLIDE": "plain",
-                "PROJECT_E": "glide",
-                "MUSIC_Y": "long",
-                "MOSTAQIL": "antat",
-                "FINAL_DOUBLE_L": "single",
-                "RUS_SIGN_GLIDE": "omit",
-                "RUS_SIGN_E": "glide",
-                "RUS_SOFT_SIGN_O": "preserve",
-                "RUS_SOFT_SIGN": "preserve",
-                "RUS_JOTATED_SOFTENING": "glide",
-                "RL_FINAL_KA": "suffix",
-                "NATIVE_UW": "glide",
-            },
-        )
+        self.assertEqual(effective, {**dict(PREFERRED_POLICY), "IYA": "compact"})
         self.assertEqual(overrides, {"IYA": "compact"})
 
         with self.assertRaisesRegex(TrainingExportError, "duplicate"):
