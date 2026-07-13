@@ -357,6 +357,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_iya_choices(word, result)
     result = result_with_ie_glide_choices(word, result)
     result = result_with_arabic_initial_ga_choices(word, result, label)
+    result = result_with_jamgiyat_iya_choices(word, result, label)
     return result_with_mostaqil_choices(word, result, label)
 
 
@@ -391,6 +392,30 @@ def _iya_options_for_source(source: str) -> tuple[tuple[str, str], ...]:
     if folded.startswith(("әдәбия", "әүлия", "риялы")):
         return (("compact", "a"), ("explicit", "ya"))
     return IYA_RULE.options
+
+
+def result_with_jamgiyat_iya_choices(
+    source: str, result: ConversionResult, label: str
+) -> ConversionResult:
+    """Annotate ``җәмгыят*`` compact PDF ``iä`` vs explicit ``iyä`` convention."""
+    if label != "N" or not source.casefold().startswith("җәмгыят"):
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in result.segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        start = 0
+        for match in re.finditer("iyä", text, flags=re.IGNORECASE):
+            _append_literal_segment(segments, text[start : match.start() + 1])
+            segments.append(Choice(IYA_RULE.rule_id, IYA_RULE.options))
+            start = match.end()
+            changed = True
+        _append_literal_segment(segments, text[start:])
+    return ConversionResult(tuple(segments)) if changed else result
 
 
 def result_with_ie_glide_choices(source: str, result: ConversionResult) -> ConversionResult:

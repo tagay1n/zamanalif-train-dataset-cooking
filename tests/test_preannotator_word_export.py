@@ -696,9 +696,6 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("табигатьтән", "tabiğättän"),
             ("җәмәгать", "cämäğät"),
             ("мөрәҗәгать", "möräcäğät"),
-            ("җәмгыять", "cämğiyät"),
-            ("җәмгыяте", "cämğiyäte"),
-            ("җәмгыятьтәге", "cämğiyättäge"),
             ("җинаятьчелек", "cinayätçelek"),
         ]
 
@@ -706,6 +703,26 @@ class PreannotatorWordExportTests(unittest.TestCase):
             with self.subTest(word=word):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
+
+    def test_jamgiyat_stem_has_compact_pdf_iya_policy(self) -> None:
+        cases = [
+            ("җәмгыять", "cämği{{IYA|compact=ä|explicit=yä}}t", "cämğiyät", "cämğiät"),
+            ("җәмгыяте", "cämği{{IYA|compact=ä|explicit=yä}}te", "cämğiyäte", "cämğiäte"),
+            (
+                "җәмгыятьтәге",
+                "cämği{{IYA|compact=ä|explicit=yä}}ttäge",
+                "cämğiyättäge",
+                "cämğiättäge",
+            ),
+        ]
+
+        for word, expected_dsl, explicit, compact in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "N")
+                self.assertEqual(convert_for_annotation(word, "N"), explicit)
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl), explicit)
+                self.assertEqual(resolve_dsl(dsl, {"IYA": "compact"}), compact)
 
     def test_selected_arabic_hamza_stems_are_deterministic(self) -> None:
         cases = [
