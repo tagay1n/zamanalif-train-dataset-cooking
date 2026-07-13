@@ -117,6 +117,12 @@ MOSTAQIL_RULE = RuleDefinition(
     default_option="antat",
     allow_custom_option_text=True,
 )
+MONTH_NAME_RULE = RuleDefinition(
+    rule_id="MONTH_NAME",
+    options=(("ordinary", ""), ("pdf", "")),
+    default_option="ordinary",
+    allow_custom_option_text=True,
+)
 FINAL_DOUBLE_L_RULE = RuleDefinition(
     rule_id="FINAL_DOUBLE_L",
     options=(("single", "l"), ("double", "ll")),
@@ -181,6 +187,7 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         OU_LOANWORD_RULE.rule_id: OU_LOANWORD_RULE,
         MUSIC_Y_RULE.rule_id: MUSIC_Y_RULE,
         MOSTAQIL_RULE.rule_id: MOSTAQIL_RULE,
+        MONTH_NAME_RULE.rule_id: MONTH_NAME_RULE,
         FINAL_DOUBLE_L_RULE.rule_id: FINAL_DOUBLE_L_RULE,
         RUS_SIGN_GLIDE_RULE.rule_id: RUS_SIGN_GLIDE_RULE,
         RUS_SIGN_E_RULE.rule_id: RUS_SIGN_E_RULE,
@@ -202,6 +209,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "OU_LOANWORD": "plain",
         "MUSIC_Y": "long",
         "MOSTAQIL": "antat",
+        "MONTH_NAME": "ordinary",
         "FINAL_DOUBLE_L": "single",
         "RUS_SIGN_GLIDE": "omit",
         "RUS_SIGN_E": "glide",
@@ -223,6 +231,7 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "OU_LOANWORD": "plain",
         "MUSIC_Y": "long",
         "MOSTAQIL": "pdf",
+        "MONTH_NAME": "pdf",
         "FINAL_DOUBLE_L": "double",
         "RUS_SIGN_GLIDE": "omit",
         "RUS_SIGN_E": "glide",

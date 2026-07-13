@@ -162,12 +162,32 @@ class ConditionalConversionDslTests(unittest.TestCase):
             with self.subTest(word=word):
                 self.assertNotEqual(conversion_branches(word).state, "origin_independent")
 
-    def test_excluded_pdf_policies_are_not_registered_as_dsl(self) -> None:
-        for word in ["гыйнвар", "февраль", "ноябрь", "декабрь", "мәшгуль"]:
+    def test_month_names_are_policy_dsl(self) -> None:
+        cases = [
+            ("гыйнвар", "N", "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}", "ğıynwar", "ğinwar"),
+            ("июнь", "RL", "{{MONTH_NAME|ordinary=iyun|pdf=iyün}}{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}", "iyunʼ", "iyün"),
+            ("июль", "RL", "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}", "iyulʼ", "iyül"),
+            ("сентябрендә", "RL", "{{MONTH_NAME|ordinary=sentyabr|pdf=sentäbr}}endä", "sentyabrendä", "sentäbrendä"),
+            ("октябрь", "RL", "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}", "oktyabrʼ", "oktäbr"),
+            ("ноябрь", "N", "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}", "noyabr", "noyäbr"),
+            ("декабрь", "RL", "{{MONTH_NAME|ordinary=dekabr|pdf=dekäbr}}{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}", "dekabrʼ", "dekäbr"),
+        ]
+
+        for word, label, expected_dsl, ordinary, pdf in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, label)
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl), ordinary)
+                self.assertEqual(
+                    resolve_dsl(dsl, {"MONTH_NAME": "pdf", "RUS_SOFT_SIGN": "omit"}),
+                    pdf,
+                )
+
+    def test_excluded_disharmony_policy_is_not_registered_as_dsl(self) -> None:
+        for word in ["мәшгуль"]:
             with self.subTest(word=word):
                 for label in ("N", "RL"):
                     dsl = convert_for_annotation_dsl(word, label)
-                    self.assertNotIn("MONTH", dsl)
                     self.assertNotIn("DISHARMONY", dsl)
 
     def test_russian_sign_before_glide_is_policy_dsl(self) -> None:
