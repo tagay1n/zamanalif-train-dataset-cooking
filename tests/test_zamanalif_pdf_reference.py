@@ -1868,12 +1868,12 @@ PDF_GENERATED_WORD_CASES = [
     ('тәмамланган', 'tämamlanğan', 'N'),
     ('тәмамлык', 'tämamlıq', 'N'),
     ('тәмле', 'tämle', 'N'),
-    ('тәнкыйди', 'tänqidi', 'N'),
+    ('тәнкыйди', 'tänqıydi', 'N'),  # Keep Cyrillic ый as ıy.
     ('тәкъдим', 'täqdim', 'N'),
     ('тәрбияви', 'tärbiäwi', 'N'),
     ('тәртип', 'tärtip', 'N'),
     ('тәртиптә', 'tärtiptä', 'N'),
-    ('тәрәккый', 'täräqqi', 'N'),
+    ('тәрәккый', 'täräqqıy', 'N'),  # Keep final ый as ıy and double кк as qq.
     ('тәшкил', 'täşkil', 'N'),
     ('тәшрик', 'täşriq', 'N'),
     ('төлкегә', 'tölkegä', 'N'),
@@ -1972,7 +1972,7 @@ PDF_GENERATED_WORD_CASES = [
     ('вак', 'waq', 'N'),
     ('вак-ваграк', 'waq-wağraq', 'N'),
     ('вакиф', 'waqif', 'N'),
-    ('вакыйга', 'waqiğa', 'N'),
+    ('вакыйга', 'waqıyğa', 'N'),  # ANTAT and converter keep кый as qıy.
     ('вакла', 'waqla', 'N'),
     ('вакланма', 'waqlanma', 'N'),
     ('вактыр', 'waqtır', 'N'),
