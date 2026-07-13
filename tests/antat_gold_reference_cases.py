@@ -5152,7 +5152,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('раслау', 'raslaw', 'ALLEGATION', 238),
     ('раслучы', 'rasluçı', 'SIGNIFICATIVE', 7833),
     ('расписка', 'raspiska', 'RECEIPT', 6885),
-    ('распятие', 'raspyätiye', 'CRUCIFIX', 2221),
+    ('распятие', 'raspyatiye', 'CRUCIFIX', 2221),  # ANTAT: raspyätiye; no cross-source evidence for separate RL пя -> pyä policy.
     ('расход', 'rasxod', 'EXPENDITURE', 3219),
     ('расчёт', 'rasçʼot', 'SETTLEMENT', 7710),
     ('ратификация', 'ratifikatsiyä', 'SANCTION', 7364),
