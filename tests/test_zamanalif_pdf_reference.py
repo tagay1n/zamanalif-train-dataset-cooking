@@ -1267,7 +1267,7 @@ PDF_GENERATED_WORD_CASES = [
     ('очрый', 'oçrıy', 'N'),
     ('папаха', 'papaxa', 'RL'),
     ('пар', 'par', 'N'),
-    ('параграфлардагы', 'paragraflardagı', 'RL'),
+    ('параграфлардагы', 'paragraflardağı', 'RL'),  # PDF: paragraflardagı; native -дагы suffix uses ğ.
     ('парлашып', 'parlaşıp', 'N'),
     ('пароход', 'paroxod', 'RL'),
     ('партиясе', 'partiäse', 'RL'),
