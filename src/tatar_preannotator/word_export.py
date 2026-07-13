@@ -42,6 +42,7 @@ from tatar_preannotator.conversion import (
     RUS_SOFT_SIGN_RULE,
     RUS_SOFT_SIGN_O_RULE,
     RUS_SIGN_GLIDE_RULE,
+    SHIGYR_STEM_RULE,
     YA_RULE,
     ZAMANALIF_APOSTROPHE,
     normalize_zamanalif_apostrophes,
@@ -365,6 +366,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_music_y_choices(word, result, label)
     result = result_with_final_double_l_choices(word, result)
     result = result_with_figyl_stem_choices(word, result)
+    result = result_with_shigyr_stem_choices(word, result)
     result = result_with_ijtimagiy_stem_choices(word, result)
     result = result_with_erzya_ya_choices(word, result)
     result = result_with_kagaz_stem_choices(word, result)
@@ -746,6 +748,28 @@ def result_with_figyl_stem_choices(source: str, result: ConversionResult) -> Con
             changed = True
             continue
         _append_literal_segment(segments, text)
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+def result_with_shigyr_stem_choices(source: str, result: ConversionResult) -> ConversionResult:
+    """Annotate the attested ``шигырь`` stem as ANTAT vs PDF policy."""
+    if "шигыр" not in source.casefold():
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in _merge_adjacent_literals(result).segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        start = 0
+        for match in re.finditer("şiğır", text):
+            _append_literal_segment(segments, text[start : match.start()])
+            segments.append(Choice(SHIGYR_STEM_RULE.rule_id, SHIGYR_STEM_RULE.options))
+            start = match.end()
+            changed = True
+        _append_literal_segment(segments, text[start:])
     return ConversionResult(tuple(segments)) if changed else result
 
 
@@ -1685,6 +1709,7 @@ NATIVE_FRAGMENT_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("гыйльм", "ğıylm", "ğilm"),
     ("зәгыйф", "zäğıyf", "zäğif"),
     ("шагыйр", "şağıyr", "şağir"),
+    ("шигри", "şigri", "şiğri"),
     ("кагыйдә", "qağıydä", "qağidä"),
     ("табигый", "tabiğıy", "tabiği"),
     ("васыять", "wasıyat", "wasıyät"),

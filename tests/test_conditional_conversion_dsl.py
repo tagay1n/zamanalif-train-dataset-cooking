@@ -151,7 +151,6 @@ class ConditionalConversionDslTests(unittest.TestCase):
         for word, label in [
             ("мәгънә", "N"),
             ("җәмәгать", "N"),
-            ("шигырь", "N"),
         ]:
             with self.subTest(word=word, label=label):
                 dsl = convert_for_annotation_dsl(word, label)
@@ -203,6 +202,24 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 self.assertEqual(dsl, expected_dsl)
                 self.assertEqual(resolve_dsl(dsl), antat)
                 self.assertEqual(resolve_dsl(dsl, {"FIGYL_STEM": "pdf"}), pdf)
+
+    def test_shigyr_stem_is_policy_dsl(self) -> None:
+        cases = [
+            ("шигырь", "{{SHIGYR_STEM|antat=şiğır|pdf=şiğer}}", "şiğır", "şiğer"),
+            (
+                "шигырь-шигри",
+                "{{SHIGYR_STEM|antat=şiğır|pdf=şiğer}}-şiğri",
+                "şiğır-şiğri",
+                "şiğer-şiğri",
+            ),
+        ]
+
+        for word, expected_dsl, antat, pdf in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "N")
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl), antat)
+                self.assertEqual(resolve_dsl(dsl, {"SHIGYR_STEM": "pdf"}), pdf)
 
     def test_kagaz_and_mashgul_stems_are_policy_dsl(self) -> None:
         cases = [

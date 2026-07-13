@@ -132,6 +132,11 @@ FIGYL_STEM_RULE = RuleDefinition(
     options=(("antat", "fiğıl"), ("pdf", "fiğel")),
     default_option="antat",
 )
+SHIGYR_STEM_RULE = RuleDefinition(
+    rule_id="SHIGYR_STEM",
+    options=(("antat", "şiğır"), ("pdf", "şiğer")),
+    default_option="antat",
+)
 IJTIMAGIY_STEM_RULE = RuleDefinition(
     rule_id="IJTIMAGIY_STEM",
     options=(("antat", "ictimağıy"), ("pdf", "ictimaği")),
@@ -225,6 +230,7 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         MUSIC_Y_RULE.rule_id: MUSIC_Y_RULE,
         MOSTAQIL_RULE.rule_id: MOSTAQIL_RULE,
         FIGYL_STEM_RULE.rule_id: FIGYL_STEM_RULE,
+        SHIGYR_STEM_RULE.rule_id: SHIGYR_STEM_RULE,
         IJTIMAGIY_STEM_RULE.rule_id: IJTIMAGIY_STEM_RULE,
         KAGAZ_STEM_RULE.rule_id: KAGAZ_STEM_RULE,
         MASHGUL_STEM_RULE.rule_id: MASHGUL_STEM_RULE,
@@ -254,6 +260,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "MUSIC_Y": "long",
         "MOSTAQIL": "antat",
         "FIGYL_STEM": "antat",
+        "SHIGYR_STEM": "antat",
         "IJTIMAGIY_STEM": "antat",
         "KAGAZ_STEM": "antat",
         "MASHGUL_STEM": "antat",
@@ -283,6 +290,7 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "MUSIC_Y": "long",
         "MOSTAQIL": "pdf",
         "FIGYL_STEM": "pdf",
+        "SHIGYR_STEM": "pdf",
         "IJTIMAGIY_STEM": "pdf",
         "KAGAZ_STEM": "pdf",
         "MASHGUL_STEM": "pdf",
