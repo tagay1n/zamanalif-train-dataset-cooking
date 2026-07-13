@@ -11,6 +11,7 @@ from urllib.request import Request, urlopen
 
 from tatar_preannotator.manual_preannotate import tokenize_sentence
 from tatar_preannotator.manual_preannotate_web import (
+    HTML_PAGE,
     ManualWebReviewService,
     _make_server,
 )
@@ -130,6 +131,9 @@ class ManualPreannotateWebTests(unittest.TestCase):
                 server.server_close()
                 service.close()
                 thread.join(timeout=2)
+
+    def test_token_row_click_does_not_swallow_form_control_changes(self) -> None:
+        self.assertIn('closest("input,label,button")', HTML_PAGE)
 
 
 def _get_json(url: str) -> dict:

@@ -327,7 +327,11 @@ function renderTokens() {
   current.tokens.forEach((token, index) => {
     const row = document.createElement("tr");
     row.className = index === selectedToken ? "selected" : "";
-    row.addEventListener("click", () => { selectedToken = index; renderTokens(); });
+    row.addEventListener("click", event => {
+      if (event.target instanceof Element && event.target.closest("input,label,button")) return;
+      selectedToken = index;
+      renderTokens();
+    });
     row.innerHTML = `
       <td>${index + 1}</td>
       <td><strong>${escapeHtml(token.text)}</strong> <span class="pill ${token.label.toLowerCase()}">${token.label}</span></td>
