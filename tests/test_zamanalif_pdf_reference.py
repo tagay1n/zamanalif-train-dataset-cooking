@@ -362,9 +362,9 @@ PDF_GENERATED_WORD_CASES = [
     ('бду', 'bdu', 'N'),
     ('белдерелгән', 'belderelgän', 'N'),
     ('белдереп', 'belderep', 'N'),
-    ('белдергән', 'belderğän', 'N'),
-    ('белдергәндә', 'belderğändä', 'N'),
-    ('белдергәнгә', 'belderğängä', 'N'),
+    ('белдергән', 'beldergän', 'N'),  # PDF: belderğän; align front-vowel г with g.
+    ('белдергәндә', 'beldergändä', 'N'),  # PDF: belderğändä; align front-vowel г with g.
+    ('белдергәнгә', 'beldergängä', 'N'),  # PDF: belderğängä; align front-vowel г with g.
     ('белдерә', 'belderä', 'N'),
     ('белдерәбез', 'belderäbez', 'N'),
     ('белдерү', 'belderü', 'N'),
@@ -623,7 +623,7 @@ PDF_GENERATED_WORD_CASES = [
     ('эшли', 'eşli', 'N'),
     ('эшләгәндә', 'eşlägändä', 'N'),
     ('эшләпә', 'eşläpä', 'N'),
-    ('эшләргә', 'eşlärğä', 'N'),
+    ('эшләргә', 'eşlärgä', 'N'),  # PDF: eşlärğä; align front-vowel г with g.
     ('эшче', 'eşçe', 'N'),
     ('фал', 'fal', 'N'),
     ('фамилия', 'familiä', 'N'),
@@ -843,7 +843,7 @@ PDF_GENERATED_WORD_CASES = [
     ('ишетелми', 'işetelmi', 'N'),
     ('ишетелсә', 'işetelsä', 'N'),
     ('ишетелә', 'işetelä', 'N'),
-    ('ишетелгән', 'işetelğän', 'N'),
+    ('ишетелгән', 'işetelgän', 'N'),  # PDF: işetelğän; align front-vowel г with g.
     ('иштуган', 'iştuğan', 'N'),
     ('жандарм', 'jandarm', 'N'),
     ('жетон', 'jeton', 'N'),
@@ -890,8 +890,8 @@ PDF_GENERATED_WORD_CASES = [
     ('килешендә', 'kileşendä', 'N'),
     ('килешүләрдә', 'kileşülärdä', 'N'),
     ('килешүче', 'kileşüçe', 'N'),
-    ('килгән', 'kilğän', 'N'),
-    ('килгәндә', 'kilğändä', 'N'),
+    ('килгән', 'kilgän', 'N'),  # PDF: kilğän; align front-vowel г with g.
+    ('килгәндә', 'kilgändä', 'N'),  # PDF: kilğändä; align front-vowel г with g.
     ('килмәде', 'kilmäde', 'N'),
     ('килограмм', 'kilogramm', 'RL'),
     ('киловатт-сәгәт', 'kilovatt-säğät', 'RL'),
