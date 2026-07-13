@@ -26,6 +26,7 @@ from tatar_preannotator.conversion import (
     MUSIC_Y_RULE,
     MOSTAQIL_RULE,
     NATIVE_UW_RULE,
+    OU_LOANWORD_RULE,
     PROJECT_E_RULE,
     RL_FINAL_KA_RULE,
     RUS_JOTATED_SOFTENING_RULE,
@@ -343,6 +344,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_russian_jotated_softening_choices(word, compact, label)
     result = result_with_loanword_final_ka_choices(word, result, label)
     result = result_with_kts_after_k_choices(word, result, label)
+    result = result_with_ou_loanword_choices(word, result, label)
     result = result_with_project_e_choices(word, result, label)
     result = result_with_music_y_choices(word, result, label)
     result = result_with_final_double_l_choices(word, result)
@@ -434,6 +436,35 @@ def result_with_kts_after_k_choices(
         for match in re.finditer("ks", segment.text, flags=re.IGNORECASE):
             _append_literal_segment(segments, segment.text[start : match.start() + 1])
             segments.append(Choice(KTS_AFTER_K_RULE.rule_id, KTS_AFTER_K_RULE.options))
+            start = match.end()
+        _append_literal_segment(segments, segment.text[start:])
+    return ConversionResult(tuple(segments))
+
+
+def result_with_ou_loanword_choices(
+    source: str, result: ConversionResult, label: str
+) -> ConversionResult:
+    """Annotate loanword Cyrillic ``оу`` as direct ``ou`` vs source-style ``ow``."""
+    if label != "RL":
+        return result
+    source_count = source.casefold().count("оу")
+    output_count = sum(
+        segment.text.casefold().count("ou")
+        for segment in result.segments
+        if isinstance(segment, Literal)
+    )
+    if source_count == 0 or source_count != output_count:
+        return result
+
+    segments: list[Literal | Choice] = []
+    for segment in result.segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        start = 0
+        for match in re.finditer("ou", segment.text, flags=re.IGNORECASE):
+            _append_literal_segment(segments, segment.text[start : match.start() + 1])
+            segments.append(Choice(OU_LOANWORD_RULE.rule_id, OU_LOANWORD_RULE.options))
             start = match.end()
         _append_literal_segment(segments, segment.text[start:])
     return ConversionResult(tuple(segments))
