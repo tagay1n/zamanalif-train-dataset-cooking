@@ -3373,7 +3373,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('колбаса', 'kolbasa', 'SAUSAGE', 7405),
     ('колга', 'qolğa', 'POLE I', 6373),
     ('колгалар', 'qolğalar', 'POLE I', 6373),
-    ('колготки', 'qolğotki', 'TIGHTS', 8652),
+    ('колготки', 'kolgotki', 'TIGHTS', 8652),  # ANTAT: qolğotki; keep Russian loanword graphic к/г -> k/g.
     ('колея', 'koleya', 'RUT', 7286),
     ('колларча', 'qollarça', 'CRINGE', 2199),
     ('коллегия', 'kollegiyä', 'BOARD II', 1024),
