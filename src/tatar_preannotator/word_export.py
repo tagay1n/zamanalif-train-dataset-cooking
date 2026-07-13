@@ -1307,6 +1307,8 @@ NATIVE_FRAGMENT_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("табигать", "tabiğat", "tabiğät"),
     ("җәмгыят", "cämğıyat", "cämğiyät"),
     ("җинаять", "cinayat", "cinayät"),
+    ("җәмәгать", "cämäğat", "cämäğät"),
+    ("мөрәҗәгать", "möräcäğat", "möräcäğät"),
 )
 
 

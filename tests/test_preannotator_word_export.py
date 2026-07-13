@@ -694,6 +694,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("сәгать", "säğät"),
             ("сәнгате", "sänğäte"),
             ("табигатьтән", "tabiğättän"),
+            ("җәмәгать", "cämäğät"),
+            ("мөрәҗәгать", "möräcäğät"),
             ("җәмгыять", "cämğiyät"),
             ("җәмгыяте", "cämğiyäte"),
             ("җәмгыятьтәге", "cämğiyättäge"),
