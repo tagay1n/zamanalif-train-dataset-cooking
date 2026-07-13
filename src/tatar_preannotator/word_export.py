@@ -560,8 +560,9 @@ def result_with_mostaqil_choices(
             segments.append(segment)
             continue
         text = segment.text
-        if not changed and text.startswith("möstäkıyl"):
-            suffix = text[len("möstäkıyl") :]
+        if not changed and text.startswith(("möstäkıyl", "möstäqıyl")):
+            stem = "möstäkıyl" if text.startswith("möstäkıyl") else "möstäqıyl"
+            suffix = text[len(stem) :]
             _append_literal_segment(segments, "möstä")
             antat_text = "qıyl" + ZAMANALIF_APOSTROPHE if suffix else "qıyl"
             segments.append(
@@ -1235,6 +1236,7 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("гарә", "ğarä", "ğärä"),
     ("гарип", "ğarip", "ğärip"),
     ("гарь", "ğar", "ğär"),
+    ("гаск", "ğask", "ğäsk"),
     ("галәм", "ğaläm", "ğäläm"),
     ("гамь", "ğam", "ğäm"),
     ("ганимәт", "ğanimät", "ğänimät"),
@@ -1426,6 +1428,11 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
             return "q"
         if suffix.startswith("кеч"):
             return "k"
+        right_context = _right_vowel_context(word, index)
+        if right_context == "front":
+            return "k"
+        if right_context == "back":
+            return "q"
         context = _local_vowel_context(word, index)
         if context == "front":
             return "k"

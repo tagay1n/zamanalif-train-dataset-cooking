@@ -163,7 +163,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
 
         words = [task["data"]["cyrl_word"] for task in result.tasks]
-        self.assertEqual(words, ["роль", "сыр", "шофёр"])
+        self.assertEqual(words, ["роль", "сыр", "шофёр", "щетка"])
         by_word = {task["data"]["cyrl_word"]: task["data"] for task in result.tasks}
         self.assertEqual(by_word["сыр"]["auto_zamanalif"], "sıyr")
         self.assertEqual(
@@ -174,6 +174,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             by_word["шофёр"]["auto_zamanalif"],
             "şof{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}or",
         )
+        self.assertEqual(by_word["щетка"]["auto_zamanalif"], "şçetka")
         self.assertIn("<b>ы</b> -> <b>ıy</b>", by_word["сыр"]["hints_html"])
         self.assertIn("<b>ь</b> -> <b>ʼ</b>", by_word["роль"]["hints_html"])
 
@@ -221,6 +222,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("проект", "RL"), "proyekt")
         self.assertEqual(convert_for_annotation("яңа", "N"), "yaña")
         self.assertEqual(convert_for_annotation("канат", " RL"), "kanat")
+        self.assertEqual(convert_for_annotation("саескан", "N"), "sayısqan")
+        self.assertEqual(convert_for_annotation("тавышкиметкеч", "N"), "tawışkimetkeç")
         self.assertEqual(
             convert_for_annotation_dsl("фамилия", "N"),
             "famili{{IYA|compact=ä|explicit=yä}}",
