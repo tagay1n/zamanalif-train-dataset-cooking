@@ -142,6 +142,30 @@ array stays on one line for readability:
 }
 ```
 
+### Manual repair of unprocessable rows
+
+Rows that remain `unprocessable` can be repaired interactively:
+
+```bash
+python -m tatar_preannotator manual-preannotate
+```
+
+The command reads `data/zamanalif.sqlite`, shows one failed sentence at a time,
+and saves accepted rows back into `preannotation_state` with
+`annotated_by_model = "manual-cli"`. Use `--limit 10` for a short pilot run.
+
+At the sentence prompt:
+
+- `Enter`, `y`, or `t`: mark mostly Tatar and review word labels;
+- `n`: mark non-Tatar and save `tokens=[]`;
+- `s`: skip;
+- `q`: quit.
+
+During token review, labels are prefilled from reviewed words, existing Gemini
+majorities, and conservative heuristics. Press `Enter` to accept and save, or
+edit with commands such as `3=RL`, `2-5=N`, `all=U`, and `3h` to toggle a
+homonym flag on an `RL` token.
+
 ## Antat Dictionary Reference
 
 Download the Antat English-Tatar dictionary reference into the shared SQLite

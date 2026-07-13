@@ -14,6 +14,7 @@ from .antat_reference import download_antat_reference
 from .config import load_config
 from .gemini_client import GoogleGeminiClient
 from .labelstudio_import import LabelStudioImportError, import_labelstudio_annotations
+from .manual_preannotate import ManualPreannotateError, run_manual_preannotation
 from .training_export import TrainingExportError, export_training_dataset
 from .word_export import (
     export_labelstudio_tasks_from_db,
@@ -125,6 +126,14 @@ def main(argv: list[str] | None = None) -> int:
     antat.add_argument("--resume", action="store_true", help="Continue existing Antat reference rows.")
     antat.add_argument("--force", action="store_true", help="Replace existing Antat reference tables.")
 
+    manual = subparsers.add_parser(
+        "manual-preannotate",
+        help="Interactively repair unprocessable sentence preannotations.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    manual.add_argument("--db", default=DEFAULT_DB_PATH, help="SQLite application database.")
+    manual.add_argument("--limit", type=int, help="Maximum unprocessable rows to review.")
+
     args = parser.parse_args(argv)
     if args.command == "annotate":
         return _annotate(args)
@@ -136,6 +145,8 @@ def main(argv: list[str] | None = None) -> int:
         return _annotation_import(args)
     if args.command == "download-antat-reference":
         return _download_antat_reference(args)
+    if args.command == "manual-preannotate":
+        return _manual_preannotate(args)
     raise AssertionError(args.command)
 
 
@@ -273,6 +284,29 @@ def _download_antat_reference(args: argparse.Namespace) -> int:
         f"aligned={summary.aligned_rows} "
         f"mismatches={summary.mismatch_rows} "
         f"missing_side={summary.missing_side_rows}"
+    )
+    return 0
+
+
+def _manual_preannotate(args: argparse.Namespace) -> int:
+    if args.limit is not None and args.limit < 1:
+        raise SystemExit("--limit must be positive")
+    try:
+        summary = run_manual_preannotation(args.db, limit=args.limit)
+    except KeyboardInterrupt:
+        print("\nmanual preannotation interrupted; saved rows remain saved.")
+        return 130
+    except (OSError, sqlite3.Error, ManualPreannotateError) as exc:
+        print(f"manual preannotation failed: {exc}")
+        return 1
+
+    print(
+        "manual preannotation complete: "
+        f"reviewed={summary.reviewed} "
+        f"tatar={summary.saved_tatar} "
+        f"non_tatar={summary.saved_non_tatar} "
+        f"skipped={summary.skipped} "
+        f"remaining={summary.remaining}"
     )
     return 0
 

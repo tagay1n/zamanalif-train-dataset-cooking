@@ -9,6 +9,7 @@ from unittest.mock import patch
 
 from tatar_preannotator.annotate import AnnotateSummary
 from tatar_preannotator.cli import ShutdownController, main
+from tatar_preannotator.manual_preannotate import ManualPreannotateSummary
 
 
 class PreannotatorCliTests(unittest.TestCase):
@@ -24,6 +25,49 @@ class PreannotatorCliTests(unittest.TestCase):
         self.assertIn("config.yaml", help_text)
         self.assertIn("--model", help_text)
         self.assertIn("--retry-unprocessable", help_text)
+
+    def test_manual_preannotate_help_shows_default_db(self) -> None:
+        output = StringIO()
+        with self.assertRaises(SystemExit), redirect_stdout(output):
+            main(["manual-preannotate", "--help"])
+
+        help_text = output.getvalue()
+        self.assertIn("--db", help_text)
+        self.assertIn("data/zamanalif.sqlite", help_text)
+        self.assertIn("--limit", help_text)
+
+    def test_manual_preannotate_cli_prints_summary(self) -> None:
+        with patch(
+            "tatar_preannotator.cli.run_manual_preannotation",
+            return_value=ManualPreannotateSummary(
+                reviewed=2,
+                saved_tatar=1,
+                saved_non_tatar=1,
+                skipped=3,
+                remaining=429,
+            ),
+        ) as run_manual:
+            output = StringIO()
+            with redirect_stdout(output):
+                exit_code = main(["manual-preannotate", "--db", "custom.sqlite", "--limit", "5"])
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(run_manual.call_args.args[0], "custom.sqlite")
+        self.assertEqual(run_manual.call_args.kwargs["limit"], 5)
+        self.assertIn("reviewed=2", output.getvalue())
+        self.assertIn("remaining=429", output.getvalue())
+
+    def test_manual_preannotate_ctrl_c_exits_cleanly(self) -> None:
+        with patch(
+            "tatar_preannotator.cli.run_manual_preannotation",
+            side_effect=KeyboardInterrupt,
+        ):
+            output = StringIO()
+            with redirect_stdout(output):
+                exit_code = main(["manual-preannotate"])
+
+        self.assertEqual(exit_code, 130)
+        self.assertIn("interrupted", output.getvalue())
 
     def test_fatal_annotation_error_is_printed_and_exits_nonzero(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
