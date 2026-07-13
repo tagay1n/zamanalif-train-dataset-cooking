@@ -1000,6 +1000,19 @@ class PreannotatorWordExportTests(unittest.TestCase):
             "vestibʼül",
         )
 
+    def test_russian_soft_sign_composes_with_final_ka_policy(self) -> None:
+        dsl = convert_for_annotation_dsl("геральдика", "RL")
+
+        self.assertEqual(
+            dsl,
+            "geral{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}di{{RL_FINAL_KA|suffix=q|stem=k}}a",
+        )
+        self.assertEqual(resolve_dsl(dsl), "geralʼdiqa")
+        self.assertEqual(
+            resolve_dsl(dsl, {"RUS_SOFT_SIGN": "preserve", "RL_FINAL_KA": "stem"}),
+            "geralʼdika",
+        )
+
     def test_native_miyaw_stem_is_deterministic(self) -> None:
         cases = [
             ("мияубикә", "miyawbikä"),

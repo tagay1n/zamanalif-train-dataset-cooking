@@ -336,6 +336,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_russian_soft_sign_choices(word, compact, label)
     if result.has_choices:
         result = result_with_russian_bu_front_choices(word, result, label)
+        result = result_with_loanword_final_ka_choices(word, result, label)
         return result_with_music_y_choices(word, result, label)
     result = result_with_cilquar_native_uw_choices(word, compact, label)
     if result.has_choices:
@@ -854,7 +855,7 @@ def result_with_loanword_final_ka_choices(
 
     segments: list[Literal | Choice] = []
     changed = False
-    for segment in result.segments:
+    for segment in _merge_adjacent_literals(result).segments:
         if isinstance(segment, Choice):
             segments.append(segment)
             continue
