@@ -859,7 +859,7 @@ PDF_GENERATED_WORD_CASES = [
     ('камилләштерүгә', 'kamilläşterügä', 'N'),
     ('камзул', 'kamzul', 'N'),
     ('капиталистик', 'kapitalistik', 'RL'),
-    ('карават', 'karawat', 'N'),
+    ('карават', 'qarawat', 'N'),  # PDF: karawat; keep native k/q rule for this integrated loan.
     ('карел-фин', 'karel-fin', 'RL'),
     ('каз', 'kaz', 'N'),
     ('казжилстрой', 'kazjilstroy', 'RL'),
