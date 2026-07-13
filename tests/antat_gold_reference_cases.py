@@ -1939,7 +1939,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('драма', 'drama', 'DRAMA', 2742),
     ('драмалаштырырга', 'dramalaştırırğa', 'DRAMATIZE', 2746),
     ('драматург', 'dramaturg', 'DRAMATIST', 2745),
-    ('драп-велюр', 'drap-welyur', 'VELOURS', 9153),
+    ('драп-велюр', 'drap-velyur', 'VELOURS', 9153),  # ANTAT: drap-welyur; keep loanword v and RL ю -> yu.
     ('драпировка', 'drapirovka', 'DRAPERY', 2747),
     ('дуамал', 'duwamal', 'ADDLE', 101),
     ('дублёр', 'dublʼor', 'UNDERSTUDY', 8916),
