@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-# Generated from data/zamanalif.sqlite by tatar_preannotator.antat_gold.
+# Committed curated ANTAT gold fixture.
 # Each tuple is: (cyrillic_word, expected_zamanalif, headword, align_id).
 # Skipped non-Zamanalif tokens: 5.
 
