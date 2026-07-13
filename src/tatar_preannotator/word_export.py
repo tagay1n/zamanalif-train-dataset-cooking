@@ -48,6 +48,7 @@ from tatar_preannotator.conversion import (
 from zamanalif_selector.features import BACK_VOWELS, CONDITIONAL_LETTERS, FRONT_VOWELS
 
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
+TATAR_SPECIFIC_PART_LETTERS = frozenset("әөүҗңһ")
 RL_REVIEW_LETTERS = frozenset("ёыьъщ")
 ALLOWED_ZAMANALIF = frozenset(
     "abcdefghijklmnopqrstuvwxyz"
@@ -1420,6 +1421,27 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
 
 
 def _convert_known_label(word: str, label: str) -> str:
+    if "-" in word:
+        parts = word.split("-")
+        part_labels = [_guess_hyphen_part_label(part, label) for part in parts]
+        if all(part_label == label for part_label in part_labels):
+            return _convert_known_label_without_hyphen(word, label)
+        return "-".join(
+            _convert_known_label_without_hyphen(part, part_label)
+            if part
+            else ""
+            for part, part_label in zip(parts, part_labels, strict=True)
+        )
+    return _convert_known_label_without_hyphen(word, label)
+
+
+def _guess_hyphen_part_label(part: str, parent_label: str) -> str:
+    if any(char in TATAR_SPECIFIC_PART_LETTERS for char in part.casefold()):
+        return "N"
+    return parent_label
+
+
+def _convert_known_label_without_hyphen(word: str, label: str) -> str:
     converted: list[str] = []
     index = 0
     while index < len(word):
@@ -1576,6 +1598,7 @@ NATIVE_FRAGMENT_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("канәгать", "qanäğat", "qanäğät"),
     ("риваять", "riwayat", "riwayät"),
     ("сәгать", "säğat", "säğät"),
+    ("сәгәт", "sägät", "säğät"),
     ("сәнгат", "sänğat", "sänğät"),
     ("табигать", "tabiğat", "tabiğät"),
     ("җәмгыят", "cämğıyat", "cämğiyät"),

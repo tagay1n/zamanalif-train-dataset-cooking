@@ -600,6 +600,17 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "RL"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "RL"), expected)
 
+    def test_hyphenated_loanwords_guess_native_tatar_parts(self) -> None:
+        cases = [
+            ("киловатт-сәгәт", "kilovatt-säğät"),
+            ("фәнни-публицистик", "fänni-publitsistik"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "RL"), expected)
+                self.assertEqual(resolve_dsl(convert_for_annotation_dsl(word, "RL")), expected)
+
     def test_loanword_final_ka_is_policy_dsl(self) -> None:
         cases = [
             ("булавка", "bulav{{RL_FINAL_KA|suffix=q|stem=k}}a", "bulavqa", "bulavka"),
