@@ -2658,7 +2658,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('кабатларга', 'qabatlarğa', 'ECHO', 2845),
     ('кабатлау', 'qabatlaw', 'BRUSH-UP', 1231),
     ('кабаттан', 'qabattan', 'AFRESH', 170),
-    ('кабахәт', 'qabäxät', 'MEAN I', 5381),
+    ('кабахәт', 'qabaxät', 'MEAN I', 5381),  # ANTAT/PDF harmonized variant exists; keep Cyrillic vowel disharmony.
     ('кабель', 'kabel', 'CABLE', 1343),
     ('кабер', 'qaber', 'GRAVESTONE', 3944),
     ('каберлек', 'qaberlek', 'CEMETERY', 1480),
