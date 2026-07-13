@@ -563,6 +563,12 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("гасыр", "N"), "ğasır")
         self.assertEqual(convert_for_annotation("гөл", "N"), "göl")
 
+    def test_native_k_g_use_kich_suffix_context(self) -> None:
+        self.assertEqual(convert_for_annotation("ерткыч", "N"), "yırtqıç")
+        self.assertEqual(convert_for_annotation("ачкыч", "N"), "açqıç")
+        self.assertEqual(convert_for_annotation("күрсәткеч", "N"), "kürsätkeç")
+        self.assertEqual(convert_for_annotation("хәлиткеч", "N"), "xälitkeç")
+
     def test_loanword_g_stems_use_plain_g(self) -> None:
         self.assertEqual(convert_for_annotation("гараж", "RL"), "garaj")
         self.assertEqual(convert_for_annotation("газет", "RL"), "gazet")

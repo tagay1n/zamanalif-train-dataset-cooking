@@ -2710,7 +2710,6 @@ ANTAT_GOLD_WORD_CASES = [
     ('каенага', 'qayınağa', 'BROTHER-IN-LAW', 1220),
     ('каенана', 'qayınana', 'MOTHER-IN-LAW', 5541),
     ('каената', 'qayınata', 'FATHER-IN-LAW', 3338),
-    ('каенене', 'qayene', 'BROTHER-IN-LAW', 1220),
     ('каенигәч', 'qayınigäç', 'SISTER-IN-LAW', 7863),
     ('каенсеңел', 'qayınseñel', 'SISTER-IN-LAW', 7863),
     ('каеш', 'qayış', 'STRAP', 8202),

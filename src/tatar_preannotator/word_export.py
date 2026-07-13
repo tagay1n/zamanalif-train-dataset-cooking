@@ -1366,6 +1366,11 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
             return "ğ"
         return "g" if harmony == "front_only" else "ğ" if harmony == "back_only" else ""
     if char == "к":
+        suffix = word[index:]
+        if suffix.startswith("кыч"):
+            return "q"
+        if suffix.startswith("кеч"):
+            return "k"
         context = _local_vowel_context(word, index)
         if context == "front":
             return "k"
