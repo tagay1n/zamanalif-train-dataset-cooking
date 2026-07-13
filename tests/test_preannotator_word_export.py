@@ -1019,6 +1019,22 @@ class PreannotatorWordExportTests(unittest.TestCase):
             "geralʼdika",
         )
 
+    def test_russian_jotated_softening_composes_with_final_soft_sign(self) -> None:
+        dsl = convert_for_annotation_dsl("князь", "RL")
+
+        self.assertEqual(
+            dsl,
+            "kn{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}az{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}",
+        )
+        self.assertEqual(resolve_dsl(dsl), "knyazʼ")
+        self.assertEqual(
+            resolve_dsl(
+                dsl,
+                {"RUS_JOTATED_SOFTENING": "apostrophe", "RUS_SOFT_SIGN": "omit"},
+            ),
+            "knʼaz",
+        )
+
     def test_native_miyaw_stem_is_deterministic(self) -> None:
         cases = [
             ("мияубикә", "miyawbikä"),

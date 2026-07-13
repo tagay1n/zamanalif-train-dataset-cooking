@@ -336,6 +336,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_russian_soft_sign_choices(word, compact, label)
     if result.has_choices:
         result = result_with_russian_bu_front_choices(word, result, label)
+        result = result_with_russian_jotated_softening_result(word, result, label)
         result = result_with_loanword_final_ka_choices(word, result, label)
         return result_with_music_y_choices(word, result, label)
     result = result_with_cilquar_native_uw_choices(word, compact, label)
@@ -763,6 +764,56 @@ def result_with_russian_bu_front_choices(
             start = match.end()
             changed = True
         _append_literal_segment(segments, segment.text[start:])
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+def result_with_russian_jotated_softening_result(
+    source: str, result: ConversionResult, label: str
+) -> ConversionResult:
+    """Compose consonant + RL ``я/ю/ё`` softening with existing sign choices."""
+    if label != "RL" or not any(char in source for char in "яюё"):
+        return result
+
+    replacements: list[tuple[str, str]] = []
+    for index, char in enumerate(source):
+        if char not in {"я", "ю", "ё"} or not _is_russian_jotated_softening_position(source, index):
+            continue
+        previous = source[index - 1]
+        previous_latin = _char_conversion(previous, source, index - 1, label)
+        latin = _char_conversion(char, source, index, label)
+        if not previous_latin or not latin.startswith("y"):
+            continue
+        replacements.append((previous_latin + latin, previous_latin))
+
+    if not replacements:
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    pending = replacements.copy()
+    for segment in _merge_adjacent_literals(result).segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        start = 0
+        while pending:
+            pattern, prefix = pending[0]
+            match_index = text.find(pattern, start)
+            if match_index < 0:
+                break
+            choice_index = match_index + len(prefix)
+            _append_literal_segment(segments, text[start:choice_index])
+            segments.append(
+                Choice(
+                    RUS_JOTATED_SOFTENING_RULE.rule_id,
+                    RUS_JOTATED_SOFTENING_RULE.options,
+                )
+            )
+            start = choice_index + 1
+            pending.pop(0)
+            changed = True
+        _append_literal_segment(segments, text[start:])
     return ConversionResult(tuple(segments)) if changed else result
 
 
