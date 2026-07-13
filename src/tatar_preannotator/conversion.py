@@ -101,6 +101,11 @@ KTS_AFTER_K_RULE = RuleDefinition(
     options=(("s", "s"), ("ts", "ts")),
     default_option="s",
 )
+FINAL_TS_SUFFIX_RULE = RuleDefinition(
+    rule_id="FINAL_TS_SUFFIX",
+    options=(("stem_s", "s"), ("surface_ts", "ts")),
+    default_option="stem_s",
+)
 OU_LOANWORD_RULE = RuleDefinition(
     rule_id="OU_LOANWORD",
     options=(("plain", "u"), ("source_w", "w")),
@@ -120,6 +125,21 @@ MOSTAQIL_RULE = RuleDefinition(
 FIGYL_STEM_RULE = RuleDefinition(
     rule_id="FIGYL_STEM",
     options=(("antat", "fiğıl"), ("pdf", "fiğel")),
+    default_option="antat",
+)
+IJTIMAGIY_STEM_RULE = RuleDefinition(
+    rule_id="IJTIMAGIY_STEM",
+    options=(("antat", "ictimağıy"), ("pdf", "ictimaği")),
+    default_option="antat",
+)
+KAGAZ_STEM_RULE = RuleDefinition(
+    rule_id="KAGAZ_STEM",
+    options=(("antat", "käğaz"), ("pdf", "qäğäz")),
+    default_option="antat",
+)
+MASHGUL_STEM_RULE = RuleDefinition(
+    rule_id="MASHGUL_STEM",
+    options=(("antat", "mäşğul"), ("pdf", "mäşğül")),
     default_option="antat",
 )
 MONTH_NAME_RULE = RuleDefinition(
@@ -189,10 +209,14 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         IE_GLIDE_RULE.rule_id: IE_GLIDE_RULE,
         PROJECT_E_RULE.rule_id: PROJECT_E_RULE,
         KTS_AFTER_K_RULE.rule_id: KTS_AFTER_K_RULE,
+        FINAL_TS_SUFFIX_RULE.rule_id: FINAL_TS_SUFFIX_RULE,
         OU_LOANWORD_RULE.rule_id: OU_LOANWORD_RULE,
         MUSIC_Y_RULE.rule_id: MUSIC_Y_RULE,
         MOSTAQIL_RULE.rule_id: MOSTAQIL_RULE,
         FIGYL_STEM_RULE.rule_id: FIGYL_STEM_RULE,
+        IJTIMAGIY_STEM_RULE.rule_id: IJTIMAGIY_STEM_RULE,
+        KAGAZ_STEM_RULE.rule_id: KAGAZ_STEM_RULE,
+        MASHGUL_STEM_RULE.rule_id: MASHGUL_STEM_RULE,
         MONTH_NAME_RULE.rule_id: MONTH_NAME_RULE,
         FINAL_DOUBLE_L_RULE.rule_id: FINAL_DOUBLE_L_RULE,
         RUS_SIGN_GLIDE_RULE.rule_id: RUS_SIGN_GLIDE_RULE,
@@ -212,10 +236,14 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "IE_GLIDE": "plain",
         "PROJECT_E": "glide",
         "KTS_AFTER_K": "s",
+        "FINAL_TS_SUFFIX": "stem_s",
         "OU_LOANWORD": "plain",
         "MUSIC_Y": "long",
         "MOSTAQIL": "antat",
         "FIGYL_STEM": "antat",
+        "IJTIMAGIY_STEM": "antat",
+        "KAGAZ_STEM": "antat",
+        "MASHGUL_STEM": "antat",
         "MONTH_NAME": "ordinary",
         "FINAL_DOUBLE_L": "single",
         "RUS_SIGN_GLIDE": "omit",
@@ -235,10 +263,14 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "IE_GLIDE": "plain",
         "PROJECT_E": "glide",
         "KTS_AFTER_K": "s",
+        "FINAL_TS_SUFFIX": "stem_s",
         "OU_LOANWORD": "plain",
         "MUSIC_Y": "long",
         "MOSTAQIL": "pdf",
         "FIGYL_STEM": "pdf",
+        "IJTIMAGIY_STEM": "pdf",
+        "KAGAZ_STEM": "pdf",
+        "MASHGUL_STEM": "pdf",
         "MONTH_NAME": "pdf",
         "FINAL_DOUBLE_L": "double",
         "RUS_SIGN_GLIDE": "omit",

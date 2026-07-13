@@ -82,6 +82,16 @@ class ConditionalConversionDslTests(unittest.TestCase):
     def test_kts_after_k_policy_does_not_cover_other_consonant_ts(self) -> None:
         self.assertEqual(convert_for_annotation_dsl("принцип", "RL"), "prinsip")
 
+    def test_loanword_final_ts_before_tatar_suffix_is_policy_dsl(self) -> None:
+        dsl = convert_for_annotation_dsl("немецләрне", "RL")
+
+        self.assertEqual(dsl, "neme{{FINAL_TS_SUFFIX|stem_s=s|surface_ts=ts}}lärne")
+        self.assertEqual(resolve_dsl(dsl), "nemeslärne")
+        self.assertEqual(resolve_dsl(dsl, {"FINAL_TS_SUFFIX": "surface_ts"}), "nemetslärne")
+
+    def test_final_ts_suffix_policy_does_not_cover_internal_root_ts(self) -> None:
+        self.assertEqual(convert_for_annotation_dsl("лицей", "RL"), "litsey")
+
     def test_loanword_ou_is_policy_dsl(self) -> None:
         dsl = convert_for_annotation_dsl("боулинг", "RL")
 
@@ -143,7 +153,6 @@ class ConditionalConversionDslTests(unittest.TestCase):
             ("җәмәгать", "N"),
             ("шигырь", "N"),
             ("мордва-ерзя", "RL"),
-            ("мәшгуль", "N"),
         ]:
             with self.subTest(word=word, label=label):
                 dsl = convert_for_annotation_dsl(word, label)
@@ -195,6 +204,35 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 self.assertEqual(dsl, expected_dsl)
                 self.assertEqual(resolve_dsl(dsl), antat)
                 self.assertEqual(resolve_dsl(dsl, {"FIGYL_STEM": "pdf"}), pdf)
+
+    def test_kagaz_and_mashgul_stems_are_policy_dsl(self) -> None:
+        cases = [
+            (
+                "иҗтимагый",
+                "{{IJTIMAGIY_STEM|antat=ictimağıy|pdf=ictimaği}}",
+                "ictimağıy",
+                "ictimaği",
+            ),
+            ("кәгазъдә", "{{KAGAZ_STEM|antat=käğaz|pdf=qäğäz}}dä", "käğazdä", "qäğäzdä"),
+            ("мәшгуль", "{{MASHGUL_STEM|antat=mäşğul|pdf=mäşğül}}", "mäşğul", "mäşğül"),
+        ]
+
+        for word, expected_dsl, antat, pdf in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "N")
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl), antat)
+                self.assertEqual(
+                    resolve_dsl(
+                        dsl,
+                        {
+                            "IJTIMAGIY_STEM": "pdf",
+                            "KAGAZ_STEM": "pdf",
+                            "MASHGUL_STEM": "pdf",
+                        },
+                    ),
+                    pdf,
+                )
 
     def test_excluded_disharmony_policy_is_not_registered_as_dsl(self) -> None:
         for word in ["мәшгуль"]:

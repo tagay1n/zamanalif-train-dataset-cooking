@@ -19,11 +19,15 @@ from tatar_preannotator.conversion import (
     ConversionResult,
     DslError,
     FIGYL_STEM_RULE,
+    FINAL_TS_SUFFIX_RULE,
     FINAL_DOUBLE_L_RULE,
     IE_GLIDE_RULE,
+    IJTIMAGIY_STEM_RULE,
     IYA_RULE,
+    KAGAZ_STEM_RULE,
     KTS_AFTER_K_RULE,
     Literal,
+    MASHGUL_STEM_RULE,
     MUSIC_Y_RULE,
     MONTH_NAME_RULE,
     MOSTAQIL_RULE,
@@ -352,11 +356,15 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_russian_jotated_softening_result(word, result, label)
     result = result_with_loanword_final_ka_choices(word, result, label)
     result = result_with_kts_after_k_choices(word, result, label)
+    result = result_with_final_ts_suffix_choices(word, result, label)
     result = result_with_ou_loanword_choices(word, result, label)
     result = result_with_project_e_choices(word, result, label)
     result = result_with_music_y_choices(word, result, label)
     result = result_with_final_double_l_choices(word, result)
     result = result_with_figyl_stem_choices(word, result)
+    result = result_with_ijtimagiy_stem_choices(word, result)
+    result = result_with_kagaz_stem_choices(word, result)
+    result = result_with_mashgul_stem_choices(word, result)
     result = result_with_iya_choices(word, result)
     result = result_with_ie_glide_choices(word, result)
     result = result_with_arabic_initial_ga_choices(word, result, label)
@@ -472,6 +480,89 @@ def result_with_kts_after_k_choices(
             segments.append(Choice(KTS_AFTER_K_RULE.rule_id, KTS_AFTER_K_RULE.options))
             start = match.end()
         _append_literal_segment(segments, segment.text[start:])
+    return ConversionResult(tuple(segments))
+
+
+TATAR_SUFFIXES_AFTER_FINAL_TS: tuple[str, ...] = (
+    "лары",
+    "ләре",
+    "ларга",
+    "ләргә",
+    "ларда",
+    "ләрдә",
+    "лардан",
+    "ләрдән",
+    "ларын",
+    "ләрен",
+    "ларының",
+    "ләренең",
+    "ларны",
+    "ләрне",
+    "лар",
+    "ләр",
+    "ының",
+    "енең",
+    "ында",
+    "ендә",
+    "ыннан",
+    "еннән",
+    "ына",
+    "енә",
+    "ны",
+    "не",
+    "ның",
+    "нең",
+    "дан",
+    "дән",
+    "тан",
+    "тән",
+    "да",
+    "дә",
+    "та",
+    "тә",
+    "га",
+    "гә",
+    "ка",
+    "кә",
+)
+
+
+def result_with_final_ts_suffix_choices(
+    source: str, result: ConversionResult, label: str
+) -> ConversionResult:
+    """Annotate loanword stem-final ``ц`` before Tatar suffix as ``s`` vs ``ts``."""
+    if label != "RL":
+        return result
+    folded = source.casefold()
+    source_count = sum(
+        1
+        for index, char in enumerate(folded)
+        if char == "ц" and folded[index + 1 :].startswith(TATAR_SUFFIXES_AFTER_FINAL_TS)
+    )
+    output_count = sum(
+        segment.text.casefold().count("ts")
+        for segment in result.segments
+        if isinstance(segment, Literal)
+    )
+    if source_count == 0 or source_count > output_count:
+        return result
+
+    segments: list[Literal | Choice] = []
+    remaining = source_count
+    for segment in _merge_adjacent_literals(result).segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        start = 0
+        for match in re.finditer("ts", text, flags=re.IGNORECASE):
+            if remaining <= 0:
+                break
+            _append_literal_segment(segments, text[start : match.start()])
+            segments.append(Choice(FINAL_TS_SUFFIX_RULE.rule_id, FINAL_TS_SUFFIX_RULE.options))
+            start = match.end()
+            remaining -= 1
+        _append_literal_segment(segments, text[start:])
     return ConversionResult(tuple(segments))
 
 
@@ -645,6 +736,69 @@ def result_with_figyl_stem_choices(source: str, result: ConversionResult) -> Con
         if not changed and text.startswith("fiğıl"):
             segments.append(Choice(FIGYL_STEM_RULE.rule_id, FIGYL_STEM_RULE.options))
             _append_literal_segment(segments, text[len("fiğıl") :])
+            changed = True
+            continue
+        _append_literal_segment(segments, text)
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+def result_with_ijtimagiy_stem_choices(source: str, result: ConversionResult) -> ConversionResult:
+    """Annotate attested ``иҗтимагый`` spelling as ANTAT vs PDF policy."""
+    if not source.casefold().startswith("иҗтимагый"):
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in _merge_adjacent_literals(result).segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        if not changed and text.startswith("ictimaği"):
+            segments.append(Choice(IJTIMAGIY_STEM_RULE.rule_id, IJTIMAGIY_STEM_RULE.options))
+            _append_literal_segment(segments, text[len("ictimaği") :])
+            changed = True
+            continue
+        _append_literal_segment(segments, text)
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+def result_with_kagaz_stem_choices(source: str, result: ConversionResult) -> ConversionResult:
+    """Annotate attested ``кәгаз`` stem spelling as ANTAT vs PDF policy."""
+    if not source.casefold().startswith(("кәгазъ", "кәгазь", "кәгаз")):
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in _merge_adjacent_literals(result).segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        if not changed and text.startswith("käğaz"):
+            segments.append(Choice(KAGAZ_STEM_RULE.rule_id, KAGAZ_STEM_RULE.options))
+            _append_literal_segment(segments, text[len("käğaz") :])
+            changed = True
+            continue
+        _append_literal_segment(segments, text)
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+def result_with_mashgul_stem_choices(source: str, result: ConversionResult) -> ConversionResult:
+    """Annotate attested ``мәшгуль`` stem spelling as ANTAT vs PDF policy."""
+    if not source.casefold().startswith("мәшгуль"):
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in _merge_adjacent_literals(result).segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        if not changed and text.startswith("mäşğul"):
+            segments.append(Choice(MASHGUL_STEM_RULE.rule_id, MASHGUL_STEM_RULE.options))
+            _append_literal_segment(segments, text[len("mäşğul") :])
             changed = True
             continue
         _append_literal_segment(segments, text)
@@ -1351,6 +1505,8 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("дикъкать", "diqkat", "diqqat"),
     ("инкыйлаб", "inkıylab", "inqıylab"),
     ("инкар", "inkar", "inqar"),
+    ("иҗтимагый", "ictimağıy", "ictimaği"),
+    ("игътибар", "iğtibar", "iğtibar"),
     ("каек", "qayık", "qayıq"),
     ("каракүл", "qaraqül", "qarakül"),
     ("киная", "kinaya", "kinayä"),
@@ -1359,7 +1515,12 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("лаек", "layık", "layıq"),
     ("мыек", "mıyık", "mıyıq"),
     ("мөкатдәс", "mökatdäs", "möqatdäs"),
+    ("маэмай", "maemay", "maʼmay"),
     ("мәкал", "mäkal", "mäqal"),
+    ("мәкәлә", "mäkälä", "mäqälä"),
+    ("мәхкүл", "mäxkül", "mäxqül"),
+    ("мәгъсум", "mäğsum", "mäğsüm"),
+    ("мәгариф", "mäğarif", "mäğärif"),
     ("мәшәкать", "mäşäkat", "mäşäqat"),
     ("мөгаллим", "möğallim", "möğällim"),
     ("мөгамәлә", "möğamälä", "möğämälä"),
@@ -1381,6 +1542,13 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("хыянәт", "xıyanät", "xıyänät"),
     ("югыйсә", "yuğıysä", "yuğisä"),
     ("шәфкать", "şäfkat", "şäfqat"),
+    ("нигмәт", "nigmät", "niğmät"),
+    ("нәгим", "nägim", "näğim"),
+    ("кәбәхәт", "käbäxät", "qäbäxät"),
+    ("кәдер", "käder", "qäder"),
+    ("кәдими", "kädimi", "qädimi"),
+    ("кәдәр", "kädär", "qädär"),
+    ("көдрәт", "ködrät", "qödrät"),
     ("һичкая", "hiçkaya", "hiçqaya"),
     ("һичкай", "hiçkay", "hiçqay"),
     ("һәркай", "härkay", "härqay"),

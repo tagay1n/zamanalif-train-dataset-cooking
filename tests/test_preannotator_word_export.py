@@ -558,6 +558,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, label), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, label), expected)
 
+    def test_native_hamza_lexical_cases(self) -> None:
+        self.assertEqual(convert_for_annotation("маэмай", "N"), "maʼmay")
+        self.assertEqual(convert_for_annotation_dsl("маэмай", "N"), "maʼmay")
+
     def test_native_k_g_use_local_vowel_context(self) -> None:
         self.assertEqual(convert_for_annotation("китап", "N"), "kitap")
         self.assertEqual(convert_for_annotation("мәктәп", "N"), "mäktäp")
