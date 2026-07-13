@@ -18,7 +18,6 @@ from tatar_preannotator.conversion import (
     Choice,
     ConversionResult,
     DslError,
-    ERZYA_STEM_RULE,
     FIGYL_STEM_RULE,
     FINAL_TS_SUFFIX_RULE,
     FINAL_DOUBLE_L_RULE,
@@ -42,6 +41,7 @@ from tatar_preannotator.conversion import (
     RUS_SOFT_SIGN_RULE,
     RUS_SOFT_SIGN_O_RULE,
     RUS_SIGN_GLIDE_RULE,
+    YA_RULE,
     ZAMANALIF_APOSTROPHE,
     normalize_zamanalif_apostrophes,
     parse_dsl,
@@ -365,7 +365,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_final_double_l_choices(word, result)
     result = result_with_figyl_stem_choices(word, result)
     result = result_with_ijtimagiy_stem_choices(word, result)
-    result = result_with_erzya_stem_choices(word, result)
+    result = result_with_erzya_ya_choices(word, result)
     result = result_with_kagaz_stem_choices(word, result)
     result = result_with_mashgul_stem_choices(word, result)
     result = result_with_iya_choices(word, result)
@@ -766,8 +766,8 @@ def result_with_ijtimagiy_stem_choices(source: str, result: ConversionResult) ->
     return ConversionResult(tuple(segments)) if changed else result
 
 
-def result_with_erzya_stem_choices(source: str, result: ConversionResult) -> ConversionResult:
-    """Annotate ``ерзя`` source-style vs localized spelling."""
+def result_with_erzya_ya_choices(source: str, result: ConversionResult) -> ConversionResult:
+    """Annotate ``ерзя`` with the generic Cyrillic ``я`` policy."""
     if "ерзя" not in source.casefold():
         return result
 
@@ -780,8 +780,8 @@ def result_with_erzya_stem_choices(source: str, result: ConversionResult) -> Con
         text = segment.text
         if not changed and "erzya" in text:
             prefix, suffix = text.split("erzya", 1)
-            _append_literal_segment(segments, prefix)
-            segments.append(Choice(ERZYA_STEM_RULE.rule_id, ERZYA_STEM_RULE.options))
+            _append_literal_segment(segments, prefix + "erz")
+            segments.append(Choice(YA_RULE.rule_id, YA_RULE.options))
             _append_literal_segment(segments, suffix)
             changed = True
             continue

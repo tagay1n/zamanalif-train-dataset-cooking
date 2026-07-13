@@ -80,6 +80,11 @@ IYA_RULE = RuleDefinition(
     default_option="explicit",
     allow_custom_option_text=True,
 )
+YA_RULE = RuleDefinition(
+    rule_id="YA",
+    options=(("ya", "ya"), ("ya_front", "yä"), ("a", "a"), ("ae", "ä")),
+    default_option="ya",
+)
 ARABIC_INITIAL_GA_RULE = RuleDefinition(
     rule_id="ARABIC_INITIAL_GA",
     options=(("plain", "a"), ("front", "ä")),
@@ -131,11 +136,6 @@ IJTIMAGIY_STEM_RULE = RuleDefinition(
     rule_id="IJTIMAGIY_STEM",
     options=(("antat", "ictimağıy"), ("pdf", "ictimaği")),
     default_option="antat",
-)
-ERZYA_STEM_RULE = RuleDefinition(
-    rule_id="ERZYA_STEM",
-    options=(("source", "erzya"), ("localized", "erzä")),
-    default_option="source",
 )
 KAGAZ_STEM_RULE = RuleDefinition(
     rule_id="KAGAZ_STEM",
@@ -210,6 +210,7 @@ NATIVE_UW_RULE = RuleDefinition(
 RULES: Mapping[str, RuleDefinition] = MappingProxyType(
     {
         IYA_RULE.rule_id: IYA_RULE,
+        YA_RULE.rule_id: YA_RULE,
         ARABIC_INITIAL_GA_RULE.rule_id: ARABIC_INITIAL_GA_RULE,
         IE_GLIDE_RULE.rule_id: IE_GLIDE_RULE,
         PROJECT_E_RULE.rule_id: PROJECT_E_RULE,
@@ -220,7 +221,6 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         MOSTAQIL_RULE.rule_id: MOSTAQIL_RULE,
         FIGYL_STEM_RULE.rule_id: FIGYL_STEM_RULE,
         IJTIMAGIY_STEM_RULE.rule_id: IJTIMAGIY_STEM_RULE,
-        ERZYA_STEM_RULE.rule_id: ERZYA_STEM_RULE,
         KAGAZ_STEM_RULE.rule_id: KAGAZ_STEM_RULE,
         MASHGUL_STEM_RULE.rule_id: MASHGUL_STEM_RULE,
         MONTH_NAME_RULE.rule_id: MONTH_NAME_RULE,
@@ -238,6 +238,7 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
 PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
     {
         "IYA": "explicit",
+        "YA": "ya",
         "ARABIC_INITIAL_GA": "plain",
         "IE_GLIDE": "plain",
         "PROJECT_E": "glide",
@@ -248,7 +249,6 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "MOSTAQIL": "antat",
         "FIGYL_STEM": "antat",
         "IJTIMAGIY_STEM": "antat",
-        "ERZYA_STEM": "source",
         "KAGAZ_STEM": "antat",
         "MASHGUL_STEM": "antat",
         "MONTH_NAME": "ordinary",
@@ -266,6 +266,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
 PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
     {
         "IYA": "compact",
+        "YA": "ae",
         "ARABIC_INITIAL_GA": "plain",
         "IE_GLIDE": "plain",
         "PROJECT_E": "glide",
@@ -276,7 +277,6 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "MOSTAQIL": "pdf",
         "FIGYL_STEM": "pdf",
         "IJTIMAGIY_STEM": "pdf",
-        "ERZYA_STEM": "localized",
         "KAGAZ_STEM": "pdf",
         "MASHGUL_STEM": "pdf",
         "MONTH_NAME": "pdf",

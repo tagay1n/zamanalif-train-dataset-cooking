@@ -216,7 +216,7 @@ class ConditionalConversionDslTests(unittest.TestCase):
             (
                 "мордва-ерзя",
                 "RL",
-                "mordva-{{ERZYA_STEM|source=erzya|localized=erzä}}",
+                "mordva-erz{{YA|ya=ya|ya_front=yä|a=a|ae=ä}}",
                 "mordva-erzya",
                 "mordva-erzä",
             ),
@@ -234,7 +234,7 @@ class ConditionalConversionDslTests(unittest.TestCase):
                         dsl,
                         {
                             "IJTIMAGIY_STEM": "pdf",
-                            "ERZYA_STEM": "localized",
+                            "YA": "ae",
                             "KAGAZ_STEM": "pdf",
                             "MASHGUL_STEM": "pdf",
                         },
