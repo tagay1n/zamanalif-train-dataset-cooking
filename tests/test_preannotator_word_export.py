@@ -603,6 +603,16 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
+    def test_native_garep_stem_uses_arabic_origin_g(self) -> None:
+        self.assertEqual(
+            convert_for_annotation("гәрәпчә-татарча", "N"),
+            "ğäräpçä-tatarça",
+        )
+        self.assertEqual(
+            convert_for_annotation_dsl("гәрәпчә-татарча", "N"),
+            "ğäräpçä-tatarça",
+        )
+
     def test_loanword_g_stems_use_plain_g(self) -> None:
         self.assertEqual(convert_for_annotation("гараж", "RL"), "garaj")
         self.assertEqual(convert_for_annotation("газет", "RL"), "gazet")
