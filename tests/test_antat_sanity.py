@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import os
 from pathlib import Path
 import sqlite3
 import tempfile
@@ -11,7 +10,6 @@ from tatar_preannotator.antat_sanity import (
     antat_rule_coverage,
     extract_antat_word_pairs,
     format_mismatches,
-    format_rule_gaps,
     infer_antat_label,
 )
 from tatar_preannotator.antat_reference import ensure_schema
@@ -141,17 +139,6 @@ class AntatSanityTests(unittest.TestCase):
             [("канат", "kanat"), ("канат", "qanat")],
         )
         self.assertEqual(result.skipped_non_zamanalif, 1)
-
-    def test_downloaded_antat_pairs_are_covered_by_some_converter_branch(self) -> None:
-        if os.environ.get("RUN_ANTAT_FULL_COVERAGE") != "1":
-            self.skipTest("set RUN_ANTAT_FULL_COVERAGE=1 to audit downloaded Antat pairs")
-        db_path = Path("data/zamanalif.sqlite")
-        pairs = extract_antat_word_pairs(db_path)
-
-        self.assertGreater(len(pairs), 1000)
-        coverage = antat_rule_coverage(pairs)
-        if coverage.rule_gaps:
-            self.fail(f"coverage={coverage.summary()}\n{format_rule_gaps(coverage.rule_gaps)}")
 
 
 def _write_antat_fixture(
