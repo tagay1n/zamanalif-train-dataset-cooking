@@ -5173,7 +5173,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('револьвер', 'revolʼver', 'PISTOL', 6278),
     ('револьвердан', 'revolʼverdan', 'PISTOL', 6278),
     ('революция', 'revolʼutsiyä', 'REVOLUTION I', 7144),
-    ('регалий', 'reğäliy', 'REGALIA', 6953),
+    ('регалий', 'regaliy', 'REGALIA', 6953),  # ANTAT: reğäliy; keep Russian/international loanword graphic г -> g and а -> a.
     ('регистрация', 'registratsiyä', 'REGISTRATION', 6960),
     ('регистрацияләргә', 'registratsiyälärgä', 'ENROL', 3042),
     ('регистрацияләү', 'registratsiyäläw', 'DETECTION', 2519),
