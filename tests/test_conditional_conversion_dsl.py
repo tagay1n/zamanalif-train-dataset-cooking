@@ -227,17 +227,14 @@ class ConditionalConversionDslTests(unittest.TestCase):
             with self.subTest(word=word):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
 
-    def test_disputed_front_g_suffixes_are_policy_dsl(self) -> None:
-        for word, expected_dsl, default, pdf in [
-            ("биргән", "bir{{FRONT_G_SUFFIX|plain=g|pdf=ğ}}än", "birgän", "birğän"),
-            ("эшләргә", "eşlär{{FRONT_G_SUFFIX|plain=g|pdf=ğ}}ä", "eşlärgä", "eşlärğä"),
+    def test_disputed_front_g_suffixes_remain_plain_without_policy_dsl(self) -> None:
+        for word, expected in [
+            ("биргән", "birgän"),
+            ("эшләргә", "eşlärgä"),
         ]:
             with self.subTest(word=word):
-                dsl = convert_for_annotation_dsl(word, "N")
-                self.assertEqual(convert_for_annotation(word, "N"), default)
-                self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl), default)
-                self.assertEqual(resolve_dsl(dsl, {"FRONT_G_SUFFIX": "pdf"}), pdf)
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertNotIn("{{", convert_for_annotation_dsl(word, "N"))
 
     def test_native_u_before_non_e_vowel_is_policy_dsl(self) -> None:
         cases = [
