@@ -21,6 +21,7 @@ from tatar_preannotator.conversion import (
     FINAL_DOUBLE_L_RULE,
     IE_GLIDE_RULE,
     IYA_RULE,
+    KTS_AFTER_K_RULE,
     Literal,
     MUSIC_Y_RULE,
     MOSTAQIL_RULE,
@@ -341,6 +342,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
         return result_with_ie_glide_choices(word, result_with_iya_choices(word, result))
     result = result_with_russian_jotated_softening_choices(word, compact, label)
     result = result_with_loanword_final_ka_choices(word, result, label)
+    result = result_with_kts_after_k_choices(word, result, label)
     result = result_with_project_e_choices(word, result, label)
     result = result_with_music_y_choices(word, result, label)
     result = result_with_final_double_l_choices(word, result)
@@ -403,6 +405,35 @@ def result_with_ie_glide_choices(source: str, result: ConversionResult) -> Conve
         for match in re.finditer("ie", segment.text, flags=re.IGNORECASE):
             _append_literal_segment(segments, segment.text[start : match.start() + 1])
             segments.append(Choice(IE_GLIDE_RULE.rule_id, IE_GLIDE_RULE.options))
+            start = match.end()
+        _append_literal_segment(segments, segment.text[start:])
+    return ConversionResult(tuple(segments))
+
+
+def result_with_kts_after_k_choices(
+    source: str, result: ConversionResult, label: str
+) -> ConversionResult:
+    """Annotate loanword Cyrillic ``кц`` as an attested ``ks`` vs ``kts`` policy."""
+    if label != "RL":
+        return result
+    source_count = source.casefold().count("кц")
+    output_count = sum(
+        segment.text.casefold().count("ks")
+        for segment in result.segments
+        if isinstance(segment, Literal)
+    )
+    if source_count == 0 or source_count != output_count:
+        return result
+
+    segments: list[Literal | Choice] = []
+    for segment in result.segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        start = 0
+        for match in re.finditer("ks", segment.text, flags=re.IGNORECASE):
+            _append_literal_segment(segments, segment.text[start : match.start() + 1])
+            segments.append(Choice(KTS_AFTER_K_RULE.rule_id, KTS_AFTER_K_RULE.options))
             start = match.end()
         _append_literal_segment(segments, segment.text[start:])
     return ConversionResult(tuple(segments))

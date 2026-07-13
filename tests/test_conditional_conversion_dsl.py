@@ -66,6 +66,22 @@ class ConditionalConversionDslTests(unittest.TestCase):
             with self.subTest(word=word, label=label):
                 self.assertEqual(convert_for_annotation(word, label), expected)
 
+    def test_loanword_kts_after_k_is_policy_dsl(self) -> None:
+        dsl = convert_for_annotation_dsl("ретроспекция", "RL")
+
+        self.assertEqual(
+            dsl,
+            "retrospek{{KTS_AFTER_K|s=s|ts=ts}}i{{IYA|compact=ä|explicit=yä}}",
+        )
+        self.assertEqual(resolve_dsl(dsl), "retrospeksiyä")
+        self.assertEqual(
+            resolve_dsl(dsl, {"KTS_AFTER_K": "ts", "IYA": "explicit"}),
+            "retrospektsiyä",
+        )
+
+    def test_kts_after_k_policy_does_not_cover_other_consonant_ts(self) -> None:
+        self.assertEqual(convert_for_annotation_dsl("принцип", "RL"), "prinsip")
+
     def test_loanword_stems_use_tatar_g_k_suffix_conversion(self) -> None:
         cases = [
             ("законга", "zakonğa"),

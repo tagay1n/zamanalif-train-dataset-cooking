@@ -96,6 +96,11 @@ PROJECT_E_RULE = RuleDefinition(
     options=(("plain", "e"), ("glide", "ye")),
     default_option="glide",
 )
+KTS_AFTER_K_RULE = RuleDefinition(
+    rule_id="KTS_AFTER_K",
+    options=(("s", "s"), ("ts", "ts")),
+    default_option="s",
+)
 MUSIC_Y_RULE = RuleDefinition(
     rule_id="MUSIC_Y",
     options=(("short", "ı"), ("long", "ıy")),
@@ -162,6 +167,7 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         ARABIC_INITIAL_GA_RULE.rule_id: ARABIC_INITIAL_GA_RULE,
         IE_GLIDE_RULE.rule_id: IE_GLIDE_RULE,
         PROJECT_E_RULE.rule_id: PROJECT_E_RULE,
+        KTS_AFTER_K_RULE.rule_id: KTS_AFTER_K_RULE,
         MUSIC_Y_RULE.rule_id: MUSIC_Y_RULE,
         MOSTAQIL_RULE.rule_id: MOSTAQIL_RULE,
         FINAL_DOUBLE_L_RULE.rule_id: FINAL_DOUBLE_L_RULE,
@@ -180,6 +186,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "ARABIC_INITIAL_GA": "plain",
         "IE_GLIDE": "plain",
         "PROJECT_E": "glide",
+        "KTS_AFTER_K": "s",
         "MUSIC_Y": "long",
         "MOSTAQIL": "antat",
         "FINAL_DOUBLE_L": "single",
@@ -198,6 +205,7 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "ARABIC_INITIAL_GA": "plain",
         "IE_GLIDE": "plain",
         "PROJECT_E": "glide",
+        "KTS_AFTER_K": "s",
         "MUSIC_Y": "long",
         "MOSTAQIL": "pdf",
         "FINAL_DOUBLE_L": "double",
