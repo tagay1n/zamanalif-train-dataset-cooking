@@ -241,6 +241,7 @@ HTML_PAGE = r"""<!doctype html>
     h1 { margin: 0; font-size: 22px; }
     .panel { background: #fff; border: 1px solid #d8d8d0; border-radius: 8px; padding: 16px; margin-bottom: 14px; }
     .meta { color: #666; font-size: 14px; }
+    .sample-id { display: inline-block; margin-bottom: 10px; padding: 3px 8px; border-radius: 6px; background: #eef2ff; color: #312e81; font-weight: 700; }
     .sentence { font-size: 20px; line-height: 1.45; white-space: pre-wrap; }
     .error { margin-top: 12px; color: #9a3412; font-size: 13px; border-top: 1px solid #eee; padding-top: 10px; }
     .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
@@ -271,7 +272,7 @@ HTML_PAGE = r"""<!doctype html>
   </header>
 
   <section class="panel">
-    <div class="meta" id="sample-id"></div>
+    <div class="sample-id" id="sample-id"></div>
     <div class="sentence" id="sentence"></div>
     <div class="error" id="last-error" hidden></div>
   </section>
@@ -312,7 +313,7 @@ async function loadItem(index) {
 
 function render() {
   el("progress").textContent = `${current.index + 1}/${current.total} · remaining ${current.remaining}`;
-  el("sample-id").textContent = current.sample.id;
+  el("sample-id").textContent = `Sentence id: ${current.sample.id}`;
   el("sentence").textContent = current.sample.text;
   el("last-error").hidden = !current.sample.last_error;
   el("last-error").textContent = current.sample.last_error || "";
@@ -338,7 +339,7 @@ function renderTokens() {
       <td class="label-cell">${labels.map(label => `
         <label><input type="radio" name="label-${index}" value="${label}" ${token.label === label ? "checked" : ""}> ${label}</label>
       `).join("")}</td>
-      <td><input type="checkbox" class="homonym" ${token.homonym ? "checked" : ""} ${token.label === "RL" ? "" : "disabled"}></td>
+      <td><input type="checkbox" class="homonym" ${token.homonym ? "checked" : ""} ${(token.label === "RL" || token.homonym) ? "" : "disabled"}></td>
     `;
     row.querySelectorAll(`input[name="label-${index}"]`).forEach(input => {
       input.addEventListener("change", () => {

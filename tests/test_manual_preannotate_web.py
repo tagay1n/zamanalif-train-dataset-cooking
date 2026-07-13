@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import Counter
 import json
 from pathlib import Path
 import sqlite3
@@ -9,7 +10,7 @@ import unittest
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
-from tatar_preannotator.manual_preannotate import tokenize_sentence
+from tatar_preannotator.manual_preannotate import build_editable_tokens, tokenize_sentence
 from tatar_preannotator.manual_preannotate_web import (
     HTML_PAGE,
     ManualWebReviewService,
@@ -42,6 +43,22 @@ class ManualPreannotateWebTests(unittest.TestCase):
             ["Мин", "проект", "турында", "әйттем", "һәм", "күрә"],
         )
         self.assertTrue(item["sample"]["suggested_tatar"])
+
+    def test_homonym_suggestion_only_applies_to_rl_tokens(self) -> None:
+        tokens = build_editable_tokens(
+            "Һәм проект.",
+            reviewed={},
+            prior_labels={
+                "һәм": Counter({"N": 3}),
+                "проект": Counter({"RL": 3}),
+            },
+            prior_homonyms=Counter({"һәм": 5, "проект": 5}),
+        )
+
+        self.assertEqual([(token.text, token.label, token.homonym) for token in tokens], [
+            ("Һәм", "N", False),
+            ("проект", "RL", True),
+        ])
 
     def test_service_saves_non_tatar_row(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -134,6 +151,10 @@ class ManualPreannotateWebTests(unittest.TestCase):
 
     def test_token_row_click_does_not_swallow_form_control_changes(self) -> None:
         self.assertIn('closest("input,label,button")', HTML_PAGE)
+
+    def test_page_labels_sentence_id_and_allows_clearing_stale_homonym(self) -> None:
+        self.assertIn("Sentence id:", HTML_PAGE)
+        self.assertIn("token.label === \"RL\" || token.homonym", HTML_PAGE)
 
 
 def _get_json(url: str) -> dict:

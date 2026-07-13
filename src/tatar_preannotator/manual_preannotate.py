@@ -49,14 +49,17 @@ def build_editable_tokens(
     prior_homonyms: Counter[str],
 ) -> list[EditableToken]:
     """Tokenize text and attach suggested labels and homonym flags."""
-    return [
-        EditableToken(
-            text=token,
-            label=_suggest_label(token, reviewed, prior_labels),
-            homonym=_suggest_homonym(token, prior_homonyms),
+    tokens: list[EditableToken] = []
+    for token in tokenize_sentence(text):
+        label = _suggest_label(token, reviewed, prior_labels)
+        tokens.append(
+            EditableToken(
+                text=token,
+                label=label,
+                homonym=label == "RL" and _suggest_homonym(token, prior_homonyms),
+            )
         )
-        for token in tokenize_sentence(text)
-    ]
+    return tokens
 
 
 def _suggest_label(
