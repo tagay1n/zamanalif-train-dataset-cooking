@@ -1716,7 +1716,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('гомумән', 'ğomumän', 'ALL-IN-ALL', 233),
     ('гондола', 'gondola', 'BALLOON-CAR', 705),
     ('гонорар', 'gonorar', 'FEE', 3359),
-    ('горелка', 'ğorelka', 'BURNER', 1294),
+    ('горелка', 'gorelka', 'BURNER', 1294),  # ANTAT: ğorelka; keep Russian loanword graphic г/к -> g/k.
     ('горизонт', 'gorizont', 'HORIZON', 4328),
     ('горизонталь', 'gorizontal', 'HORIZONTAL', 4329),
     ('горилла', 'gorilla', 'GORILLA', 3895),
@@ -7555,7 +7555,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('хозур', 'xozur', 'AIRY', 205),
     ('хозурланырга', 'xozurlanırğa', 'LUXURIATE', 5280),
     ('хозурлык', 'xozurlıq', 'FELICITY', 3367),
-    ('хоккее', 'xokkee', 'ICE-HOCKEY', 4431),
+    ('хоккее', 'xokkeye', 'ICE-HOCKEY', 4431),  # ANTAT: xokkee; keep е after vowel -> ye.
     ('хоккей', 'xokkey', 'HOCKEY', 4288),
     ('хокук', 'xoquq', 'ASSENT', 556),
     ('хокуклары', 'xoquqları', 'ENFRANCHISE', 3017),
