@@ -600,6 +600,19 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "RL"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "RL"), expected)
 
+    def test_loanword_stems_with_native_mixed_suffixes(self) -> None:
+        cases = [
+            ("закон", "zakon"),
+            ("законсыз", "zakonsız"),
+            ("закончалыклар", "zakonçalıqlar"),
+            ("закончалыклары", "zakonçalıqları"),
+        ]
+
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "RL"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "RL"), expected)
+
     def test_hyphenated_loanwords_guess_native_tatar_parts(self) -> None:
         cases = [
             ("киловатт-сәгәт", "kilovatt-säğät"),

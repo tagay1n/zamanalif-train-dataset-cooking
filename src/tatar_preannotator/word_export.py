@@ -1555,6 +1555,10 @@ def _convert_known_label_without_hyphen(word: str, label: str) -> str:
 
 def _apply_loanword_lexical_conventions(word: str, converted: str) -> str:
     folded = word.casefold()
+    for cyrillic_prefix, plain_text, expected_text in LOANWORD_MIXED_SUFFIX_REPLACEMENTS:
+        if not folded.startswith(cyrillic_prefix) or not converted.startswith(plain_text):
+            continue
+        return expected_text + converted[len(plain_text) :]
     if folded.startswith("интриг") and converted.startswith("intriğ"):
         return "intrig" + converted[len("intriğ") :]
     if folded.endswith("лау") and converted.endswith("lau"):
@@ -1562,6 +1566,11 @@ def _apply_loanword_lexical_conventions(word: str, converted: str) -> str:
     if folded.endswith("ләү") and converted.endswith("läü"):
         return converted[:-3] + "läw"
     return converted
+
+
+LOANWORD_MIXED_SUFFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
+    ("закончалык", "zakonçalık", "zakonçalıq"),
+)
 
 
 def _loanword_final_ets_sequence_conversion(
