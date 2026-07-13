@@ -5248,7 +5248,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('робот', 'robot', 'ROBOT', 7195),
     ('роза', 'roza', 'ROSARY', 7216),
     ('розетка', 'rozetka', 'ROSETTE', 7218),
-    ('рококо', 'rokoqo', 'ROCOCO', 7202),
+    ('рококо', 'rokoko', 'ROCOCO', 7202),  # ANTAT: rokoqo; keep Russian/international loanword graphic к -> k.
     ('роле', 'role', 'HEROINE', 4222),
     ('роль', 'rol', 'ENACT', 2981),
     ('роман', 'roman', 'SERIAL', 7697),
