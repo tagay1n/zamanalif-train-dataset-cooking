@@ -1298,6 +1298,7 @@ NATIVE_FRAGMENT_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("кагыйдә", "qağıydä", "qağidä"),
     ("табигый", "tabiğıy", "tabiği"),
     ("васыять", "wasıyat", "wasıyät"),
+    ("елан", "elan", "yılan"),
     ("итагать", "itağat", "itağät"),
     ("канәгать", "qanäğat", "qanäğät"),
     ("риваять", "riwayat", "riwayät"),
@@ -1450,6 +1451,8 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
     if char == "я":
         return _ya_conversion(word, index, "N")
     if char == "ю":
+        if word == "ю":
+            return "yü"
         if index > 0 and word[index - 1] == "и":
             return "yü"
         context = _local_vowel_context(word, index)

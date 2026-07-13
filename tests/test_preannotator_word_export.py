@@ -224,6 +224,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("канат", " RL"), "kanat")
         self.assertEqual(convert_for_annotation("саескан", "N"), "sayısqan")
         self.assertEqual(convert_for_annotation("тавышкиметкеч", "N"), "tawışkimetkeç")
+        self.assertEqual(convert_for_annotation("бакырелан", "N"), "baqıryılan")
+        self.assertEqual(convert_for_annotation("ю", "N"), "yü")
         self.assertEqual(
             convert_for_annotation_dsl("фамилия", "N"),
             "famili{{IYA|compact=ä|explicit=yä}}",
