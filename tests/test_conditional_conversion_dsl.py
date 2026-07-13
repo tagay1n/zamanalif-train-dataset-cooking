@@ -183,6 +183,19 @@ class ConditionalConversionDslTests(unittest.TestCase):
                     pdf,
                 )
 
+    def test_figyl_stem_is_policy_dsl(self) -> None:
+        cases = [
+            ("фигыль", "{{FIGYL_STEM|antat=fiğıl|pdf=fiğel}}", "fiğıl", "fiğel"),
+            ("фигыльләрдә", "{{FIGYL_STEM|antat=fiğıl|pdf=fiğel}}lärdä", "fiğıllärdä", "fiğellärdä"),
+        ]
+
+        for word, expected_dsl, antat, pdf in cases:
+            with self.subTest(word=word):
+                dsl = convert_for_annotation_dsl(word, "N")
+                self.assertEqual(dsl, expected_dsl)
+                self.assertEqual(resolve_dsl(dsl), antat)
+                self.assertEqual(resolve_dsl(dsl, {"FIGYL_STEM": "pdf"}), pdf)
+
     def test_excluded_disharmony_policy_is_not_registered_as_dsl(self) -> None:
         for word in ["мәшгуль"]:
             with self.subTest(word=word):

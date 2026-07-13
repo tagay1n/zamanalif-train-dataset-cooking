@@ -18,6 +18,7 @@ from tatar_preannotator.conversion import (
     Choice,
     ConversionResult,
     DslError,
+    FIGYL_STEM_RULE,
     FINAL_DOUBLE_L_RULE,
     IE_GLIDE_RULE,
     IYA_RULE,
@@ -355,6 +356,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_project_e_choices(word, result, label)
     result = result_with_music_y_choices(word, result, label)
     result = result_with_final_double_l_choices(word, result)
+    result = result_with_figyl_stem_choices(word, result)
     result = result_with_iya_choices(word, result)
     result = result_with_ie_glide_choices(word, result)
     result = result_with_arabic_initial_ga_choices(word, result, label)
@@ -622,6 +624,27 @@ def result_with_month_name_choices(source: str, result: ConversionResult) -> Con
                 )
             )
             _append_literal_segment(segments, text[len(ordinary_stem) :])
+            changed = True
+            continue
+        _append_literal_segment(segments, text)
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+def result_with_figyl_stem_choices(source: str, result: ConversionResult) -> ConversionResult:
+    """Annotate the attested ``фигыль`` stem as ANTAT vs PDF policy."""
+    if not source.casefold().startswith("фигыль"):
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in _merge_adjacent_literals(result).segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        if not changed and text.startswith("fiğıl"):
+            segments.append(Choice(FIGYL_STEM_RULE.rule_id, FIGYL_STEM_RULE.options))
+            _append_literal_segment(segments, text[len("fiğıl") :])
             changed = True
             continue
         _append_literal_segment(segments, text)
