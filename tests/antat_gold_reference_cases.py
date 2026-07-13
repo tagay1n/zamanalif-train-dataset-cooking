@@ -5230,7 +5230,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('ризалыгын', 'rizalığın', 'ENLIST', 3034),
     ('ризалык', 'rizalıq', 'ADMIT', 118),
     ('ризык', 'rizıq', 'EDIBLE', 2859),
-    ('римейк', 'rimyıyq', 'REMAKE', 7011),
+    ('римейк', 'rimeyk', 'REMAKE', 7011),  # ANTAT: rimyıyq; keep loanword графика and ordinary ей -> ey.
     ('рисвайлык', 'riswaylıq', 'IGNOMINY', 4455),
     ('риторика', 'ritorika', 'RHETORIC', 7151),
     ('риф', 'rif', 'SHELF', 7761),
