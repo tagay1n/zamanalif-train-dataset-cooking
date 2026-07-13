@@ -21,6 +21,7 @@ from tatar_preannotator.conversion import (
     FIGYL_STEM_RULE,
     FINAL_TS_SUFFIX_RULE,
     FINAL_DOUBLE_L_RULE,
+    HAMZA_RULE,
     IE_GLIDE_RULE,
     IJTIMAGIY_STEM_RULE,
     IYA_RULE,
@@ -368,6 +369,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_erzya_ya_choices(word, result)
     result = result_with_kagaz_stem_choices(word, result)
     result = result_with_mashgul_stem_choices(word, result)
+    result = result_with_qoran_hamza_choices(word, result)
     result = result_with_iya_choices(word, result)
     result = result_with_ie_glide_choices(word, result)
     result = result_with_arabic_initial_ga_choices(word, result, label)
@@ -825,6 +827,28 @@ def result_with_mashgul_stem_choices(source: str, result: ConversionResult) -> C
         if not changed and text.startswith("mäşğul"):
             segments.append(Choice(MASHGUL_STEM_RULE.rule_id, MASHGUL_STEM_RULE.options))
             _append_literal_segment(segments, text[len("mäşğul") :])
+            changed = True
+            continue
+        _append_literal_segment(segments, text)
+    return ConversionResult(tuple(segments)) if changed else result
+
+
+def result_with_qoran_hamza_choices(source: str, result: ConversionResult) -> ConversionResult:
+    """Annotate ``коръән`` as hamza-preserving vs hamza-omitting policy."""
+    if not source.casefold().startswith("коръән"):
+        return result
+
+    segments: list[Literal | Choice] = []
+    changed = False
+    for segment in _merge_adjacent_literals(result).segments:
+        if isinstance(segment, Choice):
+            segments.append(segment)
+            continue
+        text = segment.text
+        if not changed and text.startswith("qorän"):
+            _append_literal_segment(segments, "qor")
+            segments.append(Choice(HAMZA_RULE.rule_id, HAMZA_RULE.options))
+            _append_literal_segment(segments, text[len("qor") :])
             changed = True
             continue
         _append_literal_segment(segments, text)

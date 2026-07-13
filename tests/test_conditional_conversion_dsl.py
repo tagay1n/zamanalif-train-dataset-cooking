@@ -242,6 +242,13 @@ class ConditionalConversionDslTests(unittest.TestCase):
                     pdf,
                 )
 
+    def test_qoran_hamza_is_policy_dsl(self) -> None:
+        dsl = convert_for_annotation_dsl("коръән", "N")
+
+        self.assertEqual(dsl, "qor{{HAMZA|omit=|preserve=ʼ}}än")
+        self.assertEqual(resolve_dsl(dsl), "qorän")
+        self.assertEqual(resolve_dsl(dsl, {"HAMZA": "preserve"}), "qorʼän")
+
     def test_excluded_disharmony_policy_is_not_registered_as_dsl(self) -> None:
         for word in ["мәшгуль"]:
             with self.subTest(word=word):

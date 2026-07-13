@@ -153,6 +153,11 @@ MONTH_NAME_RULE = RuleDefinition(
     default_option="ordinary",
     allow_custom_option_text=True,
 )
+HAMZA_RULE = RuleDefinition(
+    rule_id="HAMZA",
+    options=(("omit", ""), ("preserve", ZAMANALIF_APOSTROPHE)),
+    default_option="omit",
+)
 FINAL_DOUBLE_L_RULE = RuleDefinition(
     rule_id="FINAL_DOUBLE_L",
     options=(("single", "l"), ("double", "ll")),
@@ -224,6 +229,7 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         KAGAZ_STEM_RULE.rule_id: KAGAZ_STEM_RULE,
         MASHGUL_STEM_RULE.rule_id: MASHGUL_STEM_RULE,
         MONTH_NAME_RULE.rule_id: MONTH_NAME_RULE,
+        HAMZA_RULE.rule_id: HAMZA_RULE,
         FINAL_DOUBLE_L_RULE.rule_id: FINAL_DOUBLE_L_RULE,
         RUS_SIGN_GLIDE_RULE.rule_id: RUS_SIGN_GLIDE_RULE,
         RUS_SIGN_E_RULE.rule_id: RUS_SIGN_E_RULE,
@@ -252,6 +258,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "KAGAZ_STEM": "antat",
         "MASHGUL_STEM": "antat",
         "MONTH_NAME": "ordinary",
+        "HAMZA": "omit",
         "FINAL_DOUBLE_L": "single",
         "RUS_SIGN_GLIDE": "omit",
         "RUS_SIGN_E": "glide",
@@ -280,6 +287,7 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "KAGAZ_STEM": "pdf",
         "MASHGUL_STEM": "pdf",
         "MONTH_NAME": "pdf",
+        "HAMZA": "preserve",
         "FINAL_DOUBLE_L": "double",
         "RUS_SIGN_GLIDE": "omit",
         "RUS_SIGN_E": "glide",
