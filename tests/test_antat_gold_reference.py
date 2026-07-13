@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import importlib.util
-import os
 from pathlib import Path
 import unittest
 
@@ -86,10 +85,6 @@ class AntatGoldReferenceTests(unittest.TestCase):
         self.assertEqual(_all_supported_resolutions(dsl), {"atelye", "atelʼe", "atelʼye"})
 
     def test_generated_antat_word_cases_for_manual_review(self) -> None:
-        if os.environ.get("RUN_ANTAT_GOLD_COVERAGE") != "1":
-            self.skipTest(
-                "set RUN_ANTAT_GOLD_COVERAGE=1 to audit unresolved ANTAT conventions"
-            )
         self.assert_antat_gold_conversions(ANTAT_GOLD_WORD_CASES)
 
 
