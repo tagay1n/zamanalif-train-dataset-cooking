@@ -2238,7 +2238,7 @@ PDF_GENERATED_WORD_CASES = [
     ('әсәр', 'äsär', 'N'),
     ('әсәре', 'äsäre', 'N'),
     ('әсәрләрдә', 'äsärlärdä', 'N'),
-    ('әсәрләрдәге', 'äsärlärdäğe', 'N'),
+    ('әсәрләрдәге', 'äsärlärdäge', 'N'),  # PDF extraction had äsärlärdäğe; front-vowel -дәге uses g.
     ('әсәрнең', 'äsärneñ', 'N'),
     ('әтисенең', 'ätiseneñ', 'N'),
     ('әттәгенәсе', 'ättägenäse', 'N'),
