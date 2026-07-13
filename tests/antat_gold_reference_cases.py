@@ -4961,7 +4961,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('плюш', 'plʼuş', 'PLUSH', 6352),
     ('подиум', 'podium', 'PODIUM', 6359),
     ('поднос', 'podnos', 'SALVER', 7358),
-    ('поезд', 'poezd', 'NON-STOP', 5676),
+    ('поезд', 'poyezd', 'NON-STOP', 5676),  # ANTAT: poezd; keep y for Cyrillic е after vowel in RL words.
     ('пожар', 'pojar', 'CONFLAGRATION', 1946),
     ('пожарник', 'pojarnik', 'FIREMAN', 3432),
     ('поза', 'poza', 'POSE I', 6425),
@@ -8474,7 +8474,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('этика', 'etika', 'ETHICS', 3146),
     ('этикет', 'etiket', 'ETIQUETTE', 3149),
     ('этикетка', 'etiketka', 'STICKER', 8161),
-    ('этиология', 'etioloğiyä', 'AETIOLOGY', 153),
+    ('этиология', 'etiologiyä', 'AETIOLOGY', 153),
     ('этник', 'etnik', 'ETHNIC', 3147),
     ('этәргеч', 'etärgeç', 'FILLIP', 3415),
     ('этәргә', 'etärgä', 'HITCH', 4279),
