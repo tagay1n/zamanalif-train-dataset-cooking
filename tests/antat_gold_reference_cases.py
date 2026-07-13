@@ -1742,8 +1742,8 @@ ANTAT_GOLD_WORD_CASES = [
     ('графлык', 'graflıq', 'COUNTY', 2131),
     ('грейпфрут', 'greypfrut', 'GRAPE-FRUIT', 3927),
     ('грелка', 'grelka', 'HOT-WATER BOTTLE', 4362),
-    ('гренки', 'ğrenki', 'TOAST', 8680),
-    ('гриль', 'ğril', 'GRILL', 3968),
+    ('гренки', 'grenki', 'TOAST', 8680),  # ANTAT: ğrenki; keep RL initial г as g.
+    ('гриль', 'gril', 'GRILL', 3968),  # ANTAT: ğril; keep RL initial г as g and omit final soft sign here.
     ('грим', 'grim', 'MAKE-UP', 5318),
     ('гротеск', 'grotesk', 'GROTESQUE', 3984),
     ('гротесклы', 'grotesklı', 'GROTESQUE', 3984),
