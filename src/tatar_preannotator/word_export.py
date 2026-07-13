@@ -1345,6 +1345,8 @@ def _e_conversion(word: str, index: int, label: str) -> str:
     if previous in {"и", "ү"}:
         return "e"
     if previous in {"ь", "ъ"}:
+        if label == "N" and word[index:].startswith("ел"):
+            return "yı"
         return "ye"
     if label == "RL":
         if index == 0:

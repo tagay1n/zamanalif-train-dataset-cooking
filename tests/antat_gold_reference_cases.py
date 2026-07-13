@@ -4979,7 +4979,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('полковник', 'polkovnik', 'COLONEL', 1800),
     ('полководец', 'polkovodets', 'GENERAL II', 3783),
     ('поляр', 'polʼar', 'POLAR', 6372),
-    ('поместье', 'pomestyı', 'ESTATE', 3134),
+    ('поместье', 'pomestʼye', 'ESTATE', 3134),  # ANTAT: pomestyı; align with Russian ь+е policy and other -ье examples.
     ('помидор', 'pomidor', 'TOMATO', 8694),
     ('помпа', 'pompa', 'POMP', 6390),
     ('попугай', 'popugay', 'PARROT', 6081),
