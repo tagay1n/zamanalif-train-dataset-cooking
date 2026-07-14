@@ -98,9 +98,6 @@ def _validate_tokens(
             if homonym is not True:
                 errors.append(f"{sample_id}: token {token_index} homonym must be exactly true")
                 continue
-            if label != "RL":
-                errors.append(f"{sample_id}: token {token_index} homonym is only valid on RL")
-                continue
         found = sentence.find(text, cursor)
         if found < 0:
             errors.append(f"{sample_id}: token {token_index} text is missing or out of order: {text}")

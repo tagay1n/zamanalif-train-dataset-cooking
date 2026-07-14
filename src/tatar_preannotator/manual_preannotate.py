@@ -56,7 +56,7 @@ def build_editable_tokens(
             EditableToken(
                 text=token,
                 label=label,
-                homonym=label == "RL" and _suggest_homonym(token, prior_homonyms),
+                homonym=_suggest_homonym(token, prior_homonyms),
             )
         )
     return tokens

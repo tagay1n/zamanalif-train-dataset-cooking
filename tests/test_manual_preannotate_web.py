@@ -44,7 +44,7 @@ class ManualPreannotateWebTests(unittest.TestCase):
         )
         self.assertTrue(item["sample"]["suggested_tatar"])
 
-    def test_homonym_suggestion_only_applies_to_rl_tokens(self) -> None:
+    def test_homonym_suggestion_is_independent_from_label(self) -> None:
         tokens = build_editable_tokens(
             "Һәм проект.",
             reviewed={},
@@ -56,7 +56,7 @@ class ManualPreannotateWebTests(unittest.TestCase):
         )
 
         self.assertEqual([(token.text, token.label, token.homonym) for token in tokens], [
-            ("Һәм", "N", False),
+            ("Һәм", "N", True),
             ("проект", "RL", True),
         ])
 
@@ -77,22 +77,27 @@ class ManualPreannotateWebTests(unittest.TestCase):
         self.assertEqual(json.loads(row["tokens_json"]), [])
         self.assertEqual(row["annotated_by_model"], "manual-web")
 
-    def test_service_rejects_invalid_homonym(self) -> None:
+    def test_service_saves_native_homonym(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = Path(tmpdir) / "db.sqlite"
             _create_db(db_path, [("sent_1", "Мин проект турында әйттем.")])
             service = ManualWebReviewService(db_path)
             try:
-                with self.assertRaisesRegex(Exception, "homonym"):
-                    service.save(
-                        {
-                            "id": "sent_1",
-                            "tatar": True,
-                            "tokens": [{"text": "Мин", "label": "N", "homonym": True}],
-                        }
-                    )
+                result = service.save(
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [{"text": "Мин", "label": "N", "homonym": True}],
+                    }
+                )
             finally:
                 service.close()
+            row = _state_row(db_path, "sent_1")
+
+        self.assertTrue(result["ok"])
+        self.assertEqual(json.loads(row["tokens_json"]), [
+            {"homonym": True, "label": "N", "text": "Мин"}
+        ])
 
     def test_http_api_loads_and_saves(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -152,9 +157,10 @@ class ManualPreannotateWebTests(unittest.TestCase):
     def test_token_row_click_does_not_swallow_form_control_changes(self) -> None:
         self.assertIn('closest("input,label,button")', HTML_PAGE)
 
-    def test_page_labels_sentence_id_and_allows_clearing_stale_homonym(self) -> None:
+    def test_page_labels_sentence_id_and_homonym_is_origin_independent(self) -> None:
         self.assertIn("Sentence id:", HTML_PAGE)
-        self.assertIn("token.label === \"RL\" || token.homonym", HTML_PAGE)
+        self.assertNotIn('class="homonym" ${token.homonym ? "checked" : ""} ${', HTML_PAGE)
+        self.assertNotIn('token.label !== "RL"', HTML_PAGE)
 
 
 def _get_json(url: str) -> dict:

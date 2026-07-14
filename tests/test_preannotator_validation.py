@@ -42,14 +42,14 @@ class ValidationTests(unittest.TestCase):
         self.assertFalse(result.ok)
         self.assertIn("invalid label", "; ".join(result.errors))
 
-    def test_homonym_on_non_rl_fails(self) -> None:
+    def test_homonym_on_non_rl_passes(self) -> None:
         result = validate_response(
             '[{"id":"sent_000001","tatar":true,"tokens":[{"text":"Казан","label":"N","homonym":true}]}]',
             [Sample(id="sent_000001", text="Казан.")],
         )
 
-        self.assertFalse(result.ok)
-        self.assertIn("homonym is only valid on RL", "; ".join(result.errors))
+        self.assertTrue(result.ok, result.errors)
+        self.assertEqual(result.items[0]["tokens"][0]["homonym"], True)
 
     def test_tatar_false_requires_empty_tokens(self) -> None:
         result = validate_response(

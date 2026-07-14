@@ -339,12 +339,11 @@ function renderTokens() {
       <td class="label-cell">${labels.map(label => `
         <label><input type="radio" name="label-${index}" value="${label}" ${token.label === label ? "checked" : ""}> ${label}</label>
       `).join("")}</td>
-      <td><input type="checkbox" class="homonym" ${token.homonym ? "checked" : ""} ${(token.label === "RL" || token.homonym) ? "" : "disabled"}></td>
+      <td><input type="checkbox" class="homonym" ${token.homonym ? "checked" : ""}></td>
     `;
     row.querySelectorAll(`input[name="label-${index}"]`).forEach(input => {
       input.addEventListener("change", () => {
         token.label = input.value;
-        if (token.label !== "RL") token.homonym = false;
         renderTokens();
       });
     });
@@ -398,7 +397,6 @@ function moveToken(delta) {
 function setSelectedLabel(label) {
   if (!current || !current.tokens.length) return;
   current.tokens[selectedToken].label = label;
-  if (label !== "RL") current.tokens[selectedToken].homonym = false;
   renderTokens();
 }
 
@@ -428,7 +426,7 @@ document.addEventListener("keydown", event => {
   if (event.key === "1") setSelectedLabel("N");
   if (event.key === "2") setSelectedLabel("RL");
   if (event.key === "3") setSelectedLabel("U");
-  if (event.key === " " && current.tokens[selectedToken]?.label === "RL") {
+  if (event.key === " ") {
     event.preventDefault();
     current.tokens[selectedToken].homonym = !current.tokens[selectedToken].homonym;
     renderTokens();
