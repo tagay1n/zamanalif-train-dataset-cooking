@@ -12,7 +12,11 @@ from zamanalif_selector.progress import RichCliProgress
 from .annotate import run_annotation
 from .antat_reference import download_antat_reference
 from .config import load_config
-from .conflict_resolver import ConflictResolverError, serve_conflict_resolver_web
+from .conflict_resolver import (
+    ConflictResolverError,
+    auto_resolve_conflicts,
+    serve_conflict_resolver_web,
+)
 from .gemini_client import GoogleGeminiClient
 from .labelstudio_import import LabelStudioImportError, import_labelstudio_annotations
 from .local_repair import repair_unprocessable
@@ -162,6 +166,18 @@ def main(argv: list[str] | None = None) -> int:
     conflicts.add_argument("--port", type=int, default=8766, help="Local bind port.")
     conflicts.add_argument("--limit", type=int, help="Maximum conflict rows to review.")
 
+    auto_conflicts = subparsers.add_parser(
+        "auto-resolve-conflicts",
+        help="Conservatively auto-resolve low-risk word conflicts.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    auto_conflicts.add_argument("--db", default=DEFAULT_DB_PATH, help="SQLite application database.")
+    auto_conflicts.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Report decisions without writing word_resolutions.",
+    )
+
     args = parser.parse_args(argv)
     if args.command == "annotate":
         return _annotate(args)
@@ -179,6 +195,8 @@ def main(argv: list[str] | None = None) -> int:
         return _manual_preannotate(args)
     if args.command == "resolve-conflicts":
         return _resolve_conflicts(args)
+    if args.command == "auto-resolve-conflicts":
+        return _auto_resolve_conflicts(args)
     raise AssertionError(args.command)
 
 
@@ -383,6 +401,25 @@ def _resolve_conflicts(args: argparse.Namespace) -> int:
     except (OSError, sqlite3.Error, ConflictResolverError) as exc:
         print(f"word conflict resolver web UI failed: {exc}")
         return 1
+    return 0
+
+
+def _auto_resolve_conflicts(args: argparse.Namespace) -> int:
+    try:
+        summary = auto_resolve_conflicts(args.db, dry_run=args.dry_run)
+    except (OSError, sqlite3.Error, ConflictResolverError) as exc:
+        print(f"auto-resolve conflicts failed: {exc}")
+        return 1
+    mode = "dry-run" if summary.dry_run else "written"
+    print(
+        "auto-resolve conflicts complete: "
+        f"mode={mode} "
+        f"inspected={summary.inspected} "
+        f"auto_resolved={summary.auto_resolved} "
+        f"skipped_homonym_conflict={summary.skipped_homonym_conflict} "
+        f"skipped_manual={summary.skipped_manual} "
+        f"by_decision={summary.by_decision}"
+    )
     return 0
 
 

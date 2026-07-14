@@ -154,6 +154,35 @@ class PreannotatorCliTests(unittest.TestCase):
         self.assertEqual(serve.call_args.kwargs["port"], 8767)
         self.assertEqual(serve.call_args.kwargs["limit"], 5)
 
+    def test_auto_resolve_conflicts_help_shows_default_db(self) -> None:
+        output = StringIO()
+        with self.assertRaises(SystemExit), redirect_stdout(output):
+            main(["auto-resolve-conflicts", "--help"])
+
+        help_text = output.getvalue()
+        self.assertIn("--db", help_text)
+        self.assertIn("data/zamanalif.sqlite", help_text)
+        self.assertIn("--dry-run", help_text)
+
+    def test_auto_resolve_conflicts_cli_prints_summary(self) -> None:
+        with patch("tatar_preannotator.cli.auto_resolve_conflicts") as auto_resolve:
+            auto_resolve.return_value.dry_run = True
+            auto_resolve.return_value.inspected = 10
+            auto_resolve.return_value.auto_resolved = 7
+            auto_resolve.return_value.skipped_homonym_conflict = 1
+            auto_resolve.return_value.skipped_manual = 2
+            auto_resolve.return_value.by_decision = {"N": 5, "RL": 2}
+            output = StringIO()
+            with redirect_stdout(output):
+                exit_code = main(
+                    ["auto-resolve-conflicts", "--db", "custom.sqlite", "--dry-run"]
+                )
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(auto_resolve.call_args.args[0], "custom.sqlite")
+        self.assertTrue(auto_resolve.call_args.kwargs["dry_run"])
+        self.assertIn("auto_resolved=7", output.getvalue())
+
     def test_fatal_annotation_error_is_printed_and_exits_nonzero(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = Path(tmpdir) / "zamanalif.sqlite"

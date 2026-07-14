@@ -9,7 +9,9 @@ import unittest
 from tatar_preannotator.conflict_resolver import (
     ConflictReviewService,
     HTML_PAGE,
+    auto_resolve_conflicts,
     build_conflict_candidates,
+    conservative_auto_decision,
     load_word_resolutions,
     save_word_resolution,
 )
@@ -96,6 +98,73 @@ class ConflictResolverTests(unittest.TestCase):
 
         self.assertEqual(item["candidate"]["word"], "авыл")
 
+    def test_conservative_auto_decision_resolves_low_risk_cases(self) -> None:
+        independent = _candidate("йөз", {"N": 10, "U": 1})
+        tiny_u = _candidate("немец", {"RL": 100, "U": 2})
+        tiny_minority = _candidate("революцион", {"RL": 100, "N": 1})
+
+        self.assertEqual(conservative_auto_decision(independent), "N")
+        self.assertEqual(conservative_auto_decision(tiny_u), "RL")
+        self.assertEqual(conservative_auto_decision(tiny_minority), "RL")
+
+    def test_conservative_auto_decision_keeps_homonym_and_meaningful_conflicts(self) -> None:
+        homonym = _candidate("сер", {"N": 10, "RL": 10}, homonyms={True: 1, False: 19})
+        meaningful = _candidate("мәскәү", {"N": 80, "RL": 20})
+
+        self.assertIsNone(conservative_auto_decision(homonym))
+        self.assertIsNone(conservative_auto_decision(meaningful))
+
+    def test_auto_resolve_conflicts_writes_only_unresolved_low_risk_decisions(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    ("sent_1", "Йөз немец сер.", [
+                        {"text": "Йөз", "label": "N"},
+                        {"text": "немец", "label": "RL"},
+                        {"text": "сер", "label": "N"},
+                    ]),
+                    ("sent_2", "Йөз немец сер.", [
+                        {"text": "Йөз", "label": "U"},
+                        {"text": "немец", "label": "U"},
+                        {"text": "сер", "label": "RL", "homonym": True},
+                    ]),
+                    ("sent_3", "немец.", [{"text": "немец", "label": "RL"}]),
+                    ("sent_4", "немец.", [{"text": "немец", "label": "RL"}]),
+                ],
+            )
+
+            dry = auto_resolve_conflicts(db_path, dry_run=True)
+            self.assertEqual(load_word_resolutions(db_path), {})
+
+            summary = auto_resolve_conflicts(db_path)
+            resolutions = load_word_resolutions(db_path)
+
+        self.assertTrue(dry.dry_run)
+        self.assertEqual(dry.auto_resolved, 2)
+        self.assertEqual(summary.auto_resolved, 2)
+        self.assertEqual(resolutions["йөз"].decision, "N")
+        self.assertEqual(resolutions["немец"].decision, "RL")
+        self.assertNotIn("сер", resolutions)
+
+    def test_auto_resolve_conflicts_does_not_overwrite_existing_resolution(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    ("sent_1", "Йөз.", [{"text": "Йөз", "label": "N"}]),
+                    ("sent_2", "Йөз.", [{"text": "Йөз", "label": "U"}]),
+                ],
+            )
+            with sqlite3.connect(db_path) as conn:
+                save_word_resolution(conn, "йөз", "U")
+
+            summary = auto_resolve_conflicts(db_path)
+            resolutions = load_word_resolutions(db_path)
+
+        self.assertEqual(summary.inspected, 0)
+        self.assertEqual(resolutions["йөз"].decision, "U")
+
     def test_page_has_requested_keyboard_shortcuts(self) -> None:
         self.assertIn("Keyboard: N=native", HTML_PAGE)
         self.assertIn('key === "n"', HTML_PAGE)
@@ -145,6 +214,25 @@ def _write_db(path: Path, rows: list[tuple[str, str, list[dict]]]) -> Path:
                 (sample_id, json.dumps(tokens, ensure_ascii=False)),
             )
     return path
+
+
+def _candidate(
+    word: str,
+    labels: dict[str, int],
+    *,
+    homonyms: dict[bool, int] | None = None,
+):
+    from collections import Counter
+
+    from tatar_preannotator.conflict_resolver import ConflictCandidate
+
+    return ConflictCandidate(
+        normalized_word=word,
+        frequency=sum(labels.values()),
+        label_counts=Counter(labels),
+        homonym_counts=Counter(homonyms or {False: sum(labels.values())}),
+        examples={},
+    )
 
 
 if __name__ == "__main__":

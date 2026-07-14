@@ -13,7 +13,7 @@ from typing import Any
 from urllib.parse import parse_qs, urlparse
 
 from . import db
-from .word_export import normalize_word
+from .word_export import conversion_branches, normalize_word
 
 
 DECISIONS = frozenset({"N", "RL", "U", "contextual_homonym"})
@@ -37,6 +37,18 @@ class ConflictCandidate:
     homonym_counts: Counter[bool]
     examples: dict[str, list[dict[str, str]]]
     resolved_decision: str | None = None
+
+
+@dataclass(frozen=True)
+class AutoResolveSummary:
+    """Counts produced by conservative automatic conflict resolution."""
+
+    inspected: int
+    auto_resolved: int
+    skipped_homonym_conflict: int
+    skipped_manual: int
+    by_decision: dict[str, int]
+    dry_run: bool
 
 
 def ensure_word_resolution_schema(conn: sqlite3.Connection) -> None:
@@ -93,6 +105,77 @@ def save_word_resolution(
         (normalized, decision, _now()),
     )
     conn.commit()
+
+
+def auto_resolve_conflicts(
+    db_path: str | Path,
+    *,
+    dry_run: bool = False,
+) -> AutoResolveSummary:
+    """Conservatively save low-risk conflict decisions."""
+    database = Path(db_path)
+    if not database.exists():
+        raise ConflictResolverError(f"database file does not exist: {database}")
+    candidates = conflict_candidates_from_db(database)
+    decisions: list[tuple[str, str]] = []
+    skipped_homonym = 0
+    skipped_manual = 0
+
+    for candidate in candidates:
+        decision = conservative_auto_decision(candidate)
+        if decision is None:
+            if _has_homonym_conflict(candidate):
+                skipped_homonym += 1
+            else:
+                skipped_manual += 1
+            continue
+        decisions.append((candidate.normalized_word, decision))
+
+    by_decision = Counter(decision for _, decision in decisions)
+    if not dry_run and decisions:
+        with closing(db.connect(database)) as conn:
+            ensure_word_resolution_schema(conn)
+            now = _now()
+            conn.executemany(
+                """
+                insert into word_resolutions(normalized_word, decision, updated_at)
+                values (?, ?, ?)
+                on conflict(normalized_word) do nothing
+                """,
+                [(word, decision, now) for word, decision in decisions],
+            )
+            conn.commit()
+
+    return AutoResolveSummary(
+        inspected=len(candidates),
+        auto_resolved=len(decisions),
+        skipped_homonym_conflict=skipped_homonym,
+        skipped_manual=skipped_manual,
+        by_decision=dict(sorted(by_decision.items())),
+        dry_run=dry_run,
+    )
+
+
+def conservative_auto_decision(candidate: ConflictCandidate) -> str | None:
+    """Return a low-risk automatic decision, or None when manual review is needed."""
+    if _has_homonym_conflict(candidate):
+        return None
+    majority = _majority_label(candidate.label_counts)
+    if majority is None:
+        return None
+    if conversion_branches(candidate.normalized_word).state == "origin_independent":
+        return majority if majority in {"N", "RL"} else "N"
+    total = sum(candidate.label_counts.values())
+    if total <= 0:
+        return None
+    if candidate.label_counts["U"] <= 2 and majority in {"N", "RL"}:
+        non_u_total = total - candidate.label_counts["U"]
+        if candidate.label_counts[majority] == non_u_total:
+            return majority
+    minority_total = total - candidate.label_counts[majority]
+    if minority_total <= 2 and candidate.label_counts[majority] / total >= 0.98:
+        return majority
+    return None
 
 
 def conflict_candidates_from_db(db_path: str | Path) -> list[ConflictCandidate]:
@@ -188,6 +271,20 @@ def build_conflict_candidates(
         )
     candidates.sort(key=lambda item: (-item.frequency, item.normalized_word))
     return candidates
+
+
+def _has_homonym_conflict(candidate: ConflictCandidate) -> bool:
+    return bool(candidate.homonym_counts[True] and candidate.homonym_counts[False])
+
+
+def _majority_label(label_counts: Counter[str]) -> str | None:
+    if not label_counts:
+        return None
+    ordered = sorted(
+        ((count, label) for label, count in label_counts.items() if count > 0),
+        reverse=True,
+    )
+    return ordered[0][1] if ordered else None
 
 
 class ConflictReviewService:

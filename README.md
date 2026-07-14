@@ -148,9 +148,9 @@ Recommended post-Gemini cleanup order:
    because of token alignment around quotes, punctuation, or suffixes.
 2. Finish any remaining rows with `manual-preannotate` so every sentence has a
    usable Tatar/non-Tatar and token-origin decision.
-3. Run `resolve-conflicts` after sentence repairs, because the repaired sentences
-   can add or change word-level `N`/`RL`/`U` and homonym evidence.
-4. Export Label Studio Project 1 word-review tasks with `annotation-export`.
+3. Run `auto-resolve-conflicts` to save low-risk word conflict decisions.
+4. Run `resolve-conflicts` for the remaining meaningful word conflicts.
+5. Export Label Studio Project 1 word-review tasks with `annotation-export`.
 
 ### Local repair of unprocessable rows
 
@@ -191,8 +191,15 @@ for example a word marked `N` in most sentences but `RL` or `homonym` in a few
 noisy rows. Review these conflicts in a separate local browser UI:
 
 ```bash
+python -m tatar_preannotator auto-resolve-conflicts --dry-run
+python -m tatar_preannotator auto-resolve-conflicts
 python -m tatar_preannotator resolve-conflicts
 ```
+
+`auto-resolve-conflicts` writes only conservative decisions to
+`word_resolutions`: origin-independent conflicts, tiny `U` noise, and tiny
+minority-label noise. It does not auto-resolve homonym conflicts and never
+overwrites existing decisions.
 
 The command starts at `http://127.0.0.1:8766` by default. It shows each
 conflicting normalized word, label counts, homonym counts, and example sentence
