@@ -142,6 +142,14 @@ array stays on one line for readability:
 }
 ```
 
+Recommended post-Gemini cleanup order:
+
+1. Finish `manual-preannotate` so every sentence has a usable Tatar/non-Tatar
+   and token-origin decision.
+2. Run `resolve-conflicts` after manual repairs, because the repaired sentences
+   can add or change word-level `N`/`RL`/`U` and homonym evidence.
+3. Export Label Studio Project 1 word-review tasks with `annotation-export`.
+
 ### Manual repair of unprocessable rows
 
 Rows that remain `unprocessable` can be repaired interactively:
@@ -224,6 +232,8 @@ Selection rules:
 
 - read annotated Gemini results from `samples` and `preannotation_state` in
   SQLite;
+- apply saved `word_resolutions` as cleaned preannotation decisions before
+  deciding which words need review;
 - ignore records with `"tatar": false`;
 - compute canonical native (`N`) and loanword (`RL`) DSL for every normalized
   word form;
