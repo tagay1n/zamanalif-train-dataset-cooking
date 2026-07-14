@@ -114,6 +114,17 @@ class ConflictResolverTests(unittest.TestCase):
         self.assertIsNone(conservative_auto_decision(homonym))
         self.assertIsNone(conservative_auto_decision(meaningful))
 
+    def test_conservative_auto_decision_resolves_10x_dominant_origin(self) -> None:
+        dominant_rl = _candidate("гражданлык", {"RL": 20, "N": 1, "U": 5})
+        dominant_n = _candidate("ерткыч", {"N": 20, "RL": 1})
+        too_small = _candidate("авыл", {"N": 9, "RL": 1})
+        homonym = _candidate("сер", {"RL": 20, "N": 1}, homonyms={True: 1, False: 20})
+
+        self.assertEqual(conservative_auto_decision(dominant_rl), "RL")
+        self.assertEqual(conservative_auto_decision(dominant_n), "N")
+        self.assertIsNone(conservative_auto_decision(too_small))
+        self.assertIsNone(conservative_auto_decision(homonym))
+
     def test_auto_resolve_conflicts_writes_only_unresolved_low_risk_decisions(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_db(

@@ -17,6 +17,8 @@ from .word_export import conversion_branches, normalize_word
 
 
 DECISIONS = frozenset({"N", "RL", "U", "contextual_homonym"})
+DOMINANT_ORIGIN_RATIO = 10
+DOMINANT_ORIGIN_MIN_COUNT = 20
 
 
 class ConflictResolverError(ValueError):
@@ -175,6 +177,9 @@ def conservative_auto_decision(candidate: ConflictCandidate) -> str | None:
     minority_total = total - candidate.label_counts[majority]
     if minority_total <= 2 and candidate.label_counts[majority] / total >= 0.98:
         return majority
+    dominant_origin = _dominant_origin_label(candidate.label_counts)
+    if dominant_origin is not None:
+        return dominant_origin
     return None
 
 
@@ -285,6 +290,23 @@ def _majority_label(label_counts: Counter[str]) -> str | None:
         reverse=True,
     )
     return ordered[0][1] if ordered else None
+
+
+def _dominant_origin_label(label_counts: Counter[str]) -> str | None:
+    n_count = label_counts["N"]
+    rl_count = label_counts["RL"]
+    if not n_count or not rl_count:
+        return None
+    dominant_label, dominant_count, weaker_count = (
+        ("N", n_count, rl_count)
+        if n_count > rl_count
+        else ("RL", rl_count, n_count)
+    )
+    if dominant_count < DOMINANT_ORIGIN_MIN_COUNT:
+        return None
+    if dominant_count >= DOMINANT_ORIGIN_RATIO * weaker_count:
+        return dominant_label
+    return None
 
 
 class ConflictReviewService:

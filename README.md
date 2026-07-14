@@ -198,8 +198,9 @@ python -m tatar_preannotator resolve-conflicts
 
 `auto-resolve-conflicts` writes only conservative decisions to
 `word_resolutions`: origin-independent conflicts, tiny `U` noise, and tiny
-minority-label noise. It does not auto-resolve homonym conflicts and never
-overwrites existing decisions.
+minority-label noise, plus no-homonym cases where one concrete origin appears
+at least 10 times more often than the other. It does not auto-resolve homonym
+conflicts and never overwrites existing decisions.
 
 The command starts at `http://127.0.0.1:8766` by default. It shows each
 conflicting normalized word, label counts, homonym counts, and example sentence
