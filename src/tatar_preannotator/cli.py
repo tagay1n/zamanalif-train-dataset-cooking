@@ -15,6 +15,7 @@ from .config import load_config
 from .conflict_resolver import ConflictResolverError, serve_conflict_resolver_web
 from .gemini_client import GoogleGeminiClient
 from .labelstudio_import import LabelStudioImportError, import_labelstudio_annotations
+from .local_repair import repair_unprocessable
 from .manual_preannotate import ManualPreannotateError
 from .manual_preannotate_web import serve_manual_preannotation_web
 from .training_export import TrainingExportError, export_training_dataset
@@ -51,6 +52,19 @@ def main(argv: list[str] | None = None) -> int:
         "--retry-unprocessable",
         action="store_true",
         help="Requeue all unprocessable samples before annotation.",
+    )
+
+    repair = subparsers.add_parser(
+        "repair-unprocessable",
+        help="Repair unprocessable sentence preannotations locally.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    repair.add_argument("--db", default=DEFAULT_DB_PATH, help="SQLite application database.")
+    repair.add_argument("--limit", type=int, help="Maximum unprocessable rows to repair.")
+    repair.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Report how many rows would be repaired without writing changes.",
     )
 
     export_words = subparsers.add_parser(
@@ -151,6 +165,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.command == "annotate":
         return _annotate(args)
+    if args.command == "repair-unprocessable":
+        return _repair_unprocessable(args)
     if args.command == "annotation-export":
         return _annotation_export(args)
     if args.command == "training-export":
@@ -201,6 +217,28 @@ def _annotate(args: argparse.Namespace) -> int:
         return 1
     if summary.stopped_reason == "forced_shutdown":
         return 130
+    return 0
+
+
+def _repair_unprocessable(args: argparse.Namespace) -> int:
+    if args.limit is not None and args.limit < 1:
+        raise SystemExit("--limit must be positive")
+    try:
+        summary = repair_unprocessable(args.db, limit=args.limit, dry_run=args.dry_run)
+    except (OSError, sqlite3.Error, ManualPreannotateError) as exc:
+        print(f"local repair failed: {exc}")
+        return 1
+    mode = "dry-run" if summary.dry_run else "written"
+    print(
+        "local repair complete: "
+        f"mode={mode} "
+        f"total={summary.total} "
+        f"repaired={summary.repaired} "
+        f"skipped_low_tatar_specific={summary.skipped_low_tatar_specific} "
+        f"skipped_no_tokens={summary.skipped_no_tokens} "
+        f"invalid={summary.invalid} "
+        f"remaining={summary.remaining}"
+    )
     return 0
 
 

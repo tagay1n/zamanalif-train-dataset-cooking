@@ -144,11 +144,30 @@ array stays on one line for readability:
 
 Recommended post-Gemini cleanup order:
 
-1. Finish `manual-preannotate` so every sentence has a usable Tatar/non-Tatar
-   and token-origin decision.
-2. Run `resolve-conflicts` after manual repairs, because the repaired sentences
+1. Run `repair-unprocessable` to locally repair rows that Gemini failed mostly
+   because of token alignment around quotes, punctuation, or suffixes.
+2. Finish any remaining rows with `manual-preannotate` so every sentence has a
+   usable Tatar/non-Tatar and token-origin decision.
+3. Run `resolve-conflicts` after sentence repairs, because the repaired sentences
    can add or change word-level `N`/`RL`/`U` and homonym evidence.
-3. Export Label Studio Project 1 word-review tasks with `annotation-export`.
+4. Export Label Studio Project 1 word-review tasks with `annotation-export`.
+
+### Local repair of unprocessable rows
+
+Most unprocessable rows are valid Tatar sentences where Gemini returned tokens
+that no longer matched the exact original text. Repair them locally before
+doing manual sentence work:
+
+```bash
+python -m tatar_preannotator repair-unprocessable --dry-run
+python -m tatar_preannotator repair-unprocessable
+```
+
+The command uses the same tokenizer and label suggestions as
+`manual-preannotate`, saves rows as `annotated_by_model = "local-repair"`, and
+allows `U` labels because later word-review steps handle uncertain words. It
+does not call Gemini and does not touch already successful annotations. Use
+`--limit 10` for a small pilot run.
 
 ### Manual repair of unprocessable rows
 

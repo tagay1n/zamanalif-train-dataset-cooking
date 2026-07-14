@@ -77,6 +77,49 @@ class PreannotatorCliTests(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, "--port"):
             main(["manual-preannotate", "--port", "70000"])
 
+    def test_repair_unprocessable_help_shows_default_db(self) -> None:
+        output = StringIO()
+        with self.assertRaises(SystemExit), redirect_stdout(output):
+            main(["repair-unprocessable", "--help"])
+
+        help_text = output.getvalue()
+        self.assertIn("--db", help_text)
+        self.assertIn("data/zamanalif.sqlite", help_text)
+        self.assertIn("--limit", help_text)
+        self.assertIn("--dry-run", help_text)
+
+    def test_repair_unprocessable_cli_prints_summary(self) -> None:
+        with patch("tatar_preannotator.cli.repair_unprocessable") as repair:
+            repair.return_value.total = 10
+            repair.return_value.repaired = 8
+            repair.return_value.skipped_low_tatar_specific = 1
+            repair.return_value.skipped_no_tokens = 0
+            repair.return_value.invalid = 1
+            repair.return_value.remaining = 2
+            repair.return_value.dry_run = True
+            output = StringIO()
+            with redirect_stdout(output):
+                exit_code = main(
+                    [
+                        "repair-unprocessable",
+                        "--db",
+                        "custom.sqlite",
+                        "--limit",
+                        "5",
+                        "--dry-run",
+                    ]
+                )
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(repair.call_args.args[0], "custom.sqlite")
+        self.assertEqual(repair.call_args.kwargs["limit"], 5)
+        self.assertTrue(repair.call_args.kwargs["dry_run"])
+        self.assertIn("repaired=8", output.getvalue())
+
+    def test_repair_unprocessable_invalid_limit_fails_fast(self) -> None:
+        with self.assertRaisesRegex(SystemExit, "--limit"):
+            main(["repair-unprocessable", "--limit", "0"])
+
     def test_resolve_conflicts_help_shows_default_db_and_port(self) -> None:
         output = StringIO()
         with self.assertRaises(SystemExit), redirect_stdout(output):
