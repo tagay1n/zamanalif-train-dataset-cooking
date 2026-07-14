@@ -8,6 +8,7 @@ import unittest
 
 from tatar_preannotator.conflict_resolver import (
     ConflictReviewService,
+    HTML_PAGE,
     build_conflict_candidates,
     load_word_resolutions,
 )
@@ -68,6 +69,16 @@ class ConflictResolverTests(unittest.TestCase):
         self.assertEqual(item["candidate"]["word"], "һәм")
         self.assertTrue(result["ok"])
         self.assertEqual(resolutions["һәм"].decision, "N")
+
+    def test_page_has_requested_keyboard_shortcuts(self) -> None:
+        self.assertIn("Keyboard: N=native", HTML_PAGE)
+        self.assertIn('key === "n"', HTML_PAGE)
+        self.assertIn('key === "r"', HTML_PAGE)
+        self.assertIn('key === "u"', HTML_PAGE)
+        self.assertIn('key === "h"', HTML_PAGE)
+        self.assertIn('event.key === "ArrowLeft"', HTML_PAGE)
+        self.assertIn('event.key === "ArrowRight"', HTML_PAGE)
+        self.assertIn('event.key === " "', HTML_PAGE)
 
 
 def _write_db(path: Path, rows: list[tuple[str, str, list[dict]]]) -> Path:

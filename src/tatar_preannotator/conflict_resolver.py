@@ -396,6 +396,7 @@ HTML_PAGE = r"""<!doctype html>
     <button id="next">Next</button>
     <span class="status" id="status"></span>
   </section>
+  <p class="meta">Keyboard: N=native, R=RL, U=uncertain, H=contextual homonym, ←/→ navigate, Space saves.</p>
   <section class="panel" id="examples"></section>
 </main>
 <script>
@@ -485,19 +486,42 @@ function setStatus(message, isError=false) {
   el("status").className = isError ? "status error" : "status";
 }
 
+function setDecision(decision) {
+  const input = document.querySelector(`input[name=decision][value="${decision}"]`);
+  if (input) input.checked = true;
+}
+
+function previousItem() {
+  return loadItem(Math.max(0, currentIndex - 1));
+}
+
+function nextItem() {
+  return loadItem(Math.min(currentTotal - 1, currentIndex + 1));
+}
+
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
 }
 
 el("save").addEventListener("click", () => save().catch(error => setStatus(error.message, true)));
-el("prev").addEventListener("click", () => loadItem(Math.max(0, currentIndex - 1)).catch(error => setStatus(error.message, true)));
-el("next").addEventListener("click", () => loadItem(currentIndex + 1).catch(error => setStatus(error.message, true)));
+el("prev").addEventListener("click", () => previousItem().catch(error => setStatus(error.message, true)));
+el("next").addEventListener("click", () => nextItem().catch(error => setStatus(error.message, true)));
 document.addEventListener("keydown", event => {
-  if (event.key === "1") document.querySelector("input[value=N]").checked = true;
-  if (event.key === "2") document.querySelector("input[value=RL]").checked = true;
-  if (event.key === "3") document.querySelector("input[value=U]").checked = true;
-  if (event.key === "4") document.querySelector("input[value=contextual_homonym]").checked = true;
-  if (event.key === "Enter") {
+  if (!current) return;
+  const key = event.key.toLowerCase();
+  if (key === "n" || event.key === "1") setDecision("N");
+  if (key === "r" || event.key === "2") setDecision("RL");
+  if (key === "u" || event.key === "3") setDecision("U");
+  if (key === "h" || event.key === "4") setDecision("contextual_homonym");
+  if (event.key === "ArrowLeft") {
+    event.preventDefault();
+    previousItem().catch(error => setStatus(error.message, true));
+  }
+  if (event.key === "ArrowRight") {
+    event.preventDefault();
+    nextItem().catch(error => setStatus(error.message, true));
+  }
+  if (event.key === " " || event.key === "Enter") {
     event.preventDefault();
     save().catch(error => setStatus(error.message, true));
   }
