@@ -1573,10 +1573,10 @@ ANTAT_GOLD_WORD_CASES = [
     ('гаделлек', 'ğädellek', 'IMPARTIALITY', 4502),
     ('гаделсез', 'ğädelsez', 'UNFAIR', 8934),
     ('гаделсезлек', 'ğädelsezlek', 'INEQUITY', 4716),
-    ('гади', 'ğädi', 'AUSTERE', 617),
+    ('гади', 'ğadi', 'AUSTERE', 617),  # ANTAT: ğädi; align with preferred plain initial га convention.
     ('гадилек', 'ğadilek', 'SIMPLICITY', 7846),
     ('гадиләштерергә', 'ğadiläşterergä', 'ADAPT', 95),
-    ('гадиләштерергә', 'ğädiläşterergä', 'SIMPLIFY', 7847),
+    ('гадиләштерергә', 'ğadiläşterergä', 'SIMPLIFY', 7847),  # ANTAT: ğädiläşterergä; align with preferred plain initial га convention.
     ('гадәт', 'ğädät', 'ACTION', 85),
     ('гадәтеңә', 'ğädäteñä', 'ADOPT', 122),
     ('гадәти', 'ğädäti', 'UNUSUAL', 9025),

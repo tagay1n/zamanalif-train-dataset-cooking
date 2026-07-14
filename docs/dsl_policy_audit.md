@@ -8,9 +8,6 @@ of a DSL choice.
 ## Kept as DSL
 
 - `IYA`: compact `iä` and explicit `iyä` are both supported by project policy.
-- `ARABIC_INITIAL_GA`: kept only for the `гади` family where references disagree
-  (`гади -> ğadi` in the PDF fixture, `гади -> ğädi` in ANTAT; ANTAT also has
-  both variants for `гадиләштерергә`).
 - `E_GLIDE`: kept pending a separate audit of `ие -> ie/iye`.
 - `RUS_SIGN`, `RUS_JOTATION`: kept for Russian
   sign/apostrophe policy differences.
@@ -21,6 +18,9 @@ of a DSL choice.
 
 ## Converted Back To Deterministic Rules
 
+- `ARABIC_INITIAL_GA`: removed as DSL. The `гади` family now follows the
+  preferred plain initial `га` convention (`ğadi`, `ğadiläşterergä`); ANTAT
+  front variants are preserved in fixture comments.
 - `GIY_COMPACT`: removed as DSL. Coherent reference cases such as
   `гыйльми -> ğilmi`, `кагыйдә -> qağidä`, and `шагыйрь -> şağir` are handled by
   deterministic lexical conventions.

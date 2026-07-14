@@ -14,7 +14,6 @@ from typing import Any, Iterable
 
 from tatar_preannotator.conversion import (
     APOSTROPHE_VARIANTS,
-    ARABIC_INITIAL_GA_RULE,
     Choice,
     ConversionResult,
     DslError,
@@ -381,7 +380,6 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_qoran_hamza_choices(word, result)
     result = result_with_iya_choices(word, result)
     result = result_with_ie_glide_choices(word, result)
-    result = result_with_arabic_initial_ga_choices(word, result, label)
     result = result_with_jamgiyat_iya_choices(word, result, label)
     return result_with_mostaqil_choices(word, result, label)
 
@@ -867,54 +865,6 @@ def result_with_mostaqil_choices(
             continue
         _append_literal_segment(segments, text)
     return ConversionResult(tuple(segments)) if changed else result
-
-
-ARABIC_INITIAL_GA_PREFIX_CHOICES: tuple[tuple[str, str, str], ...] = (
-    ("гадиләштер", "ğadiläşter", "ğädiläşter"),
-    ("гади", "ğadi", "ğädi"),
-)
-
-
-def result_with_arabic_initial_ga_choices(
-    source: str,
-    result: ConversionResult,
-    label: str,
-) -> ConversionResult:
-    """Annotate Arabic/Persian-style initial ``га`` fronting convention."""
-    if label != "N":
-        return result
-    matched = _arabic_initial_ga_prefix_choice(source)
-    if matched is None:
-        return result
-    _, plain_prefix, front_prefix = matched
-
-    segments: list[Literal | Choice] = []
-    changed = False
-    for segment in result.segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        text = segment.text
-        if not changed and text.startswith(plain_prefix):
-            segments.append(
-                Choice(
-                    ARABIC_INITIAL_GA_RULE.rule_id,
-                    (("plain", plain_prefix), ("front", front_prefix)),
-                )
-            )
-            _append_literal_segment(segments, text[len(plain_prefix) :])
-            changed = True
-            continue
-        _append_literal_segment(segments, text)
-    return ConversionResult(tuple(segments)) if changed else result
-
-
-def _arabic_initial_ga_prefix_choice(source: str) -> tuple[str, str, str] | None:
-    folded = source.casefold()
-    for cyrillic_prefix, plain_prefix, front_prefix in ARABIC_INITIAL_GA_PREFIX_CHOICES:
-        if folded == cyrillic_prefix or folded.startswith(cyrillic_prefix + "ергә"):
-            return cyrillic_prefix, plain_prefix, front_prefix
-    return None
 
 
 def _append_literal_segment(segments: list[Literal | Choice], text: str) -> None:

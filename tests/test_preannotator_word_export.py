@@ -754,26 +754,17 @@ class PreannotatorWordExportTests(unittest.TestCase):
             with self.subTest(word=word):
                 self.assertNotIn("RL_FINAL_KA", convert_for_annotation_dsl(word, "RL"))
 
-    def test_conflicting_arabic_initial_ga_stays_policy_dsl(self) -> None:
+    def test_conflicting_arabic_initial_ga_uses_plain_preferred_form(self) -> None:
         cases = [
-            ("гади", "{{ARABIC_INITIAL_GA|plain=ğadi|front=ğädi}}", "ğadi", "ğädi"),
-            (
-                "гадиләштерергә",
-                "{{ARABIC_INITIAL_GA|plain=ğadiläşter|front=ğädiläşter}}ergä",
-                "ğadiläşterergä",
-                "ğädiläşterergä",
-            ),
+            ("гади", "ğadi"),
+            ("гадиләштерергә", "ğadiläşterergä"),
         ]
 
-        for word, expected_dsl, plain, front in cases:
+        for word, expected in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "N")
-                self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl), plain)
-                self.assertEqual(
-                    resolve_dsl(dsl, {"ARABIC_INITIAL_GA": "front"}),
-                    front,
-                )
+                self.assertEqual(dsl, expected)
+                self.assertEqual(resolve_dsl(dsl), expected)
 
     def test_coherent_arabic_initial_ga_fronting_is_deterministic(self) -> None:
         cases = [

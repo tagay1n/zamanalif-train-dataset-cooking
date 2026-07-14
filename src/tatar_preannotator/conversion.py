@@ -85,12 +85,6 @@ YA_RULE = RuleDefinition(
     options=(("ya", "ya"), ("ya_front", "yä"), ("a", "a"), ("ae", "ä")),
     default_option="ya",
 )
-ARABIC_INITIAL_GA_RULE = RuleDefinition(
-    rule_id="ARABIC_INITIAL_GA",
-    options=(("plain", "a"), ("front", "ä")),
-    default_option="plain",
-    allow_custom_option_text=True,
-)
 E_GLIDE_RULE = RuleDefinition(
     rule_id="E_GLIDE",
     options=(("plain", "e"), ("glide", "ye")),
@@ -191,7 +185,6 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
     {
         IYA_RULE.rule_id: IYA_RULE,
         YA_RULE.rule_id: YA_RULE,
-        ARABIC_INITIAL_GA_RULE.rule_id: ARABIC_INITIAL_GA_RULE,
         E_GLIDE_RULE.rule_id: E_GLIDE_RULE,
         TS_RULE.rule_id: TS_RULE,
         RL_Y_RULE.rule_id: RL_Y_RULE,
@@ -215,7 +208,6 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
     {
         "IYA": "explicit",
         "YA": "ya",
-        "ARABIC_INITIAL_GA": "plain",
         "E_GLIDE": "glide",
         "TS": "s",
         "RL_Y": "long",
@@ -239,7 +231,6 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
     {
         "IYA": "compact",
         "YA": "ae",
-        "ARABIC_INITIAL_GA": "plain",
         "E_GLIDE": "glide",
         "TS": "s",
         "RL_Y": "long",
