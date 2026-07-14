@@ -544,23 +544,17 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(resolve_dsl(dsl, {"MOSTAQIL": "pdf"}), pdf)
                 self.assertEqual(resolve_dsl(dsl), antat)
 
-    def test_final_double_l_is_policy_dsl(self) -> None:
+    def test_final_double_l_is_deterministic_single_l(self) -> None:
         cases = [
-            ("металл", "meta{{FINAL_DOUBLE_L|single=l|double=ll}}", "metall", "metal"),
-            (
-                "металлга",
-                "meta{{FINAL_DOUBLE_L|single=l|double=ll}}ğa",
-                "metallğa",
-                "metalğa",
-            ),
+            ("металл", "metal"),
+            ("металлга", "metalğa"),
         ]
 
-        for word, expected_dsl, pdf, antat in cases:
+        for word, expected in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "N")
-                self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl, {"FINAL_DOUBLE_L": "double"}), pdf)
-                self.assertEqual(resolve_dsl(dsl), antat)
+                self.assertEqual(dsl, expected)
+                self.assertEqual(resolve_dsl(dsl), expected)
 
     def test_native_vowel_before_e_uses_y_glide_vowel_harmony(self) -> None:
         self.assertEqual(convert_for_annotation("аерым", "N"), "ayırım")

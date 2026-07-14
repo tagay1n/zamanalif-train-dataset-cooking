@@ -20,7 +20,6 @@ from tatar_preannotator.conversion import (
     DslError,
     E_GLIDE_RULE,
     FIGYL_STEM_RULE,
-    FINAL_DOUBLE_L_RULE,
     HAMZA_RULE,
     IJTIMAGIY_STEM_RULE,
     IYA_RULE,
@@ -373,7 +372,6 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_final_ts_suffix_choices(word, result, label)
     result = result_with_project_e_choices(word, result, label)
     result = result_with_rl_y_choices(word, result, label)
-    result = result_with_final_double_l_choices(word, result)
     result = result_with_figyl_stem_choices(word, result)
     result = result_with_shigyr_stem_choices(word, result)
     result = result_with_ijtimagiy_stem_choices(word, result)
@@ -629,28 +627,6 @@ def result_with_rl_y_choices(
             start = match.end()
             changed = True
         _append_literal_segment(segments, text[start:])
-    return ConversionResult(tuple(segments)) if changed else result
-
-
-def result_with_final_double_l_choices(source: str, result: ConversionResult) -> ConversionResult:
-    """Annotate the attested ``металл`` / ``metal`` vs ``metall`` convention."""
-    if not source.casefold().startswith("металл"):
-        return result
-
-    segments: list[Literal | Choice] = []
-    changed = False
-    for segment in result.segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        text = segment.text
-        if not changed and text.startswith("metall"):
-            _append_literal_segment(segments, "meta")
-            segments.append(Choice(FINAL_DOUBLE_L_RULE.rule_id, FINAL_DOUBLE_L_RULE.options))
-            _append_literal_segment(segments, text[len("metall") :])
-            changed = True
-            continue
-        _append_literal_segment(segments, text)
     return ConversionResult(tuple(segments)) if changed else result
 
 
@@ -1562,6 +1538,8 @@ def _convert_known_label_without_hyphen(word: str, label: str) -> str:
             converted.append(_char_conversion(char, word, index, label))
         index += 1
     output = "".join(converted)
+    if word.casefold().startswith("металл") and output.startswith("metall"):
+        output = "metal" + output[len("metall") :]
     if label == "N":
         output = _apply_native_lexical_conventions(word, output)
     if label == "RL":

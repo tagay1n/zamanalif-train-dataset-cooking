@@ -1085,8 +1085,8 @@ PDF_GENERATED_WORD_CASES = [
     ('меню', 'menyu', 'RL'),
     ('менә', 'menä', 'N'),
     ('меркурий', 'merkuriy', 'RL'),
-    ('металл', 'metall', 'N'),
-    ('металлы', 'metallı', 'N'),
+    ('металл', 'metal', 'N'),  # PDF: metall; align with preferred deterministic single-l loanword spelling.
+    ('металлы', 'metalı', 'N'),  # PDF: metallı; align with preferred deterministic single-l loanword spelling.
     ('меңнән', 'meñnän', 'N'),
     ('микро', 'mikro', 'RL'),
     ('микән', 'mikän', 'N'),
