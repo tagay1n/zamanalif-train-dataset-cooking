@@ -140,14 +140,14 @@ class ConditionalConversionDslTests(unittest.TestCase):
             ("авыл", "awıl", "avıl"),
             ("актив", "aqtiw", "aktiv"),
             ("вакыт", "waqıt", "vakıt"),
-            ("проект", "proyıkt", "pro{{PROJECT_E|plain=e|glide=ye}}kt"),
+            ("проект", "proyıkt", "pro{{E_GLIDE|plain=e|glide=ye}}kt"),
         ]
 
         for word, native, loanword in cases:
             with self.subTest(word=word):
                 self.assert_origin_dependent(word, native, loanword)
 
-    def test_legacy_lexical_cases_are_not_encoded_as_policy_dsl(self) -> None:
+    def test_deterministic_lexical_cases_are_not_encoded_as_policy_dsl(self) -> None:
         for word, label in [
             ("мәгънә", "N"),
             ("җәмәгать", "N"),
@@ -156,7 +156,7 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 dsl = convert_for_annotation_dsl(word, label)
                 self.assertNotIn("{{", dsl)
 
-    def test_legacy_lexical_cases_remain_review_items(self) -> None:
+    def test_origin_dependent_lexical_cases_remain_review_items(self) -> None:
         for word in [
             "мәгънә",
             "җәмәгать",

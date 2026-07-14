@@ -18,11 +18,11 @@ from tatar_preannotator.conversion import (
     Choice,
     ConversionResult,
     DslError,
+    E_GLIDE_RULE,
     FIGYL_STEM_RULE,
     FINAL_TS_SUFFIX_RULE,
     FINAL_DOUBLE_L_RULE,
     HAMZA_RULE,
-    IE_GLIDE_RULE,
     IJTIMAGIY_STEM_RULE,
     IYA_RULE,
     KAGAZ_STEM_RULE,
@@ -34,7 +34,6 @@ from tatar_preannotator.conversion import (
     MOSTAQIL_RULE,
     NATIVE_UW_RULE,
     OU_LOANWORD_RULE,
-    PROJECT_E_RULE,
     RL_FINAL_KA_RULE,
     RUS_JOTATED_SOFTENING_RULE,
     RUS_BU_FRONT_RULE,
@@ -474,7 +473,7 @@ def result_with_ie_glide_choices(source: str, result: ConversionResult) -> Conve
         start = 0
         for match in re.finditer("ie", segment.text, flags=re.IGNORECASE):
             _append_literal_segment(segments, segment.text[start : match.start() + 1])
-            segments.append(Choice(IE_GLIDE_RULE.rule_id, IE_GLIDE_RULE.options))
+            segments.append(Choice(E_GLIDE_RULE.rule_id, E_GLIDE_RULE.options))
             start = match.end()
         _append_literal_segment(segments, segment.text[start:])
     return ConversionResult(tuple(segments))
@@ -637,7 +636,7 @@ def result_with_project_e_choices(
         text = segment.text
         if not changed and text.startswith("proyekt"):
             _append_literal_segment(segments, "pro")
-            segments.append(Choice(PROJECT_E_RULE.rule_id, PROJECT_E_RULE.options))
+            segments.append(Choice(E_GLIDE_RULE.rule_id, E_GLIDE_RULE.options))
             _append_literal_segment(segments, text[len("proye") :])
             changed = True
             continue

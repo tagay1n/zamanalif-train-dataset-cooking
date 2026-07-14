@@ -102,7 +102,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(result.tasks[0]["data"]["auto_zamanalif"], "waqıtında")
         self.assertEqual(
             result.tasks[1]["data"]["auto_zamanalif"],
-            "pro{{PROJECT_E|plain=e|glide=ye}}kt",
+            "pro{{E_GLIDE|plain=e|glide=ye}}kt",
         )
         self.assertEqual(result.tasks[2]["data"]["auto_zamanalif"], "")
         self.assertEqual(result.tasks[1]["data"]["gemini_origin"], "RL")
@@ -139,7 +139,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual([task["data"]["cyrl_word"] for task in result.tasks], ["банк", "проект"])
         self.assertEqual(
             result.tasks[1]["data"]["auto_zamanalif"],
-            "pro{{PROJECT_E|plain=e|glide=ye}}kt",
+            "pro{{E_GLIDE|plain=e|glide=ye}}kt",
         )
 
     def test_russian_loanword_review_letters_are_exported_for_rl_only(self) -> None:
@@ -407,21 +407,22 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("килүе", "N"), "kilüe")
         self.assertEqual(convert_for_annotation("пьеса", "N"), "pyesa")
 
-    def test_ie_glide_is_policy_dsl(self) -> None:
+    def test_e_glide_is_policy_dsl(self) -> None:
         cases = [
-            ("тиеш", "N", "ti{{IE_GLIDE|plain=e|glide=ye}}ş", "tieş", "tiyeş"),
-            ("тиен", "N", "ti{{IE_GLIDE|plain=e|glide=ye}}n", "tien", "tiyen"),
-            ("мие", "N", "mi{{IE_GLIDE|plain=e|glide=ye}}", "mie", "miye"),
-            ("задание", "RL", "zadani{{IE_GLIDE|plain=e|glide=ye}}", "zadanie", "zadaniye"),
-            ("имение", "RL", "imeni{{IE_GLIDE|plain=e|glide=ye}}", "imenie", "imeniye"),
+            ("тиеш", "N", "ti{{E_GLIDE|plain=e|glide=ye}}ş", "tieş", "tiyeş"),
+            ("тиен", "N", "ti{{E_GLIDE|plain=e|glide=ye}}n", "tien", "tiyen"),
+            ("мие", "N", "mi{{E_GLIDE|plain=e|glide=ye}}", "mie", "miye"),
+            ("задание", "RL", "zadani{{E_GLIDE|plain=e|glide=ye}}", "zadanie", "zadaniye"),
+            ("имение", "RL", "imeni{{E_GLIDE|plain=e|glide=ye}}", "imenie", "imeniye"),
         ]
 
         for word, label, expected_dsl, plain, glide in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, label)
                 self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl), plain)
-                self.assertEqual(resolve_dsl(dsl, {"IE_GLIDE": "glide"}), glide)
+                self.assertEqual(resolve_dsl(dsl, {"E_GLIDE": "plain"}), plain)
+                self.assertEqual(resolve_dsl(dsl, {"E_GLIDE": "glide"}), glide)
+                self.assertEqual(resolve_dsl(dsl), glide)
 
     def test_hard_iya_stems_use_hard_iya_policy_text(self) -> None:
         cases = [
@@ -454,12 +455,12 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_project_e_is_policy_dsl(self) -> None:
         cases = [
-            ("проект", "pro{{PROJECT_E|plain=e|glide=ye}}kt", "proekt", "proyekt"),
-            ("проекты", "pro{{PROJECT_E|plain=e|glide=ye}}ktı", "proektı", "proyektı"),
-            ("проектын", "pro{{PROJECT_E|plain=e|glide=ye}}ktın", "proektın", "proyektın"),
+            ("проект", "pro{{E_GLIDE|plain=e|glide=ye}}kt", "proekt", "proyekt"),
+            ("проекты", "pro{{E_GLIDE|plain=e|glide=ye}}ktı", "proektı", "proyektı"),
+            ("проектын", "pro{{E_GLIDE|plain=e|glide=ye}}ktın", "proektın", "proyektın"),
             (
                 "проектының",
-                "pro{{PROJECT_E|plain=e|glide=ye}}ktınıñ",
+                "pro{{E_GLIDE|plain=e|glide=ye}}ktınıñ",
                 "proektınıñ",
                 "proyektınıñ",
             ),
@@ -469,7 +470,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "RL")
                 self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl, {"PROJECT_E": "plain"}), plain)
+                self.assertEqual(resolve_dsl(dsl, {"E_GLIDE": "plain"}), plain)
                 self.assertEqual(resolve_dsl(dsl), glide)
 
     def test_music_y_is_policy_dsl(self) -> None:

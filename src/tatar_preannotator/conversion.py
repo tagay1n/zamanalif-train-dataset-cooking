@@ -91,13 +91,8 @@ ARABIC_INITIAL_GA_RULE = RuleDefinition(
     default_option="plain",
     allow_custom_option_text=True,
 )
-IE_GLIDE_RULE = RuleDefinition(
-    rule_id="IE_GLIDE",
-    options=(("plain", "e"), ("glide", "ye")),
-    default_option="plain",
-)
-PROJECT_E_RULE = RuleDefinition(
-    rule_id="PROJECT_E",
+E_GLIDE_RULE = RuleDefinition(
+    rule_id="E_GLIDE",
     options=(("plain", "e"), ("glide", "ye")),
     default_option="glide",
 )
@@ -227,8 +222,7 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         IYA_RULE.rule_id: IYA_RULE,
         YA_RULE.rule_id: YA_RULE,
         ARABIC_INITIAL_GA_RULE.rule_id: ARABIC_INITIAL_GA_RULE,
-        IE_GLIDE_RULE.rule_id: IE_GLIDE_RULE,
-        PROJECT_E_RULE.rule_id: PROJECT_E_RULE,
+        E_GLIDE_RULE.rule_id: E_GLIDE_RULE,
         KTS_AFTER_K_RULE.rule_id: KTS_AFTER_K_RULE,
         FINAL_TS_SUFFIX_RULE.rule_id: FINAL_TS_SUFFIX_RULE,
         OU_LOANWORD_RULE.rule_id: OU_LOANWORD_RULE,
@@ -258,8 +252,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "IYA": "explicit",
         "YA": "ya",
         "ARABIC_INITIAL_GA": "plain",
-        "IE_GLIDE": "plain",
-        "PROJECT_E": "glide",
+        "E_GLIDE": "glide",
         "KTS_AFTER_K": "s",
         "FINAL_TS_SUFFIX": "stem_s",
         "OU_LOANWORD": "plain",
@@ -289,8 +282,7 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "IYA": "compact",
         "YA": "ae",
         "ARABIC_INITIAL_GA": "plain",
-        "IE_GLIDE": "plain",
-        "PROJECT_E": "glide",
+        "E_GLIDE": "glide",
         "KTS_AFTER_K": "s",
         "FINAL_TS_SUFFIX": "stem_s",
         "OU_LOANWORD": "plain",
@@ -320,7 +312,7 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
 def result_with_iya_choices(source: str, compact_zamanalif: str) -> ConversionResult:
     """Annotate aligned Cyrillic ``ия`` / compact ``iä`` occurrences with IYA choices.
 
-    The legacy converter already handles lexical exceptions. A choice is emitted only
+    The word converter already handles lexical exceptions. A choice is emitted only
     when every source ``ия`` occurrence aligns with a compact ``iä`` occurrence. If
     alignment is uncertain, the plain result is retained for human review rather than
     inventing a policy choice.
@@ -495,7 +487,7 @@ def _validate_zamanalif(value: str, context: str) -> None:
 
 
 def normalize_zamanalif_apostrophes(value: str) -> str:
-    """Normalize legacy apostrophe-like marks to Zamanalif U+02BC."""
+    """Normalize apostrophe-like marks to Zamanalif U+02BC."""
     return "".join(
         ZAMANALIF_APOSTROPHE if char in APOSTROPHE_VARIANTS else char
         for char in value

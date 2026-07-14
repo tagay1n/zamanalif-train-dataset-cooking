@@ -11,7 +11,7 @@ of a DSL choice.
 - `ARABIC_INITIAL_GA`: kept only for the `гади` family where references disagree
   (`гади -> ğadi` in the PDF fixture, `гади -> ğädi` in ANTAT; ANTAT also has
   both variants for `гадиләштерергә`).
-- `IE_GLIDE`: kept pending a separate audit of `ие -> ie/iye`.
+- `E_GLIDE`: kept pending a separate audit of `ие -> ie/iye`.
 - `RUS_SIGN_GLIDE`, `RUS_SOFT_SIGN`, `RUS_JOTATED_SOFTENING`: kept for Russian
   sign/apostrophe policy differences.
 - `RL_FINAL_KA`: kept pending a separate morphology audit.
@@ -33,6 +33,6 @@ of a DSL choice.
 
 ## Next Audit Candidates
 
-- `IE_GLIDE`
+- `E_GLIDE`
 - `RL_FINAL_KA`
 - `NATIVE_UW`
