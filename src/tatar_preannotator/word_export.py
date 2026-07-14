@@ -20,13 +20,11 @@ from tatar_preannotator.conversion import (
     DslError,
     E_GLIDE_RULE,
     FIGYL_STEM_RULE,
-    FINAL_TS_SUFFIX_RULE,
     FINAL_DOUBLE_L_RULE,
     HAMZA_RULE,
     IJTIMAGIY_STEM_RULE,
     IYA_RULE,
     KAGAZ_STEM_RULE,
-    KTS_AFTER_K_RULE,
     Literal,
     MASHGUL_STEM_RULE,
     MUSIC_Y_RULE,
@@ -41,6 +39,7 @@ from tatar_preannotator.conversion import (
     RUS_SOFT_SIGN_O_RULE,
     RUS_SIGN_RULE,
     SHIGYR_STEM_RULE,
+    TS_RULE,
     YA_RULE,
     ZAMANALIF_APOSTROPHE,
     normalize_zamanalif_apostrophes,
@@ -500,7 +499,7 @@ def result_with_kts_after_k_choices(
         start = 0
         for match in re.finditer("ks", segment.text, flags=re.IGNORECASE):
             _append_literal_segment(segments, segment.text[start : match.start() + 1])
-            segments.append(Choice(KTS_AFTER_K_RULE.rule_id, KTS_AFTER_K_RULE.options))
+            segments.append(Choice(TS_RULE.rule_id, TS_RULE.options))
             start = match.end()
         _append_literal_segment(segments, segment.text[start:])
     return ConversionResult(tuple(segments))
@@ -582,7 +581,7 @@ def result_with_final_ts_suffix_choices(
             if remaining <= 0:
                 break
             _append_literal_segment(segments, text[start : match.start()])
-            segments.append(Choice(FINAL_TS_SUFFIX_RULE.rule_id, FINAL_TS_SUFFIX_RULE.options))
+            segments.append(Choice(TS_RULE.rule_id, TS_RULE.options))
             start = match.end()
             remaining -= 1
         _append_literal_segment(segments, text[start:])

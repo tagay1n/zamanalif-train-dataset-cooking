@@ -71,11 +71,11 @@ class ConditionalConversionDslTests(unittest.TestCase):
 
         self.assertEqual(
             dsl,
-            "retrospek{{KTS_AFTER_K|s=s|ts=ts}}i{{IYA|compact=ä|explicit=yä}}",
+            "retrospek{{TS|s=s|ts=ts}}i{{IYA|compact=ä|explicit=yä}}",
         )
         self.assertEqual(resolve_dsl(dsl), "retrospeksiyä")
         self.assertEqual(
-            resolve_dsl(dsl, {"KTS_AFTER_K": "ts", "IYA": "explicit"}),
+            resolve_dsl(dsl, {"TS": "ts", "IYA": "explicit"}),
             "retrospektsiyä",
         )
 
@@ -85,9 +85,9 @@ class ConditionalConversionDslTests(unittest.TestCase):
     def test_loanword_final_ts_before_tatar_suffix_is_policy_dsl(self) -> None:
         dsl = convert_for_annotation_dsl("немецләрне", "RL")
 
-        self.assertEqual(dsl, "neme{{FINAL_TS_SUFFIX|stem_s=s|surface_ts=ts}}lärne")
+        self.assertEqual(dsl, "neme{{TS|s=s|ts=ts}}lärne")
         self.assertEqual(resolve_dsl(dsl), "nemeslärne")
-        self.assertEqual(resolve_dsl(dsl, {"FINAL_TS_SUFFIX": "surface_ts"}), "nemetslärne")
+        self.assertEqual(resolve_dsl(dsl, {"TS": "ts"}), "nemetslärne")
 
     def test_final_ts_suffix_policy_does_not_cover_internal_root_ts(self) -> None:
         self.assertEqual(convert_for_annotation_dsl("лицей", "RL"), "litsey")

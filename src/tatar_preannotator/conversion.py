@@ -96,15 +96,10 @@ E_GLIDE_RULE = RuleDefinition(
     options=(("plain", "e"), ("glide", "ye")),
     default_option="glide",
 )
-KTS_AFTER_K_RULE = RuleDefinition(
-    rule_id="KTS_AFTER_K",
+TS_RULE = RuleDefinition(
+    rule_id="TS",
     options=(("s", "s"), ("ts", "ts")),
     default_option="s",
-)
-FINAL_TS_SUFFIX_RULE = RuleDefinition(
-    rule_id="FINAL_TS_SUFFIX",
-    options=(("stem_s", "s"), ("surface_ts", "ts")),
-    default_option="stem_s",
 )
 OU_LOANWORD_RULE = RuleDefinition(
     rule_id="OU_LOANWORD",
@@ -213,8 +208,7 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         YA_RULE.rule_id: YA_RULE,
         ARABIC_INITIAL_GA_RULE.rule_id: ARABIC_INITIAL_GA_RULE,
         E_GLIDE_RULE.rule_id: E_GLIDE_RULE,
-        KTS_AFTER_K_RULE.rule_id: KTS_AFTER_K_RULE,
-        FINAL_TS_SUFFIX_RULE.rule_id: FINAL_TS_SUFFIX_RULE,
+        TS_RULE.rule_id: TS_RULE,
         OU_LOANWORD_RULE.rule_id: OU_LOANWORD_RULE,
         MUSIC_Y_RULE.rule_id: MUSIC_Y_RULE,
         MOSTAQIL_RULE.rule_id: MOSTAQIL_RULE,
@@ -241,8 +235,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "YA": "ya",
         "ARABIC_INITIAL_GA": "plain",
         "E_GLIDE": "glide",
-        "KTS_AFTER_K": "s",
-        "FINAL_TS_SUFFIX": "stem_s",
+        "TS": "s",
         "OU_LOANWORD": "plain",
         "MUSIC_Y": "long",
         "MOSTAQIL": "antat",
@@ -269,8 +262,7 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "YA": "ae",
         "ARABIC_INITIAL_GA": "plain",
         "E_GLIDE": "glide",
-        "KTS_AFTER_K": "s",
-        "FINAL_TS_SUFFIX": "stem_s",
+        "TS": "s",
         "OU_LOANWORD": "plain",
         "MUSIC_Y": "long",
         "MOSTAQIL": "pdf",
