@@ -172,12 +172,12 @@ class ConditionalConversionDslTests(unittest.TestCase):
     def test_month_names_are_policy_dsl(self) -> None:
         cases = [
             ("гыйнвар", "N", "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}", "ğıynwar", "ğinwar"),
-            ("июнь", "RL", "{{MONTH_NAME|ordinary=iyun|pdf=iyün}}{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}", "iyunʼ", "iyün"),
-            ("июль", "RL", "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}", "iyulʼ", "iyül"),
+            ("июнь", "RL", "{{MONTH_NAME|ordinary=iyun|pdf=iyün}}{{RUS_SIGN|omit=|preserve=ʼ}}", "iyunʼ", "iyün"),
+            ("июль", "RL", "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SIGN|omit=|preserve=ʼ}}", "iyulʼ", "iyül"),
             ("сентябрендә", "RL", "{{MONTH_NAME|ordinary=sentyabr|pdf=sentäbr}}endä", "sentyabrendä", "sentäbrendä"),
-            ("октябрь", "RL", "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}", "oktyabrʼ", "oktäbr"),
+            ("октябрь", "RL", "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}", "oktyabrʼ", "oktäbr"),
             ("ноябрь", "N", "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}", "noyabr", "noyäbr"),
-            ("декабрь", "RL", "{{MONTH_NAME|ordinary=dekabr|pdf=dekäbr}}{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}", "dekabrʼ", "dekäbr"),
+            ("декабрь", "RL", "{{MONTH_NAME|ordinary=dekabr|pdf=dekäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}", "dekabrʼ", "dekäbr"),
         ]
 
         for word, label, expected_dsl, ordinary, pdf in cases:
@@ -186,7 +186,7 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 self.assertEqual(dsl, expected_dsl)
                 self.assertEqual(resolve_dsl(dsl), ordinary)
                 self.assertEqual(
-                    resolve_dsl(dsl, {"MONTH_NAME": "pdf", "RUS_SOFT_SIGN": "omit"}),
+                    resolve_dsl(dsl, {"MONTH_NAME": "pdf", "RUS_SIGN": "omit"}),
                     pdf,
                 )
 
@@ -275,16 +275,17 @@ class ConditionalConversionDslTests(unittest.TestCase):
 
     def test_russian_sign_before_glide_is_policy_dsl(self) -> None:
         cases = [
-            ("компьютер", "komp{{RUS_SIGN_GLIDE|omit=|preserve=ʼ}}yuter", "kompyuter", "kompʼyuter"),
-            ("нью-йорк", "n{{RUS_SIGN_GLIDE|omit=|preserve=ʼ}}yu-york", "nyu-york", "nʼyu-york"),
+            ("компьютер", "komp{{RUS_SIGN|omit=|preserve=ʼ}}yuter", "kompyuter", "kompʼyuter"),
+            ("нью-йорк", "n{{RUS_SIGN|omit=|preserve=ʼ}}yu-york", "nyu-york", "nʼyu-york"),
         ]
 
         for word, expected_dsl, omitted, preserved in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "RL")
                 self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl), omitted)
-                self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN_GLIDE": "preserve"}), preserved)
+                self.assertEqual(resolve_dsl(dsl), preserved)
+                self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN": "omit"}), omitted)
+                self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN": "preserve"}), preserved)
 
         dsl = convert_for_annotation_dsl("барьер", "RL")
         self.assertEqual(dsl, "bar{{RUS_SIGN_E|glide=y|apostrophe=ʼ|apostrophe_glide=ʼy}}er")
@@ -293,18 +294,18 @@ class ConditionalConversionDslTests(unittest.TestCase):
 
     def test_russian_soft_sign_is_policy_dsl(self) -> None:
         cases = [
-            ("роль", "rol{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}", "rol", "rolʼ"),
-            ("культура", "kul{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}tura", "kultura", "kulʼtura"),
-            ("секретарь", "sekretar{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}", "sekretar", "sekretarʼ"),
-            ("автомобиль", "avtomobil{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}", "avtomobil", "avtomobilʼ"),
+            ("роль", "rol{{RUS_SIGN|omit=|preserve=ʼ}}", "rol", "rolʼ"),
+            ("культура", "kul{{RUS_SIGN|omit=|preserve=ʼ}}tura", "kultura", "kulʼtura"),
+            ("секретарь", "sekretar{{RUS_SIGN|omit=|preserve=ʼ}}", "sekretar", "sekretarʼ"),
+            ("автомобиль", "avtomobil{{RUS_SIGN|omit=|preserve=ʼ}}", "avtomobil", "avtomobilʼ"),
         ]
 
         for word, expected_dsl, omitted, preserved in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "RL")
                 self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl, {"RUS_SOFT_SIGN": "omit"}), omitted)
-                self.assertEqual(resolve_dsl(dsl, {"RUS_SOFT_SIGN": "preserve"}), preserved)
+                self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN": "omit"}), omitted)
+                self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN": "preserve"}), preserved)
 
     def test_arabic_persian_g_hard_sign_and_k_hard_sign_are_general_rules(self) -> None:
         cases = [

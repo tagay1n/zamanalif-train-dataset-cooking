@@ -169,7 +169,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(by_word["сыр"]["auto_zamanalif"], "sıyr")
         self.assertEqual(
             by_word["роль"]["auto_zamanalif"],
-            "rol{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}",
+            "rol{{RUS_SIGN|omit=|preserve=ʼ}}",
         )
         self.assertEqual(
             by_word["шофёр"]["auto_zamanalif"],
@@ -370,7 +370,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("һәръяклап", "N"), "häryaqlap")
         self.assertEqual(
             convert_for_annotation_dsl("ладья", "RL"),
-            "lad{{RUS_SIGN_GLIDE|omit=|preserve=ʼ}}ya",
+            "lad{{RUS_SIGN|omit=|preserve=ʼ}}ya",
         )
 
     def test_e_conversion_uses_pdf_context_rules(self) -> None:
@@ -398,7 +398,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(
             resolve_dsl(
                 convert_for_annotation_dsl("епископаль", "RL"),
-                {"RUS_SOFT_SIGN": "omit"},
+                {"RUS_SIGN": "omit"},
             ),
             "yepiskopal",
         )
@@ -478,7 +478,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("музыка", "muz{{MUSIC_Y|short=ı|long=ıy}}ka", "muzıka", "muzıyka"),
             (
                 "музыкаль",
-                "muz{{MUSIC_Y|short=ı|long=ıy}}kal{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}",
+                "muz{{MUSIC_Y|short=ı|long=ıy}}kal{{RUS_SIGN|omit=|preserve=ʼ}}",
                 "muzıkal",
                 "muzıykalʼ",
             ),
@@ -503,7 +503,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(
                     resolve_dsl(
                         dsl,
-                        {"MUSIC_Y": "short", "RUS_SOFT_SIGN": "omit"},
+                        {"MUSIC_Y": "short", "RUS_SIGN": "omit"},
                     ),
                     short,
                 )
@@ -1060,23 +1060,23 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("секретарь", "RL"), "sekretarʼ")
         self.assertEqual(
             convert_for_annotation_dsl("роль", "RL"),
-            "rol{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}",
+            "rol{{RUS_SIGN|omit=|preserve=ʼ}}",
         )
         self.assertEqual(
             convert_for_annotation_dsl("культура", "RL"),
-            "kul{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}tura",
+            "kul{{RUS_SIGN|omit=|preserve=ʼ}}tura",
         )
         self.assertEqual(
             convert_for_annotation_dsl("секретарь", "RL"),
-            "sekretar{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}",
+            "sekretar{{RUS_SIGN|omit=|preserve=ʼ}}",
         )
         self.assertEqual(
             convert_for_annotation_dsl("коньяк", "RL"),
-            "kon{{RUS_SIGN_GLIDE|omit=|preserve=ʼ}}yak",
+            "kon{{RUS_SIGN|omit=|preserve=ʼ}}yak",
         )
         self.assertEqual(
             convert_for_annotation_dsl("тальян", "RL"),
-            "tal{{RUS_SIGN_GLIDE|omit=|preserve=ʼ}}yan",
+            "tal{{RUS_SIGN|omit=|preserve=ʼ}}yan",
         )
         self.assertEqual(
             convert_for_annotation_dsl("объективлык", "RL"),
@@ -1178,11 +1178,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual(
             dsl,
-            "vestib{{RUS_BU_FRONT|yu=yu|apostrophe_front=ʼü}}l{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}",
+            "vestib{{RUS_BU_FRONT|yu=yu|apostrophe_front=ʼü}}l{{RUS_SIGN|omit=|preserve=ʼ}}",
         )
         self.assertEqual(resolve_dsl(dsl), "vestibyulʼ")
         self.assertEqual(
-            resolve_dsl(dsl, {"RUS_BU_FRONT": "apostrophe_front", "RUS_SOFT_SIGN": "omit"}),
+            resolve_dsl(dsl, {"RUS_BU_FRONT": "apostrophe_front", "RUS_SIGN": "omit"}),
             "vestibʼül",
         )
 
@@ -1191,11 +1191,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual(
             dsl,
-            "geral{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}di{{RL_FINAL_KA|suffix=q|stem=k}}a",
+            "geral{{RUS_SIGN|omit=|preserve=ʼ}}di{{RL_FINAL_KA|suffix=q|stem=k}}a",
         )
         self.assertEqual(resolve_dsl(dsl), "geralʼdiqa")
         self.assertEqual(
-            resolve_dsl(dsl, {"RUS_SOFT_SIGN": "preserve", "RL_FINAL_KA": "stem"}),
+            resolve_dsl(dsl, {"RUS_SIGN": "preserve", "RL_FINAL_KA": "stem"}),
             "geralʼdika",
         )
 
@@ -1204,13 +1204,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual(
             dsl,
-            "kn{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}az{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}",
+            "kn{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}az{{RUS_SIGN|omit=|preserve=ʼ}}",
         )
         self.assertEqual(resolve_dsl(dsl), "knyazʼ")
         self.assertEqual(
             resolve_dsl(
                 dsl,
-                {"RUS_JOTATED_SOFTENING": "apostrophe", "RUS_SOFT_SIGN": "omit"},
+                {"RUS_JOTATED_SOFTENING": "apostrophe", "RUS_SIGN": "omit"},
             ),
             "knʼaz",
         )

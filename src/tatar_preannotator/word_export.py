@@ -39,9 +39,8 @@ from tatar_preannotator.conversion import (
     RUS_BU_FRONT_RULE,
     RUS_SHCH_YO_RULE,
     RUS_SIGN_E_RULE,
-    RUS_SOFT_SIGN_RULE,
     RUS_SOFT_SIGN_O_RULE,
-    RUS_SIGN_GLIDE_RULE,
+    RUS_SIGN_RULE,
     SHIGYR_STEM_RULE,
     YA_RULE,
     ZAMANALIF_APOSTROPHE,
@@ -1030,7 +1029,7 @@ def result_with_russian_sign_glide_choices(
                 continue
             if converted.startswith(ZAMANALIF_APOSTROPHE, converted_index):
                 converted_index += 1
-            segments.append(Choice(RUS_SIGN_GLIDE_RULE.rule_id, RUS_SIGN_GLIDE_RULE.options))
+            segments.append(Choice(RUS_SIGN_RULE.rule_id, RUS_SIGN_RULE.options))
             source_index += 1
             continue
 
@@ -1078,7 +1077,7 @@ def result_with_russian_soft_sign_choices(
             ):
                 return ConversionResult((Literal(converted),))
             if converted.startswith(ZAMANALIF_APOSTROPHE, converted_index):
-                segments.append(Choice(RUS_SOFT_SIGN_RULE.rule_id, RUS_SOFT_SIGN_RULE.options))
+                segments.append(Choice(RUS_SIGN_RULE.rule_id, RUS_SIGN_RULE.options))
                 converted_index += 1
                 source_index += 1
                 continue

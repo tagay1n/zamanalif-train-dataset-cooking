@@ -97,21 +97,21 @@ class ConversionDslTests(unittest.TestCase):
             result.resolve({"IYA": "other"})
 
     def test_russian_sign_glide_rule_resolves_by_policy(self) -> None:
-        value = "komp{{RUS_SIGN_GLIDE|omit=|preserve=ʼ}}yuter"
+        value = "komp{{RUS_SIGN|omit=|preserve=ʼ}}yuter"
 
-        self.assertEqual(resolve_dsl(value), "kompyuter")
-        self.assertEqual(resolve_dsl(value, {"RUS_SIGN_GLIDE": "omit"}), "kompyuter")
+        self.assertEqual(resolve_dsl(value), "kompʼyuter")
+        self.assertEqual(resolve_dsl(value, {"RUS_SIGN": "omit"}), "kompyuter")
         self.assertEqual(
-            resolve_dsl(value, {"RUS_SIGN_GLIDE": "preserve"}),
+            resolve_dsl(value, {"RUS_SIGN": "preserve"}),
             "kompʼyuter",
         )
 
     def test_russian_soft_sign_rule_resolves_by_policy(self) -> None:
-        value = "rol{{RUS_SOFT_SIGN|omit=|preserve=ʼ}}"
+        value = "rol{{RUS_SIGN|omit=|preserve=ʼ}}"
 
         self.assertEqual(resolve_dsl(value), "rolʼ")
-        self.assertEqual(resolve_dsl(value, {"RUS_SOFT_SIGN": "omit"}), "rol")
-        self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "rol")
+        self.assertEqual(resolve_dsl(value, {"RUS_SIGN": "omit"}), "rol")
+        self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "rolʼ")
         self.assertEqual(resolve_dsl(value, PREFERRED_POLICY), "rolʼ")
 
     def test_russian_jotated_softening_rule_resolves_by_policy(self) -> None:

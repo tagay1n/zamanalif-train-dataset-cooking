@@ -163,10 +163,10 @@ FINAL_DOUBLE_L_RULE = RuleDefinition(
     options=(("single", "l"), ("double", "ll")),
     default_option="single",
 )
-RUS_SIGN_GLIDE_RULE = RuleDefinition(
-    rule_id="RUS_SIGN_GLIDE",
+RUS_SIGN_RULE = RuleDefinition(
+    rule_id="RUS_SIGN",
     options=(("omit", ""), ("preserve", ZAMANALIF_APOSTROPHE)),
-    default_option="omit",
+    default_option="preserve",
 )
 RUS_SIGN_E_RULE = RuleDefinition(
     rule_id="RUS_SIGN_E",
@@ -184,11 +184,6 @@ RUS_SOFT_SIGN_O_RULE = RuleDefinition(
         ("preserve", ZAMANALIF_APOSTROPHE),
         ("apostrophe_y", ZAMANALIF_APOSTROPHE + "y"),
     ),
-    default_option="preserve",
-)
-RUS_SOFT_SIGN_RULE = RuleDefinition(
-    rule_id="RUS_SOFT_SIGN",
-    options=(("omit", ""), ("preserve", ZAMANALIF_APOSTROPHE)),
     default_option="preserve",
 )
 RUS_JOTATED_SOFTENING_RULE = RuleDefinition(
@@ -236,10 +231,9 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         MONTH_NAME_RULE.rule_id: MONTH_NAME_RULE,
         HAMZA_RULE.rule_id: HAMZA_RULE,
         FINAL_DOUBLE_L_RULE.rule_id: FINAL_DOUBLE_L_RULE,
-        RUS_SIGN_GLIDE_RULE.rule_id: RUS_SIGN_GLIDE_RULE,
+        RUS_SIGN_RULE.rule_id: RUS_SIGN_RULE,
         RUS_SIGN_E_RULE.rule_id: RUS_SIGN_E_RULE,
         RUS_SOFT_SIGN_O_RULE.rule_id: RUS_SOFT_SIGN_O_RULE,
-        RUS_SOFT_SIGN_RULE.rule_id: RUS_SOFT_SIGN_RULE,
         RUS_JOTATED_SOFTENING_RULE.rule_id: RUS_JOTATED_SOFTENING_RULE,
         RUS_SHCH_YO_RULE.rule_id: RUS_SHCH_YO_RULE,
         RUS_BU_FRONT_RULE.rule_id: RUS_BU_FRONT_RULE,
@@ -266,10 +260,9 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "MONTH_NAME": "ordinary",
         "HAMZA": "omit",
         "FINAL_DOUBLE_L": "single",
-        "RUS_SIGN_GLIDE": "omit",
+        "RUS_SIGN": "preserve",
         "RUS_SIGN_E": "glide",
         "RUS_SOFT_SIGN_O": "preserve",
-        "RUS_SOFT_SIGN": "preserve",
         "RUS_JOTATED_SOFTENING": "glide",
         "RUS_SHCH_YO": "glide",
         "RUS_BU_FRONT": "yu",
@@ -296,10 +289,9 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "MONTH_NAME": "pdf",
         "HAMZA": "preserve",
         "FINAL_DOUBLE_L": "double",
-        "RUS_SIGN_GLIDE": "omit",
+        "RUS_SIGN": "preserve",
         "RUS_SIGN_E": "glide",
         "RUS_SOFT_SIGN_O": "preserve",
-        "RUS_SOFT_SIGN": "omit",
         "RUS_JOTATED_SOFTENING": "glide",
         "RUS_SHCH_YO": "plain",
         "RUS_BU_FRONT": "yu",
