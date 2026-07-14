@@ -1168,7 +1168,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('ботинкасы', 'botinkası', 'BOOTEE', 1074),
     ('ботка', 'botqa', 'CEREAL', 1488),
     ('боткасы', 'botqası', 'CHAT', 1537),
-    ('боулинг', 'bowling', 'BOWLING', 1116),
+    ('боулинг', 'bowling', 'BOWLING', 1116),  # Keep as narrow English-source spelling; other оу loanwords remain plain ou.
     ('боцман', 'botsman', 'BOATSWAIN', 1031),
     ('боҗра', 'bocra', 'HALO', 4061),
     ('бразилия', 'braziliyä', 'BRAZILIAN', 1151),

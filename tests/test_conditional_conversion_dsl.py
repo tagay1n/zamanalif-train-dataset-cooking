@@ -92,12 +92,9 @@ class ConditionalConversionDslTests(unittest.TestCase):
     def test_final_ts_suffix_policy_does_not_cover_internal_root_ts(self) -> None:
         self.assertEqual(convert_for_annotation_dsl("лицей", "RL"), "litsey")
 
-    def test_loanword_ou_is_policy_dsl(self) -> None:
-        dsl = convert_for_annotation_dsl("боулинг", "RL")
-
-        self.assertEqual(dsl, "bo{{OU_LOANWORD|plain=u|source_w=w}}ling")
-        self.assertEqual(resolve_dsl(dsl), "bouling")
-        self.assertEqual(resolve_dsl(dsl, {"OU_LOANWORD": "source_w"}), "bowling")
+    def test_loanword_ou_is_not_general_policy_dsl(self) -> None:
+        self.assertEqual(convert_for_annotation_dsl("соус", "RL"), "sous")
+        self.assertEqual(convert_for_annotation_dsl("боулинг", "RL"), "bowling")
 
     def test_loanword_stems_use_tatar_g_k_suffix_conversion(self) -> None:
         cases = [

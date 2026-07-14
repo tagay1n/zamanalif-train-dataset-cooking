@@ -595,7 +595,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("граверлау", "RL", "graverlaw"),
             ("консервлау", "RL", "konservlaw"),
             ("страховкалау", "RL", "straxovkalaw"),
-            ("боулинг", "RL", "bouling"),
+            ("боулинг", "RL", "bowling"),
             ("культура", "RL", "kulʼtura"),
         ]
 
