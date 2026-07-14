@@ -24,10 +24,12 @@ from .manual_preannotate import ManualPreannotateError
 from .manual_preannotate_web import serve_manual_preannotation_web
 from .training_export import TrainingExportError, export_training_dataset
 from .word_export import (
+    export_labelstudio_project_tasks_from_db,
     export_labelstudio_tasks_from_db,
     load_exported_words,
     mark_exported_words,
     write_outputs,
+    write_split_outputs,
 )
 
 
@@ -77,7 +79,11 @@ def main(argv: list[str] | None = None) -> int:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     export_words.add_argument("--db", default=DEFAULT_DB_PATH, help="SQLite application database.")
-    export_words.add_argument("--output", required=True, help="Label Studio JSON output.")
+    export_words.add_argument("--output", help="Label Studio JSON output.")
+    export_words.add_argument(
+        "--output-dir",
+        help="Directory for split Label Studio project JSON outputs.",
+    )
     export_words.add_argument("--max-items", type=int, help="Maximum exported words.")
     export_words.add_argument("--include-rl", action=argparse.BooleanOptionalAction, default=True)
     export_words.add_argument(
@@ -261,6 +267,10 @@ def _repair_unprocessable(args: argparse.Namespace) -> int:
 
 
 def _annotation_export(args: argparse.Namespace) -> int:
+    if bool(args.output) == bool(args.output_dir):
+        raise SystemExit("provide exactly one of --output or --output-dir")
+    if args.output_dir and args.report_output:
+        raise SystemExit("--report-output can only be used with --output")
     if args.max_items is not None and args.max_items < 1:
         raise SystemExit("--max-items must be positive")
     if args.min_frequency < 1:
@@ -277,8 +287,14 @@ def _annotation_export(args: argparse.Namespace) -> int:
             "sort_by": args.sort_by,
             "already_exported": already_exported,
         }
-        result = export_labelstudio_tasks_from_db(args.db, **export_kwargs)
-        report_path = write_outputs(result, args.output, report_output=args.report_output)
+        if args.output_dir:
+            result = export_labelstudio_project_tasks_from_db(args.db, **export_kwargs)
+            report_path = write_split_outputs(result, args.output_dir)
+            output_target = args.output_dir
+        else:
+            result = export_labelstudio_tasks_from_db(args.db, **export_kwargs)
+            report_path = write_outputs(result, args.output, report_output=args.report_output)
+            output_target = args.output
         if args.track_exported:
             mark_exported_words(state_db, result.exported_words)
     except (OSError, ValueError, sqlite3.Error) as exc:
@@ -287,7 +303,7 @@ def _annotation_export(args: argparse.Namespace) -> int:
 
     print(
         "annotation export complete: "
-        f"exported={len(result.tasks)} output={args.output} report={report_path}"
+        f"exported={len(result.exported_words)} output={output_target} report={report_path}"
     )
     return 0
 

@@ -24,6 +24,7 @@ from tatar_preannotator.conversion import (
     IYA_RULE,
     KAGAZ_STEM_RULE,
     Literal,
+    RULES,
     MASHGUL_STEM_RULE,
     RL_Y_RULE,
     MONTH_NAME_RULE,
@@ -72,6 +73,13 @@ class WordStats:
 @dataclass(frozen=True)
 class ExportResult:
     tasks: list[dict[str, Any]]
+    report: dict[str, Any]
+    exported_words: list[str]
+
+
+@dataclass(frozen=True)
+class SplitExportResult:
+    projects: dict[str, ExportResult]
     report: dict[str, Any]
     exported_words: list[str]
 
@@ -178,6 +186,77 @@ def export_labelstudio_tasks_from_db(
         reviewed_words=reviewed_words,
         word_resolutions=word_resolutions,
     )
+
+
+def export_labelstudio_project_tasks_from_db(
+    db_path: str | Path,
+    *,
+    max_items: int | None = None,
+    include_rl: bool = True,
+    include_unknown: bool = True,
+    min_frequency: int = 1,
+    sort_by: str = "frequency_desc",
+    already_exported: set[str] | None = None,
+    reviewed_words: set[str] | None = None,
+    word_resolutions: dict[str, str] | None = None,
+) -> SplitExportResult:
+    """Build focused Label Studio word-review project tasks from SQLite rows."""
+    base = export_labelstudio_tasks_from_db(
+        db_path,
+        max_items=max_items,
+        include_rl=include_rl,
+        include_unknown=include_unknown,
+        min_frequency=min_frequency,
+        sort_by=sort_by,
+        already_exported=already_exported,
+        reviewed_words=reviewed_words,
+        word_resolutions=word_resolutions,
+    )
+    return split_export_result(base)
+
+
+def split_export_result(result: ExportResult) -> SplitExportResult:
+    """Split one export result into focused project buckets."""
+    grouped_tasks: dict[str, list[dict[str, Any]]] = {}
+    grouped_words: dict[str, list[str]] = {}
+    for task, normalized in zip(result.tasks, result.exported_words, strict=True):
+        data = task.get("data", {})
+        label = data.get("gemini_origin", "U")
+        project = classify_project(normalized, label if isinstance(label, str) else "U")
+        grouped_tasks.setdefault(project["key"], []).append(_task_with_project_data(task, project))
+        grouped_words.setdefault(project["key"], []).append(normalized)
+
+    projects: dict[str, ExportResult] = {}
+    for project_key in _ordered_project_keys(grouped_tasks):
+        tasks = grouped_tasks[project_key]
+        words = grouped_words[project_key]
+        projects[project_key] = ExportResult(
+            tasks=tasks,
+            report=_project_report(project_key, tasks, words),
+            exported_words=words,
+        )
+
+    return SplitExportResult(
+        projects=projects,
+        report=_split_report(result, projects),
+        exported_words=result.exported_words,
+    )
+
+
+def classify_project(word: str, label: str) -> dict[str, Any]:
+    """Return the focused Label Studio project metadata for one normalized word."""
+    result = conversion_result_for_annotation(word, label)
+    rules = list(result.rule_ids) if result is not None else []
+    if len(rules) > 1:
+        key = "complex_multi_rule"
+        title = "Complex multi-rule words"
+    elif len(rules) == 1:
+        key = _project_key_for_rule(rules[0])
+        title = _project_title_for_key(key)
+    else:
+        key = "catchall"
+        title = "Catchall word review"
+    return {"key": key, "title": title, "dsl_rules": rules}
 
 
 def _export_from_records(
@@ -305,6 +384,18 @@ def _export_from_records(
         ),
         exported_words=[entry.normalized for entry in candidates],
     )
+
+
+def _task_with_project_data(task: dict[str, Any], project: dict[str, Any]) -> dict[str, Any]:
+    data = dict(task["data"])
+    data.update(
+        {
+            "project_key": project["key"],
+            "project_title": project["title"],
+            "dsl_rules": project["dsl_rules"],
+        }
+    )
+    return {"data": data}
 
 
 def _sqlite_records(db_path: str | Path) -> Iterable[dict[str, Any]]:
@@ -1331,6 +1422,29 @@ def write_outputs(
     return report_path
 
 
+def write_split_outputs(result: SplitExportResult, output_dir: str | Path) -> Path:
+    """Write split Label Studio project JSON files and reports. Return summary path."""
+    root = Path(output_dir)
+    root.mkdir(parents=True, exist_ok=True)
+    for project_key, project in result.projects.items():
+        output_path = root / f"project_{project_key}.json"
+        output_path.write_text(
+            json.dumps(project.tasks, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        report_path = root / f"project_{project_key}.report.json"
+        report_path.write_text(
+            json.dumps(project.report, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+    summary_path = root / "summary_report.json"
+    summary_path.write_text(
+        json.dumps(result.report, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return summary_path
+
+
 def load_exported_words(db_path: str | Path) -> set[str]:
     """Read normalized words already exported to Label Studio."""
     with closing(sqlite3.connect(db_path)) as conn, conn:
@@ -2084,4 +2198,52 @@ def _report(
             {"word": entry.normalized, "frequency": entry.frequency}
             for entry in sorted(exported, key=lambda item: (-item.frequency, item.normalized))[:50]
         ],
+    }
+
+
+def _ordered_project_keys(projects: dict[str, list[dict[str, Any]]]) -> list[str]:
+    priority = ["complex_multi_rule", *(_project_key_for_rule(rule_id) for rule_id in RULES), "catchall"]
+    known = [key for key in priority if key in projects]
+    unknown = sorted(key for key in projects if key not in set(priority))
+    return known + unknown
+
+
+def _project_key_for_rule(rule_id: str) -> str:
+    return rule_id.lower()
+
+
+def _project_title_for_key(project_key: str) -> str:
+    if project_key == "complex_multi_rule":
+        return "Complex multi-rule words"
+    if project_key == "catchall":
+        return "Catchall word review"
+    return project_key.upper().replace("_", " ")
+
+
+def _project_report(project_key: str, tasks: list[dict[str, Any]], words: list[str]) -> dict[str, Any]:
+    rule_counts: Counter[str] = Counter()
+    for task in tasks:
+        rule_counts.update(task["data"].get("dsl_rules", []))
+    return {
+        "project_key": project_key,
+        "project_title": _project_title_for_key(project_key),
+        "exported_word_count": len(tasks),
+        "dsl_rule_counts": dict(sorted(rule_counts.items())),
+        "exported_words": words,
+    }
+
+
+def _split_report(result: ExportResult, projects: dict[str, ExportResult]) -> dict[str, Any]:
+    return {
+        "exported_word_count": len(result.tasks),
+        "project_count": len(projects),
+        "projects": [
+            {
+                "project_key": key,
+                "project_title": project.report["project_title"],
+                "exported_word_count": len(project.tasks),
+            }
+            for key, project in projects.items()
+        ],
+        "base_report": result.report,
     }

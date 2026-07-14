@@ -306,6 +306,32 @@ differing substring.
 The command also writes a report JSON. By default it is written as
 `<output>.report.json`.
 
+To split the same export into focused Label Studio projects, use `--output-dir`
+instead of `--output`:
+
+```bash
+python -m tatar_preannotator annotation-export \
+  --db data/zamanalif.sqlite \
+  --output-dir labelstudio_projects \
+  --max-items 5000
+```
+
+Split mode writes files such as `project_iya.json`, `project_rus_sign.json`,
+`project_complex_multi_rule.json`, and `project_catchall.json`, plus matching
+per-project reports and `summary_report.json`. Each word is exported once. If a
+word has multiple DSL rules it goes to `complex_multi_rule`; otherwise it goes
+to the matching DSL-rule project or to `catchall`.
+
+Split task `data` additionally includes:
+
+```json
+{
+  "project_key": "iya",
+  "project_title": "IYA",
+  "dsl_rules": ["IYA"]
+}
+```
+
 Label Studio layout:
 
 ```xml

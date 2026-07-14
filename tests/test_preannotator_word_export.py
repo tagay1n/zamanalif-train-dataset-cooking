@@ -12,11 +12,13 @@ from tatar_preannotator.cli import main
 from tatar_preannotator.conflict_resolver import save_word_resolution
 from tatar_preannotator.conversion import resolve_dsl
 from tatar_preannotator.word_export import (
+    classify_project,
     contains_conditional_letter,
     contains_rl_review_letter,
     conversion_branches,
     convert_for_annotation,
     convert_for_annotation_dsl,
+    export_labelstudio_project_tasks_from_db,
     export_labelstudio_tasks_from_db,
     load_exported_words,
     load_reviewed_words,
@@ -1335,6 +1337,126 @@ class PreannotatorWordExportTests(unittest.TestCase):
         )
         self.assertEqual(report["exported_word_count"], 1)
         self.assertIn("annotation export complete", output.getvalue())
+
+    def test_split_export_groups_by_priority_project(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "орфография", "label": "RL"},
+                            {"text": "сыр", "label": "RL"},
+                            {"text": "объективлык", "label": "RL"},
+                            {"text": "вакыт", "label": "N"},
+                        ],
+                    }
+                ],
+            )
+
+            result = export_labelstudio_project_tasks_from_db(db_path, sort_by="word")
+
+        self.assertIn("iya", result.projects)
+        self.assertIn("rl_y", result.projects)
+        self.assertIn("rus_sign_e", result.projects)
+        self.assertIn("catchall", result.projects)
+        self.assertEqual(
+            result.projects["iya"].tasks[0]["data"]["project_key"],
+            "iya",
+        )
+        self.assertEqual(
+            result.projects["iya"].tasks[0]["data"]["dsl_rules"],
+            ["IYA"],
+        )
+        self.assertEqual(
+            result.projects["catchall"].tasks[0]["data"]["cyrl_word"],
+            "вакыт",
+        )
+        self.assertEqual(result.report["exported_word_count"], 4)
+
+    def test_split_export_uses_complex_multi_rule_project(self) -> None:
+        project = classify_project("бюрократия", "RL")
+
+        self.assertEqual(project["key"], "complex_multi_rule")
+        self.assertEqual(project["dsl_rules"], ["RUS_JOTATION", "IYA"])
+
+    def test_cli_writes_split_labelstudio_json_and_reports(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "орфография", "label": "RL"},
+                            {"text": "вакыт", "label": "N"},
+                        ],
+                    }
+                ],
+            )
+            output_dir = Path(tmpdir) / "split"
+
+            output = StringIO()
+            with redirect_stdout(output):
+                exit_code = main(
+                    [
+                        "annotation-export",
+                        "--db",
+                        str(db_path),
+                        "--output-dir",
+                        str(output_dir),
+                        "--sort-by",
+                        "word",
+                    ]
+                )
+
+            iya = json.loads((output_dir / "project_iya.json").read_text(encoding="utf-8"))
+            catchall = json.loads((output_dir / "project_catchall.json").read_text(encoding="utf-8"))
+            summary = json.loads((output_dir / "summary_report.json").read_text(encoding="utf-8"))
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(iya[0]["data"]["project_key"], "iya")
+        self.assertEqual(catchall[0]["data"]["project_key"], "catchall")
+        self.assertEqual(summary["exported_word_count"], 2)
+        self.assertIn("annotation export complete", output.getvalue())
+
+    def test_split_cli_tracking_marks_all_exported_words(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "орфография", "label": "RL"},
+                            {"text": "вакыт", "label": "N"},
+                        ],
+                    }
+                ],
+            )
+            output_dir = Path(tmpdir) / "split"
+
+            first = main(
+                [
+                    "annotation-export",
+                    "--db",
+                    str(db_path),
+                    "--output-dir",
+                    str(output_dir),
+                    "--track-exported",
+                ]
+            )
+            second = export_labelstudio_project_tasks_from_db(
+                db_path,
+                already_exported=load_exported_words(db_path),
+            )
+
+        self.assertEqual(first, 0)
+        self.assertEqual(second.exported_words, [])
 
     def test_exports_from_sqlite_annotation_database(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
