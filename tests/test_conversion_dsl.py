@@ -114,26 +114,26 @@ class ConversionDslTests(unittest.TestCase):
         self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "rolʼ")
         self.assertEqual(resolve_dsl(value, PREFERRED_POLICY), "rolʼ")
 
-    def test_russian_jotated_softening_rule_resolves_by_policy(self) -> None:
-        value = "b{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}uro"
+    def test_russian_jotation_rule_resolves_by_policy(self) -> None:
+        value = "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uro"
 
         self.assertEqual(resolve_dsl(value), "byuro")
         self.assertEqual(
-            resolve_dsl(value, {"RUS_JOTATED_SOFTENING": "glide"}),
+            resolve_dsl(value, {"RUS_JOTATION": "glide"}),
             "byuro",
         )
         self.assertEqual(
-            resolve_dsl(value, {"RUS_JOTATED_SOFTENING": "apostrophe"}),
+            resolve_dsl(value, {"RUS_JOTATION": "apostrophe"}),
             "bʼuro",
         )
         self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "byuro")
 
-    def test_russian_shch_yo_rule_resolves_by_policy(self) -> None:
-        value = "şç{{RUS_SHCH_YO|glide=y|apostrophe=ʼ|plain=}}otka"
+    def test_russian_shch_yo_uses_jotation_plain_option(self) -> None:
+        value = "şç{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}otka"
 
         self.assertEqual(resolve_dsl(value), "şçyotka")
-        self.assertEqual(resolve_dsl(value, {"RUS_SHCH_YO": "apostrophe"}), "şçʼotka")
-        self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "şçotka")
+        self.assertEqual(resolve_dsl(value, {"RUS_JOTATION": "apostrophe"}), "şçʼotka")
+        self.assertEqual(resolve_dsl(value, {"RUS_JOTATION": "plain"}), "şçotka")
 
     def test_native_uw_rule_resolves_by_policy(self) -> None:
         value = "bu{{NATIVE_UW|plain=|glide=w}}a"

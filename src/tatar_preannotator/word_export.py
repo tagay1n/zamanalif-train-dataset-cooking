@@ -35,9 +35,8 @@ from tatar_preannotator.conversion import (
     NATIVE_UW_RULE,
     OU_LOANWORD_RULE,
     RL_FINAL_KA_RULE,
-    RUS_JOTATED_SOFTENING_RULE,
+    RUS_JOTATION_RULE,
     RUS_BU_FRONT_RULE,
-    RUS_SHCH_YO_RULE,
     RUS_SIGN_E_RULE,
     RUS_SOFT_SIGN_O_RULE,
     RUS_SIGN_RULE,
@@ -1142,7 +1141,7 @@ def result_with_russian_shch_yo_choices(
                 break
             choice_index = match_index + len("şç")
             _append_literal_segment(segments, text[start:choice_index])
-            segments.append(Choice(RUS_SHCH_YO_RULE.rule_id, RUS_SHCH_YO_RULE.options))
+            segments.append(Choice(RUS_JOTATION_RULE.rule_id, RUS_JOTATION_RULE.options))
             start = choice_index + 1
             pending_count -= 1
             changed = True
@@ -1193,8 +1192,8 @@ def result_with_russian_jotated_softening_result(
             _append_literal_segment(segments, text[start:choice_index])
             segments.append(
                 Choice(
-                    RUS_JOTATED_SOFTENING_RULE.rule_id,
-                    RUS_JOTATED_SOFTENING_RULE.options,
+                    RUS_JOTATION_RULE.rule_id,
+                    RUS_JOTATION_RULE.options,
                 )
             )
             start = choice_index + 1
@@ -1244,8 +1243,8 @@ def result_with_russian_jotated_softening_choices(
         ):
             segments.append(
                 Choice(
-                    RUS_JOTATED_SOFTENING_RULE.rule_id,
-                    RUS_JOTATED_SOFTENING_RULE.options,
+                    RUS_JOTATION_RULE.rule_id,
+                    RUS_JOTATION_RULE.options,
                 )
             )
             _append_literal_segment(segments, latin[1:])

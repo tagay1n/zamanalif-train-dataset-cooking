@@ -12,7 +12,7 @@ of a DSL choice.
   (`гади -> ğadi` in the PDF fixture, `гади -> ğädi` in ANTAT; ANTAT also has
   both variants for `гадиләштерергә`).
 - `E_GLIDE`: kept pending a separate audit of `ие -> ie/iye`.
-- `RUS_SIGN`, `RUS_JOTATED_SOFTENING`: kept for Russian
+- `RUS_SIGN`, `RUS_JOTATION`: kept for Russian
   sign/apostrophe policy differences.
 - `RL_FINAL_KA`: kept pending a separate morphology audit.
 - `NATIVE_UW`: kept pending a separate `u/ü + vowel` glide audit. For

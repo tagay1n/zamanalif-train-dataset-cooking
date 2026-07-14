@@ -173,7 +173,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         )
         self.assertEqual(
             by_word["шофёр"]["auto_zamanalif"],
-            "şof{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}or",
+            "şof{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}or",
         )
         self.assertEqual(by_word["щетка"]["auto_zamanalif"], "şçetka")
         self.assertIn("<b>ы</b> -> <b>ıy</b>", by_word["сыр"]["hints_html"])
@@ -727,7 +727,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("форсунка", "forsun{{RL_FINAL_KA|suffix=q|stem=k}}a", "forsunqa", "forsunka"),
             (
                 "фотоплёнка",
-                "fotopl{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}on{{RL_FINAL_KA|suffix=q|stem=k}}a",
+                "fotopl{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}on{{RL_FINAL_KA|suffix=q|stem=k}}a",
                 "fotoplyonqa",
                 "fotoplʼonka",
             ),
@@ -742,7 +742,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     resolve_dsl(
                         dsl,
                         {
-                            "RUS_JOTATED_SOFTENING": "apostrophe",
+                            "RUS_JOTATION": "apostrophe",
                             "RL_FINAL_KA": "stem",
                         },
                     ),
@@ -1118,9 +1118,9 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_russian_jotated_softening_is_policy_dsl(self) -> None:
         cases = [
-            ("бюро", "b{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}uro", "byuro", "bʼuro"),
-            ("вафля", "vafl{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}a", "vaflya", "vaflʼa"),
-            ("шофёр", "şof{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}or", "şofyor", "şofʼor"),
+            ("бюро", "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uro", "byuro", "bʼuro"),
+            ("вафля", "vafl{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}a", "vaflya", "vaflʼa"),
+            ("шофёр", "şof{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}or", "şofyor", "şofʼor"),
         ]
 
         for word, expected_dsl, glide, apostrophe in cases:
@@ -1129,30 +1129,30 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(dsl, expected_dsl)
                 self.assertEqual(resolve_dsl(dsl), glide)
                 self.assertEqual(
-                    resolve_dsl(dsl, {"RUS_JOTATED_SOFTENING": "apostrophe"}),
+                    resolve_dsl(dsl, {"RUS_JOTATION": "apostrophe"}),
                     apostrophe,
                 )
 
     def test_russian_shch_yo_is_narrow_policy_dsl(self) -> None:
         dsl = convert_for_annotation_dsl("щётка", "RL")
 
-        self.assertEqual(dsl, "şç{{RUS_SHCH_YO|glide=y|apostrophe=ʼ|plain=}}otka")
+        self.assertEqual(dsl, "şç{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}otka")
         self.assertEqual(resolve_dsl(dsl), "şçyotka")
-        self.assertEqual(resolve_dsl(dsl, {"RUS_SHCH_YO": "apostrophe"}), "şçʼotka")
-        self.assertEqual(resolve_dsl(dsl, {"RUS_SHCH_YO": "plain"}), "şçotka")
+        self.assertEqual(resolve_dsl(dsl, {"RUS_JOTATION": "apostrophe"}), "şçʼotka")
+        self.assertEqual(resolve_dsl(dsl, {"RUS_JOTATION": "plain"}), "şçotka")
 
     def test_russian_jotated_softening_composes_with_iya(self) -> None:
         dsl = convert_for_annotation_dsl("бюрократия", "RL")
 
         self.assertEqual(
             dsl,
-            "b{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}urokrati{{IYA|compact=ä|explicit=yä}}",
+            "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}urokrati{{IYA|compact=ä|explicit=yä}}",
         )
         self.assertEqual(resolve_dsl(dsl), "byurokratiyä")
         self.assertEqual(
             resolve_dsl(
                 dsl,
-                {"RUS_JOTATED_SOFTENING": "apostrophe", "IYA": "explicit"},
+                {"RUS_JOTATION": "apostrophe", "IYA": "explicit"},
             ),
             "bʼurokratiyä",
         )
@@ -1162,13 +1162,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual(
             dsl,
-            "izol{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}atsi{{IYA|compact=ä|explicit=yä}}läw",
+            "izol{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}atsi{{IYA|compact=ä|explicit=yä}}läw",
         )
         self.assertEqual(resolve_dsl(dsl), "izolyatsiyäläw")
         self.assertEqual(
             resolve_dsl(
                 dsl,
-                {"RUS_JOTATED_SOFTENING": "apostrophe", "IYA": "explicit"},
+                {"RUS_JOTATION": "apostrophe", "IYA": "explicit"},
             ),
             "izolʼatsiyäläw",
         )
@@ -1204,13 +1204,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual(
             dsl,
-            "kn{{RUS_JOTATED_SOFTENING|glide=y|apostrophe=ʼ}}az{{RUS_SIGN|omit=|preserve=ʼ}}",
+            "kn{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}az{{RUS_SIGN|omit=|preserve=ʼ}}",
         )
         self.assertEqual(resolve_dsl(dsl), "knyazʼ")
         self.assertEqual(
             resolve_dsl(
                 dsl,
-                {"RUS_JOTATED_SOFTENING": "apostrophe", "RUS_SIGN": "omit"},
+                {"RUS_JOTATION": "apostrophe", "RUS_SIGN": "omit"},
             ),
             "knʼaz",
         )
