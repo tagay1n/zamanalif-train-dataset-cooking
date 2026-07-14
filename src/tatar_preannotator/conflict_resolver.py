@@ -120,7 +120,12 @@ def conflict_candidates_from_db(db_path: str | Path) -> list[ConflictCandidate]:
             order by s.id
             """
         ).fetchall()
-    return build_conflict_candidates(rows, resolutions=resolutions)
+    resolved_words = set(resolutions)
+    return [
+        candidate
+        for candidate in build_conflict_candidates(rows, resolutions=resolutions)
+        if candidate.normalized_word not in resolved_words
+    ]
 
 
 def build_conflict_candidates(

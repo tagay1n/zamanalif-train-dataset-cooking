@@ -11,6 +11,7 @@ from tatar_preannotator.conflict_resolver import (
     HTML_PAGE,
     build_conflict_candidates,
     load_word_resolutions,
+    save_word_resolution,
 )
 
 
@@ -69,6 +70,31 @@ class ConflictResolverTests(unittest.TestCase):
         self.assertEqual(item["candidate"]["word"], "һәм")
         self.assertTrue(result["ok"])
         self.assertEqual(resolutions["һәм"].decision, "N")
+
+    def test_new_service_skips_already_resolved_conflicts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    ("sent_1", "Һәм килде. Авыл бар.", [
+                        {"text": "Һәм", "label": "N"},
+                        {"text": "Авыл", "label": "N"},
+                    ]),
+                    ("sent_2", "Һәм китте. Авыл зур.", [
+                        {"text": "Һәм", "label": "RL", "homonym": True},
+                        {"text": "Авыл", "label": "RL"},
+                    ]),
+                ],
+            )
+            with sqlite3.connect(db_path) as conn:
+                save_word_resolution(conn, "һәм", "N")
+            service = ConflictReviewService(db_path)
+            try:
+                item = service.item(0)
+            finally:
+                service.close()
+
+        self.assertEqual(item["candidate"]["word"], "авыл")
 
     def test_page_has_requested_keyboard_shortcuts(self) -> None:
         self.assertIn("Keyboard: N=native", HTML_PAGE)
