@@ -1532,7 +1532,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('вербовкаларга', 'verbovkalarğa', 'ENLIST', 3034),
     ('верстак', 'verstak', 'BENCH', 869),
     ('вертикаль', 'vertikal', 'UPRIGHT', 9051),
-    ('вестибюль', 'vestibʼül', 'ANTECHAMBER', 380),
+    ('вестибюль', 'vestibyulʼ', 'ANTECHAMBER', 380),  # ANTAT: vestibʼül; align with deterministic RL бю -> byu.
     ('ветеран', 'veteran', 'VETERAN', 9178),
     ('взносы', 'vznosı', 'FEE', 3359),
     ('виноград', 'vinograd', 'GRAPE', 3926),

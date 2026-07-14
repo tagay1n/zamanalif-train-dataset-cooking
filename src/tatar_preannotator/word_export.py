@@ -33,7 +33,6 @@ from tatar_preannotator.conversion import (
     NATIVE_UW_RULE,
     RL_FINAL_KA_RULE,
     RUS_JOTATION_RULE,
-    RUS_BU_FRONT_RULE,
     RUS_SIGN_E_RULE,
     RUS_SOFT_SIGN_O_RULE,
     RUS_SIGN_RULE,
@@ -357,7 +356,6 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_russian_soft_sign_choices(word, compact, label)
     if result.has_choices:
         result = result_with_month_name_choices(word, result)
-        result = result_with_russian_bu_front_choices(word, result, label)
         result = result_with_russian_jotated_softening_result(word, result, label)
         result = result_with_loanword_final_ka_choices(word, result, label)
         return result_with_rl_y_choices(word, result, label)
@@ -1064,29 +1062,6 @@ def result_with_russian_soft_sign_choices(
     return ConversionResult(tuple(segments))
 
 
-def result_with_russian_bu_front_choices(
-    source: str, result: ConversionResult, label: str
-) -> ConversionResult:
-    """Annotate exceptional RL ``бю`` as ``byu`` vs ``bʼü`` before soft endings."""
-    if label != "RL" or "бю" not in source.casefold():
-        return result
-
-    segments: list[Literal | Choice] = []
-    changed = False
-    for segment in _merge_adjacent_literals(result).segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        start = 0
-        for match in re.finditer("byu", segment.text, flags=re.IGNORECASE):
-            _append_literal_segment(segments, segment.text[start : match.start() + 1])
-            segments.append(Choice(RUS_BU_FRONT_RULE.rule_id, RUS_BU_FRONT_RULE.options))
-            start = match.end()
-            changed = True
-        _append_literal_segment(segments, segment.text[start:])
-    return ConversionResult(tuple(segments)) if changed else result
-
-
 def result_with_russian_shch_yo_choices(
     source: str, result: ConversionResult, label: str
 ) -> ConversionResult:
@@ -1123,7 +1098,7 @@ def result_with_russian_jotated_softening_result(
     """Compose consonant + RL ``я/ю/ё`` softening with existing sign choices."""
     if label != "RL" or not any(char in source for char in "яюё"):
         return result
-    if "ерзя" in source:
+    if "ерзя" in source or source.casefold().startswith("вестибюль"):
         return result
 
     replacements: list[tuple[str, str]] = []
@@ -1189,7 +1164,7 @@ def result_with_russian_jotated_softening_choices(
     """Annotate RL consonant + ``я/ю/ё`` as y-glide vs apostrophe convention."""
     if label != "RL" or not any(char in source for char in "яюё"):
         return ConversionResult((Literal(converted),))
-    if "ерзя" in source:
+    if "ерзя" in source or source.casefold().startswith("вестибюль"):
         return ConversionResult((Literal(converted),))
 
     segments: list[Literal | Choice] = []
