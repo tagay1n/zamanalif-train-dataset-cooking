@@ -101,8 +101,8 @@ TS_RULE = RuleDefinition(
     options=(("s", "s"), ("ts", "ts")),
     default_option="s",
 )
-MUSIC_Y_RULE = RuleDefinition(
-    rule_id="MUSIC_Y",
+RL_Y_RULE = RuleDefinition(
+    rule_id="RL_Y",
     options=(("short", "ı"), ("long", "ıy")),
     default_option="long",
 )
@@ -204,7 +204,7 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         ARABIC_INITIAL_GA_RULE.rule_id: ARABIC_INITIAL_GA_RULE,
         E_GLIDE_RULE.rule_id: E_GLIDE_RULE,
         TS_RULE.rule_id: TS_RULE,
-        MUSIC_Y_RULE.rule_id: MUSIC_Y_RULE,
+        RL_Y_RULE.rule_id: RL_Y_RULE,
         MOSTAQIL_RULE.rule_id: MOSTAQIL_RULE,
         FIGYL_STEM_RULE.rule_id: FIGYL_STEM_RULE,
         SHIGYR_STEM_RULE.rule_id: SHIGYR_STEM_RULE,
@@ -230,7 +230,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "ARABIC_INITIAL_GA": "plain",
         "E_GLIDE": "glide",
         "TS": "s",
-        "MUSIC_Y": "long",
+        "RL_Y": "long",
         "MOSTAQIL": "antat",
         "FIGYL_STEM": "antat",
         "SHIGYR_STEM": "antat",
@@ -256,7 +256,7 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "ARABIC_INITIAL_GA": "plain",
         "E_GLIDE": "glide",
         "TS": "s",
-        "MUSIC_Y": "long",
+        "RL_Y": "long",
         "MOSTAQIL": "pdf",
         "FIGYL_STEM": "pdf",
         "SHIGYR_STEM": "pdf",

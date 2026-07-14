@@ -166,7 +166,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
         words = [task["data"]["cyrl_word"] for task in result.tasks]
         self.assertEqual(words, ["роль", "сыр", "шофёр", "щетка"])
         by_word = {task["data"]["cyrl_word"]: task["data"] for task in result.tasks}
-        self.assertEqual(by_word["сыр"]["auto_zamanalif"], "sıyr")
+        self.assertEqual(
+            by_word["сыр"]["auto_zamanalif"],
+            "s{{RL_Y|short=ı|long=ıy}}r",
+        )
         self.assertEqual(
             by_word["роль"]["auto_zamanalif"],
             "rol{{RUS_SIGN|omit=|preserve=ʼ}}",
@@ -473,27 +476,30 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(resolve_dsl(dsl, {"E_GLIDE": "plain"}), plain)
                 self.assertEqual(resolve_dsl(dsl), glide)
 
-    def test_music_y_is_policy_dsl(self) -> None:
+    def test_rl_y_is_policy_dsl(self) -> None:
         cases = [
-            ("музыка", "muz{{MUSIC_Y|short=ı|long=ıy}}ka", "muzıka", "muzıyka"),
+            ("музыка", "muz{{RL_Y|short=ı|long=ıy}}ka", "muzıka", "muzıyka"),
             (
                 "музыкаль",
-                "muz{{MUSIC_Y|short=ı|long=ıy}}kal{{RUS_SIGN|omit=|preserve=ʼ}}",
+                "muz{{RL_Y|short=ı|long=ıy}}kal{{RUS_SIGN|omit=|preserve=ʼ}}",
                 "muzıkal",
                 "muzıykalʼ",
             ),
             (
                 "музыкасын",
-                "muz{{MUSIC_Y|short=ı|long=ıy}}kas{{MUSIC_Y|short=ı|long=ıy}}n",
+                "muz{{RL_Y|short=ı|long=ıy}}kas{{RL_Y|short=ı|long=ıy}}n",
                 "muzıkasın",
                 "muzıykasıyn",
             ),
             (
                 "музыкасына",
-                "muz{{MUSIC_Y|short=ı|long=ıy}}kas{{MUSIC_Y|short=ı|long=ıy}}na",
+                "muz{{RL_Y|short=ı|long=ıy}}kas{{RL_Y|short=ı|long=ıy}}na",
                 "muzıkasına",
                 "muzıykasıyna",
             ),
+            ("сыр", "s{{RL_Y|short=ı|long=ıy}}r", "sır", "sıyr"),
+            ("посылка", "pos{{RL_Y|short=ı|long=ıy}}lka", "posılka", "posıylka"),
+            ("вышка", "v{{RL_Y|short=ı|long=ıy}}şka", "vışka", "vıyşka"),
         ]
 
         for word, expected_dsl, short, long in cases:
@@ -503,7 +509,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(
                     resolve_dsl(
                         dsl,
-                        {"MUSIC_Y": "short", "RUS_SIGN": "omit"},
+                        {"RL_Y": "short", "RUS_SIGN": "omit"},
                     ),
                     short,
                 )

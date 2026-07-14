@@ -27,7 +27,7 @@ from tatar_preannotator.conversion import (
     KAGAZ_STEM_RULE,
     Literal,
     MASHGUL_STEM_RULE,
-    MUSIC_Y_RULE,
+    RL_Y_RULE,
     MONTH_NAME_RULE,
     MOSTAQIL_RULE,
     NATIVE_UW_RULE,
@@ -353,14 +353,14 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
         return None
     result = result_with_russian_sign_glide_choices(word, compact, label)
     if result.has_choices:
-        return result_with_music_y_choices(word, result, label)
+        return result_with_rl_y_choices(word, result, label)
     result = result_with_russian_soft_sign_choices(word, compact, label)
     if result.has_choices:
         result = result_with_month_name_choices(word, result)
         result = result_with_russian_bu_front_choices(word, result, label)
         result = result_with_russian_jotated_softening_result(word, result, label)
         result = result_with_loanword_final_ka_choices(word, result, label)
-        return result_with_music_y_choices(word, result, label)
+        return result_with_rl_y_choices(word, result, label)
     result = result_with_cilquar_native_uw_choices(word, compact, label)
     if result.has_choices:
         return result
@@ -374,7 +374,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_kts_after_k_choices(word, result, label)
     result = result_with_final_ts_suffix_choices(word, result, label)
     result = result_with_project_e_choices(word, result, label)
-    result = result_with_music_y_choices(word, result, label)
+    result = result_with_rl_y_choices(word, result, label)
     result = result_with_final_double_l_choices(word, result)
     result = result_with_figyl_stem_choices(word, result)
     result = result_with_shigyr_stem_choices(word, result)
@@ -610,11 +610,11 @@ def result_with_project_e_choices(
     return ConversionResult(tuple(segments)) if changed else result
 
 
-def result_with_music_y_choices(
+def result_with_rl_y_choices(
     source: str, result: ConversionResult, label: str
 ) -> ConversionResult:
-    """Annotate the attested ``музыка`` / ``muzıka`` vs ``muzıyka`` convention."""
-    if label != "RL" or not source.casefold().startswith("музык"):
+    """Annotate long vs short ``ы`` in known Russian/Russian-through-Russian stems."""
+    if label != "RL" or not _uses_long_loanword_y(source.casefold()):
         return result
 
     segments: list[Literal | Choice] = []
@@ -627,7 +627,7 @@ def result_with_music_y_choices(
         start = 0
         for match in re.finditer("ıy", text):
             _append_literal_segment(segments, text[start : match.start()])
-            segments.append(Choice(MUSIC_Y_RULE.rule_id, MUSIC_Y_RULE.options))
+            segments.append(Choice(RL_Y_RULE.rule_id, RL_Y_RULE.options))
             start = match.end()
             changed = True
         _append_literal_segment(segments, text[start:])
@@ -1796,9 +1796,13 @@ def _surname_sequence_conversion(word: str, index: int) -> tuple[str, int] | Non
 
 
 def _loanword_y_conversion(word: str) -> str:
-    if word.startswith(("музы", "посыл", "выш", "сыр")):
+    if _uses_long_loanword_y(word):
         return "ıy"
     return "ı"
+
+
+def _uses_long_loanword_y(word: str) -> bool:
+    return word.startswith(("музы", "посыл", "выш", "сыр"))
 
 
 def _conditional_char_conversion(char: str, word: str, index: int, label: str) -> str:
