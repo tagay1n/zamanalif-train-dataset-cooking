@@ -4738,7 +4738,7 @@ ANTAT_GOLD_WORD_CASES = [
     ('осталык', 'ostalıq', 'ABILITY', 21),
     ('остасы', 'ostası', 'ARTIST', 524),
     ('остаханәсе', 'ostaxanäse', 'POTTERY', 6456),
-    ('остов', 'ostow', 'SHELL', 7762),
+    ('остов', 'ostov', 'SHELL', 7762),  # ANTAT: ostow; aligned to strict loanword в -> v.
     ('отарга', 'otarğa', 'OUTPLAY', 5940),
     ('отвёртка', 'otvʼortka', 'SCREWDRIVER', 7506),
     ('отель', 'otel', 'HOTEL', 4363),

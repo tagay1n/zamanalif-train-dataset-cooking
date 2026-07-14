@@ -1801,16 +1801,15 @@ def _apply_native_lexical_conventions(word: str, converted: str) -> str:
 
 
 def _apply_native_surname_suffix_conventions(folded: str, converted: str) -> str:
-    if not folded.startswith(NATIVE_SURNAME_V_PREFIXES):
-        return converted
     if folded.endswith("ова") and converted.endswith("owa"):
         return converted[:-3] + "ova"
     if folded.endswith("ов") and converted.endswith("ow"):
         return converted[:-2] + "ov"
+    if folded.endswith("ева") and converted.endswith("ewa"):
+        return converted[:-3] + "eva"
+    if folded.endswith("ев") and converted.endswith("ew"):
+        return converted[:-2] + "ev"
     return converted
-
-
-NATIVE_SURNAME_V_PREFIXES = ("гәлим", "гилем")
 
 
 def _next_char(word: str, index: int) -> str:

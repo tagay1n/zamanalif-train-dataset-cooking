@@ -571,6 +571,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("мәһдиев", "N"), "mähdiev")
         self.assertEqual(convert_for_annotation("әлмиев", "N"), "älmiev")
         self.assertEqual(convert_for_annotation("әлмиевкә", "N"), "älmievkä")
+        self.assertEqual(convert_for_annotation("сәлимев", "N"), "sälimev")
+        self.assertEqual(convert_for_annotation("юлдашев", "N"), "yuldaşev")
+        self.assertEqual(convert_for_annotation("юлдашева", "N"), "yuldaşeva")
+        self.assertEqual(convert_for_annotation("булатов", "N"), "bulatov")
+        self.assertEqual(convert_for_annotation("булатова", "N"), "bulatova")
         self.assertEqual(convert_for_annotation("вакыт", "N"), "waqıt")
         self.assertEqual(convert_for_annotation("актив", "RL"), "aktiv")
 
