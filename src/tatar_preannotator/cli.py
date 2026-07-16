@@ -97,7 +97,6 @@ def main(argv: list[str] | None = None) -> int:
         choices=["frequency_desc", "word"],
         default="frequency_desc",
     )
-    export_words.add_argument("--report-output", help="Report JSON output path.")
     export_words.add_argument(
         "--track-exported",
         action="store_true",
@@ -269,8 +268,6 @@ def _repair_unprocessable(args: argparse.Namespace) -> int:
 def _annotation_export(args: argparse.Namespace) -> int:
     if bool(args.output) == bool(args.output_dir):
         raise SystemExit("provide exactly one of --output or --output-dir")
-    if args.output_dir and args.report_output:
-        raise SystemExit("--report-output can only be used with --output")
     if args.max_items is not None and args.max_items < 1:
         raise SystemExit("--max-items must be positive")
     if args.min_frequency < 1:
@@ -289,11 +286,11 @@ def _annotation_export(args: argparse.Namespace) -> int:
         }
         if args.output_dir:
             result = export_labelstudio_project_tasks_from_db(args.db, **export_kwargs)
-            report_path = write_split_outputs(result, args.output_dir)
+            write_split_outputs(result, args.output_dir)
             output_target = args.output_dir
         else:
             result = export_labelstudio_tasks_from_db(args.db, **export_kwargs)
-            report_path = write_outputs(result, args.output, report_output=args.report_output)
+            write_outputs(result, args.output)
             output_target = args.output
         if args.track_exported:
             mark_exported_words(state_db, result.exported_words)
@@ -303,7 +300,7 @@ def _annotation_export(args: argparse.Namespace) -> int:
 
     print(
         "annotation export complete: "
-        f"exported={len(result.exported_words)} output={output_target} report={report_path}"
+        f"exported={len(result.exported_words)} output={output_target}"
     )
     return 0
 

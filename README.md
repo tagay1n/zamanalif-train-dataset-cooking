@@ -303,9 +303,6 @@ options. The preferred policy currently resolves it to `orfografiyä`; the
 compact PDF policy resolves it to `orfografiä`. The DSL marks only the
 differing substring.
 
-The command also writes a report JSON. By default it is written as
-`<output>.report.json`.
-
 To split the same export into focused Label Studio projects, use `--output-dir`
 instead of `--output`:
 
@@ -317,10 +314,10 @@ python -m tatar_preannotator annotation-export \
 ```
 
 Split mode writes files such as `project_iya.json`, `project_rus_sign.json`,
-`project_complex_multi_rule.json`, and `project_catchall.json`, plus matching
-per-project reports and `summary_report.json`. Each word is exported once. If a
-word has multiple DSL rules it goes to `complex_multi_rule`; otherwise it goes
-to the matching DSL-rule project or to `catchall`.
+`project_complex_multi_rule.json`, and `project_catchall.json`. These JSON files
+are the files to import into Label Studio. Each word is exported once. If a word
+has multiple DSL rules it goes to `complex_multi_rule`; otherwise it goes to the
+matching DSL-rule project or to `catchall`.
 
 Split task `data` additionally includes:
 

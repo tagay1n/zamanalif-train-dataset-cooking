@@ -1402,47 +1402,29 @@ def _branch_suggestion_html(value: str) -> str:
     return f"<b>{escape(value)}</b>"
 
 
-def write_outputs(
-    result: ExportResult,
-    output_path: str | Path,
-    *,
-    report_output: str | Path | None = None,
-) -> Path:
-    """Write Label Studio JSON and report JSON. Return the report path."""
+def write_outputs(result: ExportResult, output_path: str | Path) -> Path:
+    """Write a Label Studio JSON import file and return its path."""
     output = Path(output_path)
     output.write_text(
         json.dumps(result.tasks, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    report_path = Path(report_output) if report_output else Path(str(output) + ".report.json")
-    report_path.write_text(
-        json.dumps(result.report, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    return report_path
+    return output
 
 
-def write_split_outputs(result: SplitExportResult, output_dir: str | Path) -> Path:
-    """Write split Label Studio project JSON files and reports. Return summary path."""
+def write_split_outputs(result: SplitExportResult, output_dir: str | Path) -> list[Path]:
+    """Write split Label Studio project JSON import files and return their paths."""
     root = Path(output_dir)
     root.mkdir(parents=True, exist_ok=True)
+    output_paths: list[Path] = []
     for project_key, project in result.projects.items():
         output_path = root / f"project_{project_key}.json"
         output_path.write_text(
             json.dumps(project.tasks, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
-        report_path = root / f"project_{project_key}.report.json"
-        report_path.write_text(
-            json.dumps(project.report, ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
-    summary_path = root / "summary_report.json"
-    summary_path.write_text(
-        json.dumps(result.report, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    return summary_path
+        output_paths.append(output_path)
+    return output_paths
 
 
 def load_exported_words(db_path: str | Path) -> set[str]:

@@ -1300,7 +1300,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual([task["data"]["cyrl_word"] for task in limited.tasks], ["авыл"])
         self.assertEqual([task["data"]["cyrl_word"] for task in frequent.tasks], ["авыл"])
 
-    def test_cli_writes_labelstudio_json_and_report(self) -> None:
+    def test_cli_writes_labelstudio_json_only(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
                 Path(tmpdir) / "zamanalif.sqlite",
@@ -1327,7 +1327,6 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 )
 
             data = json.loads(output_path.read_text(encoding="utf-8"))
-            report = json.loads(Path(str(output_path) + ".report.json").read_text(encoding="utf-8"))
 
         self.assertEqual(exit_code, 0)
         self.assertEqual(data[0]["data"]["cyrl_word"], "вакыт")
@@ -1335,7 +1334,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             set(data[0]["data"]),
             {"id", "cyrl_word", "auto_zamanalif", "gemini_origin", "hints_html"},
         )
-        self.assertEqual(report["exported_word_count"], 1)
+        self.assertFalse(Path(str(output_path) + ".report.json").exists())
         self.assertIn("annotation export complete", output.getvalue())
 
     def test_split_export_groups_by_priority_project(self) -> None:
@@ -1382,7 +1381,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(project["key"], "complex_multi_rule")
         self.assertEqual(project["dsl_rules"], ["RUS_JOTATION", "IYA"])
 
-    def test_cli_writes_split_labelstudio_json_and_reports(self) -> None:
+    def test_cli_writes_split_labelstudio_json_only(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
                 Path(tmpdir) / "zamanalif.sqlite",
@@ -1415,12 +1414,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
             iya = json.loads((output_dir / "project_iya.json").read_text(encoding="utf-8"))
             catchall = json.loads((output_dir / "project_catchall.json").read_text(encoding="utf-8"))
-            summary = json.loads((output_dir / "summary_report.json").read_text(encoding="utf-8"))
 
         self.assertEqual(exit_code, 0)
         self.assertEqual(iya[0]["data"]["project_key"], "iya")
         self.assertEqual(catchall[0]["data"]["project_key"], "catchall")
-        self.assertEqual(summary["exported_word_count"], 2)
+        self.assertFalse((output_dir / "project_iya.report.json").exists())
+        self.assertFalse((output_dir / "project_catchall.report.json").exists())
+        self.assertFalse((output_dir / "summary_report.json").exists())
         self.assertIn("annotation export complete", output.getvalue())
 
     def test_split_cli_tracking_marks_all_exported_words(self) -> None:
