@@ -7,11 +7,13 @@ from pathlib import Path
 import sqlite3
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from tatar_preannotator.cli import main
 from tatar_preannotator.conflict_resolver import save_word_resolution
 from tatar_preannotator.conversion import resolve_dsl
 from tatar_preannotator.word_export import (
+    AnnotationExportError,
     classify_project,
     contains_conditional_letter,
     contains_rl_review_letter,
@@ -25,6 +27,7 @@ from tatar_preannotator.word_export import (
     mark_exported_words,
     normalize_word,
     save_reviewed_word,
+    validate_export_result,
     vowel_harmony_class,
 )
 
@@ -1381,6 +1384,12 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(project["key"], "complex_multi_rule")
         self.assertEqual(project["dsl_rules"], ["RUS_JOTATION", "IYA"])
 
+    def test_split_export_counts_distinct_rules_not_repeated_occurrences(self) -> None:
+        project = classify_project("социаль-икътисадый", "RL")
+
+        self.assertEqual(project["key"], "rus_sign")
+        self.assertEqual(project["dsl_rules"], ["RUS_SIGN"])
+
     def test_split_export_routes_unknown_words_to_focused_projects(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
@@ -1453,6 +1462,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 ],
             )
             output_dir = Path(tmpdir) / "split"
+            output_dir.mkdir()
+            stale_batch = output_dir / "project_iya_batch_001_of_999.json"
+            stale_batch.write_text("[]\n", encoding="utf-8")
+            legacy_export = output_dir / "project_iya.json"
+            legacy_export.write_text("[]\n", encoding="utf-8")
+            unrelated = output_dir / "notes.txt"
+            unrelated.write_text("keep me\n", encoding="utf-8")
 
             output = StringIO()
             with redirect_stdout(output):
@@ -1476,6 +1492,25 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     encoding="utf-8"
                 )
             )
+            iya_instructions = (
+                output_dir / "project_iya_instructions.html"
+            ).read_text(encoding="utf-8")
+            catchall_instructions = (
+                output_dir / "project_catchall_instructions.html"
+            ).read_text(encoding="utf-8")
+            report_files_exist = any(
+                (
+                    (output_dir / "project_iya.report.json").exists(),
+                    (output_dir / "project_catchall.report.json").exists(),
+                    (output_dir / "summary_report.json").exists(),
+                )
+            )
+            stale_exists = stale_batch.exists()
+            legacy_exists = legacy_export.exists()
+            unrelated_text = unrelated.read_text(encoding="utf-8")
+            inactive_instructions_exist = (
+                output_dir / "project_ts_instructions.html"
+            ).exists()
 
         self.assertEqual(exit_code, 0)
         self.assertEqual(iya[0]["data"]["project_key"], "iya")
@@ -1483,10 +1518,148 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(iya[0]["data"]["batch_index"], 1)
         self.assertEqual(iya[0]["data"]["batch_total"], 1)
         self.assertEqual(catchall[0]["data"]["project_key"], "catchall")
-        self.assertFalse((output_dir / "project_iya.report.json").exists())
-        self.assertFalse((output_dir / "project_catchall.report.json").exists())
-        self.assertFalse((output_dir / "summary_report.json").exists())
+        self.assertFalse(report_files_exist)
+        self.assertFalse(stale_exists)
+        self.assertFalse(legacy_exists)
+        self.assertEqual(unrelated_text, "keep me\n")
+        self.assertIn("orfografiä", iya_instructions)
+        self.assertIn("orfografiyä", iya_instructions)
+        self.assertIn("вакыт → waqıt", catchall_instructions)
+        self.assertFalse(inactive_instructions_exist)
         self.assertIn("annotation export complete", output.getvalue())
+
+    def test_export_validation_rejects_duplicate_ids(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "вакыт", "label": "N"},
+                            {"text": "проект", "label": "RL"},
+                        ],
+                    }
+                ],
+            )
+            result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
+            result.tasks[1]["data"]["id"] = result.tasks[0]["data"]["id"]
+
+            with self.assertRaisesRegex(AnnotationExportError, "duplicate task id"):
+                validate_export_result(result)
+
+    def test_export_validation_allows_empty_u_suggestion_only(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "торак", "label": "U"},
+                            {"text": "вакыт", "label": "N"},
+                        ],
+                    }
+                ],
+            )
+            result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
+            validate_export_result(result)
+            known = next(
+                task
+                for task in result.tasks
+                if task["data"]["gemini_origin"] == "N"
+            )
+            known["data"]["auto_zamanalif"] = ""
+
+            with self.assertRaisesRegex(
+                AnnotationExportError,
+                "empty suggestion for origin N",
+            ):
+                validate_export_result(result)
+
+    def test_tracking_is_not_updated_when_split_write_fails_validation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [{"text": "вакыт", "label": "N"}],
+                    }
+                ],
+            )
+            output_dir = Path(tmpdir) / "split"
+            with patch(
+                "tatar_preannotator.cli.write_split_outputs",
+                side_effect=AnnotationExportError("invalid generated export"),
+            ):
+                exit_code = main(
+                    [
+                        "annotation-export",
+                        "--db",
+                        str(db_path),
+                        "--output-dir",
+                        str(output_dir),
+                        "--track-exported",
+                    ]
+                )
+
+            tracked = load_exported_words(db_path)
+
+        self.assertEqual(exit_code, 1)
+        self.assertEqual(tracked, set())
+
+    def test_split_export_is_deterministic_when_state_is_unchanged(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "орфография", "label": "RL"},
+                            {"text": "вакыт", "label": "N"},
+                        ],
+                    }
+                ],
+            )
+            output_dir = Path(tmpdir) / "split"
+            first_exit = main(
+                [
+                    "annotation-export",
+                    "--db",
+                    str(db_path),
+                    "--output-dir",
+                    str(output_dir),
+                ]
+            )
+            first_files = {
+                path.name: path.read_bytes()
+                for path in output_dir.iterdir()
+                if path.is_file()
+            }
+            second_exit = main(
+                [
+                    "annotation-export",
+                    "--db",
+                    str(db_path),
+                    "--output-dir",
+                    str(output_dir),
+                ]
+            )
+            second_files = {
+                path.name: path.read_bytes()
+                for path in output_dir.iterdir()
+                if path.is_file()
+            }
+
+        self.assertEqual(first_exit, 0)
+        self.assertEqual(second_exit, 0)
+        self.assertEqual(first_files, second_files)
 
     def test_split_cli_batches_large_projects_at_1000_tasks(self) -> None:
         letters = "бдмнрст"
@@ -1571,6 +1744,55 @@ class PreannotatorWordExportTests(unittest.TestCase):
             )
 
         self.assertEqual(first, 0)
+        self.assertEqual(second.exported_words, [])
+
+    def test_labelstudio_round_trip_removes_reviewed_word_from_export(self) -> None:
+        from tatar_preannotator.labelstudio_import import import_labelstudio_annotations
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_annotation_db(
+                root / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [{"text": "вакыт", "label": "N"}],
+                    }
+                ],
+            )
+            first = export_labelstudio_tasks_from_db(db_path)
+            task = first.tasks[0]
+            labelstudio_task = {
+                **task,
+                "annotations": [
+                    {
+                        "was_cancelled": False,
+                        "result": [
+                            {
+                                "from_name": "reviewed_origin",
+                                "type": "choices",
+                                "value": {"choices": ["N"]},
+                            },
+                            {
+                                "from_name": "corrected_zamanalif",
+                                "type": "textarea",
+                                "value": {"text": ["waqıt"]},
+                            },
+                        ],
+                    }
+                ],
+            }
+            annotation_path = root / "completed.json"
+            annotation_path.write_text(
+                json.dumps([labelstudio_task], ensure_ascii=False),
+                encoding="utf-8",
+            )
+
+            summary = import_labelstudio_annotations(db_path, annotation_path)
+            second = export_labelstudio_tasks_from_db(db_path)
+
+        self.assertEqual(summary.imported_words, 1)
         self.assertEqual(second.exported_words, [])
 
     def test_exports_from_sqlite_annotation_database(self) -> None:

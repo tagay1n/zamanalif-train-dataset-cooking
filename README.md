@@ -325,11 +325,21 @@ Split mode writes 1000-task batch files such as
 `project_iya_batch_001_of_003.json`, `project_rus_sign_batch_001_of_004.json`,
 `project_complex_multi_rule_batch_001_of_002.json`, and
 `project_catchall_batch_001_of_039.json`. These JSON files are the files to
-import into Label Studio, one file per Label Studio project. Each word is
-exported once. If a word has multiple DSL rules it goes to `complex_multi_rule`;
-otherwise it goes to the matching DSL-rule project or to `catchall`. Unresolved
-`U` words are split into focused projects: `u_hyphenated`,
-`u_abbrev_fragment`, `u_tatar_specific`, `u_conditional_plain`, and `u_other`.
+import into Label Studio, one batch file per Label Studio project. It also
+writes `project_<key>_instructions.html` for every active project category.
+Use the same instruction file for all batches of that category. Each word is
+exported once. If a word has multiple DSL rules it goes to
+`complex_multi_rule`; otherwise it goes to the matching DSL-rule project or to
+`catchall`. Unresolved `U` words are split into focused projects:
+`u_hyphenated`, `u_abbrev_fragment`, `u_tatar_specific`,
+`u_conditional_plain`, and `u_other`.
+
+Every export is validated before SQLite tracking is updated. Validation checks
+task and word uniqueness, project routing, required fields, Zamanalif DSL, and
+1000-task batch limits, then reads the staged JSON back before publishing it.
+When reusing an output directory, the exporter replaces only its managed batch
+and instruction files, removes obsolete managed batches, and preserves
+unrelated files.
 
 Split task `data` additionally includes:
 
@@ -358,7 +368,6 @@ Label Studio layout:
   <Choices name="reviewed_origin" toName="cyrl_word" choice="single" required="true">
     <Choice value="N"/>
     <Choice value="RL"/>
-    <Choice value="U"/>
   </Choices>
 
   <Header value="Correct if necessary | ä Ä | ö Ö | ü Ü | ñ Ñ | ı I | ğ Ğ | ş Ş | ç Ç"/>
@@ -385,10 +394,11 @@ python -m tatar_preannotator annotation-import \
 The importer reads the `reviewed_origin` and `corrected_zamanalif` controls,
 validates every completed task, and writes approved conversion/origin pairs to
 `reviewed_words` in one transaction. Unannotated and cancelled tasks are
-skipped. Importing the same decision again is idempotent; a different decision
-for an already reviewed word fails instead of silently replacing the final
-approval. Remove the existing `reviewed_words` row explicitly before importing
-a deliberate correction.
+skipped, so an annotator can skip genuinely uncertain words instead of choosing
+an `U` label. Importing the same decision again is idempotent; a different
+decision for an already reviewed word fails instead of silently replacing the
+final approval. Remove the existing `reviewed_words` row explicitly before
+importing a deliberate correction.
 
 Malformed DSL, missing controls, duplicate word tasks, conflicting annotations,
 or invalid origins abort the whole import without partial writes. After a

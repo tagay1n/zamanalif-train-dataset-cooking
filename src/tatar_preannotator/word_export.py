@@ -10,8 +10,10 @@ import json
 from pathlib import Path
 import re
 import sqlite3
+from tempfile import TemporaryDirectory
 from typing import Any, Iterable
 
+from tatar_preannotator.labelstudio_instructions import render_project_instructions
 from tatar_preannotator.conversion import (
     APOSTROPHE_VARIANTS,
     Choice,
@@ -45,6 +47,10 @@ from tatar_preannotator.conversion import (
 from zamanalif_selector.features import BACK_VOWELS, CONDITIONAL_LETTERS, FRONT_VOWELS
 
 LABELSTUDIO_SPLIT_BATCH_SIZE = 1000
+MANAGED_BATCH_RE = re.compile(
+    r"^project_[a-z0-9_]+(?:_batch_\d{3}_of_\d{3})?\.json$"
+)
+MANAGED_INSTRUCTIONS_RE = re.compile(r"^project_[a-z0-9_]+_instructions\.html$")
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
 TATAR_SPECIFIC_PART_LETTERS = frozenset("әөүҗңһ")
 RL_REVIEW_LETTERS = frozenset("ёыьъщ")
@@ -115,6 +121,10 @@ class ConversionBranches:
         if self.state == "origin_independent":
             return self.native_dsl
         return ""
+
+
+class AnnotationExportError(ValueError):
+    """Raised when generated Label Studio tasks are internally inconsistent."""
 
 
 def normalize_word(token: str) -> str:
@@ -250,7 +260,7 @@ def classify_project(word: str, label: str) -> dict[str, Any]:
         key = _u_project_key(word)
         return {"key": key, "title": _project_title_for_key(key), "dsl_rules": []}
     result = conversion_result_for_annotation(word, label)
-    rules = list(result.rule_ids) if result is not None else []
+    rules = list(dict.fromkeys(result.rule_ids)) if result is not None else []
     if len(rules) > 1:
         key = "complex_multi_rule"
         title = "Complex multi-rule words"
@@ -1411,43 +1421,293 @@ def decision_html(entry: WordStats) -> str:
 
 def write_outputs(result: ExportResult, output_path: str | Path) -> Path:
     """Write a Label Studio JSON import file and return its path."""
+    validate_export_result(result)
     output = Path(output_path)
-    output.write_text(
-        json.dumps(result.tasks, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    with TemporaryDirectory(prefix=f".{output.name}.staging-", dir=output.parent) as tmpdir:
+        staged = Path(tmpdir) / output.name
+        staged.write_text(_json_text(result.tasks), encoding="utf-8")
+        _validate_serialized_single_output(staged, result)
+        staged.replace(output)
     return output
 
 
 def write_split_outputs(result: SplitExportResult, output_dir: str | Path) -> list[Path]:
     """Write split Label Studio project JSON import files and return their paths."""
+    validate_split_export_result(result)
     root = Path(output_dir)
-    root.mkdir(parents=True, exist_ok=True)
-    output_paths: list[Path] = []
+    root.parent.mkdir(parents=True, exist_ok=True)
+    output_names: list[str] = []
+    with TemporaryDirectory(prefix=f".{root.name}.staging-", dir=root.parent) as tmpdir:
+        staging = Path(tmpdir)
+        for project_key, project in result.projects.items():
+            batches = list(_task_batches(project.tasks, LABELSTUDIO_SPLIT_BATCH_SIZE))
+            batch_total = len(batches)
+            for batch_index, tasks in enumerate(batches, start=1):
+                output_name = (
+                    f"project_{project_key}_batch_{batch_index:03d}_"
+                    f"of_{batch_total:03d}.json"
+                )
+                payload = _tasks_with_batch_data(
+                    tasks,
+                    project_key=project_key,
+                    batch_index=batch_index,
+                    batch_total=batch_total,
+                )
+                (staging / output_name).write_text(
+                    _json_text(payload),
+                    encoding="utf-8",
+                )
+                output_names.append(output_name)
+
+            rule_ids = (
+                rule_id
+                for task in project.tasks
+                for rule_id in task["data"].get("dsl_rules", [])
+            )
+            instructions = render_project_instructions(
+                project_key,
+                _project_title_for_key(project_key),
+                rule_ids,
+            )
+            (staging / f"project_{project_key}_instructions.html").write_text(
+                instructions,
+                encoding="utf-8",
+            )
+
+        _validate_serialized_split_outputs(staging, result)
+        root.mkdir(parents=True, exist_ok=True)
+        for existing in root.iterdir():
+            if existing.is_file() and _is_managed_export_name(existing.name):
+                existing.unlink()
+        for staged in staging.iterdir():
+            staged.replace(root / staged.name)
+
+    return [root / name for name in output_names]
+
+
+def validate_export_result(result: ExportResult) -> None:
+    """Validate one unsplit Label Studio export before it is persisted."""
+    if len(result.tasks) != len(result.exported_words):
+        raise AnnotationExportError(
+            "task count does not match exported-word count: "
+            f"{len(result.tasks)} != {len(result.exported_words)}"
+        )
+
+    seen_ids: set[str] = set()
+    seen_words: set[str] = set()
+    for index, (task, expected_word) in enumerate(
+        zip(result.tasks, result.exported_words, strict=True)
+    ):
+        _validate_task(
+            task,
+            expected_word=expected_word,
+            context=f"task {index}",
+            seen_ids=seen_ids,
+            seen_words=seen_words,
+        )
+
+
+def validate_split_export_result(result: SplitExportResult) -> None:
+    """Validate project routing and global uniqueness in a split export."""
+    seen_ids: set[str] = set()
+    seen_words: set[str] = set()
+    flattened_words: list[str] = []
+
+    for project_key, project in result.projects.items():
+        if not project.tasks:
+            raise AnnotationExportError(f"project {project_key!r} is empty")
+        if len(project.tasks) != len(project.exported_words):
+            raise AnnotationExportError(
+                f"project {project_key!r} task count does not match exported words"
+            )
+        expected_title = _project_title_for_key(project_key)
+        if project.report.get("project_key") != project_key:
+            raise AnnotationExportError(f"project {project_key!r} has inconsistent report key")
+        if project.report.get("project_title") != expected_title:
+            raise AnnotationExportError(
+                f"project {project_key!r} has inconsistent report title"
+            )
+
+        for index, (task, expected_word) in enumerate(
+            zip(project.tasks, project.exported_words, strict=True)
+        ):
+            context = f"project {project_key!r} task {index}"
+            data = _validate_task(
+                task,
+                expected_word=expected_word,
+                context=context,
+                seen_ids=seen_ids,
+                seen_words=seen_words,
+            )
+            if data.get("project_key") != project_key:
+                raise AnnotationExportError(f"{context} has wrong project_key")
+            if data.get("project_title") != expected_title:
+                raise AnnotationExportError(f"{context} has wrong project_title")
+            rules = data.get("dsl_rules")
+            if (
+                not isinstance(rules, list)
+                or any(not isinstance(rule, str) or rule not in RULES for rule in rules)
+                or len(rules) != len(set(rules))
+            ):
+                raise AnnotationExportError(f"{context} has invalid dsl_rules")
+            expected_project = classify_project(expected_word, data["gemini_origin"])
+            if expected_project["key"] != project_key:
+                raise AnnotationExportError(
+                    f"{context} belongs to project {expected_project['key']!r}"
+                )
+            if rules != expected_project["dsl_rules"]:
+                raise AnnotationExportError(f"{context} has inconsistent dsl_rules")
+        flattened_words.extend(project.exported_words)
+
+    if set(flattened_words) != set(result.exported_words):
+        raise AnnotationExportError(
+            "split projects do not contain exactly the exported words"
+        )
+    if len(flattened_words) != len(result.exported_words):
+        raise AnnotationExportError(
+            "split project word count does not match base exported-word count"
+        )
+
+
+def _validate_task(
+    task: Any,
+    *,
+    expected_word: str,
+    context: str,
+    seen_ids: set[str],
+    seen_words: set[str],
+) -> dict[str, Any]:
+    if not isinstance(task, dict) or set(task) != {"data"}:
+        raise AnnotationExportError(f"{context} must contain only a data object")
+    data = task.get("data")
+    if not isinstance(data, dict):
+        raise AnnotationExportError(f"{context}.data must be an object")
+
+    task_id = data.get("id")
+    if not isinstance(task_id, str) or not task_id:
+        raise AnnotationExportError(f"{context} has invalid id")
+    if task_id in seen_ids:
+        raise AnnotationExportError(f"duplicate task id: {task_id!r}")
+    seen_ids.add(task_id)
+
+    surface = data.get("cyrl_word")
+    if not isinstance(surface, str) or not surface:
+        raise AnnotationExportError(f"{context} has invalid cyrl_word")
+    normalized = normalize_word(surface)
+    if normalized != expected_word:
+        raise AnnotationExportError(
+            f"{context} normalized word {normalized!r} does not match {expected_word!r}"
+        )
+    if normalized in seen_words:
+        raise AnnotationExportError(f"duplicate normalized word: {normalized!r}")
+    seen_words.add(normalized)
+
+    origin = data.get("gemini_origin")
+    if origin not in {"N", "RL", "U"}:
+        raise AnnotationExportError(f"{context} has invalid gemini_origin")
+    suggestion = data.get("auto_zamanalif")
+    if not isinstance(suggestion, str):
+        raise AnnotationExportError(f"{context} has invalid auto_zamanalif")
+    if not suggestion:
+        if origin != "U":
+            raise AnnotationExportError(
+                f"{context} has an empty suggestion for origin {origin}"
+            )
+    else:
+        try:
+            parse_dsl(suggestion)
+        except DslError as exc:
+            raise AnnotationExportError(
+                f"{context} has invalid Zamanalif DSL: {exc}"
+            ) from exc
+    if not isinstance(data.get("hints_html"), str):
+        raise AnnotationExportError(f"{context} has invalid hints_html")
+    return data
+
+
+def _validate_serialized_single_output(path: Path, result: ExportResult) -> None:
+    payload = _read_json_array(path)
+    if payload != result.tasks:
+        raise AnnotationExportError("serialized Label Studio output changed task data")
+
+
+def _validate_serialized_split_outputs(
+    staging: Path,
+    result: SplitExportResult,
+) -> None:
+    expected_names: set[str] = set()
+    seen_ids: set[str] = set()
+    seen_words: set[str] = set()
+
     for project_key, project in result.projects.items():
         batches = list(_task_batches(project.tasks, LABELSTUDIO_SPLIT_BATCH_SIZE))
         batch_total = len(batches)
         for batch_index, tasks in enumerate(batches, start=1):
-            output_path = (
-                root
-                / f"project_{project_key}_batch_{batch_index:03d}_of_{batch_total:03d}.json"
+            name = (
+                f"project_{project_key}_batch_{batch_index:03d}_"
+                f"of_{batch_total:03d}.json"
             )
-            output_path.write_text(
-                json.dumps(
-                    _tasks_with_batch_data(
-                        tasks,
-                        project_key=project_key,
-                        batch_index=batch_index,
-                        batch_total=batch_total,
-                    ),
-                    ensure_ascii=False,
-                    indent=2,
-                )
-                + "\n",
-                encoding="utf-8",
+            expected_names.add(name)
+            payload = _read_json_array(staging / name)
+            expected_payload = _tasks_with_batch_data(
+                tasks,
+                project_key=project_key,
+                batch_index=batch_index,
+                batch_total=batch_total,
             )
-            output_paths.append(output_path)
-    return output_paths
+            if payload != expected_payload:
+                raise AnnotationExportError(f"serialized batch {name} changed task data")
+            if not 1 <= len(payload) <= LABELSTUDIO_SPLIT_BATCH_SIZE:
+                raise AnnotationExportError(f"batch {name} has invalid task count")
+            for task in payload:
+                data = task["data"]
+                task_id = data["id"]
+                normalized = normalize_word(data["cyrl_word"])
+                if task_id in seen_ids:
+                    raise AnnotationExportError(
+                        f"duplicate task id across serialized batches: {task_id!r}"
+                    )
+                if normalized in seen_words:
+                    raise AnnotationExportError(
+                        "duplicate normalized word across serialized batches: "
+                        f"{normalized!r}"
+                    )
+                seen_ids.add(task_id)
+                seen_words.add(normalized)
+
+        instruction_name = f"project_{project_key}_instructions.html"
+        expected_names.add(instruction_name)
+        instruction_path = staging / instruction_name
+        if not instruction_path.exists() or not instruction_path.read_text(
+            encoding="utf-8"
+        ).strip():
+            raise AnnotationExportError(
+                f"project {project_key!r} has empty instructions"
+            )
+
+    staged_names = {path.name for path in staging.iterdir() if path.is_file()}
+    if staged_names != expected_names:
+        raise AnnotationExportError(
+            "staged export files differ from expected managed files"
+        )
+
+
+def _read_json_array(path: Path) -> list[Any]:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise AnnotationExportError(f"cannot validate {path.name}: {exc}") from exc
+    if not isinstance(payload, list):
+        raise AnnotationExportError(f"{path.name} must contain a JSON array")
+    return payload
+
+
+def _json_text(payload: Any) -> str:
+    return json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+
+
+def _is_managed_export_name(name: str) -> bool:
+    return bool(MANAGED_BATCH_RE.fullmatch(name) or MANAGED_INSTRUCTIONS_RE.fullmatch(name))
 
 
 def _task_batches(tasks: list[dict[str, Any]], batch_size: int) -> Iterable[list[dict[str, Any]]]:
