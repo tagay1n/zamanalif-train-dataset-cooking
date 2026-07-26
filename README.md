@@ -150,7 +150,8 @@ Recommended post-Gemini cleanup order:
    usable Tatar/non-Tatar and token-origin decision.
 3. Run `auto-resolve-conflicts` to save low-risk word conflict decisions.
 4. Run `resolve-conflicts` for the remaining meaningful word conflicts.
-5. Export Label Studio Project 1 word-review tasks with `annotation-export`.
+5. Run `auto-resolve-unknowns` to save low-risk surname/patronymic decisions.
+6. Export Label Studio Project 1 word-review tasks with `annotation-export`.
 
 ### Local repair of unprocessable rows
 
@@ -194,6 +195,8 @@ noisy rows. Review these conflicts in a separate local browser UI:
 python -m tatar_preannotator auto-resolve-conflicts --dry-run
 python -m tatar_preannotator auto-resolve-conflicts
 python -m tatar_preannotator resolve-conflicts
+python -m tatar_preannotator auto-resolve-unknowns --dry-run
+python -m tatar_preannotator auto-resolve-unknowns
 ```
 
 `auto-resolve-conflicts` writes only conservative decisions to
@@ -201,6 +204,12 @@ python -m tatar_preannotator resolve-conflicts
 minority-label noise, plus no-homonym cases where one concrete origin appears
 at least 10 times more often than the other. It does not auto-resolve homonym
 conflicts and never overwrites existing decisions.
+
+`auto-resolve-unknowns` handles only unresolved `U` words that look like
+Russian-style surnames or patronymics, such as `-ов`, `-ев`, `-ова`, `-ева`,
+`-ович`, and `-евич` with common Tatar suffixes. It writes them as `RL`, skips
+hyphenated compounds and abbreviation/fragments, and never overwrites existing
+decisions.
 
 The command starts at `http://127.0.0.1:8766` by default. It shows each
 conflicting normalized word, label counts, homonym counts, and example sentence
@@ -274,8 +283,7 @@ Selection rules:
 - deduplicate by lowercase normalized Cyrillic word form.
 
 At 20,211 annotated database rows, this decision-based selection produces
-45,940 tasks instead of the previous 88,280 letter-based tasks. The report
-includes origin-independent, origin-dependent, and unavailable-branch counts.
+45,940 tasks instead of the previous 88,280 letter-based tasks.
 
 The output is a Label Studio JSON array:
 
@@ -286,7 +294,7 @@ The output is a Label Studio JSON array:
     "cyrl_word": "вакытында",
     "auto_zamanalif": "waqıtında",
     "gemini_origin": "N",
-    "hints_html": "<ul><li>Native branch: <b>waqıtında</b></li><li>Loanword branch: <b>vakıtında</b></li><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    "hints_html": "<ul><li><b>в</b> -> <b>w</b></li><li><b>к</b> -> <b>q</b></li><li>Gemini's origin prediction: <b>native</b></li></ul>"
   }
 }
 ```
@@ -313,11 +321,15 @@ python -m tatar_preannotator annotation-export \
   --max-items 5000
 ```
 
-Split mode writes files such as `project_iya.json`, `project_rus_sign.json`,
-`project_complex_multi_rule.json`, and `project_catchall.json`. These JSON files
-are the files to import into Label Studio. Each word is exported once. If a word
-has multiple DSL rules it goes to `complex_multi_rule`; otherwise it goes to the
-matching DSL-rule project or to `catchall`.
+Split mode writes 1000-task batch files such as
+`project_iya_batch_001_of_003.json`, `project_rus_sign_batch_001_of_004.json`,
+`project_complex_multi_rule_batch_001_of_002.json`, and
+`project_catchall_batch_001_of_039.json`. These JSON files are the files to
+import into Label Studio, one file per Label Studio project. Each word is
+exported once. If a word has multiple DSL rules it goes to `complex_multi_rule`;
+otherwise it goes to the matching DSL-rule project or to `catchall`. Unresolved
+`U` words are split into focused projects: `u_hyphenated`,
+`u_abbrev_fragment`, `u_tatar_specific`, `u_conditional_plain`, and `u_other`.
 
 Split task `data` additionally includes:
 
@@ -325,7 +337,10 @@ Split task `data` additionally includes:
 {
   "project_key": "iya",
   "project_title": "IYA",
-  "dsl_rules": ["IYA"]
+  "dsl_rules": ["IYA"],
+  "batch_id": "iya_batch_001",
+  "batch_index": 1,
+  "batch_total": 3
 }
 ```
 

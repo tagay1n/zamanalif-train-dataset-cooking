@@ -1259,7 +1259,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
-    def test_origin_dependent_hints_show_both_branches(self) -> None:
+    def test_origin_dependent_hints_show_letter_decisions_without_branch_lines(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
                 Path(tmpdir) / "zamanalif.sqlite",
@@ -1278,9 +1278,9 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertIn("<b>е</b> -> <b>ye</b>", html_by_word["проект"])
         self.assertIn("<b>в</b> -> <b>w</b>", html_by_word["вакыт"])
         self.assertIn("<b>г</b> -> <b>ğ</b>", html_by_word["гасыр"])
-        self.assertIn("Native branch: <b>waqıt</b>", html_by_word["вакыт"])
-        self.assertIn("Loanword branch: <b>vakıt</b>", html_by_word["вакыт"])
         for html in html_by_word.values():
+            self.assertNotIn("Native branch:", html)
+            self.assertNotIn("Loanword branch:", html)
             self.assertNotIn("because of", html)
 
     def test_sorting_frequency_limit_and_min_frequency(self) -> None:
@@ -1381,6 +1381,62 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(project["key"], "complex_multi_rule")
         self.assertEqual(project["dsl_rules"], ["RUS_JOTATION", "IYA"])
 
+    def test_split_export_routes_unknown_words_to_focused_projects(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "УУГ", "label": "U"},
+                            {"text": "торак-коммуналь", "label": "U"},
+                            {"text": "күпфункцияле", "label": "U"},
+                            {"text": "видеоязма", "label": "U"},
+                            {"text": "альфонс", "label": "U"},
+                            {"text": "вакыт", "label": "N"},
+                        ],
+                    }
+                ],
+            )
+
+            result = export_labelstudio_project_tasks_from_db(db_path, sort_by="word")
+
+        self.assertIn("u_abbrev_fragment", result.projects)
+        self.assertIn("u_hyphenated", result.projects)
+        self.assertIn("u_tatar_specific", result.projects)
+        self.assertIn("u_conditional_plain", result.projects)
+        self.assertIn("u_other", result.projects)
+        self.assertEqual(
+            result.projects["u_abbrev_fragment"].tasks[0]["data"]["cyrl_word"],
+            "УУГ",
+        )
+        self.assertEqual(
+            result.projects["u_abbrev_fragment"].tasks[0]["data"]["project_title"],
+            "Unknown abbreviations and fragments",
+        )
+        self.assertEqual(
+            result.projects["u_hyphenated"].tasks[0]["data"]["cyrl_word"],
+            "торак-коммуналь",
+        )
+        self.assertEqual(
+            result.projects["u_tatar_specific"].tasks[0]["data"]["cyrl_word"],
+            "күпфункцияле",
+        )
+        self.assertEqual(
+            result.projects["u_conditional_plain"].tasks[0]["data"]["cyrl_word"],
+            "видеоязма",
+        )
+        self.assertEqual(
+            result.projects["u_other"].tasks[0]["data"]["cyrl_word"],
+            "альфонс",
+        )
+        self.assertEqual(
+            result.projects["catchall"].tasks[0]["data"]["cyrl_word"],
+            "вакыт",
+        )
+
     def test_cli_writes_split_labelstudio_json_only(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
@@ -1412,16 +1468,75 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     ]
                 )
 
-            iya = json.loads((output_dir / "project_iya.json").read_text(encoding="utf-8"))
-            catchall = json.loads((output_dir / "project_catchall.json").read_text(encoding="utf-8"))
+            iya = json.loads(
+                (output_dir / "project_iya_batch_001_of_001.json").read_text(encoding="utf-8")
+            )
+            catchall = json.loads(
+                (output_dir / "project_catchall_batch_001_of_001.json").read_text(
+                    encoding="utf-8"
+                )
+            )
 
         self.assertEqual(exit_code, 0)
         self.assertEqual(iya[0]["data"]["project_key"], "iya")
+        self.assertEqual(iya[0]["data"]["batch_id"], "iya_batch_001")
+        self.assertEqual(iya[0]["data"]["batch_index"], 1)
+        self.assertEqual(iya[0]["data"]["batch_total"], 1)
         self.assertEqual(catchall[0]["data"]["project_key"], "catchall")
         self.assertFalse((output_dir / "project_iya.report.json").exists())
         self.assertFalse((output_dir / "project_catchall.report.json").exists())
         self.assertFalse((output_dir / "summary_report.json").exists())
         self.assertIn("annotation export complete", output.getvalue())
+
+    def test_split_cli_batches_large_projects_at_1000_tasks(self) -> None:
+        letters = "бдмнрст"
+        words = [
+            "вакыт"
+            + letters[(index // 343) % 7]
+            + letters[(index // 49) % 7]
+            + letters[(index // 7) % 7]
+            + letters[index % 7]
+            for index in range(1001)
+        ]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [{"text": word, "label": "N"} for word in words],
+                    }
+                ],
+            )
+            output_dir = Path(tmpdir) / "split"
+
+            exit_code = main(
+                [
+                    "annotation-export",
+                    "--db",
+                    str(db_path),
+                    "--output-dir",
+                    str(output_dir),
+                    "--sort-by",
+                    "word",
+                ]
+            )
+
+            first_path = output_dir / "project_catchall_batch_001_of_002.json"
+            second_path = output_dir / "project_catchall_batch_002_of_002.json"
+            first = json.loads(first_path.read_text(encoding="utf-8"))
+            second = json.loads(second_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(len(first), 1000)
+        self.assertEqual(len(second), 1)
+        self.assertEqual(first[0]["data"]["batch_id"], "catchall_batch_001")
+        self.assertEqual(first[0]["data"]["batch_index"], 1)
+        self.assertEqual(first[0]["data"]["batch_total"], 2)
+        self.assertEqual(second[0]["data"]["batch_id"], "catchall_batch_002")
+        self.assertEqual(second[0]["data"]["batch_index"], 2)
+        self.assertEqual(second[0]["data"]["batch_total"], 2)
 
     def test_split_cli_tracking_marks_all_exported_words(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

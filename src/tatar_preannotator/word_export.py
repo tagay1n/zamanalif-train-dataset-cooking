@@ -44,6 +44,7 @@ from tatar_preannotator.conversion import (
 )
 from zamanalif_selector.features import BACK_VOWELS, CONDITIONAL_LETTERS, FRONT_VOWELS
 
+LABELSTUDIO_SPLIT_BATCH_SIZE = 1000
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
 TATAR_SPECIFIC_PART_LETTERS = frozenset("әөүҗңһ")
 RL_REVIEW_LETTERS = frozenset("ёыьъщ")
@@ -245,6 +246,9 @@ def split_export_result(result: ExportResult) -> SplitExportResult:
 
 def classify_project(word: str, label: str) -> dict[str, Any]:
     """Return the focused Label Studio project metadata for one normalized word."""
+    if label == "U":
+        key = _u_project_key(word)
+        return {"key": key, "title": _project_title_for_key(key), "dsl_rules": []}
     result = conversion_result_for_annotation(word, label)
     rules = list(result.rule_ids) if result is not None else []
     if len(rules) > 1:
@@ -257,6 +261,23 @@ def classify_project(word: str, label: str) -> dict[str, Any]:
         key = "catchall"
         title = "Catchall word review"
     return {"key": key, "title": title, "dsl_rules": rules}
+
+
+def _u_project_key(word: str) -> str:
+    if "-" in word:
+        return "u_hyphenated"
+    if _is_u_abbrev_fragment(word):
+        return "u_abbrev_fragment"
+    if any(char in TATAR_SPECIFIC_PART_LETTERS for char in word):
+        return "u_tatar_specific"
+    if contains_conditional_letter(word):
+        return "u_conditional_plain"
+    return "u_other"
+
+
+def _is_u_abbrev_fragment(word: str) -> bool:
+    cyrillic_count = len(CYRILLIC_RE.findall(word))
+    return cyrillic_count <= 3 or "." in word or "/" in word
 
 
 def _export_from_records(
@@ -1370,14 +1391,6 @@ def decision_html(entry: WordStats) -> str:
     result = conversion_result_for_annotation(entry.normalized, entry.label)
     if result is not None and "IYA" in result.rule_ids:
         items.append("<b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)")
-    branches = conversion_branches(entry.normalized)
-    if branches.state != "origin_independent":
-        items.append(
-            "Native branch: " + _branch_suggestion_html(branches.native_dsl)
-        )
-        items.append(
-            "Loanword branch: " + _branch_suggestion_html(branches.loanword_dsl)
-        )
     for index, char in enumerate(entry.normalized):
         if not CYRILLIC_RE.fullmatch(char):
             continue
@@ -1396,12 +1409,6 @@ def decision_html(entry: WordStats) -> str:
     return "<ul>" + "".join(f"<li>{item}</li>" for item in items) + "</ul>"
 
 
-def _branch_suggestion_html(value: str) -> str:
-    if not value:
-        return "<b>unavailable</b>"
-    return f"<b>{escape(value)}</b>"
-
-
 def write_outputs(result: ExportResult, output_path: str | Path) -> Path:
     """Write a Label Studio JSON import file and return its path."""
     output = Path(output_path)
@@ -1418,13 +1425,55 @@ def write_split_outputs(result: SplitExportResult, output_dir: str | Path) -> li
     root.mkdir(parents=True, exist_ok=True)
     output_paths: list[Path] = []
     for project_key, project in result.projects.items():
-        output_path = root / f"project_{project_key}.json"
-        output_path.write_text(
-            json.dumps(project.tasks, ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
-        output_paths.append(output_path)
+        batches = list(_task_batches(project.tasks, LABELSTUDIO_SPLIT_BATCH_SIZE))
+        batch_total = len(batches)
+        for batch_index, tasks in enumerate(batches, start=1):
+            output_path = (
+                root
+                / f"project_{project_key}_batch_{batch_index:03d}_of_{batch_total:03d}.json"
+            )
+            output_path.write_text(
+                json.dumps(
+                    _tasks_with_batch_data(
+                        tasks,
+                        project_key=project_key,
+                        batch_index=batch_index,
+                        batch_total=batch_total,
+                    ),
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            output_paths.append(output_path)
     return output_paths
+
+
+def _task_batches(tasks: list[dict[str, Any]], batch_size: int) -> Iterable[list[dict[str, Any]]]:
+    for start in range(0, len(tasks), batch_size):
+        yield tasks[start : start + batch_size]
+
+
+def _tasks_with_batch_data(
+    tasks: list[dict[str, Any]],
+    *,
+    project_key: str,
+    batch_index: int,
+    batch_total: int,
+) -> list[dict[str, Any]]:
+    batch_id = f"{project_key}_batch_{batch_index:03d}"
+    return [
+        {
+            "data": {
+                **task["data"],
+                "batch_id": batch_id,
+                "batch_index": batch_index,
+                "batch_total": batch_total,
+            }
+        }
+        for task in tasks
+    ]
 
 
 def load_exported_words(db_path: str | Path) -> set[str]:
@@ -2184,7 +2233,16 @@ def _report(
 
 
 def _ordered_project_keys(projects: dict[str, list[dict[str, Any]]]) -> list[str]:
-    priority = ["complex_multi_rule", *(_project_key_for_rule(rule_id) for rule_id in RULES), "catchall"]
+    priority = [
+        "complex_multi_rule",
+        *(_project_key_for_rule(rule_id) for rule_id in RULES),
+        "u_hyphenated",
+        "u_abbrev_fragment",
+        "u_tatar_specific",
+        "u_conditional_plain",
+        "u_other",
+        "catchall",
+    ]
     known = [key for key in priority if key in projects]
     unknown = sorted(key for key in projects if key not in set(priority))
     return known + unknown
@@ -2197,6 +2255,16 @@ def _project_key_for_rule(rule_id: str) -> str:
 def _project_title_for_key(project_key: str) -> str:
     if project_key == "complex_multi_rule":
         return "Complex multi-rule words"
+    if project_key == "u_hyphenated":
+        return "Unknown hyphenated compounds"
+    if project_key == "u_abbrev_fragment":
+        return "Unknown abbreviations and fragments"
+    if project_key == "u_tatar_specific":
+        return "Unknown Tatar-specific words"
+    if project_key == "u_conditional_plain":
+        return "Unknown conditional-letter words"
+    if project_key == "u_other":
+        return "Other unknown-origin words"
     if project_key == "catchall":
         return "Catchall word review"
     return project_key.upper().replace("_", " ")

@@ -15,6 +15,7 @@ from .config import load_config
 from .conflict_resolver import (
     ConflictResolverError,
     auto_resolve_conflicts,
+    auto_resolve_unknowns,
     serve_conflict_resolver_web,
 )
 from .gemini_client import GoogleGeminiClient
@@ -183,6 +184,18 @@ def main(argv: list[str] | None = None) -> int:
         help="Report decisions without writing word_resolutions.",
     )
 
+    auto_unknowns = subparsers.add_parser(
+        "auto-resolve-unknowns",
+        help="Conservatively auto-resolve low-risk unknown-origin words.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    auto_unknowns.add_argument("--db", default=DEFAULT_DB_PATH, help="SQLite application database.")
+    auto_unknowns.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Report decisions without writing word_resolutions.",
+    )
+
     args = parser.parse_args(argv)
     if args.command == "annotate":
         return _annotate(args)
@@ -202,6 +215,8 @@ def main(argv: list[str] | None = None) -> int:
         return _resolve_conflicts(args)
     if args.command == "auto-resolve-conflicts":
         return _auto_resolve_conflicts(args)
+    if args.command == "auto-resolve-unknowns":
+        return _auto_resolve_unknowns(args)
     raise AssertionError(args.command)
 
 
@@ -432,6 +447,25 @@ def _auto_resolve_conflicts(args: argparse.Namespace) -> int:
         f"skipped_homonym_conflict={summary.skipped_homonym_conflict} "
         f"skipped_manual={summary.skipped_manual} "
         f"by_decision={summary.by_decision}"
+    )
+    return 0
+
+
+def _auto_resolve_unknowns(args: argparse.Namespace) -> int:
+    try:
+        summary = auto_resolve_unknowns(args.db, dry_run=args.dry_run)
+    except (OSError, sqlite3.Error, ConflictResolverError) as exc:
+        print(f"auto-resolve unknowns failed: {exc}")
+        return 1
+    mode = "dry-run" if summary.dry_run else "written"
+    print(
+        "auto-resolve unknowns complete: "
+        f"mode={mode} "
+        f"inspected={summary.inspected} "
+        f"auto_resolved={summary.auto_resolved} "
+        f"skipped_by_category={summary.skipped_by_category} "
+        f"by_decision={summary.by_decision} "
+        f"examples_by_category={summary.examples_by_category}"
     )
     return 0
 
