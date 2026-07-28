@@ -185,5 +185,6 @@ Project 1 is word dictionary review:
 - never re-export a form already stored in `reviewed_words`;
 - correct the suggested Zamanalif form when it is wrong;
 - trust deterministic letters more than conditional letters;
-- use Gemini origin prediction as a weak hint, not final truth;
+- retain the exported Gemini origin prediction; dictionary annotators review
+  only the proposed spelling or mark the word as a contextual homonym;
 - for `U` words, prefer careful correction over guessing aggressively.

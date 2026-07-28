@@ -60,6 +60,7 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(summary.imported_items, 1)
         self.assertEqual(summary.skipped_unannotated_tasks, 1)
         self.assertEqual(set(reviewed), {"вакыт"})
+        self.assertEqual(reviewed["вакыт"].origin, "N")
 
     def test_reimport_is_idempotent_and_conflict_rolls_back(self) -> None:
         with TemporaryDirectory() as tmpdir:
@@ -93,8 +94,6 @@ class LabelStudioImportTests(unittest.TestCase):
                 "торганнары",
                 "torğannarı",
                 "N",
-                family_members=["торганнары", "торганнар", "торган"],
-                morphology=("тор", "v"),
             )
 
             summary = import_labelstudio_annotations(
@@ -142,10 +141,8 @@ class LabelStudioImportTests(unittest.TestCase):
                 "торганнары",
                 "torğannarı",
                 "N",
-                family_members=["торганнары", "торган"],
-                morphology=("тор", "v"),
             )
-            task["annotations"][0]["result"][1]["value"]["text"] = ["torğannarıx"]
+            task["annotations"][0]["result"][0]["value"]["text"] = ["torğannarıx"]
 
             summary = import_labelstudio_annotations(
                 db_path,
@@ -157,10 +154,11 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(summary.inherited_items, 0)
         self.assertEqual(set(reviewed), {"торганнары"})
 
-    def test_next_dictionary_import_expands_existing_direct_review(self) -> None:
+    def test_next_dictionary_import_expands_only_prefixes_of_direct_review(self) -> None:
         analyzer = FakeMorphologyAnalyzer(
             {
                 "торган": ("тор", "v"),
+                "торганда": ("тор", "v"),
                 "торганнар": ("тор", "v"),
                 "торганнары": ("тор", "v"),
             }
@@ -168,8 +166,11 @@ class LabelStudioImportTests(unittest.TestCase):
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             db_path = _database(root / "db.sqlite")
-            _add_words(db_path, ["торган", "торганнар", "торганнары"])
-            save_reviewed_word(db_path, "торган", "torğan", "N")
+            _add_words(
+                db_path,
+                ["торган", "торганда", "торганнар", "торганнары"],
+            )
+            save_reviewed_word(db_path, "торганнары", "torğannarı", "N")
 
             summary = import_labelstudio_annotations(
                 db_path,
@@ -184,6 +185,52 @@ class LabelStudioImportTests(unittest.TestCase):
             set(reviewed),
             {"вакыт", "торган", "торганнар", "торганнары"},
         )
+        self.assertNotIn("торганда", reviewed)
+
+    def test_imported_branch_does_not_propagate_to_non_prefix_family_member(self) -> None:
+        words = [
+            "мәсьәлә",
+            "мәсьәләләр",
+            "мәсьәләләре",
+            "мәсьәләләрен",
+            "мәсьәләләрендә",
+            "мәсьәләләрендәге",
+            "мәсьәләдә",
+        ]
+        analyzer = FakeMorphologyAnalyzer(
+            {word: ("мәсьәлә", "n") for word in words}
+        )
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, words)
+            task = _task(
+                "мәсьәләләрендәге",
+                "mäsälälärendäge",
+                "N",
+            )
+
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "prefix-family.json", [task]),
+                morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.imported_items, 1)
+        self.assertEqual(summary.inherited_items, 5)
+        self.assertTrue(
+            {
+                "мәсьәлә",
+                "мәсьәләләр",
+                "мәсьәләләре",
+                "мәсьәләләрен",
+                "мәсьәләләрендә",
+                "мәсьәләләрендәге",
+            }
+            <= set(reviewed)
+        )
+        self.assertNotIn("мәсьәләдә", reviewed)
 
     def test_homonym_annotation_routes_word_to_contextual_export_idempotently(self) -> None:
         with TemporaryDirectory() as tmpdir:
@@ -234,11 +281,6 @@ class LabelStudioImportTests(unittest.TestCase):
         retained["result"].extend(
             [
                 {
-                    "from_name": "reviewed_origin",
-                    "type": "textarea",
-                    "value": {"text": []},
-                },
-                {
                     "from_name": "corrected_zamanalif",
                     "type": "choices",
                     "value": {"choices": []},
@@ -249,14 +291,10 @@ class LabelStudioImportTests(unittest.TestCase):
             root = Path(tmpdir)
             db_path = _database(root / "db.sqlite")
             _add_words(db_path, ["торган", "торганнар", "торганнары"])
-            family_members = ["торганнары", "торганнар", "торган"]
-            morphology = ("тор", "v")
             initial_task = _task(
                 "торганнары",
                 "torğannarı",
                 "N",
-                family_members=family_members,
-                morphology=morphology,
             )
             import_labelstudio_annotations(
                 db_path,
@@ -275,8 +313,6 @@ class LabelStudioImportTests(unittest.TestCase):
                 "torğannarı",
                 "N",
                 annotations=[retained],
-                family_members=family_members,
-                morphology=morphology,
             )
 
             summary = import_labelstudio_annotations(
@@ -307,14 +343,13 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertTrue(
             {"торганнары", "торганнар", "торган"}.isdisjoint(reviewed)
         )
-        family_tasks = [
-            task
-            for task in next_export.projects["catchall"].tasks
-            if "торганнар" in task["meta"]["family_members"]
-        ]
         self.assertEqual(
-            family_tasks[0]["meta"]["family_members"],
-            ["торганнар", "торган"],
+            next_export.projects["catchall"].exported_words,
+            ["вакыт", "торганнар"],
+        )
+        self.assertEqual(
+            next_export.projects["catchall"].report["covered_word_count"],
+            3,
         )
 
     def test_rejects_conflicting_homonym_and_regular_annotations(self) -> None:
@@ -376,7 +411,9 @@ class LabelStudioImportTests(unittest.TestCase):
                     _backup(root / "malformed-homonym.json", [malformed])
                 )
 
-    def test_rejects_array_missing_project_key_and_missing_origin(self) -> None:
+    def test_rejects_array_missing_project_key_and_legacy_dictionary_origin(
+        self,
+    ) -> None:
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             task = _task("вакыт", "waqıt", "N")
@@ -390,41 +427,43 @@ class LabelStudioImportTests(unittest.TestCase):
                 parse_labelstudio_export(_backup(root / "no-key.json", [task]))
 
             task = _task("вакыт", "waqıt", "N")
-            task["annotations"][0]["result"] = task["annotations"][0]["result"][1:]
-            with self.assertRaisesRegex(LabelStudioImportError, "reviewed_origin"):
-                parse_labelstudio_export(_backup(root / "no-origin.json", [task]))
+            task["annotations"][0]["result"].insert(
+                0,
+                {
+                    "from_name": "reviewed_origin",
+                    "type": "choices",
+                    "value": {"choices": ["N"]},
+                },
+            )
+            with self.assertRaisesRegex(LabelStudioImportError, "unexpected control"):
+                parse_labelstudio_export(_backup(root / "legacy-origin.json", [task]))
 
-    def test_rejects_legacy_catchall_schema_and_overlapping_families(self) -> None:
+            contextual = _task(
+                "акты",
+                "aqtı",
+                "N",
+                project_key="contextual_homonym",
+                sample_id="sent_1",
+                token_index=0,
+            )
+            contextual["annotations"][0]["result"] = contextual["annotations"][0][
+                "result"
+            ][1:]
+            with self.assertRaisesRegex(LabelStudioImportError, "reviewed_origin"):
+                parse_labelstudio_export(
+                    _backup(root / "contextual-no-origin.json", [contextual])
+                )
+
+    def test_rejects_legacy_catchall_schema(self) -> None:
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             legacy = _task("вакыт", "waqıt", "N")
             legacy["meta"] = {"schema_version": 1, "project_key": "catchall"}
             with self.assertRaisesRegex(
                 LabelStudioImportError,
-                "unexpected or missing fields",
+                "unsupported schema_version",
             ):
                 parse_labelstudio_export(_backup(root / "legacy.json", [legacy]))
-
-            first = _task(
-                "торганнары",
-                "torğannarı",
-                "N",
-                family_members=["торганнары", "торган"],
-                morphology=("тор", "v"),
-            )
-            second = _task(
-                "торганнар",
-                "torğannar",
-                "N",
-                family_members=["торганнар", "торган"],
-                morphology=("тор", "v"),
-            )
-            overlapping = _backup(root / "overlapping.json", [first, second])
-            with self.assertRaisesRegex(
-                LabelStudioImportError,
-                "duplicate catchall family member",
-            ):
-                parse_labelstudio_export(overlapping)
 
     def test_rejects_mixed_projects_and_dictionary_homonym(self) -> None:
         with TemporaryDirectory() as tmpdir:
@@ -508,7 +547,7 @@ class LabelStudioImportTests(unittest.TestCase):
             unchanged = _task("вакыт", "waqıt", "N")
             changed = _task("проект", "proyekt", "RL")
             changed["data"]["auto_zamanalif"] = "proekt"
-            changed["annotations"][0]["result"][1]["value"]["text"] = [
+            changed["annotations"][0]["result"][0]["value"]["text"] = [
                 "proekt",
                 "proyekt",
             ]
@@ -596,8 +635,6 @@ def _task(
     project_key: str = "catchall",
     sample_id: str | None = None,
     token_index: int | None = None,
-    family_members: list[str] | None = None,
-    morphology: tuple[str, str] | None = None,
 ) -> dict[str, object]:
     data: dict[str, object] = {
         "cyrl_word": word,
@@ -610,22 +647,7 @@ def _task(
         "project_key": project_key,
     }
     if project_key == "catchall":
-        members = family_members or [word.lower()]
-        meta.update(
-            {
-                "schema_version": 2,
-                "family_members": members,
-                "morphology": (
-                    {
-                        "analyzer_revision": "test-apertium-tat",
-                        "lemma": morphology[0],
-                        "part_of_speech": morphology[1],
-                    }
-                    if morphology is not None
-                    else None
-                ),
-            }
-        )
+        meta["schema_version"] = 3
     if project_key == "contextual_homonym":
         data.update(
             {
@@ -638,21 +660,26 @@ def _task(
         meta["sample_id"] = sample_id
         meta["token_index"] = token_index
     if annotations is None:
+        results: list[dict[str, object]] = [
+            {
+                "from_name": "corrected_zamanalif",
+                "type": "textarea",
+                "value": {"text": [zamanalif]},
+            }
+        ]
+        if project_key == "contextual_homonym":
+            results.insert(
+                0,
+                {
+                    "from_name": "reviewed_origin",
+                    "type": "choices",
+                    "value": {"choices": [origin]},
+                },
+            )
         annotations = [
             {
                 "was_cancelled": False,
-                "result": [
-                    {
-                        "from_name": "reviewed_origin",
-                        "type": "choices",
-                        "value": {"choices": [origin]},
-                    },
-                    {
-                        "from_name": "corrected_zamanalif",
-                        "type": "textarea",
-                        "value": {"text": [zamanalif]},
-                    },
-                ],
+                "result": results,
             }
         ]
     return {

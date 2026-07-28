@@ -63,12 +63,15 @@ Ambiguous and unknown words remain independent tasks. DSL-rule words, hamza
 words, and contextual homonyms are routed to their dedicated projects before
 family grouping and therefore cannot enter a catchall family.
 
-The longest form represents a family; frequency and lexical order break ties.
-Accepting its unchanged canonical conversion approves each exported member
-with that member's own canonical conversion. Editing the representative
-conversion disables propagation. A later dictionary import applies the same
-rule to eligible families anchored by older directly reviewed canonical
-catchall words. Derived approvals retain their source and analyzer revision in
+Every maximal form represents one prefix branch, so divergent forms in the
+same morphological family are exported as separate tasks. Accepting an
+unchanged canonical conversion approves only forms that are literal prefixes
+of the displayed representative, with each form's own canonical conversion.
+For example, accepting `мәсьәләләрендәге` can approve `мәсьәләләрендә` and
+`мәсьәлә`, but not `мәсьәләдә`. Editing the representative conversion disables
+propagation. A later dictionary import applies the same prefix rule to
+eligible forms anchored by older directly reviewed canonical catchall words.
+Derived approvals retain their source and analyzer revision in
 `reviewed_word_derivations`.
 
 ## Contextual Homonym Review

@@ -1423,14 +1423,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(
             catchall.tasks[0]["meta"],
             {
-                "schema_version": 2,
+                "schema_version": 3,
                 "project_key": "catchall",
-                "family_members": ["торганнары", "торганнар", "торган"],
-                "morphology": {
-                    "analyzer_revision": "test-apertium-tat",
-                    "lemma": "тор",
-                    "part_of_speech": "v",
-                },
             },
         )
         self.assertEqual(result.report["exported_word_count"], 1)
@@ -1440,6 +1434,47 @@ class PreannotatorWordExportTests(unittest.TestCase):
             catchall.tasks[0]["data"]["hints_html"],
         )
         self.assertEqual(len(analyzer.calls), 1)
+
+    def test_catchall_exports_each_maximal_prefix_branch(self) -> None:
+        words = [
+            "мәсьәлә",
+            "мәсьәләләр",
+            "мәсьәләләре",
+            "мәсьәләләрен",
+            "мәсьәләләрендә",
+            "мәсьәләләрендәге",
+            "мәсьәләдә",
+        ]
+        analyzer = FakeMorphologyAnalyzer(
+            {word: ("мәсьәлә", "n") for word in words}
+        )
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": word, "label": "N"} for word in words
+                        ],
+                    }
+                ],
+            )
+
+            result = export_labelstudio_project_tasks_from_db(
+                db_path,
+                sort_by="word",
+                morphology_analyzer=analyzer,
+            )
+
+        catchall = result.projects["catchall"]
+        self.assertEqual(
+            catchall.exported_words,
+            ["мәсьәләдә", "мәсьәләләрендәге"],
+        )
+        self.assertEqual(catchall.report["covered_word_count"], len(words))
+        self.assertEqual(result.report["covered_word_count"], len(words))
 
     def test_catchall_does_not_group_different_origins_or_ambiguous_words(self) -> None:
         analyzer = FakeMorphologyAnalyzer(
@@ -1472,9 +1507,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         tasks = result.projects["catchall"].tasks
         self.assertEqual(len(tasks), 3)
-        self.assertTrue(
-            all(len(task["meta"]["family_members"]) == 1 for task in tasks)
-        )
+        self.assertEqual(len(result.projects["catchall"].exported_words), 3)
 
     def test_split_export_uses_complex_multi_rule_project(self) -> None:
         project = classify_project("бюрократия", "RL")
@@ -1673,10 +1706,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(
             catchall[0]["meta"],
             {
-                "schema_version": 2,
+                "schema_version": 3,
                 "project_key": "catchall",
-                "family_members": ["вакыт"],
-                "morphology": None,
             },
         )
         self.assertFalse(report_files_exist)
@@ -1840,7 +1871,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(second_exit, 0)
         self.assertEqual(first_files, second_files)
 
-    def test_split_cli_batches_large_projects_at_1000_tasks(self) -> None:
+    def test_split_cli_batches_large_projects_at_500_tasks(self) -> None:
         letters = "бдмнрст"
         words = [
             "вакыт"
@@ -1875,22 +1906,25 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 ]
             )
 
-            first_path = output_dir / "project_catchall_batch_001_of_002.json"
-            second_path = output_dir / "project_catchall_batch_002_of_002.json"
+            first_path = output_dir / "project_catchall_batch_001_of_003.json"
+            second_path = output_dir / "project_catchall_batch_002_of_003.json"
+            third_path = output_dir / "project_catchall_batch_003_of_003.json"
             first = json.loads(first_path.read_text(encoding="utf-8"))
             second = json.loads(second_path.read_text(encoding="utf-8"))
+            third = json.loads(third_path.read_text(encoding="utf-8"))
 
         self.assertEqual(exit_code, 0)
-        self.assertEqual(len(first), 1000)
-        self.assertEqual(len(second), 1)
+        self.assertEqual(len(first), 500)
+        self.assertEqual(len(second), 500)
+        self.assertEqual(len(third), 1)
         self.assertEqual(
             set(first[0]["meta"]),
-            {"schema_version", "project_key", "family_members", "morphology"},
+            {"schema_version", "project_key"},
         )
-        self.assertEqual(first[0]["meta"]["schema_version"], 2)
+        self.assertEqual(first[0]["meta"]["schema_version"], 3)
         self.assertEqual(first[0]["meta"]["project_key"], "catchall")
-        self.assertEqual(second[0]["meta"]["schema_version"], 2)
-        self.assertEqual(second[0]["meta"]["project_key"], "catchall")
+        self.assertEqual(third[0]["meta"]["schema_version"], 3)
+        self.assertEqual(third[0]["meta"]["project_key"], "catchall")
         self.assertNotIn("batch_id", first[0]["data"])
         self.assertNotIn("batch_index", first[0]["data"])
         self.assertNotIn("batch_total", first[0]["data"])
@@ -1936,20 +1970,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
             labelstudio_task = {
                 **task,
                 "meta": {
-                    "schema_version": 2,
+                    "schema_version": 3,
                     "project_key": "catchall",
-                    "family_members": [task["data"]["cyrl_word"].lower()],
-                    "morphology": None,
                 },
                 "annotations": [
                     {
                         "was_cancelled": False,
                         "result": [
-                            {
-                                "from_name": "reviewed_origin",
-                                "type": "choices",
-                                "value": {"choices": ["N"]},
-                            },
                             {
                                 "from_name": "corrected_zamanalif",
                                 "type": "textarea",

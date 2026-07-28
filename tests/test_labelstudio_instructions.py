@@ -20,8 +20,8 @@ class LabelStudioInstructionTests(unittest.TestCase):
         self.assertIn("orfografiä", html)
         self.assertIn("orfografiyä", html)
         self.assertIn("Enter the complete word, not DSL syntax", html)
-        self.assertIn("<b>N</b>", html)
-        self.assertIn("<b>RL</b>", html)
+        self.assertNotIn("Origin Labels", html)
+        self.assertNotIn("Choose <b>N</b> or <b>RL</b>", html)
 
     def test_unknown_project_tells_annotator_to_skip_uncertain_items(self) -> None:
         html = render_project_instructions(

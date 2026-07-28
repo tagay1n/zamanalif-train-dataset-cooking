@@ -308,7 +308,7 @@ options. The preferred policy currently resolves it to `orfografiyä`; the
 compact PDF policy resolves it to `orfografiä`. The DSL marks only the
 differing substring.
 
-The command writes 1000-task batch files such as
+The command writes 500-task batch files such as
 `project_iya_batch_001_of_003.json`, `project_rus_sign_batch_001_of_004.json`,
 `project_complex_multi_rule_batch_001_of_002.json`, and
 `project_hamza_batch_001_of_001.json`, and
@@ -329,7 +329,7 @@ with explicit Gemini homonym flags first.
 
 Every export is validated before files are published. Validation checks task
 and word uniqueness, project routing, required fields, Zamanalif DSL, and
-1000-task batch limits, then reads the staged JSON back before publishing it.
+500-task batch limits, then reads the staged JSON back before publishing it.
 When reusing an output directory, the exporter replaces only its managed batch
 and instruction files, removes obsolete managed batches, and preserves
 unrelated files.
@@ -359,9 +359,11 @@ and `loanword_zamanalif`; its `meta` additionally contains `sample_id` and
 `token_index`. Project titles, batch fields, DSL rule lists, and custom task
 IDs are not repeated in tasks.
 
-Catchall uses the pinned Apertium-tat analyzer to combine unambiguous word
-forms with the same lemma, part of speech, and predicted origin. Install its
-local toolchain once:
+Catchall uses the pinned Apertium-tat analyzer to group unambiguous word forms
+with the same lemma, part of speech, and predicted origin. Within each group,
+every maximal form starts a separate task branch. That task covers only forms
+that are literal prefixes of its displayed word. Install the local toolchain
+once:
 
 ```bash
 sudo apt install apertium-all-dev
@@ -371,59 +373,120 @@ tools/setup_apertium_tat.sh
 The compiled language data lives under ignored `.tools/apertium-tat`. Export
 and import require it; use `--apertium-tat-dir` only to point at an equivalent
 compiled checkout. Ambiguous or unknown analyses stay as single-word tasks.
-For catchall tasks, `meta.schema_version` is `2` and `meta` also records
-`family_members` and the pinned morphology identity.
+Catchall family details are not serialized into Label Studio tasks; import
+reconstructs them from the displayed representative with the pinned analyzer.
+Catchall tasks use `meta.schema_version` `3`.
 
 When a catchall representative is accepted without changing its canonical
-conversion, import approves every exported family member using that member's
-canonical conversion. An edited conversion approves only the representative.
-Each later dictionary import also expands existing directly reviewed canonical
-catchall words to currently eligible members of the same unambiguous family.
-Inherited reviews are recorded in `reviewed_word_derivations`; exporting itself
-never writes review state.
+conversion, import approves only same-origin, same-analysis forms that are
+literal prefixes of the representative, using each form's canonical
+conversion. A divergent form is exported as another task even when it has the
+same lemma and part of speech. An edited conversion approves only the
+representative. Each later dictionary import applies the same prefix rule to
+older directly reviewed canonical catchall words. Inherited reviews are
+recorded in `reviewed_word_derivations`; exporting itself never writes review
+state.
 
 Label Studio layout:
 
 ```xml
 <View>
-  <Header value="Original cyrillic word"/>
-  <Text name="cyrl_word" value="$cyrl_word"/>
+  <Style>
+    .box {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 16px;
+      background: #fafafa;
+    }
 
-  <Header value="Hints"/>
-  <HyperText name="hints" value="$hints_html"/>
+    .box-title,
+    .box-title * {
+      font-size: 15px !important;
+      font-weight: 600 !important;
+      color: #555 !important;
+      margin-bottom: 8px;
+    }
 
-  <Choices name="is_homonym" toName="cyrl_word" choice="multiple" showInline="true">
-    <Choice value="Homonym"/>
-  </Choices>
+    .big-word,
+    .big-word * {
+      font-size: 44px !important;
+      font-weight: 700 !important;
+      font-style: italic !important;
+      line-height: 1.3 !important;
+    }
+
+    .big-textarea textarea,
+    .big-textarea textarea *,
+    .big-textarea [contenteditable="true"],
+    .big-textarea [role="textbox"] {
+      font-size: 44px !important;
+      font-weight: 700 !important;
+      line-height: 1.3 !important;
+      min-height: 64px !important;
+    }
+  </Style>
+
+  <View className="box">
+    <View className="box-title">
+      <Text name="original_cyrillic_word_label" value="Original word"/>
+    </View>
+
+    <View className="big-word">
+      <Text name="cyrl_word" value="$cyrl_word"/>
+    </View>
+  </View>
 
   <View
     visibleWhen="choice-unselected"
     whenTagName="is_homonym"
     whenChoiceValue="Homonym"
   >
-    <Header value="Correct Gemini origin prediction if necessary"/>
-    <Choices name="reviewed_origin" toName="cyrl_word" choice="single" required="true">
-      <Choice value="N"/>
-      <Choice value="RL"/>
-    </Choices>
+    <View className="box">
+      <Text name="corrected_zamanalif_label" value="Correct if necessary"/>
 
-    <Header value="Correct if necessary | ä Ä | ö Ö | ü Ü | ñ Ñ | ı I | ğ Ğ | ş Ş | ç Ç"/>
-    <TextArea
-      name="corrected_zamanalif"
+      <View className="big-textarea">
+        <TextArea
+          name="corrected_zamanalif"
+          toName="cyrl_word"
+          rows="2"
+          value="$auto_zamanalif"
+          placeholder="Edit only if the suggestion is wrong"
+          required="true"
+        />
+      </View>
+
+      <Text
+        name="fast-copy"
+        value="ä Ä | ö Ö | ü Ü | ñ Ñ | ı I | ğ Ğ | ş Ş | ç Ç"
+      />
+    </View>
+  </View>
+
+  <View className="box">
+    <Choices
+      name="is_homonym"
       toName="cyrl_word"
-      rows="1"
-      value="$auto_zamanalif"
-      placeholder="Edit only if the suggestion is wrong"
-      required="true"
-    />
+      choice="multiple"
+      showInline="true"
+    >
+      <Choice value="Homonym"/>
+    </Choices>
+  </View>
+
+  <View className="box">
+    <Text name="hints_header" value="Hints"/>
+    <HyperText name="hints" value="$hints_html"/>
   </View>
 </View>
 ```
 
 The `Homonym` checkbox is unchecked by default. When it remains unchecked,
-both `reviewed_origin` and `corrected_zamanalif` are required. When checked,
-those controls are hidden and the checkbox alone is a complete decision. The
-importer has no origin or task-shape fallback.
+`corrected_zamanalif` is required and the exported `gemini_origin` is retained
+automatically. The checkbox initially appears immediately below the correction.
+When checked, the correction is hidden and the checkbox alone is a complete
+decision. Dictionary annotations containing a `reviewed_origin` control are
+rejected.
 
 The contextual project uses the same controls against highlighted sentence
 context:
@@ -483,7 +546,7 @@ python3 -m json.tool data/labelstudio_projects.json
 ```
 
 Set the ID shown for the required project and download all task fields. Export
-batches in this repository contain at most 1000 tasks, so one API page covers
+batches in this repository contain at most 500 tasks, so one API page covers
 one complete Label Studio project:
 
 ```bash
@@ -517,7 +580,8 @@ separates:
 
 - `unchanged`: submitted tasks whose final values equal the exported
   suggestions;
-- `changed`: tasks where the final origin or conversion actually differs;
+- `changed`: dictionary tasks where the conversion differs, contextual tasks
+  where origin or conversion differs, and dictionary homonym decisions;
 - `unannotated`: untouched and cancelled tasks.
 
 Only genuine changes are printed after the summary. Label Studio can encode an
@@ -538,14 +602,15 @@ The backup must use the task API response schema and contain exactly one
 `meta.project_key` with the expected project schema version. Normal dictionary
 decisions are written to `reviewed_words`. Dictionary tasks checked as
 `Homonym` are instead written to `word_resolutions` as `contextual_homonym`;
-their origin and conversion values are ignored. Contextual occurrence decisions
-are written to `contextual_reviews` by exact `meta.sample_id` and
-`meta.token_index`. Unannotated and cancelled tasks are skipped.
+their conversion value is ignored. Contextual occurrence decisions are written
+to `contextual_reviews` by exact `meta.sample_id` and `meta.token_index`.
+Unannotated and cancelled tasks are skipped.
 Identical reimports are idempotent; conflicting decisions fail atomically.
 
-Malformed DSL, missing controls, duplicate word tasks, conflicting annotations,
-or invalid origins abort the whole import without partial writes. After a
-successful import, approved words no longer appear in `annotation-export`.
+Malformed DSL, missing controls, unexpected dictionary origin controls,
+duplicate word tasks, conflicting annotations, or invalid contextual origins
+abort the whole import without partial writes. After a successful import,
+approved words no longer appear in `annotation-export`.
 
 ## Conversion DSL
 

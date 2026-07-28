@@ -12,6 +12,7 @@ APERTIUM_TAT_REVISION = "18fe9e45d5672d6f6113291197449e7522df1b3e"
 DEFAULT_APERTIUM_TAT_DIR = (
     Path(__file__).resolve().parents[2] / ".tools" / "apertium-tat"
 )
+APERTIUM_STREAM_RESERVED = frozenset(r"[]{}^$/*@\<>")
 
 
 class MorphologyError(ValueError):
@@ -44,7 +45,10 @@ class ApertiumTatarAnalyzer:
         unique_words = list(dict.fromkeys(words))
         if not unique_words:
             return {}
-        if any(not word or "\n" in word or "\r" in word for word in unique_words):
+        if any(
+            not word or "\n" in word or "\r" in word or "\0" in word
+            for word in unique_words
+        ):
             raise MorphologyError("morphology input contains an invalid word")
 
         executable = shutil.which("lt-proc")
@@ -63,7 +67,10 @@ class ApertiumTatarAnalyzer:
         try:
             completed = subprocess.run(
                 [executable, "-w", str(transducer)],
-                input="".join(f"{word}\n" for word in unique_words),
+                input="".join(
+                    f"{_escape_apertium_stream(word)}\n"
+                    for word in unique_words
+                ),
                 text=True,
                 encoding="utf-8",
                 capture_output=True,
@@ -91,6 +98,13 @@ def default_morphology_analyzer(
     data_dir: str | Path | None = None,
 ) -> MorphologyAnalyzer:
     return ApertiumTatarAnalyzer(data_dir)
+
+
+def _escape_apertium_stream(value: str) -> str:
+    return "".join(
+        f"\\{char}" if char in APERTIUM_STREAM_RESERVED else char
+        for char in value
+    )
 
 
 def _unambiguous_identity(line: str) -> MorphIdentity | None:

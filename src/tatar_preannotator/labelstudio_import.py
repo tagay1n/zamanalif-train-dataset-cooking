@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from contextlib import closing
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -224,12 +224,10 @@ def import_labelstudio_annotations(
                     unchanged += int(not changed)
 
                 effective_homonyms = effective_contextual_homonym_words(conn)
-                imported_words = {
-                    word
-                    for item in regular_items
-                    for word in item.family_members
+                regular_words = {
+                    item.normalized_word for item in regular_items
                 }
-                homonyms = sorted(imported_words & effective_homonyms)
+                homonyms = sorted(regular_words & effective_homonyms)
                 if homonyms:
                     raise LabelStudioImportError(
                         "dictionary project contains contextual homonyms: "
@@ -254,12 +252,19 @@ def import_labelstudio_annotations(
                 analysis_words = (
                     set(eligible)
                     | (set(existing) - derived_words)
-                    | imported_words
+                    | regular_words
                 )
                 analyses = analyzer.analyze(sorted(analysis_words))
-                for item in regular_items:
-                    if parsed.project_key == "catchall":
-                        _validate_imported_family(item, analyses, eligible, analyzer)
+                if parsed.project_key == "catchall":
+                    regular_items = [
+                        _reconstruct_imported_family(
+                            item,
+                            analyses,
+                            eligible,
+                            analyzer,
+                        )
+                        for item in regular_items
+                    ]
                 for item in regular_items:
                     origin, zamanalif_dsl = _regular_values(item)
                     current = (zamanalif_dsl, origin)
@@ -394,32 +399,44 @@ def _store_homonym_decision(
     return True
 
 
-def _validate_imported_family(
+def _reconstruct_imported_family(
     item: ReviewedAnnotation,
     analyses: dict[str, MorphIdentity | None],
     eligible: dict[str, Any],
     analyzer: MorphologyAnalyzer,
-) -> None:
-    if not item.family_members or item.family_members[0] != item.normalized_word:
-        raise LabelStudioImportError("catchall task has invalid family identity")
-    if item.analyzer_revision not in {None, analyzer.revision}:
+) -> ReviewedAnnotation:
+    candidate = eligible.get(item.normalized_word)
+    if candidate is None:
         raise LabelStudioImportError(
-            "catchall task uses a different Apertium-tat revision"
+            f"catchall word is no longer eligible: {item.normalized_word!r}"
         )
-    for word in item.family_members:
-        candidate = eligible.get(word)
-        if candidate is None:
-            raise LabelStudioImportError(
-                f"catchall family member is no longer eligible: {word!r}"
-            )
-        if candidate.origin != item.suggested_origin:
-            raise LabelStudioImportError(
-                f"catchall family member changed predicted origin: {word!r}"
-            )
-        if analyses.get(word) != item.morphology:
-            raise LabelStudioImportError(
-                f"catchall family morphology changed for {word!r}"
-            )
+    if candidate.origin != item.suggested_origin:
+        raise LabelStudioImportError(
+            "catchall word changed predicted origin: "
+            f"{item.normalized_word!r}"
+        )
+    identity = analyses.get(item.normalized_word)
+    if identity is None:
+        members = (item.normalized_word,)
+    else:
+        related = sorted(
+            (
+                word
+                for word, related_candidate in eligible.items()
+                if word != item.normalized_word
+                and item.normalized_word.startswith(word)
+                and related_candidate.origin == item.suggested_origin
+                and analyses.get(word) == identity
+            ),
+            key=lambda word: (-len(word), word),
+        )
+        members = (item.normalized_word, *related)
+    return replace(
+        item,
+        family_members=members,
+        morphology=identity,
+        analyzer_revision=analyzer.revision,
+    )
 
 
 def _propagate_imported_family(
@@ -441,6 +458,10 @@ def _propagate_imported_family(
 
     inserted = 0
     for word in item.family_members[1:]:
+        if not item.normalized_word.startswith(word):
+            raise LabelStudioImportError(
+                f"catchall family member is not a prefix: {word!r}"
+            )
         if analyses.get(word) != identity:
             raise LabelStudioImportError(
                 f"catchall family morphology changed for {word!r}"
@@ -497,7 +518,11 @@ def _backfill_reviewed_families(
         identity = analyses.get(word)
         if identity is None:
             continue
-        sources = anchors.get((identity, candidate.origin), [])
+        sources = [
+            source
+            for source in anchors.get((identity, candidate.origin), [])
+            if source.startswith(word)
+        ]
         if not sources or classify_project(word, candidate.origin)["key"] != "catchall":
             continue
         source = min(
@@ -582,7 +607,6 @@ def parse_labelstudio_export(input_path: str | Path) -> ParsedLabelStudioExport:
     project_key = _project_key(payload)
     annotations: list[ReviewedAnnotation] = []
     seen: set[str | tuple[str, int]] = set()
-    seen_family_words: set[str] = set()
     skipped = 0
     for task_index, task in enumerate(payload):
         parsed = _parse_task(task, task_index, project_key)
@@ -600,14 +624,6 @@ def parse_labelstudio_export(input_path: str | Path) -> ParsedLabelStudioExport:
                 f"duplicate task identity in Label Studio export: {identity!r}"
             )
         seen.add(identity)
-        if project_key == "catchall":
-            duplicates = sorted(set(reviewed.family_members) & seen_family_words)
-            if duplicates:
-                raise LabelStudioImportError(
-                    "duplicate catchall family member in Label Studio export: "
-                    f"{duplicates[0]!r}"
-                )
-            seen_family_words.update(reviewed.family_members)
         annotations.append(reviewed)
     return ParsedLabelStudioExport(
         project_key=project_key,
@@ -628,7 +644,6 @@ def audit_labelstudio_export(
     project_key = _project_key(payload)
     changes: list[LabelStudioAnnotationChange] = []
     seen: set[str | tuple[str, int]] = set()
-    seen_family_words: set[str] = set()
     skipped = 0
     unchanged = 0
     origin_changes = 0
@@ -664,14 +679,6 @@ def audit_labelstudio_export(
                     f"duplicate task identity in Label Studio export: {identity!r}"
                 )
             seen.add(identity)
-            if project_key == "catchall":
-                duplicates = sorted(set(reviewed.family_members) & seen_family_words)
-                if duplicates:
-                    raise LabelStudioImportError(
-                        "duplicate catchall family member in Label Studio export: "
-                        f"{duplicates[0]!r}"
-                    )
-                seen_family_words.update(reviewed.family_members)
             if reviewed.is_homonym:
                 homonym_changes += 1
                 changes.append(
@@ -817,46 +824,6 @@ def _parse_task(
     normalized = normalize_word(surface)
     if not normalized:
         raise LabelStudioImportError(f"{context} has no Cyrillic word")
-    family_members = (normalized,)
-    morphology: MorphIdentity | None = None
-    analyzer_revision: str | None = None
-    if project_key == "catchall":
-        raw_members = meta["family_members"]
-        if (
-            not isinstance(raw_members, list)
-            or not raw_members
-            or any(
-                not isinstance(word, str) or normalize_word(word) != word
-                for word in raw_members
-            )
-            or len(raw_members) != len(set(raw_members))
-            or raw_members[0] != normalized
-        ):
-            raise LabelStudioImportError(f"{context} has invalid family_members")
-        family_members = tuple(raw_members)
-        raw_morphology = meta["morphology"]
-        if raw_morphology is None:
-            if len(family_members) != 1:
-                raise LabelStudioImportError(
-                    f"{context} has a family without morphology"
-                )
-        elif (
-            not isinstance(raw_morphology, dict)
-            or set(raw_morphology)
-            != {"analyzer_revision", "lemma", "part_of_speech"}
-            or any(
-                not isinstance(raw_morphology[field], str)
-                or not raw_morphology[field]
-                for field in raw_morphology
-            )
-        ):
-            raise LabelStudioImportError(f"{context} has invalid morphology")
-        else:
-            analyzer_revision = raw_morphology["analyzer_revision"]
-            morphology = MorphIdentity(
-                raw_morphology["lemma"],
-                raw_morphology["part_of_speech"],
-            )
     suggested_origin = data.get("gemini_origin")
     if suggested_origin not in SUGGESTED_ORIGINS:
         raise LabelStudioImportError(f"{context} has invalid data.gemini_origin")
@@ -899,6 +866,7 @@ def _parse_task(
                 annotation_index,
                 suggested_zamanalif,
                 allow_homonym=project_key != CONTEXTUAL_PROJECT_KEY,
+                require_origin=project_key == CONTEXTUAL_PROJECT_KEY,
             )
         )
     if not decisions:
@@ -909,13 +877,15 @@ def _parse_task(
     reviewed = ReviewedAnnotation(
         normalized_word=normalized,
         zamanalif_dsl=decision.zamanalif_dsl,
-        origin=decision.origin,
+        origin=(
+            decision.origin
+            if project_key == CONTEXTUAL_PROJECT_KEY
+            else suggested_origin
+        ),
         is_homonym=decision.is_homonym,
         sample_id=sample_id,
         token_index=token_index,
-        family_members=family_members,
-        morphology=morphology,
-        analyzer_revision=analyzer_revision,
+        family_members=(normalized,),
         suggested_origin=suggested_origin,
     )
     return _ParsedTask(
@@ -934,6 +904,7 @@ def _parse_result(
     suggested_zamanalif: str,
     *,
     allow_homonym: bool,
+    require_origin: bool,
 ) -> _AnnotationDecision:
     context = f"{task_context} annotation {annotation_index}"
     origins: list[tuple[dict[str, Any], int]] = []
@@ -945,7 +916,7 @@ def _parse_result(
                 f"{context} result {result_index} must be an object"
             )
         control = result.get("from_name")
-        if control == ORIGIN_CONTROL:
+        if control == ORIGIN_CONTROL and require_origin:
             origins.append((result, result_index))
         elif control == CONVERSION_CONTROL:
             conversions.append((result, result_index))
@@ -971,7 +942,7 @@ def _parse_result(
                 f"{context} contains duplicate ignored controls"
             )
         return _AnnotationDecision(is_homonym=True)
-    if len(origins) != 1:
+    if require_origin and len(origins) != 1:
         raise LabelStudioImportError(
             f"{context} must contain exactly one {ORIGIN_CONTROL!r} result"
         )
@@ -979,9 +950,11 @@ def _parse_result(
         raise LabelStudioImportError(
             f"{context} must contain exactly one {CONVERSION_CONTROL!r} result"
         )
-    origin_result, origin_index = origins[0]
     conversion_result, conversion_index = conversions[0]
-    origin = _parse_origin(origin_result, context, origin_index)
+    origin = None
+    if require_origin:
+        origin_result, origin_index = origins[0]
+        origin = _parse_origin(origin_result, context, origin_index)
     zamanalif_dsl = _parse_conversion(
         conversion_result,
         context,

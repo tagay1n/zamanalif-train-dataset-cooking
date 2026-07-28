@@ -2,10 +2,20 @@ from __future__ import annotations
 
 import unittest
 
-from tatar_preannotator.morphology import MorphIdentity, _unambiguous_identity
+from tatar_preannotator.morphology import (
+    MorphIdentity,
+    _escape_apertium_stream,
+    _unambiguous_identity,
+)
 
 
 class MorphologyParserTests(unittest.TestCase):
+    def test_escapes_reserved_apertium_stream_characters(self) -> None:
+        self.assertEqual(
+            _escape_apertium_stream(r"кв/м[2]\тест"),
+            r"кв\/м\[2\]\\тест",
+        )
+
     def test_parses_one_lemma_and_part_of_speech(self) -> None:
         self.assertEqual(
             _unambiguous_identity("^барабыз/бар<v><iv><pres><p1><pl>$"),

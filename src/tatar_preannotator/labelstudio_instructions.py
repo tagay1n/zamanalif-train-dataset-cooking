@@ -103,8 +103,8 @@ RULE_GUIDANCE: dict[str, tuple[str, tuple[tuple[str, tuple[str, ...]], ...]]] = 
 
 UNKNOWN_GUIDANCE = {
     "u_hyphenated": (
-        "The origin of this hyphenated compound is unresolved. Classify the complete "
-        "written form, then check every component separately when correcting it."
+        "The origin of this hyphenated compound is unresolved. Check the complete "
+        "written form and every component when correcting the proposed spelling."
     ),
     "u_abbrev_fragment": (
         "The item may be an abbreviation, initialism, or fragment. Expand nothing: "
@@ -112,15 +112,15 @@ UNKNOWN_GUIDANCE = {
     ),
     "u_tatar_specific": (
         "The word contains Tatar-specific Cyrillic letters but its origin is unresolved. "
-        "Use the whole word, not one letter alone, to choose N or RL."
+        "Use the whole word, not one letter alone, to judge the proposed spelling."
     ),
     "u_conditional_plain": (
-        "The word has a conditional conversion letter and unresolved origin. Decide "
-        "origin first because it may change the suggested Zamanalif spelling."
+        "The word has a conditional conversion letter and unresolved origin. Check "
+        "the proposed Zamanalif spelling carefully."
     ),
     "u_other": (
-        "Gemini could not determine this word's origin. Choose N or RL only when the "
-        "word is recognizable; otherwise skip the task."
+        "Gemini could not determine this word's origin. Correct the proposed spelling "
+        "only when the word is recognizable; otherwise skip the task."
     ),
 }
 
@@ -177,7 +177,6 @@ def render_project_instructions(
     sections = [
         _heading(project_title),
         _workflow(),
-        _origin_labels(),
         _focus(project_key, rule_ids),
         _editing_rules(),
     ]
@@ -201,19 +200,8 @@ def _workflow() -> str:
     <li>Read the original Cyrillic word.</li>
     <li>If the word can be either native or Russian depending on sentence context, check <b>Homonym</b> and submit.</li>
     <li>Otherwise, check and, if needed, edit the suggested Zamanalif spelling.</li>
-    <li>Choose <b>N</b> or <b>RL</b>.</li>
     <li>Submit, or skip the task when you cannot decide reliably.</li>
   </ol>
-</section>"""
-
-
-def _origin_labels() -> str:
-    return """<section>
-  <h3>Origin Labels</h3>
-  <ul>
-    <li><b>N</b>: native/non-Russian, including Turkic, Arabic, Persian, and other integrated Tatar vocabulary.</li>
-    <li><b>RL</b>: Russian, Russian loanword, or international vocabulary entering Tatar through Russian.</li>
-  </ul>
 </section>"""
 
 
@@ -242,7 +230,6 @@ def _focus(project_key: str, rule_ids: Iterable[str]) -> str:
             "<section>\n"
             "  <h3>Conversion Focus</h3>\n"
             f"  <p>{escape(unknown)}</p>\n"
-            "  <p>Gemini's origin prediction is uncertain and is not final truth.</p>\n"
             "</section>"
         )
 
