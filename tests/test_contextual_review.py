@@ -7,7 +7,9 @@ from pathlib import Path
 import sqlite3
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
+from tests.morphology_fakes import FakeMorphologyAnalyzer
 from tatar_preannotator.cli import main
 from tatar_preannotator.contextual_review import (
     export_contextual_tasks_from_db,
@@ -16,6 +18,26 @@ from tatar_preannotator.labelstudio_import import import_labelstudio_annotations
 
 
 class ContextualReviewExportTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.analyzer = FakeMorphologyAnalyzer()
+        patchers = (
+            patch(
+                "tatar_preannotator.word_export.default_morphology_analyzer",
+                return_value=self.analyzer,
+            ),
+            patch(
+                "tatar_preannotator.labelstudio_import.default_morphology_analyzer",
+                return_value=self.analyzer,
+            ),
+            patch(
+                "tatar_preannotator.cli.default_morphology_analyzer",
+                return_value=self.analyzer,
+            ),
+        )
+        for patcher in patchers:
+            patcher.start()
+            self.addCleanup(patcher.stop)
+
     def test_exports_every_occurrence_and_highlights_only_target(self) -> None:
         with TemporaryDirectory() as tmpdir:
             db_path = _database(Path(tmpdir) / "db.sqlite")

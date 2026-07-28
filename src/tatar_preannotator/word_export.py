@@ -14,6 +14,11 @@ from tempfile import TemporaryDirectory
 from typing import TYPE_CHECKING, Any, Iterable
 
 from tatar_preannotator.labelstudio_instructions import render_project_instructions
+from tatar_preannotator.morphology import (
+    MorphIdentity,
+    MorphologyAnalyzer,
+    default_morphology_analyzer,
+)
 from tatar_preannotator.conversion import (
     APOSTROPHE_VARIANTS,
     Choice,
@@ -51,10 +56,14 @@ if TYPE_CHECKING:
 
 LABELSTUDIO_SPLIT_BATCH_SIZE = 1000
 TASK_SCHEMA_VERSION = 1
+CATCHALL_TASK_SCHEMA_VERSION = 2
 DICTIONARY_DATA_FIELDS = frozenset(
     {"cyrl_word", "auto_zamanalif", "gemini_origin", "hints_html"}
 )
 DICTIONARY_META_FIELDS = frozenset({"schema_version", "project_key"})
+CATCHALL_META_FIELDS = frozenset(
+    {"schema_version", "project_key", "family_members", "morphology"}
+)
 CONTEXTUAL_DATA_FIELDS = frozenset(
     {
         "cyrl_word",
@@ -105,6 +114,7 @@ class ExportResult:
     tasks: list[dict[str, Any]]
     report: dict[str, Any]
     exported_words: list[str]
+    frequencies: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -120,6 +130,23 @@ class ReviewedWord:
     normalized_word: str
     zamanalif_dsl: str
     origin: str
+
+
+@dataclass(frozen=True)
+class CatchallWord:
+    normalized_word: str
+    origin: str
+    frequency: int
+
+
+@dataclass(frozen=True)
+class _ExportUnit:
+    task: dict[str, Any]
+    normalized_word: str
+    project_key: str
+    frequency: int
+    family_members: tuple[str, ...]
+    morphology: MorphIdentity | None = None
 
 
 @dataclass(frozen=True)
@@ -231,11 +258,12 @@ def export_labelstudio_project_tasks_from_db(
     sort_by: str = "frequency_desc",
     reviewed_words: set[str] | None = None,
     word_resolutions: dict[str, str] | None = None,
+    morphology_analyzer: MorphologyAnalyzer | None = None,
 ) -> SplitExportResult:
     """Build focused Label Studio word-review project tasks from SQLite rows."""
     base = export_labelstudio_tasks_from_db(
         db_path,
-        max_items=max_items,
+        max_items=None,
         include_rl=include_rl,
         include_unknown=include_unknown,
         min_frequency=min_frequency,
@@ -243,21 +271,48 @@ def export_labelstudio_project_tasks_from_db(
         reviewed_words=reviewed_words,
         word_resolutions=word_resolutions,
     )
-    return split_export_result(base)
+    analyzer = morphology_analyzer or default_morphology_analyzer()
+    return split_export_result(
+        base,
+        morphology_analyzer=analyzer,
+        max_items=max_items,
+        sort_by=sort_by,
+    )
 
 
-def split_export_result(result: ExportResult) -> SplitExportResult:
+def split_export_result(
+    result: ExportResult,
+    *,
+    morphology_analyzer: MorphologyAnalyzer,
+    max_items: int | None,
+    sort_by: str,
+) -> SplitExportResult:
     """Split one export result into focused project buckets."""
+    units = _export_units(result, morphology_analyzer)
+    if sort_by == "frequency_desc":
+        units.sort(key=lambda item: (-item.frequency, item.normalized_word))
+    elif sort_by == "word":
+        units.sort(key=lambda item: item.normalized_word)
+    else:
+        raise ValueError("--sort-by must be one of: frequency_desc, word")
+    if max_items is not None:
+        units = units[:max_items]
+
     grouped_tasks: dict[str, list[dict[str, Any]]] = {}
     grouped_words: dict[str, list[str]] = {}
-    for task, normalized in zip(result.tasks, result.exported_words, strict=True):
-        data = task.get("data", {})
-        label = data.get("gemini_origin", "U")
-        project = classify_project(normalized, label if isinstance(label, str) else "U")
-        grouped_tasks.setdefault(project["key"], []).append(
-            _task_with_project_meta(task, project["key"])
+    grouped_frequencies: dict[str, list[int]] = {}
+    for unit in units:
+        grouped_tasks.setdefault(unit.project_key, []).append(
+            _task_with_project_meta(
+                unit.task,
+                unit.project_key,
+                family_members=unit.family_members,
+                morphology=unit.morphology,
+                analyzer_revision=morphology_analyzer.revision,
+            )
         )
-        grouped_words.setdefault(project["key"], []).append(normalized)
+        grouped_words.setdefault(unit.project_key, []).append(unit.normalized_word)
+        grouped_frequencies.setdefault(unit.project_key, []).append(unit.frequency)
 
     projects: dict[str, ExportResult] = {}
     for project_key in _ordered_project_keys(grouped_tasks):
@@ -267,12 +322,20 @@ def split_export_result(result: ExportResult) -> SplitExportResult:
             tasks=tasks,
             report=_project_report(project_key, tasks, words),
             exported_words=words,
+            frequencies=tuple(grouped_frequencies[project_key]),
         )
 
+    exported_words = [unit.normalized_word for unit in units]
+    covered_words = sum(len(unit.family_members) for unit in units)
     return SplitExportResult(
         projects=projects,
-        report=_split_report(result, projects),
-        exported_words=result.exported_words,
+        report=_split_report(
+            result,
+            projects,
+            covered_word_count=covered_words,
+            analyzer_revision=morphology_analyzer.revision,
+        ),
+        exported_words=exported_words,
     )
 
 
@@ -469,43 +532,180 @@ def _export_from_records(
             decision_counts=decision_counts,
         ),
         exported_words=[entry.normalized for entry in candidates],
+        frequencies=tuple(entry.frequency for entry in candidates),
     )
 
 
-def _task_with_project_meta(task: dict[str, Any], project_key: str) -> dict[str, Any]:
-    return {
-        "data": dict(task["data"]),
-        "meta": {
+def _export_units(
+    result: ExportResult,
+    morphology_analyzer: MorphologyAnalyzer,
+) -> list[_ExportUnit]:
+    if len(result.frequencies) != len(result.tasks):
+        raise AnnotationExportError("word frequencies do not match exported tasks")
+
+    ordinary: list[_ExportUnit] = []
+    catchall: list[tuple[dict[str, Any], str, int, str]] = []
+    for task, normalized, frequency in zip(
+        result.tasks,
+        result.exported_words,
+        result.frequencies,
+        strict=True,
+    ):
+        label = task["data"]["gemini_origin"]
+        project_key = classify_project(normalized, label)["key"]
+        if project_key == "catchall":
+            catchall.append((task, normalized, frequency, label))
+        else:
+            ordinary.append(
+                _ExportUnit(
+                    task=task,
+                    normalized_word=normalized,
+                    project_key=project_key,
+                    frequency=frequency,
+                    family_members=(normalized,),
+                )
+            )
+
+    identities = morphology_analyzer.analyze(item[1] for item in catchall)
+    grouped: dict[tuple[Any, ...], list[tuple[dict[str, Any], str, int, str]]] = {}
+    for item in catchall:
+        _, normalized, _, label = item
+        identity = identities.get(normalized)
+        key = (
+            ("family", identity.lemma, identity.part_of_speech, label)
+            if identity is not None
+            else ("singleton", normalized)
+        )
+        grouped.setdefault(key, []).append(item)
+
+    for items in grouped.values():
+        representative = min(
+            items,
+            key=lambda item: (-len(item[1]), -item[2], item[1]),
+        )
+        task, normalized, _, _ = representative
+        members = tuple(
+            item[1]
+            for item in sorted(
+                items,
+                key=lambda item: (
+                    item[1] != normalized,
+                    -len(item[1]),
+                    item[1],
+                ),
+            )
+        )
+        identity = identities.get(normalized)
+        ordinary.append(
+            _ExportUnit(
+                task=task,
+                normalized_word=normalized,
+                project_key="catchall",
+                frequency=sum(item[2] for item in items),
+                family_members=members,
+                morphology=identity,
+            )
+        )
+    return ordinary
+
+
+def _task_with_project_meta(
+    task: dict[str, Any],
+    project_key: str,
+    *,
+    family_members: tuple[str, ...],
+    morphology: MorphIdentity | None,
+    analyzer_revision: str,
+) -> dict[str, Any]:
+    if project_key == "catchall":
+        meta: dict[str, Any] = {
+            "schema_version": CATCHALL_TASK_SCHEMA_VERSION,
+            "project_key": project_key,
+            "family_members": list(family_members),
+            "morphology": (
+                {
+                    "analyzer_revision": analyzer_revision,
+                    "lemma": morphology.lemma,
+                    "part_of_speech": morphology.part_of_speech,
+                }
+                if morphology is not None
+                else None
+            ),
+        }
+    else:
+        meta = {
             "schema_version": TASK_SCHEMA_VERSION,
             "project_key": project_key,
-        },
+        }
+    return {
+        "data": dict(task["data"]),
+        "meta": meta,
     }
 
 
 def _sqlite_records(db_path: str | Path) -> Iterable[dict[str, Any]]:
     with closing(sqlite3.connect(db_path)) as conn:
-        conn.row_factory = sqlite3.Row
-        rows = conn.execute(
-            """
-            select s.id, s.text, p.tatar, p.tokens_json
-            from preannotation_state p
-            join samples s on s.id = p.sample_id
-            where p.status = 'annotated'
-              and p.tokens_json is not null
-            order by s.id
-            """
-        )
-        for row in rows:
-            try:
-                tokens = json.loads(row["tokens_json"])
-            except json.JSONDecodeError as exc:
-                raise ValueError(f"invalid tokens_json for {row['id']}: {exc}") from exc
-            yield {
-                "id": row["id"],
-                "text": row["text"],
-                "tatar": bool(row["tatar"]),
-                "tokens": tokens,
-            }
+        yield from _sqlite_records_from_connection(conn)
+
+
+def _sqlite_records_from_connection(
+    conn: sqlite3.Connection,
+) -> Iterable[dict[str, Any]]:
+    conn.row_factory = sqlite3.Row
+    rows = conn.execute(
+        """
+        select s.id, s.text, p.tatar, p.tokens_json
+        from preannotation_state p
+        join samples s on s.id = p.sample_id
+        where p.status = 'annotated'
+          and p.tokens_json is not null
+        order by s.id
+        """
+    )
+    for row in rows:
+        try:
+            tokens = json.loads(row["tokens_json"])
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"invalid tokens_json for {row['id']}: {exc}") from exc
+        yield {
+            "id": row["id"],
+            "text": row["text"],
+            "tatar": bool(row["tatar"]),
+            "tokens": tokens,
+        }
+
+
+def eligible_catchall_words(
+    conn: sqlite3.Connection,
+) -> dict[str, CatchallWord]:
+    """Return every observed word currently eligible for catchall review."""
+    resolutions = {
+        str(row[0]): str(row[1])
+        for row in conn.execute(
+            "select normalized_word, decision from word_resolutions"
+        ).fetchall()
+    }
+    result = _export_from_records(
+        _sqlite_records_from_connection(conn),
+        max_items=None,
+        include_rl=True,
+        include_unknown=True,
+        min_frequency=1,
+        sort_by="word",
+        reviewed_words=set(),
+        word_resolutions=resolutions,
+    )
+    eligible: dict[str, CatchallWord] = {}
+    for task, word, frequency in zip(
+        result.tasks,
+        result.exported_words,
+        result.frequencies,
+        strict=True,
+    ):
+        origin = task["data"]["gemini_origin"]
+        if classify_project(word, origin)["key"] == "catchall":
+            eligible[word] = CatchallWord(word, origin, frequency)
+    return eligible
 
 
 def convert_for_annotation(word: str, label: str) -> str:
@@ -1681,10 +1881,14 @@ def _validate_contextual_project(
         contextual_words.add(normalize_word(surface))
         if data.get("gemini_origin") not in {"N", "RL", "U"}:
             raise AnnotationExportError(f"{context} has invalid gemini_origin")
-        for field in ("auto_zamanalif", "native_zamanalif", "loanword_zamanalif"):
-            value = data.get(field)
+        for field_name in (
+            "auto_zamanalif",
+            "native_zamanalif",
+            "loanword_zamanalif",
+        ):
+            value = data.get(field_name)
             if not isinstance(value, str):
-                raise AnnotationExportError(f"{context} has invalid {field}")
+                raise AnnotationExportError(f"{context} has invalid {field_name}")
             if value:
                 try:
                     parse_dsl(value)
@@ -1717,11 +1921,21 @@ def _validate_task(
         )
     if project_key is not None:
         meta = task.get("meta")
-        if not isinstance(meta, dict) or set(meta) != DICTIONARY_META_FIELDS:
+        expected_meta_fields = (
+            CATCHALL_META_FIELDS
+            if project_key == "catchall"
+            else DICTIONARY_META_FIELDS
+        )
+        if not isinstance(meta, dict) or set(meta) != expected_meta_fields:
             raise AnnotationExportError(
                 f"{context}.meta must contain exactly the dictionary metadata fields"
             )
-        if meta.get("schema_version") != TASK_SCHEMA_VERSION:
+        expected_schema_version = (
+            CATCHALL_TASK_SCHEMA_VERSION
+            if project_key == "catchall"
+            else TASK_SCHEMA_VERSION
+        )
+        if meta.get("schema_version") != expected_schema_version:
             raise AnnotationExportError(f"{context} has unsupported schema_version")
         if meta.get("project_key") != project_key:
             raise AnnotationExportError(f"{context} has wrong project_key")
@@ -1734,13 +1948,57 @@ def _validate_task(
         raise AnnotationExportError(
             f"{context} normalized word {normalized!r} does not match {expected_word!r}"
         )
-    if normalized in seen_words:
-        raise AnnotationExportError(f"duplicate normalized word: {normalized!r}")
-    seen_words.add(normalized)
 
     origin = data.get("gemini_origin")
     if origin not in {"N", "RL", "U"}:
         raise AnnotationExportError(f"{context} has invalid gemini_origin")
+    family_members = [normalized]
+    if project_key == "catchall":
+        meta = task["meta"]
+        raw_members = meta["family_members"]
+        if (
+            not isinstance(raw_members, list)
+            or not raw_members
+            or any(
+                not isinstance(word, str)
+                or normalize_word(word) != word
+                for word in raw_members
+            )
+            or len(raw_members) != len(set(raw_members))
+            or raw_members[0] != normalized
+        ):
+            raise AnnotationExportError(f"{context} has invalid family_members")
+        family_members = raw_members
+        morphology = meta["morphology"]
+        if morphology is None:
+            if len(family_members) != 1:
+                raise AnnotationExportError(
+                    f"{context} has a family without morphology"
+                )
+        elif (
+            not isinstance(morphology, dict)
+            or set(morphology)
+            != {"analyzer_revision", "lemma", "part_of_speech"}
+            or any(
+                not isinstance(morphology[field], str) or not morphology[field]
+                for field in morphology
+            )
+        ):
+            raise AnnotationExportError(f"{context} has invalid morphology")
+        for member in family_members:
+            expected_member_project = classify_project(member, origin)["key"]
+            if expected_member_project != "catchall":
+                raise AnnotationExportError(
+                    f"{context} family member {member!r} belongs to "
+                    f"{expected_member_project!r}"
+                )
+    duplicates = sorted(set(family_members) & seen_words)
+    if duplicates:
+        raise AnnotationExportError(
+            f"duplicate normalized word: {duplicates[0]!r}"
+        )
+    seen_words.update(family_members)
+
     suggestion = data.get("auto_zamanalif")
     if not isinstance(suggestion, str):
         raise AnnotationExportError(f"{context} has invalid auto_zamanalif")
@@ -1800,13 +2058,18 @@ def _validate_serialized_split_outputs(
                         )
                     seen_occurrences.add(occurrence)
                 else:
-                    normalized = normalize_word(data["cyrl_word"])
-                    if normalized in seen_words:
+                    family_members = (
+                        task["meta"]["family_members"]
+                        if project_key == "catchall"
+                        else [normalize_word(data["cyrl_word"])]
+                    )
+                    duplicates = sorted(set(family_members) & seen_words)
+                    if duplicates:
                         raise AnnotationExportError(
                             "duplicate normalized word across serialized batches: "
-                            f"{normalized!r}"
+                            f"{duplicates[0]!r}"
                         )
-                    seen_words.add(normalized)
+                    seen_words.update(family_members)
 
         instruction_name = f"project_{project_key}_instructions.html"
         expected_names.add(instruction_name)
@@ -2529,6 +2792,20 @@ def ensure_review_state_schema(conn: sqlite3.Connection) -> None:
         )
         """
     )
+    conn.execute(
+        """
+        create table if not exists reviewed_word_derivations (
+            normalized_word text primary key,
+            source_word text not null,
+            lemma text not null,
+            part_of_speech text not null,
+            analyzer_revision text not null,
+            created_at text not null,
+            foreign key(normalized_word) references reviewed_words(normalized_word),
+            foreign key(source_word) references reviewed_words(normalized_word)
+        )
+        """
+    )
 
 
 def _report(
@@ -2640,20 +2917,35 @@ def _project_report(project_key: str, tasks: list[dict[str, Any]], words: list[s
         "project_key": project_key,
         "project_title": project_title_for_key(project_key),
         "exported_word_count": len(tasks),
+        "covered_word_count": sum(
+            len(task["meta"]["family_members"])
+            if project_key == "catchall"
+            else 1
+            for task in tasks
+        ),
         "dsl_rule_counts": dict(sorted(rule_counts.items())),
         "exported_words": words,
     }
 
 
-def _split_report(result: ExportResult, projects: dict[str, ExportResult]) -> dict[str, Any]:
+def _split_report(
+    result: ExportResult,
+    projects: dict[str, ExportResult],
+    *,
+    covered_word_count: int,
+    analyzer_revision: str,
+) -> dict[str, Any]:
     return {
-        "exported_word_count": len(result.tasks),
+        "exported_word_count": sum(len(project.tasks) for project in projects.values()),
+        "covered_word_count": covered_word_count,
+        "morphology_analyzer_revision": analyzer_revision,
         "project_count": len(projects),
         "projects": [
             {
                 "project_key": key,
                 "project_title": project.report["project_title"],
                 "exported_word_count": len(project.tasks),
+                "covered_word_count": project.report["covered_word_count"],
             }
             for key, project in projects.items()
         ],

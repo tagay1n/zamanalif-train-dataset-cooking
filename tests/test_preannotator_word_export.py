@@ -7,7 +7,9 @@ from pathlib import Path
 import sqlite3
 import tempfile
 import unittest
+from unittest.mock import patch
 
+from tests.morphology_fakes import FakeMorphologyAnalyzer
 from tatar_preannotator.cli import main
 from tatar_preannotator.conflict_resolver import save_word_resolution
 from tatar_preannotator.contextual_review import export_contextual_tasks_from_db
@@ -33,6 +35,26 @@ from tatar_preannotator.word_export import (
 
 
 class PreannotatorWordExportTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.analyzer = FakeMorphologyAnalyzer()
+        patchers = (
+            patch(
+                "tatar_preannotator.word_export.default_morphology_analyzer",
+                return_value=self.analyzer,
+            ),
+            patch(
+                "tatar_preannotator.labelstudio_import.default_morphology_analyzer",
+                return_value=self.analyzer,
+            ),
+            patch(
+                "tatar_preannotator.cli.default_morphology_analyzer",
+                return_value=self.analyzer,
+            ),
+        )
+        for patcher in patchers:
+            patcher.start()
+            self.addCleanup(patcher.stop)
+
     def test_normalize_word_strips_punctuation_and_lowercases(self) -> None:
         self.assertEqual(normalize_word("«Вакытында!»"), "вакытында")
         self.assertEqual(normalize_word("..."), "")
@@ -1366,6 +1388,94 @@ class PreannotatorWordExportTests(unittest.TestCase):
         )
         self.assertEqual(result.report["exported_word_count"], 4)
 
+    def test_catchall_groups_unambiguous_morphological_family(self) -> None:
+        analyzer = FakeMorphologyAnalyzer(
+            {
+                "торган": ("тор", "v"),
+                "торганнар": ("тор", "v"),
+                "торганнары": ("тор", "v"),
+            }
+        )
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "торган", "label": "N"},
+                            {"text": "торганнар", "label": "N"},
+                            {"text": "торганнары", "label": "N"},
+                        ],
+                    }
+                ],
+            )
+
+            result = export_labelstudio_project_tasks_from_db(
+                db_path,
+                sort_by="word",
+                morphology_analyzer=analyzer,
+            )
+
+        catchall = result.projects["catchall"]
+        self.assertEqual(catchall.exported_words, ["торганнары"])
+        self.assertEqual(
+            catchall.tasks[0]["meta"],
+            {
+                "schema_version": 2,
+                "project_key": "catchall",
+                "family_members": ["торганнары", "торганнар", "торган"],
+                "morphology": {
+                    "analyzer_revision": "test-apertium-tat",
+                    "lemma": "тор",
+                    "part_of_speech": "v",
+                },
+            },
+        )
+        self.assertEqual(result.report["exported_word_count"], 1)
+        self.assertEqual(result.report["covered_word_count"], 3)
+        self.assertNotIn(
+            "morphological family",
+            catchall.tasks[0]["data"]["hints_html"],
+        )
+        self.assertEqual(len(analyzer.calls), 1)
+
+    def test_catchall_does_not_group_different_origins_or_ambiguous_words(self) -> None:
+        analyzer = FakeMorphologyAnalyzer(
+            {
+                "торган": ("тор", "v"),
+                "торганнары": ("тор", "v"),
+            }
+        )
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "торган", "label": "RL"},
+                            {"text": "торганнары", "label": "N"},
+                            {"text": "вакыт", "label": "N"},
+                        ],
+                    }
+                ],
+            )
+
+            result = export_labelstudio_project_tasks_from_db(
+                db_path,
+                sort_by="word",
+                morphology_analyzer=analyzer,
+            )
+
+        tasks = result.projects["catchall"].tasks
+        self.assertEqual(len(tasks), 3)
+        self.assertTrue(
+            all(len(task["meta"]["family_members"]) == 1 for task in tasks)
+        )
+
     def test_split_export_uses_complex_multi_rule_project(self) -> None:
         project = classify_project("бюрократия", "RL")
 
@@ -1562,7 +1672,12 @@ class PreannotatorWordExportTests(unittest.TestCase):
         )
         self.assertEqual(
             catchall[0]["meta"],
-            {"schema_version": 1, "project_key": "catchall"},
+            {
+                "schema_version": 2,
+                "project_key": "catchall",
+                "family_members": ["вакыт"],
+                "morphology": None,
+            },
         )
         self.assertFalse(report_files_exist)
         self.assertFalse(stale_exists)
@@ -1769,10 +1884,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(len(first), 1000)
         self.assertEqual(len(second), 1)
         self.assertEqual(
-            first[0]["meta"],
-            {"schema_version": 1, "project_key": "catchall"},
+            set(first[0]["meta"]),
+            {"schema_version", "project_key", "family_members", "morphology"},
         )
-        self.assertEqual(second[0]["meta"], first[0]["meta"])
+        self.assertEqual(first[0]["meta"]["schema_version"], 2)
+        self.assertEqual(first[0]["meta"]["project_key"], "catchall")
+        self.assertEqual(second[0]["meta"]["schema_version"], 2)
+        self.assertEqual(second[0]["meta"]["project_key"], "catchall")
         self.assertNotIn("batch_id", first[0]["data"])
         self.assertNotIn("batch_index", first[0]["data"])
         self.assertNotIn("batch_total", first[0]["data"])
@@ -1818,8 +1936,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
             labelstudio_task = {
                 **task,
                 "meta": {
-                    "schema_version": 1,
+                    "schema_version": 2,
                     "project_key": "catchall",
+                    "family_members": [task["data"]["cyrl_word"].lower()],
+                    "morphology": None,
                 },
                 "annotations": [
                     {

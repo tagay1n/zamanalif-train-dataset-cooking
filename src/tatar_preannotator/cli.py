@@ -28,6 +28,7 @@ from .labelstudio_import import (
 from .local_repair import repair_unprocessable
 from .manual_preannotate import ManualPreannotateError
 from .manual_preannotate_web import serve_manual_preannotation_web
+from .morphology import MorphologyError, default_morphology_analyzer
 from .training_export import TrainingExportError, export_training_dataset
 from .word_export import (
     attach_contextual_project,
@@ -106,6 +107,10 @@ def main(argv: list[str] | None = None) -> int:
         choices=["frequency_desc", "word"],
         default="frequency_desc",
     )
+    export_words.add_argument(
+        "--apertium-tat-dir",
+        help="Compiled pinned Apertium-tat directory.",
+    )
     training_export = subparsers.add_parser(
         "training-export",
         help="Export resolved Cyrillic/Zamanalif training pairs.",
@@ -139,6 +144,10 @@ def main(argv: list[str] | None = None) -> int:
         "--input",
         required=True,
         help="Label Studio JSON export.",
+    )
+    annotation_import.add_argument(
+        "--apertium-tat-dir",
+        help="Compiled pinned Apertium-tat directory.",
     )
 
     annotation_audit = subparsers.add_parser(
@@ -309,6 +318,9 @@ def _annotation_export(args: argparse.Namespace) -> int:
             "include_unknown": args.include_unknown,
             "min_frequency": args.min_frequency,
             "sort_by": args.sort_by,
+            "morphology_analyzer": default_morphology_analyzer(
+                args.apertium_tat_dir
+            ),
         }
         result = export_labelstudio_project_tasks_from_db(args.db, **export_kwargs)
         contextual = export_contextual_tasks_from_db(
@@ -353,8 +365,14 @@ def _training_export(args: argparse.Namespace) -> int:
 
 def _annotation_import(args: argparse.Namespace) -> int:
     try:
-        summary = import_labelstudio_annotations(args.db, args.input)
-    except (OSError, sqlite3.Error, LabelStudioImportError) as exc:
+        summary = import_labelstudio_annotations(
+            args.db,
+            args.input,
+            morphology_analyzer=default_morphology_analyzer(
+                args.apertium_tat_dir
+            ),
+        )
+    except (OSError, sqlite3.Error, LabelStudioImportError, MorphologyError) as exc:
         print(f"annotation import failed: {exc}")
         return 1
 
@@ -364,6 +382,7 @@ def _annotation_import(args: argparse.Namespace) -> int:
         f"tasks={summary.total_tasks} "
         f"completed={summary.completed_tasks} "
         f"imported={summary.imported_items} "
+        f"inherited={summary.inherited_items} "
         f"unchanged={summary.unchanged_items} "
         f"unannotated={summary.skipped_unannotated_tasks}"
     )

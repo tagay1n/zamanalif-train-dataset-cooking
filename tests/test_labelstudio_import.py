@@ -7,7 +7,9 @@ from pathlib import Path
 import sqlite3
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
+from tests.morphology_fakes import FakeMorphologyAnalyzer
 from tatar_preannotator.cli import main
 from tatar_preannotator.contextual_review import load_contextual_reviews
 from tatar_preannotator.labelstudio_import import (
@@ -16,10 +18,25 @@ from tatar_preannotator.labelstudio_import import (
     import_labelstudio_annotations,
     parse_labelstudio_export,
 )
-from tatar_preannotator.word_export import load_reviewed_words
+from tatar_preannotator.word_export import load_reviewed_words, save_reviewed_word
 
 
 class LabelStudioImportTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.analyzer = FakeMorphologyAnalyzer()
+        self._analyzer_patch = patch(
+            "tatar_preannotator.labelstudio_import.default_morphology_analyzer",
+            return_value=self.analyzer,
+        )
+        self._cli_analyzer_patch = patch(
+            "tatar_preannotator.cli.default_morphology_analyzer",
+            return_value=self.analyzer,
+        )
+        self._analyzer_patch.start()
+        self._cli_analyzer_patch.start()
+        self.addCleanup(self._analyzer_patch.stop)
+        self.addCleanup(self._cli_analyzer_patch.stop)
+
     def test_imports_strict_dictionary_backup_and_skips_unannotated(self) -> None:
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
@@ -44,15 +61,122 @@ class LabelStudioImportTests(unittest.TestCase):
             backup = _backup(root / "backup.json", [_task("вакыт", "waqıt", "N")])
             first = import_labelstudio_annotations(db_path, backup)
             second = import_labelstudio_annotations(db_path, backup)
-            conflict = _backup(
-                root / "conflict.json",
-                [_task("вакыт", "vaqıt", "RL")],
-            )
+            conflict_task = _task("вакыт", "vaqıt", "RL")
+            conflict_task["data"]["gemini_origin"] = "N"
+            conflict = _backup(root / "conflict.json", [conflict_task])
             with self.assertRaisesRegex(LabelStudioImportError, "reviewed word conflict"):
                 import_labelstudio_annotations(db_path, conflict)
 
         self.assertEqual(first.imported_items, 1)
         self.assertEqual(second.unchanged_items, 1)
+
+    def test_canonical_catchall_family_imports_every_member_with_provenance(self) -> None:
+        analyzer = FakeMorphologyAnalyzer(
+            {
+                "торган": ("тор", "v"),
+                "торганнар": ("тор", "v"),
+                "торганнары": ("тор", "v"),
+            }
+        )
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, ["торган", "торганнар", "торганнары"])
+            task = _task(
+                "торганнары",
+                "torğannarı",
+                "N",
+                family_members=["торганнары", "торганнар", "торган"],
+                morphology=("тор", "v"),
+            )
+
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "family.json", [task]),
+                morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+            with sqlite3.connect(db_path) as conn:
+                derivations = conn.execute(
+                    """
+                    select normalized_word, source_word, lemma, part_of_speech
+                    from reviewed_word_derivations
+                    order by normalized_word
+                    """
+                ).fetchall()
+
+        self.assertEqual(summary.imported_items, 1)
+        self.assertEqual(summary.inherited_items, 2)
+        self.assertEqual(
+            set(reviewed),
+            {"торган", "торганнар", "торганнары"},
+        )
+        self.assertEqual(
+            derivations,
+            [
+                ("торган", "торганнары", "тор", "v"),
+                ("торганнар", "торганнары", "тор", "v"),
+            ],
+        )
+        self.assertEqual(len(analyzer.calls), 1)
+
+    def test_edited_representative_does_not_propagate(self) -> None:
+        analyzer = FakeMorphologyAnalyzer(
+            {
+                "торган": ("тор", "v"),
+                "торганнары": ("тор", "v"),
+            }
+        )
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, ["торган", "торганнары"])
+            task = _task(
+                "торганнары",
+                "torğannarı",
+                "N",
+                family_members=["торганнары", "торган"],
+                morphology=("тор", "v"),
+            )
+            task["annotations"][0]["result"][1]["value"]["text"] = ["torğannarıx"]
+
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "edited.json", [task]),
+                morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.inherited_items, 0)
+        self.assertEqual(set(reviewed), {"торганнары"})
+
+    def test_next_dictionary_import_expands_existing_direct_review(self) -> None:
+        analyzer = FakeMorphologyAnalyzer(
+            {
+                "торган": ("тор", "v"),
+                "торганнар": ("тор", "v"),
+                "торганнары": ("тор", "v"),
+            }
+        )
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, ["торган", "торганнар", "торганнары"])
+            save_reviewed_word(db_path, "торган", "torğan", "N")
+
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "next.json", [_task("вакыт", "waqıt", "N")]),
+                morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.imported_items, 1)
+        self.assertEqual(summary.inherited_items, 2)
+        self.assertEqual(
+            set(reviewed),
+            {"вакыт", "торган", "торганнар", "торганнары"},
+        )
 
     def test_rejects_array_missing_project_key_and_missing_origin(self) -> None:
         with TemporaryDirectory() as tmpdir:
@@ -71,6 +195,38 @@ class LabelStudioImportTests(unittest.TestCase):
             task["annotations"][0]["result"] = task["annotations"][0]["result"][1:]
             with self.assertRaisesRegex(LabelStudioImportError, "reviewed_origin"):
                 parse_labelstudio_export(_backup(root / "no-origin.json", [task]))
+
+    def test_rejects_legacy_catchall_schema_and_overlapping_families(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            legacy = _task("вакыт", "waqıt", "N")
+            legacy["meta"] = {"schema_version": 1, "project_key": "catchall"}
+            with self.assertRaisesRegex(
+                LabelStudioImportError,
+                "unexpected or missing fields",
+            ):
+                parse_labelstudio_export(_backup(root / "legacy.json", [legacy]))
+
+            first = _task(
+                "торганнары",
+                "torğannarı",
+                "N",
+                family_members=["торганнары", "торган"],
+                morphology=("тор", "v"),
+            )
+            second = _task(
+                "торганнар",
+                "torğannar",
+                "N",
+                family_members=["торганнар", "торган"],
+                morphology=("тор", "v"),
+            )
+            overlapping = _backup(root / "overlapping.json", [first, second])
+            with self.assertRaisesRegex(
+                LabelStudioImportError,
+                "duplicate catchall family member",
+            ):
+                parse_labelstudio_export(overlapping)
 
     def test_rejects_mixed_projects_and_dictionary_homonym(self) -> None:
         with TemporaryDirectory() as tmpdir:
@@ -218,7 +374,7 @@ def _database(path: Path, *, contextual_word: str | None = None) -> Path:
         insert into preannotation_state(sample_id, status, tatar, tokens_json)
         values ('sent_1', 'annotated', 1, ?)
         """,
-        (json.dumps([{"text": token, "label": "RL"}], ensure_ascii=False),),
+        (json.dumps([{"text": token, "label": "N"}], ensure_ascii=False),),
     )
     if contextual_word:
         conn.execute(
@@ -242,6 +398,8 @@ def _task(
     project_key: str = "catchall",
     sample_id: str | None = None,
     token_index: int | None = None,
+    family_members: list[str] | None = None,
+    morphology: tuple[str, str] | None = None,
 ) -> dict[str, object]:
     data: dict[str, object] = {
         "cyrl_word": word,
@@ -253,6 +411,23 @@ def _task(
         "schema_version": 1,
         "project_key": project_key,
     }
+    if project_key == "catchall":
+        members = family_members or [word.lower()]
+        meta.update(
+            {
+                "schema_version": 2,
+                "family_members": members,
+                "morphology": (
+                    {
+                        "analyzer_revision": "test-apertium-tat",
+                        "lemma": morphology[0],
+                        "part_of_speech": morphology[1],
+                    }
+                    if morphology is not None
+                    else None
+                ),
+            }
+        )
     if project_key == "contextual_homonym":
         data.update(
             {
@@ -304,6 +479,33 @@ def _backup(path: Path, tasks: list[dict[str, object]]) -> Path:
         encoding="utf-8",
     )
     return path
+
+
+def _add_words(path: Path, words: list[str]) -> None:
+    with sqlite3.connect(path) as conn:
+        for index, word in enumerate(words, start=2):
+            sample_id = f"sent_{index}"
+            conn.execute(
+                """
+                insert into samples(id, source_id, text)
+                values (?, 'src', ?)
+                """,
+                (sample_id, word),
+            )
+            conn.execute(
+                """
+                insert into preannotation_state(
+                    sample_id, status, tatar, tokens_json
+                ) values (?, 'annotated', 1, ?)
+                """,
+                (
+                    sample_id,
+                    json.dumps(
+                        [{"text": word, "label": "N"}],
+                        ensure_ascii=False,
+                    ),
+                ),
+            )
 
 
 if __name__ == "__main__":

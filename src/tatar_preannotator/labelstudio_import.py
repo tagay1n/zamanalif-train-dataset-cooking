@@ -18,13 +18,23 @@ from .contextual_review import (
 )
 from .conflict_resolver import ensure_word_resolution_schema
 from .conversion import DslError, parse_dsl
+from .morphology import (
+    MorphIdentity,
+    MorphologyAnalyzer,
+    default_morphology_analyzer,
+)
 from .word_export import (
+    CATCHALL_META_FIELDS,
+    CATCHALL_TASK_SCHEMA_VERSION,
     CONTEXTUAL_DATA_FIELDS,
     CONTEXTUAL_META_FIELDS,
     DICTIONARY_DATA_FIELDS,
     DICTIONARY_META_FIELDS,
     TASK_SCHEMA_VERSION,
+    classify_project,
+    conversion_branches,
     dictionary_project_keys,
+    eligible_catchall_words,
     ensure_review_state_schema,
     normalize_word,
 )
@@ -47,6 +57,10 @@ class ReviewedAnnotation:
     origin: str
     sample_id: str | None = None
     token_index: int | None = None
+    family_members: tuple[str, ...] = ()
+    morphology: MorphIdentity | None = None
+    analyzer_revision: str | None = None
+    suggested_origin: str | None = None
 
 
 @dataclass(frozen=True)
@@ -55,6 +69,7 @@ class LabelStudioImportSummary:
     total_tasks: int
     completed_tasks: int
     imported_items: int
+    inherited_items: int
     unchanged_items: int
     skipped_unannotated_tasks: int
 
@@ -101,6 +116,8 @@ class _ParsedTask:
 def import_labelstudio_annotations(
     db_path: str | Path,
     input_path: str | Path,
+    *,
+    morphology_analyzer: MorphologyAnalyzer | None = None,
 ) -> LabelStudioImportSummary:
     """Strictly validate one project backup and atomically import its decisions."""
     database = Path(db_path)
@@ -109,6 +126,7 @@ def import_labelstudio_annotations(
     parsed = parse_labelstudio_export(input_path)
     now = datetime.now(timezone.utc).isoformat()
     imported = 0
+    inherited = 0
     unchanged = 0
 
     with closing(sqlite3.connect(database)) as conn:
@@ -168,13 +186,19 @@ def import_labelstudio_annotations(
                     )
                     imported += 1
             else:
-                imported_words = {item.normalized_word for item in parsed.annotations}
+                analyzer = morphology_analyzer or default_morphology_analyzer()
+                imported_words = {
+                    word
+                    for item in parsed.annotations
+                    for word in item.family_members
+                }
                 homonyms = sorted(imported_words & effective_homonyms)
                 if homonyms:
                     raise LabelStudioImportError(
                         "dictionary project contains contextual homonyms: "
                         + ", ".join(homonyms[:20])
                     )
+                eligible = eligible_catchall_words(conn)
                 existing = {
                     str(row[0]): (str(row[1]), str(row[2]))
                     for row in conn.execute(
@@ -184,6 +208,21 @@ def import_labelstudio_annotations(
                         """
                     ).fetchall()
                 }
+                derived_words = {
+                    str(row[0])
+                    for row in conn.execute(
+                        "select normalized_word from reviewed_word_derivations"
+                    ).fetchall()
+                }
+                analysis_words = (
+                    set(eligible)
+                    | (set(existing) - derived_words)
+                    | imported_words
+                )
+                analyses = analyzer.analyze(sorted(analysis_words))
+                for item in parsed.annotations:
+                    if parsed.project_key == "catchall":
+                        _validate_imported_family(item, analyses, eligible, analyzer)
                 for item in parsed.annotations:
                     current = (item.zamanalif_dsl, item.origin)
                     previous = existing.get(item.normalized_word)
@@ -194,6 +233,14 @@ def import_labelstudio_annotations(
                                 f"database has {previous!r}, import has {current!r}"
                             )
                         unchanged += 1
+                        conn.execute(
+                            """
+                            delete from reviewed_word_derivations
+                            where normalized_word = ?
+                            """,
+                            (item.normalized_word,),
+                        )
+                        derived_words.discard(item.normalized_word)
                         continue
                     conn.execute(
                         """
@@ -208,7 +255,29 @@ def import_labelstudio_annotations(
                             now,
                         ),
                     )
+                    existing[item.normalized_word] = current
                     imported += 1
+                for item in parsed.annotations:
+                    if parsed.project_key != "catchall":
+                        continue
+                    inherited += _propagate_imported_family(
+                        conn,
+                        item,
+                        analyses,
+                        analyzer.revision,
+                        existing,
+                        derived_words,
+                        now,
+                    )
+                inherited += _backfill_reviewed_families(
+                    conn,
+                    analyses,
+                    analyzer.revision,
+                    eligible,
+                    existing,
+                    derived_words,
+                    now,
+                )
             conn.commit()
         except Exception:
             conn.rollback()
@@ -219,9 +288,192 @@ def import_labelstudio_annotations(
         total_tasks=parsed.total_tasks,
         completed_tasks=len(parsed.annotations),
         imported_items=imported,
+        inherited_items=inherited,
         unchanged_items=unchanged,
         skipped_unannotated_tasks=parsed.skipped_unannotated_tasks,
     )
+
+
+def _validate_imported_family(
+    item: ReviewedAnnotation,
+    analyses: dict[str, MorphIdentity | None],
+    eligible: dict[str, Any],
+    analyzer: MorphologyAnalyzer,
+) -> None:
+    if not item.family_members or item.family_members[0] != item.normalized_word:
+        raise LabelStudioImportError("catchall task has invalid family identity")
+    if item.analyzer_revision not in {None, analyzer.revision}:
+        raise LabelStudioImportError(
+            "catchall task uses a different Apertium-tat revision"
+        )
+    for word in item.family_members:
+        candidate = eligible.get(word)
+        if candidate is None:
+            raise LabelStudioImportError(
+                f"catchall family member is no longer eligible: {word!r}"
+            )
+        if candidate.origin != item.suggested_origin:
+            raise LabelStudioImportError(
+                f"catchall family member changed predicted origin: {word!r}"
+            )
+        if analyses.get(word) != item.morphology:
+            raise LabelStudioImportError(
+                f"catchall family morphology changed for {word!r}"
+            )
+
+
+def _propagate_imported_family(
+    conn: sqlite3.Connection,
+    item: ReviewedAnnotation,
+    analyses: dict[str, MorphIdentity | None],
+    analyzer_revision: str,
+    existing: dict[str, tuple[str, str]],
+    derived_words: set[str],
+    now: str,
+) -> int:
+    identity = item.morphology
+    if identity is None or len(item.family_members) == 1:
+        return 0
+    canonical = conversion_branches(item.normalized_word).suggestion(item.origin)
+    if item.zamanalif_dsl != canonical:
+        return 0
+
+    inserted = 0
+    for word in item.family_members[1:]:
+        if analyses.get(word) != identity:
+            raise LabelStudioImportError(
+                f"catchall family morphology changed for {word!r}"
+            )
+        if classify_project(word, item.origin)["key"] != "catchall":
+            continue
+        zamanalif_dsl = conversion_branches(word).suggestion(item.origin)
+        if not zamanalif_dsl:
+            continue
+        inserted += _store_inherited_review(
+            conn,
+            word=word,
+            zamanalif_dsl=zamanalif_dsl,
+            origin=item.origin,
+            source_word=item.normalized_word,
+            identity=identity,
+            analyzer_revision=analyzer_revision,
+            existing=existing,
+            derived_words=derived_words,
+            now=now,
+        )
+    return inserted
+
+
+def _backfill_reviewed_families(
+    conn: sqlite3.Connection,
+    analyses: dict[str, MorphIdentity | None],
+    analyzer_revision: str,
+    eligible: dict[str, Any],
+    existing: dict[str, tuple[str, str]],
+    derived_words: set[str],
+    now: str,
+) -> int:
+    anchors: dict[tuple[MorphIdentity, str], list[str]] = {}
+    for word, (zamanalif_dsl, origin) in existing.items():
+        if word in derived_words or origin not in REVIEWED_ORIGINS:
+            continue
+        candidate = eligible.get(word)
+        identity = analyses.get(word)
+        if (
+            candidate is None
+            or candidate.origin != origin
+            or identity is None
+            or classify_project(word, origin)["key"] != "catchall"
+            or conversion_branches(word).suggestion(origin) != zamanalif_dsl
+        ):
+            continue
+        anchors.setdefault((identity, origin), []).append(word)
+
+    inserted = 0
+    for word, candidate in eligible.items():
+        if word in existing:
+            continue
+        identity = analyses.get(word)
+        if identity is None:
+            continue
+        sources = anchors.get((identity, candidate.origin), [])
+        if not sources or classify_project(word, candidate.origin)["key"] != "catchall":
+            continue
+        source = min(
+            sources,
+            key=lambda value: (
+                value != identity.lemma,
+                len(value),
+                value,
+            ),
+        )
+        zamanalif_dsl = conversion_branches(word).suggestion(candidate.origin)
+        if not zamanalif_dsl:
+            continue
+        inserted += _store_inherited_review(
+            conn,
+            word=word,
+            zamanalif_dsl=zamanalif_dsl,
+            origin=candidate.origin,
+            source_word=source,
+            identity=identity,
+            analyzer_revision=analyzer_revision,
+            existing=existing,
+            derived_words=derived_words,
+            now=now,
+        )
+    return inserted
+
+
+def _store_inherited_review(
+    conn: sqlite3.Connection,
+    *,
+    word: str,
+    zamanalif_dsl: str,
+    origin: str,
+    source_word: str,
+    identity: MorphIdentity,
+    analyzer_revision: str,
+    existing: dict[str, tuple[str, str]],
+    derived_words: set[str],
+    now: str,
+) -> int:
+    current = (zamanalif_dsl, origin)
+    previous = existing.get(word)
+    if previous is not None:
+        if previous != current:
+            raise LabelStudioImportError(
+                f"inherited review conflict for {word!r}: "
+                f"database has {previous!r}, family implies {current!r}"
+            )
+        return 0
+    conn.execute(
+        """
+        insert into reviewed_words(
+            normalized_word, zamanalif_dsl, origin, updated_at
+        ) values (?, ?, ?, ?)
+        """,
+        (word, zamanalif_dsl, origin, now),
+    )
+    conn.execute(
+        """
+        insert into reviewed_word_derivations(
+            normalized_word, source_word, lemma, part_of_speech,
+            analyzer_revision, created_at
+        ) values (?, ?, ?, ?, ?, ?)
+        """,
+        (
+            word,
+            source_word,
+            identity.lemma,
+            identity.part_of_speech,
+            analyzer_revision,
+            now,
+        ),
+    )
+    existing[word] = current
+    derived_words.add(word)
+    return 1
 
 
 def parse_labelstudio_export(input_path: str | Path) -> ParsedLabelStudioExport:
@@ -229,6 +481,7 @@ def parse_labelstudio_export(input_path: str | Path) -> ParsedLabelStudioExport:
     project_key = _project_key(payload)
     annotations: list[ReviewedAnnotation] = []
     seen: set[str | tuple[str, int]] = set()
+    seen_family_words: set[str] = set()
     skipped = 0
     for task_index, task in enumerate(payload):
         parsed = _parse_task(task, task_index, project_key)
@@ -246,6 +499,14 @@ def parse_labelstudio_export(input_path: str | Path) -> ParsedLabelStudioExport:
                 f"duplicate task identity in Label Studio export: {identity!r}"
             )
         seen.add(identity)
+        if project_key == "catchall":
+            duplicates = sorted(set(reviewed.family_members) & seen_family_words)
+            if duplicates:
+                raise LabelStudioImportError(
+                    "duplicate catchall family member in Label Studio export: "
+                    f"{duplicates[0]!r}"
+                )
+            seen_family_words.update(reviewed.family_members)
         annotations.append(reviewed)
     return ParsedLabelStudioExport(
         project_key=project_key,
@@ -266,6 +527,7 @@ def audit_labelstudio_export(
     project_key = _project_key(payload)
     changes: list[LabelStudioAnnotationChange] = []
     seen: set[str | tuple[str, int]] = set()
+    seen_family_words: set[str] = set()
     skipped = 0
     unchanged = 0
     origin_changes = 0
@@ -297,6 +559,14 @@ def audit_labelstudio_export(
                     f"duplicate task identity in Label Studio export: {identity!r}"
                 )
             seen.add(identity)
+            if project_key == "catchall":
+                duplicates = sorted(set(reviewed.family_members) & seen_family_words)
+                if duplicates:
+                    raise LabelStudioImportError(
+                        "duplicate catchall family member in Label Studio export: "
+                        f"{duplicates[0]!r}"
+                    )
+                seen_family_words.update(reviewed.family_members)
             origin_changed = reviewed.origin != parsed.suggested_origin
             conversion_changed = (
                 reviewed.zamanalif_dsl != parsed.suggested_zamanalif
@@ -405,16 +675,20 @@ def _parse_task(
             f"{context}.data contains unexpected or missing fields"
         )
     meta = task.get("meta")
-    expected_meta_fields = (
-        CONTEXTUAL_META_FIELDS
-        if project_key == CONTEXTUAL_PROJECT_KEY
-        else DICTIONARY_META_FIELDS
-    )
+    if project_key == CONTEXTUAL_PROJECT_KEY:
+        expected_meta_fields = CONTEXTUAL_META_FIELDS
+        expected_schema_version = TASK_SCHEMA_VERSION
+    elif project_key == "catchall":
+        expected_meta_fields = CATCHALL_META_FIELDS
+        expected_schema_version = CATCHALL_TASK_SCHEMA_VERSION
+    else:
+        expected_meta_fields = DICTIONARY_META_FIELDS
+        expected_schema_version = TASK_SCHEMA_VERSION
     if not isinstance(meta, dict) or set(meta) != expected_meta_fields:
         raise LabelStudioImportError(
             f"{context}.meta contains unexpected or missing fields"
         )
-    if meta.get("schema_version") != TASK_SCHEMA_VERSION:
+    if meta.get("schema_version") != expected_schema_version:
         raise LabelStudioImportError(f"{context} has unsupported schema_version")
     if meta.get("project_key") != project_key:
         raise LabelStudioImportError(f"{context} has inconsistent project_key")
@@ -424,6 +698,46 @@ def _parse_task(
     normalized = normalize_word(surface)
     if not normalized:
         raise LabelStudioImportError(f"{context} has no Cyrillic word")
+    family_members = (normalized,)
+    morphology: MorphIdentity | None = None
+    analyzer_revision: str | None = None
+    if project_key == "catchall":
+        raw_members = meta["family_members"]
+        if (
+            not isinstance(raw_members, list)
+            or not raw_members
+            or any(
+                not isinstance(word, str) or normalize_word(word) != word
+                for word in raw_members
+            )
+            or len(raw_members) != len(set(raw_members))
+            or raw_members[0] != normalized
+        ):
+            raise LabelStudioImportError(f"{context} has invalid family_members")
+        family_members = tuple(raw_members)
+        raw_morphology = meta["morphology"]
+        if raw_morphology is None:
+            if len(family_members) != 1:
+                raise LabelStudioImportError(
+                    f"{context} has a family without morphology"
+                )
+        elif (
+            not isinstance(raw_morphology, dict)
+            or set(raw_morphology)
+            != {"analyzer_revision", "lemma", "part_of_speech"}
+            or any(
+                not isinstance(raw_morphology[field], str)
+                or not raw_morphology[field]
+                for field in raw_morphology
+            )
+        ):
+            raise LabelStudioImportError(f"{context} has invalid morphology")
+        else:
+            analyzer_revision = raw_morphology["analyzer_revision"]
+            morphology = MorphIdentity(
+                raw_morphology["lemma"],
+                raw_morphology["part_of_speech"],
+            )
     suggested_origin = data.get("gemini_origin")
     if suggested_origin not in SUGGESTED_ORIGINS:
         raise LabelStudioImportError(f"{context} has invalid data.gemini_origin")
@@ -478,6 +792,10 @@ def _parse_task(
         origin=origin,
         sample_id=sample_id,
         token_index=token_index,
+        family_members=family_members,
+        morphology=morphology,
+        analyzer_revision=analyzer_revision,
+        suggested_origin=suggested_origin,
     )
     return _ParsedTask(
         reviewed=reviewed,

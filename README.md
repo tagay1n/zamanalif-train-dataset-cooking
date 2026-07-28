@@ -359,6 +359,29 @@ and `loanword_zamanalif`; its `meta` additionally contains `sample_id` and
 `token_index`. Project titles, batch fields, DSL rule lists, and custom task
 IDs are not repeated in tasks.
 
+Catchall uses the pinned Apertium-tat analyzer to combine unambiguous word
+forms with the same lemma, part of speech, and predicted origin. Install its
+local toolchain once:
+
+```bash
+sudo apt install apertium-all-dev
+tools/setup_apertium_tat.sh
+```
+
+The compiled language data lives under ignored `.tools/apertium-tat`. Export
+and import require it; use `--apertium-tat-dir` only to point at an equivalent
+compiled checkout. Ambiguous or unknown analyses stay as single-word tasks.
+For catchall tasks, `meta.schema_version` is `2` and `meta` also records
+`family_members` and the pinned morphology identity.
+
+When a catchall representative is accepted without changing its canonical
+conversion, import approves every exported family member using that member's
+canonical conversion. An edited conversion approves only the representative.
+Each later dictionary import also expands existing directly reviewed canonical
+catchall words to currently eligible members of the same unambiguous family.
+Inherited reviews are recorded in `reviewed_word_derivations`; exporting itself
+never writes review state.
+
 Label Studio layout:
 
 ```xml

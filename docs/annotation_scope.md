@@ -47,6 +47,23 @@ once, and the approved result is stored in `reviewed_words`.
 Exporting alone never suppresses a word. It remains eligible until a successful
 Label Studio import stores its completed review.
 
+### Catchall Morphological Families
+
+Catchall is reduced with the pinned Apertium-tat morphological analyzer. Words
+share one task only when every form has one unambiguous analysis with the same
+lemma and part of speech, and the forms have the same predicted origin.
+Ambiguous and unknown words remain independent tasks. DSL-rule words, hamza
+words, and contextual homonyms are routed to their dedicated projects before
+family grouping and therefore cannot enter a catchall family.
+
+The longest form represents a family; frequency and lexical order break ties.
+Accepting its unchanged canonical conversion approves each exported member
+with that member's own canonical conversion. Editing the representative
+conversion disables propagation. A later dictionary import applies the same
+rule to eligible families anchored by older directly reviewed canonical
+catchall words. Derived approvals retain their source and analyzer revision in
+`reviewed_word_derivations`.
+
 ## Contextual Homonym Review
 
 The same split export writes one task per homonym occurrence to
