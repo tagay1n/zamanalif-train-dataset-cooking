@@ -7,10 +7,10 @@ from pathlib import Path
 import sqlite3
 import tempfile
 import unittest
-from unittest.mock import patch
 
 from tatar_preannotator.cli import main
 from tatar_preannotator.conflict_resolver import save_word_resolution
+from tatar_preannotator.contextual_review import export_contextual_tasks_from_db
 from tatar_preannotator.conversion import resolve_dsl
 from tatar_preannotator.word_export import (
     AnnotationExportError,
@@ -22,9 +22,7 @@ from tatar_preannotator.word_export import (
     convert_for_annotation_dsl,
     export_labelstudio_project_tasks_from_db,
     export_labelstudio_tasks_from_db,
-    load_exported_words,
     load_reviewed_words,
-    mark_exported_words,
     normalize_word,
     save_reviewed_word,
     validate_export_result,
@@ -340,7 +338,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             "orfografi{{IYA|compact=ä|explicit=yä}}",
         )
 
-    def test_reviewed_word_never_reappears_without_export_tracking(self) -> None:
+    def test_reviewed_word_never_reappears_after_import(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
                 Path(tmpdir) / "zamanalif.sqlite",
@@ -1355,12 +1353,12 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertIn("rus_sign_e", result.projects)
         self.assertIn("catchall", result.projects)
         self.assertEqual(
-            result.projects["iya"].tasks[0]["data"]["project_key"],
+            result.projects["iya"].tasks[0]["meta"]["project_key"],
             "iya",
         )
         self.assertEqual(
-            result.projects["iya"].tasks[0]["data"]["dsl_rules"],
-            ["IYA"],
+            set(result.projects["iya"].tasks[0]["data"]),
+            {"cyrl_word", "auto_zamanalif", "gemini_origin", "hints_html"},
         )
         self.assertEqual(
             result.projects["catchall"].tasks[0]["data"]["cyrl_word"],
@@ -1421,7 +1419,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
 
         self.assertEqual(set(result.projects), {"hamza"})
-        self.assertEqual(tasks[0]["data"]["project_key"], "hamza")
+        self.assertEqual(tasks[0]["meta"]["project_key"], "hamza")
         self.assertEqual(tasks[0]["data"]["auto_zamanalif"], "täʼmin")
         self.assertIn("Arabic/Persian hamza", instructions)
 
@@ -1463,7 +1461,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             "УУГ",
         )
         self.assertEqual(
-            result.projects["u_abbrev_fragment"].tasks[0]["data"]["project_title"],
+            result.projects["u_abbrev_fragment"].report["project_title"],
             "Unknown abbreviations and fragments",
         )
         self.assertEqual(
@@ -1554,11 +1552,18 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ).exists()
 
         self.assertEqual(exit_code, 0)
-        self.assertEqual(iya[0]["data"]["project_key"], "iya")
-        self.assertEqual(iya[0]["data"]["batch_id"], "iya_batch_001")
-        self.assertEqual(iya[0]["data"]["batch_index"], 1)
-        self.assertEqual(iya[0]["data"]["batch_total"], 1)
-        self.assertEqual(catchall[0]["data"]["project_key"], "catchall")
+        self.assertEqual(
+            iya[0]["meta"],
+            {"schema_version": 1, "project_key": "iya"},
+        )
+        self.assertEqual(
+            set(iya[0]["data"]),
+            {"cyrl_word", "auto_zamanalif", "gemini_origin", "hints_html"},
+        )
+        self.assertEqual(
+            catchall[0]["meta"],
+            {"schema_version": 1, "project_key": "catchall"},
+        )
         self.assertFalse(report_files_exist)
         self.assertFalse(stale_exists)
         self.assertFalse(legacy_exists)
@@ -1569,7 +1574,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertFalse(inactive_instructions_exist)
         self.assertIn("annotation export complete", output.getvalue())
 
-    def test_export_validation_rejects_duplicate_ids(self) -> None:
+    def test_export_validation_rejects_extraneous_data_fields(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
                 Path(tmpdir) / "zamanalif.sqlite",
@@ -1585,9 +1590,9 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 ],
             )
             result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
-            result.tasks[1]["data"]["id"] = result.tasks[0]["data"]["id"]
+            result.tasks[1]["data"]["id"] = "obsolete-custom-id"
 
-            with self.assertRaisesRegex(AnnotationExportError, "duplicate task id"):
+            with self.assertRaisesRegex(AnnotationExportError, "display fields"):
                 validate_export_result(result)
 
     def test_export_validation_allows_empty_u_suggestion_only(self) -> None:
@@ -1643,7 +1648,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ):
                 validate_split_export_result(result)
 
-    def test_tracking_is_not_updated_when_split_write_fails_validation(self) -> None:
+    def test_removed_export_tracking_flags_are_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
                 Path(tmpdir) / "zamanalif.sqlite",
@@ -1656,25 +1661,20 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 ],
             )
             output_dir = Path(tmpdir) / "split"
-            with patch(
-                "tatar_preannotator.cli.write_split_outputs",
-                side_effect=AnnotationExportError("invalid generated export"),
+            base_args = [
+                "annotation-export",
+                "--db",
+                str(db_path),
+                "--output-dir",
+                str(output_dir),
+            ]
+            for removed_args in (
+                ["--track-exported"],
+                ["--state-db", str(db_path)],
             ):
-                exit_code = main(
-                    [
-                        "annotation-export",
-                        "--db",
-                        str(db_path),
-                        "--output-dir",
-                        str(output_dir),
-                        "--track-exported",
-                    ]
-                )
-
-            tracked = load_exported_words(db_path)
-
-        self.assertEqual(exit_code, 1)
-        self.assertEqual(tracked, set())
+                with self.subTest(removed_args=removed_args):
+                    with self.assertRaisesRegex(SystemExit, "2"):
+                        main([*base_args, *removed_args])
 
     def test_split_export_is_deterministic_when_state_is_unchanged(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1768,14 +1768,16 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(exit_code, 0)
         self.assertEqual(len(first), 1000)
         self.assertEqual(len(second), 1)
-        self.assertEqual(first[0]["data"]["batch_id"], "catchall_batch_001")
-        self.assertEqual(first[0]["data"]["batch_index"], 1)
-        self.assertEqual(first[0]["data"]["batch_total"], 2)
-        self.assertEqual(second[0]["data"]["batch_id"], "catchall_batch_002")
-        self.assertEqual(second[0]["data"]["batch_index"], 2)
-        self.assertEqual(second[0]["data"]["batch_total"], 2)
+        self.assertEqual(
+            first[0]["meta"],
+            {"schema_version": 1, "project_key": "catchall"},
+        )
+        self.assertEqual(second[0]["meta"], first[0]["meta"])
+        self.assertNotIn("batch_id", first[0]["data"])
+        self.assertNotIn("batch_index", first[0]["data"])
+        self.assertNotIn("batch_total", first[0]["data"])
 
-    def test_split_cli_tracking_marks_all_exported_words(self) -> None:
+    def test_repeated_dictionary_export_does_not_persist_state(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
                 Path(tmpdir) / "zamanalif.sqlite",
@@ -1790,25 +1792,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     }
                 ],
             )
-            output_dir = Path(tmpdir) / "split"
+            first = export_labelstudio_project_tasks_from_db(db_path)
+            second = export_labelstudio_project_tasks_from_db(db_path)
 
-            first = main(
-                [
-                    "annotation-export",
-                    "--db",
-                    str(db_path),
-                    "--output-dir",
-                    str(output_dir),
-                    "--track-exported",
-                ]
-            )
-            second = export_labelstudio_project_tasks_from_db(
-                db_path,
-                already_exported=load_exported_words(db_path),
-            )
-
-        self.assertEqual(first, 0)
-        self.assertEqual(second.exported_words, [])
+        self.assertEqual(first.exported_words, second.exported_words)
+        self.assertEqual(first.projects, second.projects)
 
     def test_labelstudio_round_trip_removes_reviewed_word_from_export(self) -> None:
         from tatar_preannotator.labelstudio_import import import_labelstudio_annotations
@@ -1829,13 +1817,9 @@ class PreannotatorWordExportTests(unittest.TestCase):
             task = first.tasks[0]
             labelstudio_task = {
                 **task,
-                "data": {
-                    **task["data"],
+                "meta": {
+                    "schema_version": 1,
                     "project_key": "catchall",
-                    "project_title": "Catchall word review",
-                    "batch_id": "catchall_batch_001",
-                    "batch_index": 1,
-                    "batch_total": 1,
                 },
                 "annotations": [
                     {
@@ -1890,9 +1874,9 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ["вакыт"],
         )
 
-    def test_sqlite_tracking_skips_previously_exported_words(self) -> None:
+    def test_schema_cleanup_drops_legacy_export_tracking_tables(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
-            selected_db = _write_annotation_db(
+            db_path = _write_annotation_db(
                 Path(tmpdir) / "zamanalif.sqlite",
                 [
                     {
@@ -1905,21 +1889,47 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     }
                 ],
             )
-            db_path = Path(tmpdir) / "state.sqlite"
-            mark_exported_words(db_path, ["вакыт"])
-
-            result = export_labelstudio_tasks_from_db(
-                selected_db,
-                sort_by="word",
-                already_exported=load_exported_words(db_path),
-            )
-
             with sqlite3.connect(db_path) as conn:
-                count = conn.execute("select count(*) from exported_words").fetchone()[0]
+                conn.executescript(
+                    """
+                    create table exported_words (
+                        normalized_word text primary key,
+                        exported_at text not null
+                    );
+                    insert into exported_words values ('вакыт', 'now');
+                    create table exported_contextual_occurrences (
+                        sample_id text not null,
+                        token_index integer not null,
+                        exported_at text not null,
+                        primary key(sample_id, token_index)
+                    );
+                    insert into exported_contextual_occurrences values ('sent_1', 0, 'now');
+                    """
+                )
 
-        self.assertEqual([task["data"]["cyrl_word"] for task in result.tasks], ["авыл"])
-        self.assertEqual(result.report["already_exported_skipped_count"], 1)
-        self.assertEqual(count, 1)
+            result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
+            export_contextual_tasks_from_db(db_path)
+            with sqlite3.connect(db_path) as conn:
+                old_tables = {
+                    row[0]
+                    for row in conn.execute(
+                        """
+                        select name
+                        from sqlite_master
+                        where type = 'table'
+                          and name in (
+                              'exported_words',
+                              'exported_contextual_occurrences'
+                          )
+                        """
+                    )
+                }
+
+        self.assertEqual(
+            [task["data"]["cyrl_word"] for task in result.tasks],
+            ["авыл", "вакыт"],
+        )
+        self.assertEqual(old_tables, set())
 
 
 def _write_annotation_db(path: Path, rows: list[dict]) -> Path:

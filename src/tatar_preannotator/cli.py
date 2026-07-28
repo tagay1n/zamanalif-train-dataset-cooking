@@ -18,11 +18,7 @@ from .conflict_resolver import (
     auto_resolve_unknowns,
     serve_conflict_resolver_web,
 )
-from .contextual_review import (
-    export_contextual_tasks_from_db,
-    load_exported_contextual_occurrences,
-    mark_annotation_export_state,
-)
+from .contextual_review import export_contextual_tasks_from_db
 from .gemini_client import GoogleGeminiClient
 from .labelstudio_import import (
     LabelStudioImportError,
@@ -36,7 +32,6 @@ from .training_export import TrainingExportError, export_training_dataset
 from .word_export import (
     attach_contextual_project,
     export_labelstudio_project_tasks_from_db,
-    load_exported_words,
     write_split_outputs,
 )
 
@@ -111,16 +106,6 @@ def main(argv: list[str] | None = None) -> int:
         choices=["frequency_desc", "word"],
         default="frequency_desc",
     )
-    export_words.add_argument(
-        "--track-exported",
-        action="store_true",
-        help="Skip and persist exported words and contextual occurrences.",
-    )
-    export_words.add_argument(
-        "--state-db",
-        help="SQLite DB for export state; defaults to --db.",
-    )
-
     training_export = subparsers.add_parser(
         "training-export",
         help="Export resolved Cyrillic/Zamanalif training pairs.",
@@ -317,13 +302,6 @@ def _annotation_export(args: argparse.Namespace) -> int:
     if args.min_frequency < 1:
         raise SystemExit("--min-frequency must be positive")
 
-    state_db = args.state_db or args.db
-    already_exported = load_exported_words(state_db) if args.track_exported else set()
-    already_exported_contextual = (
-        load_exported_contextual_occurrences(state_db)
-        if args.track_exported
-        else set()
-    )
     try:
         export_kwargs = {
             "max_items": args.max_items,
@@ -331,22 +309,14 @@ def _annotation_export(args: argparse.Namespace) -> int:
             "include_unknown": args.include_unknown,
             "min_frequency": args.min_frequency,
             "sort_by": args.sort_by,
-            "already_exported": already_exported,
         }
         result = export_labelstudio_project_tasks_from_db(args.db, **export_kwargs)
         contextual = export_contextual_tasks_from_db(
             args.db,
             max_items=args.max_items,
-            already_exported=already_exported_contextual,
         )
         result = attach_contextual_project(result, contextual)
         write_split_outputs(result, args.output_dir)
-        if args.track_exported:
-            mark_annotation_export_state(
-                state_db,
-                result.exported_words,
-                result.contextual_occurrences,
-            )
     except (OSError, ValueError, sqlite3.Error) as exc:
         print(f"annotation export failed: {exc}")
         return 1

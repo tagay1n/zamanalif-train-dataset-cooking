@@ -3,7 +3,6 @@ from __future__ import annotations
 from collections import defaultdict
 from contextlib import closing
 from dataclasses import dataclass
-from datetime import datetime, timezone
 from html import escape
 import json
 from pathlib import Path
@@ -11,7 +10,12 @@ import sqlite3
 from typing import Any, Iterable
 
 from .conversion import DslError, parse_dsl
-from .word_export import conversion_branches, ensure_review_state_schema, normalize_word
+from .word_export import (
+    TASK_SCHEMA_VERSION,
+    conversion_branches,
+    ensure_review_state_schema,
+    normalize_word,
+)
 
 
 PROJECT_KEY = "contextual_homonym"
@@ -60,15 +64,12 @@ def export_contextual_tasks_from_db(
     db_path: str | Path,
     *,
     max_items: int | None = None,
-    already_exported: set[OccurrenceKey] | None = None,
 ) -> ContextualExportResult:
     """Export one sentence-context task for each deferred homonym occurrence."""
     database = Path(db_path)
     if not database.exists():
         raise ContextualReviewError(f"database file does not exist: {database}")
-    already_exported = already_exported or set()
-
-    with closing(sqlite3.connect(database)) as conn:
+    with closing(sqlite3.connect(database)) as conn, conn:
         from .conflict_resolver import ensure_word_resolution_schema
 
         ensure_review_state_schema(conn)
@@ -147,7 +148,6 @@ def export_contextual_tasks_from_db(
         for occurrence in all_occurrences
         if occurrence.normalized_word in effective_words
         and occurrence.key not in completed
-        and occurrence.key not in already_exported
     ]
     ordered = _round_robin_occurrences(eligible)
     if max_items is not None:
@@ -164,11 +164,6 @@ def export_contextual_tasks_from_db(
             "pending_occurrence_count": len(eligible),
             "exported_occurrence_count": len(ordered),
             "completed_occurrence_count": len(completed),
-            "tracked_occurrence_skipped_count": sum(
-                occurrence.normalized_word in effective_words
-                and occurrence.key in already_exported
-                for occurrence in all_occurrences
-            ),
         },
     )
 
@@ -272,11 +267,6 @@ def _task_for_occurrence(item: _Occurrence) -> dict[str, Any]:
     suggestion = branches.suggestion(item.label)
     return {
         "data": {
-            "id": f"context_{item.key.sample_id}_{item.key.token_index:04d}",
-            "project_key": PROJECT_KEY,
-            "project_title": PROJECT_TITLE,
-            "sample_id": item.key.sample_id,
-            "token_index": item.key.token_index,
             "cyrl_word": item.token_text,
             "sentence": item.sentence,
             "context_html": _highlighted_context(
@@ -289,8 +279,13 @@ def _task_for_occurrence(item: _Occurrence) -> dict[str, Any]:
             "native_zamanalif": branches.native_dsl,
             "loanword_zamanalif": branches.loanword_dsl,
             "hints_html": _contextual_hints(branches.native_dsl, branches.loanword_dsl),
-            "dsl_rules": [],
-        }
+        },
+        "meta": {
+            "schema_version": TASK_SCHEMA_VERSION,
+            "project_key": PROJECT_KEY,
+            "sample_id": item.key.sample_id,
+            "token_index": item.key.token_index,
+        },
     }
 
 
@@ -346,6 +341,7 @@ def _contextual_hints(native: str, loanword: str) -> str:
 
 
 def ensure_contextual_review_schema(conn: sqlite3.Connection) -> None:
+    conn.execute("drop table if exists exported_contextual_occurrences")
     conn.execute(
         """
         create table if not exists contextual_reviews (
@@ -355,16 +351,6 @@ def ensure_contextual_review_schema(conn: sqlite3.Connection) -> None:
             zamanalif_dsl text not null,
             origin text not null check(origin in ('N', 'RL')),
             updated_at text not null,
-            primary key(sample_id, token_index)
-        )
-        """
-    )
-    conn.execute(
-        """
-        create table if not exists exported_contextual_occurrences (
-            sample_id text not null,
-            token_index integer not null check(token_index >= 0),
-            exported_at text not null,
             primary key(sample_id, token_index)
         )
         """
@@ -393,50 +379,6 @@ def load_contextual_reviews(
         )
         for row in rows
     }
-
-
-def load_exported_contextual_occurrences(
-    db_path: str | Path,
-) -> set[OccurrenceKey]:
-    with closing(sqlite3.connect(db_path)) as conn, conn:
-        ensure_contextual_review_schema(conn)
-        rows = conn.execute(
-            """
-            select sample_id, token_index
-            from exported_contextual_occurrences
-            """
-        ).fetchall()
-    return {OccurrenceKey(str(row[0]), int(row[1])) for row in rows}
-
-
-def mark_annotation_export_state(
-    db_path: str | Path,
-    words: Iterable[str],
-    occurrences: Iterable[OccurrenceKey],
-) -> None:
-    """Atomically persist dictionary and contextual export identities."""
-    now = datetime.now(timezone.utc).isoformat()
-    with closing(sqlite3.connect(db_path)) as conn, conn:
-        ensure_review_state_schema(conn)
-        ensure_contextual_review_schema(conn)
-        conn.executemany(
-            """
-            insert or ignore into exported_words(normalized_word, exported_at)
-            values (?, ?)
-            """,
-            [(word, now) for word in words],
-        )
-        conn.executemany(
-            """
-            insert or ignore into exported_contextual_occurrences(
-                sample_id, token_index, exported_at
-            ) values (?, ?, ?)
-            """,
-            [
-                (occurrence.sample_id, occurrence.token_index, now)
-                for occurrence in occurrences
-            ],
-        )
 
 
 def validate_contextual_review(

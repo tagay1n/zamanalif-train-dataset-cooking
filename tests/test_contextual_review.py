@@ -10,9 +10,7 @@ import unittest
 
 from tatar_preannotator.cli import main
 from tatar_preannotator.contextual_review import (
-    OccurrenceKey,
     export_contextual_tasks_from_db,
-    load_exported_contextual_occurrences,
 )
 from tatar_preannotator.labelstudio_import import import_labelstudio_annotations
 
@@ -31,7 +29,8 @@ class ContextualReviewExportTests(unittest.TestCase):
         self.assertEqual(words.count("Сер"), 1)
         self.assertEqual(len(result.occurrences), 4)
         for task in result.tasks:
-            self.assertEqual(task["data"]["project_key"], "contextual_homonym")
+            self.assertEqual(task["meta"]["project_key"], "contextual_homonym")
+            self.assertEqual(task["meta"]["schema_version"], 1)
             self.assertEqual(task["data"]["context_html"].count("<mark>"), 1)
 
     def test_concrete_resolution_clears_raw_homonym_flag(self) -> None:
@@ -87,7 +86,7 @@ class ContextualReviewExportTests(unittest.TestCase):
         self.assertIn("проект", dictionary_words)
         self.assertIn("contextual=4", stdout.getvalue())
 
-    def test_tracking_is_occurrence_level_and_limit_is_independent(self) -> None:
+    def test_repeated_export_returns_same_unreviewed_occurrence(self) -> None:
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             db_path = _database(root / "db.sqlite")
@@ -102,10 +101,8 @@ class ContextualReviewExportTests(unittest.TestCase):
                     str(first_dir),
                     "--max-items",
                     "1",
-                    "--track-exported",
                 ]
             )
-            tracked = load_exported_contextual_occurrences(db_path)
             second = main(
                 [
                     "annotation-export",
@@ -115,8 +112,12 @@ class ContextualReviewExportTests(unittest.TestCase):
                     str(second_dir),
                     "--max-items",
                     "1",
-                    "--track-exported",
                 ]
+            )
+            first_context = json.loads(
+                next(first_dir.glob("project_contextual_homonym_batch_*.json")).read_text(
+                    encoding="utf-8"
+                )
             )
             second_context = json.loads(
                 next(second_dir.glob("project_contextual_homonym_batch_*.json")).read_text(
@@ -126,14 +127,7 @@ class ContextualReviewExportTests(unittest.TestCase):
 
         self.assertEqual(first, 0)
         self.assertEqual(second, 0)
-        self.assertEqual(len(tracked), 1)
-        self.assertNotEqual(
-            next(iter(tracked)),
-            OccurrenceKey(
-                second_context[0]["data"]["sample_id"],
-                second_context[0]["data"]["token_index"],
-            ),
-        )
+        self.assertEqual(first_context, second_context)
 
     def test_exported_contextual_task_round_trips_through_strict_import(self) -> None:
         with TemporaryDirectory() as tmpdir:
@@ -160,13 +154,6 @@ class ContextualReviewExportTests(unittest.TestCase):
                     }
                 ],
             }
-            task["data"].update(
-                {
-                    "batch_id": "contextual_homonym_batch_001",
-                    "batch_index": 1,
-                    "batch_total": 1,
-                }
-            )
             backup = root / "backup.json"
             backup.write_text(
                 json.dumps(
@@ -182,9 +169,11 @@ class ContextualReviewExportTests(unittest.TestCase):
             )
 
             summary = import_labelstudio_annotations(db_path, backup)
+            remaining = export_contextual_tasks_from_db(db_path)
 
         self.assertEqual(summary.project_key, "contextual_homonym")
         self.assertEqual(summary.imported_items, 1)
+        self.assertNotIn(exported.occurrences[0], remaining.occurrences)
 
 
 def _database(path: Path) -> Path:

@@ -19,10 +19,14 @@ from .contextual_review import (
 from .conflict_resolver import ensure_word_resolution_schema
 from .conversion import DslError, parse_dsl
 from .word_export import (
+    CONTEXTUAL_DATA_FIELDS,
+    CONTEXTUAL_META_FIELDS,
+    DICTIONARY_DATA_FIELDS,
+    DICTIONARY_META_FIELDS,
+    TASK_SCHEMA_VERSION,
     dictionary_project_keys,
     ensure_review_state_schema,
     normalize_word,
-    project_title_for_key,
 )
 
 
@@ -364,11 +368,11 @@ def _load_tasks(input_path: str | Path) -> list[Any]:
 def _project_key(tasks: list[Any]) -> str:
     keys: set[str] = set()
     for task_index, task in enumerate(tasks):
-        data = task.get("data") if isinstance(task, dict) else None
-        key = data.get("project_key") if isinstance(data, dict) else None
+        meta = task.get("meta") if isinstance(task, dict) else None
+        key = meta.get("project_key") if isinstance(meta, dict) else None
         if not isinstance(key, str) or not key:
             raise LabelStudioImportError(
-                f"task {task_index} has invalid data.project_key"
+                f"task {task_index} has invalid meta.project_key"
             )
         keys.add(key)
     if len(keys) != 1:
@@ -391,27 +395,29 @@ def _parse_task(
     data = task.get("data")
     if not isinstance(data, dict):
         raise LabelStudioImportError(f"{context}.data must be an object")
-    if data.get("project_key") != project_key:
+    expected_data_fields = (
+        CONTEXTUAL_DATA_FIELDS
+        if project_key == CONTEXTUAL_PROJECT_KEY
+        else DICTIONARY_DATA_FIELDS
+    )
+    if set(data) != expected_data_fields:
+        raise LabelStudioImportError(
+            f"{context}.data contains unexpected or missing fields"
+        )
+    meta = task.get("meta")
+    expected_meta_fields = (
+        CONTEXTUAL_META_FIELDS
+        if project_key == CONTEXTUAL_PROJECT_KEY
+        else DICTIONARY_META_FIELDS
+    )
+    if not isinstance(meta, dict) or set(meta) != expected_meta_fields:
+        raise LabelStudioImportError(
+            f"{context}.meta contains unexpected or missing fields"
+        )
+    if meta.get("schema_version") != TASK_SCHEMA_VERSION:
+        raise LabelStudioImportError(f"{context} has unsupported schema_version")
+    if meta.get("project_key") != project_key:
         raise LabelStudioImportError(f"{context} has inconsistent project_key")
-    data_id = data.get("id")
-    if not isinstance(data_id, str) or not data_id:
-        raise LabelStudioImportError(f"{context} has invalid data.id")
-    if data.get("project_title") != project_title_for_key(project_key):
-        raise LabelStudioImportError(f"{context} has invalid data.project_title")
-    batch_id = data.get("batch_id")
-    batch_index = data.get("batch_index")
-    batch_total = data.get("batch_total")
-    if not isinstance(batch_id, str) or not batch_id:
-        raise LabelStudioImportError(f"{context} has invalid data.batch_id")
-    if (
-        not isinstance(batch_index, int)
-        or isinstance(batch_index, bool)
-        or not isinstance(batch_total, int)
-        or isinstance(batch_total, bool)
-        or batch_index < 1
-        or batch_total < batch_index
-    ):
-        raise LabelStudioImportError(f"{context} has invalid batch position")
     surface = data.get("cyrl_word")
     if not isinstance(surface, str) or not surface:
         raise LabelStudioImportError(f"{context} has invalid data.cyrl_word")
@@ -428,12 +434,12 @@ def _parse_task(
     sample_id: str | None = None
     token_index: int | None = None
     if project_key == CONTEXTUAL_PROJECT_KEY:
-        sample_id = data.get("sample_id")
-        token_index = data.get("token_index")
+        sample_id = meta.get("sample_id")
+        token_index = meta.get("token_index")
         if not isinstance(sample_id, str) or not sample_id:
-            raise LabelStudioImportError(f"{context} has invalid data.sample_id")
+            raise LabelStudioImportError(f"{context} has invalid meta.sample_id")
         if not isinstance(token_index, int) or isinstance(token_index, bool) or token_index < 0:
-            raise LabelStudioImportError(f"{context} has invalid data.token_index")
+            raise LabelStudioImportError(f"{context} has invalid meta.token_index")
 
     annotations = task.get("annotations")
     if not isinstance(annotations, list):
@@ -475,7 +481,7 @@ def _parse_task(
     )
     return _ParsedTask(
         reviewed=reviewed,
-        task_id=str(task.get("id", data_id)),
+        task_id=str(task.get("id", task_index)),
         word=surface,
         suggested_origin=suggested_origin,
         suggested_zamanalif=suggested_zamanalif,

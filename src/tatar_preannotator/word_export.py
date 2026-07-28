@@ -50,6 +50,26 @@ if TYPE_CHECKING:
     from .contextual_review import ContextualExportResult, OccurrenceKey
 
 LABELSTUDIO_SPLIT_BATCH_SIZE = 1000
+TASK_SCHEMA_VERSION = 1
+DICTIONARY_DATA_FIELDS = frozenset(
+    {"cyrl_word", "auto_zamanalif", "gemini_origin", "hints_html"}
+)
+DICTIONARY_META_FIELDS = frozenset({"schema_version", "project_key"})
+CONTEXTUAL_DATA_FIELDS = frozenset(
+    {
+        "cyrl_word",
+        "sentence",
+        "context_html",
+        "gemini_origin",
+        "auto_zamanalif",
+        "native_zamanalif",
+        "loanword_zamanalif",
+        "hints_html",
+    }
+)
+CONTEXTUAL_META_FIELDS = frozenset(
+    {"schema_version", "project_key", "sample_id", "token_index"}
+)
 MANAGED_BATCH_RE = re.compile(
     r"^project_[a-z0-9_]+(?:_batch_\d{3}_of_\d{3})?\.json$"
 )
@@ -176,7 +196,6 @@ def export_labelstudio_tasks_from_db(
     include_unknown: bool = True,
     min_frequency: int = 1,
     sort_by: str = "frequency_desc",
-    already_exported: set[str] | None = None,
     reviewed_words: set[str] | None = None,
     word_resolutions: dict[str, str] | None = None,
 ) -> ExportResult:
@@ -197,7 +216,6 @@ def export_labelstudio_tasks_from_db(
         include_unknown=include_unknown,
         min_frequency=min_frequency,
         sort_by=sort_by,
-        already_exported=already_exported,
         reviewed_words=reviewed_words,
         word_resolutions=word_resolutions,
     )
@@ -211,7 +229,6 @@ def export_labelstudio_project_tasks_from_db(
     include_unknown: bool = True,
     min_frequency: int = 1,
     sort_by: str = "frequency_desc",
-    already_exported: set[str] | None = None,
     reviewed_words: set[str] | None = None,
     word_resolutions: dict[str, str] | None = None,
 ) -> SplitExportResult:
@@ -223,7 +240,6 @@ def export_labelstudio_project_tasks_from_db(
         include_unknown=include_unknown,
         min_frequency=min_frequency,
         sort_by=sort_by,
-        already_exported=already_exported,
         reviewed_words=reviewed_words,
         word_resolutions=word_resolutions,
     )
@@ -238,7 +254,9 @@ def split_export_result(result: ExportResult) -> SplitExportResult:
         data = task.get("data", {})
         label = data.get("gemini_origin", "U")
         project = classify_project(normalized, label if isinstance(label, str) else "U")
-        grouped_tasks.setdefault(project["key"], []).append(_task_with_project_data(task, project))
+        grouped_tasks.setdefault(project["key"], []).append(
+            _task_with_project_meta(task, project["key"])
+        )
         grouped_words.setdefault(project["key"], []).append(normalized)
 
     projects: dict[str, ExportResult] = {}
@@ -344,7 +362,6 @@ def _export_from_records(
     include_unknown: bool,
     min_frequency: int,
     sort_by: str,
-    already_exported: set[str] | None,
     reviewed_words: set[str],
     word_resolutions: dict[str, str],
 ) -> ExportResult:
@@ -353,8 +370,6 @@ def _export_from_records(
     total_tokens = 0
     homonym_words: set[str] = set()
     word_occurrences: Counter[str] = Counter()
-    already_exported = already_exported or set()
-
     for record in records:
         total_sentences += 1
         if record.get("tatar") is not True:
@@ -394,7 +409,6 @@ def _export_from_records(
     decision_counts: Counter[str] = Counter()
     candidates: list[WordStats] = []
     mixed_harmony_n_skipped = 0
-    already_exported_skipped = 0
     reviewed_words_skipped = 0
     for entry in stats.values():
         branches = conversion_branches(entry.normalized)
@@ -406,9 +420,6 @@ def _export_from_records(
             continue
         if entry.normalized in reviewed_words:
             reviewed_words_skipped += 1
-            continue
-        if entry.normalized in already_exported:
-            already_exported_skipped += 1
             continue
         if entry.label == "RL" and not include_rl:
             continue
@@ -434,14 +445,13 @@ def _export_from_records(
     tasks = [
         {
             "data": {
-                "id": f"word_{index:06d}",
                 "cyrl_word": entry.display,
                 "auto_zamanalif": conversion_branches(entry.normalized).suggestion(entry.label),
                 "gemini_origin": entry.label,
                 "hints_html": decision_html(entry),
             }
         }
-        for index, entry in enumerate(candidates, start=1)
+        for entry in candidates
     ]
     return ExportResult(
         tasks=tasks,
@@ -451,7 +461,6 @@ def _export_from_records(
             unique_word_forms=len(stats),
             exported=candidates,
             mixed_harmony_n_skipped=mixed_harmony_n_skipped,
-            already_exported_skipped=already_exported_skipped,
             reviewed_words_skipped=reviewed_words_skipped,
             homonym_occurrences_skipped=sum(
                 word_occurrences[word] for word in homonym_words
@@ -463,16 +472,14 @@ def _export_from_records(
     )
 
 
-def _task_with_project_data(task: dict[str, Any], project: dict[str, Any]) -> dict[str, Any]:
-    data = dict(task["data"])
-    data.update(
-        {
-            "project_key": project["key"],
-            "project_title": project["title"],
-            "dsl_rules": project["dsl_rules"],
-        }
-    )
-    return {"data": data}
+def _task_with_project_meta(task: dict[str, Any], project_key: str) -> dict[str, Any]:
+    return {
+        "data": dict(task["data"]),
+        "meta": {
+            "schema_version": TASK_SCHEMA_VERSION,
+            "project_key": project_key,
+        },
+    }
 
 
 def _sqlite_records(db_path: str | Path) -> Iterable[dict[str, Any]]:
@@ -1465,18 +1472,6 @@ def decision_html(entry: WordStats) -> str:
     return "<ul>" + "".join(f"<li>{item}</li>" for item in items) + "</ul>"
 
 
-def write_outputs(result: ExportResult, output_path: str | Path) -> Path:
-    """Write a Label Studio JSON import file and return its path."""
-    validate_export_result(result)
-    output = Path(output_path)
-    with TemporaryDirectory(prefix=f".{output.name}.staging-", dir=output.parent) as tmpdir:
-        staged = Path(tmpdir) / output.name
-        staged.write_text(_json_text(result.tasks), encoding="utf-8")
-        _validate_serialized_single_output(staged, result)
-        staged.replace(output)
-    return output
-
-
 def write_split_outputs(result: SplitExportResult, output_dir: str | Path) -> list[Path]:
     """Write split Label Studio project JSON import files and return their paths."""
     validate_split_export_result(result)
@@ -1493,22 +1488,23 @@ def write_split_outputs(result: SplitExportResult, output_dir: str | Path) -> li
                     f"project_{project_key}_batch_{batch_index:03d}_"
                     f"of_{batch_total:03d}.json"
                 )
-                payload = _tasks_with_batch_data(
-                    tasks,
-                    project_key=project_key,
-                    batch_index=batch_index,
-                    batch_total=batch_total,
-                )
                 (staging / output_name).write_text(
-                    _json_text(payload),
+                    _json_text(tasks),
                     encoding="utf-8",
                 )
                 output_names.append(output_name)
 
             rule_ids = (
                 rule_id
-                for task in project.tasks
-                for rule_id in task["data"].get("dsl_rules", [])
+                for task, word in zip(
+                    project.tasks,
+                    project.exported_words,
+                    strict=True,
+                )
+                for rule_id in classify_project(
+                    word,
+                    task["data"]["gemini_origin"],
+                )["dsl_rules"]
             )
             if project_key == "contextual_homonym":
                 from .contextual_review import contextual_project_instructions
@@ -1544,7 +1540,6 @@ def validate_export_result(result: ExportResult) -> None:
             f"{len(result.tasks)} != {len(result.exported_words)}"
         )
 
-    seen_ids: set[str] = set()
     seen_words: set[str] = set()
     for index, (task, expected_word) in enumerate(
         zip(result.tasks, result.exported_words, strict=True)
@@ -1553,14 +1548,12 @@ def validate_export_result(result: ExportResult) -> None:
             task,
             expected_word=expected_word,
             context=f"task {index}",
-            seen_ids=seen_ids,
             seen_words=seen_words,
         )
 
 
 def validate_split_export_result(result: SplitExportResult) -> None:
     """Validate project routing and global uniqueness in a split export."""
-    seen_ids: set[str] = set()
     seen_words: set[str] = set()
     contextual_words: set[str] = set()
     flattened_words: list[str] = []
@@ -1586,7 +1579,6 @@ def validate_split_export_result(result: SplitExportResult) -> None:
                 project,
                 result.contextual_occurrences,
                 contextual_index,
-                seen_ids,
                 contextual_words,
             )
             continue
@@ -1599,37 +1591,22 @@ def validate_split_export_result(result: SplitExportResult) -> None:
                 task,
                 expected_word=expected_word,
                 context=context,
-                seen_ids=seen_ids,
                 seen_words=seen_words,
+                project_key=project_key,
             )
-            if data.get("project_key") != project_key:
-                raise AnnotationExportError(f"{context} has wrong project_key")
-            if data.get("project_title") != expected_title:
-                raise AnnotationExportError(f"{context} has wrong project_title")
-            rules = data.get("dsl_rules")
-            if (
-                not isinstance(rules, list)
-                or any(not isinstance(rule, str) or rule not in RULES for rule in rules)
-                or len(rules) != len(set(rules))
-            ):
-                raise AnnotationExportError(f"{context} has invalid dsl_rules")
             suggestion = data["auto_zamanalif"]
             suggestion_rules = (
                 list(dict.fromkeys(parse_dsl(suggestion).rule_ids))
                 if suggestion
                 else []
             )
-            if suggestion_rules != rules:
-                raise AnnotationExportError(
-                    f"{context} suggestion rules do not match dsl_rules"
-                )
             expected_project = classify_project(expected_word, data["gemini_origin"])
             if expected_project["key"] != project_key:
                 raise AnnotationExportError(
                     f"{context} belongs to project {expected_project['key']!r}"
                 )
-            if rules != expected_project["dsl_rules"]:
-                raise AnnotationExportError(f"{context} has inconsistent dsl_rules")
+            if suggestion_rules != expected_project["dsl_rules"]:
+                raise AnnotationExportError(f"{context} has inconsistent DSL rules")
         flattened_words.extend(project.exported_words)
 
     if contextual_index != len(result.contextual_occurrences):
@@ -1656,10 +1633,9 @@ def _validate_contextual_project(
     project: ExportResult,
     occurrences: tuple[OccurrenceKey, ...],
     start_index: int,
-    seen_ids: set[str],
     contextual_words: set[str],
 ) -> int:
-    from .contextual_review import PROJECT_KEY, PROJECT_TITLE
+    from .contextual_review import PROJECT_KEY
 
     end_index = start_index + len(project.tasks)
     expected_occurrences = occurrences[start_index:end_index]
@@ -1670,28 +1646,31 @@ def _validate_contextual_project(
         zip(project.tasks, expected_occurrences, strict=True)
     ):
         context = f"project {PROJECT_KEY!r} task {index}"
-        if not isinstance(task, dict) or set(task) != {"data"}:
-            raise AnnotationExportError(f"{context} must contain only a data object")
+        if not isinstance(task, dict) or set(task) != {"data", "meta"}:
+            raise AnnotationExportError(
+                f"{context} must contain exactly data and meta objects"
+            )
         data = task.get("data")
-        if not isinstance(data, dict):
-            raise AnnotationExportError(f"{context}.data must be an object")
-        task_id = data.get("id")
-        if not isinstance(task_id, str) or not task_id:
-            raise AnnotationExportError(f"{context} has invalid id")
-        if task_id in seen_ids:
-            raise AnnotationExportError(f"duplicate task id: {task_id!r}")
-        seen_ids.add(task_id)
-        key = (data.get("sample_id"), data.get("token_index"))
+        if not isinstance(data, dict) or set(data) != CONTEXTUAL_DATA_FIELDS:
+            raise AnnotationExportError(
+                f"{context}.data must contain exactly the contextual display fields"
+            )
+        meta = task.get("meta")
+        if not isinstance(meta, dict) or set(meta) != CONTEXTUAL_META_FIELDS:
+            raise AnnotationExportError(
+                f"{context}.meta must contain exactly the contextual metadata fields"
+            )
+        if meta.get("schema_version") != TASK_SCHEMA_VERSION:
+            raise AnnotationExportError(f"{context} has unsupported schema_version")
+        if meta.get("project_key") != PROJECT_KEY:
+            raise AnnotationExportError(f"{context} has wrong project_key")
+        key = (meta.get("sample_id"), meta.get("token_index"))
         expected_key = (occurrence.sample_id, occurrence.token_index)
         if key != expected_key:
             raise AnnotationExportError(f"{context} has inconsistent occurrence identity")
         if key in seen_occurrences:
             raise AnnotationExportError(f"duplicate contextual occurrence: {key!r}")
         seen_occurrences.add(key)
-        if data.get("project_key") != PROJECT_KEY:
-            raise AnnotationExportError(f"{context} has wrong project_key")
-        if data.get("project_title") != PROJECT_TITLE:
-            raise AnnotationExportError(f"{context} has wrong project_title")
         if not isinstance(data.get("sentence"), str) or not data["sentence"]:
             raise AnnotationExportError(f"{context} has invalid sentence")
         if not isinstance(data.get("context_html"), str) or "<mark>" not in data["context_html"]:
@@ -1715,8 +1694,6 @@ def _validate_contextual_project(
                     ) from exc
         if not isinstance(data.get("hints_html"), str):
             raise AnnotationExportError(f"{context} has invalid hints_html")
-        if data.get("dsl_rules") != []:
-            raise AnnotationExportError(f"{context} has invalid dsl_rules")
     return end_index
 
 
@@ -1725,21 +1702,29 @@ def _validate_task(
     *,
     expected_word: str,
     context: str,
-    seen_ids: set[str],
     seen_words: set[str],
+    project_key: str | None = None,
 ) -> dict[str, Any]:
-    if not isinstance(task, dict) or set(task) != {"data"}:
-        raise AnnotationExportError(f"{context} must contain only a data object")
+    expected_task_fields = {"data"} if project_key is None else {"data", "meta"}
+    if not isinstance(task, dict) or set(task) != expected_task_fields:
+        raise AnnotationExportError(
+            f"{context} must contain exactly {sorted(expected_task_fields)}"
+        )
     data = task.get("data")
-    if not isinstance(data, dict):
-        raise AnnotationExportError(f"{context}.data must be an object")
-
-    task_id = data.get("id")
-    if not isinstance(task_id, str) or not task_id:
-        raise AnnotationExportError(f"{context} has invalid id")
-    if task_id in seen_ids:
-        raise AnnotationExportError(f"duplicate task id: {task_id!r}")
-    seen_ids.add(task_id)
+    if not isinstance(data, dict) or set(data) != DICTIONARY_DATA_FIELDS:
+        raise AnnotationExportError(
+            f"{context}.data must contain exactly the dictionary display fields"
+        )
+    if project_key is not None:
+        meta = task.get("meta")
+        if not isinstance(meta, dict) or set(meta) != DICTIONARY_META_FIELDS:
+            raise AnnotationExportError(
+                f"{context}.meta must contain exactly the dictionary metadata fields"
+            )
+        if meta.get("schema_version") != TASK_SCHEMA_VERSION:
+            raise AnnotationExportError(f"{context} has unsupported schema_version")
+        if meta.get("project_key") != project_key:
+            raise AnnotationExportError(f"{context} has wrong project_key")
 
     surface = data.get("cyrl_word")
     if not isinstance(surface, str) or not surface:
@@ -1781,18 +1766,11 @@ def _validate_task(
     return data
 
 
-def _validate_serialized_single_output(path: Path, result: ExportResult) -> None:
-    payload = _read_json_array(path)
-    if payload != result.tasks:
-        raise AnnotationExportError("serialized Label Studio output changed task data")
-
-
 def _validate_serialized_split_outputs(
     staging: Path,
     result: SplitExportResult,
 ) -> None:
     expected_names: set[str] = set()
-    seen_ids: set[str] = set()
     seen_words: set[str] = set()
     seen_occurrences: set[tuple[str, int]] = set()
 
@@ -1806,26 +1784,15 @@ def _validate_serialized_split_outputs(
             )
             expected_names.add(name)
             payload = _read_json_array(staging / name)
-            expected_payload = _tasks_with_batch_data(
-                tasks,
-                project_key=project_key,
-                batch_index=batch_index,
-                batch_total=batch_total,
-            )
-            if payload != expected_payload:
+            if payload != tasks:
                 raise AnnotationExportError(f"serialized batch {name} changed task data")
             if not 1 <= len(payload) <= LABELSTUDIO_SPLIT_BATCH_SIZE:
                 raise AnnotationExportError(f"batch {name} has invalid task count")
             for task in payload:
                 data = task["data"]
-                task_id = data["id"]
-                if task_id in seen_ids:
-                    raise AnnotationExportError(
-                        f"duplicate task id across serialized batches: {task_id!r}"
-                    )
-                seen_ids.add(task_id)
                 if project_key == "contextual_homonym":
-                    occurrence = (data["sample_id"], data["token_index"])
+                    meta = task["meta"]
+                    occurrence = (meta["sample_id"], meta["token_index"])
                     if occurrence in seen_occurrences:
                         raise AnnotationExportError(
                             "duplicate contextual occurrence across serialized batches: "
@@ -1879,49 +1846,6 @@ def _is_managed_export_name(name: str) -> bool:
 def _task_batches(tasks: list[dict[str, Any]], batch_size: int) -> Iterable[list[dict[str, Any]]]:
     for start in range(0, len(tasks), batch_size):
         yield tasks[start : start + batch_size]
-
-
-def _tasks_with_batch_data(
-    tasks: list[dict[str, Any]],
-    *,
-    project_key: str,
-    batch_index: int,
-    batch_total: int,
-) -> list[dict[str, Any]]:
-    batch_id = f"{project_key}_batch_{batch_index:03d}"
-    return [
-        {
-            "data": {
-                **task["data"],
-                "batch_id": batch_id,
-                "batch_index": batch_index,
-                "batch_total": batch_total,
-            }
-        }
-        for task in tasks
-    ]
-
-
-def load_exported_words(db_path: str | Path) -> set[str]:
-    """Read normalized words already exported to Label Studio."""
-    with closing(sqlite3.connect(db_path)) as conn, conn:
-        ensure_review_state_schema(conn)
-        rows = conn.execute("select normalized_word from exported_words").fetchall()
-    return {row[0] for row in rows}
-
-
-def mark_exported_words(db_path: str | Path, words: list[str]) -> None:
-    """Persist normalized words exported in a successful batch."""
-    now = datetime.now(timezone.utc).isoformat()
-    with closing(sqlite3.connect(db_path)) as conn, conn:
-        ensure_review_state_schema(conn)
-        conn.executemany(
-            """
-            insert or ignore into exported_words(normalized_word, exported_at)
-            values (?, ?)
-            """,
-            [(word, now) for word in words],
-        )
 
 
 def save_reviewed_word(
@@ -2594,14 +2518,7 @@ def _is_clean_zamanalif(value: str | None) -> bool:
 
 def ensure_review_state_schema(conn: sqlite3.Connection) -> None:
     """Create SQLite tables used by word-review export and import."""
-    conn.execute(
-        """
-        create table if not exists exported_words (
-            normalized_word text primary key,
-            exported_at text not null
-        )
-        """
-    )
+    conn.execute("drop table if exists exported_words")
     conn.execute(
         """
         create table if not exists reviewed_words (
@@ -2621,7 +2538,6 @@ def _report(
     unique_word_forms: int,
     exported: list[WordStats],
     mixed_harmony_n_skipped: int,
-    already_exported_skipped: int,
     reviewed_words_skipped: int,
     homonym_occurrences_skipped: int,
     homonym_words_skipped: int,
@@ -2643,7 +2559,6 @@ def _report(
         "rl_exported_word_count": sum(entry.label == "RL" for entry in exported),
         "u_exported_word_count": sum(entry.label == "U" for entry in exported),
         "mixed_harmony_n_word_skipped_count": mixed_harmony_n_skipped,
-        "already_exported_skipped_count": already_exported_skipped,
         "reviewed_words_skipped_count": reviewed_words_skipped,
         "homonym_occurrences_skipped_count": homonym_occurrences_skipped,
         "homonym_words_deferred_count": homonym_words_skipped,
@@ -2717,8 +2632,10 @@ def dictionary_project_keys() -> set[str]:
 
 def _project_report(project_key: str, tasks: list[dict[str, Any]], words: list[str]) -> dict[str, Any]:
     rule_counts: Counter[str] = Counter()
-    for task in tasks:
-        rule_counts.update(task["data"].get("dsl_rules", []))
+    for task, word in zip(tasks, words, strict=True):
+        rule_counts.update(
+            classify_project(word, task["data"]["gemini_origin"])["dsl_rules"]
+        )
     return {
         "project_key": project_key,
         "project_title": project_title_for_key(project_key),

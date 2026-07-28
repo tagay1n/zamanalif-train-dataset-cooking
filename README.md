@@ -252,16 +252,10 @@ python -m tatar_preannotator annotation-export \
   --max-items 5000
 ```
 
-For real annotation batches, enable SQLite tracking so the next export skips
-already exported normalized words and contextual occurrences:
-
-```bash
-python -m tatar_preannotator annotation-export \
-  --db data/zamanalif.sqlite \
-  --output-dir labelstudio_projects \
-  --max-items 5000 \
-  --track-exported
-```
+Exporting does not change annotation state. Re-running the command before
+importing completed Label Studio results produces the same eligible tasks.
+Only a successful `annotation-import` records completed reviews and excludes
+them from later exports.
 
 Selection rules:
 
@@ -333,25 +327,37 @@ word is exported once. If a word has multiple DSL rules it goes to
 occurrences. Contextual tasks are ordered round-robin across homonym words,
 with explicit Gemini homonym flags first.
 
-Every export is validated before SQLite tracking is updated. Validation checks
-task and word uniqueness, project routing, required fields, Zamanalif DSL, and
+Every export is validated before files are published. Validation checks task
+and word uniqueness, project routing, required fields, Zamanalif DSL, and
 1000-task batch limits, then reads the staged JSON back before publishing it.
 When reusing an output directory, the exporter replaces only its managed batch
 and instruction files, removes obsolete managed batches, and preserves
 unrelated files.
 
-Split task `data` additionally includes:
+Split tasks keep only labeling-interface values in `data`. Routing metadata is
+stored separately so Label Studio does not expose redundant bookkeeping as
+task-data columns:
 
 ```json
 {
-  "project_key": "iya",
-  "project_title": "IYA",
-  "dsl_rules": ["IYA"],
-  "batch_id": "iya_batch_001",
-  "batch_index": 1,
-  "batch_total": 3
+  "data": {
+    "cyrl_word": "орфография",
+    "auto_zamanalif": "orfografi{{IYA|compact=ä|explicit=yä}}",
+    "gemini_origin": "RL",
+    "hints_html": "..."
+  },
+  "meta": {
+    "schema_version": 1,
+    "project_key": "iya"
+  }
 }
 ```
+
+Dictionary task `data` contains exactly those four fields. Contextual task
+`data` additionally contains `sentence`, `context_html`, `native_zamanalif`,
+and `loanword_zamanalif`; its `meta` additionally contains `sample_id` and
+`token_index`. Project titles, batch fields, DSL rule lists, and custom task
+IDs are not repeated in tasks.
 
 Label Studio layout:
 
@@ -494,9 +500,10 @@ python -m tatar_preannotator annotation-import \
 ```
 
 The backup must use the task API response schema and contain exactly one
-`project_key`. Dictionary decisions are written to `reviewed_words`;
-`contextual_homonym` decisions are written to `contextual_reviews` by exact
-`sample_id` and `token_index`. Unannotated and cancelled tasks are skipped.
+`meta.project_key` under schema version `1`. Dictionary decisions are written
+to `reviewed_words`; `contextual_homonym` decisions are written to
+`contextual_reviews` by exact `meta.sample_id` and `meta.token_index`.
+Unannotated and cancelled tasks are skipped.
 Identical reimports are idempotent; conflicting decisions fail atomically.
 
 Malformed DSL, missing controls, duplicate word tasks, conflicting annotations,

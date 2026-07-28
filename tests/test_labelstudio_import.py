@@ -63,7 +63,7 @@ class LabelStudioImportTests(unittest.TestCase):
             with self.assertRaisesRegex(LabelStudioImportError, "task API response schema"):
                 parse_labelstudio_export(array_path)
 
-            del task["data"]["project_key"]
+            del task["meta"]["project_key"]
             with self.assertRaisesRegex(LabelStudioImportError, "project_key"):
                 parse_labelstudio_export(_backup(root / "no-key.json", [task]))
 
@@ -244,23 +244,26 @@ def _task(
     token_index: int | None = None,
 ) -> dict[str, object]:
     data: dict[str, object] = {
-        "id": f"task_{word}",
-        "project_key": project_key,
-        "project_title": (
-            "Contextual homonyms"
-            if project_key == "contextual_homonym"
-            else "Catchall word review"
-        ),
-        "batch_id": f"{project_key}_batch_001",
-        "batch_index": 1,
-        "batch_total": 1,
         "cyrl_word": word,
         "auto_zamanalif": zamanalif,
         "gemini_origin": origin,
+        "hints_html": "",
+    }
+    meta: dict[str, object] = {
+        "schema_version": 1,
+        "project_key": project_key,
     }
     if project_key == "contextual_homonym":
-        data["sample_id"] = sample_id
-        data["token_index"] = token_index
+        data.update(
+            {
+                "sentence": word,
+                "context_html": f"<mark>{word}</mark>",
+                "native_zamanalif": zamanalif,
+                "loanword_zamanalif": zamanalif,
+            }
+        )
+        meta["sample_id"] = sample_id
+        meta["token_index"] = token_index
     if annotations is None:
         annotations = [
             {
@@ -279,7 +282,12 @@ def _task(
                 ],
             }
         ]
-    return {"id": data["id"], "data": data, "annotations": annotations}
+    return {
+        "id": f"task_{word}",
+        "data": data,
+        "meta": meta,
+        "annotations": annotations,
+    }
 
 
 def _backup(path: Path, tasks: list[dict[str, object]]) -> Path:

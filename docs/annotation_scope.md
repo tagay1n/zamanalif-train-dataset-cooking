@@ -26,9 +26,6 @@ once, and the approved result is stored in `reviewed_words`.
   `"tatar": false`, ignore it.
 - **Already reviewed words.** If a normalized word is already present in
   `reviewed_words`, do not export it again.
-- **Already exported words, when tracking is enabled.** With
-  `--track-exported`, exported words are remembered and skipped in later real
-  exports. Without tracking, dry-run exports may show the same words again.
 - **Contextual homonyms.** Effective homonyms are excluded from every dictionary
   project, including catchall.
 - **Native hamza conversions.** Words whose native conversion emits `ʼ`, or
@@ -46,6 +43,9 @@ once, and the approved result is stored in `reviewed_words`.
 - **Punctuation-only or empty normalized tokens.** Ignore them.
 - **Below minimum frequency.** If an export uses `--min-frequency`, skip words
   below that threshold.
+
+Exporting alone never suppresses a word. It remains eligible until a successful
+Label Studio import stores its completed review.
 
 ## Contextual Homonym Review
 
