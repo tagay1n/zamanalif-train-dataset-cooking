@@ -8,14 +8,28 @@ from pathlib import Path
 import sqlite3
 from typing import Any
 
+from .contextual_review import (
+    PROJECT_KEY as CONTEXTUAL_PROJECT_KEY,
+    ContextualReviewError,
+    OccurrenceKey,
+    effective_contextual_homonym_words,
+    ensure_contextual_review_schema,
+    validate_contextual_review,
+)
 from .conflict_resolver import ensure_word_resolution_schema
 from .conversion import DslError, parse_dsl
-from .word_export import ensure_review_state_schema, normalize_word
+from .word_export import (
+    dictionary_project_keys,
+    ensure_review_state_schema,
+    normalize_word,
+    project_title_for_key,
+)
 
 
 ORIGIN_CONTROL = "reviewed_origin"
 CONVERSION_CONTROL = "corrected_zamanalif"
-ALLOWED_ORIGINS = frozenset({"N", "RL", "U"})
+REVIEWED_ORIGINS = frozenset({"N", "RL"})
+SUGGESTED_ORIGINS = frozenset({"N", "RL", "U"})
 
 
 class LabelStudioImportError(ValueError):
@@ -24,28 +38,26 @@ class LabelStudioImportError(ValueError):
 
 @dataclass(frozen=True)
 class ReviewedAnnotation:
-    """One validated word-level annotation from Label Studio."""
-
     normalized_word: str
     zamanalif_dsl: str
     origin: str
+    sample_id: str | None = None
+    token_index: int | None = None
 
 
 @dataclass(frozen=True)
 class LabelStudioImportSummary:
-    """Counts produced by a successful atomic annotation import."""
-
+    project_key: str
     total_tasks: int
     completed_tasks: int
-    imported_words: int
-    unchanged_words: int
-    contextual_homonym_words: int
+    imported_items: int
+    unchanged_items: int
     skipped_unannotated_tasks: int
-    contextual_homonym_examples: tuple[str, ...]
 
 
 @dataclass(frozen=True)
 class ParsedLabelStudioExport:
+    project_key: str
     annotations: tuple[ReviewedAnnotation, ...]
     total_tasks: int
     skipped_unannotated_tasks: int
@@ -53,8 +65,6 @@ class ParsedLabelStudioExport:
 
 @dataclass(frozen=True)
 class LabelStudioAnnotationChange:
-    """One human decision that differs from the exported suggestion."""
-
     task_id: str
     word: str
     suggested_origin: str
@@ -65,8 +75,7 @@ class LabelStudioAnnotationChange:
 
 @dataclass(frozen=True)
 class LabelStudioAuditSummary:
-    """Read-only validation and change counts for a Label Studio export."""
-
+    project_key: str
     total_tasks: int
     completed_tasks: int
     unchanged_tasks: int
@@ -89,159 +98,224 @@ def import_labelstudio_annotations(
     db_path: str | Path,
     input_path: str | Path,
 ) -> LabelStudioImportSummary:
-    """Validate a Label Studio JSON export and atomically store approved words."""
+    """Strictly validate one project backup and atomically import its decisions."""
     database = Path(db_path)
     if not database.exists():
         raise LabelStudioImportError(f"database file does not exist: {database}")
     parsed = parse_labelstudio_export(input_path)
     now = datetime.now(timezone.utc).isoformat()
-
     imported = 0
     unchanged = 0
+
     with closing(sqlite3.connect(database)) as conn:
         try:
             conn.execute("BEGIN IMMEDIATE")
             ensure_review_state_schema(conn)
+            ensure_contextual_review_schema(conn)
             ensure_word_resolution_schema(conn)
-            contextual_homonyms = _load_contextual_homonym_words(conn)
-            reviewable = [
-                item
-                for item in parsed.annotations
-                if item.normalized_word not in contextual_homonyms
-            ]
-            deferred_homonyms = sorted(
-                {item.normalized_word for item in parsed.annotations}
-                & contextual_homonyms
-            )
-            imported_words = {item.normalized_word for item in reviewable}
-            existing = {
-                row[0]: (row[1], row[2])
-                for row in conn.execute(
-                    """
-                    select normalized_word, zamanalif_dsl, origin
-                    from reviewed_words
-                    """
-                ).fetchall()
-                if row[0] in imported_words
-            }
-            for word in deferred_homonyms:
-                conn.execute(
-                    """
-                    insert into word_resolutions(normalized_word, decision, updated_at)
-                    values (?, 'contextual_homonym', ?)
-                    on conflict(normalized_word) do update set
-                        decision=excluded.decision,
-                        updated_at=excluded.updated_at
-                    """,
-                    (word, now),
-                )
-            for item in reviewable:
-                previous = existing.get(item.normalized_word)
-                current = (item.zamanalif_dsl, item.origin)
-                if previous is not None:
-                    if previous != current:
-                        raise LabelStudioImportError(
-                            f"reviewed word conflict for {item.normalized_word!r}: "
-                            f"database has {previous!r}, import has {current!r}"
-                        )
-                    unchanged += 1
-                    continue
-                conn.execute(
-                    """
-                    insert into reviewed_words(
-                        normalized_word, zamanalif_dsl, origin, updated_at
-                    ) values (?, ?, ?, ?)
-                    """,
-                    (item.normalized_word, item.zamanalif_dsl, item.origin, now),
-                )
-                imported += 1
+            effective_homonyms = effective_contextual_homonym_words(conn)
+            if parsed.project_key == CONTEXTUAL_PROJECT_KEY:
+                existing = {
+                    OccurrenceKey(str(row[0]), int(row[1])): (
+                        str(row[2]),
+                        str(row[3]),
+                        str(row[4]),
+                    )
+                    for row in conn.execute(
+                        """
+                        select sample_id, token_index, normalized_word,
+                               zamanalif_dsl, origin
+                        from contextual_reviews
+                        """
+                    ).fetchall()
+                }
+                for item in parsed.annotations:
+                    _validate_contextual_source(conn, item, effective_homonyms)
+                    key = OccurrenceKey(str(item.sample_id), int(item.token_index))
+                    current = (
+                        item.normalized_word,
+                        item.zamanalif_dsl,
+                        item.origin,
+                    )
+                    previous = existing.get(key)
+                    if previous is not None:
+                        if previous != current:
+                            raise LabelStudioImportError(
+                                f"contextual review conflict for {key}: "
+                                f"database has {previous!r}, import has {current!r}"
+                            )
+                        unchanged += 1
+                        continue
+                    conn.execute(
+                        """
+                        insert into contextual_reviews(
+                            sample_id, token_index, normalized_word,
+                            zamanalif_dsl, origin, updated_at
+                        ) values (?, ?, ?, ?, ?, ?)
+                        """,
+                        (
+                            item.sample_id,
+                            item.token_index,
+                            item.normalized_word,
+                            item.zamanalif_dsl,
+                            item.origin,
+                            now,
+                        ),
+                    )
+                    imported += 1
+            else:
+                imported_words = {item.normalized_word for item in parsed.annotations}
+                homonyms = sorted(imported_words & effective_homonyms)
+                if homonyms:
+                    raise LabelStudioImportError(
+                        "dictionary project contains contextual homonyms: "
+                        + ", ".join(homonyms[:20])
+                    )
+                existing = {
+                    str(row[0]): (str(row[1]), str(row[2]))
+                    for row in conn.execute(
+                        """
+                        select normalized_word, zamanalif_dsl, origin
+                        from reviewed_words
+                        """
+                    ).fetchall()
+                }
+                for item in parsed.annotations:
+                    current = (item.zamanalif_dsl, item.origin)
+                    previous = existing.get(item.normalized_word)
+                    if previous is not None:
+                        if previous != current:
+                            raise LabelStudioImportError(
+                                f"reviewed word conflict for {item.normalized_word!r}: "
+                                f"database has {previous!r}, import has {current!r}"
+                            )
+                        unchanged += 1
+                        continue
+                    conn.execute(
+                        """
+                        insert into reviewed_words(
+                            normalized_word, zamanalif_dsl, origin, updated_at
+                        ) values (?, ?, ?, ?)
+                        """,
+                        (
+                            item.normalized_word,
+                            item.zamanalif_dsl,
+                            item.origin,
+                            now,
+                        ),
+                    )
+                    imported += 1
             conn.commit()
         except Exception:
             conn.rollback()
             raise
 
     return LabelStudioImportSummary(
+        project_key=parsed.project_key,
         total_tasks=parsed.total_tasks,
         completed_tasks=len(parsed.annotations),
-        imported_words=imported,
-        unchanged_words=unchanged,
-        contextual_homonym_words=len(deferred_homonyms),
+        imported_items=imported,
+        unchanged_items=unchanged,
         skipped_unannotated_tasks=parsed.skipped_unannotated_tasks,
-        contextual_homonym_examples=tuple(deferred_homonyms[:20]),
     )
 
 
 def parse_labelstudio_export(input_path: str | Path) -> ParsedLabelStudioExport:
-    """Read and validate the supported Label Studio JSON export shape."""
     payload = _load_tasks(input_path)
-
+    project_key = _project_key(payload)
     annotations: list[ReviewedAnnotation] = []
-    seen_words: set[str] = set()
+    seen: set[str | tuple[str, int]] = set()
     skipped = 0
     for task_index, task in enumerate(payload):
-        parsed = _parse_task(task, task_index)
+        parsed = _parse_task(task, task_index, project_key)
         if parsed is None:
             skipped += 1
             continue
         reviewed = parsed.reviewed
-        if reviewed.normalized_word in seen_words:
+        identity: str | tuple[str, int]
+        if project_key == CONTEXTUAL_PROJECT_KEY:
+            identity = (str(reviewed.sample_id), int(reviewed.token_index))
+        else:
+            identity = reviewed.normalized_word
+        if identity in seen:
             raise LabelStudioImportError(
-                f"duplicate normalized word in Label Studio export: "
-                f"{reviewed.normalized_word!r}"
+                f"duplicate task identity in Label Studio export: {identity!r}"
             )
-        seen_words.add(reviewed.normalized_word)
+        seen.add(identity)
         annotations.append(reviewed)
     return ParsedLabelStudioExport(
+        project_key=project_key,
         annotations=tuple(annotations),
         total_tasks=len(payload),
         skipped_unannotated_tasks=skipped,
     )
 
 
-def audit_labelstudio_export(input_path: str | Path) -> LabelStudioAuditSummary:
-    """Validate an export without writing it and report genuine human edits."""
+def audit_labelstudio_export(
+    db_path: str | Path,
+    input_path: str | Path,
+) -> LabelStudioAuditSummary:
+    database = Path(db_path)
+    if not database.exists():
+        raise LabelStudioImportError(f"database file does not exist: {database}")
     payload = _load_tasks(input_path)
+    project_key = _project_key(payload)
     changes: list[LabelStudioAnnotationChange] = []
-    seen_words: set[str] = set()
+    seen: set[str | tuple[str, int]] = set()
     skipped = 0
-    completed = 0
     unchanged = 0
     origin_changes = 0
     conversion_changes = 0
 
-    for task_index, task in enumerate(payload):
-        parsed = _parse_task(task, task_index)
-        if parsed is None:
-            skipped += 1
-            continue
-        reviewed = parsed.reviewed
-        if reviewed.normalized_word in seen_words:
-            raise LabelStudioImportError(
-                f"duplicate normalized word in Label Studio export: "
-                f"{reviewed.normalized_word!r}"
+    with closing(sqlite3.connect(database)) as conn:
+        effective_homonyms = effective_contextual_homonym_words(conn)
+        for task_index, task in enumerate(payload):
+            parsed = _parse_task(task, task_index, project_key)
+            if parsed is None:
+                skipped += 1
+                continue
+            reviewed = parsed.reviewed
+            if project_key == CONTEXTUAL_PROJECT_KEY:
+                identity: str | tuple[str, int] = (
+                    str(reviewed.sample_id),
+                    int(reviewed.token_index),
+                )
+                _validate_contextual_source(conn, reviewed, effective_homonyms)
+            else:
+                identity = reviewed.normalized_word
+                if reviewed.normalized_word in effective_homonyms:
+                    raise LabelStudioImportError(
+                        "dictionary project contains contextual homonym: "
+                        f"{reviewed.normalized_word!r}"
+                    )
+            if identity in seen:
+                raise LabelStudioImportError(
+                    f"duplicate task identity in Label Studio export: {identity!r}"
+                )
+            seen.add(identity)
+            origin_changed = reviewed.origin != parsed.suggested_origin
+            conversion_changed = (
+                reviewed.zamanalif_dsl != parsed.suggested_zamanalif
             )
-        seen_words.add(reviewed.normalized_word)
-        completed += 1
+            origin_changes += int(origin_changed)
+            conversion_changes += int(conversion_changed)
+            if not origin_changed and not conversion_changed:
+                unchanged += 1
+            else:
+                changes.append(
+                    LabelStudioAnnotationChange(
+                        task_id=parsed.task_id,
+                        word=parsed.word,
+                        suggested_origin=parsed.suggested_origin,
+                        reviewed_origin=reviewed.origin,
+                        suggested_zamanalif=parsed.suggested_zamanalif,
+                        reviewed_zamanalif=reviewed.zamanalif_dsl,
+                    )
+                )
 
-        origin_changed = reviewed.origin != parsed.suggested_origin
-        conversion_changed = reviewed.zamanalif_dsl != parsed.suggested_zamanalif
-        origin_changes += int(origin_changed)
-        conversion_changes += int(conversion_changed)
-        if not origin_changed and not conversion_changed:
-            unchanged += 1
-            continue
-        changes.append(
-            LabelStudioAnnotationChange(
-                task_id=parsed.task_id,
-                word=parsed.word,
-                suggested_origin=parsed.suggested_origin,
-                reviewed_origin=reviewed.origin,
-                suggested_zamanalif=parsed.suggested_zamanalif,
-                reviewed_zamanalif=reviewed.zamanalif_dsl,
-            )
-        )
-
+    completed = len(payload) - skipped
     return LabelStudioAuditSummary(
+        project_key=project_key,
         total_tasks=len(payload),
         completed_tasks=completed,
         unchanged_tasks=unchanged,
@@ -260,148 +334,151 @@ def _load_tasks(input_path: str | Path) -> list[Any]:
         payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, UnicodeError, json.JSONDecodeError) as exc:
         raise LabelStudioImportError(f"cannot read Label Studio export: {exc}") from exc
-    if isinstance(payload, dict):
-        payload = payload.get("tasks")
-        if not isinstance(payload, list):
-            raise LabelStudioImportError(
-                "Label Studio API response must contain a tasks list"
-            )
-    if not isinstance(payload, list):
+    allowed_keys = {"tasks", "total", "total_annotations", "total_predictions"}
+    if (
+        not isinstance(payload, dict)
+        or "tasks" not in payload
+        or not set(payload) <= allowed_keys
+    ):
         raise LabelStudioImportError(
-            "Label Studio export must be a JSON array or task API response"
+            "Label Studio backup must use the task API response schema"
         )
-    return payload
-
-
-def _load_contextual_homonym_words(conn: sqlite3.Connection) -> set[str]:
-    words = {
-        str(row[0])
-        for row in conn.execute(
-            """
-            select normalized_word
-            from word_resolutions
-            where decision = 'contextual_homonym'
-            """
-        ).fetchall()
-    }
-    table_exists = conn.execute(
-        """
-        select 1
-        from sqlite_master
-        where type = 'table' and name = 'preannotation_state'
-        """
-    ).fetchone()
-    if table_exists is None:
-        return words
-
-    rows = conn.execute(
-        """
-        select sample_id, tokens_json
-        from preannotation_state
-        where status = 'annotated'
-          and tatar = 1
-          and tokens_json is not null
-        """
-    ).fetchall()
-    for sample_id, raw_tokens in rows:
-        try:
-            tokens = json.loads(raw_tokens)
-        except json.JSONDecodeError as exc:
+    tasks = payload["tasks"]
+    if not isinstance(tasks, list) or not tasks:
+        raise LabelStudioImportError("Label Studio backup tasks must be a non-empty list")
+    for field in ("total", "total_annotations", "total_predictions"):
+        value = payload.get(field)
+        if value is not None and (
+            not isinstance(value, int) or isinstance(value, bool) or value < 0
+        ):
             raise LabelStudioImportError(
-                f"{sample_id}: invalid tokens_json in database: {exc}"
-            ) from exc
-        if not isinstance(tokens, list):
-            raise LabelStudioImportError(
-                f"{sample_id}: tokens_json must contain a token list"
+                f"Label Studio backup has invalid {field}"
             )
-        for token in tokens:
-            if not isinstance(token, dict) or token.get("homonym") is not True:
-                continue
-            text = token.get("text")
-            if not isinstance(text, str):
-                continue
-            normalized = normalize_word(text)
-            if normalized:
-                words.add(normalized)
-    return words
+    if payload.get("total") is not None and payload["total"] != len(tasks):
+        raise LabelStudioImportError(
+            "Label Studio backup total does not match tasks"
+        )
+    return tasks
 
 
-def _parse_task(task: Any, task_index: int) -> _ParsedTask | None:
+def _project_key(tasks: list[Any]) -> str:
+    keys: set[str] = set()
+    for task_index, task in enumerate(tasks):
+        data = task.get("data") if isinstance(task, dict) else None
+        key = data.get("project_key") if isinstance(data, dict) else None
+        if not isinstance(key, str) or not key:
+            raise LabelStudioImportError(
+                f"task {task_index} has invalid data.project_key"
+            )
+        keys.add(key)
+    if len(keys) != 1:
+        raise LabelStudioImportError("Label Studio backup mixes project types")
+    project_key = next(iter(keys))
+    allowed = dictionary_project_keys() | {CONTEXTUAL_PROJECT_KEY}
+    if project_key not in allowed:
+        raise LabelStudioImportError(f"unknown project_key: {project_key!r}")
+    return project_key
+
+
+def _parse_task(
+    task: Any,
+    task_index: int,
+    project_key: str,
+) -> _ParsedTask | None:
     context = f"task {task_index}"
     if not isinstance(task, dict):
         raise LabelStudioImportError(f"{context} must be an object")
     data = task.get("data")
     if not isinstance(data, dict):
         raise LabelStudioImportError(f"{context}.data must be an object")
+    if data.get("project_key") != project_key:
+        raise LabelStudioImportError(f"{context} has inconsistent project_key")
+    data_id = data.get("id")
+    if not isinstance(data_id, str) or not data_id:
+        raise LabelStudioImportError(f"{context} has invalid data.id")
+    if data.get("project_title") != project_title_for_key(project_key):
+        raise LabelStudioImportError(f"{context} has invalid data.project_title")
+    batch_id = data.get("batch_id")
+    batch_index = data.get("batch_index")
+    batch_total = data.get("batch_total")
+    if not isinstance(batch_id, str) or not batch_id:
+        raise LabelStudioImportError(f"{context} has invalid data.batch_id")
+    if (
+        not isinstance(batch_index, int)
+        or isinstance(batch_index, bool)
+        or not isinstance(batch_total, int)
+        or isinstance(batch_total, bool)
+        or batch_index < 1
+        or batch_total < batch_index
+    ):
+        raise LabelStudioImportError(f"{context} has invalid batch position")
     surface = data.get("cyrl_word")
     if not isinstance(surface, str) or not surface:
         raise LabelStudioImportError(f"{context} has invalid data.cyrl_word")
     normalized = normalize_word(surface)
     if not normalized:
-        raise LabelStudioImportError(f"{context} has no Cyrillic word in data.cyrl_word")
+        raise LabelStudioImportError(f"{context} has no Cyrillic word")
     suggested_origin = data.get("gemini_origin")
-    if suggested_origin is not None and suggested_origin not in ALLOWED_ORIGINS:
+    if suggested_origin not in SUGGESTED_ORIGINS:
         raise LabelStudioImportError(f"{context} has invalid data.gemini_origin")
     suggested_zamanalif = data.get("auto_zamanalif")
-    if suggested_zamanalif is not None and (
-        not isinstance(suggested_zamanalif, str) or not suggested_zamanalif
-    ):
+    if not isinstance(suggested_zamanalif, str):
         raise LabelStudioImportError(f"{context} has invalid data.auto_zamanalif")
 
-    raw_annotations = task.get("annotations", [])
-    if raw_annotations is None:
-        raw_annotations = []
-    if not isinstance(raw_annotations, list):
-        raise LabelStudioImportError(f"{context}.annotations must be a list")
+    sample_id: str | None = None
+    token_index: int | None = None
+    if project_key == CONTEXTUAL_PROJECT_KEY:
+        sample_id = data.get("sample_id")
+        token_index = data.get("token_index")
+        if not isinstance(sample_id, str) or not sample_id:
+            raise LabelStudioImportError(f"{context} has invalid data.sample_id")
+        if not isinstance(token_index, int) or isinstance(token_index, bool) or token_index < 0:
+            raise LabelStudioImportError(f"{context} has invalid data.token_index")
 
+    annotations = task.get("annotations")
+    if not isinstance(annotations, list):
+        raise LabelStudioImportError(f"{context}.annotations must be a list")
     decisions: set[tuple[str, str]] = set()
-    for annotation_index, annotation in enumerate(raw_annotations):
+    for annotation_index, annotation in enumerate(annotations):
         if not isinstance(annotation, dict):
             raise LabelStudioImportError(
                 f"{context} annotation {annotation_index} must be an object"
             )
         if annotation.get("was_cancelled") is True:
             continue
-        result = annotation.get("result", [])
-        if result is None:
-            result = []
-        if not isinstance(result, list):
+        results = annotation.get("result")
+        if not isinstance(results, list):
             raise LabelStudioImportError(
                 f"{context} annotation {annotation_index}.result must be a list"
             )
-        if not result:
+        if not results:
             continue
         decisions.add(
             _parse_result(
-                result,
+                results,
                 context,
                 annotation_index,
-                suggested_origin=suggested_origin,
-                suggested_zamanalif=suggested_zamanalif,
+                suggested_zamanalif,
             )
         )
-
     if not decisions:
         return None
     if len(decisions) != 1:
-        raise LabelStudioImportError(f"{context} has conflicting completed annotations")
+        raise LabelStudioImportError(f"{context} has conflicting annotations")
     origin, zamanalif_dsl = next(iter(decisions))
-    audit_origin = suggested_origin if suggested_origin is not None else origin
-    audit_zamanalif = (
-        suggested_zamanalif
-        if suggested_zamanalif is not None
-        else zamanalif_dsl
+    reviewed = ReviewedAnnotation(
+        normalized_word=normalized,
+        zamanalif_dsl=zamanalif_dsl,
+        origin=origin,
+        sample_id=sample_id,
+        token_index=token_index,
     )
     return _ParsedTask(
-        reviewed=ReviewedAnnotation(
-            normalized_word=normalized,
-            zamanalif_dsl=zamanalif_dsl,
-            origin=origin,
-        ),
-        task_id=str(task.get("id", task_index)),
+        reviewed=reviewed,
+        task_id=str(task.get("id", data_id)),
         word=surface,
-        suggested_origin=audit_origin,
-        suggested_zamanalif=audit_zamanalif,
+        suggested_origin=suggested_origin,
+        suggested_zamanalif=suggested_zamanalif,
     )
 
 
@@ -409,9 +486,7 @@ def _parse_result(
     results: list[Any],
     task_context: str,
     annotation_index: int,
-    *,
-    suggested_origin: str | None,
-    suggested_zamanalif: str | None,
+    suggested_zamanalif: str,
 ) -> tuple[str, str]:
     context = f"{task_context} annotation {annotation_index}"
     origins: list[str] = []
@@ -421,33 +496,26 @@ def _parse_result(
             raise LabelStudioImportError(
                 f"{context} result {result_index} must be an object"
             )
-        from_name = result.get("from_name")
-        if from_name == ORIGIN_CONTROL:
+        if result.get("from_name") == ORIGIN_CONTROL:
             origins.append(_parse_origin(result, context, result_index))
-        elif from_name == CONVERSION_CONTROL:
+        elif result.get("from_name") == CONVERSION_CONTROL:
             conversions.append(
                 _parse_conversion(
                     result,
                     context,
                     result_index,
-                    suggested_zamanalif=suggested_zamanalif,
+                    suggested_zamanalif,
                 )
             )
-
-    if len(origins) > 1:
+    if len(origins) != 1:
         raise LabelStudioImportError(
-            f"{context} must contain at most one {ORIGIN_CONTROL!r} result"
+            f"{context} must contain exactly one {ORIGIN_CONTROL!r} result"
         )
     if len(conversions) != 1:
         raise LabelStudioImportError(
             f"{context} must contain exactly one {CONVERSION_CONTROL!r} result"
         )
-    if not origins and suggested_origin is None:
-        raise LabelStudioImportError(
-            f"{context} must contain exactly one {ORIGIN_CONTROL!r} result "
-            "when data.gemini_origin is absent"
-        )
-    return origins[0] if origins else suggested_origin, conversions[0]
+    return origins[0], conversions[0]
 
 
 def _parse_origin(result: dict[str, Any], context: str, result_index: int) -> str:
@@ -462,7 +530,7 @@ def _parse_origin(result: dict[str, Any], context: str, result_index: int) -> st
             f"{context} result {result_index} must select exactly one origin"
         )
     origin = choices[0]
-    if origin not in ALLOWED_ORIGINS:
+    if origin not in REVIEWED_ORIGINS:
         raise LabelStudioImportError(
             f"{context} result {result_index} has invalid origin: {origin!r}"
         )
@@ -473,8 +541,7 @@ def _parse_conversion(
     result: dict[str, Any],
     context: str,
     result_index: int,
-    *,
-    suggested_zamanalif: str | None,
+    suggested_zamanalif: str,
 ) -> str:
     if result.get("type") != "textarea":
         raise LabelStudioImportError(
@@ -482,22 +549,17 @@ def _parse_conversion(
         )
     value = result.get("value")
     texts = value.get("text") if isinstance(value, dict) else None
-    if not isinstance(texts, list) or not texts or any(
-        not isinstance(text, str) for text in texts
+    if (
+        not isinstance(texts, list)
+        or not texts
+        or any(not isinstance(text, str) or not text for text in texts)
     ):
         raise LabelStudioImportError(
-            f"{context} result {result_index} must contain non-empty text values"
+            f"{context} result {result_index} has invalid conversion text"
         )
-    if any(not text for text in texts):
+    if len(texts) > 1 and texts[:-1] != [suggested_zamanalif]:
         raise LabelStudioImportError(
-            f"{context} result {result_index} conversion must not be empty"
-        )
-    if len(texts) > 1 and (
-        suggested_zamanalif is None or texts[0] != suggested_zamanalif
-    ):
-        raise LabelStudioImportError(
-            f"{context} result {result_index} has multiple conversion values "
-            "without the exported suggestion first"
+            f"{context} result {result_index} has invalid conversion history"
         )
     zamanalif_dsl = texts[-1]
     try:
@@ -507,3 +569,55 @@ def _parse_conversion(
             f"{context} result {result_index} has invalid Zamanalif DSL: {exc}"
         ) from exc
     return zamanalif_dsl
+
+
+def _validate_contextual_source(
+    conn: sqlite3.Connection,
+    item: ReviewedAnnotation,
+    effective_homonyms: set[str],
+) -> None:
+    if item.sample_id is None or item.token_index is None:
+        raise LabelStudioImportError("contextual annotation lacks occurrence identity")
+    row = conn.execute(
+        """
+        select p.tokens_json
+        from preannotation_state p
+        where p.sample_id = ?
+          and p.status = 'annotated'
+          and p.tatar = 1
+        """,
+        (item.sample_id,),
+    ).fetchone()
+    if row is None:
+        raise LabelStudioImportError(
+            f"contextual sample is missing or not eligible: {item.sample_id!r}"
+        )
+    try:
+        tokens = json.loads(row[0])
+    except json.JSONDecodeError as exc:
+        raise LabelStudioImportError(
+            f"{item.sample_id}: invalid tokens_json in database: {exc}"
+        ) from exc
+    if not isinstance(tokens, list) or item.token_index >= len(tokens):
+        raise LabelStudioImportError(
+            f"{item.sample_id}: token index is stale: {item.token_index}"
+        )
+    token = tokens[item.token_index]
+    text = token.get("text") if isinstance(token, dict) else None
+    normalized = normalize_word(text) if isinstance(text, str) else ""
+    if normalized != item.normalized_word:
+        raise LabelStudioImportError(
+            f"{item.sample_id}: contextual token changed at index {item.token_index}"
+        )
+    if normalized not in effective_homonyms:
+        raise LabelStudioImportError(
+            f"{item.sample_id}: word is no longer contextual: {normalized!r}"
+        )
+    try:
+        validate_contextual_review(
+            item.normalized_word,
+            item.zamanalif_dsl,
+            item.origin,
+        )
+    except ContextualReviewError as exc:
+        raise LabelStudioImportError(str(exc)) from exc

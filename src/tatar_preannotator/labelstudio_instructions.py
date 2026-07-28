@@ -246,6 +246,8 @@ def _focus(project_key: str, rule_ids: Iterable[str]) -> str:
         )
 
     ordered_rules = tuple(dict.fromkeys(rule_ids))
+    if project_key == "hamza" and "HAMZA" not in ordered_rules:
+        ordered_rules = ("HAMZA", *ordered_rules)
     if not ordered_rules:
         raise ValueError(f"project {project_key!r} has no instruction guidance")
     items: list[str] = []

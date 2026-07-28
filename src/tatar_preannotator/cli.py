@@ -18,6 +18,11 @@ from .conflict_resolver import (
     auto_resolve_unknowns,
     serve_conflict_resolver_web,
 )
+from .contextual_review import (
+    export_contextual_tasks_from_db,
+    load_exported_contextual_occurrences,
+    mark_annotation_export_state,
+)
 from .gemini_client import GoogleGeminiClient
 from .labelstudio_import import (
     LabelStudioImportError,
@@ -29,11 +34,9 @@ from .manual_preannotate import ManualPreannotateError
 from .manual_preannotate_web import serve_manual_preannotation_web
 from .training_export import TrainingExportError, export_training_dataset
 from .word_export import (
+    attach_contextual_project,
     export_labelstudio_project_tasks_from_db,
-    export_labelstudio_tasks_from_db,
     load_exported_words,
-    mark_exported_words,
-    write_outputs,
     write_split_outputs,
 )
 
@@ -45,6 +48,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="tatar_preannotator",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        allow_abbrev=False,
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -80,16 +84,21 @@ def main(argv: list[str] | None = None) -> int:
 
     export_words = subparsers.add_parser(
         "annotation-export",
-        help="Export unique word forms for Label Studio Project 1 review.",
+        help="Export dictionary and contextual Label Studio projects.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        allow_abbrev=False,
     )
     export_words.add_argument("--db", default=DEFAULT_DB_PATH, help="SQLite application database.")
-    export_words.add_argument("--output", help="Label Studio JSON output.")
     export_words.add_argument(
         "--output-dir",
+        required=True,
         help="Directory for split Label Studio project JSON outputs.",
     )
-    export_words.add_argument("--max-items", type=int, help="Maximum exported words.")
+    export_words.add_argument(
+        "--max-items",
+        type=int,
+        help="Maximum dictionary words and contextual occurrences, applied separately.",
+    )
     export_words.add_argument("--include-rl", action=argparse.BooleanOptionalAction, default=True)
     export_words.add_argument(
         "--include-unknown",
@@ -105,7 +114,7 @@ def main(argv: list[str] | None = None) -> int:
     export_words.add_argument(
         "--track-exported",
         action="store_true",
-        help="Skip and persist exported words in SQLite.",
+        help="Skip and persist exported words and contextual occurrences.",
     )
     export_words.add_argument(
         "--state-db",
@@ -151,6 +160,11 @@ def main(argv: list[str] | None = None) -> int:
         "annotation-audit",
         help="Validate Label Studio annotations and show genuine human edits.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    annotation_audit.add_argument(
+        "--db",
+        default=DEFAULT_DB_PATH,
+        help="SQLite application database.",
     )
     annotation_audit.add_argument(
         "--input",
@@ -298,8 +312,6 @@ def _repair_unprocessable(args: argparse.Namespace) -> int:
 
 
 def _annotation_export(args: argparse.Namespace) -> int:
-    if bool(args.output) == bool(args.output_dir):
-        raise SystemExit("provide exactly one of --output or --output-dir")
     if args.max_items is not None and args.max_items < 1:
         raise SystemExit("--max-items must be positive")
     if args.min_frequency < 1:
@@ -307,6 +319,11 @@ def _annotation_export(args: argparse.Namespace) -> int:
 
     state_db = args.state_db or args.db
     already_exported = load_exported_words(state_db) if args.track_exported else set()
+    already_exported_contextual = (
+        load_exported_contextual_occurrences(state_db)
+        if args.track_exported
+        else set()
+    )
     try:
         export_kwargs = {
             "max_items": args.max_items,
@@ -316,23 +333,29 @@ def _annotation_export(args: argparse.Namespace) -> int:
             "sort_by": args.sort_by,
             "already_exported": already_exported,
         }
-        if args.output_dir:
-            result = export_labelstudio_project_tasks_from_db(args.db, **export_kwargs)
-            write_split_outputs(result, args.output_dir)
-            output_target = args.output_dir
-        else:
-            result = export_labelstudio_tasks_from_db(args.db, **export_kwargs)
-            write_outputs(result, args.output)
-            output_target = args.output
+        result = export_labelstudio_project_tasks_from_db(args.db, **export_kwargs)
+        contextual = export_contextual_tasks_from_db(
+            args.db,
+            max_items=args.max_items,
+            already_exported=already_exported_contextual,
+        )
+        result = attach_contextual_project(result, contextual)
+        write_split_outputs(result, args.output_dir)
         if args.track_exported:
-            mark_exported_words(state_db, result.exported_words)
+            mark_annotation_export_state(
+                state_db,
+                result.exported_words,
+                result.contextual_occurrences,
+            )
     except (OSError, ValueError, sqlite3.Error) as exc:
         print(f"annotation export failed: {exc}")
         return 1
 
     print(
         "annotation export complete: "
-        f"exported={len(result.exported_words)} output={output_target}"
+        f"dictionary={len(result.exported_words)} "
+        f"contextual={len(result.contextual_occurrences)} "
+        f"output={args.output_dir}"
     )
     return 0
 
@@ -367,30 +390,26 @@ def _annotation_import(args: argparse.Namespace) -> int:
 
     print(
         "annotation import complete: "
+        f"project={summary.project_key} "
         f"tasks={summary.total_tasks} "
         f"completed={summary.completed_tasks} "
-        f"imported={summary.imported_words} "
-        f"unchanged={summary.unchanged_words} "
-        f"contextual_homonyms={summary.contextual_homonym_words} "
+        f"imported={summary.imported_items} "
+        f"unchanged={summary.unchanged_items} "
         f"unannotated={summary.skipped_unannotated_tasks}"
     )
-    if summary.contextual_homonym_examples:
-        print(
-            "contextual homonyms deferred: "
-            + ", ".join(summary.contextual_homonym_examples)
-        )
     return 0
 
 
 def _annotation_audit(args: argparse.Namespace) -> int:
     try:
-        summary = audit_labelstudio_export(args.input)
+        summary = audit_labelstudio_export(args.db, args.input)
     except (OSError, LabelStudioImportError) as exc:
         print(f"annotation audit failed: {exc}")
         return 1
 
     print(
         "annotation audit complete: "
+        f"project={summary.project_key} "
         f"tasks={summary.total_tasks} "
         f"completed={summary.completed_tasks} "
         f"unchanged={summary.unchanged_tasks} "

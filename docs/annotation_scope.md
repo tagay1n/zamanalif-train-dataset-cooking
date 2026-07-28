@@ -29,8 +29,12 @@ once, and the approved result is stored in `reviewed_words`.
 - **Already exported words, when tracking is enabled.** With
   `--track-exported`, exported words are remembered and skipped in later real
   exports. Without tracking, dry-run exports may show the same words again.
-- **Gemini-marked homonyms.** Words with `homonym: true` need sentence context,
-  so they are deferred to a later contextual annotation project.
+- **Contextual homonyms.** Effective homonyms are excluded from every dictionary
+  project, including catchall.
+- **Native hamza conversions.** Words whose native conversion emits `ʼ`, or
+  contains the `HAMZA` policy rule, are routed only to the `hamza` dictionary
+  project. They never appear in catchall or the multi-rule project. Russian
+  soft/hard-sign apostrophes remain separate `rus_*` review cases.
 - **Native-looking mixed-harmony words.** If Gemini labels a word `N` and the
   word has mixed front/back vowels, skip it for Project 1. Keep matching `RL`
   and `U` words.
@@ -42,6 +46,14 @@ once, and the approved result is stored in `reviewed_words`.
 - **Punctuation-only or empty normalized tokens.** Ignore them.
 - **Below minimum frequency.** If an export uses `--min-frequency`, skip words
   below that threshold.
+
+## Contextual Homonym Review
+
+The same split export writes one task per homonym occurrence to
+`contextual_homonym`. Each task highlights the exact token in its sentence and
+requires an `N` or `RL` decision plus the approved Zamanalif spelling.
+Decisions are stored by `(sample_id, token_index)` in `contextual_reviews`;
+they never approve the normalized word globally.
 
 ## Final Training Dataset Policy
 

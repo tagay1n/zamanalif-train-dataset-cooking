@@ -28,7 +28,9 @@ from tatar_preannotator.word_export import (
     normalize_word,
     save_reviewed_word,
     validate_export_result,
+    validate_split_export_result,
     vowel_harmony_class,
+    write_split_outputs,
 )
 
 
@@ -1303,7 +1305,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual([task["data"]["cyrl_word"] for task in limited.tasks], ["авыл"])
         self.assertEqual([task["data"]["cyrl_word"] for task in frequent.tasks], ["авыл"])
 
-    def test_cli_writes_labelstudio_json_only(self) -> None:
+    def test_cli_rejects_removed_single_file_output(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
                 Path(tmpdir) / "zamanalif.sqlite",
@@ -1315,30 +1317,18 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     }
                 ],
             )
-            output_path = Path(tmpdir) / "out.json"
-
-            output = StringIO()
-            with redirect_stdout(output):
-                exit_code = main(
+            with self.assertRaises(SystemExit) as raised:
+                main(
                     [
                         "annotation-export",
                         "--db",
                         str(db_path),
                         "--output",
-                        str(output_path),
+                        str(Path(tmpdir) / "out.json"),
                     ]
                 )
 
-            data = json.loads(output_path.read_text(encoding="utf-8"))
-
-        self.assertEqual(exit_code, 0)
-        self.assertEqual(data[0]["data"]["cyrl_word"], "вакыт")
-        self.assertEqual(
-            set(data[0]["data"]),
-            {"id", "cyrl_word", "auto_zamanalif", "gemini_origin", "hints_html"},
-        )
-        self.assertFalse(Path(str(output_path) + ".report.json").exists())
-        self.assertIn("annotation export complete", output.getvalue())
+        self.assertEqual(raised.exception.code, 2)
 
     def test_split_export_groups_by_priority_project(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1383,6 +1373,57 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual(project["key"], "complex_multi_rule")
         self.assertEqual(project["dsl_rules"], ["RUS_JOTATION", "IYA"])
+
+    def test_split_export_routes_literal_and_policy_hamza_out_of_catchall(self) -> None:
+        cases = {
+            "маэмай": [],
+            "тәэмин": [],
+            "тәэсир": [],
+            "коръән": ["HAMZA"],
+        }
+
+        for word, rules in cases.items():
+            with self.subTest(word=word):
+                project = classify_project(word, "N")
+                self.assertEqual(project["key"], "hamza")
+                self.assertEqual(project["title"], "Hamza review")
+                self.assertEqual(project["dsl_rules"], rules)
+
+    def test_russian_apostrophe_is_not_routed_as_hamza(self) -> None:
+        project = classify_project("культура", "RL")
+
+        self.assertEqual(project["key"], "rus_sign")
+        self.assertEqual(project["dsl_rules"], ["RUS_SIGN"])
+
+    def test_literal_hamza_project_writes_dedicated_output_and_instructions(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [{"text": "Тәэмин", "label": "N"}],
+                    }
+                ],
+            )
+            output_dir = Path(tmpdir) / "projects"
+
+            result = export_labelstudio_project_tasks_from_db(db_path)
+            write_split_outputs(result, output_dir)
+            tasks = json.loads(
+                (output_dir / "project_hamza_batch_001_of_001.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            instructions = (
+                output_dir / "project_hamza_instructions.html"
+            ).read_text(encoding="utf-8")
+
+        self.assertEqual(set(result.projects), {"hamza"})
+        self.assertEqual(tasks[0]["data"]["project_key"], "hamza")
+        self.assertEqual(tasks[0]["data"]["auto_zamanalif"], "täʼmin")
+        self.assertIn("Arabic/Persian hamza", instructions)
 
     def test_split_export_counts_distinct_rules_not_repeated_occurrences(self) -> None:
         project = classify_project("социаль-икътисадый", "RL")
@@ -1579,6 +1620,29 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ):
                 validate_export_result(result)
 
+    def test_split_validation_rejects_dsl_in_catchall(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [{"text": "вакыт", "label": "N"}],
+                    }
+                ],
+            )
+            result = export_labelstudio_project_tasks_from_db(db_path)
+            result.projects["catchall"].tasks[0]["data"]["auto_zamanalif"] = (
+                "waqı{{TS|s=s|ts=ts}}t"
+            )
+
+            with self.assertRaisesRegex(
+                AnnotationExportError,
+                "suggestion does not match canonical conversion",
+            ):
+                validate_split_export_result(result)
+
     def test_tracking_is_not_updated_when_split_write_fails_validation(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
@@ -1765,6 +1829,14 @@ class PreannotatorWordExportTests(unittest.TestCase):
             task = first.tasks[0]
             labelstudio_task = {
                 **task,
+                "data": {
+                    **task["data"],
+                    "project_key": "catchall",
+                    "project_title": "Catchall word review",
+                    "batch_id": "catchall_batch_001",
+                    "batch_index": 1,
+                    "batch_total": 1,
+                },
                 "annotations": [
                     {
                         "was_cancelled": False,
@@ -1785,14 +1857,14 @@ class PreannotatorWordExportTests(unittest.TestCase):
             }
             annotation_path = root / "completed.json"
             annotation_path.write_text(
-                json.dumps([labelstudio_task], ensure_ascii=False),
+                json.dumps({"tasks": [labelstudio_task]}, ensure_ascii=False),
                 encoding="utf-8",
             )
 
             summary = import_labelstudio_annotations(db_path, annotation_path)
             second = export_labelstudio_tasks_from_db(db_path)
 
-        self.assertEqual(summary.imported_words, 1)
+        self.assertEqual(summary.imported_items, 1)
         self.assertEqual(second.exported_words, [])
 
     def test_exports_from_sqlite_annotation_database(self) -> None:

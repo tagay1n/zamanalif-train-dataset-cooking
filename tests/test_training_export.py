@@ -10,6 +10,7 @@ import unittest
 
 from tatar_preannotator.cli import main
 from tatar_preannotator.conflict_resolver import save_word_resolution
+from tatar_preannotator.contextual_review import ensure_contextual_review_schema
 from tatar_preannotator.conversion import PREFERRED_POLICY
 from tatar_preannotator.training_export import (
     TrainingExportError,
@@ -260,6 +261,44 @@ class TrainingExportTests(unittest.TestCase):
 
         self.assertEqual(output_text, "")
         self.assertEqual(manifest["skipped_by_reason"], {"unreviewed_word": 1})
+
+    def test_exact_contextual_review_releases_only_reviewed_occurrence(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(
+                root / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "text": "Акты.",
+                        "tokens": [{"text": "Акты", "label": "RL", "homonym": True}],
+                    },
+                    {
+                        "id": "sent_2",
+                        "text": "Акты.",
+                        "tokens": [{"text": "Акты", "label": "RL", "homonym": True}],
+                    },
+                ],
+            )
+            with sqlite3.connect(db_path) as conn:
+                save_word_resolution(conn, "акты", "contextual_homonym")
+                ensure_contextual_review_schema(conn)
+                conn.execute(
+                    """
+                    insert into contextual_reviews(
+                        sample_id, token_index, normalized_word,
+                        zamanalif_dsl, origin, updated_at
+                    ) values ('sent_1', 0, 'акты', 'aqtı', 'N', 'now')
+                    """
+                )
+
+            summary = export_training_dataset(db_path, root / "train.jsonl")
+            records = _read_jsonl(root / "train.jsonl")
+
+        self.assertEqual(summary.exported_count, 1)
+        self.assertEqual(summary.skipped_count, 1)
+        self.assertEqual(records[0]["id"], "sent_1")
+        self.assertEqual(records[0]["zamanalif"], "Aqtı.")
 
     def test_malformed_reviewed_dsl_preserves_existing_output(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

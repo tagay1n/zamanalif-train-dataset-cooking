@@ -242,24 +242,23 @@ the Antat reference tables with `--force`.
 
 ## Label Studio Project 1: Word Dictionary Review
 
-After Gemini pre-annotation, export unique word forms for dictionary-level human
-review:
+After Gemini pre-annotation, export dictionary words and contextual homonym
+occurrences into focused Label Studio projects:
 
 ```bash
 python -m tatar_preannotator annotation-export \
   --db data/zamanalif.sqlite \
-  --output labelstudio_word_review.json \
+  --output-dir labelstudio_projects \
   --max-items 5000
 ```
 
 For real annotation batches, enable SQLite tracking so the next export skips
-already exported normalized words. Export state is stored in the shared
-database by default:
+already exported normalized words and contextual occurrences:
 
 ```bash
 python -m tatar_preannotator annotation-export \
   --db data/zamanalif.sqlite \
-  --output labelstudio_word_review_001.json \
+  --output-dir labelstudio_projects \
   --max-items 5000 \
   --track-exported
 ```
@@ -277,15 +276,19 @@ Selection rules:
 - skip words whose conversion is identical under both origins, including `U`
   words, because origin cannot change their target text;
 - skip native-looking `"N"` words with mixed front/back vowel harmony;
-- defer every normalized word that Gemini marked as a homonym to the later
-  sentence-context project;
+- exclude every effective homonym from all dictionary projects, including
+  catchall;
+- export every occurrence of those words to `contextual_homonym` with its
+  sentence context;
+- route every native conversion that emits a hamza, including literal lexical
+  conversions such as `тәэмин → täʼmin`, to `hamza` and never to catchall;
 - always skip forms already approved in `reviewed_words`;
 - deduplicate by lowercase normalized Cyrillic word form.
 
 At 20,211 annotated database rows, this decision-based selection produces
 45,940 tasks instead of the previous 88,280 letter-based tasks.
 
-The output is a Label Studio JSON array:
+Each generated batch is a Label Studio JSON array:
 
 ```json
 {
@@ -311,28 +314,24 @@ options. The preferred policy currently resolves it to `orfografiyä`; the
 compact PDF policy resolves it to `orfografiä`. The DSL marks only the
 differing substring.
 
-To split the same export into focused Label Studio projects, use `--output-dir`
-instead of `--output`:
-
-```bash
-python -m tatar_preannotator annotation-export \
-  --db data/zamanalif.sqlite \
-  --output-dir labelstudio_projects \
-  --max-items 5000
-```
-
-Split mode writes 1000-task batch files such as
+The command writes 1000-task batch files such as
 `project_iya_batch_001_of_003.json`, `project_rus_sign_batch_001_of_004.json`,
 `project_complex_multi_rule_batch_001_of_002.json`, and
-`project_catchall_batch_001_of_039.json`. These JSON files are the files to
-import into Label Studio, one batch file per Label Studio project. It also
-writes `project_<key>_instructions.html` for every active project category.
-Use the same instruction file for all batches of that category. Each word is
-exported once. If a word has multiple DSL rules it goes to
+`project_hamza_batch_001_of_001.json`, and
+`project_contextual_homonym_batch_001_of_027.json`. Import each batch into the
+matching Label Studio project. Hamza has routing priority over catchall and
+multi-rule projects. Russian soft/hard-sign apostrophes remain in their
+`rus_*` projects. The command also writes
+`project_<key>_instructions.html` for every active category. Each dictionary
+word is exported once. If a word has multiple DSL rules it goes to
 `complex_multi_rule`; otherwise it goes to the matching DSL-rule project or to
 `catchall`. Unresolved `U` words are split into focused projects:
 `u_hyphenated`, `u_abbrev_fragment`, `u_tatar_specific`,
 `u_conditional_plain`, and `u_other`.
+
+`--max-items` is applied independently to dictionary words and contextual
+occurrences. Contextual tasks are ordered round-robin across homonym words,
+with explicit Gemini homonym flags first.
 
 Every export is validated before SQLite tracking is updated. Validation checks
 task and word uniqueness, project routing, required fields, Zamanalif DSL, and
@@ -382,9 +381,29 @@ Label Studio layout:
 </View>
 ```
 
-The origin control is optional. Focused projects can omit it when annotators
-only review the Zamanalif spelling. In that case the importer uses the
-`data.gemini_origin` value that was saved in the exported task.
+Both `reviewed_origin` and `corrected_zamanalif` are required. The importer has
+no origin or task-shape fallback.
+
+The contextual project uses the same controls against highlighted sentence
+context:
+
+```xml
+<View>
+  <HyperText name="context" value="$context_html"/>
+  <HyperText name="hints" value="$hints_html"/>
+  <Choices name="reviewed_origin" toName="context" choice="single" required="true">
+    <Choice value="N"/>
+    <Choice value="RL"/>
+  </Choices>
+  <TextArea
+    name="corrected_zamanalif"
+    toName="context"
+    rows="1"
+    value="$auto_zamanalif"
+    required="true"
+  />
+</View>
+```
 
 ### Back up annotations from hosted Label Studio
 
@@ -448,6 +467,7 @@ Validate the backup and inspect actual annotator changes before importing:
 
 ```bash
 python -m tatar_preannotator annotation-audit \
+  --db data/zamanalif.sqlite \
   --input "$OUTPUT"
 ```
 
@@ -465,16 +485,7 @@ this only when the first value exactly matches `data.auto_zamanalif`, then
 compares the final value. Merely submitting an unchanged suggestion is not
 reported as an edit.
 
-For example, the first Catchall backup produced:
-
-```text
-annotation audit complete: tasks=1000 completed=931 unchanged=930 changed=1 origin_changes=0 conversion_changes=1 unannotated=69
-task=510 word=акты
-  conversion: aktı -> aqtı
-```
-
-After reviewing every printed change, import the same backup into the shared
-reviewed-word dictionary:
+After reviewing every printed change, import the same backup:
 
 ```bash
 python -m tatar_preannotator annotation-import \
@@ -482,21 +493,11 @@ python -m tatar_preannotator annotation-import \
   --input "$OUTPUT"
 ```
 
-The importer reads the `reviewed_origin` and `corrected_zamanalif` controls,
-or uses `data.gemini_origin` when the layout omits the origin control. It
-validates every completed task and writes approved conversion/origin pairs to
-`reviewed_words` in one transaction. Unannotated and cancelled tasks are
-skipped, so an annotator can skip genuinely uncertain words instead of choosing
-an `U` label. Importing the same decision again is idempotent; a different
-decision for an already reviewed word fails instead of silently replacing the
-final approval. Remove the existing `reviewed_words` row explicitly before
-importing a deliberate correction.
-
-Words with existing homonym evidence are not imported as global dictionary
-entries, even when their Label Studio task is completed. The importer marks
-them as `contextual_homonym` in `word_resolutions` and prints examples. They
-therefore disappear from Project 1 word exports and must be handled later in a
-sentence-context project.
+The backup must use the task API response schema and contain exactly one
+`project_key`. Dictionary decisions are written to `reviewed_words`;
+`contextual_homonym` decisions are written to `contextual_reviews` by exact
+`sample_id` and `token_index`. Unannotated and cancelled tasks are skipped.
+Identical reimports are idempotent; conflicting decisions fail atomically.
 
 Malformed DSL, missing controls, duplicate word tasks, conflicting annotations,
 or invalid origins abort the whole import without partial writes. After a
@@ -551,12 +552,12 @@ Each output line has only the sentence ID and the text pair:
 The exporter:
 
 - reads `tatar=true` Gemini-annotated sentences from SQLite;
-- uses approved `reviewed_words` entries before automatic conversion;
+- uses exact contextual occurrence reviews, then approved `reviewed_words`;
 - automatically converts words whose native and loanword branches are
   identical;
 - preserves sentence punctuation, whitespace, and ordinary word casing;
 - skips sentences that still contain unreviewed origin-dependent words,
-  mixed-harmony native review cases, or contextual homonyms;
+  mixed-harmony native review cases, or unresolved contextual occurrences;
 - fails without replacing the existing output on malformed DSL, invalid
   policy choices, converter failures, or token alignment errors;
 - rejects any final target containing DSL delimiters or Cyrillic letters.
