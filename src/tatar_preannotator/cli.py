@@ -382,6 +382,7 @@ def _annotation_import(args: argparse.Namespace) -> int:
         f"tasks={summary.total_tasks} "
         f"completed={summary.completed_tasks} "
         f"imported={summary.imported_items} "
+        f"homonyms={summary.homonym_items} "
         f"inherited={summary.inherited_items} "
         f"unchanged={summary.unchanged_items} "
         f"unannotated={summary.skipped_unannotated_tasks}"
@@ -405,10 +406,14 @@ def _annotation_audit(args: argparse.Namespace) -> int:
         f"changed={len(summary.changes)} "
         f"origin_changes={summary.origin_changes} "
         f"conversion_changes={summary.conversion_changes} "
+        f"homonym_changes={summary.homonym_changes} "
         f"unannotated={summary.skipped_unannotated_tasks}"
     )
     for change in summary.changes:
         print(f"task={change.task_id} word={change.word}")
+        if change.is_homonym:
+            print("  decision: contextual_homonym")
+            continue
         if change.suggested_origin != change.reviewed_origin:
             print(
                 f"  origin: {change.suggested_origin} -> {change.reviewed_origin}"

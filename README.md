@@ -392,26 +392,38 @@ Label Studio layout:
   <Header value="Hints"/>
   <HyperText name="hints" value="$hints_html"/>
 
-  <Header value="Correct Gemini origin prediction if necessary"/>
-  <Choices name="reviewed_origin" toName="cyrl_word" choice="single" required="true">
-    <Choice value="N"/>
-    <Choice value="RL"/>
+  <Choices name="is_homonym" toName="cyrl_word" choice="multiple" showInline="true">
+    <Choice value="Homonym"/>
   </Choices>
 
-  <Header value="Correct if necessary | ä Ä | ö Ö | ü Ü | ñ Ñ | ı I | ğ Ğ | ş Ş | ç Ç"/>
-  <TextArea
-    name="corrected_zamanalif"
-    toName="cyrl_word"
-    rows="1"
-    value="$auto_zamanalif"
-    placeholder="Edit only if the suggestion is wrong"
-    required="true"
-  />
+  <View
+    visibleWhen="choice-unselected"
+    whenTagName="is_homonym"
+    whenChoiceValue="Homonym"
+  >
+    <Header value="Correct Gemini origin prediction if necessary"/>
+    <Choices name="reviewed_origin" toName="cyrl_word" choice="single" required="true">
+      <Choice value="N"/>
+      <Choice value="RL"/>
+    </Choices>
+
+    <Header value="Correct if necessary | ä Ä | ö Ö | ü Ü | ñ Ñ | ı I | ğ Ğ | ş Ş | ç Ç"/>
+    <TextArea
+      name="corrected_zamanalif"
+      toName="cyrl_word"
+      rows="1"
+      value="$auto_zamanalif"
+      placeholder="Edit only if the suggestion is wrong"
+      required="true"
+    />
+  </View>
 </View>
 ```
 
-Both `reviewed_origin` and `corrected_zamanalif` are required. The importer has
-no origin or task-shape fallback.
+The `Homonym` checkbox is unchecked by default. When it remains unchecked,
+both `reviewed_origin` and `corrected_zamanalif` are required. When checked,
+those controls are hidden and the checkbox alone is a complete decision. The
+importer has no origin or task-shape fallback.
 
 The contextual project uses the same controls against highlighted sentence
 context:
@@ -523,10 +535,12 @@ python -m tatar_preannotator annotation-import \
 ```
 
 The backup must use the task API response schema and contain exactly one
-`meta.project_key` under schema version `1`. Dictionary decisions are written
-to `reviewed_words`; `contextual_homonym` decisions are written to
-`contextual_reviews` by exact `meta.sample_id` and `meta.token_index`.
-Unannotated and cancelled tasks are skipped.
+`meta.project_key` with the expected project schema version. Normal dictionary
+decisions are written to `reviewed_words`. Dictionary tasks checked as
+`Homonym` are instead written to `word_resolutions` as `contextual_homonym`;
+their origin and conversion values are ignored. Contextual occurrence decisions
+are written to `contextual_reviews` by exact `meta.sample_id` and
+`meta.token_index`. Unannotated and cancelled tasks are skipped.
 Identical reimports are idempotent; conflicting decisions fail atomically.
 
 Malformed DSL, missing controls, duplicate word tasks, conflicting annotations,

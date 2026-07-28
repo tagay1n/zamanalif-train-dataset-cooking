@@ -47,6 +47,13 @@ once, and the approved result is stored in `reviewed_words`.
 Exporting alone never suppresses a word. It remains eligible until a successful
 Label Studio import stores its completed review.
 
+Annotators can mark any dictionary task as a contextual homonym. That decision
+overrides an existing N/RL/U word resolution, ignores the task's origin and
+conversion fields, and routes occurrences of the displayed word to the
+contextual project on the next export. For a grouped catchall task, only the
+displayed representative is marked; hidden family members remain dictionary
+review candidates.
+
 ### Catchall Morphological Families
 
 Catchall is reduced with the pinned Apertium-tat morphological analyzer. Words

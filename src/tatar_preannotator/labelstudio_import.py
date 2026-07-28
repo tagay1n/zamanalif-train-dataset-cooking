@@ -42,6 +42,8 @@ from .word_export import (
 
 ORIGIN_CONTROL = "reviewed_origin"
 CONVERSION_CONTROL = "corrected_zamanalif"
+HOMONYM_CONTROL = "is_homonym"
+HOMONYM_CHOICE = "Homonym"
 REVIEWED_ORIGINS = frozenset({"N", "RL"})
 SUGGESTED_ORIGINS = frozenset({"N", "RL", "U"})
 
@@ -53,8 +55,9 @@ class LabelStudioImportError(ValueError):
 @dataclass(frozen=True)
 class ReviewedAnnotation:
     normalized_word: str
-    zamanalif_dsl: str
-    origin: str
+    zamanalif_dsl: str | None
+    origin: str | None
+    is_homonym: bool = False
     sample_id: str | None = None
     token_index: int | None = None
     family_members: tuple[str, ...] = ()
@@ -69,6 +72,7 @@ class LabelStudioImportSummary:
     total_tasks: int
     completed_tasks: int
     imported_items: int
+    homonym_items: int
     inherited_items: int
     unchanged_items: int
     skipped_unannotated_tasks: int
@@ -87,9 +91,10 @@ class LabelStudioAnnotationChange:
     task_id: str
     word: str
     suggested_origin: str
-    reviewed_origin: str
+    reviewed_origin: str | None
     suggested_zamanalif: str
-    reviewed_zamanalif: str
+    reviewed_zamanalif: str | None
+    is_homonym: bool = False
 
 
 @dataclass(frozen=True)
@@ -101,6 +106,7 @@ class LabelStudioAuditSummary:
     skipped_unannotated_tasks: int
     origin_changes: int
     conversion_changes: int
+    homonym_changes: int
     changes: tuple[LabelStudioAnnotationChange, ...]
 
 
@@ -111,6 +117,13 @@ class _ParsedTask:
     word: str
     suggested_origin: str
     suggested_zamanalif: str
+
+
+@dataclass(frozen=True)
+class _AnnotationDecision:
+    is_homonym: bool
+    origin: str | None = None
+    zamanalif_dsl: str | None = None
 
 
 def import_labelstudio_annotations(
@@ -153,11 +166,12 @@ def import_labelstudio_annotations(
                 }
                 for item in parsed.annotations:
                     _validate_contextual_source(conn, item, effective_homonyms)
+                    origin, zamanalif_dsl = _regular_values(item)
                     key = OccurrenceKey(str(item.sample_id), int(item.token_index))
                     current = (
                         item.normalized_word,
-                        item.zamanalif_dsl,
-                        item.origin,
+                        zamanalif_dsl,
+                        origin,
                     )
                     previous = existing.get(key)
                     if previous is not None:
@@ -179,17 +193,40 @@ def import_labelstudio_annotations(
                             item.sample_id,
                             item.token_index,
                             item.normalized_word,
-                            item.zamanalif_dsl,
-                            item.origin,
+                            zamanalif_dsl,
+                            origin,
                             now,
                         ),
                     )
                     imported += 1
             else:
                 analyzer = morphology_analyzer or default_morphology_analyzer()
+                homonym_items = [
+                    item for item in parsed.annotations if item.is_homonym
+                ]
+                regular_items = [
+                    item for item in parsed.annotations if not item.is_homonym
+                ]
+                existing_resolutions = {
+                    str(row[0]): str(row[1])
+                    for row in conn.execute(
+                        "select normalized_word, decision from word_resolutions"
+                    ).fetchall()
+                }
+                for item in homonym_items:
+                    changed = _store_homonym_decision(
+                        conn,
+                        item.normalized_word,
+                        existing_resolutions,
+                        now,
+                    )
+                    imported += int(changed)
+                    unchanged += int(not changed)
+
+                effective_homonyms = effective_contextual_homonym_words(conn)
                 imported_words = {
                     word
-                    for item in parsed.annotations
+                    for item in regular_items
                     for word in item.family_members
                 }
                 homonyms = sorted(imported_words & effective_homonyms)
@@ -220,11 +257,12 @@ def import_labelstudio_annotations(
                     | imported_words
                 )
                 analyses = analyzer.analyze(sorted(analysis_words))
-                for item in parsed.annotations:
+                for item in regular_items:
                     if parsed.project_key == "catchall":
                         _validate_imported_family(item, analyses, eligible, analyzer)
-                for item in parsed.annotations:
-                    current = (item.zamanalif_dsl, item.origin)
+                for item in regular_items:
+                    origin, zamanalif_dsl = _regular_values(item)
+                    current = (zamanalif_dsl, origin)
                     previous = existing.get(item.normalized_word)
                     if previous is not None:
                         if previous != current:
@@ -250,14 +288,14 @@ def import_labelstudio_annotations(
                         """,
                         (
                             item.normalized_word,
-                            item.zamanalif_dsl,
-                            item.origin,
+                            zamanalif_dsl,
+                            origin,
                             now,
                         ),
                     )
                     existing[item.normalized_word] = current
                     imported += 1
-                for item in parsed.annotations:
+                for item in regular_items:
                     if parsed.project_key != "catchall":
                         continue
                     inherited += _propagate_imported_family(
@@ -288,10 +326,72 @@ def import_labelstudio_annotations(
         total_tasks=parsed.total_tasks,
         completed_tasks=len(parsed.annotations),
         imported_items=imported,
+        homonym_items=sum(item.is_homonym for item in parsed.annotations),
         inherited_items=inherited,
         unchanged_items=unchanged,
         skipped_unannotated_tasks=parsed.skipped_unannotated_tasks,
     )
+
+
+def _regular_values(item: ReviewedAnnotation) -> tuple[str, str]:
+    if item.is_homonym or item.origin is None or item.zamanalif_dsl is None:
+        raise LabelStudioImportError("regular annotation lacks origin or conversion")
+    return item.origin, item.zamanalif_dsl
+
+
+def _store_homonym_decision(
+    conn: sqlite3.Connection,
+    word: str,
+    existing_resolutions: dict[str, str],
+    now: str,
+) -> bool:
+    derived_members = [
+        str(row[0])
+        for row in conn.execute(
+            """
+            select normalized_word
+            from reviewed_word_derivations
+            where source_word = ?
+            """,
+            (word,),
+        ).fetchall()
+    ]
+    removed_reviews = conn.execute(
+        "delete from reviewed_words where normalized_word = ?",
+        (word,),
+    ).rowcount
+    for member in derived_members:
+        removed_reviews += conn.execute(
+            "delete from reviewed_words where normalized_word = ?",
+            (member,),
+        ).rowcount
+    removed_derivations = conn.execute(
+        """
+        delete from reviewed_word_derivations
+        where normalized_word = ? or source_word = ?
+        """,
+        (word, word),
+    ).rowcount
+
+    previous = existing_resolutions.get(word)
+    if (
+        previous == "contextual_homonym"
+        and removed_reviews == 0
+        and removed_derivations == 0
+    ):
+        return False
+    conn.execute(
+        """
+        insert into word_resolutions(normalized_word, decision, updated_at)
+        values (?, 'contextual_homonym', ?)
+        on conflict(normalized_word) do update set
+            decision=excluded.decision,
+            updated_at=excluded.updated_at
+        """,
+        (word, now),
+    )
+    existing_resolutions[word] = "contextual_homonym"
+    return True
 
 
 def _validate_imported_family(
@@ -334,8 +434,9 @@ def _propagate_imported_family(
     identity = item.morphology
     if identity is None or len(item.family_members) == 1:
         return 0
-    canonical = conversion_branches(item.normalized_word).suggestion(item.origin)
-    if item.zamanalif_dsl != canonical:
+    origin, zamanalif_dsl = _regular_values(item)
+    canonical = conversion_branches(item.normalized_word).suggestion(origin)
+    if zamanalif_dsl != canonical:
         return 0
 
     inserted = 0
@@ -344,16 +445,16 @@ def _propagate_imported_family(
             raise LabelStudioImportError(
                 f"catchall family morphology changed for {word!r}"
             )
-        if classify_project(word, item.origin)["key"] != "catchall":
+        if classify_project(word, origin)["key"] != "catchall":
             continue
-        zamanalif_dsl = conversion_branches(word).suggestion(item.origin)
-        if not zamanalif_dsl:
+        member_zamanalif = conversion_branches(word).suggestion(origin)
+        if not member_zamanalif:
             continue
         inserted += _store_inherited_review(
             conn,
             word=word,
-            zamanalif_dsl=zamanalif_dsl,
-            origin=item.origin,
+            zamanalif_dsl=member_zamanalif,
+            origin=origin,
             source_word=item.normalized_word,
             identity=identity,
             analyzer_revision=analyzer_revision,
@@ -532,6 +633,7 @@ def audit_labelstudio_export(
     unchanged = 0
     origin_changes = 0
     conversion_changes = 0
+    homonym_changes = 0
 
     with closing(sqlite3.connect(database)) as conn:
         effective_homonyms = effective_contextual_homonym_words(conn)
@@ -549,7 +651,10 @@ def audit_labelstudio_export(
                 _validate_contextual_source(conn, reviewed, effective_homonyms)
             else:
                 identity = reviewed.normalized_word
-                if reviewed.normalized_word in effective_homonyms:
+                if (
+                    not reviewed.is_homonym
+                    and reviewed.normalized_word in effective_homonyms
+                ):
                     raise LabelStudioImportError(
                         "dictionary project contains contextual homonym: "
                         f"{reviewed.normalized_word!r}"
@@ -567,10 +672,23 @@ def audit_labelstudio_export(
                         f"{duplicates[0]!r}"
                     )
                 seen_family_words.update(reviewed.family_members)
-            origin_changed = reviewed.origin != parsed.suggested_origin
-            conversion_changed = (
-                reviewed.zamanalif_dsl != parsed.suggested_zamanalif
-            )
+            if reviewed.is_homonym:
+                homonym_changes += 1
+                changes.append(
+                    LabelStudioAnnotationChange(
+                        task_id=parsed.task_id,
+                        word=parsed.word,
+                        suggested_origin=parsed.suggested_origin,
+                        reviewed_origin=None,
+                        suggested_zamanalif=parsed.suggested_zamanalif,
+                        reviewed_zamanalif=None,
+                        is_homonym=True,
+                    )
+                )
+                continue
+            origin, zamanalif_dsl = _regular_values(reviewed)
+            origin_changed = origin != parsed.suggested_origin
+            conversion_changed = zamanalif_dsl != parsed.suggested_zamanalif
             origin_changes += int(origin_changed)
             conversion_changes += int(conversion_changed)
             if not origin_changed and not conversion_changed:
@@ -581,9 +699,9 @@ def audit_labelstudio_export(
                         task_id=parsed.task_id,
                         word=parsed.word,
                         suggested_origin=parsed.suggested_origin,
-                        reviewed_origin=reviewed.origin,
+                        reviewed_origin=origin,
                         suggested_zamanalif=parsed.suggested_zamanalif,
-                        reviewed_zamanalif=reviewed.zamanalif_dsl,
+                        reviewed_zamanalif=zamanalif_dsl,
                     )
                 )
 
@@ -596,6 +714,7 @@ def audit_labelstudio_export(
         skipped_unannotated_tasks=skipped,
         origin_changes=origin_changes,
         conversion_changes=conversion_changes,
+        homonym_changes=homonym_changes,
         changes=tuple(changes),
     )
 
@@ -758,7 +877,7 @@ def _parse_task(
     annotations = task.get("annotations")
     if not isinstance(annotations, list):
         raise LabelStudioImportError(f"{context}.annotations must be a list")
-    decisions: set[tuple[str, str]] = set()
+    decisions: set[_AnnotationDecision] = set()
     for annotation_index, annotation in enumerate(annotations):
         if not isinstance(annotation, dict):
             raise LabelStudioImportError(
@@ -779,17 +898,19 @@ def _parse_task(
                 context,
                 annotation_index,
                 suggested_zamanalif,
+                allow_homonym=project_key != CONTEXTUAL_PROJECT_KEY,
             )
         )
     if not decisions:
         return None
     if len(decisions) != 1:
         raise LabelStudioImportError(f"{context} has conflicting annotations")
-    origin, zamanalif_dsl = next(iter(decisions))
+    decision = next(iter(decisions))
     reviewed = ReviewedAnnotation(
         normalized_word=normalized,
-        zamanalif_dsl=zamanalif_dsl,
-        origin=origin,
+        zamanalif_dsl=decision.zamanalif_dsl,
+        origin=decision.origin,
+        is_homonym=decision.is_homonym,
         sample_id=sample_id,
         token_index=token_index,
         family_members=family_members,
@@ -811,26 +932,45 @@ def _parse_result(
     task_context: str,
     annotation_index: int,
     suggested_zamanalif: str,
-) -> tuple[str, str]:
+    *,
+    allow_homonym: bool,
+) -> _AnnotationDecision:
     context = f"{task_context} annotation {annotation_index}"
-    origins: list[str] = []
-    conversions: list[str] = []
+    origins: list[tuple[dict[str, Any], int]] = []
+    conversions: list[tuple[dict[str, Any], int]] = []
+    homonyms: list[tuple[dict[str, Any], int]] = []
     for result_index, result in enumerate(results):
         if not isinstance(result, dict):
             raise LabelStudioImportError(
                 f"{context} result {result_index} must be an object"
             )
-        if result.get("from_name") == ORIGIN_CONTROL:
-            origins.append(_parse_origin(result, context, result_index))
-        elif result.get("from_name") == CONVERSION_CONTROL:
-            conversions.append(
-                _parse_conversion(
-                    result,
-                    context,
-                    result_index,
-                    suggested_zamanalif,
-                )
+        control = result.get("from_name")
+        if control == ORIGIN_CONTROL:
+            origins.append((result, result_index))
+        elif control == CONVERSION_CONTROL:
+            conversions.append((result, result_index))
+        elif control == HOMONYM_CONTROL:
+            homonyms.append((result, result_index))
+        else:
+            raise LabelStudioImportError(
+                f"{context} result {result_index} has unexpected control: "
+                f"{control!r}"
             )
+    if homonyms:
+        if not allow_homonym:
+            raise LabelStudioImportError(
+                f"{context} cannot mark a contextual task as homonym"
+            )
+        if len(homonyms) != 1:
+            raise LabelStudioImportError(
+                f"{context} must contain at most one {HOMONYM_CONTROL!r} result"
+            )
+        _parse_homonym(*homonyms[0], context=context)
+        if len(origins) > 1 or len(conversions) > 1:
+            raise LabelStudioImportError(
+                f"{context} contains duplicate ignored controls"
+            )
+        return _AnnotationDecision(is_homonym=True)
     if len(origins) != 1:
         raise LabelStudioImportError(
             f"{context} must contain exactly one {ORIGIN_CONTROL!r} result"
@@ -839,7 +979,38 @@ def _parse_result(
         raise LabelStudioImportError(
             f"{context} must contain exactly one {CONVERSION_CONTROL!r} result"
         )
-    return origins[0], conversions[0]
+    origin_result, origin_index = origins[0]
+    conversion_result, conversion_index = conversions[0]
+    origin = _parse_origin(origin_result, context, origin_index)
+    zamanalif_dsl = _parse_conversion(
+        conversion_result,
+        context,
+        conversion_index,
+        suggested_zamanalif,
+    )
+    return _AnnotationDecision(
+        is_homonym=False,
+        origin=origin,
+        zamanalif_dsl=zamanalif_dsl,
+    )
+
+
+def _parse_homonym(
+    result: dict[str, Any],
+    result_index: int,
+    *,
+    context: str,
+) -> None:
+    if result.get("type") != "choices":
+        raise LabelStudioImportError(
+            f"{context} result {result_index} homonym type must be 'choices'"
+        )
+    value = result.get("value")
+    choices = value.get("choices") if isinstance(value, dict) else None
+    if choices != [HOMONYM_CHOICE]:
+        raise LabelStudioImportError(
+            f"{context} result {result_index} has invalid homonym choice"
+        )
 
 
 def _parse_origin(result: dict[str, Any], context: str, result_index: int) -> str:
@@ -937,11 +1108,12 @@ def _validate_contextual_source(
         raise LabelStudioImportError(
             f"{item.sample_id}: word is no longer contextual: {normalized!r}"
         )
+    origin, zamanalif_dsl = _regular_values(item)
     try:
         validate_contextual_review(
             item.normalized_word,
-            item.zamanalif_dsl,
-            item.origin,
+            zamanalif_dsl,
+            origin,
         )
     except ContextualReviewError as exc:
         raise LabelStudioImportError(str(exc)) from exc

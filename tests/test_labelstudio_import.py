@@ -11,14 +11,21 @@ from unittest.mock import patch
 
 from tests.morphology_fakes import FakeMorphologyAnalyzer
 from tatar_preannotator.cli import main
-from tatar_preannotator.contextual_review import load_contextual_reviews
+from tatar_preannotator.contextual_review import (
+    export_contextual_tasks_from_db,
+    load_contextual_reviews,
+)
 from tatar_preannotator.labelstudio_import import (
     LabelStudioImportError,
     audit_labelstudio_export,
     import_labelstudio_annotations,
     parse_labelstudio_export,
 )
-from tatar_preannotator.word_export import load_reviewed_words, save_reviewed_word
+from tatar_preannotator.word_export import (
+    export_labelstudio_project_tasks_from_db,
+    load_reviewed_words,
+    save_reviewed_word,
+)
 
 
 class LabelStudioImportTests(unittest.TestCase):
@@ -177,6 +184,197 @@ class LabelStudioImportTests(unittest.TestCase):
             set(reviewed),
             {"вакыт", "торган", "торганнар", "торганнары"},
         )
+
+    def test_homonym_annotation_routes_word_to_contextual_export_idempotently(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            task = _task(
+                "вакыт",
+                "waqıt",
+                "N",
+                annotations=[_homonym_annotation()],
+            )
+            backup = _backup(root / "homonym.json", [task])
+
+            audit = audit_labelstudio_export(db_path, backup)
+            first = import_labelstudio_annotations(db_path, backup)
+            second = import_labelstudio_annotations(db_path, backup)
+            contextual = export_contextual_tasks_from_db(db_path)
+            reviewed = load_reviewed_words(db_path)
+            with sqlite3.connect(db_path) as conn:
+                resolutions = dict(
+                    conn.execute(
+                        "select normalized_word, decision from word_resolutions"
+                    ).fetchall()
+                )
+
+        self.assertEqual(audit.homonym_changes, 1)
+        self.assertTrue(audit.changes[0].is_homonym)
+        self.assertEqual(first.imported_items, 1)
+        self.assertEqual(first.homonym_items, 1)
+        self.assertEqual(second.imported_items, 0)
+        self.assertEqual(second.unchanged_items, 1)
+        self.assertEqual(resolutions["вакыт"], "contextual_homonym")
+        self.assertNotIn("вакыт", reviewed)
+        self.assertEqual(
+            [task["data"]["cyrl_word"] for task in contextual.tasks],
+            ["вакыт"],
+        )
+
+    def test_homonym_overrides_resolution_ignores_hidden_values_and_not_family(self) -> None:
+        analyzer = FakeMorphologyAnalyzer(
+            {
+                "торган": ("тор", "v"),
+                "торганнар": ("тор", "v"),
+                "торганнары": ("тор", "v"),
+            }
+        )
+        retained = _homonym_annotation()
+        retained["result"].extend(
+            [
+                {
+                    "from_name": "reviewed_origin",
+                    "type": "textarea",
+                    "value": {"text": []},
+                },
+                {
+                    "from_name": "corrected_zamanalif",
+                    "type": "choices",
+                    "value": {"choices": []},
+                },
+            ]
+        )
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, ["торган", "торганнар", "торганнары"])
+            family_members = ["торганнары", "торганнар", "торган"]
+            morphology = ("тор", "v")
+            initial_task = _task(
+                "торганнары",
+                "torğannarı",
+                "N",
+                family_members=family_members,
+                morphology=morphology,
+            )
+            import_labelstudio_annotations(
+                db_path,
+                _backup(root / "initial-family.json", [initial_task]),
+                morphology_analyzer=analyzer,
+            )
+            with sqlite3.connect(db_path) as conn:
+                conn.execute(
+                    """
+                    insert into word_resolutions(normalized_word, decision, updated_at)
+                    values ('торганнары', 'N', 'now')
+                    """
+                )
+            task = _task(
+                "торганнары",
+                "torğannarı",
+                "N",
+                annotations=[retained],
+                family_members=family_members,
+                morphology=morphology,
+            )
+
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "family-homonym.json", [task]),
+                morphology_analyzer=analyzer,
+            )
+            next_export = export_labelstudio_project_tasks_from_db(
+                db_path,
+                sort_by="word",
+                morphology_analyzer=analyzer,
+            )
+            with sqlite3.connect(db_path) as conn:
+                resolutions = dict(
+                    conn.execute(
+                        "select normalized_word, decision from word_resolutions"
+                    ).fetchall()
+                )
+                reviewed = {
+                    row[0]
+                    for row in conn.execute(
+                        "select normalized_word from reviewed_words"
+                    ).fetchall()
+                }
+
+        self.assertEqual(summary.imported_items, 1)
+        self.assertEqual(resolutions, {"торганнары": "contextual_homonym"})
+        self.assertTrue(
+            {"торганнары", "торганнар", "торган"}.isdisjoint(reviewed)
+        )
+        family_tasks = [
+            task
+            for task in next_export.projects["catchall"].tasks
+            if "торганнар" in task["meta"]["family_members"]
+        ]
+        self.assertEqual(
+            family_tasks[0]["meta"]["family_members"],
+            ["торганнар", "торган"],
+        )
+
+    def test_rejects_conflicting_homonym_and_regular_annotations(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            dsl_task = _task(
+                "орфография",
+                "orfografiä",
+                "RL",
+                annotations=[_homonym_annotation()],
+                project_key="iya",
+            )
+            parsed = parse_labelstudio_export(
+                _backup(root / "dsl-homonym.json", [dsl_task])
+            )
+            self.assertTrue(parsed.annotations[0].is_homonym)
+
+            task = _task("вакыт", "waqıt", "N")
+            task["annotations"].append(_homonym_annotation())
+            with self.assertRaisesRegex(
+                LabelStudioImportError,
+                "conflicting annotations",
+            ):
+                parse_labelstudio_export(
+                    _backup(root / "conflicting-homonym.json", [task])
+                )
+
+            contextual = _task(
+                "акты",
+                "aqtı",
+                "N",
+                annotations=[_homonym_annotation()],
+                project_key="contextual_homonym",
+                sample_id="sent_1",
+                token_index=0,
+            )
+            with self.assertRaisesRegex(
+                LabelStudioImportError,
+                "cannot mark a contextual task",
+            ):
+                parse_labelstudio_export(
+                    _backup(root / "contextual-homonym.json", [contextual])
+                )
+
+            malformed = _task(
+                "вакыт",
+                "waqıt",
+                "N",
+                annotations=[_homonym_annotation()],
+            )
+            malformed["annotations"][0]["result"][0]["value"]["choices"] = [
+                "Not homonym"
+            ]
+            with self.assertRaisesRegex(
+                LabelStudioImportError,
+                "invalid homonym choice",
+            ):
+                parse_labelstudio_export(
+                    _backup(root / "malformed-homonym.json", [malformed])
+                )
 
     def test_rejects_array_missing_project_key_and_missing_origin(self) -> None:
         with TemporaryDirectory() as tmpdir:
@@ -462,6 +660,19 @@ def _task(
         "data": data,
         "meta": meta,
         "annotations": annotations,
+    }
+
+
+def _homonym_annotation() -> dict[str, object]:
+    return {
+        "was_cancelled": False,
+        "result": [
+            {
+                "from_name": "is_homonym",
+                "type": "choices",
+                "value": {"choices": ["Homonym"]},
+            }
+        ],
     }
 
 

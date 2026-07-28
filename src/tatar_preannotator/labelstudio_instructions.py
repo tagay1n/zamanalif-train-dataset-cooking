@@ -199,7 +199,8 @@ def _workflow() -> str:
   <h3>What To Do</h3>
   <ol>
     <li>Read the original Cyrillic word.</li>
-    <li>Check and, if needed, edit the suggested Zamanalif spelling.</li>
+    <li>If the word can be either native or Russian depending on sentence context, check <b>Homonym</b> and submit.</li>
+    <li>Otherwise, check and, if needed, edit the suggested Zamanalif spelling.</li>
     <li>Choose <b>N</b> or <b>RL</b>.</li>
     <li>Submit, or skip the task when you cannot decide reliably.</li>
   </ol>

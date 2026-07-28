@@ -37,6 +37,7 @@ class LabelStudioInstructionTests(unittest.TestCase):
     def test_catchall_has_short_conditional_letter_examples(self) -> None:
         html = render_project_instructions("catchall", "Catchall word review", [])
 
+        self.assertIn("<b>Homonym</b>", html)
         self.assertIn("вакыт → waqıt", html)
         self.assertIn("проект → proyekt", html)
         self.assertIn("саклау → saqlaw", html)
