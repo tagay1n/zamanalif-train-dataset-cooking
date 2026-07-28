@@ -139,8 +139,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertGreater(result.report["origin_dependent_word_count"], 0)
 
         html = result.tasks[0]["data"]["hints_html"]
-        self.assertIn("<b>в</b> -> <b>w</b>", html)
-        self.assertIn("<b>к</b> -> <b>q</b>", html)
+        self.assertNotIn("<b>в</b> ->", html)
+        self.assertNotIn("<b>к</b> ->", html)
         self.assertIn("Gemini's origin prediction: <b>native</b>", html)
         self.assertIn("Frequency for <b><i>вакытында</i></b>: <b>2</b>", html)
 
@@ -206,8 +206,12 @@ class PreannotatorWordExportTests(unittest.TestCase):
             "şof{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}or",
         )
         self.assertEqual(by_word["щетка"]["auto_zamanalif"], "şçetka")
-        self.assertIn("<b>ы</b> -> <b>ıy</b>", by_word["сыр"]["hints_html"])
-        self.assertIn("<b>ь</b> -> <b>ʼ</b>", by_word["роль"]["hints_html"])
+        self.assertNotIn("<b>ы</b> ->", by_word["сыр"]["hints_html"])
+        self.assertNotIn("<b>ь</b> ->", by_word["роль"]["hints_html"])
+        self.assertIn(
+            "Gemini's origin prediction: <b>loanword</b>",
+            by_word["сыр"]["hints_html"],
+        )
 
     def test_branch_analysis_only_reviews_origin_dependent_conversion(self) -> None:
         independent = conversion_branches("белән")
@@ -1284,7 +1288,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
-    def test_origin_dependent_hints_show_letter_decisions_without_branch_lines(self) -> None:
+    def test_origin_dependent_hints_omit_letter_mappings_and_branch_lines(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
                 Path(tmpdir) / "zamanalif.sqlite",
@@ -1300,10 +1304,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
         html_by_word = {
             task["data"]["cyrl_word"]: task["data"]["hints_html"] for task in result.tasks
         }
-        self.assertIn("<b>е</b> -> <b>ye</b>", html_by_word["проект"])
-        self.assertIn("<b>в</b> -> <b>w</b>", html_by_word["вакыт"])
-        self.assertIn("<b>г</b> -> <b>ğ</b>", html_by_word["гасыр"])
         for html in html_by_word.values():
+            self.assertNotIn(" -> ", html)
+            self.assertIn("Gemini's origin prediction:", html)
+            self.assertIn("Frequency for", html)
             self.assertNotIn("Native branch:", html)
             self.assertNotIn("Loanword branch:", html)
             self.assertNotIn("because of", html)

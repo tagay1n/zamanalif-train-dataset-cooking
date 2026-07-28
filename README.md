@@ -291,7 +291,7 @@ Each generated batch is a Label Studio JSON array:
     "cyrl_word": "вакытында",
     "auto_zamanalif": "waqıtında",
     "gemini_origin": "N",
-    "hints_html": "<ul><li><b>в</b> -> <b>w</b></li><li><b>к</b> -> <b>q</b></li><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li><li>Frequency for <b><i>вакыт</i></b>: <b>42</b></li></ul>"
   }
 }
 ```

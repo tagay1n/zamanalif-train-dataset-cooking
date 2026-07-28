@@ -1643,20 +1643,11 @@ def conversion_branches(word: str) -> ConversionBranches:
 
 
 def decision_html(entry: WordStats) -> str:
-    """Build compact vertical conversion-decision HTML for Label Studio."""
+    """Build compact review context for Label Studio."""
     items: list[str] = []
     result = conversion_result_for_annotation(entry.normalized, entry.label)
     if result is not None and "IYA" in result.rule_ids:
         items.append("<b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)")
-    for index, char in enumerate(entry.normalized):
-        if not CYRILLIC_RE.fullmatch(char):
-            continue
-        if char in CONDITIONAL_LETTERS:
-            items.append(_conditional_decision(char, entry.normalized, index, entry.label))
-        else:
-            converted = _char_conversion(char, entry.normalized, index, entry.label)
-            if converted:
-                items.append(f"<b>{escape(char)}</b> -> <b>{escape(converted)}</b>")
     items.append(f"Gemini's origin prediction: <b>{_origin_prediction(entry.label)}</b>")
     if result is None:
         items.append("Automatic converter produced no clean Latin suggestion")
@@ -2112,13 +2103,6 @@ def _display_word(surface: str, normalized: str) -> str:
     if len(stripped) >= 2 and stripped.isupper():
         return stripped
     return normalized
-
-
-def _conditional_decision(char: str, word: str, index: int, label: str) -> str:
-    converted = _conditional_char_conversion(char, word, index, label)
-    if converted:
-        return f"<b>{escape(char)}</b> -> <b>{escape(converted)}</b>"
-    return f"<b>{escape(char)}</b> -> conditional"
 
 
 def _origin_prediction(label: str) -> str:

@@ -217,8 +217,8 @@ def _focus(project_key: str, rule_ids: Iterable[str]) -> str:
         return (
             "<section>\n"
             "  <h3>Conversion Focus</h3>\n"
-            "  <p>Check the converter's letter-level hints, especially these common "
-            "conditional cases:</p>\n"
+            "  <p>Check the proposed spelling, especially these common conditional "
+            "cases:</p>\n"
             "  <ul>\n    "
             + "\n    ".join(items)
             + "\n  </ul>\n</section>"
