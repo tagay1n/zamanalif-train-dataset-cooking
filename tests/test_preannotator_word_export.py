@@ -24,6 +24,7 @@ from tatar_preannotator.word_export import (
     convert_for_annotation_dsl,
     export_labelstudio_project_tasks_from_db,
     export_labelstudio_tasks_from_db,
+    is_safe_family_member,
     load_reviewed_words,
     normalize_word,
     save_reviewed_word,
@@ -1448,6 +1449,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             "мәсьәләләрендә",
             "мәсьәләләрендәге",
             "мәсьәләдә",
+            "мәсьәләгә",
         ]
         analyzer = FakeMorphologyAnalyzer(
             {word: ("мәсьәлә", "n") for word in words}
@@ -1475,10 +1477,27 @@ class PreannotatorWordExportTests(unittest.TestCase):
         catchall = result.projects["catchall"]
         self.assertEqual(
             catchall.exported_words,
-            ["мәсьәләдә", "мәсьәләләрендәге"],
+            ["мәсьәләгә", "мәсьәләләрендәге"],
         )
         self.assertEqual(catchall.report["covered_word_count"], len(words))
         self.assertEqual(result.report["covered_word_count"], len(words))
+
+    def test_safe_family_member_requires_suffix_divergence_after_lemma(self) -> None:
+        self.assertTrue(
+            is_safe_family_member(
+                "мәсьәләләрендәге",
+                "мәсьәләдә",
+                "мәсьәлә",
+            )
+        )
+        self.assertFalse(
+            is_safe_family_member(
+                "мәсьәләләрендәге",
+                "мәсьәләгә",
+                "мәсьәлә",
+            )
+        )
+        self.assertFalse(is_safe_family_member("баралар", "бала", "бар"))
 
     def test_catchall_does_not_group_different_origins_or_ambiguous_words(self) -> None:
         analyzer = FakeMorphologyAnalyzer(

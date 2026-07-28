@@ -13,7 +13,7 @@ ZAMANALIF_CHARACTERS = frozenset(
     "abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     "äÄöÖüÜñÑıİğĞşŞçÇ"
-    f"-{ZAMANALIF_APOSTROPHE}—"
+    f"-{ZAMANALIF_APOSTROPHE}—()"
 )
 IDENTIFIER_RE = re.compile(r"[A-Z][A-Z0-9_]*")
 OPTION_RE = re.compile(r"[a-z][a-z0-9_]*")

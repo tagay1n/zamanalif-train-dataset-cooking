@@ -63,16 +63,16 @@ Ambiguous and unknown words remain independent tasks. DSL-rule words, hamza
 words, and contextual homonyms are routed to their dedicated projects before
 family grouping and therefore cannot enter a catchall family.
 
-Every maximal form represents one prefix branch, so divergent forms in the
-same morphological family are exported as separate tasks. Accepting an
-unchanged canonical conversion approves only forms that are literal prefixes
-of the displayed representative, with each form's own canonical conversion.
-For example, accepting `мәсьәләләрендәге` can approve `мәсьәләләрендә` and
-`мәсьәлә`, but not `мәсьәләдә`. Editing the representative conversion disables
-propagation. A later dictionary import applies the same prefix rule to
-eligible forms anchored by older directly reviewed canonical catchall words.
-Derived approvals retain their source and analyzer revision in
-`reviewed_word_derivations`.
+Export chooses longer representatives first. A representative covers its
+literal prefixes and shorter divergent siblings when divergence starts after
+the full lemma and the sibling-only suffix contains none of
+`вгекуцюяүщъыьё`. Other divergent branches remain separate tasks. Accepting
+the unchanged canonical conversion approves each covered form with that
+form's own canonical conversion. For example, `мәсьәләләрендәге` can approve
+`мәсьәләләрендә`, `мәсьәлә`, and `мәсьәләдә`, but not `мәсьәләгә`. Editing the
+representative conversion disables propagation. Historical backfill from
+older direct canonical reviews remains prefix-only. Derived approvals retain
+their source and analyzer revision in `reviewed_word_derivations`.
 
 ## Contextual Homonym Review
 

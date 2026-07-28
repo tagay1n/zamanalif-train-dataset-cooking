@@ -82,6 +82,7 @@ class LabelStudioImportTests(unittest.TestCase):
         analyzer = FakeMorphologyAnalyzer(
             {
                 "торган": ("тор", "v"),
+                "торганда": ("тор", "v"),
                 "торганнар": ("тор", "v"),
                 "торганнары": ("тор", "v"),
             }
@@ -89,7 +90,10 @@ class LabelStudioImportTests(unittest.TestCase):
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             db_path = _database(root / "db.sqlite")
-            _add_words(db_path, ["торган", "торганнар", "торганнары"])
+            _add_words(
+                db_path,
+                ["торган", "торганда", "торганнар", "торганнары"],
+            )
             task = _task(
                 "торганнары",
                 "torğannarı",
@@ -112,15 +116,21 @@ class LabelStudioImportTests(unittest.TestCase):
                 ).fetchall()
 
         self.assertEqual(summary.imported_items, 1)
-        self.assertEqual(summary.inherited_items, 2)
+        self.assertEqual(summary.inherited_items, 3)
+        self.assertEqual(summary.inherited_current_batch_items, 3)
+        self.assertEqual(summary.inherited_backfill_items, 0)
+        self.assertEqual(summary.inherited_literal_subword_items, 2)
+        self.assertEqual(summary.inherited_deterministic_divergent_items, 1)
+        self.assertEqual(summary.inherited_source_families, 1)
         self.assertEqual(
             set(reviewed),
-            {"торган", "торганнар", "торганнары"},
+            {"торган", "торганда", "торганнар", "торганнары"},
         )
         self.assertEqual(
             derivations,
             [
                 ("торган", "торганнары", "тор", "v"),
+                ("торганда", "торганнары", "тор", "v"),
                 ("торганнар", "торганнары", "тор", "v"),
             ],
         )
@@ -130,13 +140,14 @@ class LabelStudioImportTests(unittest.TestCase):
         analyzer = FakeMorphologyAnalyzer(
             {
                 "торган": ("тор", "v"),
+                "торганда": ("тор", "v"),
                 "торганнары": ("тор", "v"),
             }
         )
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             db_path = _database(root / "db.sqlite")
-            _add_words(db_path, ["торган", "торганнары"])
+            _add_words(db_path, ["торган", "торганда", "торганнары"])
             task = _task(
                 "торганнары",
                 "torğannarı",
@@ -153,6 +164,38 @@ class LabelStudioImportTests(unittest.TestCase):
 
         self.assertEqual(summary.inherited_items, 0)
         self.assertEqual(set(reviewed), {"торганнары"})
+
+    def test_direct_family_review_outranks_inferred_conversion(self) -> None:
+        analyzer = FakeMorphologyAnalyzer(
+            {
+                "идеяләрендә": ("идея", "n"),
+                "идеяләренә": ("идея", "n"),
+            }
+        )
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, ["идеяләрендә", "идеяләренә"], origin="RL")
+            edited = _task("идеяләренә", "ideyalärenä", "RL")
+            edited["annotations"][0]["result"][0]["value"]["text"] = [
+                "ideyälärenä"
+            ]
+
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(
+                    root / "direct-family.json",
+                    [
+                        _task("идеяләрендә", "ideyalärendä", "RL"),
+                        edited,
+                    ],
+                ),
+                morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.imported_items, 2)
+        self.assertEqual(reviewed["идеяләренә"].zamanalif_dsl, "ideyälärenä")
 
     def test_next_dictionary_import_expands_only_prefixes_of_direct_review(self) -> None:
         analyzer = FakeMorphologyAnalyzer(
@@ -187,7 +230,7 @@ class LabelStudioImportTests(unittest.TestCase):
         )
         self.assertNotIn("торганда", reviewed)
 
-    def test_imported_branch_does_not_propagate_to_non_prefix_family_member(self) -> None:
+    def test_imported_branch_propagates_only_to_safe_divergent_member(self) -> None:
         words = [
             "мәсьәлә",
             "мәсьәләләр",
@@ -196,6 +239,7 @@ class LabelStudioImportTests(unittest.TestCase):
             "мәсьәләләрендә",
             "мәсьәләләрендәге",
             "мәсьәләдә",
+            "мәсьәләгә",
         ]
         analyzer = FakeMorphologyAnalyzer(
             {word: ("мәсьәлә", "n") for word in words}
@@ -218,7 +262,7 @@ class LabelStudioImportTests(unittest.TestCase):
             reviewed = load_reviewed_words(db_path)
 
         self.assertEqual(summary.imported_items, 1)
-        self.assertEqual(summary.inherited_items, 5)
+        self.assertEqual(summary.inherited_items, 6)
         self.assertTrue(
             {
                 "мәсьәлә",
@@ -227,10 +271,11 @@ class LabelStudioImportTests(unittest.TestCase):
                 "мәсьәләләрен",
                 "мәсьәләләрендә",
                 "мәсьәләләрендәге",
+                "мәсьәләдә",
             }
             <= set(reviewed)
         )
-        self.assertNotIn("мәсьәләдә", reviewed)
+        self.assertNotIn("мәсьәләгә", reviewed)
 
     def test_homonym_annotation_routes_word_to_contextual_export_idempotently(self) -> None:
         with TemporaryDirectory() as tmpdir:
@@ -577,6 +622,12 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(audit_code, 0)
         self.assertEqual(import_code, 0)
         self.assertIn("project=catchall", stdout.getvalue())
+        self.assertIn(
+            "family propagation: inherited=0 current_batch=0 "
+            "historical_backfill=0 literal_subwords=0 "
+            "deterministic_divergent=0 source_families=0",
+            stdout.getvalue(),
+        )
 
 
 def _database(path: Path, *, contextual_word: str | None = None) -> Path:
@@ -719,7 +770,7 @@ def _backup(path: Path, tasks: list[dict[str, object]]) -> Path:
     return path
 
 
-def _add_words(path: Path, words: list[str]) -> None:
+def _add_words(path: Path, words: list[str], *, origin: str = "N") -> None:
     with sqlite3.connect(path) as conn:
         for index, word in enumerate(words, start=2):
             sample_id = f"sent_{index}"
@@ -739,7 +790,7 @@ def _add_words(path: Path, words: list[str]) -> None:
                 (
                     sample_id,
                     json.dumps(
-                        [{"text": word, "label": "N"}],
+                        [{"text": word, "label": origin}],
                         ensure_ascii=False,
                     ),
                 ),

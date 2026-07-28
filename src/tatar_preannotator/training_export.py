@@ -29,7 +29,7 @@ from .word_export import (
 
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
 DSL_DELIMITER_RE = re.compile(r"{{|}}")
-CASE_SEPARATORS_RE = re.compile(r"([-\u2019'])")
+CASE_SEPARATORS_RE = re.compile(r"([-\u2019'()])")
 
 
 class TrainingExportError(ValueError):
@@ -294,11 +294,18 @@ def _convert_sentence(
             raise TrainingExportError(
                 f"{record.sample_id}: invalid DSL for {normalized!r}: {exc}"
             ) from exc
-        pieces.append(_apply_source_case(text, resolved))
+        pieces.append(_apply_source_case(text, _restore_edge_punctuation(text, resolved)))
         cursor = found + len(text)
 
     pieces.append(record.text[cursor:])
     return "".join(pieces)
+
+
+def _restore_edge_punctuation(source: str, target: str) -> str:
+    matches = list(CYRILLIC_RE.finditer(source))
+    if not matches:
+        return target
+    return source[: matches[0].start()] + target + source[matches[-1].end() :]
 
 
 def _apply_source_case(source: str, target: str) -> str:

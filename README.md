@@ -248,14 +248,14 @@ occurrences into focused Label Studio projects:
 ```bash
 python -m tatar_preannotator annotation-export \
   --db data/zamanalif.sqlite \
-  --output-dir labelstudio_projects \
-  --max-items 5000
+  --output-dir labelstudio_projects
 ```
 
 Exporting does not change annotation state. Re-running the command before
 importing completed Label Studio results produces the same eligible tasks.
 Only a successful `annotation-import` records completed reviews and excludes
-them from later exports.
+them from later exports. The export writes each project as batches containing
+at most 500 tasks.
 
 Selection rules:
 
@@ -360,10 +360,11 @@ and `loanword_zamanalif`; its `meta` additionally contains `sample_id` and
 IDs are not repeated in tasks.
 
 Catchall uses the pinned Apertium-tat analyzer to group unambiguous word forms
-with the same lemma, part of speech, and predicted origin. Within each group,
-every maximal form starts a separate task branch. That task covers only forms
-that are literal prefixes of its displayed word. Install the local toolchain
-once:
+with the same lemma, part of speech, and predicted origin. Longer forms cover
+their literal prefixes and shorter divergent siblings when the divergence
+starts after the full lemma and the sibling-only suffix contains none of the
+non-deterministic letters `вгекуцюяүщъыьё`. Uncovered branches remain separate
+tasks. Install the local toolchain once:
 
 ```bash
 sudo apt install apertium-all-dev
@@ -378,14 +379,13 @@ reconstructs them from the displayed representative with the pinned analyzer.
 Catchall tasks use `meta.schema_version` `3`.
 
 When a catchall representative is accepted without changing its canonical
-conversion, import approves only same-origin, same-analysis forms that are
-literal prefixes of the representative, using each form's canonical
-conversion. A divergent form is exported as another task even when it has the
-same lemma and part of speech. An edited conversion approves only the
-representative. Each later dictionary import applies the same prefix rule to
-older directly reviewed canonical catchall words. Inherited reviews are
-recorded in `reviewed_word_derivations`; exporting itself never writes review
-state.
+conversion, import approves covered same-origin, same-analysis forms using
+each form's canonical conversion. For example, `мәсьәләләрендәге` covers both
+its prefix chain and the safe divergent sibling `мәсьәләдә`, but not
+`мәсьәләгә` because its divergent suffix contains `г`. An edited conversion
+approves only the representative. Historical backfill from older direct
+reviews remains prefix-only. Inherited reviews are recorded in
+`reviewed_word_derivations`; exporting itself never writes review state.
 
 Label Studio layout:
 
@@ -606,6 +606,9 @@ their conversion value is ignored. Contextual occurrence decisions are written
 to `contextual_reviews` by exact `meta.sample_id` and `meta.token_index`.
 Unannotated and cancelled tasks are skipped.
 Identical reimports are idempotent; conflicting decisions fail atomically.
+After a successful dictionary import, the command prints family-propagation
+counts for the current batch and historical backfill, split between literal
+subwords and deterministic divergent forms, plus the number of source families.
 
 Malformed DSL, missing controls, unexpected dictionary origin controls,
 duplicate word tasks, conflicting annotations, or invalid contextual origins

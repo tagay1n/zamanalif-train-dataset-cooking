@@ -83,11 +83,12 @@ MANAGED_INSTRUCTIONS_RE = re.compile(r"^project_[a-z0-9_]+_instructions\.html$")
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
 TATAR_SPECIFIC_PART_LETTERS = frozenset("әөүҗңһ")
 RL_REVIEW_LETTERS = frozenset("ёыьъщ")
+FAMILY_DIVERGENCE_RISK_LETTERS = frozenset(CONDITIONAL_LETTERS) | RL_REVIEW_LETTERS
 ALLOWED_ZAMANALIF = frozenset(
     "abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     "äÄöÖüÜñÑıİğĞşŞçÇ"
-    f"-—{ZAMANALIF_APOSTROPHE}"
+    f"-—{ZAMANALIF_APOSTROPHE}()"
 )
 @dataclass
 class WordStats:
@@ -190,6 +191,35 @@ def contains_conditional_letter(word: str) -> bool:
 def contains_rl_review_letter(word: str) -> bool:
     """Return true when a loanword has a non-deterministic review letter."""
     return any(char in CONDITIONAL_LETTERS or char in RL_REVIEW_LETTERS for char in word)
+
+
+def is_safe_family_member(
+    representative: str,
+    candidate: str,
+    lemma: str,
+) -> bool:
+    """Return whether a shorter family member is covered by this review."""
+    if len(candidate) >= len(representative):
+        return False
+    if representative.startswith(candidate):
+        return True
+    if not representative.startswith(lemma) or not candidate.startswith(lemma):
+        return False
+
+    common_length = 0
+    for source_char, candidate_char in zip(representative, candidate, strict=False):
+        if source_char != candidate_char:
+            break
+        common_length += 1
+    if common_length < len(lemma):
+        return False
+
+    divergent_suffix = candidate[common_length:]
+    return bool(divergent_suffix) and all(
+        CYRILLIC_RE.fullmatch(char)
+        and char not in FAMILY_DIVERGENCE_RISK_LETTERS
+        for char in divergent_suffix
+    )
 
 
 def requires_dictionary_review(word: str, label: str) -> bool:
@@ -584,17 +614,38 @@ def _export_units(
         grouped.setdefault(key, []).append(item)
 
     for items in grouped.values():
-        representatives = [
-            item
-            for item in items
-            if not any(
-                other[1] != item[1] and other[1].startswith(item[1])
-                for other in items
-            )
-        ]
+        identity = identities.get(items[0][1])
+        if identity is None:
+            representatives = items
+        else:
+            representatives = []
+            for item in sorted(
+                items,
+                key=lambda value: (-len(value[1]), -value[2], value[1]),
+            ):
+                if any(
+                    is_safe_family_member(
+                        representative[1],
+                        item[1],
+                        identity.lemma,
+                    )
+                    for representative in representatives
+                ):
+                    continue
+                representatives.append(item)
         for task, normalized, _, _ in representatives:
             covered = [
-                item for item in items if normalized.startswith(item[1])
+                item
+                for item in items
+                if item[1] == normalized
+                or (
+                    identity is not None
+                    and is_safe_family_member(
+                        normalized,
+                        item[1],
+                        identity.lemma,
+                    )
+                )
             ]
             members = tuple(
                 item[1]

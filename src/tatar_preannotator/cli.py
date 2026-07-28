@@ -18,7 +18,10 @@ from .conflict_resolver import (
     auto_resolve_unknowns,
     serve_conflict_resolver_web,
 )
-from .contextual_review import export_contextual_tasks_from_db
+from .contextual_review import (
+    PROJECT_KEY as CONTEXTUAL_PROJECT_KEY,
+    export_contextual_tasks_from_db,
+)
 from .gemini_client import GoogleGeminiClient
 from .labelstudio_import import (
     LabelStudioImportError,
@@ -387,6 +390,17 @@ def _annotation_import(args: argparse.Namespace) -> int:
         f"unchanged={summary.unchanged_items} "
         f"unannotated={summary.skipped_unannotated_tasks}"
     )
+    if summary.project_key != CONTEXTUAL_PROJECT_KEY:
+        print(
+            "family propagation: "
+            f"inherited={summary.inherited_items} "
+            f"current_batch={summary.inherited_current_batch_items} "
+            f"historical_backfill={summary.inherited_backfill_items} "
+            f"literal_subwords={summary.inherited_literal_subword_items} "
+            f"deterministic_divergent="
+            f"{summary.inherited_deterministic_divergent_items} "
+            f"source_families={summary.inherited_source_families}"
+        )
     return 0
 
 

@@ -88,6 +88,9 @@ class ConversionDslTests(unittest.TestCase):
         with self.assertRaisesRegex(DslError, "invalid characters"):
             parse_dsl("сәлам")
 
+    def test_accepts_parentheses_in_literal(self) -> None:
+        self.assertEqual(parse_dsl("vkp(b").to_dsl(), "vkp(b")
+
     def test_rejects_unknown_policy_rule_and_option(self) -> None:
         result = ConversionResult((Choice("IYA", (("compact", "ä"), ("explicit", "yä"))),))
 

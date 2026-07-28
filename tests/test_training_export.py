@@ -341,6 +341,43 @@ class TrainingExportTests(unittest.TestCase):
         self.assertFalse(output.exists())
         self.assertFalse(Path(str(output) + ".manifest.json").exists())
 
+    def test_reviewed_abbreviation_restores_trailing_parenthesis_and_case(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(
+                root / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "text": "ВКП(б) тарихы.",
+                        "tokens": [
+                            {"text": "ВКП(б)", "label": "RL"},
+                            {"text": "тарихы", "label": "N"},
+                        ],
+                    }
+                ],
+            )
+            with sqlite3.connect(db_path) as conn:
+                conn.execute(
+                    """
+                    insert into reviewed_words(
+                        normalized_word, zamanalif_dsl, origin, updated_at
+                    ) values ('вкп(б', 'vkp(b', 'RL', 'now')
+                    """
+                )
+                conn.execute(
+                    """
+                    insert into reviewed_words(
+                        normalized_word, zamanalif_dsl, origin, updated_at
+                    ) values ('тарихы', 'tarixı', 'N', 'now')
+                    """
+                )
+
+            export_training_dataset(db_path, root / "train.jsonl")
+            records = _read_jsonl(root / "train.jsonl")
+
+        self.assertEqual(records[0]["zamanalif"], "VKP(b) tarixı.")
+
     def test_omitted_cyrillic_token_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

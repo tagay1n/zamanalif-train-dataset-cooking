@@ -36,6 +36,7 @@ from .word_export import (
     dictionary_project_keys,
     eligible_catchall_words,
     ensure_review_state_schema,
+    is_safe_family_member,
     normalize_word,
 )
 
@@ -74,6 +75,11 @@ class LabelStudioImportSummary:
     imported_items: int
     homonym_items: int
     inherited_items: int
+    inherited_current_batch_items: int
+    inherited_backfill_items: int
+    inherited_literal_subword_items: int
+    inherited_deterministic_divergent_items: int
+    inherited_source_families: int
     unchanged_items: int
     skipped_unannotated_tasks: int
 
@@ -140,6 +146,11 @@ def import_labelstudio_annotations(
     now = datetime.now(timezone.utc).isoformat()
     imported = 0
     inherited = 0
+    inherited_current_batch = 0
+    inherited_backfill = 0
+    inherited_literal_subwords = 0
+    inherited_deterministic_divergent = 0
+    inherited_source_families = 0
     unchanged = 0
 
     with closing(sqlite3.connect(database)) as conn:
@@ -321,6 +332,28 @@ def import_labelstudio_annotations(
                     derived_words,
                     now,
                 )
+                new_derivations = conn.execute(
+                    """
+                    select normalized_word, source_word
+                    from reviewed_word_derivations
+                    where created_at = ?
+                    """,
+                    (now,),
+                ).fetchall()
+                inherited_current_batch = sum(
+                    str(row[1]) in regular_words for row in new_derivations
+                )
+                inherited_backfill = len(new_derivations) - inherited_current_batch
+                inherited_literal_subwords = sum(
+                    str(row[1]).startswith(str(row[0]))
+                    for row in new_derivations
+                )
+                inherited_deterministic_divergent = (
+                    len(new_derivations) - inherited_literal_subwords
+                )
+                inherited_source_families = len(
+                    {str(row[1]) for row in new_derivations}
+                )
             conn.commit()
         except Exception:
             conn.rollback()
@@ -333,6 +366,11 @@ def import_labelstudio_annotations(
         imported_items=imported,
         homonym_items=sum(item.is_homonym for item in parsed.annotations),
         inherited_items=inherited,
+        inherited_current_batch_items=inherited_current_batch,
+        inherited_backfill_items=inherited_backfill,
+        inherited_literal_subword_items=inherited_literal_subwords,
+        inherited_deterministic_divergent_items=inherited_deterministic_divergent,
+        inherited_source_families=inherited_source_families,
         unchanged_items=unchanged,
         skipped_unannotated_tasks=parsed.skipped_unannotated_tasks,
     )
@@ -424,7 +462,11 @@ def _reconstruct_imported_family(
                 word
                 for word, related_candidate in eligible.items()
                 if word != item.normalized_word
-                and item.normalized_word.startswith(word)
+                and is_safe_family_member(
+                    item.normalized_word,
+                    word,
+                    identity.lemma,
+                )
                 and related_candidate.origin == item.suggested_origin
                 and analyses.get(word) == identity
             ),
@@ -458,9 +500,13 @@ def _propagate_imported_family(
 
     inserted = 0
     for word in item.family_members[1:]:
-        if not item.normalized_word.startswith(word):
+        if not is_safe_family_member(
+            item.normalized_word,
+            word,
+            identity.lemma,
+        ):
             raise LabelStudioImportError(
-                f"catchall family member is not a prefix: {word!r}"
+                f"catchall family member is not safely covered: {word!r}"
             )
         if analyses.get(word) != identity:
             raise LabelStudioImportError(
@@ -567,7 +613,7 @@ def _store_inherited_review(
     current = (zamanalif_dsl, origin)
     previous = existing.get(word)
     if previous is not None:
-        if previous != current:
+        if previous != current and word in derived_words:
             raise LabelStudioImportError(
                 f"inherited review conflict for {word!r}: "
                 f"database has {previous!r}, family implies {current!r}"
