@@ -382,23 +382,121 @@ Label Studio layout:
 </View>
 ```
 
-Export completed Label Studio tasks as a JSON array, then import them into the
-shared reviewed-word dictionary:
+The origin control is optional. Focused projects can omit it when annotators
+only review the Zamanalif spelling. In that case the importer uses the
+`data.gemini_origin` value that was saved in the exported task.
+
+### Back up annotations from hosted Label Studio
+
+On the hosted Label Studio instance, the UI export can fail when its server-side
+`/data/export` directory is unavailable. The task API avoids that directory and
+returns task data and annotations directly.
+
+Create a short-lived access token from a Personal Access Token:
+
+```bash
+read -rsp "Personal Access Token: " LS_PAT
+echo
+
+LS_ACCESS=$(
+  printf '{"refresh":"%s"}' "$LS_PAT" |
+  curl --silent --show-error --fail \
+    -H "Content-Type: application/json" \
+    --data-binary @- \
+    "https://yasalma-default-annotation.hf.space/api/token/refresh" |
+  python3 -c 'import json,sys; print(json.load(sys.stdin)["access"])'
+)
+unset LS_PAT
+```
+
+Never put the PAT or access token in a file or commit it. List projects first
+because Label Studio project IDs can change when a Space or volume is
+recreated:
+
+```bash
+curl --silent --show-error --fail \
+  -H "Authorization: Bearer $LS_ACCESS" \
+  "https://yasalma-default-annotation.hf.space/api/projects/?page_size=100" \
+  --output data/labelstudio_projects.json
+
+python3 -m json.tool data/labelstudio_projects.json
+```
+
+Set the ID shown for the required project and download all task fields. Export
+batches in this repository contain at most 1000 tasks, so one API page covers
+one complete Label Studio project:
+
+```bash
+PROJECT_ID=4
+OUTPUT="data/labelstudio_project_${PROJECT_ID}_tasks.json"
+
+curl --silent --show-error --fail-with-body \
+  -H "Authorization: Bearer $LS_ACCESS" \
+  "https://yasalma-default-annotation.hf.space/api/tasks/?project=${PROJECT_ID}&fields=all&page_size=1000" \
+  --output "${OUTPUT}.part"
+
+mv "${OUTPUT}.part" "$OUTPUT"
+unset LS_ACCESS
+```
+
+Keep the `.part` suffix until `curl` succeeds. A failed request therefore
+cannot overwrite a previous valid backup. The downloaded JSON is a task API
+response with a top-level `tasks` array; both `annotation-audit` and
+`annotation-import` accept this shape directly.
+
+Validate the backup and inspect actual annotator changes before importing:
+
+```bash
+python -m tatar_preannotator annotation-audit \
+  --input "$OUTPUT"
+```
+
+The audit validates completed annotations but does not write to SQLite. It
+separates:
+
+- `unchanged`: submitted tasks whose final values equal the exported
+  suggestions;
+- `changed`: tasks where the final origin or conversion actually differs;
+- `unannotated`: untouched and cancelled tasks.
+
+Only genuine changes are printed after the summary. Label Studio can encode an
+edited prefilled TextArea as `["original", "edited"]`; the audit recognizes
+this only when the first value exactly matches `data.auto_zamanalif`, then
+compares the final value. Merely submitting an unchanged suggestion is not
+reported as an edit.
+
+For example, the first Catchall backup produced:
+
+```text
+annotation audit complete: tasks=1000 completed=931 unchanged=930 changed=1 origin_changes=0 conversion_changes=1 unannotated=69
+task=510 word=акты
+  conversion: aktı -> aqtı
+```
+
+After reviewing every printed change, import the same backup into the shared
+reviewed-word dictionary:
 
 ```bash
 python -m tatar_preannotator annotation-import \
   --db data/zamanalif.sqlite \
-  --input labelstudio_word_review_export.json
+  --input "$OUTPUT"
 ```
 
 The importer reads the `reviewed_origin` and `corrected_zamanalif` controls,
-validates every completed task, and writes approved conversion/origin pairs to
+or uses `data.gemini_origin` when the layout omits the origin control. It
+validates every completed task and writes approved conversion/origin pairs to
 `reviewed_words` in one transaction. Unannotated and cancelled tasks are
 skipped, so an annotator can skip genuinely uncertain words instead of choosing
 an `U` label. Importing the same decision again is idempotent; a different
 decision for an already reviewed word fails instead of silently replacing the
 final approval. Remove the existing `reviewed_words` row explicitly before
 importing a deliberate correction.
+
+Words with existing homonym evidence are not imported as global dictionary
+entries, even when their Label Studio task is completed. The importer marks
+them as `contextual_homonym` in `word_resolutions` and prints examples. They
+therefore disappear from Project 1 word exports and must be handled later in a
+sentence-context project.
 
 Malformed DSL, missing controls, duplicate word tasks, conflicting annotations,
 or invalid origins abort the whole import without partial writes. After a

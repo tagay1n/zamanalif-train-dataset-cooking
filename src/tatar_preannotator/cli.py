@@ -19,7 +19,11 @@ from .conflict_resolver import (
     serve_conflict_resolver_web,
 )
 from .gemini_client import GoogleGeminiClient
-from .labelstudio_import import LabelStudioImportError, import_labelstudio_annotations
+from .labelstudio_import import (
+    LabelStudioImportError,
+    audit_labelstudio_export,
+    import_labelstudio_annotations,
+)
 from .local_repair import repair_unprocessable
 from .manual_preannotate import ManualPreannotateError
 from .manual_preannotate_web import serve_manual_preannotation_web
@@ -143,6 +147,17 @@ def main(argv: list[str] | None = None) -> int:
         help="Label Studio JSON export.",
     )
 
+    annotation_audit = subparsers.add_parser(
+        "annotation-audit",
+        help="Validate Label Studio annotations and show genuine human edits.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    annotation_audit.add_argument(
+        "--input",
+        required=True,
+        help="Label Studio JSON export or task API response.",
+    )
+
     antat = subparsers.add_parser(
         "download-antat-reference",
         help="Download Antat English-Tatar Cyrillic/Zamanalif dictionary into SQLite.",
@@ -207,6 +222,8 @@ def main(argv: list[str] | None = None) -> int:
         return _training_export(args)
     if args.command == "annotation-import":
         return _annotation_import(args)
+    if args.command == "annotation-audit":
+        return _annotation_audit(args)
     if args.command == "download-antat-reference":
         return _download_antat_reference(args)
     if args.command == "manual-preannotate":
@@ -354,8 +371,45 @@ def _annotation_import(args: argparse.Namespace) -> int:
         f"completed={summary.completed_tasks} "
         f"imported={summary.imported_words} "
         f"unchanged={summary.unchanged_words} "
+        f"contextual_homonyms={summary.contextual_homonym_words} "
         f"unannotated={summary.skipped_unannotated_tasks}"
     )
+    if summary.contextual_homonym_examples:
+        print(
+            "contextual homonyms deferred: "
+            + ", ".join(summary.contextual_homonym_examples)
+        )
+    return 0
+
+
+def _annotation_audit(args: argparse.Namespace) -> int:
+    try:
+        summary = audit_labelstudio_export(args.input)
+    except (OSError, LabelStudioImportError) as exc:
+        print(f"annotation audit failed: {exc}")
+        return 1
+
+    print(
+        "annotation audit complete: "
+        f"tasks={summary.total_tasks} "
+        f"completed={summary.completed_tasks} "
+        f"unchanged={summary.unchanged_tasks} "
+        f"changed={len(summary.changes)} "
+        f"origin_changes={summary.origin_changes} "
+        f"conversion_changes={summary.conversion_changes} "
+        f"unannotated={summary.skipped_unannotated_tasks}"
+    )
+    for change in summary.changes:
+        print(f"task={change.task_id} word={change.word}")
+        if change.suggested_origin != change.reviewed_origin:
+            print(
+                f"  origin: {change.suggested_origin} -> {change.reviewed_origin}"
+            )
+        if change.suggested_zamanalif != change.reviewed_zamanalif:
+            print(
+                f"  conversion: "
+                f"{change.suggested_zamanalif} -> {change.reviewed_zamanalif}"
+            )
     return 0
 
 
