@@ -143,9 +143,15 @@ def export_contextual_tasks_from_db(
             ).fetchall()
         }
 
-    eligible = [
+    review_required = [
         occurrence
         for occurrence in all_occurrences
+        if conversion_branches(occurrence.normalized_word).state
+        != "origin_independent"
+    ]
+    eligible = [
+        occurrence
+        for occurrence in review_required
         if occurrence.normalized_word in effective_words
         and occurrence.key not in completed
     ]
@@ -161,6 +167,12 @@ def export_contextual_tasks_from_db(
             "project_key": PROJECT_KEY,
             "project_title": PROJECT_TITLE,
             "effective_homonym_word_count": len(effective_words),
+            "review_required_homonym_word_count": len(
+                {item.normalized_word for item in review_required}
+            ),
+            "auto_resolved_deterministic_occurrence_count": (
+                len(all_occurrences) - len(review_required)
+            ),
             "pending_occurrence_count": len(eligible),
             "exported_occurrence_count": len(ordered),
             "completed_occurrence_count": len(completed),

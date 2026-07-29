@@ -48,8 +48,14 @@ class ContextualReviewExportTests(unittest.TestCase):
         self.assertEqual(words.count("Акты"), 1)
         self.assertEqual(words.count("акты"), 1)
         self.assertEqual(words.count("Кама"), 1)
-        self.assertEqual(words.count("Сер"), 1)
-        self.assertEqual(len(result.occurrences), 4)
+        self.assertEqual(words.count("Сер"), 0)
+        self.assertEqual(len(result.occurrences), 3)
+        self.assertEqual(result.report["effective_homonym_word_count"], 3)
+        self.assertEqual(result.report["review_required_homonym_word_count"], 2)
+        self.assertEqual(
+            result.report["auto_resolved_deterministic_occurrence_count"],
+            1,
+        )
         for task in result.tasks:
             self.assertEqual(task["meta"]["project_key"], "contextual_homonym")
             self.assertEqual(task["meta"]["schema_version"], 1)
@@ -103,10 +109,10 @@ class ContextualReviewExportTests(unittest.TestCase):
             }
 
         self.assertEqual(exit_code, 0)
-        self.assertEqual(contextual_words, {"акты", "кама", "сер"})
+        self.assertEqual(contextual_words, {"акты", "кама"})
         self.assertTrue({"акты", "кама", "сер"}.isdisjoint(dictionary_words))
         self.assertIn("проект", dictionary_words)
-        self.assertIn("contextual=4", stdout.getvalue())
+        self.assertIn("contextual=3", stdout.getvalue())
 
     def test_repeated_export_returns_same_unreviewed_occurrence(self) -> None:
         with TemporaryDirectory() as tmpdir:

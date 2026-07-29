@@ -272,8 +272,10 @@ Selection rules:
 - skip native-looking `"N"` words with mixed front/back vowel harmony;
 - exclude every effective homonym from all dictionary projects, including
   catchall;
-- export every occurrence of those words to `contextual_homonym` with its
-  sentence context;
+- automatically convert homonym occurrences whose native and loanword branches
+  are identical;
+- export only origin-dependent homonym occurrences to `contextual_homonym` with
+  their sentence context;
 - route every native conversion that emits a hamza, including literal lexical
   conversions such as `тәэмин → täʼmin`, to `hamza` and never to catchall;
 - always skip forms already approved in `reviewed_words`;
@@ -488,8 +490,8 @@ When checked, the correction is hidden and the checkbox alone is a complete
 decision. Dictionary annotations containing a `reviewed_origin` control are
 rejected.
 
-The contextual project uses the same controls against highlighted sentence
-context:
+The contextual project contains only occurrences whose native and loanword
+outputs differ. It uses the same controls against highlighted sentence context:
 
 ```xml
 <View>

@@ -252,10 +252,18 @@ def _convert_sentence(
             pieces.append(text)
             cursor = found + len(text)
             continue
+        branches = conversion_branches(normalized)
+        resolution = word_resolutions.get(normalized)
+        is_contextual_homonym = resolution == "contextual_homonym" or (
+            token.get("homonym") is True
+            and resolution not in {"N", "RL", "U"}
+        )
         contextual = contextual_reviews.get(
             OccurrenceKey(record.sample_id, token_index)
         )
-        if contextual is not None:
+        if is_contextual_homonym and branches.state == "origin_independent":
+            dsl = branches.native_dsl
+        elif contextual is not None:
             if contextual.normalized_word != normalized:
                 raise TrainingExportError(
                     f"{record.sample_id}: contextual review is stale at token "
@@ -263,12 +271,9 @@ def _convert_sentence(
                 )
             dsl = contextual.zamanalif_dsl
         else:
-            resolution = word_resolutions.get(normalized)
-            if resolution == "contextual_homonym":
+            if is_contextual_homonym:
                 return _NotReady("contextual_homonym")
             effective_label = resolution if resolution in {"N", "RL", "U"} else label
-            if token.get("homonym") is True and resolution not in {"N", "RL", "U"}:
-                return _NotReady("contextual_homonym")
 
             approved = reviewed.get(normalized)
             if approved is not None:
@@ -279,7 +284,6 @@ def _convert_sentence(
                     and vowel_harmony_class(normalized) == "mixed_front_back"
                 ):
                     return _NotReady("mixed_harmony_word")
-                branches = conversion_branches(normalized)
                 if branches.state != "origin_independent":
                     return _NotReady("unreviewed_word")
                 dsl = branches.suggestion(effective_label)

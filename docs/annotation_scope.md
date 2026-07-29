@@ -76,9 +76,11 @@ their source and analyzer revision in `reviewed_word_derivations`.
 
 ## Contextual Homonym Review
 
-The same split export writes one task per homonym occurrence to
-`contextual_homonym`. Each task highlights the exact token in its sentence and
-requires an `N` or `RL` decision plus the approved Zamanalif spelling.
+The same split export automatically converts homonym occurrences whose native
+and loanword branches are identical. It writes one task per remaining
+origin-dependent occurrence to `contextual_homonym`. Each task highlights the
+exact token in its sentence and requires an `N` or `RL` decision plus the
+approved Zamanalif spelling.
 Decisions are stored by `(sample_id, token_index)` in `contextual_reviews`;
 they never approve the normalized word globally.
 

@@ -126,9 +126,9 @@ class TrainingExportTests(unittest.TestCase):
                     },
                     {
                         "id": "sent_2",
-                        "text": "Сер калды.",
+                        "text": "Акты калды.",
                         "tokens": [
-                            {"text": "Сер", "label": "RL", "homonym": True},
+                            {"text": "Акты", "label": "RL", "homonym": True},
                             {"text": "калды", "label": "N"},
                         ],
                     },
@@ -167,6 +167,30 @@ class TrainingExportTests(unittest.TestCase):
             },
         )
         self.assertEqual(summary.skipped_count, 3)
+
+    def test_origin_independent_homonym_needs_no_contextual_review(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(
+                root / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "text": "Сер.",
+                        "tokens": [
+                            {"text": "Сер", "label": "RL"},
+                        ],
+                    }
+                ],
+            )
+            with sqlite3.connect(db_path) as conn:
+                save_word_resolution(conn, "сер", "contextual_homonym")
+
+            summary = export_training_dataset(db_path, root / "train.jsonl")
+            rows = _read_jsonl(root / "train.jsonl")
+
+        self.assertEqual(summary.exported_count, 1)
+        self.assertEqual(rows[0]["zamanalif"], "Ser.")
 
     def test_non_tatar_sentences_are_ignored(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

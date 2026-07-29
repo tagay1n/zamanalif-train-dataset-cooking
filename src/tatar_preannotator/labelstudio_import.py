@@ -1127,6 +1127,11 @@ def _validate_contextual_source(
         raise LabelStudioImportError(
             f"{item.sample_id}: word is no longer contextual: {normalized!r}"
         )
+    if conversion_branches(normalized).state == "origin_independent":
+        raise LabelStudioImportError(
+            f"{item.sample_id}: word no longer requires contextual review: "
+            f"{normalized!r}"
+        )
     origin, zamanalif_dsl = _regular_values(item)
     try:
         validate_contextual_review(
