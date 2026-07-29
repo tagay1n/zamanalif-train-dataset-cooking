@@ -203,6 +203,69 @@ class ContextualReviewExportTests(unittest.TestCase):
         self.assertEqual(summary.imported_items, 1)
         self.assertNotIn(exported.occurrences[0], remaining.occurrences)
 
+    def test_contextual_origin_uses_exported_variant_without_correction(self) -> None:
+        for correction_result in (
+            [],
+            [
+                {
+                    "from_name": "corrected_zamanalif",
+                    "type": "textarea",
+                    "value": {"text": [""]},
+                }
+            ],
+        ):
+            with self.subTest(correction_result=correction_result):
+                with TemporaryDirectory() as tmpdir:
+                    root = Path(tmpdir)
+                    db_path = _database(root / "db.sqlite")
+                    exported = export_contextual_tasks_from_db(db_path, max_items=1)
+                    task = {
+                        **exported.tasks[0],
+                        "annotations": [
+                            {
+                                "was_cancelled": False,
+                                "result": [
+                                    {
+                                        "from_name": "reviewed_origin",
+                                        "type": "choices",
+                                        "value": {"choices": ["RL"]},
+                                    },
+                                    *correction_result,
+                                ],
+                            }
+                        ],
+                    }
+                    backup = root / "backup.json"
+                    backup.write_text(
+                        json.dumps(
+                            {
+                                "tasks": [task],
+                                "total": 1,
+                                "total_annotations": 1,
+                                "total_predictions": 0,
+                            },
+                            ensure_ascii=False,
+                        ),
+                        encoding="utf-8",
+                    )
+
+                    summary = import_labelstudio_annotations(db_path, backup)
+                    with sqlite3.connect(db_path) as conn:
+                        stored = conn.execute(
+                            """
+                            select origin, zamanalif_dsl
+                            from contextual_reviews
+                            where sample_id = ? and token_index = ?
+                            """,
+                            (
+                                exported.occurrences[0].sample_id,
+                                exported.occurrences[0].token_index,
+                            ),
+                        ).fetchone()
+
+                self.assertEqual(summary.imported_items, 1)
+                self.assertEqual(stored, ("RL", "aktı"))
+
 
 def _database(path: Path) -> Path:
     with sqlite3.connect(path) as conn:

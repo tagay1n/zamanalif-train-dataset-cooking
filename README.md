@@ -491,25 +491,157 @@ decision. Dictionary annotations containing a `reviewed_origin` control are
 rejected.
 
 The contextual project contains only occurrences whose native and loanword
-outputs differ. It uses the same controls against highlighted sentence context:
+outputs differ. The annotator selects the meaning in context; the selected
+exported variant is accepted automatically unless an optional correction is
+entered.
 
 ```xml
 <View>
-  <HyperText name="context" value="$context_html"/>
-  <HyperText name="hints" value="$hints_html"/>
-  <Choices name="reviewed_origin" toName="context" choice="single" required="true">
-    <Choice value="N"/>
-    <Choice value="RL"/>
-  </Choices>
-  <TextArea
-    name="corrected_zamanalif"
-    toName="context"
-    rows="1"
-    value="$auto_zamanalif"
-    required="true"
-  />
+  <Style>
+    .box {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 16px;
+      background: #fafafa;
+    }
+
+    .box-title,
+    .box-title * {
+      font-size: 15px !important;
+      font-weight: 600 !important;
+      color: #555 !important;
+      margin-bottom: 8px;
+    }
+
+    .context-text,
+    .context-text * {
+      font-size: 22px !important;
+      line-height: 1.6 !important;
+    }
+
+    .context-text mark,
+    .context-text mark * {
+      font-weight: 700 !important;
+      font-style: italic !important;
+      background: #fff0a6 !important;
+      padding: 1px 3px !important;
+    }
+
+    .big-word,
+    .big-word * {
+      font-size: 44px !important;
+      font-weight: 700 !important;
+      font-style: italic !important;
+      line-height: 1.3 !important;
+    }
+
+    .variant-word,
+    .variant-word * {
+      font-size: 32px !important;
+      font-weight: 700 !important;
+      line-height: 1.35 !important;
+    }
+
+    .variant-row {
+      margin-bottom: 12px;
+    }
+
+    .big-textarea textarea,
+    .big-textarea textarea *,
+    .big-textarea [contenteditable="true"],
+    .big-textarea [role="textbox"] {
+      font-size: 44px !important;
+      font-weight: 700 !important;
+      line-height: 1.3 !important;
+      min-height: 64px !important;
+    }
+  </Style>
+
+  <View className="box">
+    <View className="box-title">
+      <Text name="sentence_label" value="Sentence"/>
+    </View>
+
+    <View className="context-text">
+      <HyperText name="context" value="$context_html"/>
+    </View>
+  </View>
+
+  <View className="box">
+    <View className="box-title">
+      <Text name="original_cyrillic_word_label" value="Original word"/>
+    </View>
+
+    <View className="big-word">
+      <Text name="cyrl_word" value="$cyrl_word"/>
+    </View>
+  </View>
+
+  <View className="box">
+    <View className="box-title">
+      <Text name="suggested_variants_label" value="Suggested variants"/>
+    </View>
+
+    <View className="variant-row">
+      <Text name="native_variant_label" value="N - Native"/>
+      <View className="variant-word">
+        <Text name="native_variant" value="$native_zamanalif"/>
+      </View>
+    </View>
+
+    <View>
+      <Text name="loanword_variant_label" value="RL - Russian / loanword"/>
+      <View className="variant-word">
+        <Text name="loanword_variant" value="$loanword_zamanalif"/>
+      </View>
+    </View>
+  </View>
+
+  <View className="box">
+    <View className="box-title">
+      <Text name="origin_choice_label" value="Meaning in this sentence"/>
+    </View>
+
+    <Choices
+      name="reviewed_origin"
+      toName="context"
+      choice="single"
+      showInline="true"
+      required="true"
+    >
+      <Choice value="N"/>
+      <Choice value="RL"/>
+    </Choices>
+  </View>
+
+  <View className="box">
+    <Text
+      name="corrected_zamanalif_label"
+      value="Correction (only if the selected variant is wrong)"
+    />
+
+    <View className="big-textarea">
+      <TextArea
+        name="corrected_zamanalif"
+        toName="context"
+        rows="2"
+        placeholder="Leave empty to accept the selected variant"
+      />
+    </View>
+
+    <Text
+      name="fast-copy"
+      value="ä Ä | ö Ö | ü Ü | ñ Ñ | ı I | ğ Ğ | ş Ş | ç Ç"
+    />
+  </View>
 </View>
 ```
+
+`reviewed_origin` is the only required control. When
+`corrected_zamanalif` is absent or empty, import stores
+`native_zamanalif` for `N` or `loanword_zamanalif` for `RL`. Existing
+contextual annotations with a populated correction remain valid.
 
 ### Back up annotations from hosted Label Studio
 

@@ -413,8 +413,9 @@ def contextual_project_instructions() -> str:
   <h2>Contextual homonyms</h2>
   <p>Review the highlighted word using its complete sentence context.</p>
   <ol>
+    <li>Compare the native and loanword Zamanalif variants.</li>
     <li>Choose N for the Tatar/native meaning or RL for the Russian/loanword meaning.</li>
-    <li>Approve or correct the Zamanalif spelling for this occurrence.</li>
+    <li>Enter a correction only when the selected variant itself is wrong.</li>
     <li>Skip the task when the meaning cannot be determined reliably.</li>
   </ol>
 </section>

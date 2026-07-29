@@ -886,6 +886,22 @@ def _parse_task(
             raise LabelStudioImportError(f"{context} has invalid meta.sample_id")
         if not isinstance(token_index, int) or isinstance(token_index, bool) or token_index < 0:
             raise LabelStudioImportError(f"{context} has invalid meta.token_index")
+        contextual_zamanalif = {
+            origin: data.get(field)
+            for origin, field in (
+                ("N", "native_zamanalif"),
+                ("RL", "loanword_zamanalif"),
+            )
+        }
+        if any(
+            not isinstance(value, str)
+            for value in contextual_zamanalif.values()
+        ):
+            raise LabelStudioImportError(
+                f"{context} has invalid contextual Zamanalif variants"
+            )
+    else:
+        contextual_zamanalif = None
 
     annotations = task.get("annotations")
     if not isinstance(annotations, list):
@@ -913,6 +929,7 @@ def _parse_task(
                 suggested_zamanalif,
                 allow_homonym=project_key != CONTEXTUAL_PROJECT_KEY,
                 require_origin=project_key == CONTEXTUAL_PROJECT_KEY,
+                contextual_zamanalif=contextual_zamanalif,
             )
         )
     if not decisions:
@@ -951,6 +968,7 @@ def _parse_result(
     *,
     allow_homonym: bool,
     require_origin: bool,
+    contextual_zamanalif: dict[str, str] | None,
 ) -> _AnnotationDecision:
     context = f"{task_context} annotation {annotation_index}"
     origins: list[tuple[dict[str, Any], int]] = []
@@ -992,26 +1010,68 @@ def _parse_result(
         raise LabelStudioImportError(
             f"{context} must contain exactly one {ORIGIN_CONTROL!r} result"
         )
-    if len(conversions) != 1:
+    if require_origin and len(conversions) > 1:
+        raise LabelStudioImportError(
+            f"{context} must contain at most one {CONVERSION_CONTROL!r} result"
+        )
+    if not require_origin and len(conversions) != 1:
         raise LabelStudioImportError(
             f"{context} must contain exactly one {CONVERSION_CONTROL!r} result"
         )
-    conversion_result, conversion_index = conversions[0]
     origin = None
     if require_origin:
         origin_result, origin_index = origins[0]
         origin = _parse_origin(origin_result, context, origin_index)
-    zamanalif_dsl = _parse_conversion(
-        conversion_result,
-        context,
-        conversion_index,
-        suggested_zamanalif,
-    )
+    if conversions and not _is_empty_conversion(*conversions[0], context=context):
+        conversion_result, conversion_index = conversions[0]
+        zamanalif_dsl = _parse_conversion(
+            conversion_result,
+            context,
+            conversion_index,
+            suggested_zamanalif,
+        )
+    elif require_origin:
+        if contextual_zamanalif is None or origin is None:
+            raise LabelStudioImportError(
+                f"{context} is missing contextual Zamanalif variants"
+            )
+        zamanalif_dsl = contextual_zamanalif[origin]
+        if not zamanalif_dsl:
+            raise LabelStudioImportError(
+                f"{context} selected origin {origin!r} has no exported conversion; "
+                "enter a correction"
+            )
+        try:
+            parse_dsl(zamanalif_dsl)
+        except DslError as exc:
+            raise LabelStudioImportError(
+                f"{context} selected origin {origin!r} has invalid exported "
+                f"Zamanalif DSL: {exc}"
+            ) from exc
+    else:
+        raise LabelStudioImportError(
+            f"{context} must contain exactly one {CONVERSION_CONTROL!r} result"
+        )
     return _AnnotationDecision(
         is_homonym=False,
         origin=origin,
         zamanalif_dsl=zamanalif_dsl,
     )
+
+
+def _is_empty_conversion(
+    result: dict[str, Any],
+    result_index: int,
+    *,
+    context: str,
+) -> bool:
+    if result.get("type") != "textarea":
+        raise LabelStudioImportError(
+            f"{context} result {result_index} conversion type must be 'textarea'"
+        )
+    value = result.get("value")
+    texts = value.get("text") if isinstance(value, dict) else None
+    return texts == [] or texts == [""]
 
 
 def _parse_homonym(
