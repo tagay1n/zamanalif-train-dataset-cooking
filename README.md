@@ -550,22 +550,21 @@ batches in this repository contain at most 500 tasks, so one API page covers
 one complete Label Studio project:
 
 ```bash
-PROJECT_ID=4
+PROJECT_ID=7
 OUTPUT="data/labelstudio_project_${PROJECT_ID}_tasks.json"
 
 curl --silent --show-error --fail-with-body \
   -H "Authorization: Bearer $LS_ACCESS" \
   "https://yasalma-default-annotation.hf.space/api/tasks/?project=${PROJECT_ID}&fields=all&page_size=1000" \
-  --output "${OUTPUT}.part"
-
-mv "${OUTPUT}.part" "$OUTPUT"
-unset LS_ACCESS
+  --output "${OUTPUT}.part" \
+&& mv "${OUTPUT}.part" "$OUTPUT"
 ```
 
 Keep the `.part` suffix until `curl` succeeds. A failed request therefore
 cannot overwrite a previous valid backup. The downloaded JSON is a task API
 response with a top-level `tasks` array; both `annotation-audit` and
-`annotation-import` accept this shape directly.
+`annotation-import` accept this shape directly. Replace `PROJECT_ID` for each
+Label Studio project.
 
 Validate the backup and inspect actual annotator changes before importing:
 
@@ -590,13 +589,22 @@ this only when the first value exactly matches `data.auto_zamanalif`, then
 compares the final value. Merely submitting an unchanged suggestion is not
 reported as an edit.
 
-After reviewing every printed change, import the same backup:
+After reviewing every printed change, make a project-specific SQLite backup
+and import the same Label Studio backup:
 
 ```bash
+DB_BACKUP="data/zamanalif.sqlite.before_project${PROJECT_ID}_import"
+cp --interactive data/zamanalif.sqlite "$DB_BACKUP"
+
 python -m tatar_preannotator annotation-import \
   --db data/zamanalif.sqlite \
   --input "$OUTPUT"
 ```
+
+Do not continue if `cp` reports an error. If the backup path already exists,
+confirm that replacing it is intentional or choose a new path. The import is
+atomic: any validation or family-propagation conflict rolls back the complete
+transaction.
 
 The backup must use the task API response schema and contain exactly one
 `meta.project_key` with the expected project schema version. Normal dictionary
@@ -614,6 +622,12 @@ Malformed DSL, missing controls, unexpected dictionary origin controls,
 duplicate word tasks, conflicting annotations, or invalid contextual origins
 abort the whole import without partial writes. After a successful import,
 approved words no longer appear in `annotation-export`.
+
+Remove the access token and temporary shell variables after the import:
+
+```bash
+unset LS_ACCESS PROJECT_ID OUTPUT DB_BACKUP
+```
 
 ## Conversion DSL
 
