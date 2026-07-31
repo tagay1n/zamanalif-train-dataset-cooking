@@ -454,6 +454,8 @@ Label Studio layout:
           rows="2"
           value="$auto_zamanalif"
           placeholder="Edit only if the suggestion is wrong"
+          editable="true"
+          maxSubmissions="1"
           required="true"
         />
       </View>
@@ -488,7 +490,8 @@ The `Homonym` checkbox is unchecked by default. When it remains unchecked,
 automatically. The checkbox initially appears immediately below the correction.
 When checked, the correction is hidden and the checkbox alone is a complete
 decision. Dictionary annotations containing a `reviewed_origin` control are
-rejected.
+rejected. The textarea keeps one editable response so reopening an existing
+annotation displays its saved correction instead of creating another response.
 
 The contextual project contains only occurrences whose native and loanword
 outputs differ. The annotator selects the meaning in context; the selected
@@ -627,6 +630,8 @@ entered.
         toName="context"
         rows="2"
         placeholder="Leave empty to accept the selected variant"
+        editable="true"
+        maxSubmissions="1"
       />
     </View>
 
