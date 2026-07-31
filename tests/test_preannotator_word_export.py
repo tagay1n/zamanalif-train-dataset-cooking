@@ -1497,6 +1497,27 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 "мәсьәлә",
             )
         )
+        self.assertTrue(
+            is_safe_family_member(
+                "диалогларга",
+                "диалогларда",
+                "диалог",
+            )
+        )
+        self.assertFalse(
+            is_safe_family_member(
+                "диалогларда",
+                "диалогларга",
+                "диалог",
+            )
+        )
+        self.assertFalse(
+            is_safe_family_member(
+                "диалогларга",
+                "диалоглары",
+                "диалог",
+            )
+        )
         self.assertFalse(is_safe_family_member("баралар", "бала", "бар"))
 
     def test_catchall_does_not_group_different_origins_or_ambiguous_words(self) -> None:

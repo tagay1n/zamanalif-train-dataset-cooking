@@ -198,8 +198,8 @@ def is_safe_family_member(
     candidate: str,
     lemma: str,
 ) -> bool:
-    """Return whether a shorter family member is covered by this review."""
-    if len(candidate) >= len(representative):
+    """Return whether a non-longer family member is covered by this review."""
+    if candidate == representative or len(candidate) > len(representative):
         return False
     if representative.startswith(candidate):
         return True

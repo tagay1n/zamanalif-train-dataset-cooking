@@ -363,10 +363,10 @@ IDs are not repeated in tasks.
 
 Catchall uses the pinned Apertium-tat analyzer to group unambiguous word forms
 with the same lemma, part of speech, and predicted origin. Longer forms cover
-their literal prefixes and shorter divergent siblings when the divergence
-starts after the full lemma and the sibling-only suffix contains none of the
-non-deterministic letters `вгекуцюяүщъыьё`. Uncovered branches remain separate
-tasks. Install the local toolchain once:
+their literal prefixes and same-length or shorter divergent siblings when the
+divergence starts after the full lemma and the sibling-only suffix contains none
+of the non-deterministic letters `вгекуцюяүщъыьё`. Uncovered branches remain
+separate tasks. Install the local toolchain once:
 
 ```bash
 sudo apt install apertium-all-dev
