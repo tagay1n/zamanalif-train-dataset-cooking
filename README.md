@@ -276,6 +276,8 @@ Selection rules:
   are identical;
 - export only origin-dependent homonym occurrences to `contextual_homonym` with
   their sentence context;
+- use contextual-only native fallbacks `г → ğ` and `к → q` when an isolated
+  homonym has no vowel context; dictionary and catchall conversion stay unchanged;
 - route every native conversion that emits a hamza, including literal lexical
   conversions such as `тәэмин → täʼmin`, to `hamza` and never to catchall;
 - always skip forms already approved in `reviewed_words`;

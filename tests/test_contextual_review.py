@@ -12,9 +12,11 @@ from unittest.mock import patch
 from tests.morphology_fakes import FakeMorphologyAnalyzer
 from tatar_preannotator.cli import main
 from tatar_preannotator.contextual_review import (
+    contextual_conversion_branches,
     export_contextual_tasks_from_db,
 )
 from tatar_preannotator.labelstudio_import import import_labelstudio_annotations
+from tatar_preannotator.word_export import conversion_branches
 
 
 class ContextualReviewExportTests(unittest.TestCase):
@@ -75,6 +77,73 @@ class ContextualReviewExportTests(unittest.TestCase):
             result = export_contextual_tasks_from_db(db_path)
 
         self.assertNotIn("сер", {task["data"]["cyrl_word"].lower() for task in result.tasks})
+
+    def test_isolated_gk_get_native_fallbacks_only_in_contextual_project(self) -> None:
+        self.assertEqual(conversion_branches("г").native_dsl, "")
+        self.assertEqual(conversion_branches("к").native_dsl, "")
+        self.assertEqual(contextual_conversion_branches("г").native_dsl, "ğ")
+        self.assertEqual(contextual_conversion_branches("г").loanword_dsl, "g")
+        self.assertEqual(contextual_conversion_branches("к").native_dsl, "q")
+        self.assertEqual(contextual_conversion_branches("к").loanword_dsl, "k")
+
+    def test_contextual_native_fallback_round_trips_without_correction(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            with sqlite3.connect(db_path) as conn:
+                conn.execute(
+                    "insert into samples(id, source_id, text) values ('sent_g', 'src', 'Г.')"
+                )
+                conn.execute(
+                    """
+                    insert into preannotation_state(sample_id, status, tatar, tokens_json)
+                    values ('sent_g', 'annotated', 1, ?)
+                    """,
+                    (json.dumps([{"text": "Г", "label": "U", "homonym": True}]),),
+                )
+
+            exported = export_contextual_tasks_from_db(db_path)
+            task = next(task for task in exported.tasks if task["data"]["cyrl_word"] == "Г")
+            self.assertEqual(task["data"]["native_zamanalif"], "ğ")
+            self.assertEqual(task["data"]["loanword_zamanalif"], "g")
+            task["annotations"] = [
+                {
+                    "was_cancelled": False,
+                    "result": [
+                        {
+                            "from_name": "reviewed_origin",
+                            "type": "choices",
+                            "value": {"choices": ["N"]},
+                        }
+                    ],
+                }
+            ]
+            backup = root / "backup.json"
+            backup.write_text(
+                json.dumps(
+                    {
+                        "tasks": [task],
+                        "total": 1,
+                        "total_annotations": 1,
+                        "total_predictions": 0,
+                    },
+                    ensure_ascii=False,
+                ),
+                encoding="utf-8",
+            )
+
+            summary = import_labelstudio_annotations(db_path, backup)
+            with sqlite3.connect(db_path) as conn:
+                stored = conn.execute(
+                    """
+                    select origin, zamanalif_dsl
+                    from contextual_reviews
+                    where sample_id = 'sent_g' and token_index = 0
+                    """
+                ).fetchone()
+
+        self.assertEqual(summary.imported_items, 1)
+        self.assertEqual(stored, ("N", "ğ"))
 
     def test_combined_cli_keeps_homonyms_out_of_dictionary_projects(self) -> None:
         with TemporaryDirectory() as tmpdir:

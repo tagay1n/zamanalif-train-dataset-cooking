@@ -12,6 +12,7 @@ from typing import Any, Iterable
 from .conversion import DslError, parse_dsl
 from .word_export import (
     TASK_SCHEMA_VERSION,
+    ConversionBranches,
     conversion_branches,
     ensure_review_state_schema,
     normalize_word,
@@ -21,6 +22,10 @@ from .word_export import (
 PROJECT_KEY = "contextual_homonym"
 PROJECT_TITLE = "Contextual homonyms"
 CONCRETE_ORIGINS = frozenset({"N", "RL", "U"})
+CONTEXTUAL_NATIVE_FALLBACKS = {
+    "г": "ğ",
+    "к": "q",
+}
 
 
 class ContextualReviewError(ValueError):
@@ -146,7 +151,7 @@ def export_contextual_tasks_from_db(
     review_required = [
         occurrence
         for occurrence in all_occurrences
-        if conversion_branches(occurrence.normalized_word).state
+        if contextual_conversion_branches(occurrence.normalized_word).state
         != "origin_independent"
     ]
     eligible = [
@@ -275,7 +280,7 @@ def _round_robin_occurrences(items: list[_Occurrence]) -> list[_Occurrence]:
 
 def _task_for_occurrence(item: _Occurrence) -> dict[str, Any]:
     _validate_token_alignment(item.key.sample_id, item.sentence, item.tokens)
-    branches = conversion_branches(item.normalized_word)
+    branches = contextual_conversion_branches(item.normalized_word)
     suggestion = branches.suggestion(item.label)
     return {
         "data": {
@@ -299,6 +304,18 @@ def _task_for_occurrence(item: _Occurrence) -> dict[str, Any]:
             "token_index": item.key.token_index,
         },
     }
+
+
+def contextual_conversion_branches(word: str) -> ConversionBranches:
+    """Return homonym variants with explicit native fallbacks for isolated letters."""
+    branches = conversion_branches(word)
+    fallback = CONTEXTUAL_NATIVE_FALLBACKS.get(word)
+    if branches.native_dsl or not branches.loanword_dsl or fallback is None:
+        return branches
+    return ConversionBranches(
+        native_dsl=fallback,
+        loanword_dsl=branches.loanword_dsl,
+    )
 
 
 def _validate_token_alignment(
