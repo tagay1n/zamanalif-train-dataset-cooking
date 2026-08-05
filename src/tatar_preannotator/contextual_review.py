@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from html import escape
 import json
 from pathlib import Path
+import re
 import sqlite3
 from typing import Any, Iterable
 
@@ -26,6 +27,31 @@ CONTEXTUAL_NATIVE_FALLBACKS = {
     "г": "ğ",
     "к": "q",
 }
+INITIAL_SURFACE_RE = re.compile(r"[А-ЯӘӨҮҖҢҺ]")
+SURNAME_SURFACE_RE = re.compile(r"[А-ЯӘӨҮҖҢҺ][А-Яа-яӘәӨөҮүҖҗҢңҺһЁё-]+")
+INITIAL_SEPARATOR_RE = re.compile(r"\.\s*")
+INITIAL_SURNAME_CASE_SUFFIXES = frozenset(
+    {
+        "ның",
+        "нең",
+        "ны",
+        "не",
+        "га",
+        "гә",
+        "ка",
+        "кә",
+        "да",
+        "дә",
+        "та",
+        "тә",
+        "дан",
+        "дән",
+        "тан",
+        "тән",
+        "нан",
+        "нән",
+    }
+)
 
 
 class ContextualReviewError(ValueError):
@@ -36,6 +62,18 @@ class ContextualReviewError(ValueError):
 class OccurrenceKey:
     sample_id: str
     token_index: int
+
+
+@dataclass(frozen=True, order=True)
+class InitialReferenceIdentity:
+    initials: tuple[str, ...]
+    target_slot: int
+    surname: str
+
+    @property
+    def display(self) -> str:
+        initials = ".".join(initial.upper() for initial in self.initials)
+        return f"{initials}. {self.surname}"
 
 
 @dataclass(frozen=True)
@@ -55,7 +93,7 @@ class ContextualExportResult:
 
 
 @dataclass(frozen=True)
-class _Occurrence:
+class ContextualOccurrence:
     key: OccurrenceKey
     sentence: str
     tokens: list[dict[str, Any]]
@@ -117,30 +155,7 @@ def export_contextual_tasks_from_db(
                 + ", ".join(conflicting_reviews[:20])
             )
 
-        all_occurrences: list[_Occurrence] = []
-        for sample_id, sentence, raw_tokens in _annotation_rows(conn):
-            tokens = _load_tokens(str(sample_id), raw_tokens)
-            for token_index, token in enumerate(tokens):
-                if not isinstance(token, dict):
-                    continue
-                text = token.get("text")
-                normalized = normalize_word(text) if isinstance(text, str) else ""
-                if not normalized or normalized not in effective_words:
-                    continue
-                label = token.get("label")
-                if label not in CONCRETE_ORIGINS:
-                    label = "U"
-                all_occurrences.append(
-                    _Occurrence(
-                        key=OccurrenceKey(str(sample_id), token_index),
-                        sentence=str(sentence),
-                        tokens=tokens,
-                        token_text=text,
-                        normalized_word=normalized,
-                        label=label,
-                        flagged=token.get("homonym") is True,
-                    )
-                )
+        all_occurrences = contextual_review_occurrences(conn, effective_words)
         completed = {
             OccurrenceKey(str(row[0]), int(row[1]))
             for row in conn.execute(
@@ -160,7 +175,12 @@ def export_contextual_tasks_from_db(
         if occurrence.normalized_word in effective_words
         and occurrence.key not in completed
     ]
-    ordered = _round_robin_occurrences(eligible)
+    identities, _ = initial_reference_groups(review_required)
+    ordered = _deduplicate_initial_references(
+        _round_robin_occurrences(eligible),
+        identities,
+    )
+    pending_review_task_count = len(ordered)
     if max_items is not None:
         ordered = ordered[:max_items]
 
@@ -179,10 +199,86 @@ def export_contextual_tasks_from_db(
                 len(all_occurrences) - len(review_required)
             ),
             "pending_occurrence_count": len(eligible),
+            "pending_review_task_count": pending_review_task_count,
+            "grouped_initial_occurrence_count": (
+                len(eligible) - pending_review_task_count
+            ),
             "exported_occurrence_count": len(ordered),
             "completed_occurrence_count": len(completed),
         },
     )
+
+
+def contextual_review_occurrences(
+    conn: sqlite3.Connection,
+    effective_words: set[str],
+) -> list[ContextualOccurrence]:
+    """Load contextual occurrences with stable source identities."""
+    occurrences: list[ContextualOccurrence] = []
+    for sample_id, sentence, raw_tokens in _annotation_rows(conn):
+        tokens = _load_tokens(str(sample_id), raw_tokens)
+        for token_index, token in enumerate(tokens):
+            if not isinstance(token, dict):
+                continue
+            text = token.get("text")
+            normalized = normalize_word(text) if isinstance(text, str) else ""
+            if not normalized or normalized not in effective_words:
+                continue
+            label = token.get("label")
+            if label not in CONCRETE_ORIGINS:
+                label = "U"
+            occurrences.append(
+                ContextualOccurrence(
+                    key=OccurrenceKey(str(sample_id), token_index),
+                    sentence=str(sentence),
+                    tokens=tokens,
+                    token_text=text,
+                    normalized_word=normalized,
+                    label=label,
+                    flagged=token.get("homonym") is True,
+                )
+            )
+    return occurrences
+
+
+def initial_reference_groups(
+    occurrences: Iterable[ContextualOccurrence],
+) -> tuple[
+    dict[OccurrenceKey, InitialReferenceIdentity],
+    dict[InitialReferenceIdentity, tuple[OccurrenceKey, ...]],
+]:
+    """Group unambiguous name initials, including observed case forms."""
+    items = list(occurrences)
+    raw: dict[OccurrenceKey, InitialReferenceIdentity] = {}
+    surname_forms: dict[tuple[tuple[str, ...], int], set[str]] = defaultdict(set)
+    for item in items:
+        identity = _raw_initial_reference_identity(item)
+        if identity is None:
+            continue
+        raw[item.key] = identity
+        surname_forms[(identity.initials, identity.target_slot)].add(identity.surname)
+
+    identities: dict[OccurrenceKey, InitialReferenceIdentity] = {}
+    grouped: dict[InitialReferenceIdentity, list[OccurrenceKey]] = defaultdict(list)
+    for key, identity in raw.items():
+        forms = surname_forms[(identity.initials, identity.target_slot)]
+        bases = [
+            form
+            for form in forms
+            if identity.surname.startswith(form)
+            and identity.surname[len(form) :] in INITIAL_SURNAME_CASE_SUFFIXES
+        ]
+        surname = max(bases, key=len) if bases else identity.surname
+        canonical = InitialReferenceIdentity(
+            identity.initials,
+            identity.target_slot,
+            surname,
+        )
+        identities[key] = canonical
+        grouped[canonical].append(key)
+    return identities, {
+        identity: tuple(sorted(keys)) for identity, keys in grouped.items()
+    }
 
 
 def _annotation_rows(
@@ -251,8 +347,10 @@ def effective_contextual_homonym_words(conn: sqlite3.Connection) -> set[str]:
     return words
 
 
-def _round_robin_occurrences(items: list[_Occurrence]) -> list[_Occurrence]:
-    grouped: dict[str, list[_Occurrence]] = defaultdict(list)
+def _round_robin_occurrences(
+    items: list[ContextualOccurrence],
+) -> list[ContextualOccurrence]:
+    grouped: dict[str, list[ContextualOccurrence]] = defaultdict(list)
     for item in items:
         grouped[item.normalized_word].append(item)
     for occurrences in grouped.values():
@@ -264,7 +362,7 @@ def _round_robin_occurrences(items: list[_Occurrence]) -> list[_Occurrence]:
             )
         )
     words = sorted(grouped)
-    result: list[_Occurrence] = []
+    result: list[ContextualOccurrence] = []
     offset = 0
     while True:
         added = False
@@ -278,7 +376,75 @@ def _round_robin_occurrences(items: list[_Occurrence]) -> list[_Occurrence]:
         offset += 1
 
 
-def _task_for_occurrence(item: _Occurrence) -> dict[str, Any]:
+def _deduplicate_initial_references(
+    items: list[ContextualOccurrence],
+    identities: dict[OccurrenceKey, InitialReferenceIdentity],
+) -> list[ContextualOccurrence]:
+    seen: set[InitialReferenceIdentity] = set()
+    result: list[ContextualOccurrence] = []
+    for item in items:
+        identity = identities.get(item.key)
+        if identity is not None:
+            if identity in seen:
+                continue
+            seen.add(identity)
+        result.append(item)
+    return result
+
+
+def _raw_initial_reference_identity(
+    item: ContextualOccurrence,
+) -> InitialReferenceIdentity | None:
+    target = item.key.token_index
+    if target >= len(item.tokens):
+        return None
+    target_text = item.tokens[target].get("text")
+    if not isinstance(target_text, str) or not INITIAL_SURFACE_RE.fullmatch(target_text):
+        return None
+    spans = _token_spans(item.key.sample_id, item.sentence, item.tokens)
+
+    first = target
+    while first > 0:
+        previous = item.tokens[first - 1].get("text")
+        if not isinstance(previous, str) or not INITIAL_SURFACE_RE.fullmatch(previous):
+            break
+        gap = item.sentence[spans[first - 1][1] : spans[first][0]]
+        if not INITIAL_SEPARATOR_RE.fullmatch(gap):
+            break
+        first -= 1
+
+    last = target
+    while last + 1 < len(item.tokens):
+        following = item.tokens[last + 1].get("text")
+        if not isinstance(following, str) or not INITIAL_SURFACE_RE.fullmatch(following):
+            break
+        gap = item.sentence[spans[last][1] : spans[last + 1][0]]
+        if not INITIAL_SEPARATOR_RE.fullmatch(gap):
+            break
+        last += 1
+
+    surname_index = last + 1
+    if surname_index >= len(item.tokens):
+        return None
+    surname = item.tokens[surname_index].get("text")
+    if not isinstance(surname, str) or not SURNAME_SURFACE_RE.fullmatch(surname):
+        return None
+    gap = item.sentence[spans[last][1] : spans[surname_index][0]]
+    if not INITIAL_SEPARATOR_RE.fullmatch(gap):
+        return None
+
+    initials = tuple(
+        str(item.tokens[index]["text"]).casefold()
+        for index in range(first, last + 1)
+    )
+    return InitialReferenceIdentity(
+        initials=initials,
+        target_slot=target - first,
+        surname=surname.casefold(),
+    )
+
+
+def _task_for_occurrence(item: ContextualOccurrence) -> dict[str, Any]:
     _validate_token_alignment(item.key.sample_id, item.sentence, item.tokens)
     branches = contextual_conversion_branches(item.normalized_word)
     suggestion = branches.suggestion(item.label)
@@ -323,7 +489,16 @@ def _validate_token_alignment(
     sentence: str,
     tokens: list[Any],
 ) -> None:
+    _token_spans(sample_id, sentence, tokens)
+
+
+def _token_spans(
+    sample_id: str,
+    sentence: str,
+    tokens: list[Any],
+) -> list[tuple[int, int]]:
     cursor = 0
+    spans: list[tuple[int, int]] = []
     for token_index, token in enumerate(tokens):
         if not isinstance(token, dict):
             raise ContextualReviewError(
@@ -339,7 +514,9 @@ def _validate_token_alignment(
             raise ContextualReviewError(
                 f"{sample_id}: token {token_index} is missing or out of order: {text!r}"
             )
+        spans.append((found, found + len(text)))
         cursor = found + len(text)
+    return spans
 
 
 def _highlighted_context(

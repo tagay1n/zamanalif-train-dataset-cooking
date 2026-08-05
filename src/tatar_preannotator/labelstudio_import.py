@@ -11,9 +11,13 @@ from typing import Any
 from .contextual_review import (
     PROJECT_KEY as CONTEXTUAL_PROJECT_KEY,
     ContextualReviewError,
+    InitialReferenceIdentity,
     OccurrenceKey,
+    contextual_conversion_branches,
+    contextual_review_occurrences,
     effective_contextual_homonym_words,
     ensure_contextual_review_schema,
+    initial_reference_groups,
     validate_contextual_review,
 )
 from .conflict_resolver import ensure_word_resolution_schema
@@ -80,6 +84,9 @@ class LabelStudioImportSummary:
     inherited_literal_subword_items: int
     inherited_deterministic_divergent_items: int
     inherited_source_families: int
+    contextual_initial_source_groups: int
+    contextual_initial_propagated_items: int
+    contextual_initial_backfill_items: int
     unchanged_items: int
     skipped_unannotated_tasks: int
 
@@ -113,6 +120,9 @@ class LabelStudioAuditSummary:
     origin_changes: int
     conversion_changes: int
     homonym_changes: int
+    contextual_initial_source_groups: int
+    contextual_initial_propagated_items: int
+    contextual_initial_backfill_items: int
     changes: tuple[LabelStudioAnnotationChange, ...]
 
 
@@ -130,6 +140,17 @@ class _AnnotationDecision:
     is_homonym: bool
     origin: str | None = None
     zamanalif_dsl: str | None = None
+
+
+@dataclass(frozen=True)
+class _ContextualPropagationPlan:
+    assignments: dict[OccurrenceKey, tuple[str, str, str]]
+    source_keys: frozenset[OccurrenceKey]
+    annotated_initial_identities: frozenset[InitialReferenceIdentity]
+    identity_by_occurrence: dict[OccurrenceKey, InitialReferenceIdentity]
+    existing: dict[OccurrenceKey, tuple[str, str, str]]
+    propagated_items: int
+    backfill_items: int
 
 
 def import_labelstudio_annotations(
@@ -151,6 +172,9 @@ def import_labelstudio_annotations(
     inherited_literal_subwords = 0
     inherited_deterministic_divergent = 0
     inherited_source_families = 0
+    contextual_initial_source_groups = 0
+    contextual_initial_propagated = 0
+    contextual_initial_backfill = 0
     unchanged = 0
 
     with closing(sqlite3.connect(database)) as conn:
@@ -161,38 +185,24 @@ def import_labelstudio_annotations(
             ensure_word_resolution_schema(conn)
             effective_homonyms = effective_contextual_homonym_words(conn)
             if parsed.project_key == CONTEXTUAL_PROJECT_KEY:
-                existing = {
-                    OccurrenceKey(str(row[0]), int(row[1])): (
-                        str(row[2]),
-                        str(row[3]),
-                        str(row[4]),
-                    )
-                    for row in conn.execute(
-                        """
-                        select sample_id, token_index, normalized_word,
-                               zamanalif_dsl, origin
-                        from contextual_reviews
-                        """
-                    ).fetchall()
-                }
-                for item in parsed.annotations:
-                    _validate_contextual_source(conn, item, effective_homonyms)
-                    origin, zamanalif_dsl = _regular_values(item)
-                    key = OccurrenceKey(str(item.sample_id), int(item.token_index))
-                    current = (
-                        item.normalized_word,
-                        zamanalif_dsl,
-                        origin,
-                    )
-                    previous = existing.get(key)
-                    if previous is not None:
-                        if previous != current:
-                            raise LabelStudioImportError(
-                                f"contextual review conflict for {key}: "
-                                f"database has {previous!r}, import has {current!r}"
-                            )
-                        unchanged += 1
+                plan = _plan_contextual_propagation(
+                    conn,
+                    parsed.annotations,
+                    effective_homonyms,
+                )
+                contextual_initial_source_groups = len(
+                    plan.annotated_initial_identities
+                )
+                contextual_initial_propagated = plan.propagated_items
+                contextual_initial_backfill = plan.backfill_items
+                unchanged = sum(
+                    plan.existing.get(key) == plan.assignments.get(key)
+                    for key in plan.source_keys
+                )
+                for key, current in sorted(plan.assignments.items()):
+                    if key in plan.existing:
                         continue
+                    normalized_word, zamanalif_dsl, origin = current
                     conn.execute(
                         """
                         insert into contextual_reviews(
@@ -201,9 +211,9 @@ def import_labelstudio_annotations(
                         ) values (?, ?, ?, ?, ?, ?)
                         """,
                         (
-                            item.sample_id,
-                            item.token_index,
-                            item.normalized_word,
+                            key.sample_id,
+                            key.token_index,
+                            normalized_word,
                             zamanalif_dsl,
                             origin,
                             now,
@@ -371,8 +381,140 @@ def import_labelstudio_annotations(
         inherited_literal_subword_items=inherited_literal_subwords,
         inherited_deterministic_divergent_items=inherited_deterministic_divergent,
         inherited_source_families=inherited_source_families,
+        contextual_initial_source_groups=contextual_initial_source_groups,
+        contextual_initial_propagated_items=contextual_initial_propagated,
+        contextual_initial_backfill_items=contextual_initial_backfill,
         unchanged_items=unchanged,
         skipped_unannotated_tasks=parsed.skipped_unannotated_tasks,
+    )
+
+
+def _plan_contextual_propagation(
+    conn: sqlite3.Connection,
+    annotations: tuple[ReviewedAnnotation, ...],
+    effective_homonyms: set[str],
+) -> _ContextualPropagationPlan:
+    try:
+        occurrences = [
+            item
+            for item in contextual_review_occurrences(conn, effective_homonyms)
+            if contextual_conversion_branches(item.normalized_word).state
+            != "origin_independent"
+        ]
+    except ContextualReviewError as exc:
+        raise LabelStudioImportError(str(exc)) from exc
+    occurrence_by_key = {item.key: item for item in occurrences}
+    identity_by_occurrence, members_by_identity = initial_reference_groups(occurrences)
+    existing = {
+        OccurrenceKey(str(row[0]), int(row[1])): (
+            str(row[2]),
+            str(row[3]),
+            str(row[4]),
+        )
+        for row in conn.execute(
+            """
+            select sample_id, token_index, normalized_word,
+                   zamanalif_dsl, origin
+            from contextual_reviews
+            """
+        ).fetchall()
+    }
+
+    existing_group_decisions: dict[InitialReferenceIdentity, tuple[str, str]] = {}
+    for identity, members in members_by_identity.items():
+        decisions = {
+            (existing[key][1], existing[key][2])
+            for key in members
+            if key in existing
+        }
+        if len(decisions) > 1:
+            raise LabelStudioImportError(
+                "conflicting stored initial reviews for "
+                f"{identity.display!r}: {sorted(decisions)!r}"
+            )
+        if decisions:
+            existing_group_decisions[identity] = next(iter(decisions))
+
+    source_keys: set[OccurrenceKey] = set()
+    annotated_initial_identities: set[InitialReferenceIdentity] = set()
+    decisions: dict[InitialReferenceIdentity | OccurrenceKey, tuple[str, str]] = {}
+    for item in annotations:
+        _validate_contextual_source(conn, item, effective_homonyms)
+        origin, zamanalif_dsl = _regular_values(item)
+        key = OccurrenceKey(str(item.sample_id), int(item.token_index))
+        if key not in occurrence_by_key:
+            raise LabelStudioImportError(
+                f"contextual occurrence is no longer reviewable: {key}"
+            )
+        source_keys.add(key)
+        identity = identity_by_occurrence.get(key)
+        decision_key: InitialReferenceIdentity | OccurrenceKey = identity or key
+        decision = (zamanalif_dsl, origin)
+        previous = decisions.get(decision_key)
+        if previous is not None and previous != decision:
+            label = identity.display if identity is not None else str(key)
+            raise LabelStudioImportError(
+                f"conflicting annotations for initial reference {label!r}: "
+                f"{previous!r} and {decision!r}"
+            )
+        decisions[decision_key] = decision
+        if identity is not None:
+            annotated_initial_identities.add(identity)
+
+    for identity in annotated_initial_identities:
+        stored = existing_group_decisions.get(identity)
+        imported = decisions[identity]
+        if stored is not None and stored != imported:
+            raise LabelStudioImportError(
+                f"initial review conflict for {identity.display!r}: "
+                f"database has {stored!r}, import has {imported!r}"
+            )
+
+    assignments: dict[OccurrenceKey, tuple[str, str, str]] = {}
+
+    def assign(key: OccurrenceKey, decision: tuple[str, str]) -> None:
+        occurrence = occurrence_by_key[key]
+        current = (occurrence.normalized_word, decision[0], decision[1])
+        previous = existing.get(key)
+        if previous is not None and previous != current:
+            raise LabelStudioImportError(
+                f"contextual review conflict for {key}: "
+                f"database has {previous!r}, import implies {current!r}"
+            )
+        assignments[key] = current
+
+    for decision_key, decision in decisions.items():
+        if isinstance(decision_key, OccurrenceKey):
+            assign(decision_key, decision)
+            continue
+        for key in members_by_identity[decision_key]:
+            assign(key, decision)
+
+    for identity, decision in existing_group_decisions.items():
+        if identity in annotated_initial_identities:
+            continue
+        for key in members_by_identity[identity]:
+            assign(key, decision)
+
+    new_keys = set(assignments) - set(existing)
+    propagated = sum(
+        key not in source_keys
+        and identity_by_occurrence.get(key) in annotated_initial_identities
+        for key in new_keys
+    )
+    backfilled = sum(
+        identity_by_occurrence.get(key) is not None
+        and identity_by_occurrence[key] not in annotated_initial_identities
+        for key in new_keys
+    )
+    return _ContextualPropagationPlan(
+        assignments=assignments,
+        source_keys=frozenset(source_keys),
+        annotated_initial_identities=frozenset(annotated_initial_identities),
+        identity_by_occurrence=identity_by_occurrence,
+        existing=existing,
+        propagated_items=propagated,
+        backfill_items=backfilled,
     )
 
 
@@ -695,6 +837,10 @@ def audit_labelstudio_export(
     origin_changes = 0
     conversion_changes = 0
     homonym_changes = 0
+    contextual_initial_source_groups = 0
+    contextual_initial_propagated = 0
+    contextual_initial_backfill = 0
+    contextual_annotations: list[ReviewedAnnotation] = []
 
     with closing(sqlite3.connect(database)) as conn:
         effective_homonyms = effective_contextual_homonym_words(conn)
@@ -710,6 +856,7 @@ def audit_labelstudio_export(
                     int(reviewed.token_index),
                 )
                 _validate_contextual_source(conn, reviewed, effective_homonyms)
+                contextual_annotations.append(reviewed)
             else:
                 identity = reviewed.normalized_word
                 if (
@@ -758,6 +905,18 @@ def audit_labelstudio_export(
                     )
                 )
 
+        if project_key == CONTEXTUAL_PROJECT_KEY:
+            plan = _plan_contextual_propagation(
+                conn,
+                tuple(contextual_annotations),
+                effective_homonyms,
+            )
+            contextual_initial_source_groups = len(
+                plan.annotated_initial_identities
+            )
+            contextual_initial_propagated = plan.propagated_items
+            contextual_initial_backfill = plan.backfill_items
+
     completed = len(payload) - skipped
     return LabelStudioAuditSummary(
         project_key=project_key,
@@ -768,6 +927,9 @@ def audit_labelstudio_export(
         origin_changes=origin_changes,
         conversion_changes=conversion_changes,
         homonym_changes=homonym_changes,
+        contextual_initial_source_groups=contextual_initial_source_groups,
+        contextual_initial_propagated_items=contextual_initial_propagated,
+        contextual_initial_backfill_items=contextual_initial_backfill,
         changes=tuple(changes),
     )
 

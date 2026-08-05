@@ -255,7 +255,8 @@ Exporting does not change annotation state. Re-running the command before
 importing completed Label Studio results produces the same eligible tasks.
 Only a successful `annotation-import` records completed reviews and excludes
 them from later exports. The export writes each project as batches containing
-at most 500 tasks.
+at most 500 tasks by default. Use `--batch-size` to override the file size,
+for example `--batch-size 1000` to place up to 1,000 tasks in one JSON file.
 
 Selection rules:
 
@@ -276,6 +277,9 @@ Selection rules:
   are identical;
 - export only origin-dependent homonym occurrences to `contextual_homonym` with
   their sentence context;
+- collapse repeated unambiguous name initials such as `К.Насыйри` and
+  `К. Насыйри` to one contextual task, while keeping references such as
+  `К. Ушинский` separate;
 - use contextual-only native fallbacks `г → ğ` and `к → q` when an isolated
   homonym has no vowel context; dictionary and catchall conversion stay unchanged;
 - route every native conversion that emits a hamza, including literal lexical
@@ -499,6 +503,16 @@ The contextual project contains only occurrences whose native and loanword
 outputs differ. The annotator selects the meaning in context; the selected
 exported variant is accepted automatically unless an optional correction is
 entered.
+
+Repeated initials before a capitalized surname are reviewed once per person
+reference. Group identity includes the complete initial sequence, the target
+initial's position, and the surname; an initial letter alone is never enough.
+Whitespace after periods is ignored. Inflected surnames are grouped with an
+observed unsuffixed form only for the Tatar genitive, accusative, dative,
+locative, and ablative endings. For example, `К. Насыйри`, `К.Насыйриның`, and
+`К. Насыйридан` share one decision when the base form occurs in the corpus.
+Ambiguous punctuation, reversed name order, lowercase fragments, and unknown
+surname stems remain separate tasks.
 
 ```xml
 <View>
@@ -753,11 +767,19 @@ decisions are written to `reviewed_words`. Dictionary tasks checked as
 `Homonym` are instead written to `word_resolutions` as `contextual_homonym`;
 their conversion value is ignored. Contextual occurrence decisions are written
 to `contextual_reviews` by exact `meta.sample_id` and `meta.token_index`.
+For recognized name initials, import reconstructs the group from the database
+and writes the same decision to every matching occurrence, including later
+batches. Projects exported before initial grouping remain compatible: repeated
+tasks are accepted when their decisions agree. Conflicting decisions for one
+reference abort the complete import. Consistent historical initial reviews are
+also backfilled during contextual import.
 Unannotated and cancelled tasks are skipped.
 Identical reimports are idempotent; conflicting decisions fail atomically.
 After a successful dictionary import, the command prints family-propagation
 counts for the current batch and historical backfill, split between literal
 subwords and deterministic divergent forms, plus the number of source families.
+After contextual audit and import, `initial propagation` reports source groups,
+newly propagated occurrences, and historical backfill.
 
 Malformed DSL, missing controls, unexpected dictionary origin controls,
 duplicate word tasks, conflicting annotations, or invalid contextual origins

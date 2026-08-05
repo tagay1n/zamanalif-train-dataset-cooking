@@ -1708,8 +1708,15 @@ def decision_html(entry: WordStats) -> str:
     return "<ul>" + "".join(f"<li>{item}</li>" for item in items) + "</ul>"
 
 
-def write_split_outputs(result: SplitExportResult, output_dir: str | Path) -> list[Path]:
+def write_split_outputs(
+    result: SplitExportResult,
+    output_dir: str | Path,
+    *,
+    batch_size: int = LABELSTUDIO_SPLIT_BATCH_SIZE,
+) -> list[Path]:
     """Write split Label Studio project JSON import files and return their paths."""
+    if batch_size < 1:
+        raise AnnotationExportError("batch_size must be positive")
     validate_split_export_result(result)
     root = Path(output_dir)
     root.parent.mkdir(parents=True, exist_ok=True)
@@ -1717,7 +1724,7 @@ def write_split_outputs(result: SplitExportResult, output_dir: str | Path) -> li
     with TemporaryDirectory(prefix=f".{root.name}.staging-", dir=root.parent) as tmpdir:
         staging = Path(tmpdir)
         for project_key, project in result.projects.items():
-            batches = list(_task_batches(project.tasks, LABELSTUDIO_SPLIT_BATCH_SIZE))
+            batches = list(_task_batches(project.tasks, batch_size))
             batch_total = len(batches)
             for batch_index, tasks in enumerate(batches, start=1):
                 output_name = (
@@ -1757,7 +1764,7 @@ def write_split_outputs(result: SplitExportResult, output_dir: str | Path) -> li
                 encoding="utf-8",
             )
 
-        _validate_serialized_split_outputs(staging, result)
+        _validate_serialized_split_outputs(staging, result, batch_size=batch_size)
         root.mkdir(parents=True, exist_ok=True)
         for existing in root.iterdir():
             if existing.is_file() and _is_managed_export_name(existing.name):
@@ -2020,13 +2027,15 @@ def _validate_task(
 def _validate_serialized_split_outputs(
     staging: Path,
     result: SplitExportResult,
+    *,
+    batch_size: int = LABELSTUDIO_SPLIT_BATCH_SIZE,
 ) -> None:
     expected_names: set[str] = set()
     seen_words: set[str] = set()
     seen_occurrences: set[tuple[str, int]] = set()
 
     for project_key, project in result.projects.items():
-        batches = list(_task_batches(project.tasks, LABELSTUDIO_SPLIT_BATCH_SIZE))
+        batches = list(_task_batches(project.tasks, batch_size))
         batch_total = len(batches)
         for batch_index, tasks in enumerate(batches, start=1):
             name = (
@@ -2037,7 +2046,7 @@ def _validate_serialized_split_outputs(
             payload = _read_json_array(staging / name)
             if payload != tasks:
                 raise AnnotationExportError(f"serialized batch {name} changed task data")
-            if not 1 <= len(payload) <= LABELSTUDIO_SPLIT_BATCH_SIZE:
+            if not 1 <= len(payload) <= batch_size:
                 raise AnnotationExportError(f"batch {name} has invalid task count")
             for task in payload:
                 data = task["data"]

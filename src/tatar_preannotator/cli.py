@@ -98,6 +98,12 @@ def main(argv: list[str] | None = None) -> int:
         type=int,
         help="Maximum dictionary words and contextual occurrences, applied separately.",
     )
+    export_words.add_argument(
+        "--batch-size",
+        type=int,
+        default=500,
+        help="Maximum tasks per generated Label Studio JSON file.",
+    )
     export_words.add_argument("--include-rl", action=argparse.BooleanOptionalAction, default=True)
     export_words.add_argument(
         "--include-unknown",
@@ -311,6 +317,8 @@ def _repair_unprocessable(args: argparse.Namespace) -> int:
 def _annotation_export(args: argparse.Namespace) -> int:
     if args.max_items is not None and args.max_items < 1:
         raise SystemExit("--max-items must be positive")
+    if args.batch_size < 1:
+        raise SystemExit("--batch-size must be positive")
     if args.min_frequency < 1:
         raise SystemExit("--min-frequency must be positive")
 
@@ -331,7 +339,7 @@ def _annotation_export(args: argparse.Namespace) -> int:
             max_items=args.max_items,
         )
         result = attach_contextual_project(result, contextual)
-        write_split_outputs(result, args.output_dir)
+        write_split_outputs(result, args.output_dir, batch_size=args.batch_size)
     except (OSError, ValueError, sqlite3.Error) as exc:
         print(f"annotation export failed: {exc}")
         return 1
@@ -340,6 +348,8 @@ def _annotation_export(args: argparse.Namespace) -> int:
         "annotation export complete: "
         f"dictionary={len(result.exported_words)} "
         f"contextual={len(result.contextual_occurrences)} "
+        f"contextual_pending={contextual.report['pending_occurrence_count']} "
+        f"initials_grouped={contextual.report['grouped_initial_occurrence_count']} "
         f"output={args.output_dir}"
     )
     return 0
@@ -401,6 +411,13 @@ def _annotation_import(args: argparse.Namespace) -> int:
             f"{summary.inherited_deterministic_divergent_items} "
             f"source_families={summary.inherited_source_families}"
         )
+    else:
+        print(
+            "initial propagation: "
+            f"source_groups={summary.contextual_initial_source_groups} "
+            f"propagated={summary.contextual_initial_propagated_items} "
+            f"historical_backfill={summary.contextual_initial_backfill_items}"
+        )
     return 0
 
 
@@ -423,6 +440,13 @@ def _annotation_audit(args: argparse.Namespace) -> int:
         f"homonym_changes={summary.homonym_changes} "
         f"unannotated={summary.skipped_unannotated_tasks}"
     )
+    if summary.project_key == CONTEXTUAL_PROJECT_KEY:
+        print(
+            "initial propagation: "
+            f"source_groups={summary.contextual_initial_source_groups} "
+            f"propagated={summary.contextual_initial_propagated_items} "
+            f"historical_backfill={summary.contextual_initial_backfill_items}"
+        )
     for change in summary.changes:
         print(f"task={change.task_id} word={change.word}")
         if change.is_homonym:

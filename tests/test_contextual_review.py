@@ -15,7 +15,11 @@ from tatar_preannotator.contextual_review import (
     contextual_conversion_branches,
     export_contextual_tasks_from_db,
 )
-from tatar_preannotator.labelstudio_import import import_labelstudio_annotations
+from tatar_preannotator.labelstudio_import import (
+    LabelStudioImportError,
+    audit_labelstudio_export,
+    import_labelstudio_annotations,
+)
 from tatar_preannotator.word_export import conversion_branches
 
 
@@ -335,6 +339,182 @@ class ContextualReviewExportTests(unittest.TestCase):
                 self.assertEqual(summary.imported_items, 1)
                 self.assertEqual(stored, ("RL", "aktı"))
 
+    def test_initial_references_collapse_spacing_and_observed_case_forms(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            db_path = _database(Path(tmpdir) / "db.sqlite")
+            _add_initial_sentences(db_path)
+
+            result = export_contextual_tasks_from_db(db_path)
+
+        initial_tasks = [task for task in result.tasks if task["data"]["cyrl_word"] == "К"]
+        self.assertEqual(len(initial_tasks), 2)
+        self.assertEqual(
+            {task["data"]["sentence"] for task in initial_tasks},
+            {"К.Насыйри язган.", "К. Ушинский язган."},
+        )
+        self.assertEqual(result.report["grouped_initial_occurrence_count"], 3)
+
+    def test_repeated_initial_letters_keep_distinct_target_slots(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            db_path = _database(Path(tmpdir) / "db.sqlite")
+            with sqlite3.connect(db_path) as conn:
+                conn.execute(
+                    """
+                    insert into word_resolutions(normalized_word, decision, updated_at)
+                    values ('в', 'contextual_homonym', 'now')
+                    """
+                )
+                for index in range(2):
+                    sample_id = f"double_{index}"
+                    conn.execute(
+                        "insert into samples(id, source_id, text) values (?, 'src', 'В.В. Путин.')",
+                        (sample_id,),
+                    )
+                    conn.execute(
+                        """
+                        insert into preannotation_state(
+                            sample_id, status, tatar, tokens_json
+                        ) values (?, 'annotated', 1, ?)
+                        """,
+                        (
+                            sample_id,
+                            json.dumps(
+                                [
+                                    {"text": "В", "label": "U"},
+                                    {"text": "В", "label": "U"},
+                                    {"text": "Путин", "label": "RL"},
+                                ],
+                                ensure_ascii=False,
+                            ),
+                        ),
+                    )
+
+            result = export_contextual_tasks_from_db(db_path)
+
+        tasks = [task for task in result.tasks if task["data"]["cyrl_word"] == "В"]
+        self.assertEqual(len(tasks), 2)
+        self.assertEqual({task["meta"]["token_index"] for task in tasks}, {0, 1})
+
+    def test_old_duplicate_initial_tasks_propagate_atomically(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_initial_sentences(db_path)
+            exported = export_contextual_tasks_from_db(db_path)
+            representative = next(
+                task
+                for task in exported.tasks
+                if task["data"]["sentence"] == "К.Насыйри язган."
+            )
+            tasks = [
+                _annotated_initial_task(representative, "initial_1", "N", "q"),
+                _annotated_initial_task(
+                    representative,
+                    "initial_2",
+                    "N",
+                    "q",
+                    sample_id="initial_2",
+                ),
+            ]
+            backup = _contextual_backup(root / "initials.json", tasks)
+
+            audit = audit_labelstudio_export(db_path, backup)
+            summary = import_labelstudio_annotations(db_path, backup)
+            with sqlite3.connect(db_path) as conn:
+                stored = conn.execute(
+                    """
+                    select sample_id, zamanalif_dsl, origin
+                    from contextual_reviews
+                    where sample_id like 'initial_%'
+                    order by sample_id
+                    """
+                ).fetchall()
+
+        self.assertEqual(audit.contextual_initial_source_groups, 1)
+        self.assertEqual(audit.contextual_initial_propagated_items, 2)
+        self.assertEqual(summary.imported_items, 4)
+        self.assertEqual(summary.contextual_initial_source_groups, 1)
+        self.assertEqual(summary.contextual_initial_propagated_items, 2)
+        self.assertEqual(
+            stored,
+            [
+                ("initial_1", "q", "N"),
+                ("initial_2", "q", "N"),
+                ("initial_3", "q", "N"),
+                ("initial_4", "q", "N"),
+            ],
+        )
+
+    def test_conflicting_duplicate_initial_tasks_roll_back(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_initial_sentences(db_path)
+            representative = next(
+                task
+                for task in export_contextual_tasks_from_db(db_path).tasks
+                if task["data"]["sentence"] == "К.Насыйри язган."
+            )
+            tasks = [
+                _annotated_initial_task(representative, "initial_1", "N", "q"),
+                _annotated_initial_task(
+                    representative,
+                    "initial_2",
+                    "RL",
+                    "k",
+                    sample_id="initial_2",
+                ),
+            ]
+            backup = _contextual_backup(root / "conflict.json", tasks)
+
+            with self.assertRaisesRegex(
+                LabelStudioImportError,
+                "conflicting annotations for initial reference",
+            ):
+                import_labelstudio_annotations(db_path, backup)
+            with sqlite3.connect(db_path) as conn:
+                count = conn.execute(
+                    "select count(*) from contextual_reviews"
+                ).fetchone()[0]
+
+        self.assertEqual(count, 0)
+
+    def test_existing_initial_review_backfills_during_contextual_import(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_initial_sentences(db_path)
+            exported = export_contextual_tasks_from_db(db_path)
+            unrelated = next(
+                task for task in exported.tasks if task["data"]["cyrl_word"] == "Акты"
+            )
+            with sqlite3.connect(db_path) as conn:
+                conn.execute(
+                    """
+                    insert into contextual_reviews(
+                        sample_id, token_index, normalized_word,
+                        zamanalif_dsl, origin, updated_at
+                    ) values ('initial_1', 0, 'к', 'q', 'N', 'now')
+                    """
+                )
+            backup = _contextual_backup(
+                root / "backfill.json",
+                [_annotated_initial_task(unrelated, "unrelated", "RL", "aktı")],
+            )
+
+            summary = import_labelstudio_annotations(db_path, backup)
+            with sqlite3.connect(db_path) as conn:
+                initial_count = conn.execute(
+                    """
+                    select count(*) from contextual_reviews
+                    where sample_id like 'initial_%'
+                    """
+                ).fetchone()[0]
+
+        self.assertEqual(initial_count, 4)
+        self.assertEqual(summary.contextual_initial_source_groups, 0)
+        self.assertEqual(summary.contextual_initial_backfill_items, 3)
+
 
 def _database(path: Path) -> Path:
     with sqlite3.connect(path) as conn:
@@ -404,6 +584,93 @@ def _database(path: Path) -> Path:
             """,
             [("акты",), ("кама",)],
         )
+    return path
+
+
+def _add_initial_sentences(path: Path) -> None:
+    rows = [
+        ("initial_1", "К.Насыйри язган.", "Насыйри", "язган"),
+        ("initial_2", "К. Насыйри язган.", "Насыйри", "язган"),
+        ("initial_3", "К.Насыйриның китабы.", "Насыйриның", "китабы"),
+        ("initial_4", "К. Насыйридан өйрәнгән.", "Насыйридан", "өйрәнгән"),
+        ("initial_5", "К. Ушинский язган.", "Ушинский", "язган"),
+    ]
+    with sqlite3.connect(path) as conn:
+        conn.execute(
+            """
+            insert into word_resolutions(normalized_word, decision, updated_at)
+            values ('к', 'contextual_homonym', 'now')
+            """
+        )
+        for sample_id, sentence, surname, final_word in rows:
+            conn.execute(
+                "insert into samples(id, source_id, text) values (?, 'src', ?)",
+                (sample_id, sentence),
+            )
+            conn.execute(
+                """
+                insert into preannotation_state(sample_id, status, tatar, tokens_json)
+                values (?, 'annotated', 1, ?)
+                """,
+                (
+                    sample_id,
+                    json.dumps(
+                        [
+                            {"text": "К", "label": "U"},
+                            {"text": surname, "label": "N"},
+                            {"text": final_word, "label": "N"},
+                        ],
+                        ensure_ascii=False,
+                    ),
+                ),
+            )
+
+
+def _annotated_initial_task(
+    task: dict[str, object],
+    task_id: str,
+    origin: str,
+    zamanalif: str,
+    *,
+    sample_id: str | None = None,
+) -> dict[str, object]:
+    result = json.loads(json.dumps(task, ensure_ascii=False))
+    result["id"] = task_id
+    if sample_id is not None:
+        result["meta"]["sample_id"] = sample_id
+    result["annotations"] = [
+        {
+            "was_cancelled": False,
+            "result": [
+                {
+                    "from_name": "reviewed_origin",
+                    "type": "choices",
+                    "value": {"choices": [origin]},
+                },
+                {
+                    "from_name": "corrected_zamanalif",
+                    "type": "textarea",
+                    "value": {"text": [zamanalif]},
+                },
+            ],
+        }
+    ]
+    return result
+
+
+def _contextual_backup(path: Path, tasks: list[dict[str, object]]) -> Path:
+    path.write_text(
+        json.dumps(
+            {
+                "tasks": tasks,
+                "total": len(tasks),
+                "total_annotations": len(tasks),
+                "total_predictions": 0,
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
     return path
 
 

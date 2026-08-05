@@ -1973,6 +1973,30 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertNotIn("batch_index", first[0]["data"])
         self.assertNotIn("batch_total", first[0]["data"])
 
+    def test_split_writer_accepts_custom_batch_size(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "вакыт", "label": "N"},
+                            {"text": "вакытта", "label": "N"},
+                        ],
+                    }
+                ],
+            )
+            output_dir = Path(tmpdir) / "split"
+            result = export_labelstudio_project_tasks_from_db(db_path)
+
+            paths = write_split_outputs(result, output_dir, batch_size=2)
+
+            batch_paths = [path for path in paths if "_batch_" in path.name]
+            self.assertEqual(len(batch_paths), 1)
+            self.assertTrue(batch_paths[0].name.endswith("_001_of_001.json"))
+
     def test_repeated_dictionary_export_does_not_persist_state(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
