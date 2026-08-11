@@ -165,6 +165,61 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(summary.inherited_items, 0)
         self.assertEqual(set(reviewed), {"торганнары"})
 
+    def test_shared_stem_correction_propagates_to_safe_family_members(self) -> None:
+        words = ["казакларны", "казакларын", "казакларның", "казакларының"]
+        analyzer = FakeMorphologyAnalyzer(
+            {word: ("казак", "n") for word in words}
+        )
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, words)
+            genitive_task = _task("казакларның", "qazaqlarnıñ", "N")
+            genitive_task["annotations"][0]["result"][0]["value"]["text"] = [
+                "kazaklarnıñ"
+            ]
+            possessive_task = _task("казакларының", "qazaqlarınıñ", "N")
+            possessive_task["annotations"][0]["result"][0]["value"]["text"] = [
+                "kazaklarınıñ"
+            ]
+
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(
+                    root / "kazak-family.json",
+                    [genitive_task, possessive_task],
+                ),
+                morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.inherited_items, 2)
+        self.assertEqual(reviewed["казакларны"].zamanalif_dsl, "kazaklarnı")
+        self.assertEqual(reviewed["казакларын"].zamanalif_dsl, "kazakların")
+
+    def test_historical_shared_stem_correction_backfills_prefix_member(self) -> None:
+        analyzer = FakeMorphologyAnalyzer(
+            {
+                "казакларны": ("казак", "n"),
+                "казакларның": ("казак", "n"),
+            }
+        )
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, ["казакларны", "казакларның"])
+            save_reviewed_word(db_path, "казакларның", "kazaklarnıñ", "N")
+
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "next.json", [_task("вакыт", "waqıt", "N")]),
+                morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.inherited_backfill_items, 1)
+        self.assertEqual(reviewed["казакларны"].zamanalif_dsl, "kazaklarnı")
+
     def test_direct_family_review_outranks_inferred_conversion(self) -> None:
         analyzer = FakeMorphologyAnalyzer(
             {

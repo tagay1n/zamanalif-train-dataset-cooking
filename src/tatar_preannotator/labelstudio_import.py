@@ -3,6 +3,7 @@ from __future__ import annotations
 from contextlib import closing
 from dataclasses import dataclass, replace
 from datetime import datetime, timezone
+from difflib import SequenceMatcher
 import json
 from pathlib import Path
 import sqlite3
@@ -637,8 +638,6 @@ def _propagate_imported_family(
         return 0
     origin, zamanalif_dsl = _regular_values(item)
     canonical = conversion_branches(item.normalized_word).suggestion(origin)
-    if zamanalif_dsl != canonical:
-        return 0
 
     inserted = 0
     for word in item.family_members[1:]:
@@ -656,7 +655,12 @@ def _propagate_imported_family(
             )
         if classify_project(word, origin)["key"] != "catchall":
             continue
-        member_zamanalif = conversion_branches(word).suggestion(origin)
+        member_canonical = conversion_branches(word).suggestion(origin)
+        member_zamanalif = _family_member_zamanalif(
+            canonical,
+            zamanalif_dsl,
+            member_canonical,
+        )
         if not member_zamanalif:
             continue
         inserted += _store_inherited_review(
@@ -694,7 +698,6 @@ def _backfill_reviewed_families(
             or candidate.origin != origin
             or identity is None
             or classify_project(word, origin)["key"] != "catchall"
-            or conversion_branches(word).suggestion(origin) != zamanalif_dsl
         ):
             continue
         anchors.setdefault((identity, origin), []).append(word)
@@ -721,7 +724,13 @@ def _backfill_reviewed_families(
                 value,
             ),
         )
-        zamanalif_dsl = conversion_branches(word).suggestion(candidate.origin)
+        member_canonical = conversion_branches(word).suggestion(candidate.origin)
+        source_canonical = conversion_branches(source).suggestion(candidate.origin)
+        zamanalif_dsl = _family_member_zamanalif(
+            source_canonical,
+            existing[source][0],
+            member_canonical,
+        )
         if not zamanalif_dsl:
             continue
         inserted += _store_inherited_review(
@@ -737,6 +746,61 @@ def _backfill_reviewed_families(
             now=now,
         )
     return inserted
+
+
+def _family_member_zamanalif(
+    source_canonical: str,
+    source_reviewed: str,
+    member_canonical: str,
+) -> str:
+    """Transfer only manual edits contained in a family's shared Latin prefix."""
+    if not source_canonical or not member_canonical:
+        return ""
+    if source_reviewed == source_canonical:
+        return member_canonical
+    if any("{{" in value for value in (source_canonical, source_reviewed, member_canonical)):
+        return ""
+
+    common_length = 0
+    for source_char, member_char in zip(
+        source_canonical,
+        member_canonical,
+        strict=False,
+    ):
+        if source_char != member_char:
+            break
+        common_length += 1
+    if common_length == 0:
+        return ""
+
+    patches: list[tuple[int, int, str]] = []
+    for tag, source_start, source_end, reviewed_start, reviewed_end in SequenceMatcher(
+        None,
+        source_canonical,
+        source_reviewed,
+        autojunk=False,
+    ).get_opcodes():
+        if tag == "equal":
+            continue
+        if source_start == source_end:
+            if source_start >= common_length:
+                continue
+        elif source_end > common_length:
+            continue
+        patches.append(
+            (source_start, source_end, source_reviewed[reviewed_start:reviewed_end])
+        )
+    if not patches:
+        return ""
+
+    result = member_canonical
+    for start, end, replacement in reversed(patches):
+        result = result[:start] + replacement + result[end:]
+    try:
+        parse_dsl(result)
+    except DslError:
+        return ""
+    return result
 
 
 def _store_inherited_review(

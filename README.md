@@ -390,9 +390,14 @@ When a catchall representative is accepted without changing its canonical
 conversion, import approves covered same-origin, same-analysis forms using
 each form's canonical conversion. For example, `мәсьәләләрендәге` covers both
 its prefix chain and the safe divergent sibling `мәсьәләдә`, but not
-`мәсьәләгә` because its divergent suffix contains `г`. An edited conversion
-approves only the representative. Historical backfill from older direct
-reviews remains prefix-only. Inherited reviews are recorded in
+`мәсьәләгә` because its divergent suffix contains `г`. For a plain edited
+conversion, import transfers only edits wholly inside the canonical Latin
+prefix shared with a covered member; the member keeps its own canonical suffix.
+Thus `казакларының → kazaklarınıñ` can approve `казакларын → kazakların`,
+while an edit confined to a longer form's suffix does not propagate. Structured
+DSL edits remain representative-only. Historical backfill from older direct
+reviews remains prefix-only and follows the same shared-correction rule.
+Inherited reviews are recorded in
 `reviewed_word_derivations`; exporting itself never writes review state.
 
 Label Studio layout:
