@@ -28,13 +28,13 @@ once, and the approved result is stored in `reviewed_words`.
   `reviewed_words`, do not export it again.
 - **Contextual homonyms.** Effective homonyms are excluded from every dictionary
   project, including catchall.
-- **Native hamza conversions.** Words whose native conversion emits `ʼ`, or
-  contains the `HAMZA` policy rule, are routed only to the `hamza` dictionary
-  project. They never appear in catchall or the multi-rule project. Russian
-  soft/hard-sign apostrophes remain separate `rus_*` review cases.
+- **Native hamza conversions.** Verified lexical families use the global
+  `HAMZA` omit/preserve policy and are routed only to the `hamza` dictionary
+  project. One representative covers every observed form of the exact lexical
+  family. Russian soft/hard-sign apostrophes remain separate `rus_*` cases.
 - **Native-looking mixed-harmony words.** If Gemini labels a word `N` and the
-  word has mixed front/back vowels, skip it for Project 1. Keep matching `RL`
-  and `U` words.
+  word has mixed front/back vowels, skip it for Project 1 unless it belongs to
+  a verified lexical hamza family. Keep matching `RL` and `U` words.
 - **Origin-independent words.** If native and Russian-loanword conversion
   branches produce the same Zamanalif result, skip the word because origin
   annotation cannot change the target text.
@@ -59,8 +59,8 @@ review candidates.
 Catchall is reduced with the pinned Apertium-tat morphological analyzer. Words
 share one task only when every form has one unambiguous analysis with the same
 lemma and part of speech, and the forms have the same predicted origin.
-Ambiguous and unknown words remain independent tasks. DSL-rule words, hamza
-words, and contextual homonyms are routed to their dedicated projects before
+Ambiguous and unknown words remain independent tasks. Other DSL-rule words,
+hamza words, and contextual homonyms are routed to their dedicated projects before
 family grouping and therefore cannot enter a catchall family.
 
 Export chooses longer representatives first. A representative covers its
@@ -68,11 +68,21 @@ literal prefixes and shorter divergent siblings when divergence starts after
 the full lemma and the sibling-only suffix contains none of
 `вгекуцюяүщъыьё`. Other divergent branches remain separate tasks. Accepting
 the unchanged canonical conversion approves each covered form with that
-form's own canonical conversion. For example, `мәсьәләләрендәге` can approve
-`мәсьәләләрендә`, `мәсьәлә`, and `мәсьәләдә`, but not `мәсьәләгә`. Editing the
+form's own canonical conversion. For example, `диалогларындагы` can approve
+`диалогларында`, `диалог`, and `диалогларда`, but not `диалогларга`. Editing the
 representative conversion disables propagation. Historical backfill from
 older direct canonical reviews remains prefix-only. Derived approvals retain
 their source and analyzer revision in `reviewed_word_derivations`.
+
+### Native Hamza Families
+
+The verified families `маэмай`, `таэмин`/`тәэмин`, `тәэсир`, `мөэмин`,
+`мәсьәлә`, `җөрьәт`, and `коръән` use one global `HAMZA` choice. For example,
+`тәэсир` is stored as `tä{{HAMZA|omit=|preserve=ʼ}}sir`. Export groups only by
+these exact lexical prefixes and resolved origin branch; it never infers hamza
+from an arbitrary `э`, `ь`, or `ъ`. Importing an unchanged representative
+propagates the structured policy to every matching family form while preserving
+each form's canonical suffix.
 
 ## Contextual Homonym Review
 

@@ -270,7 +270,8 @@ Selection rules:
 - export the word only when those branches differ or one branch is unavailable;
 - skip words whose conversion is identical under both origins, including `U`
   words, because origin cannot change their target text;
-- skip native-looking `"N"` words with mixed front/back vowel harmony;
+- skip native-looking `"N"` words with mixed front/back vowel harmony, except
+  verified lexical hamza families;
 - exclude every effective homonym from all dictionary projects, including
   catchall;
 - automatically convert homonym occurrences whose native and loanword branches
@@ -282,8 +283,10 @@ Selection rules:
   `К. Ушинский` separate;
 - use contextual-only native fallbacks `г → ğ` and `к → q` when an isolated
   homonym has no vowel context; dictionary and catchall conversion stay unchanged;
-- route every native conversion that emits a hamza, including literal lexical
-  conversions such as `тәэмин → täʼmin`, to `hamza` and never to catchall;
+- encode verified native hamza families with the global `HAMZA` omit/preserve
+  policy and route them to `hamza`, never catchall;
+- collapse every observed hamza family to one representative task and propagate
+  an unchanged policy review to all forms in that exact lexical family;
 - always skip forms already approved in `reviewed_words`;
 - deduplicate by lowercase normalized Cyrillic word form.
 

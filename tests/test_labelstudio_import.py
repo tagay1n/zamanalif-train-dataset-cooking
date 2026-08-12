@@ -197,6 +197,45 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(reviewed["казакларны"].zamanalif_dsl, "kazaklarnı")
         self.assertEqual(reviewed["казакларын"].zamanalif_dsl, "kazakların")
 
+    def test_new_direct_correction_refreshes_an_older_inherited_review(self) -> None:
+        words = ["өязендә", "өязендәдер", "өязенең"]
+        analyzer = FakeMorphologyAnalyzer({word: ("өяз", "n") for word in words})
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, words, origin="RL")
+
+            import_labelstudio_annotations(
+                db_path,
+                _backup(
+                    root / "first.json",
+                    [_task("өязендәдер", "öyazendäder", "RL")],
+                ),
+                morphology_analyzer=analyzer,
+            )
+            corrected = _task("өязенең", "öyazeneñ", "RL")
+            corrected["annotations"][0]["result"][0]["value"]["text"] = [
+                "öyäzeneñ"
+            ]
+
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "second.json", [corrected]),
+                morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+            with sqlite3.connect(db_path) as conn:
+                source = conn.execute(
+                    """
+                    select source_word from reviewed_word_derivations
+                    where normalized_word = 'өязендә'
+                    """
+                ).fetchone()
+
+        self.assertEqual(summary.inherited_items, 1)
+        self.assertEqual(reviewed["өязендә"].zamanalif_dsl, "öyäzendä")
+        self.assertEqual(source, ("өязенең",))
+
     def test_historical_shared_stem_correction_backfills_prefix_member(self) -> None:
         analyzer = FakeMorphologyAnalyzer(
             {
@@ -287,26 +326,26 @@ class LabelStudioImportTests(unittest.TestCase):
 
     def test_imported_branch_propagates_only_to_safe_divergent_member(self) -> None:
         words = [
-            "мәсьәлә",
-            "мәсьәләләр",
-            "мәсьәләләре",
-            "мәсьәләләрен",
-            "мәсьәләләрендә",
-            "мәсьәләләрендәге",
-            "мәсьәләдә",
-            "мәсьәләгә",
+            "диалог",
+            "диалоглар",
+            "диалоглары",
+            "диалогларын",
+            "диалогларында",
+            "диалогларындагы",
+            "диалогта",
+            "диалогларга",
         ]
         analyzer = FakeMorphologyAnalyzer(
-            {word: ("мәсьәлә", "n") for word in words}
+            {word: ("диалог", "n") for word in words}
         )
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             db_path = _database(root / "db.sqlite")
-            _add_words(db_path, words)
+            _add_words(db_path, words, origin="RL")
             task = _task(
-                "мәсьәләләрендәге",
-                "mäsälälärendäge",
-                "N",
+                "диалогларындагы",
+                "dialoglarındağı",
+                "RL",
             )
 
             summary = import_labelstudio_annotations(
@@ -320,17 +359,44 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(summary.inherited_items, 6)
         self.assertTrue(
             {
-                "мәсьәлә",
-                "мәсьәләләр",
-                "мәсьәләләре",
-                "мәсьәләләрен",
-                "мәсьәләләрендә",
-                "мәсьәләләрендәге",
-                "мәсьәләдә",
+                "диалог",
+                "диалоглар",
+                "диалоглары",
+                "диалогларын",
+                "диалогларында",
+                "диалогларындагы",
+                "диалогта",
             }
             <= set(reviewed)
         )
-        self.assertNotIn("мәсьәләгә", reviewed)
+        self.assertNotIn("диалогларга", reviewed)
+
+    def test_hamza_import_propagates_policy_to_entire_lexical_family(self) -> None:
+        words = ["тәэсир", "тәэсире", "тәэсирле", "тәэсирләр"]
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, words)
+            task = _task(
+                "тәэсир",
+                "tä{{HAMZA|omit=|preserve=ʼ}}sir",
+                "N",
+                project_key="hamza",
+            )
+
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "hamza-family.json", [task]),
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.imported_items, 1)
+        self.assertEqual(summary.inherited_items, 3)
+        self.assertEqual(set(reviewed) & set(words), set(words))
+        self.assertEqual(
+            reviewed["тәэсирле"].zamanalif_dsl,
+            "tä{{HAMZA|omit=|preserve=ʼ}}sirle",
+        )
 
     def test_homonym_annotation_routes_word_to_contextual_export_idempotently(self) -> None:
         with TemporaryDirectory() as tmpdir:

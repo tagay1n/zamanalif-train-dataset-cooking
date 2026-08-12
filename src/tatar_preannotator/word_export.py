@@ -411,7 +411,7 @@ def classify_project(word: str, label: str) -> dict[str, Any]:
         return {"key": key, "title": project_title_for_key(key), "dsl_rules": []}
     result = conversion_result_for_annotation(word, label)
     rules = list(dict.fromkeys(result.rule_ids)) if result is not None else []
-    if label == "N" and _contains_hamza(result):
+    if native_hamza_family(word) is not None and _contains_hamza(result):
         key = _project_key_for_rule(HAMZA_RULE.rule_id)
         title = project_title_for_key(key)
     elif len(rules) > 1:
@@ -424,6 +424,43 @@ def classify_project(word: str, label: str) -> dict[str, Any]:
         key = "catchall"
         title = "Catchall word review"
     return {"key": key, "title": title, "dsl_rules": rules}
+
+
+NATIVE_HAMZA_FAMILIES: tuple[tuple[str, str, str], ...] = (
+    ("маэмай", "maemay", "maʼmay"),
+    ("таэмин", "taemin", "täʼmin"),
+    ("тәэмин", "täemin", "täʼmin"),
+    ("тәэсир", "täesir", "täʼsir"),
+    ("мөэмин", "möemin", "möʼmin"),
+    ("мәсьәлә", "mäsälä", "mäsʼälä"),
+    ("җөрьәт", "cörät", "cörʼät"),
+    ("коръән", "qorän", "qorʼän"),
+)
+
+LOANWORD_HAMZA_PREFIXES: dict[str, str] = {
+    "маэмай": "maemay",
+    "таэмин": "taemin",
+    "тәэмин": "täemin",
+    "тәэсир": "täesir",
+    "мөэмин": "möemin",
+    "мәсьәлә": "mäsʼälä",
+    "җөрьәт": "cörʼät",
+    "коръән": "korʼän",
+}
+
+
+def native_hamza_family(word: str) -> str | None:
+    """Return the verified lexical hamza stem for a word."""
+    folded = word.casefold()
+    family = next(
+        (
+            cyrillic_prefix
+            for cyrillic_prefix, _, _ in NATIVE_HAMZA_FAMILIES
+            if folded.startswith(cyrillic_prefix)
+        ),
+        None,
+    )
+    return "тәэмин" if family == "таэмин" else family
 
 
 def _contains_hamza(result: ConversionResult | None) -> bool:
@@ -499,6 +536,8 @@ def _export_from_records(
                 stats[normalized] = entry
             entry.frequency += 1
             effective_label = resolution if resolution in {"N", "RL", "U"} else label
+            if native_hamza_family(normalized) is not None and effective_label == "U":
+                effective_label = "N"
             entry.label_counts[effective_label] += 1
             entry.conditional_letters.update(
                 char for char in normalized if char in CONDITIONAL_LETTERS
@@ -523,10 +562,17 @@ def _export_from_records(
             continue
         if entry.label == "U" and not include_unknown:
             continue
-        if entry.label == "N" and vowel_harmony_class(entry.normalized) == "mixed_front_back":
+        if (
+            entry.label == "N"
+            and vowel_harmony_class(entry.normalized) == "mixed_front_back"
+            and native_hamza_family(entry.normalized) is None
+        ):
             mixed_harmony_n_skipped += 1
             continue
-        if branches.state == "origin_independent":
+        if (
+            branches.state == "origin_independent"
+            and native_hamza_family(entry.normalized) is None
+        ):
             continue
         if entry.frequency < min_frequency:
             continue
@@ -580,6 +626,7 @@ def _export_units(
 
     ordinary: list[_ExportUnit] = []
     catchall: list[tuple[dict[str, Any], str, int, str]] = []
+    hamza: dict[tuple[str, str], list[tuple[dict[str, Any], str, int, str]]] = {}
     for task, normalized, frequency in zip(
         result.tasks,
         result.exported_words,
@@ -590,6 +637,12 @@ def _export_units(
         project_key = classify_project(normalized, label)["key"]
         if project_key == "catchall":
             catchall.append((task, normalized, frequency, label))
+        elif project_key == "hamza" and (
+            family := native_hamza_family(normalized)
+        ) is not None:
+            hamza.setdefault((family, label), []).append(
+                (task, normalized, frequency, label)
+            )
         else:
             ordinary.append(
                 _ExportUnit(
@@ -600,6 +653,31 @@ def _export_units(
                     family_members=(normalized,),
                 )
             )
+
+    for items in hamza.values():
+        representative = min(
+            items,
+            key=lambda item: (len(item[1]), -item[2], item[1]),
+        )
+        ordinary.append(
+            _ExportUnit(
+                task=representative[0],
+                normalized_word=representative[1],
+                project_key="hamza",
+                frequency=sum(item[2] for item in items),
+                family_members=tuple(
+                    item[1]
+                    for item in sorted(
+                        items,
+                        key=lambda item: (
+                            item[1] != representative[1],
+                            len(item[1]),
+                            item[1],
+                        ),
+                    )
+                ),
+            )
+        )
 
     identities = morphology_analyzer.analyze(item[1] for item in catchall)
     grouped: dict[tuple[Any, ...], list[tuple[dict[str, Any], str, int, str]]] = {}
@@ -724,6 +802,14 @@ def eligible_catchall_words(
     conn: sqlite3.Connection,
 ) -> dict[str, CatchallWord]:
     """Return every observed word currently eligible for catchall review."""
+    return eligible_project_words(conn, "catchall")
+
+
+def eligible_project_words(
+    conn: sqlite3.Connection,
+    project_key: str,
+) -> dict[str, CatchallWord]:
+    """Return observed unreviewed candidates for one dictionary project."""
     resolutions = {
         str(row[0]): str(row[1])
         for row in conn.execute(
@@ -748,7 +834,7 @@ def eligible_catchall_words(
         strict=True,
     ):
         origin = task["data"]["gemini_origin"]
-        if classify_project(word, origin)["key"] == "catchall":
+        if classify_project(word, origin)["key"] == project_key:
             eligible[word] = CatchallWord(word, origin, frequency)
     return eligible
 
@@ -768,6 +854,11 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     compact = convert_for_annotation(word, label)
     if not compact:
         return None
+    if native_hamza_family(word) is not None:
+        return result_with_native_hamza_choices(
+            word,
+            ConversionResult((Literal(compact),)),
+        )
     result = result_with_russian_sign_glide_choices(word, compact, label)
     if result.has_choices:
         return result_with_rl_y_choices(word, result, label)
@@ -797,7 +888,6 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_erzya_ya_choices(word, result)
     result = result_with_kagaz_stem_choices(word, result)
     result = result_with_mashgul_stem_choices(word, result)
-    result = result_with_qoran_hamza_choices(word, result)
     result = result_with_iya_choices(word, result)
     result = result_with_ie_glide_choices(word, result)
     result = result_with_jamgiyat_iya_choices(word, result, label)
@@ -1233,10 +1323,20 @@ def result_with_mashgul_stem_choices(source: str, result: ConversionResult) -> C
     return ConversionResult(tuple(segments)) if changed else result
 
 
-def result_with_qoran_hamza_choices(source: str, result: ConversionResult) -> ConversionResult:
-    """Annotate ``коръән`` as hamza-preserving vs hamza-omitting policy."""
-    if not source.casefold().startswith("коръән"):
+def result_with_native_hamza_choices(
+    source: str,
+    result: ConversionResult,
+) -> ConversionResult:
+    """Represent verified native lexical hamza as one global policy choice."""
+    family = native_hamza_family(source)
+    if family is None:
         return result
+    preserved_prefix = next(
+        preserved
+        for cyrillic, _, preserved in NATIVE_HAMZA_FAMILIES
+        if cyrillic == family
+    )
+    apostrophe_index = preserved_prefix.index(ZAMANALIF_APOSTROPHE)
 
     segments: list[Literal | Choice] = []
     changed = False
@@ -1245,10 +1345,14 @@ def result_with_qoran_hamza_choices(source: str, result: ConversionResult) -> Co
             segments.append(segment)
             continue
         text = segment.text
-        if not changed and text.startswith("qorän"):
-            _append_literal_segment(segments, "qor")
+        if not changed and text.startswith(preserved_prefix):
+            _append_literal_segment(segments, preserved_prefix[:apostrophe_index])
             segments.append(Choice(HAMZA_RULE.rule_id, HAMZA_RULE.options))
-            _append_literal_segment(segments, text[len("qor") :])
+            _append_literal_segment(
+                segments,
+                preserved_prefix[apostrophe_index + 1 :]
+                + text[len(preserved_prefix) :],
+            )
             changed = True
             continue
         _append_literal_segment(segments, text)
@@ -2242,7 +2346,25 @@ def _convert_known_label_without_hyphen(word: str, label: str) -> str:
         output = _apply_native_lexical_conventions(word, output)
     if label == "RL":
         output = _apply_loanword_lexical_conventions(word, output)
-    return output
+    return _apply_verified_hamza_lexical_convention(word, output, label)
+
+
+def _apply_verified_hamza_lexical_convention(
+    word: str,
+    converted: str,
+    label: str,
+) -> str:
+    folded = word.casefold()
+    for cyrillic, native_plain, preserved in NATIVE_HAMZA_FAMILIES:
+        if not folded.startswith(cyrillic):
+            continue
+        branch_prefix = native_plain if label == "N" else LOANWORD_HAMZA_PREFIXES[cyrillic]
+        if converted.startswith(preserved):
+            return converted
+        if converted.startswith(branch_prefix):
+            return preserved + converted[len(branch_prefix) :]
+        return converted
+    return converted
 
 
 def _apply_loanword_lexical_conventions(word: str, converted: str) -> str:
@@ -2281,6 +2403,7 @@ def _loanword_final_ets_sequence_conversion(
 
 
 NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
+    *NATIVE_HAMZA_FAMILIES,
     ("аек", "ayık", "ayıq"),
     ("беркай", "berkay", "berqay"),
     ("беркая", "berkaya", "berqaya"),
@@ -2323,7 +2446,6 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("лаек", "layık", "layıq"),
     ("мыек", "mıyık", "mıyıq"),
     ("мөкатдәс", "mökatdäs", "möqatdäs"),
-    ("маэмай", "maemay", "maʼmay"),
     ("мәкал", "mäkal", "mäqal"),
     ("мәкәлә", "mäkälä", "mäqälä"),
     ("мәхкүл", "mäxkül", "mäxqül"),
@@ -2340,11 +2462,8 @@ NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("сөякк", "söyäqq", "söyäkk"),
     ("сөяк", "söyäq", "söyäk"),
     ("сәркатип", "särkatip", "särqatip"),
-    ("таэмин", "taemin", "täʼmin"),
     ("тәкать", "täkat", "täqat"),
     ("тәрәккый", "täräkqıy", "täräqqıy"),
-    ("тәэмин", "täemin", "täʼmin"),
-    ("тәэсир", "täesir", "täʼsir"),
     ("тәнкыйть", "tänkıyt", "tänqıyt"),
     ("тәшрик", "täşrik", "täşriq"),
     ("вакиф", "wakif", "waqif"),
@@ -2496,6 +2615,10 @@ def _loanword_suffix_gk_conversion(char: str, word: str, index: int) -> str:
         return "ğ" if suffix in {"га", "ларга"} else "g"
     if char == "г" and suffix in {"ган", "гән", "гын", "ген"} and len(prefix) >= 5:
         return "ğ" if suffix in {"ган", "гын"} else "g"
+    if char == "г" and suffix in {"гы", "ге"} and word.endswith(("лыгы", "леге")):
+        stem = word[:-4]
+        if len(stem) >= 4:
+            return "ğ" if suffix == "гы" else "g"
     if char == "г" and index == len(word) - 2 and word.endswith(
         ("дагы", "дәге", "тагы", "тәге")
     ):

@@ -40,8 +40,10 @@ from .word_export import (
     conversion_branches,
     dictionary_project_keys,
     eligible_catchall_words,
+    eligible_project_words,
     ensure_review_state_schema,
     is_safe_family_member,
+    native_hamza_family,
     normalize_word,
 )
 
@@ -256,6 +258,11 @@ def import_labelstudio_annotations(
                         + ", ".join(homonyms[:20])
                     )
                 eligible = eligible_catchall_words(conn)
+                project_eligible = (
+                    eligible_project_words(conn, "hamza")
+                    if parsed.project_key == "hamza"
+                    else eligible
+                )
                 existing = {
                     str(row[0]): (str(row[1]), str(row[2]))
                     for row in conn.execute(
@@ -284,6 +291,14 @@ def import_labelstudio_annotations(
                             analyses,
                             eligible,
                             analyzer,
+                        )
+                        for item in regular_items
+                    ]
+                elif parsed.project_key == "hamza":
+                    regular_items = [
+                        _reconstruct_imported_hamza_family(
+                            item,
+                            project_eligible,
                         )
                         for item in regular_items
                     ]
@@ -323,17 +338,24 @@ def import_labelstudio_annotations(
                     existing[item.normalized_word] = current
                     imported += 1
                 for item in regular_items:
-                    if parsed.project_key != "catchall":
-                        continue
-                    inherited += _propagate_imported_family(
-                        conn,
-                        item,
-                        analyses,
-                        analyzer.revision,
-                        existing,
-                        derived_words,
-                        now,
-                    )
+                    if parsed.project_key == "catchall":
+                        inherited += _propagate_imported_family(
+                            conn,
+                            item,
+                            analyses,
+                            analyzer.revision,
+                            existing,
+                            derived_words,
+                            now,
+                        )
+                    elif parsed.project_key == "hamza":
+                        inherited += _propagate_imported_hamza_family(
+                            conn,
+                            item,
+                            existing,
+                            derived_words,
+                            now,
+                        )
                 inherited += _backfill_reviewed_families(
                     conn,
                     analyses,
@@ -624,6 +646,42 @@ def _reconstruct_imported_family(
     )
 
 
+def _reconstruct_imported_hamza_family(
+    item: ReviewedAnnotation,
+    eligible: dict[str, Any],
+) -> ReviewedAnnotation:
+    candidate = eligible.get(item.normalized_word)
+    if candidate is None:
+        raise LabelStudioImportError(
+            f"hamza word is no longer eligible: {item.normalized_word!r}"
+        )
+    if candidate.origin != item.suggested_origin:
+        raise LabelStudioImportError(
+            f"hamza word changed predicted origin: {item.normalized_word!r}"
+        )
+    family = native_hamza_family(item.normalized_word)
+    if family is None:
+        raise LabelStudioImportError(
+            f"hamza word has no verified lexical family: {item.normalized_word!r}"
+        )
+    related = sorted(
+        (
+            word
+            for word, related_candidate in eligible.items()
+            if word != item.normalized_word
+            and related_candidate.origin == item.suggested_origin
+            and native_hamza_family(word) == family
+        ),
+        key=lambda word: (len(word), word),
+    )
+    return replace(
+        item,
+        family_members=(item.normalized_word, *related),
+        morphology=MorphIdentity(family, "hamza"),
+        analyzer_revision="lexical-hamza-v1",
+    )
+
+
 def _propagate_imported_family(
     conn: sqlite3.Connection,
     item: ReviewedAnnotation,
@@ -671,6 +729,51 @@ def _propagate_imported_family(
             source_word=item.normalized_word,
             identity=identity,
             analyzer_revision=analyzer_revision,
+            existing=existing,
+            derived_words=derived_words,
+            now=now,
+        )
+    return inserted
+
+
+def _propagate_imported_hamza_family(
+    conn: sqlite3.Connection,
+    item: ReviewedAnnotation,
+    existing: dict[str, tuple[str, str]],
+    derived_words: set[str],
+    now: str,
+) -> int:
+    identity = item.morphology
+    if identity is None or len(item.family_members) == 1:
+        return 0
+    origin, zamanalif_dsl = _regular_values(item)
+    canonical = conversion_branches(item.normalized_word).suggestion(origin)
+    inserted = 0
+    for word in item.family_members[1:]:
+        if native_hamza_family(word) != identity.lemma:
+            raise LabelStudioImportError(
+                f"hamza family changed for {word!r}"
+            )
+        if classify_project(word, origin)["key"] != "hamza":
+            raise LabelStudioImportError(
+                f"hamza family member changed project for {word!r}"
+            )
+        member_canonical = conversion_branches(word).suggestion(origin)
+        member_zamanalif = _family_member_zamanalif(
+            canonical,
+            zamanalif_dsl,
+            member_canonical,
+        )
+        if not member_zamanalif:
+            continue
+        inserted += _store_inherited_review(
+            conn,
+            word=word,
+            zamanalif_dsl=member_zamanalif,
+            origin=origin,
+            source_word=item.normalized_word,
+            identity=identity,
+            analyzer_revision=item.analyzer_revision or "lexical-hamza-v1",
             existing=existing,
             derived_words=derived_words,
             now=now,
@@ -820,10 +923,32 @@ def _store_inherited_review(
     previous = existing.get(word)
     if previous is not None:
         if previous != current and word in derived_words:
-            raise LabelStudioImportError(
-                f"inherited review conflict for {word!r}: "
-                f"database has {previous!r}, family implies {current!r}"
+            conn.execute(
+                """
+                update reviewed_words
+                set zamanalif_dsl = ?, origin = ?, updated_at = ?
+                where normalized_word = ?
+                """,
+                (zamanalif_dsl, origin, now, word),
             )
+            conn.execute(
+                """
+                update reviewed_word_derivations
+                set source_word = ?, lemma = ?, part_of_speech = ?,
+                    analyzer_revision = ?, created_at = ?
+                where normalized_word = ?
+                """,
+                (
+                    source_word,
+                    identity.lemma,
+                    identity.part_of_speech,
+                    analyzer_revision,
+                    now,
+                    word,
+                ),
+            )
+            existing[word] = current
+            return 1
         return 0
     conn.execute(
         """

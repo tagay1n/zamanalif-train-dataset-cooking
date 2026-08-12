@@ -652,7 +652,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_native_hamza_lexical_cases(self) -> None:
         self.assertEqual(convert_for_annotation("маэмай", "N"), "maʼmay")
-        self.assertEqual(convert_for_annotation_dsl("маэмай", "N"), "maʼmay")
+        self.assertEqual(
+            convert_for_annotation_dsl("маэмай", "N"),
+            "ma{{HAMZA|omit=|preserve=ʼ}}may",
+        )
 
     def test_native_k_g_use_local_vowel_context(self) -> None:
         self.assertEqual(convert_for_annotation("китап", "N"), "kitap")
@@ -717,6 +720,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_loanword_stems_with_tatar_suffixes_use_suffix_gk(self) -> None:
         cases = [
             ("авторлыгын", "avtorlığın"),
+            ("комплектлылыгы", "komplektlılığı"),
             ("графлык", "graflıq"),
             ("коллективтагы", "kollektivtağı"),
             ("маскировкаланмаган", "maskirovkalanmağan"),
@@ -876,25 +880,34 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(resolve_dsl(dsl), explicit)
                 self.assertEqual(resolve_dsl(dsl, {"IYA": "compact"}), compact)
 
-    def test_selected_arabic_hamza_stems_are_deterministic(self) -> None:
+    def test_verified_native_hamza_stems_share_one_policy(self) -> None:
         cases = [
-            ("таэмин", "täʼmin"),
-            ("тәэмин", "täʼmin"),
-            ("тәэсир", "täʼsir"),
-            ("тәэсирендә", "täʼsirendä"),
-            ("тәэсиргә", "täʼsirgä"),
-            ("тәэсирле", "täʼsirle"),
-            ("тәэсирлелек", "täʼsirlelek"),
-            ("тәэсирләнергә", "täʼsirlänergä"),
-            ("тәэсирләнүчән", "täʼsirlänüçän"),
-            ("тәэсирләнүчәнлек", "täʼsirlänüçänlek"),
-            ("тәэсирсез", "täʼsirsez"),
+            ("маэмай", "maʼmay", "mamay"),
+            ("таэмин", "täʼmin", "tämin"),
+            ("тәэмин", "täʼmin", "tämin"),
+            ("тәэсирендә", "täʼsirendä", "täsirendä"),
+            ("мөэминнәр", "möʼminnär", "möminnär"),
+            ("мәсьәләләр", "mäsʼälälär", "mäsälälär"),
+            ("җөрьәт", "cörʼät", "cörät"),
+            ("коръәнгә", "qorʼängä", "qorängä"),
         ]
 
-        for word, expected in cases:
+        for word, preserved, omitted in cases:
             with self.subTest(word=word):
-                self.assertEqual(convert_for_annotation(word, "N"), expected)
-                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
+                dsl = convert_for_annotation_dsl(word, "N")
+                self.assertEqual(convert_for_annotation(word, "N"), preserved)
+                self.assertEqual(resolve_dsl(dsl), omitted)
+                self.assertEqual(
+                    resolve_dsl(dsl, {"HAMZA": "preserve"}),
+                    preserved,
+                )
+
+    def test_hamza_policy_preserves_resolved_loanword_surname_suffix(self) -> None:
+        self.assertEqual(
+            convert_for_annotation_dsl("мөэминованың", "RL"),
+            "mö{{HAMZA|omit=|preserve=ʼ}}minovanıñ",
+        )
+        self.assertEqual(classify_project("мөэминованың", "RL")["key"], "hamza")
 
     def test_native_ek_to_iyq_words_are_deterministic(self) -> None:
         cases = [
@@ -1442,17 +1455,17 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_catchall_exports_each_maximal_prefix_branch(self) -> None:
         words = [
-            "мәсьәлә",
-            "мәсьәләләр",
-            "мәсьәләләре",
-            "мәсьәләләрен",
-            "мәсьәләләрендә",
-            "мәсьәләләрендәге",
-            "мәсьәләдә",
-            "мәсьәләгә",
+            "диалог",
+            "диалоглар",
+            "диалоглары",
+            "диалогларын",
+            "диалогларында",
+            "диалогларындагы",
+            "диалогта",
+            "диалогларга",
         ]
         analyzer = FakeMorphologyAnalyzer(
-            {word: ("мәсьәлә", "n") for word in words}
+            {word: ("диалог", "n") for word in words}
         )
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
@@ -1462,7 +1475,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                         "id": "sent_1",
                         "tatar": True,
                         "tokens": [
-                            {"text": word, "label": "N"} for word in words
+                            {"text": word, "label": "RL"} for word in words
                         ],
                     }
                 ],
@@ -1477,7 +1490,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         catchall = result.projects["catchall"]
         self.assertEqual(
             catchall.exported_words,
-            ["мәсьәләгә", "мәсьәләләрендәге"],
+            ["диалогларга", "диалогларындагы"],
         )
         self.assertEqual(catchall.report["covered_word_count"], len(words))
         self.assertEqual(result.report["covered_word_count"], len(words))
@@ -1560,19 +1573,22 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(project["dsl_rules"], ["RUS_JOTATION", "IYA"])
 
     def test_split_export_routes_literal_and_policy_hamza_out_of_catchall(self) -> None:
-        cases = {
-            "маэмай": [],
-            "тәэмин": [],
-            "тәэсир": [],
-            "коръән": ["HAMZA"],
-        }
+        cases = (
+            "маэмай",
+            "тәэмин",
+            "тәэсир",
+            "мөэмин",
+            "мәсьәлә",
+            "җөрьәт",
+            "коръән",
+        )
 
-        for word, rules in cases.items():
+        for word in cases:
             with self.subTest(word=word):
                 project = classify_project(word, "N")
                 self.assertEqual(project["key"], "hamza")
                 self.assertEqual(project["title"], "Hamza review")
-                self.assertEqual(project["dsl_rules"], rules)
+                self.assertEqual(project["dsl_rules"], ["HAMZA"])
 
     def test_russian_apostrophe_is_not_routed_as_hamza(self) -> None:
         project = classify_project("культура", "RL")
@@ -1607,8 +1623,38 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual(set(result.projects), {"hamza"})
         self.assertEqual(tasks[0]["meta"]["project_key"], "hamza")
-        self.assertEqual(tasks[0]["data"]["auto_zamanalif"], "täʼmin")
+        self.assertEqual(
+            tasks[0]["data"]["auto_zamanalif"],
+            "tä{{HAMZA|omit=|preserve=ʼ}}min",
+        )
         self.assertIn("Arabic/Persian hamza", instructions)
+
+    def test_hamza_export_collapses_each_verified_lexical_family(self) -> None:
+        words = ["тәэсир", "тәэсире", "тәэсирле", "мөэмин", "мөэминнәр"]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": word, "label": "N"} for word in words
+                        ],
+                    }
+                ],
+            )
+
+            result = export_labelstudio_project_tasks_from_db(
+                db_path,
+                sort_by="word",
+                morphology_analyzer=FakeMorphologyAnalyzer(),
+            )
+
+        hamza = result.projects["hamza"]
+        self.assertEqual(hamza.exported_words, ["мөэмин", "тәэсир"])
+        self.assertEqual(hamza.report["covered_word_count"], len(words))
+        self.assertEqual(result.report["covered_word_count"], len(words))
 
     def test_split_export_counts_distinct_rules_not_repeated_occurrences(self) -> None:
         project = classify_project("социаль-икътисадый", "RL")
