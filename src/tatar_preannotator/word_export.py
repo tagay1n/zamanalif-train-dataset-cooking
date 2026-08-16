@@ -5,7 +5,6 @@ from contextlib import closing
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from functools import lru_cache
-from html import escape
 import json
 from pathlib import Path
 import re
@@ -1951,9 +1950,6 @@ def decision_html(entry: WordStats) -> str:
         )
     if result is None:
         items.append("Automatic converter produced no clean Latin suggestion")
-    items.append(
-        f"Frequency for <b><i>{escape(entry.normalized)}</i></b>: <b>{entry.frequency}</b>"
-    )
     return "<ul>" + "".join(f"<li>{item}</li>" for item in items) + "</ul>"
 
 

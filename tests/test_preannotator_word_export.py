@@ -201,7 +201,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertNotIn("<b>в</b> ->", html)
         self.assertNotIn("<b>к</b> ->", html)
         self.assertIn("Gemini's origin prediction: <b>native</b>", html)
-        self.assertIn("Frequency for <b><i>вакытында</i></b>: <b>2</b>", html)
+        self.assertNotIn("Frequency for", html)
 
     def test_mixed_harmony_rl_is_kept_and_rl_without_conditional_is_skipped(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1401,7 +1401,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         for html in html_by_word.values():
             self.assertNotIn(" -> ", html)
             self.assertIn("Gemini's origin prediction:", html)
-            self.assertIn("Frequency for", html)
+            self.assertNotIn("Frequency for", html)
             self.assertNotIn("Native branch:", html)
             self.assertNotIn("Loanword branch:", html)
             self.assertNotIn("because of", html)
