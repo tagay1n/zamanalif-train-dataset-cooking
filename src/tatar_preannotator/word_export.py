@@ -81,7 +81,82 @@ MANAGED_BATCH_RE = re.compile(
 )
 MANAGED_INSTRUCTIONS_RE = re.compile(r"^project_[a-z0-9_]+_instructions\.html$")
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
+INTERNAL_DOUBLE_QUOTES = frozenset('"“”„‟«»〝〞〟＂')
+TATAR_SUFFIXES_AFTER_QUOTE = frozenset(
+    {
+        "гы",
+        "ге",
+        "кы",
+        "ке",
+        "да",
+        "дә",
+        "та",
+        "тә",
+        "дагы",
+        "дәге",
+        "тагы",
+        "тәге",
+        "дан",
+        "дән",
+        "тан",
+        "тән",
+        "га",
+        "гә",
+        "ка",
+        "кә",
+        "ны",
+        "не",
+        "ның",
+        "нең",
+        "н",
+        "на",
+        "нә",
+        "нда",
+        "ндә",
+        "ннан",
+        "ннән",
+        "ы",
+        "е",
+        "сы",
+        "се",
+        "ында",
+        "ендә",
+        "ыннан",
+        "еннән",
+        "лар",
+        "ләр",
+        "лары",
+        "ләре",
+        "ларның",
+        "ләрнең",
+        "ларында",
+        "ләрендә",
+        "лыкка",
+        "леккә",
+        "лыкны",
+        "лекне",
+        "лыкның",
+        "лекнең",
+    }
+)
 TATAR_SPECIFIC_PART_LETTERS = frozenset("әөүҗңһ")
+UNKNOWN_LOANWORD_MARKER_LETTERS = frozenset("ёцщьъ")
+UNKNOWN_LOANWORD_PREFIXES = (
+    "авиа",
+    "авто",
+    "агро",
+    "аудио",
+    "видео",
+    "гео",
+    "гидро",
+    "кино",
+    "макро",
+    "микро",
+    "радио",
+    "теле",
+    "фото",
+    "электро",
+)
 RL_REVIEW_LETTERS = frozenset("ёыьъщ")
 FAMILY_DIVERGENCE_RISK_LETTERS = frozenset(CONDITIONAL_LETTERS) | RL_REVIEW_LETTERS
 ALLOWED_ZAMANALIF = frozenset(
@@ -180,7 +255,30 @@ def normalize_word(token: str) -> str:
     matches = list(CYRILLIC_RE.finditer(token or ""))
     if not matches:
         return ""
-    return token[matches[0].start() : matches[-1].end()].lower()
+    surface = token[matches[0].start() : matches[-1].end()]
+    cleaned: list[str] = []
+    for index, char in enumerate(surface):
+        if (
+            char in INTERNAL_DOUBLE_QUOTES
+            and index > 0
+            and index + 1 < len(surface)
+            and CYRILLIC_RE.fullmatch(surface[index - 1])
+            and CYRILLIC_RE.fullmatch(surface[index + 1])
+            and surface[index + 1 :].casefold() in TATAR_SUFFIXES_AFTER_QUOTE
+        ):
+            continue
+        cleaned.append(char)
+    normalized = "".join(cleaned)
+    if any(
+        char in INTERNAL_DOUBLE_QUOTES
+        and index > 0
+        and index + 1 < len(normalized)
+        and CYRILLIC_RE.fullmatch(normalized[index - 1])
+        and CYRILLIC_RE.fullmatch(normalized[index + 1])
+        for index, char in enumerate(normalized)
+    ):
+        return ""
+    return normalized.casefold()
 
 
 def contains_conditional_letter(word: str) -> bool:
@@ -191,6 +289,39 @@ def contains_conditional_letter(word: str) -> bool:
 def contains_rl_review_letter(word: str) -> bool:
     """Return true when a loanword has a non-deterministic review letter."""
     return any(char in CONDITIONAL_LETTERS or char in RL_REVIEW_LETTERS for char in word)
+
+
+def guess_unknown_tatar_specific_origin(word: str) -> str:
+    """Conservatively guess an origin branch for an unresolved Tatar-looking word."""
+    folded = word.casefold()
+    if any(char in UNKNOWN_LOANWORD_MARKER_LETTERS for char in folded):
+        return "RL"
+    if folded.startswith(UNKNOWN_LOANWORD_PREFIXES):
+        return "RL"
+    first_specific = next(
+        (
+            index
+            for index, char in enumerate(folded)
+            if char in TATAR_SPECIFIC_PART_LETTERS
+        ),
+        -1,
+    )
+    if first_specific >= 3 and vowel_harmony_class(folded) == "mixed_front_back":
+        return "RL"
+    return "N"
+
+
+def annotation_suggestion(word: str, label: str) -> str:
+    """Return the editable export suggestion, including focused unknown heuristics."""
+    branches = conversion_branches(word)
+    if label != "U" or _u_project_key(word) != "u_tatar_specific":
+        return branches.suggestion(label)
+    guessed_origin = guess_unknown_tatar_specific_origin(word)
+    preferred = (
+        branches.native_dsl if guessed_origin == "N" else branches.loanword_dsl
+    )
+    fallback = branches.loanword_dsl if guessed_origin == "N" else branches.native_dsl
+    return preferred or fallback
 
 
 def is_safe_family_member(
@@ -408,7 +539,11 @@ def classify_project(word: str, label: str) -> dict[str, Any]:
     """Return the focused Label Studio project metadata for one normalized word."""
     if label == "U":
         key = _u_project_key(word)
-        return {"key": key, "title": project_title_for_key(key), "dsl_rules": []}
+        suggestion = annotation_suggestion(word, label)
+        rules = (
+            list(dict.fromkeys(parse_dsl(suggestion).rule_ids)) if suggestion else []
+        )
+        return {"key": key, "title": project_title_for_key(key), "dsl_rules": rules}
     result = conversion_result_for_annotation(word, label)
     rules = list(dict.fromkeys(result.rule_ids)) if result is not None else []
     if native_hamza_family(word) is not None and _contains_hamza(result):
@@ -590,7 +725,9 @@ def _export_from_records(
         {
             "data": {
                 "cyrl_word": entry.display,
-                "auto_zamanalif": conversion_branches(entry.normalized).suggestion(entry.label),
+                "auto_zamanalif": annotation_suggestion(
+                    entry.normalized, entry.label
+                ),
                 "gemini_origin": entry.label,
                 "hints_html": decision_html(entry),
             }
@@ -1800,10 +1937,18 @@ def conversion_branches(word: str) -> ConversionBranches:
 def decision_html(entry: WordStats) -> str:
     """Build compact review context for Label Studio."""
     items: list[str] = []
-    result = conversion_result_for_annotation(entry.normalized, entry.label)
+    effective_label = entry.label
+    if entry.label == "U" and _u_project_key(entry.normalized) == "u_tatar_specific":
+        effective_label = guess_unknown_tatar_specific_origin(entry.normalized)
+    result = conversion_result_for_annotation(entry.normalized, effective_label)
     if result is not None and "IYA" in result.rule_ids:
         items.append("<b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)")
     items.append(f"Gemini's origin prediction: <b>{_origin_prediction(entry.label)}</b>")
+    if effective_label != entry.label:
+        items.append(
+            "Simple origin heuristic: "
+            f"<b>{_origin_prediction(effective_label)}</b> (editable suggestion)"
+        )
     if result is None:
         items.append("Automatic converter produced no clean Latin suggestion")
     items.append(
@@ -2118,7 +2263,7 @@ def _validate_task(
             raise AnnotationExportError(
                 f"{context} has invalid Zamanalif DSL: {exc}"
             ) from exc
-    expected_suggestion = conversion_branches(normalized).suggestion(origin)
+    expected_suggestion = annotation_suggestion(normalized, origin)
     if suggestion != expected_suggestion:
         raise AnnotationExportError(
             f"{context} suggestion does not match canonical conversion"

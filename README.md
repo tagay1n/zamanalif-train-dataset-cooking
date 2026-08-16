@@ -262,6 +262,9 @@ Selection rules:
 
 - read annotated Gemini results from `samples` and `preannotation_state` in
   SQLite;
+- remove double quotation marks trapped between a word and a recognized Tatar
+  suffix (for example, `турында”гы` becomes `турындагы`), preserve
+  apostrophes, and quarantine tokens where a quote joins independent words;
 - apply saved `word_resolutions` as cleaned preannotation decisions before
   deciding which words need review;
 - ignore records with `"tatar": false`;
@@ -333,6 +336,13 @@ word is exported once. If a word has multiple DSL rules it goes to
 `catchall`. Unresolved `U` words are split into focused projects:
 `u_hyphenated`, `u_abbrev_fragment`, `u_tatar_specific`,
 `u_conditional_plain`, and `u_other`.
+
+`u_tatar_specific` tasks receive an editable suggestion from a conservative
+origin heuristic. Russian-specific letters, common international prefixes,
+and mixed-harmony words whose Tatar-specific letter occurs after a stem-like
+prefix favor the loanword branch; other words favor the native branch. The
+stored Gemini origin remains `U`, and the task hint identifies the heuristic
+guess so it is not mistaken for a reviewed decision.
 
 `--max-items` is applied independently to dictionary words and contextual
 occurrences. Contextual tasks are ordered round-robin across homonym words,
@@ -852,7 +862,9 @@ The exporter:
 - uses exact contextual occurrence reviews, then approved `reviewed_words`;
 - automatically converts words whose native and loanword branches are
   identical;
-- preserves sentence punctuation, whitespace, and ordinary word casing;
+- preserves sentence punctuation, whitespace, and ordinary word casing,
+  including a closing quote between a converted stem and its Tatar suffix
+  (`турында”гы -> turında”ğı`);
 - skips sentences that still contain unreviewed origin-dependent words,
   mixed-harmony native review cases, or unresolved contextual occurrences;
 - fails without replacing the existing output on malformed DSL, invalid

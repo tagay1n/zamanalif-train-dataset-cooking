@@ -19,6 +19,8 @@ from .contextual_review import (
     load_contextual_reviews,
 )
 from .word_export import (
+    INTERNAL_DOUBLE_QUOTES,
+    TATAR_SUFFIXES_AFTER_QUOTE,
     ReviewedWord,
     conversion_branches,
     load_reviewed_words,
@@ -298,7 +300,17 @@ def _convert_sentence(
             raise TrainingExportError(
                 f"{record.sample_id}: invalid DSL for {normalized!r}: {exc}"
             ) from exc
-        pieces.append(_apply_source_case(text, _restore_edge_punctuation(text, resolved)))
+        with_internal_punctuation = _restore_internal_word_punctuation(
+            text,
+            resolved,
+            policy,
+        )
+        pieces.append(
+            _apply_source_case(
+                text,
+                _restore_edge_punctuation(text, with_internal_punctuation),
+            )
+        )
         cursor = found + len(text)
 
     pieces.append(record.text[cursor:])
@@ -310,6 +322,58 @@ def _restore_edge_punctuation(source: str, target: str) -> str:
     if not matches:
         return target
     return source[: matches[0].start()] + target + source[matches[-1].end() :]
+
+
+def _restore_internal_word_punctuation(
+    source: str,
+    target: str,
+    policy: dict[str, str],
+) -> str:
+    """Reinsert normalized structural quotes at their converted stem boundary."""
+    matches = list(CYRILLIC_RE.finditer(source))
+    if not matches:
+        return target
+    surface = source[matches[0].start() : matches[-1].end()]
+    clean_prefix: list[str] = []
+    boundaries: list[tuple[str, str]] = []
+    for index, char in enumerate(surface):
+        if (
+            char in INTERNAL_DOUBLE_QUOTES
+            and index > 0
+            and index + 1 < len(surface)
+            and CYRILLIC_RE.fullmatch(surface[index - 1])
+            and CYRILLIC_RE.fullmatch(surface[index + 1])
+            and surface[index + 1 :].casefold() in TATAR_SUFFIXES_AFTER_QUOTE
+        ):
+            boundaries.append(("".join(clean_prefix).casefold(), char))
+            continue
+        clean_prefix.append(char)
+    if not boundaries:
+        return target
+
+    insertions: list[tuple[int, str]] = []
+    for prefix, quote in boundaries:
+        branches = conversion_branches(prefix)
+        converted_prefixes = {
+            resolve_dsl(dsl, policy)
+            for dsl in (branches.native_dsl, branches.loanword_dsl)
+            if dsl
+        }
+        positions = {
+            len(converted)
+            for converted in converted_prefixes
+            if target.startswith(converted)
+        }
+        if len(positions) != 1:
+            raise TrainingExportError(
+                f"cannot preserve internal quote in token {source!r}"
+            )
+        insertions.append((positions.pop(), quote))
+
+    restored = target
+    for position, quote in sorted(insertions, reverse=True):
+        restored = restored[:position] + quote + restored[position:]
+    return restored
 
 
 def _apply_source_case(source: str, target: str) -> str:

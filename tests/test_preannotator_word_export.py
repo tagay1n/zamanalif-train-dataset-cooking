@@ -16,6 +16,7 @@ from tatar_preannotator.contextual_review import export_contextual_tasks_from_db
 from tatar_preannotator.conversion import resolve_dsl
 from tatar_preannotator.word_export import (
     AnnotationExportError,
+    annotation_suggestion,
     classify_project,
     contains_conditional_letter,
     contains_rl_review_letter,
@@ -24,6 +25,7 @@ from tatar_preannotator.word_export import (
     convert_for_annotation_dsl,
     export_labelstudio_project_tasks_from_db,
     export_labelstudio_tasks_from_db,
+    guess_unknown_tatar_specific_origin,
     is_safe_family_member,
     load_reviewed_words,
     normalize_word,
@@ -61,6 +63,62 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(normalize_word("..."), "")
         self.assertEqual(normalize_word("сүз-сүз"), "сүз-сүз")
         self.assertEqual(normalize_word("Шофёр"), "шофёр")
+
+    def test_normalize_word_removes_closing_quote_before_tatar_suffix(self) -> None:
+        cases = {
+            "турында”гы": "турындагы",
+            "турында»гы": "турындагы",
+            "Крайова»ның": "крайованың",
+            "гыйшык»тагы": "гыйшыктагы",
+            'бию"е': "биюе",
+            'Тәкъва"лыкка': "тәкъвалыкка",
+        }
+        for source, expected in cases.items():
+            with self.subTest(source=source):
+                self.assertEqual(normalize_word(source), expected)
+
+    def test_normalize_word_preserves_apostrophe_and_quarantines_word_join(self) -> None:
+        self.assertEqual(normalize_word("д'Артаньян"), "д'артаньян")
+        self.assertEqual(
+            normalize_word("об’ектларын"),
+            "об’ектларын",
+        )
+        self.assertEqual(
+            normalize_word("Республикасы«Лениногорск"),
+            "",
+        )
+
+    def test_export_merges_quote_suffix_variants_with_clean_word(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "Крайованың", "label": "RL"},
+                            {"text": "Крайова”ның", "label": "RL"},
+                            {"text": "Крайова»ның", "label": "RL"},
+                        ],
+                    }
+                ],
+            )
+
+            result = export_labelstudio_tasks_from_db(db_path)
+
+        self.assertEqual(result.exported_words, ["крайованың"])
+        self.assertEqual(result.frequencies, (3,))
+        self.assertEqual(
+            result.tasks[0]["data"]["cyrl_word"],
+            "крайованың",
+        )
+
+    def test_cleaned_turyndagy_no_longer_requires_dictionary_review(self) -> None:
+        branches = conversion_branches("турындагы")
+
+        self.assertEqual(branches.state, "origin_independent")
+        self.assertEqual(branches.native_dsl, "turındağı")
 
     def test_conditional_letter_detection(self) -> None:
         self.assertTrue(contains_conditional_letter("вакыт"))
@@ -228,6 +286,28 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(unavailable.state, "unconvertible")
         self.assertEqual(unavailable.native_dsl, "")
         self.assertEqual(unavailable.loanword_dsl, "k")
+
+    def test_unknown_tatar_specific_origin_heuristic(self) -> None:
+        self.assertEqual(guess_unknown_tatar_specific_origin("күпфункцияле"), "RL")
+        self.assertEqual(guess_unknown_tatar_specific_origin("авиатөзелеш"), "RL")
+        self.assertEqual(guess_unknown_tatar_specific_origin("агросәнәгать"), "RL")
+        self.assertEqual(guess_unknown_tatar_specific_origin("шәһәр"), "N")
+
+    def test_unknown_tatar_specific_suggestion_uses_guessed_branch(self) -> None:
+        self.assertEqual(
+            annotation_suggestion("видеокүзәтү", "U"),
+            conversion_branches("видеокүзәтү").loanword_dsl,
+        )
+        self.assertEqual(
+            annotation_suggestion("шәһәр", "U"),
+            conversion_branches("шәһәр").native_dsl,
+        )
+        self.assertEqual(annotation_suggestion("торак", "U"), "")
+        self.assertEqual(classify_project("күпфункцияле", "U")["key"], "u_tatar_specific")
+        self.assertEqual(
+            classify_project("күпфункцияле", "U")["dsl_rules"],
+            ["TS", "IYA"],
+        )
 
     def test_include_unknown_and_include_rl_flags(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1704,6 +1784,15 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(
             result.projects["u_tatar_specific"].tasks[0]["data"]["cyrl_word"],
             "күпфункцияле",
+        )
+        tatar_specific = result.projects["u_tatar_specific"].tasks[0]["data"]
+        self.assertEqual(
+            tatar_specific["auto_zamanalif"],
+            conversion_branches("күпфункцияле").loanword_dsl,
+        )
+        self.assertIn(
+            "Simple origin heuristic: <b>loanword</b>",
+            tatar_specific["hints_html"],
         )
         self.assertEqual(
             result.projects["u_conditional_plain"].tasks[0]["data"]["cyrl_word"],

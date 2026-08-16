@@ -21,6 +21,45 @@ from tatar_preannotator.word_export import save_reviewed_word
 
 
 class TrainingExportTests(unittest.TestCase):
+    def test_internal_quotes_are_preserved_after_shared_word_conversion(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(
+                root / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "clean",
+                        "text": "Турындагы.",
+                        "tokens": [{"text": "Турындагы", "label": "N"}],
+                    },
+                    {
+                        "id": "curly",
+                        "text": "Турында”гы.",
+                        "tokens": [{"text": "Турында”гы", "label": "N"}],
+                    },
+                    {
+                        "id": "guillemet",
+                        "text": "Турында»гы.",
+                        "tokens": [{"text": "Турында»гы", "label": "N"}],
+                    },
+                    {
+                        "id": "reviewed_loanword",
+                        "text": "Крайова»ның.",
+                        "tokens": [{"text": "Крайова»ның", "label": "RL"}],
+                    },
+                ],
+            )
+            save_reviewed_word(db_path, "крайованың", "krayovanıñ", "RL")
+
+            summary = export_training_dataset(db_path, root / "train.jsonl")
+            rows = _read_jsonl(root / "train.jsonl")
+
+        self.assertEqual(summary.exported_count, 4)
+        self.assertEqual(
+            [row["zamanalif"] for row in rows],
+            ["Turındağı.", "Turında”ğı.", "Turında»ğı.", "Krayova»nıñ."],
+        )
+
     def test_default_policy_exports_plain_jsonl_and_manifest(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
