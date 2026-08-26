@@ -148,6 +148,51 @@ class TrainingExportTests(unittest.TestCase):
         self.assertEqual(manifest["overrides"], {"IYA": "compact"})
         self.assertIn("training export complete", stdout.getvalue())
 
+    def test_reviewed_variant_corrections_follow_policy(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(
+                root / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "text": "Орфография.",
+                        "tokens": [{"text": "Орфография", "label": "RL"}],
+                    }
+                ],
+            )
+            save_reviewed_word(
+                db_path,
+                "орфография",
+                "orfografi{{IYA|compact=ä|explicit=yä}}",
+                "RL",
+            )
+            with sqlite3.connect(db_path) as conn:
+                conn.executemany(
+                    """
+                    insert into reviewed_word_variants(
+                        normalized_word, position, zamanalif,
+                        policies_json, updated_at
+                    ) values ('орфография', ?, ?, ?, 'now')
+                    """,
+                    [
+                        (0, "urphografiyä", '[{"IYA":"explicit"}]'),
+                        (1, "urphografiä", '[{"IYA":"compact"}]'),
+                    ],
+                )
+
+            export_training_dataset(db_path, root / "preferred.jsonl")
+            export_training_dataset(
+                db_path,
+                root / "compact.jsonl",
+                choice_overrides=["IYA=compact"],
+            )
+            preferred = _read_jsonl(root / "preferred.jsonl")
+            compact = _read_jsonl(root / "compact.jsonl")
+
+        self.assertEqual(preferred[0]["zamanalif"], "Urphografiyä.")
+        self.assertEqual(compact[0]["zamanalif"], "Urphografiä.")
+
     def test_skips_unreviewed_homonym_and_mixed_harmony_sentences(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

@@ -1,0 +1,1002 @@
+[
+  {
+    "data": {
+      "cyrl_word": "музыка",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıyka\nmuzıka"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}ka",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкасы",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykasıy\nmuzıkası"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kas{{RL_Y|short=ı|long=ıy}}",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыканы",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykanıy\nmuzıkanı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kan{{RL_Y|short=ı|long=ıy}}",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкасын",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykasıyn\nmuzıkasın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kas{{RL_Y|short=ı|long=ıy}}n",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "сыр",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "sıyr\nsır"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "s{{RL_Y|short=ı|long=ıy}}r",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкант",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykant\nmuzıkant"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kant",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкасының",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykasıynıyñ\nmuzıkasınıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kas{{RL_Y|short=ı|long=ıy}}n{{RL_Y|short=ı|long=ıy}}ñ",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "вышинский",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "vıyşinskiy\nvışinskiy"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "v{{RL_Y|short=ı|long=ıy}}şinskiy",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "вышкалары",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "vıyşkalarıy\nvışkaları"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "v{{RL_Y|short=ı|long=ıy}}şkalar{{RL_Y|short=ı|long=ıy}}",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкага",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykağa\nmuzıkağa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kağa",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкантлар",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykantlar\nmuzıkantlar"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kantlar",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыканың",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykanıyñ\nmuzıkanıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kan{{RL_Y|short=ı|long=ıy}}ñ",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкантларның",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykantlarnıyñ\nmuzıkantlarnıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kantlarn{{RL_Y|short=ı|long=ıy}}ñ",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкасында",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykasıynda\nmuzıkasında"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kas{{RL_Y|short=ı|long=ıy}}nda",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкада",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykada\nmuzıkada"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kada",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкантова",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykantova\nmuzıkantova"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kantova",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкасына",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykasıyna\nmuzıkasına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kas{{RL_Y|short=ı|long=ıy}}na",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "посылкаларны",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "posıylkalarnıy\nposılkalarnı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "pos{{RL_Y|short=ı|long=ıy}}lkalarn{{RL_Y|short=ı|long=ıy}}",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "выше",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "vıyşe\nvışe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "v{{RL_Y|short=ı|long=ıy}}şe",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "вышеуказанный",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "vıyşeukazannıyy\nvışeukazannıy"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "v{{RL_Y|short=ı|long=ıy}}şeukazann{{RL_Y|short=ı|long=ıy}}y",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "вышинскийга",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "vıyşinskiyğa\nvışinskiyğa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "v{{RL_Y|short=ı|long=ıy}}şinskiyğa",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "вышкаларын",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "vıyşkalarıyn\nvışkaların"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "v{{RL_Y|short=ı|long=ıy}}şkalar{{RL_Y|short=ı|long=ıy}}n",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "вышний",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "vıyşniy\nvışniy"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "v{{RL_Y|short=ı|long=ıy}}şniy",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкабыз",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykabıyz\nmuzıkabız"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kab{{RL_Y|short=ı|long=ıy}}z",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкабызга",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykabıyzğa\nmuzıkabızğa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kab{{RL_Y|short=ı|long=ıy}}zğa",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкабызның",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykabıyznıyñ\nmuzıkabıznıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kab{{RL_Y|short=ı|long=ıy}}zn{{RL_Y|short=ı|long=ıy}}ñ",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкадагы",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykadağıy\nmuzıkadağı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kadağ{{RL_Y|short=ı|long=ıy}}",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкалар",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykalar\nmuzıkalar"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kalar",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкалары",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykalarıy\nmuzıkaları"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kalar{{RL_Y|short=ı|long=ıy}}",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкаларын",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykalarıyn\nmuzıkaların"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kalar{{RL_Y|short=ı|long=ıy}}n",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкалы",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykalıy\nmuzıkalı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kal{{RL_Y|short=ı|long=ıy}}",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкамыз",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykamıyz\nmuzıkamız"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kam{{RL_Y|short=ı|long=ıy}}z",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкан",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykan\nmuzıkan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kan",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкантларга",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykantlarğa\nmuzıkantlarğa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kantlarğa",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкантларыбыз",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykantlarıybıyz\nmuzıkantlarıbız"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kantlar{{RL_Y|short=ı|long=ıy}}b{{RL_Y|short=ı|long=ıy}}z",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыкантов",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykantov\nmuzıkantov"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kantov",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "музыканты",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "muzıykantıy\nmuzıkantı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "muz{{RL_Y|short=ı|long=ıy}}kant{{RL_Y|short=ı|long=ıy}}",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "посылка",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "posıylka\nposılka"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "pos{{RL_Y|short=ı|long=ıy}}lka",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "посылкалар",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "posıylkalar\nposılkalar"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "pos{{RL_Y|short=ı|long=ıy}}lkalar",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "сыртланов",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "sıyrtlanov\nsırtlanov"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_y",
+      "suggested_zamanalif_dsl": "s{{RL_Y|short=ı|long=ıy}}rtlanov",
+      "variant_policies": [
+        [
+          {
+            "RL_Y": "long"
+          }
+        ],
+        [
+          {
+            "RL_Y": "short"
+          }
+        ]
+      ]
+    }
+  }
+]

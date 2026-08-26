@@ -62,6 +62,55 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(set(reviewed), {"вакыт"})
         self.assertEqual(reviewed["вакыт"].origin, "N")
 
+    def test_focused_variant_editor_preserves_policies_and_corrections(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, ["проект", "проекты"], origin="RL")
+            exported = export_labelstudio_project_tasks_from_db(db_path)
+            tasks = exported.projects["e_glide"].tasks
+            for task in tasks:
+                visible = task["data"]["zamanalif_variants"]
+                reviewed = (
+                    visible.replace("pro", "pra")
+                    if task["data"]["cyrl_word"] == "проекты"
+                    else visible
+                )
+                task["annotations"] = [
+                    {
+                        "was_cancelled": False,
+                        "result": [
+                            {
+                                "from_name": "reviewed_zamanalif_variants",
+                                "type": "textarea",
+                                "value": {"text": [reviewed]},
+                            }
+                        ],
+                    }
+                ]
+            backup = _backup(root / "e-glide.json", tasks)
+
+            audit = audit_labelstudio_export(db_path, backup)
+            summary = import_labelstudio_annotations(db_path, backup)
+            repeated = import_labelstudio_annotations(db_path, backup)
+            reviewed_words = load_reviewed_words(db_path)
+
+        self.assertEqual(audit.unchanged_tasks, 1)
+        self.assertEqual(audit.conversion_changes, 1)
+        self.assertEqual(summary.imported_items, 2)
+        self.assertEqual(repeated.unchanged_items, 2)
+        self.assertEqual(
+            reviewed_words["проект"].zamanalif_dsl,
+            "pro{{E_GLIDE|plain=e|glide=ye}}kt",
+        )
+        self.assertEqual(
+            tuple(
+                variant.zamanalif
+                for variant in reviewed_words["проекты"].variants
+            ),
+            ("prayektı", "praektı"),
+        )
+
     def test_reimport_is_idempotent_and_conflict_rolls_back(self) -> None:
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

@@ -5,6 +5,7 @@ from contextlib import closing
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from functools import lru_cache
+from itertools import product
 import json
 from pathlib import Path
 import re
@@ -54,12 +55,24 @@ if TYPE_CHECKING:
 
 LABELSTUDIO_SPLIT_BATCH_SIZE = 500
 TASK_SCHEMA_VERSION = 1
+LEGACY_FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION = 2
+FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION = 3
 CATCHALL_TASK_SCHEMA_VERSION = 3
 DICTIONARY_DATA_FIELDS = frozenset(
     {"cyrl_word", "auto_zamanalif", "gemini_origin", "hints_html"}
 )
-DICTIONARY_META_FIELDS = frozenset({"schema_version", "project_key"})
-CATCHALL_META_FIELDS = DICTIONARY_META_FIELDS
+FOCUSED_DICTIONARY_DATA_FIELDS = frozenset(
+    {"cyrl_word", "zamanalif_variants", "gemini_origin", "hints_html"}
+)
+DICTIONARY_META_FIELDS = frozenset(
+    {
+        "schema_version",
+        "project_key",
+        "suggested_zamanalif_dsl",
+        "variant_policies",
+    }
+)
+CATCHALL_META_FIELDS = frozenset({"schema_version", "project_key"})
 CONTEXTUAL_DATA_FIELDS = frozenset(
     {
         "cyrl_word",
@@ -202,6 +215,19 @@ class ReviewedWord:
     normalized_word: str
     zamanalif_dsl: str
     origin: str
+    variants: tuple[ReviewedVariant, ...] = ()
+
+
+@dataclass(frozen=True)
+class ReviewedVariant:
+    zamanalif: str
+    policies: tuple[tuple[tuple[str, str], ...], ...]
+
+
+@dataclass(frozen=True)
+class AnnotationVariant:
+    zamanalif: str
+    policies: tuple[tuple[tuple[str, str], ...], ...]
 
 
 @dataclass(frozen=True)
@@ -321,6 +347,67 @@ def annotation_suggestion(word: str, label: str) -> str:
     )
     fallback = branches.loanword_dsl if guessed_origin == "N" else branches.native_dsl
     return preferred or fallback
+
+
+def annotation_display_variants(
+    zamanalif_dsl: str,
+    *,
+    limit: int = 3,
+) -> tuple[str, ...]:
+    """Resolve a DSL suggestion into a preferred plain word and alternatives."""
+    if not zamanalif_dsl or limit < 1:
+        return ()
+    result = parse_dsl(zamanalif_dsl)
+    preferred = result.resolve()
+    variants = [preferred]
+    choices: dict[str, tuple[str, ...]] = {}
+    for segment in result.segments:
+        if isinstance(segment, Choice) and segment.rule_id not in choices:
+            choices[segment.rule_id] = tuple(option for option, _ in segment.options)
+    for selected in product(*(choices.values())):
+        policy = dict(zip(choices, selected, strict=True))
+        try:
+            candidate = result.resolve(policy)
+        except DslError:
+            continue
+        if candidate not in variants:
+            variants.append(candidate)
+        if len(variants) >= limit:
+            break
+    return tuple(variants)
+
+
+def annotation_variants(zamanalif_dsl: str) -> tuple[AnnotationVariant, ...]:
+    """Return every distinct plain rendering and the policies that select it."""
+    if not zamanalif_dsl:
+        return ()
+    result = parse_dsl(zamanalif_dsl)
+    choices: dict[str, tuple[str, ...]] = {}
+    for segment in result.segments:
+        if isinstance(segment, Choice) and segment.rule_id not in choices:
+            choices[segment.rule_id] = tuple(option for option, _ in segment.options)
+    if not choices:
+        return (AnnotationVariant(result.resolve(), ((),)),)
+
+    grouped: dict[str, list[tuple[tuple[str, str], ...]]] = {}
+    order: list[str] = []
+    preferred = result.resolve()
+    order.append(preferred)
+    grouped[preferred] = []
+    for selected in product(*(choices.values())):
+        policy = tuple(zip(choices, selected, strict=True))
+        try:
+            rendered = result.resolve(dict(policy))
+        except DslError:
+            continue
+        if rendered not in grouped:
+            grouped[rendered] = []
+            order.append(rendered)
+        grouped[rendered].append(policy)
+    return tuple(
+        AnnotationVariant(zamanalif=value, policies=tuple(grouped[value]))
+        for value in order
+    )
 
 
 def is_safe_family_member(
@@ -542,10 +629,15 @@ def classify_project(word: str, label: str) -> dict[str, Any]:
         rules = (
             list(dict.fromkeys(parse_dsl(suggestion).rule_ids)) if suggestion else []
         )
+        if "ц" in word.casefold():
+            key = _project_key_for_rule(TS_RULE.rule_id)
         return {"key": key, "title": project_title_for_key(key), "dsl_rules": rules}
     result = conversion_result_for_annotation(word, label)
     rules = list(dict.fromkeys(result.rule_ids)) if result is not None else []
-    if native_hamza_family(word) is not None and _contains_hamza(result):
+    if "ц" in word.casefold():
+        key = _project_key_for_rule(TS_RULE.rule_id)
+        title = project_title_for_key(key)
+    elif native_hamza_family(word) is not None and _contains_hamza(result):
         key = _project_key_for_rule(HAMZA_RULE.rule_id)
         title = project_title_for_key(key)
     elif len(rules) > 1:
@@ -888,16 +980,30 @@ def _task_with_project_meta(
     task: dict[str, Any],
     project_key: str,
 ) -> dict[str, Any]:
-    meta = {
-        "schema_version": (
-            CATCHALL_TASK_SCHEMA_VERSION
-            if project_key == "catchall"
-            else TASK_SCHEMA_VERSION
-        ),
-        "project_key": project_key,
-    }
+    data = dict(task["data"])
+    if project_key == "catchall":
+        meta = {
+            "schema_version": CATCHALL_TASK_SCHEMA_VERSION,
+            "project_key": project_key,
+        }
+    else:
+        suggestion_dsl = data["auto_zamanalif"]
+        variants = annotation_variants(suggestion_dsl)
+        del data["auto_zamanalif"]
+        data["zamanalif_variants"] = "\n".join(
+            variant.zamanalif for variant in variants
+        )
+        meta = {
+            "schema_version": FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION,
+            "project_key": project_key,
+            "suggested_zamanalif_dsl": suggestion_dsl,
+            "variant_policies": [
+                [dict(policy) for policy in variant.policies]
+                for variant in variants
+            ],
+        }
     return {
-        "data": dict(task["data"]),
+        "data": data,
         "meta": meta,
     }
 
@@ -2082,7 +2188,11 @@ def validate_split_export_result(result: SplitExportResult) -> None:
                 seen_words=seen_words,
                 project_key=project_key,
             )
-            suggestion = data["auto_zamanalif"]
+            suggestion = (
+                data["auto_zamanalif"]
+                if project_key == "catchall"
+                else task["meta"]["suggested_zamanalif_dsl"]
+            )
             suggestion_rules = (
                 list(dict.fromkeys(parse_dsl(suggestion).rule_ids))
                 if suggestion
@@ -2203,7 +2313,12 @@ def _validate_task(
             f"{context} must contain exactly {sorted(expected_task_fields)}"
         )
     data = task.get("data")
-    if not isinstance(data, dict) or set(data) != DICTIONARY_DATA_FIELDS:
+    expected_data_fields = (
+        FOCUSED_DICTIONARY_DATA_FIELDS
+        if project_key is not None and project_key != "catchall"
+        else DICTIONARY_DATA_FIELDS
+    )
+    if not isinstance(data, dict) or set(data) != expected_data_fields:
         raise AnnotationExportError(
             f"{context}.data must contain exactly the dictionary display fields"
         )
@@ -2221,7 +2336,7 @@ def _validate_task(
         expected_schema_version = (
             CATCHALL_TASK_SCHEMA_VERSION
             if project_key == "catchall"
-            else TASK_SCHEMA_VERSION
+            else FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION
         )
         if meta.get("schema_version") != expected_schema_version:
             raise AnnotationExportError(f"{context} has unsupported schema_version")
@@ -2244,26 +2359,48 @@ def _validate_task(
         raise AnnotationExportError(f"duplicate normalized word: {normalized!r}")
     seen_words.add(normalized)
 
-    suggestion = data.get("auto_zamanalif")
-    if not isinstance(suggestion, str):
-        raise AnnotationExportError(f"{context} has invalid auto_zamanalif")
-    if not suggestion:
-        if origin != "U":
-            raise AnnotationExportError(
-                f"{context} has an empty suggestion for origin {origin}"
-            )
-    else:
-        try:
-            parse_dsl(suggestion)
-        except DslError as exc:
-            raise AnnotationExportError(
-                f"{context} has invalid Zamanalif DSL: {exc}"
-            ) from exc
     expected_suggestion = annotation_suggestion(normalized, origin)
-    if suggestion != expected_suggestion:
-        raise AnnotationExportError(
-            f"{context} suggestion does not match canonical conversion"
-        )
+    if project_key is not None and project_key != "catchall":
+        display_variants = data.get("zamanalif_variants")
+        if not isinstance(display_variants, str):
+            raise AnnotationExportError(f"{context} has invalid zamanalif_variants")
+        hidden_suggestion = task["meta"].get("suggested_zamanalif_dsl")
+        if hidden_suggestion != expected_suggestion:
+            raise AnnotationExportError(
+                f"{context} hidden suggestion does not match canonical conversion"
+            )
+        variants = annotation_variants(hidden_suggestion)
+        expected_display = "\n".join(variant.zamanalif for variant in variants)
+        if display_variants != expected_display:
+            raise AnnotationExportError(
+                f"{context} visible variants do not match resolved conversion"
+            )
+        expected_policies = [
+            [dict(policy) for policy in variant.policies]
+            for variant in variants
+        ]
+        if task["meta"].get("variant_policies") != expected_policies:
+            raise AnnotationExportError(f"{context} has inconsistent variant policies")
+    else:
+        display_suggestion = data.get("auto_zamanalif")
+        if not isinstance(display_suggestion, str):
+            raise AnnotationExportError(f"{context} has invalid auto_zamanalif")
+        if not display_suggestion:
+            if origin != "U":
+                raise AnnotationExportError(
+                    f"{context} has an empty suggestion for origin {origin}"
+                )
+        else:
+            try:
+                parse_dsl(display_suggestion)
+            except DslError as exc:
+                raise AnnotationExportError(
+                    f"{context} has invalid visible Zamanalif suggestion: {exc}"
+                ) from exc
+        if display_suggestion != expected_suggestion:
+            raise AnnotationExportError(
+                f"{context} suggestion does not match canonical conversion"
+            )
     if not isinstance(data.get("hints_html"), str):
         raise AnnotationExportError(f"{context} has invalid hints_html")
     return data
@@ -2384,6 +2521,10 @@ def save_reviewed_word(
             """,
             (normalized, zamanalif_dsl, origin, now),
         )
+        conn.execute(
+            "delete from reviewed_word_variants where normalized_word = ?",
+            (normalized,),
+        )
 
 
 def load_reviewed_words(db_path: str | Path) -> dict[str, ReviewedWord]:
@@ -2397,8 +2538,30 @@ def load_reviewed_words(db_path: str | Path) -> dict[str, ReviewedWord]:
             order by normalized_word
             """
         ).fetchall()
+        variant_rows = conn.execute(
+            """
+            select normalized_word, position, zamanalif, policies_json
+            from reviewed_word_variants
+            order by normalized_word, position
+            """
+        ).fetchall()
+    variants_by_word: dict[str, list[ReviewedVariant]] = {}
+    for word, _, zamanalif, policies_json in variant_rows:
+        raw_policies = json.loads(policies_json)
+        policies = tuple(
+            tuple((str(rule), str(option)) for rule, option in policy.items())
+            for policy in raw_policies
+        )
+        variants_by_word.setdefault(str(word), []).append(
+            ReviewedVariant(str(zamanalif), policies)
+        )
     return {
-        row[0]: ReviewedWord(normalized_word=row[0], zamanalif_dsl=row[1], origin=row[2])
+        row[0]: ReviewedWord(
+            normalized_word=row[0],
+            zamanalif_dsl=row[1],
+            origin=row[2],
+            variants=tuple(variants_by_word.get(row[0], ())),
+        )
         for row in rows
     }
 
@@ -3057,6 +3220,19 @@ def ensure_review_state_schema(conn: sqlite3.Connection) -> None:
             created_at text not null,
             foreign key(normalized_word) references reviewed_words(normalized_word),
             foreign key(source_word) references reviewed_words(normalized_word)
+        )
+        """
+    )
+    conn.execute(
+        """
+        create table if not exists reviewed_word_variants (
+            normalized_word text not null,
+            position integer not null,
+            zamanalif text not null,
+            policies_json text not null,
+            updated_at text not null,
+            primary key(normalized_word, position),
+            foreign key(normalized_word) references reviewed_words(normalized_word)
         )
         """
     )

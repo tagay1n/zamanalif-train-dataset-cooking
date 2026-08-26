@@ -263,6 +263,7 @@ def _convert_sentence(
         contextual = contextual_reviews.get(
             OccurrenceKey(record.sample_id, token_index)
         )
+        reviewed_resolution: str | None = None
         if is_contextual_homonym and branches.state == "origin_independent":
             dsl = branches.native_dsl
         elif contextual is not None:
@@ -280,6 +281,10 @@ def _convert_sentence(
             approved = reviewed.get(normalized)
             if approved is not None:
                 dsl = approved.zamanalif_dsl
+                reviewed_resolution = _reviewed_variant_for_policy(
+                    approved,
+                    policy,
+                )
             else:
                 if (
                     effective_label == "N"
@@ -294,12 +299,15 @@ def _convert_sentence(
                         f"{record.sample_id}: converter failed for token {text!r}"
                     )
 
-        try:
-            resolved = resolve_dsl(dsl, policy)
-        except DslError as exc:
-            raise TrainingExportError(
-                f"{record.sample_id}: invalid DSL for {normalized!r}: {exc}"
-            ) from exc
+        if reviewed_resolution is not None:
+            resolved = reviewed_resolution
+        else:
+            try:
+                resolved = resolve_dsl(dsl, policy)
+            except DslError as exc:
+                raise TrainingExportError(
+                    f"{record.sample_id}: invalid DSL for {normalized!r}: {exc}"
+                ) from exc
         with_internal_punctuation = _restore_internal_word_punctuation(
             text,
             resolved,
@@ -417,6 +425,30 @@ def _validate_reviewed_dictionary(reviewed: dict[str, ReviewedWord]) -> None:
             raise TrainingExportError(
                 f"invalid reviewed DSL for {word!r}: {exc}"
             ) from exc
+        for variant in annotation.variants:
+            try:
+                parsed = parse_dsl(variant.zamanalif)
+            except DslError as exc:
+                raise TrainingExportError(
+                    f"invalid reviewed variant for {word!r}: {exc}"
+                ) from exc
+            if parsed.has_choices:
+                raise TrainingExportError(
+                    f"reviewed variant for {word!r} contains unresolved DSL"
+                )
+
+
+def _reviewed_variant_for_policy(
+    annotation: ReviewedWord,
+    policy: dict[str, str],
+) -> str | None:
+    for variant in annotation.variants:
+        if any(
+            all(policy.get(rule_id) == option_id for rule_id, option_id in candidate)
+            for candidate in variant.policies
+        ):
+            return variant.zamanalif
+    return None
 
 
 def _validate_resolved_sentence(sample_id: str, value: str) -> None:

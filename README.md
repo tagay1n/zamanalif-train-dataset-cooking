@@ -310,8 +310,8 @@ Each generated batch is a Label Studio JSON array:
 }
 ```
 
-Accepted convention choices are represented in `auto_zamanalif` with inline
-DSL. For example:
+Accepted convention choices are preserved internally with inline DSL. For
+example:
 
 ```text
 orfografi{{IYA|compact=ä|explicit=yä}}
@@ -319,8 +319,9 @@ orfografi{{IYA|compact=ä|explicit=yä}}
 
 `IYA` is the stable rule identifier. `compact` and `explicit` are named
 options. The preferred policy currently resolves it to `orfografiyä`; the
-compact PDF policy resolves it to `orfografiä`. The DSL marks only the
-differing substring.
+compact PDF policy resolves it to `orfografiä`. Label Studio annotators see
+every distinct plain rendering as one editable line in `zamanalif_variants`,
+while the DSL and each line's policy mapping are stored only in task `meta`.
 
 The command writes 500-task batch files such as
 `project_iya_batch_001_of_003.json`, `project_rus_sign_batch_001_of_004.json`,
@@ -363,18 +364,30 @@ task-data columns:
 {
   "data": {
     "cyrl_word": "орфография",
-    "auto_zamanalif": "orfografi{{IYA|compact=ä|explicit=yä}}",
+    "zamanalif_variants": "orfografiyä\norfografiä",
     "gemini_origin": "RL",
     "hints_html": "..."
   },
   "meta": {
-    "schema_version": 1,
-    "project_key": "iya"
+    "schema_version": 3,
+    "project_key": "iya",
+    "suggested_zamanalif_dsl": "orfografi{{IYA|compact=ä|explicit=yä}}",
+    "variant_policies": [
+      [{"IYA": "explicit"}],
+      [{"IYA": "compact"}]
+    ]
   }
 }
 ```
 
-Dictionary task `data` contains exactly those four fields. Contextual task
+For focused dictionary projects, each line is editable and must remain in the
+same order. Import stores every reviewed line with its hidden policy mapping.
+Training export selects the corrected line matching the active global policy.
+This keeps the annotation interface free of implementation syntax without
+losing any reviewed alternative.
+
+Focused dictionary task `data` contains exactly those four fields. Catchall
+retains the single `auto_zamanalif` field. Contextual task
 `data` additionally contains `sentence`, `context_html`, `native_zamanalif`,
 and `loanword_zamanalif`; its `meta` additionally contains `sample_id` and
 `token_index`. Project titles, batch fields, DSL rule lists, and custom task
@@ -442,14 +455,19 @@ Label Studio layout:
       line-height: 1.3 !important;
     }
 
-    .big-textarea textarea,
-    .big-textarea textarea *,
-    .big-textarea [contenteditable="true"],
-    .big-textarea [role="textbox"] {
-      font-size: 44px !important;
+    .variant-editor textarea,
+    .variant-editor [contenteditable="true"],
+    .variant-editor [role="textbox"] {
+      font-size: 34px !important;
       font-weight: 700 !important;
-      line-height: 1.3 !important;
-      min-height: 64px !important;
+      line-height: 1.5 !important;
+      min-height: 130px !important;
+    }
+
+    .help-text,
+    .help-text * {
+      color: #666 !important;
+      font-size: 14px !important;
     }
   </Style>
 
@@ -463,32 +481,40 @@ Label Studio layout:
     </View>
   </View>
 
-  <View
+  <View className="box"
     visibleWhen="choice-unselected"
     whenTagName="is_homonym"
     whenChoiceValue="Homonym"
   >
-    <View className="box">
-      <Text name="corrected_zamanalif_label" value="Correct if necessary"/>
+    <View className="box-title">
+      <Text name="variants_label" value="Check every Zamanalif variant"/>
+    </View>
 
-      <View className="big-textarea">
-        <TextArea
-          name="corrected_zamanalif"
-          toName="cyrl_word"
-          rows="2"
-          value="$auto_zamanalif"
-          placeholder="Edit only if the suggestion is wrong"
-          editable="true"
-          maxSubmissions="1"
-          required="true"
-        />
-      </View>
-
+    <View className="help-text">
       <Text
-        name="fast-copy"
-        value="ä Ä | ö Ö | ü Ü | ñ Ñ | ı I | ğ Ğ | ş Ş | ç Ç"
+        name="variants_help"
+        value="Each line is one variant. Correct mistakes directly, but keep the variants in the same order."
       />
     </View>
+
+    <View className="variant-editor">
+      <TextArea
+        name="reviewed_zamanalif_variants"
+        toName="cyrl_word"
+        rows="4"
+        value="$zamanalif_variants"
+        placeholder="One Zamanalif variant per line"
+        editable="true"
+        transcription="true"
+        maxSubmissions="1"
+        required="true"
+      />
+    </View>
+
+    <Text
+      name="fast-copy"
+      value="ä Ä | ö Ö | ü Ü | ñ Ñ | ı I | ğ Ğ | ş Ş | ç Ç"
+    />
   </View>
 
   <View className="box">
@@ -510,12 +536,11 @@ Label Studio layout:
 ```
 
 The `Homonym` checkbox is unchecked by default. When it remains unchecked,
-`corrected_zamanalif` is required and the exported `gemini_origin` is retained
-automatically. The checkbox initially appears immediately below the correction.
-When checked, the correction is hidden and the checkbox alone is a complete
-decision. Dictionary annotations containing a `reviewed_origin` control are
-rejected. The textarea keeps one editable response so reopening an existing
-annotation displays its saved correction instead of creating another response.
+`reviewed_zamanalif_variants` is required and the exported `gemini_origin` is
+retained automatically. When checked, the variant editor is hidden and the
+checkbox alone is a complete decision. Dictionary annotations containing a
+`reviewed_origin` control are rejected. The textarea keeps one editable
+response so reopening an annotation displays all saved variant lines.
 
 The contextual project contains only occurrences whose native and loanword
 outputs differ. The annotator selects the meaning in context; the selected

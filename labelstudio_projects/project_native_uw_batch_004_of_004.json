@@ -1,0 +1,8327 @@
+[
+  {
+    "data": {
+      "cyrl_word": "төзәтелүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "tözätelüwenä\ntözätelüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "tözätelü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "төзәтүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "tözätüwen\ntözätüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "tözätü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "төйнәлүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "töynälüwe\ntöynälüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "töynälü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "төшереүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "töşereüwe\ntöşereüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "töşereü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "төшерүем",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "töşerüwem\ntöşerüem"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "töşerü{{NATIVE_UW|plain=|glide=w}}em",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "төшерүеннән",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "töşerüwennän\ntöşerüennän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "töşerü{{NATIVE_UW|plain=|glide=w}}ennän",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "төшүебез",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "töşüwebez\ntöşüebez"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "töşü{{NATIVE_UW|plain=|glide=w}}ebez",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "төшүенең",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "töşüweneñ\ntöşüeneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "töşü{{NATIVE_UW|plain=|glide=w}}eneñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "төшүеңне",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "töşüweñne\ntöşüeñne"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "töşü{{NATIVE_UW|plain=|glide=w}}eñne",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "уалып",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uwalıp\nualıp"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "u{{NATIVE_UW|plain=|glide=w}}alıp",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "уздыруын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uzdıruwın\nuzdıruın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uzdıru{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "уздырылуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uzdırıluwın\nuzdırıluın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uzdırılu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "уздырылуына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uzdırıluwına\nuzdırıluına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uzdırılu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "уку-язуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uqu-yazuwın\nuqu-yazuın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uqu-yazu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "укуыбыз",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uquwıbız\nuquıbız"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uqu{{NATIVE_UW|plain=|glide=w}}ıbız",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "укуыгызны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uquwığıznı\nuquığıznı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uqu{{NATIVE_UW|plain=|glide=w}}ığıznı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "укуым",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uquwım\nuquım"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uqu{{NATIVE_UW|plain=|glide=w}}ım",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "укуымыз",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uquwımız\nuquımız"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uqu{{NATIVE_UW|plain=|glide=w}}ımız",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "укуында",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uquwında\nuquında"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uqu{{NATIVE_UW|plain=|glide=w}}ında",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "укуының",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uquwınıñ\nuquınıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uqu{{NATIVE_UW|plain=|glide=w}}ınıñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "укуыңызны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uquwıñıznı\nuquıñıznı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uqu{{NATIVE_UW|plain=|glide=w}}ıñıznı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "укылуыннан",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uqıluwınnan\nuqıluınnan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uqılu{{NATIVE_UW|plain=|glide=w}}ınnan",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "укытуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uqıtuwı\nuqıtuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uqıtu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "укытуым",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uqıtuwım\nuqıtuım"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uqıtu{{NATIVE_UW|plain=|glide=w}}ım",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "улуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uluwın\nuluın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ulu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "урлануы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "urlanuwı\nurlanuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "urlanu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "урнаштыруына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "urnaştıruwına\nurnaştıruına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "urnaştıru{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "урнашуым",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "urnaşuwım\nurnaşuım"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "urnaşu{{NATIVE_UW|plain=|glide=w}}ım",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "урнашуындагы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "urnaşuwındağı\nurnaşuındağı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "urnaşu{{NATIVE_UW|plain=|glide=w}}ındağı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "урныштырылуына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "urnıştırıluwına\nurnıştırıluına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "urnıştırılu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "уртаклашуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "urtaqlaşuwın\nurtaqlaşuın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "urtaqlaşu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "урынлаштырылуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "urınlaştırıluwın\nurınlaştırıluın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "urınlaştırılu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "урынлашуына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "urınlaşuwına\nurınlaşuına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "urınlaşu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "утыруыннан",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "utıruwınnan\nutıruınnan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "utıru{{NATIVE_UW|plain=|glide=w}}ınnan",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ууку",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uwuqu\nuuqu"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "u{{NATIVE_UW|plain=|glide=w}}uqu",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "уылдык",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uwıldıq\nuıldıq"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "u{{NATIVE_UW|plain=|glide=w}}ıldıq",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "уындыгында",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uwındığında\nuındığında"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "u{{NATIVE_UW|plain=|glide=w}}ındığında",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "уянуым",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uyanuwım\nuyanuım"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uyanu{{NATIVE_UW|plain=|glide=w}}ım",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "уятуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "uyatuwın\nuyatuın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "uyatu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "файдалануына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "faydalanuwına\nfaydalanuına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "faydalanu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "файдалануыннан",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "faydalanuwınnan\nfaydalanuınnan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "faydalanu{{NATIVE_UW|plain=|glide=w}}ınnan",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "файдалануының",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "faydalanuwınıñ\nfaydalanuınıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "faydalanu{{NATIVE_UW|plain=|glide=w}}ınıñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "фәхшәһүү",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "fäxşähüwü\nfäxşähüü"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "fäxşähü{{NATIVE_UW|plain=|glide=w}}ü",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "хаҗуафаның",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "xacuwafanıñ\nxacuafanıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "xacu{{NATIVE_UW|plain=|glide=w}}afanıñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "хушлашуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "xuşlaşuwı\nxuşlaşuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "xuşlaşu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "хәерчеләнүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "xäyerçelänüwe\nxäyerçelänüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "xäyerçelänü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "хәерчеләнүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "xäyerçelänüwen\nxäyerçelänüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "xäyerçelänü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "хәзерләнүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "xäzerlänüwe\nxäzerlänüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "xäzerlänü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "хәзерләнүемез",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "xäzerlänüwemez\nxäzerlänüemez"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "xäzerlänü{{NATIVE_UW|plain=|glide=w}}emez",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чабуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çabuwı\nçabuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çabu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чабуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çabuwın\nçabuın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çabu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чабыш-куышка",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çabış-quwışqa\nçabış-quışqa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çabış-qu{{NATIVE_UW|plain=|glide=w}}ışqa",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чагылдыруы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çağıldıruwı\nçağıldıruı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çağıldıru{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чагылдыруына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çağıldıruwına\nçağıldıruına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çağıldıru{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чагылдырылуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çağıldırıluwı\nçağıldırıluı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çağıldırılu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чагылдырылуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çağıldırıluwın\nçağıldırıluın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çağıldırılu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чагылуына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çağıluwına\nçağıluına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çağılu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чагылуында",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çağıluwında\nçağıluında"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çağılu{{NATIVE_UW|plain=|glide=w}}ında",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чагыштыруым",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çağıştıruwım\nçağıştıruım"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çağıştıru{{NATIVE_UW|plain=|glide=w}}ım",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чагыштыруында",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çağıştıruwında\nçağıştıruında"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çağıştıru{{NATIVE_UW|plain=|glide=w}}ında",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чакыртуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çaqırtuwın\nçaqırtuın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çaqırtu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чакыруыбызга",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çaqıruwıbızğa\nçaqıruıbızğa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çaqıru{{NATIVE_UW|plain=|glide=w}}ıbızğa",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чакыруыгыз",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çaqıruwığız\nçaqıruığız"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çaqıru{{NATIVE_UW|plain=|glide=w}}ığız",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чакырылуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çaqırıluwın\nçaqırıluın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çaqırılu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чигелүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çigelüwe\nçigelüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çigelü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чигенүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çigenüwe\nçigenüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çigenü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чигенүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çigenüwenä\nçigenüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çigenü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чигүендә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çigüwendä\nçigüendä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çigü{{NATIVE_UW|plain=|glide=w}}endä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чикләнүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çiklänüwen\nçiklänüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çiklänü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чирүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çirüwe\nçirüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çirü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чирүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çirüwen\nçirüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çirü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "читләшүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çitläşüwe\nçitläşüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çitläşü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чишендерүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çişenderüwe\nçişenderüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çişenderü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чишүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çişüwen\nçişüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çişü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуагы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwağı\nçuağı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}ağı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуаланды",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwalandı\nçualandı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}alandı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуаланып",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwalanıp\nçualanıp"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}alanıp",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуалганнар",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwalğannar\nçualğannar"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}alğannar",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуалтырга",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwaltırğa\nçualtırğa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}altırğa",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуалчыклыгын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwalçıqlığın\nçualçıqlığın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}alçıqlığın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуалып",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwalıp\nçualıp"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}alıp",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуалышларсыз",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwalışlarsız\nçualışlarsız"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}alışlarsız",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуалышлары",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwalışları\nçualışları"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}alışları",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуалышны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwalışnı\nçualışnı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}alışnı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуалышның",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwalışnıñ\nçualışnıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}alışnıñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуалышы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwalışı\nçualışı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}alışı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуарланды",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwarlandı\nçuarlandı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}arlandı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуашлар",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwaşlar\nçuaşlar"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}aşlar",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуашларда",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwaşlarda\nçuaşlarda"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}aşlarda",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуашларны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwaşlarnı\nçuaşlarnı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}aşlarnı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуашның",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwaşnıñ\nçuaşnıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}aşnıñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чуашы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çuwaşı\nçuaşı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çu{{NATIVE_UW|plain=|glide=w}}aşı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чумдыруымны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çumdıruwımnı\nçumdıruımnı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çumdıru{{NATIVE_UW|plain=|glide=w}}ımnı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чыгаруыбыз",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çığaruwıbız\nçığaruıbız"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çığaru{{NATIVE_UW|plain=|glide=w}}ıbız",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чыгаруына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çığaruwına\nçığaruına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çığaru{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чыгаруынча",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çığaruwınça\nçığaruınça"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çığaru{{NATIVE_UW|plain=|glide=w}}ınça",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чыгуыгызны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çığuwığıznı\nçığuığıznı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çığu{{NATIVE_UW|plain=|glide=w}}ığıznı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чыгуыма",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çığuwıma\nçığuıma"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çığu{{NATIVE_UW|plain=|glide=w}}ıma",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чыгуында",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çığuwında\nçığuında"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çığu{{NATIVE_UW|plain=|glide=w}}ında",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чыгуының",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çığuwınıñ\nçığuınıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çığu{{NATIVE_UW|plain=|glide=w}}ınıñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чыныгуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çınığuwı\nçınığuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çınığu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чүпләнүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çüplänüwenä\nçüplänüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çüplänü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чәйнәүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çäynäwwe\nçäynäwe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çäynäw{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чәчелүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çäçelüwen\nçäçelüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çäçelü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чәчелүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çäçelüwenä\nçäçelüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çäçelü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чәчүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çäçüwe\nçäçüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çäçü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "чәчүендәме",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "çäçüwendäme\nçäçüendäme"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "çäçü{{NATIVE_UW|plain=|glide=w}}endäme",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "шатлык-куанычларын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "şatlıq-quwanıçların\nşatlıq-quanıçların"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "şatlıq-qu{{NATIVE_UW|plain=|glide=w}}anıçların",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "шау-шуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "şaw-şuwın\nşaw-şuın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "şaw-şu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "шашуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "şaşuwın\nşaşuın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "şaşu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "шуа",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "şuwa\nşua"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "şu{{NATIVE_UW|plain=|glide=w}}a",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "шуулар",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "şuwular\nşuular"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "şu{{NATIVE_UW|plain=|glide=w}}ular",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "шуышсын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "şuwışsın\nşuışsın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "şu{{NATIVE_UW|plain=|glide=w}}ışsın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "шуышу",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "şuwışu\nşuışu"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "şu{{NATIVE_UW|plain=|glide=w}}ışu",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "шуышуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "şuwışuwı\nşuışuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "şu{{NATIVE_UW|plain=|glide=w}}ışu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "шәрехләнүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "şärexlänüwen\nşärexlänüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "şärexlänü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ыргытуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ırğıtuwı\nırğıtuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ırğıtu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ыруы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ıruwı\nıruı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ıru{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ыруыгызны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ıruwığıznı\nıruığıznı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ıru{{NATIVE_UW|plain=|glide=w}}ığıznı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ыруын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ıruwın\nıruın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ıru{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ыруыннан",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ıruwınnan\nıruınnan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ıru{{NATIVE_UW|plain=|glide=w}}ınnan",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ычкынуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ıçqınuwı\nıçqınuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ıçqınu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ышандыруы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ışandıruwı\nışandıruı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ışandıru{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ышануыбызны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ışanuwıbıznı\nışanuıbıznı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ışanu{{NATIVE_UW|plain=|glide=w}}ıbıznı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ышануыгызны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ışanuwığıznı\nışanuığıznı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ışanu{{NATIVE_UW|plain=|glide=w}}ığıznı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ышануыңыздан",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ışanuwıñızdan\nışanuıñızdan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ışanu{{NATIVE_UW|plain=|glide=w}}ıñızdan",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эзләнүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ezlänüwe\nezlänüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ezlänü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эзләнүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ezlänüwenä\nezlänüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ezlänü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эзәрлекләнүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ezärleklänüwen\nezärleklänüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ezärleklänü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эреләнүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "erelänüwen\nerelänüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "erelänü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эрүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "erüwe\nerüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "erü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "этелүеннән",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "etelüwennän\netelüennän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "etelü{{NATIVE_UW|plain=|glide=w}}ennän",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "этәрелүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "etärelüwe\netärelüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "etärelü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "этәрүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "etärüwe\netärüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "etärü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эшкуарларына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "eşquwarlarına\neşquarlarına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "eşqu{{NATIVE_UW|plain=|glide=w}}arlarına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эшкуарлыгына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "eşquwarlığına\neşquarlığına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "eşqu{{NATIVE_UW|plain=|glide=w}}arlığına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эшкуарлыгының",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "eşquwarlığınıñ\neşquarlığınıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "eşqu{{NATIVE_UW|plain=|glide=w}}arlığınıñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эшкуарныкы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "eşquwarnıqı\neşquarnıqı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "eşqu{{NATIVE_UW|plain=|glide=w}}arnıqı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эшкуары",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "eşquwarı\neşquarı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "eşqu{{NATIVE_UW|plain=|glide=w}}arı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эшкәртелүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "eşkärtelüwe\neşkärtelüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "eşkärtelü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эшкәртелүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "eşkärtelüwen\neşkärtelüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "eşkärtelü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эшкәртелүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "eşkärtelüwenä\neşkärtelüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "eşkärtelü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эшкәртүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "eşkärtüwen\neşkärtüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "eşkärtü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эшләтүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "eşlätüwe\neşlätüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "eşlätü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юан-юан",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwan-yuwan\nyuan-yuan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}an-yu{{NATIVE_UW|plain=|glide=w}}an",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юанайган",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwanayğan\nyuanayğan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}anayğan",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юанлык",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwanlıq\nyuanlıq"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}anlıq",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юануны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwanunı\nyuanunı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}anunı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юанып",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwanıp\nyuanıp"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}anıp",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юанырга",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwanırğa\nyuanırğa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}anırğa",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юанычка",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwanıçqa\nyuanıçqa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}anıçqa",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юанычның",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwanıçnıñ\nyuanıçnıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}anıçnıñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юанычы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwanıçı\nyuanıçı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}anıçı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юасы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwası\nyuası"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ası",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юаткан",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwatqan\nyuatqan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}atqan",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юатмаячак",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwatmayaçaq\nyuatmayaçaq"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}atmayaçaq",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юатучылар",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwatuçılar\nyuatuçılar"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}atuçılar",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юатыр",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwatır\nyuatır"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}atır",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юач-йуач",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwaç-yuwaç\nyuaç-yuaç"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}aç-yu{{NATIVE_UW|plain=|glide=w}}aç",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юашлыкны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwaşlıqnı\nyuaşlıqnı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}aşlıqnı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "югалтуыбыз",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuğaltuwıbız\nyuğaltuıbız"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yuğaltu{{NATIVE_UW|plain=|glide=w}}ıbız",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "югалуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuğaluwın\nyuğaluın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yuğalu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "югалуыннан",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuğaluwınnan\nyuğaluınnan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yuğalu{{NATIVE_UW|plain=|glide=w}}ınnan",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юештән",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yüweştän\nyüeştän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yü{{NATIVE_UW|plain=|glide=w}}eştän",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юнәлдерелүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yünälderelüwe\nyünälderelüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yünälderelü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юнәлдерүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yünälderüwe\nyünälderüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yünälderü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юнәлдерүендә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yünälderüwendä\nyünälderüendä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yünälderü{{NATIVE_UW|plain=|glide=w}}endä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юнәлтелүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yünältelüwen\nyünältelüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yünältelü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юуда",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwuda\nyuuda"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}uda",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юуй",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwuy\nyuuy"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}uy",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юуны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwunı\nyuunı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}unı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юучы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwuçı\nyuuçı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}uçı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юучылар",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwuçılar\nyuuçılar"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}uçılar",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юучының",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwuçınıñ\nyuuçınıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}uçınıñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwı\nyuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юылганга",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwılğanğa\nyuılğanğa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ılğanğa",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юылганмы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwılğanmı\nyuılğanmı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ılğanmı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юылмаган",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwılmağan\nyuılmağan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ılmağan",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юылуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwıluwı\nyuıluı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ılu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юылуына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwıluwına\nyuıluına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ılu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юылып",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwılıp\nyuılıp"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ılıp",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юынгыч",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwınğıç\nyuınğıç"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ınğıç",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юындырганда",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwındırğanda\nyuındırğanda"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ındırğanda",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юындыру",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwındıru\nyuındıru"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ındıru",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юыну",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwınu\nyuınu"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ınu",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юынырга",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwınırğa\nyuınırğa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ınırğa",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юырту",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwırtu\nyuırtu"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ırtu",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юыртуны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwırtunı\nyuırtunı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ırtunı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "юыртуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yuwırtuwı\nyuırtuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yu{{NATIVE_UW|plain=|glide=w}}ırtu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ябырылуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yabırıluwı\nyabırıluı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yabırılu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "явуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yawuwın\nyawuın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yawu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ягуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yağuwın\nyağuın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yağu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "язуыбыз",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yazuwıbız\nyazuıbız"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yazu{{NATIVE_UW|plain=|glide=w}}ıbız",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "язуыбыздан",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yazuwıbızdan\nyazuıbızdan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yazu{{NATIVE_UW|plain=|glide=w}}ıbızdan",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "язуыгызны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yazuwığıznı\nyazuığıznı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yazu{{NATIVE_UW|plain=|glide=w}}ığıznı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "язуым",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yazuwım\nyazuım"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yazu{{NATIVE_UW|plain=|glide=w}}ım",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "язуымны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yazuwımnı\nyazuımnı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yazu{{NATIVE_UW|plain=|glide=w}}ımnı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "язуындагы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yazuwındağı\nyazuındağı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yazu{{NATIVE_UW|plain=|glide=w}}ındağı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "язуындагыча",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yazuwındağıça\nyazuındağıça"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yazu{{NATIVE_UW|plain=|glide=w}}ındağıça",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "язылуына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yazıluwına\nyazıluına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yazılu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "язылуында",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yazıluwında\nyazıluında"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yazılu{{NATIVE_UW|plain=|glide=w}}ında",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "язышуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yazışuwı\nyazışuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yazışu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яклануына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yaqlanuwına\nyaqlanuına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yaqlanu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яктыртуымны",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yaqtırtuwımnı\nyaqtırtuımnı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yaqtırtu{{NATIVE_UW|plain=|glide=w}}ımnı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яктыртуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yaqtırtuwın\nyaqtırtuın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yaqtırtu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яктыртылуына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yaqtırtıluwına\nyaqtırtıluına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yaqtırtılu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "якынаюына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yaqınayuwına\nyaqınayuına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yaqınayu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "якынлашуына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yaqınlaşuwına\nyaqınlaşuına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yaqınlaşu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ялаягуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yalayağuwın\nyalayağuın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yalayağu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ялваруы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yalwaruwı\nyalwaruı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yalwaru{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ялваруын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yalwaruwın\nyalwaruın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yalwaru{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ялгануын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yalğanuwın\nyalğanuın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yalğanu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яндырылуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yandırıluwı\nyandırıluı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yandırılu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "янсуармы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yansuwarmı\nyansuarmı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yansu{{NATIVE_UW|plain=|glide=w}}armı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яраклашуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yaraqlaşuwı\nyaraqlaşuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yaraqlaşu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яраклашуына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yaraqlaşuwına\nyaraqlaşuına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yaraqlaşu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яратуының",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yaratuwınıñ\nyaratuınıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yaratu{{NATIVE_UW|plain=|glide=w}}ınıñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яратылуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yaratıluwı\nyaratıluı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yaratılu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ярлыкануы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yarlıqanuwı\nyarlıqanuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yarlıqanu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ярлылануына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yarlılanuwına\nyarlılanuına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yarlılanu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ярсуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yarsuwın\nyarsuın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yarsu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ярсуыннан",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yarsuwınnan\nyarsuınnan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yarsu{{NATIVE_UW|plain=|glide=w}}ınnan",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ясалуына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yasaluwına\nyasaluına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yasalu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ятуыгыз",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yatuwığız\nyatuığız"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yatu{{NATIVE_UW|plain=|glide=w}}ığız",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яудыруындамы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yawdıruwındamı\nyawdıruındamı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yawdıru{{NATIVE_UW|plain=|glide=w}}ındamı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яулануы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yawlanuwı\nyawlanuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yawlanu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яуу",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yawwu\nyawu"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yaw{{NATIVE_UW|plain=|glide=w}}u",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яхшыртылуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yaxşırtıluwı\nyaxşırtıluı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yaxşırtılu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яхшыруына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yaxşıruwına\nyaxşıruına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yaxşıru{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яшелләндерүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yäşelländerüwe\nyäşelländerüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yäşelländerü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яшелләнүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yäşellänüwe\nyäşellänüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yäşellänü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яшеренүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yäşerenüwen\nyäşerenüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yäşerenü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яңаруын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yañaruwın\nyañaruın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yañaru{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яңгыратуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yañğıratuwı\nyañğıratuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yañğıratu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яңгыраулашуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "yañğırawlaşuwı\nyañğırawlaşuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "yañğırawlaşu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җайлашуына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "caylaşuwına\ncaylaşuına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "caylaşu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җанландырылуын",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "canlandırıluwın\ncanlandırıluın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "canlandırılu{{NATIVE_UW|plain=|glide=w}}ın",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җанлануына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "canlanuwına\ncanlanuına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "canlanu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җибәрелүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cibärelüwe\ncibärelüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cibärelü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җибәрүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cibärüwenä\ncibärüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cibärü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җилкенүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cilkenüwe\ncilkenüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cilkenü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җилкенүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cilkenüwenä\ncilkenüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cilkenü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җимерелүенең",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cimerelüweneñ\ncimerelüeneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cimerelü{{NATIVE_UW|plain=|glide=w}}eneñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җимерелүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cimerelüwenä\ncimerelüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cimerelü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җимереүендә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cimereüwendä\ncimereüendä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cimereü{{NATIVE_UW|plain=|glide=w}}endä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җимерүегезне",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cimerüwegezne\ncimerüegezne"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cimerü{{NATIVE_UW|plain=|glide=w}}egezne",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җимерүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cimerüwen\ncimerüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cimerü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җимерүендә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cimerüwendä\ncimerüendä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cimerü{{NATIVE_UW|plain=|glide=w}}endä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җимерүеннән",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cimerüwennän\ncimerüennän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cimerü{{NATIVE_UW|plain=|glide=w}}ennän",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җирләнүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cirlänüwe\ncirlänüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cirlänü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җирләшүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cirläşüwen\ncirläşüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cirläşü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җирсүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cirsüwen\ncirsüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cirsü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җитешүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "citeşüwe\nciteşüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "citeşü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җиткерелүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "citkerelüwe\ncitkerelüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "citkerelü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җиткерелүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "citkerelüwen\ncitkerelüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "citkerelü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җиткерүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "citkerüwe\ncitkerüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "citkerü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җиткерүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "citkerüwen\ncitkerüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "citkerü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җитлегүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "citlegüwenä\ncitlegüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "citlegü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җитүебез",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "citüwebez\ncitüebez"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "citü{{NATIVE_UW|plain=|glide=w}}ebez",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җиңелүебез",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ciñelüwebez\nciñelüebez"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ciñelü{{NATIVE_UW|plain=|glide=w}}ebez",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җиңелүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ciñelüwen\nciñelüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ciñelü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җиңелүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ciñelüwenä\nciñelüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ciñelü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җиңеләйтүеннән",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ciñeläytüwennän\nciñeläytüennän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ciñeläytü{{NATIVE_UW|plain=|glide=w}}ennän",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җиңүебезнең",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ciñüwebezneñ\nciñüebezneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ciñü{{NATIVE_UW|plain=|glide=w}}ebezneñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җиңүендә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ciñüwendä\nciñüendä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ciñü{{NATIVE_UW|plain=|glide=w}}endä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җуан",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cuwan\ncuan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cu{{NATIVE_UW|plain=|glide=w}}an",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җуанып",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cuwanıp\ncuanıp"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cu{{NATIVE_UW|plain=|glide=w}}anıp",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җуу",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cuwu\ncuu"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cu{{NATIVE_UW|plain=|glide=w}}u",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җыйналуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cıynaluwı\ncıynaluı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cıynalu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җылытылуына",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cılıtıluwına\ncılıtıluına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cılıtılu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җырлатуы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cırlatuwı\ncırlatuı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cırlatu{{NATIVE_UW|plain=|glide=w}}ı",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җәелдерүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cäyelderüwe\ncäyelderüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cäyelderü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җәелдерүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cäyelderüwen\ncäyelderüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cäyelderü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җәелүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cäyelüwenä\ncäyelüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cäyelü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җәюе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cäyüwe\ncäyüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cäyü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җәюен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "cäyüwen\ncäyüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "cäyü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үемлек",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üwemlek\nüemlek"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ü{{NATIVE_UW|plain=|glide=w}}emlek",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үзбилгеләнүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üzbilgelänüwenä\nüzbilgelänüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üzbilgelänü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үзгәртелүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üzgärtelüwe\nüzgärtelüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üzgärtelü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үзгөрүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üzgörüwen\nüzgörüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üzgörü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үзләштерелүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üzläşterelüwe\nüzläşterelüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üzläşterelü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үзләштерүендә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üzläşterüwendä\nüzläşterüendä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üzläşterü{{NATIVE_UW|plain=|glide=w}}endä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үзтиңләнүебезне",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üztiñlänüwebezne\nüztiñlänüebezne"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üztiñlänü{{NATIVE_UW|plain=|glide=w}}ebezne",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үл-мәүүт",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ül-mäwwüt\nül-mäwüt"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ül-mäw{{NATIVE_UW|plain=|glide=w}}üt",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үлүендә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ülüwendä\nülüendä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ülü{{NATIVE_UW|plain=|glide=w}}endä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үлүенең",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ülüweneñ\nülüeneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ülü{{NATIVE_UW|plain=|glide=w}}eneñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үлүең",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ülüweñ\nülüeñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ülü{{NATIVE_UW|plain=|glide=w}}eñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үрелүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ürelüwe\nürelüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ürelü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үрчүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ürçüwenä\nürçüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ürçü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үстерелүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üsterelüwenä\nüsterelüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üsterelü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үстерүебез",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üsterüwebez\nüsterüebez"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üsterü{{NATIVE_UW|plain=|glide=w}}ebez",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үстерүенең",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üsterüweneñ\nüsterüeneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üsterü{{NATIVE_UW|plain=|glide=w}}eneñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үстерүең",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üsterüweñ\nüsterüeñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üsterü{{NATIVE_UW|plain=|glide=w}}eñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үсү-үзгәрүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üsü-üzgärüwen\nüsü-üzgärüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üsü-üzgärü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үсүендәге",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üsüwendäge\nüsüendäge"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üsü{{NATIVE_UW|plain=|glide=w}}endäge",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үсүенең",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üsüweneñ\nüsüeneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üsü{{NATIVE_UW|plain=|glide=w}}eneñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үсүеннән",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üsüwennän\nüsüennän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üsü{{NATIVE_UW|plain=|glide=w}}ennän",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үтенүемнең",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ütenüwemneñ\nütenüemneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ütenü{{NATIVE_UW|plain=|glide=w}}emneñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үтерелүеннән",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üterelüwennän\nüterelüennän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üterelü{{NATIVE_UW|plain=|glide=w}}ennän",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үтерелүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üterelüwenä\nüterelüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üterelü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үтерүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üterüwe\nüterüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üterü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үтерүемнән",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üterüwemnän\nüterüemnän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "üterü{{NATIVE_UW|plain=|glide=w}}emnän",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үткәрүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ütkärüwe\nütkärüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ütkärü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үткәрүегезне",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ütkärüwegezne\nütkärüegezne"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ütkärü{{NATIVE_UW|plain=|glide=w}}egezne",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үтүеннән",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ütüwennän\nütüennän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ütü{{NATIVE_UW|plain=|glide=w}}ennän",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үәгьдү",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üwägdü\nüägdü"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ü{{NATIVE_UW|plain=|glide=w}}ägdü",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үәл-хикмәтә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üwäl-xikmätä\nüäl-xikmätä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ü{{NATIVE_UW|plain=|glide=w}}äl-xikmätä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үәм",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üwäm\nüäm"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ü{{NATIVE_UW|plain=|glide=w}}äm",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үәс",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üwäs\nüäs"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ü{{NATIVE_UW|plain=|glide=w}}äs",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "үәсәлләм",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "üwäsälläm\nüäsälläm"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ü{{NATIVE_UW|plain=|glide=w}}äsälläm",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "һүә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "hüwä\nhüä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "hü{{NATIVE_UW|plain=|glide=w}}ä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "әверелдерүендә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "äwerelderüwendä\näwerelderüendä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "äwerelderü{{NATIVE_UW|plain=|glide=w}}endä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "әверелүендә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "äwerelüwendä\näwerelüendä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "äwerelü{{NATIVE_UW|plain=|glide=w}}endä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "әверелүенең",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "äwerelüweneñ\näwerelüeneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "äwerelü{{NATIVE_UW|plain=|glide=w}}eneñ",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "әз-зәүәҗир",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "äz-zäwwäcir\näz-zäwäcir"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "äz-zäw{{NATIVE_UW|plain=|glide=w}}äcir",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "әйләндерелүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "äyländerelüwe\näyländerelüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "äyländerelü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "әйләндерүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "äyländerüwen\näyländerüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "äyländerü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "әйтелүенчә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "äytelüwençä\näytelüençä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "äytelü{{NATIVE_UW|plain=|glide=w}}ençä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "әл_үәбәли",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "älüwäbäli\nälüäbäli"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "älü{{NATIVE_UW|plain=|glide=w}}äbäli",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "әрнүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ärnüwe\närnüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ärnü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "әрнүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ärnüwen\närnüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ärnü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "әчүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "äçüwe\näçüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "äçü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "әүистәʻҫәртә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "äwwistäärtä\näwistäärtä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "äw{{NATIVE_UW|plain=|glide=w}}istäärtä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "өзелүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "özelüwenä\nözelüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "özelü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "өзүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "özüwen\nözüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "özü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "өзүеннән",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "özüwennän\nözüennän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "özü{{NATIVE_UW|plain=|glide=w}}ennän",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "өйрәнелүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "öyränelüwenä\nöyränelüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "öyränelü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "өйрәнүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "öyränüwenä\nöyränüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "öyränü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "өйрәтүендә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "öyrätüwendä\nöyrätüendä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "öyrätü{{NATIVE_UW|plain=|glide=w}}endä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "өйрәтүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "öyrätüwenä\nöyrätüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "öyrätü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "өлгерүе",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ölgerüwe\nölgerüe"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ölgerü{{NATIVE_UW|plain=|glide=w}}e",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "өлгерүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ölgerüwen\nölgerüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "ölgerü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "өрүен",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "örüwen\nörüen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "örü{{NATIVE_UW|plain=|glide=w}}en",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  }
+]

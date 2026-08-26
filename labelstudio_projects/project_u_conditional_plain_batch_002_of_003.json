@@ -1,0 +1,7002 @@
+[
+  {
+    "data": {
+      "cyrl_word": "ДАУЗ",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "даулей",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "даяновнага",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "дворянствосы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "дворянчылык",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "декольн",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "деньга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "державачыл",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "джавада",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "дигом",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "диего",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "директивада",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "договорлашучы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "догрул",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "доруг",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "древних",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "дункан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "дунхуан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "дуфак",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "дюма",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "дюпюи",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "елардабашлангыч",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "елгататарстан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ендриховский",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ефредика",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "жиркадастр",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "житокчелек",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "жумашка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "жыентыклар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "жюльен",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "жюсанми",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "жюэн",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "загадки",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "загонлап",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "закиулловна",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "заклга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "законсызлык",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "законсызлыкка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "закончылык",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "заметкалары",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "замошьедан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "зарган",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "заукель",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "земствочылар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "зиновьевчылар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "зклан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "златко",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "знчк",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "зорау",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "зуеводан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "зурлаучы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "зютегу",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "зяблыларны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "игъти",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "иждивенчылык",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "изка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "излегалиевна",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "изящный",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ильеустан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "илюшкиннар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "инвал",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "индерка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "индивидуальлек",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "инструкторга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "интертактада",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "инфракызыл",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "иоганн",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "иркеннефть",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ирныкша",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ИРСИКА",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "истикълялларына",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "исхакыйлар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "итепсаклана",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ится",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "иттифакчы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "иттифакы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ихсанованын",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "йанлыг",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "йоклатмыйча",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "йокысына",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "йомшамаска",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кабала",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кабудан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кавелин",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кавышканнан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кавышуын",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кадейкинаны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кадетланучы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кадом",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кадыйргали",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "каезланган",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "каженкин",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "казанкомпрессормаш",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "казаноргсинтез",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "казас",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "казахча",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "казбич",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "казимир",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "каин",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "каймар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кайнашкан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кайс",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кайши",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "какшатты",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "калакир",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "каланча",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "калганча",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "калынрак",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "камгэсэнергостройлыларны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "камералылыкка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "камок",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кампанелла",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "камусин",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "камъни",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "камытлар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "канабеки",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "канадзава",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "канатыдай",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кангар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кандаш",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кантчылар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кантчылыкны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "каптыргычта",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "караганы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "карагызчы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "карарла",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "караульщик",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "каргат",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "карильда",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "карло",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "карлыгачлары",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "карно",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "карпинскийга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "карс",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "каруль",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кастей",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "касы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "катениеке",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "катибе",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "катрин",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "катэш",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "катюша",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кауль",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "каупуше",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "каутскийчылык",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "каушик",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кафур",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кбнулпына",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "квазилянде",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "КВАРТ",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "квтка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "КДАХА",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кдмуда",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "КДПУ",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кдуда",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "КДУЕ-16",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "керестька",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "керуен",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "киевская",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "киенгоп",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "киндеррауб",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кировлылар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кирямат",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кккны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кладовойчыларда",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кластерлары",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "княгаидвр",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "КОАМ",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кодны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кодсия",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кодэлэр",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "койвистодагы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "койрыгыннан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "койтендаг",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кокшетауда",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "колае",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "колакчыннар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "колдуэлл",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "колеган",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "коллекти",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "коллонтайга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "колог",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "колхозара",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "колхозчыларынын",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "колчактан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кольбе",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "колюччо",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "командировкадабулган",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "комба",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "комбайнына",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "комбатан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "комел",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "комментарийлы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "компостлар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "комптема",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "конгур",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "КОНГЭ",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "конигына",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "конитешнен",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "конкретрак",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "конкрит",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "конрад",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "континенатара",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "КОНТИНИУС",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "конъюнктураны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "коомих",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "координатор",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "коралландырух",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "корепин",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кормачы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кормчий",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "корпс",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "корсам",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "корытудан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "космонавты",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "костюшко",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "котылмакчылар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "котылуны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кочо",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кояново",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "краныгыз",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "красновидовоавыл",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "краупишкен",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кредитлауны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кренкель",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "крепостьларга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "крестилась",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кресть",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "крокодилы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кросна",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ксаты",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кубада",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "куза",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кузгаткычы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кузебай",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "куирки",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "куймаулары",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кукурузчы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кукшин",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кулрға",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "култаево",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кумрда",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кунаага",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "куорсуннаах",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "купала",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "купянск",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "куркуга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "курортная",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "курыны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "курьез",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кусар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кускуны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "куссен",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кустарьчылыкка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кутаннарга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "куусиненны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "куучылар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кухняларны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кучи",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кушканнан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "куштанланырга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "куштанлыкны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кушылмады",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кушымтасанпин",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "куышлыкларындагы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кыгылып",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кыерсытулар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кызларнын",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кызылармияче",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кыйбатлы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кыйсеме",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кыйтгадан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кылгучы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кылыначагына",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кырымлы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кычкырдылар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кыямыч",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кямяря",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ланган",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ландау",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ланья",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "латышовкада",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "лаубан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "лаурер",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ЛГКК",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "леамавы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "лексикалашу",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "леонбергка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "летописях",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "либка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ливанны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ликвида",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "листовкасы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "листогы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "листоктагы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ЛИСЯ",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "лугуй",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "луибланчылык",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "лукойл",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "луксордагы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "луын",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "лшыга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "лыгын",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "лыклы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "льеж",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "людове",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "лянемаа",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "магарина",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мадхав",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мадьярлар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "макалар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "макетлаучыларга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "макиавелли",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "макки",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "маклин",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "МАКСАЛАХТИ",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "малкиня",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мальтус",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мальтустан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мангабейра",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "МАНГУШНЫ",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мансуровна",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мараканда",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "маргарете",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мастерлыгына",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мастяк",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "махешвари",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "махтагы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "машук",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "МБГБУ",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мдивани",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мебельче",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "медиаяссылыкта",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "меланжын",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "меллагол",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мереткозино",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мерзва",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "методикасынанык",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "механикалаштырабыз",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мивентаре",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мигъраж",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "микадога",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "микроикътисад",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "микрошартлаткыч",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мингечаур",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мишель",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мкусен",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "МКФХ",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мкытыида",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мнятае",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "могде",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "моклокасы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "молодежь",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "момканлеге",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "монахлыкта",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "моркваши",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "морлок",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "морякмы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "москвич",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мотивлаштыручы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мотоукчылар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мсье",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "муентык",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "муксалма",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мундиньо",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "МУОЛА",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мэргэнь",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мюнхенга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мялькеля",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "наган",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "нагольд",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "надьканижа",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "наказы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "намикага",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "нанкай",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "наньюань",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "наумбург",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "науны",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "нгваяя",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "нгыч",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "независимчылары",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "неймаркт",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "неккар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "неопка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "неромкар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "нефтекама",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "нефть автоматлары",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ниагара",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "нижегород",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "низагына",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "никадан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "николаеску",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "никулин",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ниневе",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "нлыктая",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "новеллаларыннан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ныгытылып",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ныгытылырга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ныкы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "нюрряпяя",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "нюртингенда",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "одиночества",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "оештырдым",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "оештырмадылар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "оймгак",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "оккга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "оксидлашып",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "олгасы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "олкодоказанышлары",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "олуглык",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ольганы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "онолгон",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "оперативрак",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "органыоештыру",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ордуидлар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "орехово",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "освобождениечел",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "оскар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "очучыкосмонавт",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пава",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "павиленис",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "паддерелгон",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "падилья",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пайдак",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "паланка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "палевски",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пальтен",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "паникачылар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "панисламчылыкта",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "панчево",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "папавинчы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "партва",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "партоешмага",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "партоешмалардан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "партоешмаларында",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "партоешмасыннан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "партоешфе",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "патрульлеген",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "паула",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "педагогларымыз",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пееме",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петрарка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петрга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петропавыл",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петрякс",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пикассо",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пилькаллен",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пимовский",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "писмян",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "планка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "планлаштыруын",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пленлыгыннан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плясвих",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "повеж",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "погонлы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "погынтысына",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подданство",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подоконлы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпольены",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпольече",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпольечы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поклама",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "помелка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "порак",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "постимеес",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "потгофта",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "потебня",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "почеркы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "превентив",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "продуктыннан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прокопега",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пролог",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пропагандадан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "профоештыручыларга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прышка",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "псанко",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "публикасы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пугай",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пужольне",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ПУСТЫНЯ",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пушкаларына",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пьесасындагы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пюленда",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пюлено",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пюльго",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пярну",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пярнумаа",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пятидворье",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пятилеткадагы",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "рагга",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "радиоалгыч",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "радиоалгычлар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "радиоалгычтан",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "радиодулкыннар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "радиотапшыргыч",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "разработкалар",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "районыкалмаш",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "рамазановна",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "рамилевна",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ранверсе",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_conditional_plain",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  }
+]

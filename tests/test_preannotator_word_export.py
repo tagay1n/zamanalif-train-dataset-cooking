@@ -303,7 +303,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             conversion_branches("шәһәр").native_dsl,
         )
         self.assertEqual(annotation_suggestion("торак", "U"), "")
-        self.assertEqual(classify_project("күпфункцияле", "U")["key"], "u_tatar_specific")
+        self.assertEqual(classify_project("күпфункцияле", "U")["key"], "ts")
         self.assertEqual(
             classify_project("күпфункцияле", "U")["dsl_rules"],
             ["TS", "IYA"],
@@ -1478,7 +1478,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         )
         self.assertEqual(
             set(result.projects["iya"].tasks[0]["data"]),
-            {"cyrl_word", "auto_zamanalif", "gemini_origin", "hints_html"},
+            {"cyrl_word", "zamanalif_variants", "gemini_origin", "hints_html"},
         )
         self.assertEqual(
             result.projects["catchall"].tasks[0]["data"]["cyrl_word"],
@@ -1704,7 +1704,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(set(result.projects), {"hamza"})
         self.assertEqual(tasks[0]["meta"]["project_key"], "hamza")
         self.assertEqual(
-            tasks[0]["data"]["auto_zamanalif"],
+            tasks[0]["data"]["zamanalif_variants"],
+            "tämin\ntäʼmin",
+        )
+        self.assertEqual(
+            tasks[0]["meta"]["suggested_zamanalif_dsl"],
             "tä{{HAMZA|omit=|preserve=ʼ}}min",
         )
         self.assertIn("Arabic/Persian hamza", instructions)
@@ -1739,8 +1743,18 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_split_export_counts_distinct_rules_not_repeated_occurrences(self) -> None:
         project = classify_project("социаль-икътисадый", "RL")
 
-        self.assertEqual(project["key"], "rus_sign")
+        self.assertEqual(project["key"], "ts")
         self.assertEqual(project["dsl_rules"], ["RUS_SIGN"])
+
+    def test_split_export_quarantines_all_ts_words(self) -> None:
+        plain = classify_project("концерт", "RL")
+        multi_rule = classify_project("социаль-икътисадый", "RL")
+        unknown = classify_project("күпфункцияле", "U")
+
+        self.assertEqual(plain["key"], "ts")
+        self.assertEqual(plain["dsl_rules"], [])
+        self.assertEqual(multi_rule["key"], "ts")
+        self.assertEqual(unknown["key"], "ts")
 
     def test_split_export_routes_unknown_words_to_focused_projects(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1766,7 +1780,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertIn("u_abbrev_fragment", result.projects)
         self.assertIn("u_hyphenated", result.projects)
-        self.assertIn("u_tatar_specific", result.projects)
+        self.assertNotIn("u_tatar_specific", result.projects)
+        self.assertIn("ts", result.projects)
         self.assertIn("u_conditional_plain", result.projects)
         self.assertIn("u_other", result.projects)
         self.assertEqual(
@@ -1781,13 +1796,14 @@ class PreannotatorWordExportTests(unittest.TestCase):
             result.projects["u_hyphenated"].tasks[0]["data"]["cyrl_word"],
             "торак-коммуналь",
         )
+        tatar_specific = result.projects["ts"].tasks[0]["data"]
+        self.assertEqual(tatar_specific["cyrl_word"], "күпфункцияле")
         self.assertEqual(
-            result.projects["u_tatar_specific"].tasks[0]["data"]["cyrl_word"],
-            "күпфункцияле",
+            tatar_specific["zamanalif_variants"].splitlines()[0],
+            "küpfunksiyäle",
         )
-        tatar_specific = result.projects["u_tatar_specific"].tasks[0]["data"]
         self.assertEqual(
-            tatar_specific["auto_zamanalif"],
+            result.projects["ts"].tasks[0]["meta"]["suggested_zamanalif_dsl"],
             conversion_branches("күпфункцияле").loanword_dsl,
         )
         self.assertIn(
@@ -1876,11 +1892,25 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(exit_code, 0)
         self.assertEqual(
             iya[0]["meta"],
-            {"schema_version": 1, "project_key": "iya"},
+            {
+                "schema_version": 3,
+                "project_key": "iya",
+                "suggested_zamanalif_dsl": (
+                    "orfografi{{IYA|compact=ä|explicit=yä}}"
+                ),
+                "variant_policies": [
+                    [{"IYA": "explicit"}],
+                    [{"IYA": "compact"}],
+                ],
+            },
+        )
+        self.assertEqual(
+            iya[0]["data"]["zamanalif_variants"],
+            "orfografiyä\norfografiä",
         )
         self.assertEqual(
             set(iya[0]["data"]),
-            {"cyrl_word", "auto_zamanalif", "gemini_origin", "hints_html"},
+            {"cyrl_word", "zamanalif_variants", "gemini_origin", "hints_html"},
         )
         self.assertEqual(
             catchall[0]["meta"],

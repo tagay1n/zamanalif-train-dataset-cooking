@@ -1,0 +1,962 @@
+[
+  {
+    "data": {
+      "cyrl_word": "батальонга",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "batalʼonğa\nbatalonğa\nbatalʼyonğa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onğa",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "павильоннар",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "pavilʼonnar\npavilonnar\npavilʼyonnar"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "pavil{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnar",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "батальоны",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "batalʼonı\nbatalonı\nbatalʼyonı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onı",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "павильон",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "pavilʼon\npavilon\npavilʼyon"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "pavil{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}on",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "павильоннары",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "pavilʼonnarı\npavilonnarı\npavilʼyonnarı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "pavil{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnarı",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "батальон",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "batalʼon\nbatalon\nbatalʼyon"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}on",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "батальонына",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "batalʼonına\nbatalonına\nbatalʼyonına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onına",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "павильоннарда",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "pavilʼonnarda\npavilonnarda\npavilʼyonnarda"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "pavil{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnarda",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "павильоннарын",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "pavilʼonnarın\npavilonnarın\npavilʼyonnarın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "pavil{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnarın",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "павильоны",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "pavilʼonı\npavilonı\npavilʼyonı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "pavil{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onı",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "павильонын",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "pavilʼonın\npavilonın\npavilʼyonın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "pavil{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onın",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "батальоннан",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "batalʼonnan\nbatalonnan\nbatalʼyonnan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnan",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "батальоннарны",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "batalʼonnarnı\nbatalonnarnı\nbatalʼyonnarnı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnarnı",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "батальоннарыбызга",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "batalʼonnarıbızğa\nbatalonnarıbızğa\nbatalʼyonnarıbızğa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnarıbızğa",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "батальонның",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "batalʼonnıñ\nbatalonnıñ\nbatalʼyonnıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnıñ",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "компаньоны",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "kompanʼonı\nkompanonı\nkompanʼyonı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "kompan{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onı",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "почтальон",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "poçtalʼon\npoçtalon\npoçtalʼyon"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "poçtal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}on",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "шильон",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "şilʼon\nşilon\nşilʼyon"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "şil{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}on",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "батальонда",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "batalʼonda\nbatalonda\nbatalʼyonda"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onda",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "батальоннар",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "batalʼonnar\nbatalonnar\nbatalʼyonnar"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnar",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "батальоннарның",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "batalʼonnarnıñ\nbatalonnarnıñ\nbatalʼyonnarnıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnarnıñ",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "батальоннары",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "batalʼonnarı\nbatalonnarı\nbatalʼyonnarı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnarı",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "батальоннарын",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "batalʼonnarın\nbatalonnarın\nbatalʼyonnarın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnarın",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "батальонны",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "batalʼonnı\nbatalonnı\nbatalʼyonnı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnı",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "гильотинада",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "gilʼotinada\ngilotinada\ngilʼyotinada"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "gil{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}otinada",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "казаньоргсинтез",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "kazanʼorgsintez\nkazanorgsintez\nkazanʼyorgsintez"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "kazan{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}orgsintez",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "компаньонының",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "kompanʼonınıñ\nkompanonınıñ\nkompanʼyonınıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "kompan{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onınıñ",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "мурильоның",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "murilʼonıñ\nmurilonıñ\nmurilʼyonıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "muril{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onıñ",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "павильонда",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "pavilʼonda\npavilonda\npavilʼyonda"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "pavil{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onda",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "павильоннарында",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "pavilʼonnarında\npavilonnarında\npavilʼyonnarında"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "pavil{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnarında",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "павильонында",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "pavilʼonında\npavilonında\npavilʼyonında"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "pavil{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onında",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "шампольон",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "şampolʼon\nşampolon\nşampolʼyon"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_soft_sign_o",
+      "suggested_zamanalif_dsl": "şampol{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}on",
+      "variant_policies": [
+        [
+          {
+            "RUS_SOFT_SIGN_O": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_SOFT_SIGN_O": "apostrophe_y"
+          }
+        ]
+      ]
+    }
+  }
+]

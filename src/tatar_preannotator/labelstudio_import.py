@@ -35,7 +35,13 @@ from .word_export import (
     CONTEXTUAL_META_FIELDS,
     DICTIONARY_DATA_FIELDS,
     DICTIONARY_META_FIELDS,
+    FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION,
+    FOCUSED_DICTIONARY_DATA_FIELDS,
+    LEGACY_FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION,
+    ReviewedVariant,
     TASK_SCHEMA_VERSION,
+    annotation_display_variants,
+    annotation_variants,
     classify_project,
     conversion_branches,
     dictionary_project_keys,
@@ -50,6 +56,7 @@ from .word_export import (
 
 ORIGIN_CONTROL = "reviewed_origin"
 CONVERSION_CONTROL = "corrected_zamanalif"
+VARIANTS_CONTROL = "reviewed_zamanalif_variants"
 HOMONYM_CONTROL = "is_homonym"
 HOMONYM_CHOICE = "Homonym"
 REVIEWED_ORIGINS = frozenset({"N", "RL"})
@@ -72,6 +79,7 @@ class ReviewedAnnotation:
     morphology: MorphIdentity | None = None
     analyzer_revision: str | None = None
     suggested_origin: str | None = None
+    variants: tuple[ReviewedVariant, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -136,6 +144,7 @@ class _ParsedTask:
     word: str
     suggested_origin: str
     suggested_zamanalif: str
+    suggested_variants: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -143,6 +152,7 @@ class _AnnotationDecision:
     is_homonym: bool
     origin: str | None = None
     zamanalif_dsl: str | None = None
+    variants: tuple[ReviewedVariant, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -272,6 +282,7 @@ def import_labelstudio_annotations(
                         """
                     ).fetchall()
                 }
+                existing_variants = _load_stored_variants(conn)
                 derived_words = {
                     str(row[0])
                     for row in conn.execute(
@@ -307,10 +318,12 @@ def import_labelstudio_annotations(
                     current = (zamanalif_dsl, origin)
                     previous = existing.get(item.normalized_word)
                     if previous is not None:
-                        if previous != current:
+                        if previous != current or existing_variants.get(
+                            item.normalized_word, ()
+                        ) != item.variants:
                             raise LabelStudioImportError(
                                 f"reviewed word conflict for {item.normalized_word!r}: "
-                                f"database has {previous!r}, import has {current!r}"
+                                "database and import decisions differ"
                             )
                         unchanged += 1
                         conn.execute(
@@ -336,6 +349,13 @@ def import_labelstudio_annotations(
                         ),
                     )
                     existing[item.normalized_word] = current
+                    _replace_stored_variants(
+                        conn,
+                        item.normalized_word,
+                        item.variants,
+                        now,
+                    )
+                    existing_variants[item.normalized_word] = item.variants
                     imported += 1
                 for item in regular_items:
                     if parsed.project_key == "catchall":
@@ -547,6 +567,61 @@ def _regular_values(item: ReviewedAnnotation) -> tuple[str, str]:
     return item.origin, item.zamanalif_dsl
 
 
+def _load_stored_variants(
+    conn: sqlite3.Connection,
+) -> dict[str, tuple[ReviewedVariant, ...]]:
+    grouped: dict[str, list[ReviewedVariant]] = {}
+    for word, _, zamanalif, policies_json in conn.execute(
+        """
+        select normalized_word, position, zamanalif, policies_json
+        from reviewed_word_variants
+        order by normalized_word, position
+        """
+    ).fetchall():
+        raw_policies = json.loads(str(policies_json))
+        policies = tuple(
+            tuple((str(rule), str(option)) for rule, option in policy.items())
+            for policy in raw_policies
+        )
+        grouped.setdefault(str(word), []).append(
+            ReviewedVariant(str(zamanalif), policies)
+        )
+    return {word: tuple(variants) for word, variants in grouped.items()}
+
+
+def _replace_stored_variants(
+    conn: sqlite3.Connection,
+    word: str,
+    variants: tuple[ReviewedVariant, ...],
+    now: str,
+) -> None:
+    conn.execute(
+        "delete from reviewed_word_variants where normalized_word = ?",
+        (word,),
+    )
+    conn.executemany(
+        """
+        insert into reviewed_word_variants(
+            normalized_word, position, zamanalif, policies_json, updated_at
+        ) values (?, ?, ?, ?, ?)
+        """,
+        [
+            (
+                word,
+                position,
+                variant.zamanalif,
+                json.dumps(
+                    [dict(policy) for policy in variant.policies],
+                    ensure_ascii=False,
+                    separators=(",", ":"),
+                ),
+                now,
+            )
+            for position, variant in enumerate(variants)
+        ],
+    )
+
+
 def _store_homonym_decision(
     conn: sqlite3.Connection,
     word: str,
@@ -564,6 +639,10 @@ def _store_homonym_decision(
             (word,),
         ).fetchall()
     ]
+    conn.executemany(
+        "delete from reviewed_word_variants where normalized_word = ?",
+        [(item,) for item in (word, *derived_members)],
+    )
     removed_reviews = conn.execute(
         "delete from reviewed_words where normalized_word = ?",
         (word,),
@@ -1077,7 +1156,14 @@ def audit_labelstudio_export(
                 continue
             origin, zamanalif_dsl = _regular_values(reviewed)
             origin_changed = origin != parsed.suggested_origin
-            conversion_changed = zamanalif_dsl != parsed.suggested_zamanalif
+            reviewed_variants = tuple(
+                variant.zamanalif for variant in reviewed.variants
+            )
+            conversion_changed = (
+                reviewed_variants != parsed.suggested_variants
+                if parsed.suggested_variants
+                else zamanalif_dsl != parsed.suggested_zamanalif
+            )
             origin_changes += int(origin_changed)
             conversion_changes += int(conversion_changed)
             if not origin_changed and not conversion_changed:
@@ -1089,8 +1175,16 @@ def audit_labelstudio_export(
                         word=parsed.word,
                         suggested_origin=parsed.suggested_origin,
                         reviewed_origin=origin,
-                        suggested_zamanalif=parsed.suggested_zamanalif,
-                        reviewed_zamanalif=zamanalif_dsl,
+                        suggested_zamanalif=(
+                            "\n".join(parsed.suggested_variants)
+                            if parsed.suggested_variants
+                            else parsed.suggested_zamanalif
+                        ),
+                        reviewed_zamanalif=(
+                            "\n".join(reviewed_variants)
+                            if reviewed_variants
+                            else zamanalif_dsl
+                        ),
                     )
                 )
 
@@ -1188,25 +1282,39 @@ def _parse_task(
     data = task.get("data")
     if not isinstance(data, dict):
         raise LabelStudioImportError(f"{context}.data must be an object")
-    expected_data_fields = (
-        CONTEXTUAL_DATA_FIELDS
-        if project_key == CONTEXTUAL_PROJECT_KEY
-        else DICTIONARY_DATA_FIELDS
-    )
+    meta = task.get("meta")
+    hidden_suggestion: str | None = None
+    exported_variants: tuple[ReviewedVariant, ...] = ()
+    is_variant_schema = False
+    if project_key == CONTEXTUAL_PROJECT_KEY:
+        expected_data_fields = CONTEXTUAL_DATA_FIELDS
+        expected_meta_fields = CONTEXTUAL_META_FIELDS
+        expected_schema_version = TASK_SCHEMA_VERSION
+    elif project_key == "catchall":
+        expected_data_fields = DICTIONARY_DATA_FIELDS
+        expected_meta_fields = CATCHALL_META_FIELDS
+        expected_schema_version = CATCHALL_TASK_SCHEMA_VERSION
+    else:
+        schema_version = meta.get("schema_version") if isinstance(meta, dict) else None
+        if schema_version == TASK_SCHEMA_VERSION:
+            expected_data_fields = DICTIONARY_DATA_FIELDS
+            expected_meta_fields = frozenset({"schema_version", "project_key"})
+            expected_schema_version = TASK_SCHEMA_VERSION
+        elif schema_version == LEGACY_FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION:
+            expected_data_fields = DICTIONARY_DATA_FIELDS
+            expected_meta_fields = frozenset(
+                {"schema_version", "project_key", "suggested_zamanalif_dsl"}
+            )
+            expected_schema_version = LEGACY_FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION
+        else:
+            expected_data_fields = FOCUSED_DICTIONARY_DATA_FIELDS
+            expected_meta_fields = DICTIONARY_META_FIELDS
+            expected_schema_version = FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION
+            is_variant_schema = True
     if set(data) != expected_data_fields:
         raise LabelStudioImportError(
             f"{context}.data contains unexpected or missing fields"
         )
-    meta = task.get("meta")
-    if project_key == CONTEXTUAL_PROJECT_KEY:
-        expected_meta_fields = CONTEXTUAL_META_FIELDS
-        expected_schema_version = TASK_SCHEMA_VERSION
-    elif project_key == "catchall":
-        expected_meta_fields = CATCHALL_META_FIELDS
-        expected_schema_version = CATCHALL_TASK_SCHEMA_VERSION
-    else:
-        expected_meta_fields = DICTIONARY_META_FIELDS
-        expected_schema_version = TASK_SCHEMA_VERSION
     if not isinstance(meta, dict) or set(meta) != expected_meta_fields:
         raise LabelStudioImportError(
             f"{context}.meta contains unexpected or missing fields"
@@ -1224,9 +1332,67 @@ def _parse_task(
     suggested_origin = data.get("gemini_origin")
     if suggested_origin not in SUGGESTED_ORIGINS:
         raise LabelStudioImportError(f"{context} has invalid data.gemini_origin")
-    suggested_zamanalif = data.get("auto_zamanalif")
-    if not isinstance(suggested_zamanalif, str):
-        raise LabelStudioImportError(f"{context} has invalid data.auto_zamanalif")
+    if is_variant_schema:
+        suggested_variants_text = data.get("zamanalif_variants")
+        if not isinstance(suggested_variants_text, str):
+            raise LabelStudioImportError(
+                f"{context} has invalid data.zamanalif_variants"
+            )
+        hidden_suggestion = meta.get("suggested_zamanalif_dsl")
+        if not isinstance(hidden_suggestion, str):
+            raise LabelStudioImportError(
+                f"{context} has invalid meta.suggested_zamanalif_dsl"
+            )
+        try:
+            canonical_variants = annotation_variants(hidden_suggestion)
+        except DslError as exc:
+            raise LabelStudioImportError(
+                f"{context} has invalid hidden Zamanalif DSL: {exc}"
+            ) from exc
+        expected_visible = "\n".join(
+            variant.zamanalif for variant in canonical_variants
+        )
+        if suggested_variants_text != expected_visible:
+            raise LabelStudioImportError(
+                f"{context} visible variants do not match hidden Zamanalif DSL"
+            )
+        raw_policies = meta.get("variant_policies")
+        expected_policies = [
+            [dict(policy) for policy in variant.policies]
+            for variant in canonical_variants
+        ]
+        if raw_policies != expected_policies:
+            raise LabelStudioImportError(f"{context} has invalid variant policies")
+        exported_variants = tuple(
+            ReviewedVariant(variant.zamanalif, variant.policies)
+            for variant in canonical_variants
+        )
+        suggested_zamanalif = hidden_suggestion
+    else:
+        suggested_zamanalif = data.get("auto_zamanalif")
+        if not isinstance(suggested_zamanalif, str):
+            raise LabelStudioImportError(f"{context} has invalid data.auto_zamanalif")
+        if (
+            project_key not in {CONTEXTUAL_PROJECT_KEY, "catchall"}
+            and expected_schema_version
+            == LEGACY_FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION
+        ):
+            hidden_suggestion = meta.get("suggested_zamanalif_dsl")
+            if not isinstance(hidden_suggestion, str):
+                raise LabelStudioImportError(
+                    f"{context} has invalid meta.suggested_zamanalif_dsl"
+                )
+            try:
+                variants = annotation_display_variants(hidden_suggestion)
+            except DslError as exc:
+                raise LabelStudioImportError(
+                    f"{context} has invalid hidden Zamanalif DSL: {exc}"
+                ) from exc
+            expected_visible = variants[0] if variants else ""
+            if suggested_zamanalif != expected_visible:
+                raise LabelStudioImportError(
+                    f"{context} visible suggestion does not match hidden Zamanalif DSL"
+                )
 
     sample_id: str | None = None
     token_index: int | None = None
@@ -1278,6 +1444,9 @@ def _parse_task(
                 context,
                 annotation_index,
                 suggested_zamanalif,
+                hidden_suggestion or suggested_zamanalif,
+                exported_variants,
+                is_variant_schema,
                 allow_homonym=project_key != CONTEXTUAL_PROJECT_KEY,
                 require_origin=project_key == CONTEXTUAL_PROJECT_KEY,
                 contextual_zamanalif=contextual_zamanalif,
@@ -1301,13 +1470,17 @@ def _parse_task(
         token_index=token_index,
         family_members=(normalized,),
         suggested_origin=suggested_origin,
+        variants=decision.variants,
     )
     return _ParsedTask(
         reviewed=reviewed,
         task_id=str(task.get("id", task_index)),
         word=surface,
         suggested_origin=suggested_origin,
-        suggested_zamanalif=suggested_zamanalif,
+        suggested_zamanalif=hidden_suggestion or suggested_zamanalif,
+        suggested_variants=tuple(
+            variant.zamanalif for variant in exported_variants
+        ),
     )
 
 
@@ -1316,6 +1489,9 @@ def _parse_result(
     task_context: str,
     annotation_index: int,
     suggested_zamanalif: str,
+    preserved_suggestion_dsl: str,
+    exported_variants: tuple[ReviewedVariant, ...],
+    variant_schema: bool,
     *,
     allow_homonym: bool,
     require_origin: bool,
@@ -1324,6 +1500,7 @@ def _parse_result(
     context = f"{task_context} annotation {annotation_index}"
     origins: list[tuple[dict[str, Any], int]] = []
     conversions: list[tuple[dict[str, Any], int]] = []
+    variant_conversions: list[tuple[dict[str, Any], int]] = []
     homonyms: list[tuple[dict[str, Any], int]] = []
     for result_index, result in enumerate(results):
         if not isinstance(result, dict):
@@ -1335,6 +1512,8 @@ def _parse_result(
             origins.append((result, result_index))
         elif control == CONVERSION_CONTROL:
             conversions.append((result, result_index))
+        elif control == VARIANTS_CONTROL:
+            variant_conversions.append((result, result_index))
         elif control == HOMONYM_CONTROL:
             homonyms.append((result, result_index))
         else:
@@ -1352,7 +1531,7 @@ def _parse_result(
                 f"{context} must contain at most one {HOMONYM_CONTROL!r} result"
             )
         _parse_homonym(*homonyms[0], context=context)
-        if len(origins) > 1 or len(conversions) > 1:
+        if len(origins) > 1 or len(conversions) > 1 or len(variant_conversions) > 1:
             raise LabelStudioImportError(
                 f"{context} contains duplicate ignored controls"
             )
@@ -1365,7 +1544,11 @@ def _parse_result(
         raise LabelStudioImportError(
             f"{context} must contain at most one {CONVERSION_CONTROL!r} result"
         )
-    if not require_origin and len(conversions) != 1:
+    if variant_schema and (len(variant_conversions) != 1 or conversions):
+        raise LabelStudioImportError(
+            f"{context} must contain exactly one {VARIANTS_CONTROL!r} result"
+        )
+    if not require_origin and not variant_schema and len(conversions) != 1:
         raise LabelStudioImportError(
             f"{context} must contain exactly one {CONVERSION_CONTROL!r} result"
         )
@@ -1373,13 +1556,22 @@ def _parse_result(
     if require_origin:
         origin_result, origin_index = origins[0]
         origin = _parse_origin(origin_result, context, origin_index)
-    if conversions and not _is_empty_conversion(*conversions[0], context=context):
+    reviewed_variants: tuple[ReviewedVariant, ...] = ()
+    if variant_schema:
+        reviewed_variants = _parse_variants_conversion(
+            *variant_conversions[0],
+            context=context,
+            exported_variants=exported_variants,
+        )
+        zamanalif_dsl = preserved_suggestion_dsl or reviewed_variants[0].zamanalif
+    elif conversions and not _is_empty_conversion(*conversions[0], context=context):
         conversion_result, conversion_index = conversions[0]
         zamanalif_dsl = _parse_conversion(
             conversion_result,
             context,
             conversion_index,
             suggested_zamanalif,
+            preserved_suggestion_dsl,
         )
     elif require_origin:
         if contextual_zamanalif is None or origin is None:
@@ -1407,6 +1599,7 @@ def _parse_result(
         is_homonym=False,
         origin=origin,
         zamanalif_dsl=zamanalif_dsl,
+        variants=reviewed_variants,
     )
 
 
@@ -1467,6 +1660,7 @@ def _parse_conversion(
     context: str,
     result_index: int,
     suggested_zamanalif: str,
+    preserved_suggestion_dsl: str,
 ) -> str:
     if result.get("type") != "textarea":
         raise LabelStudioImportError(
@@ -1486,7 +1680,11 @@ def _parse_conversion(
         raise LabelStudioImportError(
             f"{context} result {result_index} has invalid conversion history"
         )
-    zamanalif_dsl = texts[-1]
+    zamanalif_dsl = (
+        preserved_suggestion_dsl
+        if texts[-1] == suggested_zamanalif
+        else texts[-1]
+    )
     try:
         parse_dsl(zamanalif_dsl)
     except DslError as exc:
@@ -1494,6 +1692,54 @@ def _parse_conversion(
             f"{context} result {result_index} has invalid Zamanalif DSL: {exc}"
         ) from exc
     return zamanalif_dsl
+
+
+def _parse_variants_conversion(
+    result: dict[str, Any],
+    result_index: int,
+    *,
+    context: str,
+    exported_variants: tuple[ReviewedVariant, ...],
+) -> tuple[ReviewedVariant, ...]:
+    if result.get("type") != "textarea":
+        raise LabelStudioImportError(
+            f"{context} result {result_index} variants type must be 'textarea'"
+        )
+    value = result.get("value")
+    texts = value.get("text") if isinstance(value, dict) else None
+    if not isinstance(texts, list) or not texts or any(
+        not isinstance(text, str) for text in texts
+    ):
+        raise LabelStudioImportError(
+            f"{context} result {result_index} has invalid variant text"
+        )
+    original = "\n".join(variant.zamanalif for variant in exported_variants)
+    if len(texts) > 1 and texts[:-1] != [original]:
+        raise LabelStudioImportError(
+            f"{context} result {result_index} has invalid variant history"
+        )
+    lines = tuple(line.strip() for line in texts[-1].splitlines())
+    expected_line_count = len(exported_variants) or 1
+    if len(lines) != expected_line_count or any(not line for line in lines):
+        raise LabelStudioImportError(
+            f"{context} result {result_index} must keep exactly "
+            f"{expected_line_count} non-empty variant lines"
+        )
+    reviewed: list[ReviewedVariant] = []
+    policy_sources = exported_variants or (ReviewedVariant("", ((),)),)
+    for line, exported in zip(lines, policy_sources, strict=True):
+        try:
+            parsed = parse_dsl(line)
+        except DslError as exc:
+            raise LabelStudioImportError(
+                f"{context} result {result_index} has invalid Zamanalif variant: {exc}"
+            ) from exc
+        if parsed.has_choices:
+            raise LabelStudioImportError(
+                f"{context} result {result_index} variant contains hidden DSL"
+            )
+        reviewed.append(ReviewedVariant(line, exported.policies))
+    return tuple(reviewed)
 
 
 def _validate_contextual_source(
