@@ -1,6 +1,31 @@
 [
   {
     "data": {
+      "cyrl_word": "гыйнварындагы",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "ğıynwarındağı\nğinwarındağı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "month_name",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}ındağı",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
       "cyrl_word": "октябрендәге",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -51,165 +76,15 @@
   },
   {
     "data": {
-      "cyrl_word": "гыйнварына",
+      "cyrl_word": "гыйнварга",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "ğıynwarına\nğinwarına"
+      "zamanalif_variants": "ğıynwarğa\nğinwarğa"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}ına",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "октябрендә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "oktyabrendä\noktäbrendä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}endä",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "гыйнварыннан",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "ğıynwarınnan\nğinwarınnan"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}ınnan",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "гыйнварындагы",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "ğıynwarındağı\nğinwarındağı"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}ındağı",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "сентябрендә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sentyabrendä\nsentäbrendä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=sentyabr|pdf=sentäbr}}endä",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "гыйнварында",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "ğıynwarında\nğinwarında"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}ında",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "гыйнвар",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "ğıynwar\nğinwar"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}ğa",
       "variant_policies": [
         [
           {
@@ -301,31 +176,6 @@
   },
   {
     "data": {
-      "cyrl_word": "октябренда",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "oktyabrenda\noktäbrenda"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}enda",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "октябренә",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -351,65 +201,15 @@
   },
   {
     "data": {
-      "cyrl_word": "гыйнварда",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "ğıynwarda\nğinwarda"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}da",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "сентябре",
+      "cyrl_word": "октябренда",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sentyabre\nsentäbre"
+      "zamanalif_variants": "oktyabrenda\noktäbrenda"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=sentyabr|pdf=sentäbr}}e",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "гыйнварга",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "ğıynwarğa\nğinwarğa"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}ğa",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}enda",
       "variant_policies": [
         [
           {
@@ -435,31 +235,6 @@
       "schema_version": 3,
       "project_key": "month_name",
       "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}ının",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "октябре",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "oktyabre\noktäbre"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}e",
       "variant_policies": [
         [
           {
@@ -535,56 +310,6 @@
       "schema_version": 3,
       "project_key": "month_name",
       "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}ya",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "гыйнвардан",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "ğıynwardan\nğinwardan"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}dan",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "гыйнвары",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "ğıynwarı\nğinwarı"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}ı",
       "variant_policies": [
         [
           {
@@ -685,31 +410,6 @@
       "schema_version": 3,
       "project_key": "month_name",
       "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}istlarnıñ",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "гыйнварының",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "ğıynwarınıñ\nğinwarınıñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "month_name",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}ınıñ",
       "variant_policies": [
         [
           {

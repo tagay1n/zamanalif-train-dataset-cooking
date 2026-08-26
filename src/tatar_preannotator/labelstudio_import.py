@@ -45,7 +45,6 @@ from .word_export import (
     classify_project,
     conversion_branches,
     dictionary_project_keys,
-    eligible_catchall_words,
     eligible_project_words,
     ensure_review_state_schema,
     is_safe_family_member,
@@ -267,12 +266,7 @@ def import_labelstudio_annotations(
                         "dictionary project contains contextual homonyms: "
                         + ", ".join(homonyms[:20])
                     )
-                eligible = eligible_catchall_words(conn)
-                project_eligible = (
-                    eligible_project_words(conn, "hamza")
-                    if parsed.project_key == "hamza"
-                    else eligible
-                )
+                project_eligible = eligible_project_words(conn, parsed.project_key)
                 existing = {
                     str(row[0]): (str(row[1]), str(row[2]))
                     for row in conn.execute(
@@ -290,18 +284,19 @@ def import_labelstudio_annotations(
                     ).fetchall()
                 }
                 analysis_words = (
-                    set(eligible)
+                    set(project_eligible)
                     | (set(existing) - derived_words)
                     | regular_words
                 )
                 analyses = analyzer.analyze(sorted(analysis_words))
-                if parsed.project_key == "catchall":
+                if parsed.project_key != "hamza":
                     regular_items = [
                         _reconstruct_imported_family(
                             item,
                             analyses,
-                            eligible,
+                            project_eligible,
                             analyzer,
+                            parsed.project_key,
                         )
                         for item in regular_items
                     ]
@@ -358,13 +353,15 @@ def import_labelstudio_annotations(
                     existing_variants[item.normalized_word] = item.variants
                     imported += 1
                 for item in regular_items:
-                    if parsed.project_key == "catchall":
+                    if parsed.project_key != "hamza":
                         inherited += _propagate_imported_family(
                             conn,
                             item,
                             analyses,
                             analyzer.revision,
+                            parsed.project_key,
                             existing,
+                            existing_variants,
                             derived_words,
                             now,
                         )
@@ -376,15 +373,18 @@ def import_labelstudio_annotations(
                             derived_words,
                             now,
                         )
-                inherited += _backfill_reviewed_families(
-                    conn,
-                    analyses,
-                    analyzer.revision,
-                    eligible,
-                    existing,
-                    derived_words,
-                    now,
-                )
+                if parsed.project_key != "hamza":
+                    inherited += _backfill_reviewed_families(
+                        conn,
+                        analyses,
+                        analyzer.revision,
+                        project_eligible,
+                        parsed.project_key,
+                        existing,
+                        existing_variants,
+                        derived_words,
+                        now,
+                    )
                 new_derivations = conn.execute(
                     """
                     select normalized_word, source_word
@@ -686,15 +686,16 @@ def _reconstruct_imported_family(
     analyses: dict[str, MorphIdentity | None],
     eligible: dict[str, Any],
     analyzer: MorphologyAnalyzer,
+    project_key: str,
 ) -> ReviewedAnnotation:
     candidate = eligible.get(item.normalized_word)
     if candidate is None:
         raise LabelStudioImportError(
-            f"catchall word is no longer eligible: {item.normalized_word!r}"
+            f"{project_key} word is no longer eligible: {item.normalized_word!r}"
         )
     if candidate.origin != item.suggested_origin:
         raise LabelStudioImportError(
-            "catchall word changed predicted origin: "
+            f"{project_key} word changed predicted origin: "
             f"{item.normalized_word!r}"
         )
     identity = analyses.get(item.normalized_word)
@@ -766,7 +767,9 @@ def _propagate_imported_family(
     item: ReviewedAnnotation,
     analyses: dict[str, MorphIdentity | None],
     analyzer_revision: str,
+    project_key: str,
     existing: dict[str, tuple[str, str]],
+    existing_variants: dict[str, tuple[ReviewedVariant, ...]],
     derived_words: set[str],
     now: str,
 ) -> int:
@@ -775,7 +778,6 @@ def _propagate_imported_family(
         return 0
     origin, zamanalif_dsl = _regular_values(item)
     canonical = conversion_branches(item.normalized_word).suggestion(origin)
-
     inserted = 0
     for word in item.family_members[1:]:
         if not is_safe_family_member(
@@ -784,13 +786,13 @@ def _propagate_imported_family(
             identity.lemma,
         ):
             raise LabelStudioImportError(
-                f"catchall family member is not safely covered: {word!r}"
+                f"{project_key} family member is not safely covered: {word!r}"
             )
         if analyses.get(word) != identity:
             raise LabelStudioImportError(
-                f"catchall family morphology changed for {word!r}"
+                f"{project_key} family morphology changed for {word!r}"
             )
-        if classify_project(word, origin)["key"] != "catchall":
+        if classify_project(word, origin)["key"] != project_key:
             continue
         member_canonical = conversion_branches(word).suggestion(origin)
         member_zamanalif = _family_member_zamanalif(
@@ -799,6 +801,13 @@ def _propagate_imported_family(
             member_canonical,
         )
         if not member_zamanalif:
+            continue
+        member_variants = _family_member_variants(
+            canonical,
+            item.variants,
+            member_canonical,
+        )
+        if item.variants and not member_variants:
             continue
         inserted += _store_inherited_review(
             conn,
@@ -809,6 +818,8 @@ def _propagate_imported_family(
             identity=identity,
             analyzer_revision=analyzer_revision,
             existing=existing,
+            variants=member_variants,
+            existing_variants=existing_variants,
             derived_words=derived_words,
             now=now,
         )
@@ -865,7 +876,9 @@ def _backfill_reviewed_families(
     analyses: dict[str, MorphIdentity | None],
     analyzer_revision: str,
     eligible: dict[str, Any],
+    project_key: str,
     existing: dict[str, tuple[str, str]],
+    existing_variants: dict[str, tuple[ReviewedVariant, ...]],
     derived_words: set[str],
     now: str,
 ) -> int:
@@ -875,11 +888,21 @@ def _backfill_reviewed_families(
             continue
         candidate = eligible.get(word)
         identity = analyses.get(word)
+        canonical = conversion_branches(word).suggestion(origin)
+        stored_variants = existing_variants.get(word, ())
         if (
             candidate is None
             or candidate.origin != origin
             or identity is None
-            or classify_project(word, origin)["key"] != "catchall"
+            or classify_project(word, origin)["key"] != project_key
+            or (
+                stored_variants
+                and stored_variants
+                != tuple(
+                    ReviewedVariant(variant.zamanalif, variant.policies)
+                    for variant in annotation_variants(canonical)
+                )
+            )
         ):
             continue
         anchors.setdefault((identity, origin), []).append(word)
@@ -894,9 +917,9 @@ def _backfill_reviewed_families(
         sources = [
             source
             for source in anchors.get((identity, candidate.origin), [])
-            if source.startswith(word)
+            if is_safe_family_member(source, word, identity.lemma)
         ]
-        if not sources or classify_project(word, candidate.origin)["key"] != "catchall":
+        if not sources or classify_project(word, candidate.origin)["key"] != project_key:
             continue
         source = min(
             sources,
@@ -915,6 +938,14 @@ def _backfill_reviewed_families(
         )
         if not zamanalif_dsl:
             continue
+        source_variants = existing_variants.get(source, ())
+        member_variants = _family_member_variants(
+            source_canonical,
+            source_variants,
+            member_canonical,
+        )
+        if source_variants and not member_variants:
+            continue
         inserted += _store_inherited_review(
             conn,
             word=word,
@@ -924,6 +955,8 @@ def _backfill_reviewed_families(
             identity=identity,
             analyzer_revision=analyzer_revision,
             existing=existing,
+            variants=member_variants,
+            existing_variants=existing_variants,
             derived_words=derived_words,
             now=now,
         )
@@ -985,6 +1018,42 @@ def _family_member_zamanalif(
     return result
 
 
+def _family_member_variants(
+    source_canonical_dsl: str,
+    source_reviewed: tuple[ReviewedVariant, ...],
+    member_canonical_dsl: str,
+) -> tuple[ReviewedVariant, ...]:
+    """Transfer focused-project edits for every matching policy rendering."""
+    if not source_reviewed:
+        return ()
+    source_canonical = annotation_variants(source_canonical_dsl)
+    member_canonical = annotation_variants(member_canonical_dsl)
+    source_by_policy: dict[tuple[tuple[str, str], ...], tuple[str, str]] = {}
+    for canonical, reviewed in zip(source_canonical, source_reviewed, strict=True):
+        for policy in canonical.policies:
+            source_by_policy[policy] = (canonical.zamanalif, reviewed.zamanalif)
+
+    transferred: list[ReviewedVariant] = []
+    for member in member_canonical:
+        values: set[str] = set()
+        for policy in member.policies:
+            source = source_by_policy.get(policy)
+            if source is None:
+                return ()
+            value = _family_member_zamanalif(
+                source[0],
+                source[1],
+                member.zamanalif,
+            )
+            if not value:
+                return ()
+            values.add(value)
+        if len(values) != 1:
+            return ()
+        transferred.append(ReviewedVariant(values.pop(), member.policies))
+    return tuple(transferred)
+
+
 def _store_inherited_review(
     conn: sqlite3.Connection,
     *,
@@ -997,11 +1066,17 @@ def _store_inherited_review(
     existing: dict[str, tuple[str, str]],
     derived_words: set[str],
     now: str,
+    variants: tuple[ReviewedVariant, ...] = (),
+    existing_variants: dict[str, tuple[ReviewedVariant, ...]] | None = None,
 ) -> int:
     current = (zamanalif_dsl, origin)
     previous = existing.get(word)
     if previous is not None:
-        if previous != current and word in derived_words:
+        variants_changed = (
+            existing_variants is not None
+            and existing_variants.get(word, ()) != variants
+        )
+        if (previous != current or variants_changed) and word in derived_words:
             conn.execute(
                 """
                 update reviewed_words
@@ -1026,7 +1101,10 @@ def _store_inherited_review(
                     word,
                 ),
             )
+            _replace_stored_variants(conn, word, variants, now)
             existing[word] = current
+            if existing_variants is not None:
+                existing_variants[word] = variants
             return 1
         return 0
     conn.execute(
@@ -1053,7 +1131,10 @@ def _store_inherited_review(
             now,
         ),
     )
+    _replace_stored_variants(conn, word, variants, now)
     existing[word] = current
+    if existing_variants is not None:
+        existing_variants[word] = variants
     derived_words.add(word)
     return 1
 

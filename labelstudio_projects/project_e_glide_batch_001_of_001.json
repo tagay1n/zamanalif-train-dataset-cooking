@@ -1,15 +1,15 @@
 [
   {
     "data": {
-      "cyrl_word": "проекты",
+      "cyrl_word": "проекттагы",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektı\nproektı"
+      "zamanalif_variants": "proyekttağı\nproekttağı"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktı",
+      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}kttağı",
       "variant_policies": [
         [
           {
@@ -26,15 +26,15 @@
   },
   {
     "data": {
-      "cyrl_word": "проектын",
+      "cyrl_word": "проектыбызның",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektın\nproektın"
+      "zamanalif_variants": "proyektıbıznıñ\nproektıbıznıñ"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktın",
+      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktıbıznıñ",
       "variant_policies": [
         [
           {
@@ -51,15 +51,15 @@
   },
   {
     "data": {
-      "cyrl_word": "проект",
+      "cyrl_word": "проектындагы",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyekt\nproekt"
+      "zamanalif_variants": "proyektındağı\nproektındağı"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}kt",
+      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktındağı",
       "variant_policies": [
         [
           {
@@ -76,15 +76,15 @@
   },
   {
     "data": {
-      "cyrl_word": "проектны",
+      "cyrl_word": "ассигнованиеләренең",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektnı\nproektnı"
+      "zamanalif_variants": "assignovaniyeläreneñ\nassignovanieläreneñ"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktnı",
+      "suggested_zamanalif_dsl": "assignovani{{E_GLIDE|plain=e|glide=ye}}läreneñ",
       "variant_policies": [
         [
           {
@@ -101,15 +101,65 @@
   },
   {
     "data": {
-      "cyrl_word": "ассигнованиеләрен",
+      "cyrl_word": "ассигнованиеләреннән",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "assignovaniyelären\nassignovanielären"
+      "zamanalif_variants": "assignovaniyelärennän\nassignovanielärennän"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "assignovani{{E_GLIDE|plain=e|glide=ye}}lären",
+      "suggested_zamanalif_dsl": "assignovani{{E_GLIDE|plain=e|glide=ye}}lärennän",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "восстаниесеннән",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "vosstaniyesennän\nvosstaniesennän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}sennän",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "восстаниесенең",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "vosstaniyeseneñ\nvosstanieseneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}seneñ",
       "variant_policies": [
         [
           {
@@ -151,15 +201,40 @@
   },
   {
     "data": {
-      "cyrl_word": "проектына",
+      "cyrl_word": "телевидениесенең",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektına\nproektına"
+      "zamanalif_variants": "televideniyeseneñ\ntelevidenieseneñ"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktına",
+      "suggested_zamanalif_dsl": "televideni{{E_GLIDE|plain=e|glide=ye}}seneñ",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "восстаниенең",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "vosstaniyeneñ\nvosstanieneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}neñ",
       "variant_policies": [
         [
           {
@@ -201,6 +276,156 @@
   },
   {
     "data": {
+      "cyrl_word": "телевидениенең",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "televideniyeneñ\ntelevidenieneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "televideni{{E_GLIDE|plain=e|glide=ye}}neñ",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проектлауның",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "proyektlaunıñ\nproektlaunıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktlaunıñ",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "телевидениеләре",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "televideniyeläre\ntelevidenieläre"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "televideni{{E_GLIDE|plain=e|glide=ye}}läre",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "восстаниеләренең",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "vosstaniyeläreneñ\nvosstanieläreneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}läreneñ",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "восстаниеләреннән",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "vosstaniyelärennän\nvosstanielärennän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}lärennän",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проектлауга",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "proyektlauğa\nproektlauğa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktlauğa",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
       "cyrl_word": "командующие",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -226,15 +451,15 @@
   },
   {
     "data": {
-      "cyrl_word": "телевидение",
+      "cyrl_word": "восстаниегә",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "televideniye\ntelevidenie"
+      "zamanalif_variants": "vosstaniyegä\nvosstaniegä"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "televideni{{E_GLIDE|plain=e|glide=ye}}",
+      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}gä",
       "variant_policies": [
         [
           {
@@ -251,65 +476,15 @@
   },
   {
     "data": {
-      "cyrl_word": "проектында",
+      "cyrl_word": "правлениесенең",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektında\nproektında"
+      "zamanalif_variants": "pravleniyeseneñ\npravlenieseneñ"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktında",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "проектлау",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektlaw\nproektlaw"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktlaw",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "проектның",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektnıñ\nproektnıñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktnıñ",
+      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}seneñ",
       "variant_policies": [
         [
           {
@@ -335,6 +510,31 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktlarnı",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "правлениеләренең",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "pravleniyeläreneñ\npravlenieläreneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}läreneñ",
       "variant_policies": [
         [
           {
@@ -401,15 +601,15 @@
   },
   {
     "data": {
-      "cyrl_word": "ассигнованиеләре",
+      "cyrl_word": "самодержавиесенең",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "assignovaniyeläre\nassignovanieläre"
+      "zamanalif_variants": "samoderjaviyeseneñ\nsamoderjavieseneñ"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "assignovani{{E_GLIDE|plain=e|glide=ye}}läre",
+      "suggested_zamanalif_dsl": "samoderjavi{{E_GLIDE|plain=e|glide=ye}}seneñ",
       "variant_policies": [
         [
           {
@@ -451,15 +651,15 @@
   },
   {
     "data": {
-      "cyrl_word": "проектының",
+      "cyrl_word": "правлениенең",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektınıñ\nproektınıñ"
+      "zamanalif_variants": "pravleniyeneñ\npravlenieneñ"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktınıñ",
+      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}neñ",
       "variant_policies": [
         [
           {
@@ -476,15 +676,15 @@
   },
   {
     "data": {
-      "cyrl_word": "восстание",
+      "cyrl_word": "самодержавиегә",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniye\nvosstanie"
+      "zamanalif_variants": "samoderjaviyegä\nsamoderjaviegä"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}",
+      "suggested_zamanalif_dsl": "samoderjavi{{E_GLIDE|plain=e|glide=ye}}gä",
       "variant_policies": [
         [
           {
@@ -501,15 +701,90 @@
   },
   {
     "data": {
-      "cyrl_word": "православие",
+      "cyrl_word": "самодержавиенең",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravoslaviye\npravoslavie"
+      "zamanalif_variants": "samoderjaviyeneñ\nsamoderjavieneñ"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravoslavi{{E_GLIDE|plain=e|glide=ye}}",
+      "suggested_zamanalif_dsl": "samoderjavi{{E_GLIDE|plain=e|glide=ye}}neñ",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "православиене",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "pravoslaviyene\npravoslaviene"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "pravoslavi{{E_GLIDE|plain=e|glide=ye}}ne",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "страхованиесенең",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "straxovaniyeseneñ\nstraxovanieseneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "straxovani{{E_GLIDE|plain=e|glide=ye}}seneñ",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "правлениеләргә",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "pravleniyelärgä\npravlenielärgä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}lärgä",
       "variant_policies": [
         [
           {
@@ -576,15 +851,15 @@
   },
   {
     "data": {
-      "cyrl_word": "правление",
+      "cyrl_word": "страхованиегә",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravleniye\npravlenie"
+      "zamanalif_variants": "straxovaniyegä\nstraxovaniegä"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}",
+      "suggested_zamanalif_dsl": "straxovani{{E_GLIDE|plain=e|glide=ye}}gä",
       "variant_policies": [
         [
           {
@@ -601,15 +876,15 @@
   },
   {
     "data": {
-      "cyrl_word": "самодержавие",
+      "cyrl_word": "настроениеләреннән",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "samoderjaviye\nsamoderjavie"
+      "zamanalif_variants": "nastroyeniyelärennän\nnastroyenielärennän"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "samoderjavi{{E_GLIDE|plain=e|glide=ye}}",
+      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}lärennän",
       "variant_policies": [
         [
           {
@@ -626,15 +901,40 @@
   },
   {
     "data": {
-      "cyrl_word": "страхование",
+      "cyrl_word": "настроениеләренең",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "straxovaniye\nstraxovanie"
+      "zamanalif_variants": "nastroyeniyeläreneñ\nnastroyenieläreneñ"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "straxovani{{E_GLIDE|plain=e|glide=ye}}",
+      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}läreneñ",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "самодержавиеле",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "samoderjaviyele\nsamoderjaviele"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "samoderjavi{{E_GLIDE|plain=e|glide=ye}}le",
       "variant_policies": [
         [
           {
@@ -751,31 +1051,6 @@
   },
   {
     "data": {
-      "cyrl_word": "ассигнованиеләренең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "assignovaniyeläreneñ\nassignovanieläreneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "assignovani{{E_GLIDE|plain=e|glide=ye}}läreneñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "проектлаганда",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -801,15 +1076,40 @@
   },
   {
     "data": {
-      "cyrl_word": "проектта",
+      "cyrl_word": "управлениесенең",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektta\nproektta"
+      "zamanalif_variants": "upravleniyeseneñ\nupravlenieseneñ"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktta",
+      "suggested_zamanalif_dsl": "upravleni{{E_GLIDE|plain=e|glide=ye}}seneñ",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ассигнованиеләрнең",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "assignovaniyelärneñ\nassignovanielärneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "assignovani{{E_GLIDE|plain=e|glide=ye}}lärneñ",
       "variant_policies": [
         [
           {
@@ -851,40 +1151,15 @@
   },
   {
     "data": {
-      "cyrl_word": "правлениесе",
+      "cyrl_word": "настроениедәге",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravleniyese\npravleniese"
+      "zamanalif_variants": "nastroyeniyedäge\nnastroyeniedäge"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}se",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "восстаниеләр",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyelär\nvosstanielär"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}lär",
+      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}däge",
       "variant_policies": [
         [
           {
@@ -1001,56 +1276,6 @@
   },
   {
     "data": {
-      "cyrl_word": "восстаниедә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyedä\nvosstaniedä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}dä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "восстаниесе",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyese\nvosstaniese"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}se",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "командованиесенә",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -1060,6 +1285,31 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "komandovani{{E_GLIDE|plain=e|glide=ye}}senä",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "настроениесендә",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "nastroyeniyesendä\nnastroyeniesendä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}sendä",
       "variant_policies": [
         [
           {
@@ -1101,15 +1351,15 @@
   },
   {
     "data": {
-      "cyrl_word": "проектлауның",
+      "cyrl_word": "сословиесеннән",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektlaunıñ\nproektlaunıñ"
+      "zamanalif_variants": "sosloviyesennän\nsosloviesennän"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktlaunıñ",
+      "suggested_zamanalif_dsl": "soslovi{{E_GLIDE|plain=e|glide=ye}}sennän",
       "variant_policies": [
         [
           {
@@ -1126,40 +1376,15 @@
   },
   {
     "data": {
-      "cyrl_word": "самодержавиегә",
+      "cyrl_word": "настроениеләргә",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "samoderjaviyegä\nsamoderjaviegä"
+      "zamanalif_variants": "nastroyeniyelärgä\nnastroyenielärgä"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "samoderjavi{{E_GLIDE|plain=e|glide=ye}}gä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "правлениеләре",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravleniyeläre\npravlenieläre"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}läre",
+      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}lärgä",
       "variant_policies": [
         [
           {
@@ -1226,6 +1451,31 @@
   },
   {
     "data": {
+      "cyrl_word": "управлениеләре",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "upravleniyeläre\nupravlenieläre"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "upravleni{{E_GLIDE|plain=e|glide=ye}}läre",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
       "cyrl_word": "великие",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -1276,140 +1526,15 @@
   },
   {
     "data": {
-      "cyrl_word": "правлениеләренең",
+      "cyrl_word": "ассигнованиеләргә",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravleniyeläreneñ\npravlenieläreneñ"
+      "zamanalif_variants": "assignovaniyelärgä\nassignovanielärgä"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}läreneñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "правлениенең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravleniyeneñ\npravlenieneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}neñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "правлениесенең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravleniyeseneñ\npravlenieseneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}seneñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "самодержавиене",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "samoderjaviyene\nsamoderjaviene"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "samoderjavi{{E_GLIDE|plain=e|glide=ye}}ne",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "самодержавиесе",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "samoderjaviyese\nsamoderjaviese"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "samoderjavi{{E_GLIDE|plain=e|glide=ye}}se",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "ассигнованиеләрне",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "assignovaniyelärne\nassignovanielärne"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "assignovani{{E_GLIDE|plain=e|glide=ye}}lärne",
+      "suggested_zamanalif_dsl": "assignovani{{E_GLIDE|plain=e|glide=ye}}lärgä",
       "variant_policies": [
         [
           {
@@ -1451,40 +1576,15 @@
   },
   {
     "data": {
-      "cyrl_word": "восстаниегә",
+      "cyrl_word": "настроениегә",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyegä\nvosstaniegä"
+      "zamanalif_variants": "nastroyeniyegä\nnastroyeniegä"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}gä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "настроениедәге",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyedäge\nnastroyeniedäge"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}däge",
+      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}gä",
       "variant_policies": [
         [
           {
@@ -1601,15 +1701,15 @@
   },
   {
     "data": {
-      "cyrl_word": "проектлауга",
+      "cyrl_word": "сословиеле",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektlauğa\nproektlauğa"
+      "zamanalif_variants": "sosloviyele\nsosloviele"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktlauğa",
+      "suggested_zamanalif_dsl": "soslovi{{E_GLIDE|plain=e|glide=ye}}le",
       "variant_policies": [
         [
           {
@@ -1626,15 +1726,15 @@
   },
   {
     "data": {
-      "cyrl_word": "страхованиегә",
+      "cyrl_word": "сословиеләре",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "straxovaniyegä\nstraxovaniegä"
+      "zamanalif_variants": "sosloviyeläre\nsoslovieläre"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "straxovani{{E_GLIDE|plain=e|glide=ye}}gä",
+      "suggested_zamanalif_dsl": "soslovi{{E_GLIDE|plain=e|glide=ye}}läre",
       "variant_policies": [
         [
           {
@@ -1651,15 +1751,15 @@
   },
   {
     "data": {
-      "cyrl_word": "управление",
+      "cyrl_word": "сословиеләрне",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "upravleniye\nupravlenie"
+      "zamanalif_variants": "sosloviyelärne\nsoslovielärne"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "upravleni{{E_GLIDE|plain=e|glide=ye}}",
+      "suggested_zamanalif_dsl": "soslovi{{E_GLIDE|plain=e|glide=ye}}lärne",
       "variant_policies": [
         [
           {
@@ -1701,31 +1801,6 @@
   },
   {
     "data": {
-      "cyrl_word": "ассигнованиеләр",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "assignovaniyelär\nassignovanielär"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "assignovani{{E_GLIDE|plain=e|glide=ye}}lär",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "аудирование",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -1751,65 +1826,15 @@
   },
   {
     "data": {
-      "cyrl_word": "восстаниенең",
+      "cyrl_word": "иероглифларны",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyeneñ\nvosstanieneñ"
+      "zamanalif_variants": "iyerogliflarnı\nierogliflarnı"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}neñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "настроениеләрен",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyelären\nnastroyenielären"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}lären",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "настроениеләреннән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyelärennän\nnastroyenielärennän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}lärennän",
+      "suggested_zamanalif_dsl": "i{{E_GLIDE|plain=e|glide=ye}}rogliflarnı",
       "variant_policies": [
         [
           {
@@ -1876,31 +1901,6 @@
   },
   {
     "data": {
-      "cyrl_word": "проектлы",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektlı\nproektlı"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktlı",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "проектор",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -1951,40 +1951,15 @@
   },
   {
     "data": {
-      "cyrl_word": "самодержавиесенә",
+      "cyrl_word": "сословиене",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "samoderjaviyesenä\nsamoderjaviesenä"
+      "zamanalif_variants": "sosloviyene\nsosloviene"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "samoderjavi{{E_GLIDE|plain=e|glide=ye}}senä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "телевидениедә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "televideniyedä\ntelevideniedä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "televideni{{E_GLIDE|plain=e|glide=ye}}dä",
+      "suggested_zamanalif_dsl": "soslovi{{E_GLIDE|plain=e|glide=ye}}ne",
       "variant_policies": [
         [
           {
@@ -2035,31 +2010,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "trebovani{{E_GLIDE|plain=e|glide=ye}}lärneñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "управлениесе",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "upravleniyese\nupravleniese"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "upravleni{{E_GLIDE|plain=e|glide=ye}}se",
       "variant_policies": [
         [
           {
@@ -2176,81 +2126,6 @@
   },
   {
     "data": {
-      "cyrl_word": "восстаниене",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyene\nvosstaniene"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}ne",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "восстаниесен",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyesen\nvosstaniesen"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}sen",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "восстаниесендә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyesendä\nvosstaniesendä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}sendä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "вәлиевкә",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
@@ -2351,6 +2226,31 @@
   },
   {
     "data": {
+      "cyrl_word": "иезуитларга",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "iyezuitlarğa\niezuitlarğa"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "i{{E_GLIDE|plain=e|glide=ye}}zuitlarğa",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
       "cyrl_word": "кариевның",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -2426,31 +2326,6 @@
   },
   {
     "data": {
-      "cyrl_word": "настроениеләрдән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyelärdän\nnastroyenielärdän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}lärdän",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "открытие",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -2460,81 +2335,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "otkrıti{{E_GLIDE|plain=e|glide=ye}}",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "правлениеләрен",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravleniyelären\npravlenielären"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}lären",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "правлениеләренә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravleniyelärenä\npravlenielärenä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}lärenä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "правлениесенә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravleniyesenä\npravleniesenä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}senä",
       "variant_policies": [
         [
           {
@@ -2651,81 +2451,6 @@
   },
   {
     "data": {
-      "cyrl_word": "проекттагы",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyekttağı\nproekttağı"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}kttağı",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "самодержавиенең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "samoderjaviyeneñ\nsamoderjavieneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "samoderjavi{{E_GLIDE|plain=e|glide=ye}}neñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "самодержавиесенең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "samoderjaviyeseneñ\nsamoderjavieseneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "samoderjavi{{E_GLIDE|plain=e|glide=ye}}seneñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "созвездие",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -2735,106 +2460,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "sozvezdi{{E_GLIDE|plain=e|glide=ye}}",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "сословие",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sosloviye\nsoslovie"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "soslovi{{E_GLIDE|plain=e|glide=ye}}",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "страхованиесе",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "straxovaniyese\nstraxovaniese"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "straxovani{{E_GLIDE|plain=e|glide=ye}}se",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "телевидениедән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "televideniyedän\ntelevideniedän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "televideni{{E_GLIDE|plain=e|glide=ye}}dän",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "телевидениесенең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "televideniyeseneñ\ntelevidenieseneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "televideni{{E_GLIDE|plain=e|glide=ye}}seneñ",
       "variant_policies": [
         [
           {
@@ -2876,15 +2501,15 @@
   },
   {
     "data": {
-      "cyrl_word": "ассигнованиеләрнең",
+      "cyrl_word": "архиепископның",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "assignovaniyelärneñ\nassignovanielärneñ"
+      "zamanalif_variants": "arxiyepiskopnıñ\narxiepiskopnıñ"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "assignovani{{E_GLIDE|plain=e|glide=ye}}lärneñ",
+      "suggested_zamanalif_dsl": "arxi{{E_GLIDE|plain=e|glide=ye}}piskopnıñ",
       "variant_policies": [
         [
           {
@@ -2960,81 +2585,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "voznagrajdeni{{E_GLIDE|plain=e|glide=ye}}lär",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "восстаниесенең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyeseneñ\nvosstanieseneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}seneñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "восстаниесеннән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyesennän\nvosstaniesennän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}sennän",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "восстаниесенә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyesenä\nvosstaniesenä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}senä",
       "variant_policies": [
         [
           {
@@ -3201,15 +2751,40 @@
   },
   {
     "data": {
-      "cyrl_word": "иезуитларга",
+      "cyrl_word": "званиесына",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyezuitlarğa\niezuitlarğa"
+      "zamanalif_variants": "zvaniyesına\nzvaniesına"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "i{{E_GLIDE|plain=e|glide=ye}}zuitlarğa",
+      "suggested_zamanalif_dsl": "zvani{{E_GLIDE|plain=e|glide=ye}}sına",
+      "variant_policies": [
+        [
+          {
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "E_GLIDE": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "иезуитларның",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "iyezuitlarnıñ\niezuitlarnıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "e_glide",
+      "suggested_zamanalif_dsl": "i{{E_GLIDE|plain=e|glide=ye}}zuitlarnıñ",
       "variant_policies": [
         [
           {
@@ -3235,31 +2810,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "i{{E_GLIDE|plain=e|glide=ye}}roglifik",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "иероглифларны",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyerogliflarnı\nierogliflarnı"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "i{{E_GLIDE|plain=e|glide=ye}}rogliflarnı",
       "variant_policies": [
         [
           {
@@ -3501,131 +3051,6 @@
   },
   {
     "data": {
-      "cyrl_word": "настроение",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniye\nnastroyenie"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "настроениедә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyedä\nnastroyeniedä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}dä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "настроениеләргә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyelärgä\nnastroyenielärgä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}lärgä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "настроениеләренә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyelärenä\nnastroyenielärenä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}lärenä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "настроениесе",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyese\nnastroyeniese"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}se",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "оборудование",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -3751,31 +3176,6 @@
   },
   {
     "data": {
-      "cyrl_word": "проектлауны",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektlaunı\nproektlaunı"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktlaunı",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "проектлый",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -3851,81 +3251,6 @@
   },
   {
     "data": {
-      "cyrl_word": "самодержавиесен",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "samoderjaviyesen\nsamoderjaviesen"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "samoderjavi{{E_GLIDE|plain=e|glide=ye}}sen",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "сословиеле",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sosloviyele\nsosloviele"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "soslovi{{E_GLIDE|plain=e|glide=ye}}le",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "сословиесенә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sosloviyesenä\nsosloviesenä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "soslovi{{E_GLIDE|plain=e|glide=ye}}senä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "страхованиеләнгән",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -3951,31 +3276,6 @@
   },
   {
     "data": {
-      "cyrl_word": "страхованиесенең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "straxovaniyeseneñ\nstraxovanieseneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "straxovani{{E_GLIDE|plain=e|glide=ye}}seneñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "сәгъдиевкә",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
@@ -3985,31 +3285,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "säğdi{{E_GLIDE|plain=e|glide=ye}}vkä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "телевидениесе",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "televideniyese\ntelevideniese"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "televideni{{E_GLIDE|plain=e|glide=ye}}se",
       "variant_policies": [
         [
           {
@@ -4260,106 +3535,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "arxi{{E_GLIDE|plain=e|glide=ye}}piskobı",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "архиепископ",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "arxiyepiskop\narxiepiskop"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "arxi{{E_GLIDE|plain=e|glide=ye}}piskop",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "архиепископның",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "arxiyepiskopnıñ\narxiepiskopnıñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "arxi{{E_GLIDE|plain=e|glide=ye}}piskopnıñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "ассигнованиеләргә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "assignovaniyelärgä\nassignovanielärgä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "assignovani{{E_GLIDE|plain=e|glide=ye}}lärgä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "ассигнованиеләреннән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "assignovaniyelärennän\nassignovanielärennän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "assignovani{{E_GLIDE|plain=e|glide=ye}}lärennän",
       "variant_policies": [
         [
           {
@@ -4835,131 +4010,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "vospitani{{E_GLIDE|plain=e|glide=ye}}",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "восстаниеләрдә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyelärdä\nvosstanielärdä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}lärdä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "восстаниеләрдән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyelärdän\nvosstanielärdän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}lärdän",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "восстаниеләренең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyeläreneñ\nvosstanieläreneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}läreneñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "восстаниеләреннән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyelärennän\nvosstanielärennän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}lärennän",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "восстаниеләренә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vosstaniyelärenä\nvosstanielärenä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "vosstani{{E_GLIDE|plain=e|glide=ye}}lärenä",
       "variant_policies": [
         [
           {
@@ -5751,31 +4801,6 @@
   },
   {
     "data": {
-      "cyrl_word": "звание",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "zvaniye\nzvanie"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "zvani{{E_GLIDE|plain=e|glide=ye}}",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "званиеләреннән",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -5826,31 +4851,6 @@
   },
   {
     "data": {
-      "cyrl_word": "званиесына",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "zvaniyesına\nzvaniesına"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "zvani{{E_GLIDE|plain=e|glide=ye}}sına",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "здравомыслие",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -5876,31 +4876,6 @@
   },
   {
     "data": {
-      "cyrl_word": "иезуит",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyezuit\niezuit"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "i{{E_GLIDE|plain=e|glide=ye}}zuit",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "иезуитизмына",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -5910,81 +4885,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "i{{E_GLIDE|plain=e|glide=ye}}zuitizmına",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "иезуитларның",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyezuitlarnıñ\niezuitlarnıñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "i{{E_GLIDE|plain=e|glide=ye}}zuitlarnıñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "иероглифлар",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyerogliflar\nierogliflar"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "i{{E_GLIDE|plain=e|glide=ye}}rogliflar",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "иероглифларын",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyeroglifların\nieroglifların"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "i{{E_GLIDE|plain=e|glide=ye}}roglifların",
       "variant_policies": [
         [
           {
@@ -6901,181 +5801,6 @@
   },
   {
     "data": {
-      "cyrl_word": "настроениегә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyegä\nnastroyeniegä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}gä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "настроениеләр",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyelär\nnastroyenielär"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}lär",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "настроениеләре",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyeläre\nnastroyenieläre"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}läre",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "настроениеләрендә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyelärendä\nnastroyenielärendä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}lärendä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "настроениеләренең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyeläreneñ\nnastroyenieläreneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}läreneñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "настроениесен",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyesen\nnastroyeniesen"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}sen",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "настроениесендә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "nastroyeniyesendä\nnastroyeniesendä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "nastroyeni{{E_GLIDE|plain=e|glide=ye}}sendä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "наурбиевның",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -7676,56 +6401,6 @@
   },
   {
     "data": {
-      "cyrl_word": "правлениедә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravleniyedä\npravleniedä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}dä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "правлениедән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravleniyedän\npravleniedän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}dän",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "правлениелере",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -7735,31 +6410,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}lere",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "правлениеләргә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravleniyelärgä\npravlenielärgä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}lärgä",
       "variant_policies": [
         [
           {
@@ -7801,31 +6451,6 @@
   },
   {
     "data": {
-      "cyrl_word": "правлениесен",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravleniyesen\npravleniesen"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravleni{{E_GLIDE|plain=e|glide=ye}}sen",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "правонарушением",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -7835,31 +6460,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "pravonaruşeni{{E_GLIDE|plain=e|glide=ye}}m",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "православиене",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pravoslaviyene\npravoslaviene"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pravoslavi{{E_GLIDE|plain=e|glide=ye}}ne",
       "variant_policies": [
         [
           {
@@ -8426,31 +7026,6 @@
   },
   {
     "data": {
-      "cyrl_word": "проекттан",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyekttan\nproekttan"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}kttan",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "проектчылар",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -8460,81 +7035,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktçılar",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "проектыбызның",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektıbıznıñ\nproektıbıznıñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktıbıznıñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "проектындагы",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektındağı\nproektındağı"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktındağı",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "проектыннан",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proyektınnan\nproektınnan"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}ktınnan",
       "variant_policies": [
         [
           {
@@ -8835,31 +7335,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "ri{{E_GLIDE|plain=e|glide=ye}}zenburg",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "самодержавиеле",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "samoderjaviyele\nsamoderjaviele"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "samoderjavi{{E_GLIDE|plain=e|glide=ye}}le",
       "variant_policies": [
         [
           {
@@ -9276,156 +7751,6 @@
   },
   {
     "data": {
-      "cyrl_word": "сословиеләр",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sosloviyelär\nsoslovielär"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "soslovi{{E_GLIDE|plain=e|glide=ye}}lär",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "сословиеләре",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sosloviyeläre\nsoslovieläre"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "soslovi{{E_GLIDE|plain=e|glide=ye}}läre",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "сословиеләрне",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sosloviyelärne\nsoslovielärne"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "soslovi{{E_GLIDE|plain=e|glide=ye}}lärne",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "сословиене",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sosloviyene\nsosloviene"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "soslovi{{E_GLIDE|plain=e|glide=ye}}ne",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "сословиесез",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sosloviyesez\nsosloviesez"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "soslovi{{E_GLIDE|plain=e|glide=ye}}sez",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "сословиесеннән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sosloviyesennän\nsosloviesennän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "soslovi{{E_GLIDE|plain=e|glide=ye}}sennän",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "страхованиеләү",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -9485,156 +7810,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "straxovani{{E_GLIDE|plain=e|glide=ye}}läüne",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "страхованиесен",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "straxovaniyesen\nstraxovaniesen"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "straxovani{{E_GLIDE|plain=e|glide=ye}}sen",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "страхованиесенә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "straxovaniyesenä\nstraxovaniesenä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "straxovani{{E_GLIDE|plain=e|glide=ye}}senä",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "телевидениеләре",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "televideniyeläre\ntelevidenieläre"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "televideni{{E_GLIDE|plain=e|glide=ye}}läre",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "телевидениене",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "televideniyene\ntelevideniene"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "televideni{{E_GLIDE|plain=e|glide=ye}}ne",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "телевидениенең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "televideniyeneñ\ntelevidenieneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "televideni{{E_GLIDE|plain=e|glide=ye}}neñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "телевидениесендә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "televideniyesendä\ntelevideniesendä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "televideni{{E_GLIDE|plain=e|glide=ye}}sendä",
       "variant_policies": [
         [
           {
@@ -9885,106 +8060,6 @@
       "schema_version": 3,
       "project_key": "e_glide",
       "suggested_zamanalif_dsl": "ukrepleni{{E_GLIDE|plain=e|glide=ye}}ne",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "управлениеләр",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "upravleniyelär\nupravlenielär"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "upravleni{{E_GLIDE|plain=e|glide=ye}}lär",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "управлениеләре",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "upravleniyeläre\nupravlenieläre"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "upravleni{{E_GLIDE|plain=e|glide=ye}}läre",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "управлениесенең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "upravleniyeseneñ\nupravlenieseneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "upravleni{{E_GLIDE|plain=e|glide=ye}}seneñ",
-      "variant_policies": [
-        [
-          {
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "E_GLIDE": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "управлениесенә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "upravleniyesenä\nupravleniesenä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "e_glide",
-      "suggested_zamanalif_dsl": "upravleni{{E_GLIDE|plain=e|glide=ye}}senä",
       "variant_policies": [
         [
           {

@@ -1,15 +1,93 @@
 [
   {
     "data": {
-      "cyrl_word": "октябрь",
+      "cyrl_word": "октябрьнең",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "oktyabrʼ\noktyabr\noktäbr\noktäbrʼ"
+      "zamanalif_variants": "oktyabrʼneñ\noktyabrneñ\noktäbrneñ\noktäbrʼneñ"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}neñ",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "октябрьгә",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "oktyabrʼgä\noktyabrgä\noktäbrgä\noktäbrʼgä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}gä",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "октябрьдән",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "oktyabrʼdän\noktyabrdän\noktäbrdän\noktäbrʼdän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}dän",
       "variant_policies": [
         [
           {
@@ -79,6 +157,591 @@
   },
   {
     "data": {
+      "cyrl_word": "июльгә",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "iyulʼgä\niyulgä\niyülgä\niyülʼgä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SIGN|omit=|preserve=ʼ}}gä",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "июльдәге",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "iyulʼdäge\niyuldäge\niyüldäge\niyülʼdäge"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SIGN|omit=|preserve=ʼ}}däge",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "июльнең",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "iyulʼneñ\niyulneñ\niyülneñ\niyülʼneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SIGN|omit=|preserve=ʼ}}neñ",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "сентябрьгә",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "sentyabrʼgä\nsentyabrgä\nsentäbrgä\nsentäbrʼgä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=sentyabr|pdf=sentäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}gä",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "июньдәге",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "iyunʼdäge\niyundäge\niyündäge\niyünʼdäge"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyun|pdf=iyün}}{{RUS_SIGN|omit=|preserve=ʼ}}däge",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "июньнең",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "iyunʼneñ\niyunneñ\niyünneñ\niyünʼneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyun|pdf=iyün}}{{RUS_SIGN|omit=|preserve=ʼ}}neñ",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "июньгә",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "iyunʼgä\niyungä\niyüngä\niyünʼgä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyun|pdf=iyün}}{{RUS_SIGN|omit=|preserve=ʼ}}gä",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ноябрьнең",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "noyabrʼneñ\nnoyabrneñ\nnoyäbrneñ\nnoyäbrʼneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}neñ",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "декабрьдән",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "dekabrʼdän\ndekabrdän\ndekäbrdän\ndekäbrʼdän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=dekabr|pdf=dekäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}dän",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ноябрьгә",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "noyabrʼgä\nnoyabrgä\nnoyäbrgä\nnoyäbrʼgä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}gä",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "декабрьгә",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "dekabrʼgä\ndekabrgä\ndekäbrgä\ndekäbrʼgä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=dekabr|pdf=dekäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}gä",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ноябрьдәге",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "noyabrʼdäge\nnoyabrdäge\nnoyäbrdäge\nnoyäbrʼdäge"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}däge",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "декабрьне",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "dekabrʼne\ndekabrne\ndekäbrne\ndekäbrʼne"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=dekabr|pdf=dekäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}ne",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "сентябрьнең",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "sentyabrʼneñ\nsentyabrneñ\nsentäbrneñ\nsentäbrʼneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=sentyabr|pdf=sentäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}neñ",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "сентябрьдән",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "sentyabrʼdän\nsentyabrdän\nsentäbrdän\nsentäbrʼdän"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=sentyabr|pdf=sentäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}dän",
+      "variant_policies": [
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "ordinary",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "MONTH_NAME": "pdf",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
       "cyrl_word": "бюджетка",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -123,123 +786,6 @@
           {
             "RUS_JOTATION": "plain",
             "RL_FINAL_KA": "stem"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "декабрь",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "dekabrʼ\ndekabr\ndekäbr\ndekäbrʼ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=dekabr|pdf=dekäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "июль",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyulʼ\niyul\niyül\niyülʼ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SIGN|omit=|preserve=ʼ}}",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "июнь",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyunʼ\niyun\niyün\niyünʼ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyun|pdf=iyün}}{{RUS_SIGN|omit=|preserve=ʼ}}",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
           }
         ]
       ]
@@ -298,45 +844,6 @@
   },
   {
     "data": {
-      "cyrl_word": "ноябрь",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "noyabrʼ\nnoyabr\nnoyäbr\nnoyäbrʼ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "октябрьский",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -376,76 +883,49 @@
   },
   {
     "data": {
-      "cyrl_word": "сентябрь",
+      "cyrl_word": "бюллетеньнең",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sentyabrʼ\nsentyabr\nsentäbr\nsentäbrʼ"
+      "zamanalif_variants": "byulletenʼneñ\nbyulletenneñ\nbʼulletenneñ\nbʼulletenʼneñ\nbulletenneñ\nbulletenʼneñ"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=sentyabr|pdf=sentäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}",
+      "suggested_zamanalif_dsl": "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}ulleten{{RUS_SIGN|omit=|preserve=ʼ}}neñ",
       "variant_policies": [
         [
           {
-            "MONTH_NAME": "ordinary",
+            "RUS_JOTATION": "glide",
             "RUS_SIGN": "preserve"
           }
         ],
         [
           {
-            "MONTH_NAME": "ordinary",
+            "RUS_JOTATION": "glide",
             "RUS_SIGN": "omit"
           }
         ],
         [
           {
-            "MONTH_NAME": "pdf",
+            "RUS_JOTATION": "apostrophe",
             "RUS_SIGN": "omit"
           }
         ],
         [
           {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "июльдә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyulʼdä\niyuldä\niyüldä\niyülʼdä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SIGN|omit=|preserve=ʼ}}dä",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
+            "RUS_JOTATION": "apostrophe",
             "RUS_SIGN": "preserve"
           }
         ],
         [
           {
-            "MONTH_NAME": "ordinary",
+            "RUS_JOTATION": "plain",
             "RUS_SIGN": "omit"
           }
         ],
         [
           {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
+            "RUS_JOTATION": "plain",
             "RUS_SIGN": "preserve"
           }
         ]
@@ -544,162 +1024,6 @@
   },
   {
     "data": {
-      "cyrl_word": "сентябрьгә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sentyabrʼgä\nsentyabrgä\nsentäbrgä\nsentäbrʼgä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=sentyabr|pdf=sentäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}gä",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "июньдә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyunʼdä\niyundä\niyündä\niyünʼdä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyun|pdf=iyün}}{{RUS_SIGN|omit=|preserve=ʼ}}dä",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "ноябрьдә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "noyabrʼdä\nnoyabrdä\nnoyäbrdä\nnoyäbrʼdä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}dä",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "сентябрьдә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sentyabrʼdä\nsentyabrdä\nsentäbrdä\nsentäbrʼdä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=sentyabr|pdf=sentäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}dä",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "занятиеләр",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -751,38 +1075,203 @@
   },
   {
     "data": {
-      "cyrl_word": "июльгә",
+      "cyrl_word": "князьләргә",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyulʼgä\niyulgä\niyülgä\niyülʼgä"
+      "zamanalif_variants": "knyazʼlärgä\nknyazlärgä\nknʼazlärgä\nknʼazʼlärgä\nknazlärgä\nknazʼlärgä"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SIGN|omit=|preserve=ʼ}}gä",
+      "suggested_zamanalif_dsl": "kn{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}az{{RUS_SIGN|omit=|preserve=ʼ}}lärgä",
       "variant_policies": [
         [
           {
-            "MONTH_NAME": "ordinary",
+            "RUS_JOTATION": "glide",
             "RUS_SIGN": "preserve"
           }
         ],
         [
           {
-            "MONTH_NAME": "ordinary",
+            "RUS_JOTATION": "glide",
             "RUS_SIGN": "omit"
           }
         ],
         [
           {
-            "MONTH_NAME": "pdf",
+            "RUS_JOTATION": "apostrophe",
             "RUS_SIGN": "omit"
           }
         ],
         [
           {
-            "MONTH_NAME": "pdf",
+            "RUS_JOTATION": "apostrophe",
             "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "князьләре",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "knyazʼläre\nknyazläre\nknʼazläre\nknʼazʼläre\nknazläre\nknazʼläre"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "kn{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}az{{RUS_SIGN|omit=|preserve=ʼ}}läre",
+      "variant_policies": [
+        [
+          {
+            "RUS_JOTATION": "glide",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "glide",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "князьләрнең",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "knyazʼlärneñ\nknyazlärneñ\nknʼazlärneñ\nknʼazʼlärneñ\nknazlärneñ\nknazʼlärneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "kn{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}az{{RUS_SIGN|omit=|preserve=ʼ}}lärneñ",
+      "variant_policies": [
+        [
+          {
+            "RUS_JOTATION": "glide",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "glide",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "тюркологиянең",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "tyurkologiyäneñ\ntyurkologiäneñ\ntʼurkologiäneñ\ntʼurkologiyäneñ\nturkologiäneñ\nturkologiyäneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "t{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}urkologi{{IYA|compact=ä|explicit=yä}}neñ",
+      "variant_policies": [
+        [
+          {
+            "RUS_JOTATION": "glide",
+            "IYA": "explicit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "glide",
+            "IYA": "compact"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe",
+            "IYA": "compact"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe",
+            "IYA": "explicit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "IYA": "compact"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "IYA": "explicit"
           }
         ]
       ]
@@ -982,6 +1471,57 @@
   },
   {
     "data": {
+      "cyrl_word": "князьгә",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "knyazʼgä\nknyazgä\nknʼazgä\nknʼazʼgä\nknazgä\nknazʼgä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "kn{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}az{{RUS_SIGN|omit=|preserve=ʼ}}gä",
+      "variant_policies": [
+        [
+          {
+            "RUS_JOTATION": "glide",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "glide",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe",
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "RUS_SIGN": "omit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
       "cyrl_word": "полянка",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -1033,66 +1573,15 @@
   },
   {
     "data": {
-      "cyrl_word": "князь",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "knyazʼ\nknyaz\nknʼaz\nknʼazʼ\nknaz\nknazʼ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "kn{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}az{{RUS_SIGN|omit=|preserve=ʼ}}",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "тюркология",
+      "cyrl_word": "иллюзиясен",
       "gemini_origin": "RL",
       "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "tyurkologiyä\ntyurkologiä\ntʼurkologiä\ntʼurkologiyä\nturkologiä\nturkologiyä"
+      "zamanalif_variants": "illyuziyäsen\nillyuziäsen\nillʼuziäsen\nillʼuziyäsen\nilluziäsen\nilluziyäsen"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "t{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}urkologi{{IYA|compact=ä|explicit=yä}}",
+      "suggested_zamanalif_dsl": "ill{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uzi{{IYA|compact=ä|explicit=yä}}sen",
       "variant_policies": [
         [
           {
@@ -1186,57 +1675,6 @@
   },
   {
     "data": {
-      "cyrl_word": "бюллетеньдә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "byulletenʼdä\nbyulletendä\nbʼulletendä\nbʼulletenʼdä\nbulletendä\nbulletenʼdä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}ulleten{{RUS_SIGN|omit=|preserve=ʼ}}dä",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "геральдика",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -1276,50 +1714,50 @@
   },
   {
     "data": {
-      "cyrl_word": "бюллетень",
+      "cyrl_word": "иллюзияләренә",
       "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "byulletenʼ\nbyulleten\nbʼulleten\nbʼulletenʼ\nbulleten\nbulletenʼ"
+      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "illyuziyälärenä\nillyuziälärenä\nillʼuziälärenä\nillʼuziyälärenä\nilluziälärenä\nilluziyälärenä"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}ulleten{{RUS_SIGN|omit=|preserve=ʼ}}",
+      "suggested_zamanalif_dsl": "ill{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uzi{{IYA|compact=ä|explicit=yä}}lärenä",
       "variant_policies": [
         [
           {
             "RUS_JOTATION": "glide",
-            "RUS_SIGN": "preserve"
+            "IYA": "explicit"
           }
         ],
         [
           {
             "RUS_JOTATION": "glide",
-            "RUS_SIGN": "omit"
+            "IYA": "compact"
           }
         ],
         [
           {
             "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "omit"
+            "IYA": "compact"
           }
         ],
         [
           {
             "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "preserve"
+            "IYA": "explicit"
           }
         ],
         [
           {
             "RUS_JOTATION": "plain",
-            "RUS_SIGN": "omit"
+            "IYA": "compact"
           }
         ],
         [
           {
             "RUS_JOTATION": "plain",
-            "RUS_SIGN": "preserve"
+            "IYA": "explicit"
           }
         ]
       ]
@@ -1327,38 +1765,101 @@
   },
   {
     "data": {
-      "cyrl_word": "декабрьдә",
+      "cyrl_word": "иллюзияләргә",
       "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "dekabrʼdä\ndekabrdä\ndekäbrdä\ndekäbrʼdä"
+      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "illyuziyälärgä\nillyuziälärgä\nillʼuziälärgä\nillʼuziyälärgä\nilluziälärgä\nilluziyälärgä"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=dekabr|pdf=dekäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}dä",
+      "suggested_zamanalif_dsl": "ill{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uzi{{IYA|compact=ä|explicit=yä}}lärgä",
       "variant_policies": [
         [
           {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
+            "RUS_JOTATION": "glide",
+            "IYA": "explicit"
           }
         ],
         [
           {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
+            "RUS_JOTATION": "glide",
+            "IYA": "compact"
           }
         ],
         [
           {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
+            "RUS_JOTATION": "apostrophe",
+            "IYA": "compact"
           }
         ],
         [
           {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
+            "RUS_JOTATION": "apostrophe",
+            "IYA": "explicit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "IYA": "compact"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "IYA": "explicit"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "иллюзияләрнең",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "illyuziyälärneñ\nillyuziälärneñ\nillʼuziälärneñ\nillʼuziyälärneñ\nilluziälärneñ\nilluziyälärneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "ill{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uzi{{IYA|compact=ä|explicit=yä}}lärneñ",
+      "variant_policies": [
+        [
+          {
+            "RUS_JOTATION": "glide",
+            "IYA": "explicit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "glide",
+            "IYA": "compact"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe",
+            "IYA": "compact"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe",
+            "IYA": "explicit"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "IYA": "compact"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "IYA": "explicit"
           }
         ]
       ]
@@ -1492,123 +1993,6 @@
       "schema_version": 3,
       "project_key": "complex_multi_rule",
       "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}da",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "октябрьдә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "oktyabrʼdä\noktyabrdä\noktäbrdä\noktäbrʼdä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}dä",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "ноябрьнең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "noyabrʼneñ\nnoyabrneñ\nnoyäbrneñ\nnoyäbrʼneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}neñ",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "октябрьгә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "oktyabrʼgä\noktyabrgä\noktäbrgä\noktäbrʼgä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}gä",
       "variant_policies": [
         [
           {
@@ -2062,45 +2446,6 @@
   },
   {
     "data": {
-      "cyrl_word": "июньнән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyunʼnän\niyunnän\niyünnän\niyünʼnän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyun|pdf=iyün}}{{RUS_SIGN|omit=|preserve=ʼ}}nän",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "октябрьда",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -2110,45 +2455,6 @@
       "schema_version": 3,
       "project_key": "complex_multi_rule",
       "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}da",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "октябрьдән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "oktyabrʼdän\noktyabrdän\noktäbrdän\noktäbrʼdän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}dän",
       "variant_policies": [
         [
           {
@@ -2269,57 +2575,6 @@
   },
   {
     "data": {
-      "cyrl_word": "бюллетеньне",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "byulletenʼne\nbyulletenne\nbʼulletenne\nbʼulletenʼne\nbulletenne\nbulletenʼne"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}ulleten{{RUS_SIGN|omit=|preserve=ʼ}}ne",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "вязовка",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -2364,57 +2619,6 @@
           {
             "RUS_JOTATION": "plain",
             "RL_FINAL_KA": "stem"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "иллюзия",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "illyuziyä\nillyuziä\nillʼuziä\nillʼuziyä\nilluziä\nilluziyä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "ill{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uzi{{IYA|compact=ä|explicit=yä}}",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "explicit"
           }
         ]
       ]
@@ -2571,6 +2775,45 @@
           {
             "MONTH_NAME": "pdf",
             "RUS_SIGN": "preserve"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "тәрбияләнүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "tärbiyälänüwenä\ntärbiälänüenä\ntärbiälänüwenä\ntärbiyälänüenä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "tärbi{{IYA|compact=ä|explicit=yä}}länü{{NATIVE_UW|plain=|glide=w}}enä",
+      "variant_policies": [
+        [
+          {
+            "IYA": "explicit",
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "IYA": "compact",
+            "NATIVE_UW": "plain"
+          }
+        ],
+        [
+          {
+            "IYA": "compact",
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "IYA": "explicit",
+            "NATIVE_UW": "plain"
           }
         ]
       ]
@@ -2911,123 +3154,6 @@
   },
   {
     "data": {
-      "cyrl_word": "июньгә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyunʼgä\niyungä\niyüngä\niyünʼgä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyun|pdf=iyün}}{{RUS_SIGN|omit=|preserve=ʼ}}gä",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "ноябрьгә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "noyabrʼgä\nnoyabrgä\nnoyäbrgä\nnoyäbrʼgä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}gä",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "сентябрьдән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sentyabrʼdän\nsentyabrdän\nsentäbrdän\nsentäbrʼdän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=sentyabr|pdf=sentäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}dän",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "фильмотека",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -3319,45 +3445,6 @@
       "schema_version": 3,
       "project_key": "complex_multi_rule",
       "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=dekabr|pdf=dekäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}ğa",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "декабрьдән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "dekabrʼdän\ndekabrdän\ndekäbrdän\ndekäbrʼdän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=dekabr|pdf=dekäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}dän",
       "variant_policies": [
         [
           {
@@ -3682,50 +3769,38 @@
   },
   {
     "data": {
-      "cyrl_word": "иллюзияләр",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "illyuziyälär\nillyuziälär\nillʼuziälär\nillʼuziyälär\nilluziälär\nilluziyälär"
+      "cyrl_word": "иминиятләштерүенә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "iminiyätläşterüwenä\niminiätläşterüenä\niminiätläşterüwenä\niminiyätläşterüenä"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "ill{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uzi{{IYA|compact=ä|explicit=yä}}lär",
+      "suggested_zamanalif_dsl": "imini{{IYA|compact=ä|explicit=yä}}tläşterü{{NATIVE_UW|plain=|glide=w}}enä",
       "variant_policies": [
         [
           {
-            "RUS_JOTATION": "glide",
-            "IYA": "explicit"
+            "IYA": "explicit",
+            "NATIVE_UW": "glide"
           }
         ],
         [
           {
-            "RUS_JOTATION": "glide",
-            "IYA": "compact"
+            "IYA": "compact",
+            "NATIVE_UW": "plain"
           }
         ],
         [
           {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "compact"
+            "IYA": "compact",
+            "NATIVE_UW": "glide"
           }
         ],
         [
           {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "explicit"
+            "IYA": "explicit",
+            "NATIVE_UW": "plain"
           }
         ]
       ]
@@ -3793,45 +3868,6 @@
       "schema_version": 3,
       "project_key": "complex_multi_rule",
       "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SIGN|omit=|preserve=ʼ}}go",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "июльдән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyulʼdän\niyuldän\niyüldän\niyülʼdän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SIGN|omit=|preserve=ʼ}}dän",
       "variant_policies": [
         [
           {
@@ -3991,45 +4027,6 @@
   },
   {
     "data": {
-      "cyrl_word": "октябрьнең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "oktyabrʼneñ\noktyabrneñ\noktäbrneñ\noktäbrʼneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}neñ",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "ориентировка",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -4152,6 +4149,57 @@
           {
             "RUS_SIGN": "preserve",
             "RL_FINAL_KA": "stem"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "управляющиена",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "upravlyayuşçiyena\nupravlyayuşçiena\nupravlʼayuşçiena\nupravlʼayuşçiyena\nupravlayuşçiena\nupravlayuşçiyena"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "complex_multi_rule",
+      "suggested_zamanalif_dsl": "upravl{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}ayuşçi{{E_GLIDE|plain=e|glide=ye}}na",
+      "variant_policies": [
+        [
+          {
+            "RUS_JOTATION": "glide",
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "glide",
+            "E_GLIDE": "plain"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe",
+            "E_GLIDE": "plain"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe",
+            "E_GLIDE": "glide"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "E_GLIDE": "plain"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain",
+            "E_GLIDE": "glide"
           }
         ]
       ]
@@ -5041,45 +5089,6 @@
   },
   {
     "data": {
-      "cyrl_word": "декабрьгә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "dekabrʼgä\ndekabrgä\ndekäbrgä\ndekäbrʼgä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=dekabr|pdf=dekäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}gä",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "должностька",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -5476,96 +5485,6 @@
   },
   {
     "data": {
-      "cyrl_word": "иллюзиясе",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "illyuziyäse\nillyuziäse\nillʼuziäse\nillʼuziyäse\nilluziäse\nilluziyäse"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "ill{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uzi{{IYA|compact=ä|explicit=yä}}se",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "explicit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "иминиятләштерүе",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "iminiyätläşterüwe\niminiätläşterüe\niminiätläşterüwe\niminiyätläşterüe"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "imini{{IYA|compact=ä|explicit=yä}}tläşterü{{NATIVE_UW|plain=|glide=w}}e",
-      "variant_policies": [
-        [
-          {
-            "IYA": "explicit",
-            "NATIVE_UW": "glide"
-          }
-        ],
-        [
-          {
-            "IYA": "compact",
-            "NATIVE_UW": "plain"
-          }
-        ],
-        [
-          {
-            "IYA": "compact",
-            "NATIVE_UW": "glide"
-          }
-        ],
-        [
-          {
-            "IYA": "explicit",
-            "NATIVE_UW": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "июльга",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -5575,84 +5494,6 @@
       "schema_version": 3,
       "project_key": "complex_multi_rule",
       "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SIGN|omit=|preserve=ʼ}}ga",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "июльдәге",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyulʼdäge\niyuldäge\niyüldäge\niyülʼdäge"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SIGN|omit=|preserve=ʼ}}däge",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "июльнең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyulʼneñ\niyulneñ\niyülneñ\niyülʼneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SIGN|omit=|preserve=ʼ}}neñ",
       "variant_policies": [
         [
           {
@@ -5743,57 +5584,6 @@
       "schema_version": 3,
       "project_key": "complex_multi_rule",
       "suggested_zamanalif_dsl": "kn{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}az{{RUS_SIGN|omit=|preserve=ʼ}}kov",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "князьләр",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "knyazʼlär\nknyazlär\nknʼazlär\nknʼazʼlär\nknazlär\nknazʼlär"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "kn{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}az{{RUS_SIGN|omit=|preserve=ʼ}}lär",
       "variant_policies": [
         [
           {
@@ -6220,45 +6010,6 @@
       "schema_version": 3,
       "project_key": "complex_multi_rule",
       "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}dan",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "ноябрьдән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "noyabrʼdän\nnoyabrdän\nnoyäbrdän\nnoyäbrʼdän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}dän",
       "variant_policies": [
         [
           {
@@ -6751,45 +6502,6 @@
   },
   {
     "data": {
-      "cyrl_word": "сентябрьнең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sentyabrʼneñ\nsentyabrneñ\nsentäbrneñ\nsentäbrʼneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=sentyabr|pdf=sentäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}neñ",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "славься",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -6982,57 +6694,6 @@
   },
   {
     "data": {
-      "cyrl_word": "тюркологиянең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "tyurkologiyäneñ\ntyurkologiäneñ\ntʼurkologiäneñ\ntʼurkologiyäneñ\nturkologiäneñ\nturkologiyäneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "t{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}urkologi{{IYA|compact=ä|explicit=yä}}neñ",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "explicit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "тяперьче",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -7084,84 +6745,6 @@
   },
   {
     "data": {
-      "cyrl_word": "тәрбияләнүе",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "tärbiyälänüwe\ntärbiälänüe\ntärbiälänüwe\ntärbiyälänüe"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "tärbi{{IYA|compact=ä|explicit=yä}}länü{{NATIVE_UW|plain=|glide=w}}e",
-      "variant_policies": [
-        [
-          {
-            "IYA": "explicit",
-            "NATIVE_UW": "glide"
-          }
-        ],
-        [
-          {
-            "IYA": "compact",
-            "NATIVE_UW": "plain"
-          }
-        ],
-        [
-          {
-            "IYA": "compact",
-            "NATIVE_UW": "glide"
-          }
-        ],
-        [
-          {
-            "IYA": "explicit",
-            "NATIVE_UW": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "тәрбияләнүен",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "tärbiyälänüwen\ntärbiälänüen\ntärbiälänüwen\ntärbiyälänüen"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "tärbi{{IYA|compact=ä|explicit=yä}}länü{{NATIVE_UW|plain=|glide=w}}en",
-      "variant_policies": [
-        [
-          {
-            "IYA": "explicit",
-            "NATIVE_UW": "glide"
-          }
-        ],
-        [
-          {
-            "IYA": "compact",
-            "NATIVE_UW": "plain"
-          }
-        ],
-        [
-          {
-            "IYA": "compact",
-            "NATIVE_UW": "glide"
-          }
-        ],
-        [
-          {
-            "IYA": "explicit",
-            "NATIVE_UW": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "умозаключения",
       "gemini_origin": "RL",
       "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -7206,57 +6789,6 @@
           {
             "RUS_JOTATION": "plain",
             "IYA": "explicit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "управляющие",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "upravlyayuşçiye\nupravlyayuşçie\nupravlʼayuşçie\nupravlʼayuşçiye\nupravlayuşçie\nupravlayuşçiye"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "upravl{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}ayuşçi{{E_GLIDE|plain=e|glide=ye}}",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "E_GLIDE": "plain"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "E_GLIDE": "plain"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "E_GLIDE": "plain"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "E_GLIDE": "glide"
           }
         ]
       ]
@@ -8200,108 +7732,6 @@
   },
   {
     "data": {
-      "cyrl_word": "бюллетеньнең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "byulletenʼneñ\nbyulletenneñ\nbʼulletenneñ\nbʼulletenʼneñ\nbulletenneñ\nbulletenʼneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}ulleten{{RUS_SIGN|omit=|preserve=ʼ}}neñ",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "бюллетеньнән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "byulletenʼnän\nbyulletennän\nbʼulletennän\nbʼulletenʼnän\nbulletennän\nbulletenʼnän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}ulleten{{RUS_SIGN|omit=|preserve=ʼ}}nän",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "бюллетеньнәрнең",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -9012,45 +8442,6 @@
           {
             "RUS_JOTATION": "plain",
             "RL_FINAL_KA": "stem"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "декабрьне",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "dekabrʼne\ndekabrne\ndekäbrne\ndekäbrʼne"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=dekabr|pdf=dekäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}ne",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
           }
         ]
       ]
@@ -9940,312 +9331,6 @@
   },
   {
     "data": {
-      "cyrl_word": "иллюзиядән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "illyuziyädän\nillyuziädän\nillʼuziädän\nillʼuziyädän\nilluziädän\nilluziyädän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "ill{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uzi{{IYA|compact=ä|explicit=yä}}dän",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "explicit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "иллюзияләргә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "illyuziyälärgä\nillyuziälärgä\nillʼuziälärgä\nillʼuziyälärgä\nilluziälärgä\nilluziyälärgä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "ill{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uzi{{IYA|compact=ä|explicit=yä}}lärgä",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "explicit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "иллюзияләрен",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "illyuziyälären\nillyuziälären\nillʼuziälären\nillʼuziyälären\nilluziälären\nilluziyälären"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "ill{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uzi{{IYA|compact=ä|explicit=yä}}lären",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "explicit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "иллюзияләренә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "illyuziyälärenä\nillyuziälärenä\nillʼuziälärenä\nillʼuziyälärenä\nilluziälärenä\nilluziyälärenä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "ill{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uzi{{IYA|compact=ä|explicit=yä}}lärenä",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "explicit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "иллюзияләрнең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "illyuziyälärneñ\nillyuziälärneñ\nillʼuziälärneñ\nillʼuziyälärneñ\nilluziälärneñ\nilluziyälärneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "ill{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uzi{{IYA|compact=ä|explicit=yä}}lärneñ",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "explicit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "иллюзиясен",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "illyuziyäsen\nillyuziäsen\nillʼuziäsen\nillʼuziyäsen\nilluziäsen\nilluziyäsen"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "ill{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uzi{{IYA|compact=ä|explicit=yä}}sen",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "explicit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "ильбяково",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -10380,45 +9465,6 @@
           {
             "RUS_SIGN": "preserve",
             "RL_FINAL_KA": "stem"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "иминиятләштерүенә",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "iminiyätläşterüwenä\niminiätläşterüenä\niminiätläşterüwenä\niminiyätläşterüenä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "imini{{IYA|compact=ä|explicit=yä}}tläşterü{{NATIVE_UW|plain=|glide=w}}enä",
-      "variant_policies": [
-        [
-          {
-            "IYA": "explicit",
-            "NATIVE_UW": "glide"
-          }
-        ],
-        [
-          {
-            "IYA": "compact",
-            "NATIVE_UW": "plain"
-          }
-        ],
-        [
-          {
-            "IYA": "compact",
-            "NATIVE_UW": "glide"
-          }
-        ],
-        [
-          {
-            "IYA": "explicit",
-            "NATIVE_UW": "plain"
           }
         ]
       ]
@@ -10942,45 +9988,6 @@
   },
   {
     "data": {
-      "cyrl_word": "июньдәге",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyunʼdäge\niyundäge\niyündäge\niyünʼdäge"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyun|pdf=iyün}}{{RUS_SIGN|omit=|preserve=ʼ}}däge",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "июньнан",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -10990,45 +9997,6 @@
       "schema_version": 3,
       "project_key": "complex_multi_rule",
       "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyun|pdf=iyün}}{{RUS_SIGN|omit=|preserve=ʼ}}nan",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "июньнең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "iyunʼneñ\niyunneñ\niyünneñ\niyünʼneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=iyun|pdf=iyün}}{{RUS_SIGN|omit=|preserve=ʼ}}neñ",
       "variant_policies": [
         [
           {
@@ -11404,57 +10372,6 @@
   },
   {
     "data": {
-      "cyrl_word": "князьгә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "knyazʼgä\nknyazgä\nknʼazgä\nknʼazʼgä\nknazgä\nknazʼgä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "kn{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}az{{RUS_SIGN|omit=|preserve=ʼ}}gä",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "князьлеге",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -11515,159 +10432,6 @@
       "schema_version": 3,
       "project_key": "complex_multi_rule",
       "suggested_zamanalif_dsl": "kn{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}az{{RUS_SIGN|omit=|preserve=ʼ}}lek",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "князьләргә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "knyazʼlärgä\nknyazlärgä\nknʼazlärgä\nknʼazʼlärgä\nknazlärgä\nknazʼlärgä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "kn{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}az{{RUS_SIGN|omit=|preserve=ʼ}}lärgä",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "князьләре",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "knyazʼläre\nknyazläre\nknʼazläre\nknʼazʼläre\nknazläre\nknazʼläre"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "kn{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}az{{RUS_SIGN|omit=|preserve=ʼ}}läre",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "князьләрнең",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "knyazʼlärneñ\nknyazlärneñ\nknʼazlärneñ\nknʼazʼlärneñ\nknazlärneñ\nknazʼlärneñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "kn{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}az{{RUS_SIGN|omit=|preserve=ʼ}}lärneñ",
       "variant_policies": [
         [
           {
@@ -13030,45 +11794,6 @@
       "schema_version": 3,
       "project_key": "complex_multi_rule",
       "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}gaça",
-      "variant_policies": [
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "ordinary",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "omit"
-          }
-        ],
-        [
-          {
-            "MONTH_NAME": "pdf",
-            "RUS_SIGN": "preserve"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "ноябрьдәге",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "noyabrʼdäge\nnoyabrdäge\nnoyäbrdäge\nnoyäbrʼdäge"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}däge",
       "variant_policies": [
         [
           {
@@ -16564,57 +15289,6 @@
   },
   {
     "data": {
-      "cyrl_word": "тюркологиядә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "tyurkologiyädä\ntyurkologiädä\ntʼurkologiädä\ntʼurkologiyädä\nturkologiädä\nturkologiyädä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "t{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}urkologi{{IYA|compact=ä|explicit=yä}}dä",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "IYA": "explicit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "тюркские",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -16698,96 +15372,6 @@
           {
             "IYA": "explicit",
             "NATIVE_UW": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "тәрбияләнүенә",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "tärbiyälänüwenä\ntärbiälänüenä\ntärbiälänüwenä\ntärbiyälänüenä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "tärbi{{IYA|compact=ä|explicit=yä}}länü{{NATIVE_UW|plain=|glide=w}}enä",
-      "variant_policies": [
-        [
-          {
-            "IYA": "explicit",
-            "NATIVE_UW": "glide"
-          }
-        ],
-        [
-          {
-            "IYA": "compact",
-            "NATIVE_UW": "plain"
-          }
-        ],
-        [
-          {
-            "IYA": "compact",
-            "NATIVE_UW": "glide"
-          }
-        ],
-        [
-          {
-            "IYA": "explicit",
-            "NATIVE_UW": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "управляющиена",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "upravlyayuşçiyena\nupravlyayuşçiena\nupravlʼayuşçiena\nupravlʼayuşçiyena\nupravlayuşçiena\nupravlayuşçiyena"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "complex_multi_rule",
-      "suggested_zamanalif_dsl": "upravl{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}ayuşçi{{E_GLIDE|plain=e|glide=ye}}na",
-      "variant_policies": [
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "glide",
-            "E_GLIDE": "plain"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "E_GLIDE": "plain"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "apostrophe",
-            "E_GLIDE": "glide"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "E_GLIDE": "plain"
-          }
-        ],
-        [
-          {
-            "RUS_JOTATION": "plain",
-            "E_GLIDE": "glide"
           }
         ]
       ]

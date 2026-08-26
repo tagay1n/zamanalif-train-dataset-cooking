@@ -309,6 +309,20 @@
   },
   {
     "data": {
+      "cyrl_word": "әгъза-корреспонденты",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
+      "zamanalif_variants": ""
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "u_hyphenated",
+      "suggested_zamanalif_dsl": "",
+      "variant_policies": []
+    }
+  },
+  {
+    "data": {
       "cyrl_word": "алтын-газ",
       "gemini_origin": "U",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
@@ -352,20 +366,6 @@
   {
     "data": {
       "cyrl_word": "финанс-икътисадый",
-      "gemini_origin": "U",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
-      "zamanalif_variants": ""
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "u_hyphenated",
-      "suggested_zamanalif_dsl": "",
-      "variant_policies": []
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "әгъза-корреспонденты",
       "gemini_origin": "U",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
       "zamanalif_variants": ""

@@ -50,29 +50,33 @@ Label Studio import stores its completed review.
 Annotators can mark any dictionary task as a contextual homonym. That decision
 overrides an existing N/RL/U word resolution, ignores the task's origin and
 conversion fields, and routes occurrences of the displayed word to the
-contextual project on the next export. For a grouped catchall task, only the
-displayed representative is marked; hidden family members remain dictionary
-review candidates.
+contextual project on the next export. For any grouped dictionary task, only
+the displayed representative is marked; hidden family members remain
+dictionary review candidates.
 
-### Catchall Morphological Families
+### Dictionary Morphological Families
 
-Catchall is reduced with the pinned Apertium-tat morphological analyzer. Words
-share one task only when every form has one unambiguous analysis with the same
-lemma and part of speech, and the forms have the same predicted origin.
-Ambiguous and unknown words remain independent tasks. Other DSL-rule words,
-hamza words, and contextual homonyms are routed to their dedicated projects before
-family grouping and therefore cannot enter a catchall family.
+Every dictionary project is reduced with the pinned Apertium-tat morphological
+analyzer. Words share one task only when every form has one unambiguous analysis
+with the same lemma and part of speech, predicted origin, and project. Ambiguous
+and unknown words remain independent tasks. Families never cross project
+boundaries. Hamza keeps its stricter verified lexical-family grouping, and
+contextual homonyms remain occurrence-level tasks.
 
 Export chooses longer representatives first. A representative covers its
 literal prefixes and shorter divergent siblings when divergence starts after
 the full lemma and the sibling-only suffix contains none of
-`вгекуцюяүщъыьё`. Other divergent branches remain separate tasks. Accepting
+`вгекуцюяүщъьё`. Cyrillic `ы` after the analyzer-confirmed lemma boundary is
+treated as a deterministic Tatar suffix letter. Other divergent branches remain
+separate tasks. Accepting
 the unchanged canonical conversion approves each covered form with that
 form's own canonical conversion. For example, `диалогларындагы` can approve
 `диалогларында`, `диалог`, and `диалогларда`, but not `диалогларга`. Editing the
-representative conversion disables propagation. Historical backfill from
-older direct canonical reviews remains prefix-only. Derived approvals retain
-their source and analyzer revision in `reviewed_word_derivations`.
+representative conversion can transfer a correction confined to the shared
+Latin prefix, including each edited focused-project variant. A suffix-only edit
+remains local. Historical reviews use the same safe-family rule. Derived
+approvals retain their source and analyzer revision in
+`reviewed_word_derivations`.
 
 ### Native Hamza Families
 

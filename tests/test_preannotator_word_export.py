@@ -1533,6 +1533,36 @@ class PreannotatorWordExportTests(unittest.TestCase):
         )
         self.assertEqual(len(analyzer.calls), 1)
 
+    def test_focused_project_groups_only_safe_morphological_family_members(self) -> None:
+        words = ["проект", "проекты", "проектын", "проекте"]
+        analyzer = FakeMorphologyAnalyzer(
+            {word: ("проект", "n") for word in words}
+        )
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": word, "label": "RL"} for word in words
+                        ],
+                    }
+                ],
+            )
+
+            result = export_labelstudio_project_tasks_from_db(
+                db_path,
+                sort_by="word",
+                morphology_analyzer=analyzer,
+            )
+
+        e_glide = result.projects["e_glide"]
+        self.assertEqual(e_glide.exported_words, ["проекте", "проектын"])
+        self.assertEqual(e_glide.report["covered_word_count"], len(words))
+        self.assertEqual(result.report["covered_word_count"], len(words))
+
     def test_catchall_exports_each_maximal_prefix_branch(self) -> None:
         words = [
             "диалог",
@@ -1604,7 +1634,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 "диалог",
             )
         )
-        self.assertFalse(
+        self.assertTrue(
             is_safe_family_member(
                 "диалогларга",
                 "диалоглары",
@@ -1612,6 +1642,17 @@ class PreannotatorWordExportTests(unittest.TestCase):
             )
         )
         self.assertFalse(is_safe_family_member("баралар", "бала", "бар"))
+
+    def test_safe_family_member_allows_deterministic_suffix_y(self) -> None:
+        representative = "проектыбызның"
+        for member in ("проект", "проектының", "проектның", "проектлы"):
+            with self.subTest(member=member):
+                self.assertTrue(
+                    is_safe_family_member(representative, member, "проект")
+                )
+        self.assertFalse(
+            is_safe_family_member(representative, "проекттагы", "проект")
+        )
 
     def test_catchall_does_not_group_different_origins_or_ambiguous_words(self) -> None:
         analyzer = FakeMorphologyAnalyzer(

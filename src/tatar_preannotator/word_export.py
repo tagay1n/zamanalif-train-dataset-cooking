@@ -170,7 +170,11 @@ UNKNOWN_LOANWORD_PREFIXES = (
     "электро",
 )
 RL_REVIEW_LETTERS = frozenset("ёыьъщ")
-FAMILY_DIVERGENCE_RISK_LETTERS = frozenset(CONDITIONAL_LETTERS) | RL_REVIEW_LETTERS
+# Cyrillic ы is ambiguous inside a Russian-loanword stem, but after the
+# analyzer-confirmed lemma boundary it is a deterministic Tatar suffix letter.
+FAMILY_DIVERGENCE_RISK_LETTERS = (
+    frozenset(CONDITIONAL_LETTERS) | (RL_REVIEW_LETTERS - {"ы"})
+)
 ALLOWED_ZAMANALIF = frozenset(
     "abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -853,7 +857,7 @@ def _export_units(
         raise AnnotationExportError("word frequencies do not match exported tasks")
 
     ordinary: list[_ExportUnit] = []
-    catchall: list[tuple[dict[str, Any], str, int, str]] = []
+    family_candidates: list[tuple[dict[str, Any], str, int, str, str]] = []
     hamza: dict[tuple[str, str], list[tuple[dict[str, Any], str, int, str]]] = {}
     for task, normalized, frequency in zip(
         result.tasks,
@@ -863,23 +867,15 @@ def _export_units(
     ):
         label = task["data"]["gemini_origin"]
         project_key = classify_project(normalized, label)["key"]
-        if project_key == "catchall":
-            catchall.append((task, normalized, frequency, label))
-        elif project_key == "hamza" and (
+        if project_key == "hamza" and (
             family := native_hamza_family(normalized)
         ) is not None:
             hamza.setdefault((family, label), []).append(
                 (task, normalized, frequency, label)
             )
         else:
-            ordinary.append(
-                _ExportUnit(
-                    task=task,
-                    normalized_word=normalized,
-                    project_key=project_key,
-                    frequency=frequency,
-                    family_members=(normalized,),
-                )
+            family_candidates.append(
+                (task, normalized, frequency, label, project_key)
             )
 
     for items in hamza.values():
@@ -907,15 +903,24 @@ def _export_units(
             )
         )
 
-    identities = morphology_analyzer.analyze(item[1] for item in catchall)
-    grouped: dict[tuple[Any, ...], list[tuple[dict[str, Any], str, int, str]]] = {}
-    for item in catchall:
-        _, normalized, _, label = item
+    identities = morphology_analyzer.analyze(item[1] for item in family_candidates)
+    grouped: dict[
+        tuple[Any, ...],
+        list[tuple[dict[str, Any], str, int, str, str]],
+    ] = {}
+    for item in family_candidates:
+        _, normalized, _, label, project_key = item
         identity = identities.get(normalized)
         key = (
-            ("family", identity.lemma, identity.part_of_speech, label)
+            (
+                "family",
+                identity.lemma,
+                identity.part_of_speech,
+                label,
+                project_key,
+            )
             if identity is not None
-            else ("singleton", normalized)
+            else ("singleton", normalized, project_key)
         )
         grouped.setdefault(key, []).append(item)
 
@@ -939,7 +944,7 @@ def _export_units(
                 ):
                     continue
                 representatives.append(item)
-        for task, normalized, _, _ in representatives:
+        for task, normalized, _, _, project_key in representatives:
             covered = [
                 item
                 for item in items
@@ -968,7 +973,7 @@ def _export_units(
                 _ExportUnit(
                     task=task,
                     normalized_word=normalized,
-                    project_key="catchall",
+                    project_key=project_key,
                     frequency=sum(item[2] for item in covered),
                     family_members=members,
                 )

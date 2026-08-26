@@ -67,7 +67,10 @@ class LabelStudioImportTests(unittest.TestCase):
             root = Path(tmpdir)
             db_path = _database(root / "db.sqlite")
             _add_words(db_path, ["проект", "проекты"], origin="RL")
-            exported = export_labelstudio_project_tasks_from_db(db_path)
+            exported = export_labelstudio_project_tasks_from_db(
+                db_path,
+                morphology_analyzer=self.analyzer,
+            )
             tasks = exported.projects["e_glide"].tasks
             for task in tasks:
                 visible = task["data"]["zamanalif_variants"]
@@ -108,6 +111,64 @@ class LabelStudioImportTests(unittest.TestCase):
                 variant.zamanalif
                 for variant in reviewed_words["проекты"].variants
             ),
+            ("prayektı", "praektı"),
+        )
+
+    def test_focused_family_import_propagates_safe_variant_edits(self) -> None:
+        words = ["проект", "проекты", "проектын", "проекте"]
+        analyzer = FakeMorphologyAnalyzer(
+            {word: ("проект", "n") for word in words}
+        )
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, words, origin="RL")
+            exported = export_labelstudio_project_tasks_from_db(
+                db_path,
+                sort_by="word",
+                morphology_analyzer=analyzer,
+            )
+            task = next(
+                task
+                for task in exported.projects["e_glide"].tasks
+                if task["data"]["cyrl_word"] == "проектын"
+            )
+            task["annotations"] = [
+                {
+                    "was_cancelled": False,
+                    "result": [
+                        {
+                            "from_name": "reviewed_zamanalif_variants",
+                            "type": "textarea",
+                            "value": {
+                                "text": [
+                                    task["data"]["zamanalif_variants"].replace(
+                                        "pro", "pra"
+                                    )
+                                ]
+                            },
+                        }
+                    ],
+                }
+            ]
+
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "e-glide-family.json", [task]),
+                morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.imported_items, 1)
+        self.assertEqual(summary.inherited_items, 2)
+        self.assertEqual(set(reviewed), {"проект", "проекты", "проектын"})
+        self.assertNotIn("проекте", reviewed)
+        self.assertEqual(
+            tuple(variant.zamanalif for variant in reviewed["проект"].variants),
+            ("prayekt", "praekt"),
+        )
+        self.assertEqual(
+            tuple(variant.zamanalif for variant in reviewed["проекты"].variants),
             ("prayektı", "praektı"),
         )
 
@@ -340,7 +401,7 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(summary.imported_items, 2)
         self.assertEqual(reviewed["идеяләренә"].zamanalif_dsl, "ideyälärenä")
 
-    def test_next_dictionary_import_expands_only_prefixes_of_direct_review(self) -> None:
+    def test_next_dictionary_import_backfills_safe_divergent_members(self) -> None:
         analyzer = FakeMorphologyAnalyzer(
             {
                 "торган": ("тор", "v"),
@@ -366,12 +427,11 @@ class LabelStudioImportTests(unittest.TestCase):
             reviewed = load_reviewed_words(db_path)
 
         self.assertEqual(summary.imported_items, 1)
-        self.assertEqual(summary.inherited_items, 2)
+        self.assertEqual(summary.inherited_items, 3)
         self.assertEqual(
             set(reviewed),
-            {"вакыт", "торган", "торганнар", "торганнары"},
+            {"вакыт", "торган", "торганда", "торганнар", "торганнары"},
         )
-        self.assertNotIn("торганда", reviewed)
 
     def test_imported_branch_propagates_only_to_safe_divergent_member(self) -> None:
         words = [

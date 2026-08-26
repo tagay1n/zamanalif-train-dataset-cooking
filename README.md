@@ -393,12 +393,15 @@ and `loanword_zamanalif`; its `meta` additionally contains `sample_id` and
 `token_index`. Project titles, batch fields, DSL rule lists, and custom task
 IDs are not repeated in tasks.
 
-Catchall uses the pinned Apertium-tat analyzer to group unambiguous word forms
-with the same lemma, part of speech, and predicted origin. Longer forms cover
-their literal prefixes and same-length or shorter divergent siblings when the
-divergence starts after the full lemma and the sibling-only suffix contains none
-of the non-deterministic letters `вгекуцюяүщъыьё`. Uncovered branches remain
-separate tasks. Install the local toolchain once:
+Every dictionary project uses the pinned Apertium-tat analyzer to group
+unambiguous word forms with the same lemma, part of speech, predicted origin,
+and project. Longer forms cover their literal prefixes and same-length or
+shorter divergent siblings when the divergence starts after the full lemma and
+the sibling-only suffix contains none of the non-deterministic letters
+`вгекуцюяүщъьё`. Cyrillic `ы` after the analyzer-confirmed lemma boundary is
+treated as a deterministic Tatar suffix letter. Uncovered branches remain
+separate tasks. Hamza retains its stricter verified lexical-family grouping.
+Install the local toolchain once:
 
 ```bash
 sudo apt install apertium-all-dev
@@ -408,22 +411,21 @@ tools/setup_apertium_tat.sh
 The compiled language data lives under ignored `.tools/apertium-tat`. Export
 and import require it; use `--apertium-tat-dir` only to point at an equivalent
 compiled checkout. Ambiguous or unknown analyses stay as single-word tasks.
-Catchall family details are not serialized into Label Studio tasks; import
-reconstructs them from the displayed representative with the pinned analyzer.
-Catchall tasks use `meta.schema_version` `3`.
+Family details are not serialized into Label Studio tasks; import reconstructs
+them from the displayed representative with the pinned analyzer. Catchall tasks
+use `meta.schema_version` `3`.
 
-When a catchall representative is accepted without changing its canonical
-conversion, import approves covered same-origin, same-analysis forms using
-each form's canonical conversion. For example, `мәсьәләләрендәге` covers both
-its prefix chain and the safe divergent sibling `мәсьәләдә`, but not
-`мәсьәләгә` because its divergent suffix contains `г`. For a plain edited
-conversion, import transfers only edits wholly inside the canonical Latin
-prefix shared with a covered member; the member keeps its own canonical suffix.
+When a dictionary representative is accepted, import approves covered
+same-origin, same-analysis, same-project forms using each form's canonical
+conversion. For example, `мәсьәләләрендәге` covers both its prefix chain and
+the safe divergent sibling `мәсьәләдә`, but not `мәсьәләгә` because its
+divergent suffix contains `г`. Import transfers only edits wholly inside the
+canonical Latin prefix shared with a covered member; the member keeps its own
+canonical suffix. This applies independently to every focused-project variant.
 Thus `казакларының → kazaklarınıñ` can approve `казакларын → kazakların`,
 while an edit confined to a longer form's suffix does not propagate. Structured
-DSL edits remain representative-only. Historical backfill from older direct
-reviews remains prefix-only and follows the same shared-correction rule.
-Inherited reviews are recorded in
+Suffix-only edits remain representative-only. Historical reviews use the same
+safe-family rule. Inherited reviews are recorded in
 `reviewed_word_derivations`; exporting itself never writes review state.
 
 Label Studio layout:

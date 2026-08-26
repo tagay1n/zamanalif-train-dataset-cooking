@@ -3991,20 +3991,6 @@
   },
   {
     "data": {
-      "cyrl_word": "әгъза-корреспондент",
-      "gemini_origin": "U",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
-      "zamanalif_variants": ""
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "u_hyphenated",
-      "suggested_zamanalif_dsl": "",
-      "variant_policies": []
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "әдәби-хореографик",
       "gemini_origin": "U",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li></ul>",
