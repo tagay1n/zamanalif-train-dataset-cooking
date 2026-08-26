@@ -178,7 +178,7 @@ def render_project_instructions(
         _heading(project_title),
         _workflow(),
         _focus(project_key, rule_ids),
-        _editing_rules(),
+        _editing_rules(project_key),
     ]
     return "\n\n".join(sections) + "\n"
 
@@ -264,11 +264,20 @@ def _focus(project_key: str, rule_ids: Iterable[str]) -> str:
     )
 
 
-def _editing_rules() -> str:
-    return """<section>
+def _editing_rules(project_key: str) -> str:
+    rejection_rule = (
+        ""
+        if project_key == "catchall"
+        else (
+            "\n    <li>Replace an invalid variant line with <b>-</b>. Keep the "
+            "line order and at least one word; rejecting alternatives must leave "
+            "exactly one word.</li>"
+        )
+    )
+    return f"""<section>
   <h3>Editing Rules</h3>
   <ul>
-    <li>Write only one complete final Zamanalif word form.</li>
+    <li>Write one complete final Zamanalif word form on each line.</li>{rejection_rule}
     <li>Do not enter DSL syntax, explanations, meanings, lemmas, or alternatives.</li>
     <li>Preserve Zamanalif letters exactly: <b>ä ö ü ñ ı ğ ş ç</b> and their uppercase forms.</li>
     <li>Use the apostrophe <b>ʼ</b> when the selected spelling requires one.</li>

@@ -442,6 +442,8 @@ def _reviewed_variant_for_policy(
     annotation: ReviewedWord,
     policy: dict[str, str],
 ) -> str | None:
+    if len(annotation.variants) == 1:
+        return annotation.variants[0].zamanalif
     for variant in annotation.variants:
         if any(
             all(policy.get(rule_id) == option_id for rule_id, option_id in candidate)

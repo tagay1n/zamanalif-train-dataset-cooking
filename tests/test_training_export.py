@@ -193,6 +193,43 @@ class TrainingExportTests(unittest.TestCase):
         self.assertEqual(preferred[0]["zamanalif"], "Urphografiyä.")
         self.assertEqual(compact[0]["zamanalif"], "Urphografiä.")
 
+    def test_single_reviewed_variant_overrides_every_global_policy(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(
+                root / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "sent_1",
+                        "text": "Проект.",
+                        "tokens": [{"text": "Проект", "label": "RL"}],
+                    }
+                ],
+            )
+            save_reviewed_word(db_path, "проект", "proyekt", "RL")
+            with sqlite3.connect(db_path) as conn:
+                conn.execute(
+                    """
+                    insert into reviewed_word_variants(
+                        normalized_word, position, zamanalif,
+                        policies_json, updated_at
+                    ) values ('проект', 0, 'proyekt',
+                              '[{"E_GLIDE":"glide"}]', 'now')
+                    """
+                )
+
+            export_training_dataset(db_path, root / "preferred.jsonl")
+            export_training_dataset(
+                db_path,
+                root / "plain.jsonl",
+                choice_overrides=["E_GLIDE=plain"],
+            )
+            preferred = _read_jsonl(root / "preferred.jsonl")
+            plain = _read_jsonl(root / "plain.jsonl")
+
+        self.assertEqual(preferred[0]["zamanalif"], "Proyekt.")
+        self.assertEqual(plain[0]["zamanalif"], "Proyekt.")
+
     def test_skips_unreviewed_homonym_and_mixed_harmony_sentences(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

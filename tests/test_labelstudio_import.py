@@ -172,6 +172,81 @@ class LabelStudioImportTests(unittest.TestCase):
             ("prayektı", "praektı"),
         )
 
+    def test_rejected_variant_becomes_family_wide_lexical_override(self) -> None:
+        words = ["проект", "проектын"]
+        analyzer = FakeMorphologyAnalyzer(
+            {word: ("проект", "n") for word in words}
+        )
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, words, origin="RL")
+            exported = export_labelstudio_project_tasks_from_db(
+                db_path,
+                morphology_analyzer=analyzer,
+            )
+            task = exported.projects["e_glide"].tasks[0]
+            variants = task["data"]["zamanalif_variants"].splitlines()
+            task["annotations"] = [
+                {
+                    "was_cancelled": False,
+                    "result": [
+                        {
+                            "from_name": "reviewed_zamanalif_variants",
+                            "type": "textarea",
+                            "value": {"text": [f"{variants[0]}\n-"]},
+                        }
+                    ],
+                }
+            ]
+
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "collapsed-family.json", [task]),
+                morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.inherited_items, 1)
+        self.assertEqual(reviewed["проектын"].zamanalif_dsl, "proyektın")
+        self.assertEqual(reviewed["проект"].zamanalif_dsl, "proyekt")
+        self.assertEqual(
+            tuple(variant.zamanalif for variant in reviewed["проект"].variants),
+            ("proyekt",),
+        )
+
+    def test_rejecting_every_variant_is_invalid(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, ["проект"], origin="RL")
+            task = export_labelstudio_project_tasks_from_db(
+                db_path,
+                morphology_analyzer=self.analyzer,
+            ).projects["e_glide"].tasks[0]
+            task["annotations"] = [
+                {
+                    "was_cancelled": False,
+                    "result": [
+                        {
+                            "from_name": "reviewed_zamanalif_variants",
+                            "type": "textarea",
+                            "value": {"text": ["-\n-"]},
+                        }
+                    ],
+                }
+            ]
+
+            with self.assertRaisesRegex(
+                LabelStudioImportError,
+                "must retain at least one variant",
+            ):
+                import_labelstudio_annotations(
+                    db_path,
+                    _backup(root / "all-rejected.json", [task]),
+                    morphology_analyzer=self.analyzer,
+                )
+
     def test_reimport_is_idempotent_and_conflict_rolls_back(self) -> None:
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

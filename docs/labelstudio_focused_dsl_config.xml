@@ -63,7 +63,7 @@
     <View className="help-text">
       <Text
         name="variants_help"
-        value="Each line is one variant. Correct mistakes directly, but keep the variants in the same order."
+        value="Each line is one variant. Correct it directly, or replace an invalid variant with -. Keep the same line order and at least one word."
       />
     </View>
 
@@ -73,7 +73,7 @@
         toName="cyrl_word"
         rows="4"
         value="$zamanalif_variants"
-        placeholder="One Zamanalif variant per line"
+        placeholder="One variant per line; use - to reject one"
         editable="true"
         transcription="true"
         maxSubmissions="1"

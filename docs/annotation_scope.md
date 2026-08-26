@@ -104,6 +104,11 @@ The final training dataset should contain plain Zamanalif text, not DSL syntax.
 DSL variants are an internal review/storage mechanism and must be resolved
 before training export.
 
+If an annotator rejects DSL alternatives with `-` and leaves one spelling, that
+spelling is a lexical override for every global policy. It propagates only to
+analyzer-confirmed safe family members, using the same shared-prefix and
+conditional-suffix boundaries as ordinary family review.
+
 Current preferred dataset policy excludes these PDF-reference policies:
 
 - deliberate vowel-harmony restoration for words that are disharmonic in

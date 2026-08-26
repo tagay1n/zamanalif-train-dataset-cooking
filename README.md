@@ -381,10 +381,13 @@ task-data columns:
 ```
 
 For focused dictionary projects, each line is editable and must remain in the
-same order. Import stores every reviewed line with its hidden policy mapping.
-Training export selects the corrected line matching the active global policy.
-This keeps the annotation interface free of implementation syntax without
-losing any reviewed alternative.
+same order. An annotator can replace an invalid alternative with `-`; at least
+one word must remain, and rejecting alternatives must leave exactly one word.
+That surviving spelling becomes an unconditional lexical override, independent
+of the active global DSL policy, and propagates to safe family members. Without
+`-`, import stores every reviewed line with its hidden policy mapping and
+training export selects the corrected line matching the active global policy.
+This keeps the annotation interface free of implementation syntax.
 
 Focused dictionary task `data` contains exactly those four fields. Catchall
 retains the single `auto_zamanalif` field. Contextual task
@@ -495,7 +498,7 @@ Label Studio layout:
     <View className="help-text">
       <Text
         name="variants_help"
-        value="Each line is one variant. Correct mistakes directly, but keep the variants in the same order."
+        value="Each line is one variant. Correct it directly, or replace an invalid variant with -. Keep the same line order and at least one word."
       />
     </View>
 
@@ -505,7 +508,7 @@ Label Studio layout:
         toName="cyrl_word"
         rows="4"
         value="$zamanalif_variants"
-        placeholder="One Zamanalif variant per line"
+        placeholder="One variant per line; use - to reject one"
         editable="true"
         transcription="true"
         maxSubmissions="1"

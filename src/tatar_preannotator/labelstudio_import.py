@@ -795,18 +795,28 @@ def _propagate_imported_family(
         if classify_project(word, origin)["key"] != project_key:
             continue
         member_canonical = conversion_branches(word).suggestion(origin)
-        member_zamanalif = _family_member_zamanalif(
+        collapsed = _collapsed_family_member_variant(
             canonical,
             zamanalif_dsl,
-            member_canonical,
-        )
-        if not member_zamanalif:
-            continue
-        member_variants = _family_member_variants(
-            canonical,
             item.variants,
             member_canonical,
         )
+        if collapsed is not None:
+            member_zamanalif = collapsed.zamanalif
+            member_variants = (collapsed,)
+        else:
+            member_zamanalif = _family_member_zamanalif(
+                canonical,
+                zamanalif_dsl,
+                member_canonical,
+            )
+            if not member_zamanalif:
+                continue
+            member_variants = _family_member_variants(
+                canonical,
+                item.variants,
+                member_canonical,
+            )
         if item.variants and not member_variants:
             continue
         inserted += _store_inherited_review(
@@ -888,21 +898,11 @@ def _backfill_reviewed_families(
             continue
         candidate = eligible.get(word)
         identity = analyses.get(word)
-        canonical = conversion_branches(word).suggestion(origin)
-        stored_variants = existing_variants.get(word, ())
         if (
             candidate is None
             or candidate.origin != origin
             or identity is None
             or classify_project(word, origin)["key"] != project_key
-            or (
-                stored_variants
-                and stored_variants
-                != tuple(
-                    ReviewedVariant(variant.zamanalif, variant.policies)
-                    for variant in annotation_variants(canonical)
-                )
-            )
         ):
             continue
         anchors.setdefault((identity, origin), []).append(word)
@@ -931,19 +931,29 @@ def _backfill_reviewed_families(
         )
         member_canonical = conversion_branches(word).suggestion(candidate.origin)
         source_canonical = conversion_branches(source).suggestion(candidate.origin)
-        zamanalif_dsl = _family_member_zamanalif(
+        source_variants = existing_variants.get(source, ())
+        collapsed = _collapsed_family_member_variant(
             source_canonical,
             existing[source][0],
-            member_canonical,
-        )
-        if not zamanalif_dsl:
-            continue
-        source_variants = existing_variants.get(source, ())
-        member_variants = _family_member_variants(
-            source_canonical,
             source_variants,
             member_canonical,
         )
+        if collapsed is not None:
+            zamanalif_dsl = collapsed.zamanalif
+            member_variants = (collapsed,)
+        else:
+            zamanalif_dsl = _family_member_zamanalif(
+                source_canonical,
+                existing[source][0],
+                member_canonical,
+            )
+            if not zamanalif_dsl:
+                continue
+            member_variants = _family_member_variants(
+                source_canonical,
+                source_variants,
+                member_canonical,
+            )
         if source_variants and not member_variants:
             continue
         inserted += _store_inherited_review(
@@ -1052,6 +1062,50 @@ def _family_member_variants(
             return ()
         transferred.append(ReviewedVariant(values.pop(), member.policies))
     return tuple(transferred)
+
+
+def _collapsed_family_member_variant(
+    source_canonical_dsl: str,
+    source_reviewed_dsl: str,
+    source_variants: tuple[ReviewedVariant, ...],
+    member_canonical_dsl: str,
+) -> ReviewedVariant | None:
+    """Transfer a one-variant lexical override to a safe family member."""
+    if (
+        len(source_variants) != 1
+        or source_reviewed_dsl != source_variants[0].zamanalif
+        or not parse_dsl(source_canonical_dsl).has_choices
+    ):
+        return None
+    selected = source_variants[0]
+    source_options = annotation_variants(source_canonical_dsl)
+    source_option = next(
+        (
+            option
+            for option in source_options
+            if set(option.policies) & set(selected.policies)
+        ),
+        None,
+    )
+    if source_option is None:
+        return None
+    member_options = annotation_variants(member_canonical_dsl)
+    member_option = next(
+        (
+            option
+            for option in member_options
+            if set(option.policies) & set(selected.policies)
+        ),
+        None,
+    )
+    if member_option is None:
+        return None
+    value = _family_member_zamanalif(
+        source_option.zamanalif,
+        selected.zamanalif,
+        member_option.zamanalif,
+    )
+    return ReviewedVariant(value, selected.policies) if value else None
 
 
 def _store_inherited_review(
@@ -1644,7 +1698,11 @@ def _parse_result(
             context=context,
             exported_variants=exported_variants,
         )
-        zamanalif_dsl = preserved_suggestion_dsl or reviewed_variants[0].zamanalif
+        zamanalif_dsl = (
+            reviewed_variants[0].zamanalif
+            if len(reviewed_variants) < len(exported_variants)
+            else preserved_suggestion_dsl or reviewed_variants[0].zamanalif
+        )
     elif conversions and not _is_empty_conversion(*conversions[0], context=context):
         conversion_result, conversion_index = conversions[0]
         zamanalif_dsl = _parse_conversion(
@@ -1806,9 +1864,21 @@ def _parse_variants_conversion(
             f"{context} result {result_index} must keep exactly "
             f"{expected_line_count} non-empty variant lines"
         )
+    retained_count = sum(line != "-" for line in lines)
+    if retained_count == 0:
+        raise LabelStudioImportError(
+            f"{context} result {result_index} must retain at least one variant"
+        )
+    if retained_count != len(lines) and retained_count != 1:
+        raise LabelStudioImportError(
+            f"{context} result {result_index} must retain exactly one variant "
+            "when rejecting alternatives"
+        )
     reviewed: list[ReviewedVariant] = []
     policy_sources = exported_variants or (ReviewedVariant("", ((),)),)
     for line, exported in zip(lines, policy_sources, strict=True):
+        if line == "-":
+            continue
         try:
             parsed = parse_dsl(line)
         except DslError as exc:
