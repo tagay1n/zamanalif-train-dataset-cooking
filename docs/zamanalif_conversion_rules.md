@@ -132,8 +132,9 @@ These cases are especially relevant for words marked by Gemini as `RL`:
 
 - `ё` is not normalized to `е`; in Russian/Russian-through-Russian loanwords it
   becomes `yo`: `шофёр -> şofyor`.
-- Russian/Russian-through-Russian `ы` can become `ıy`: `сыр -> sıyr`,
-  `вышка -> vıyşka`, `музыка -> muzıyka`. Native `ы` remains `ı`.
+- Cyrillic `ы` is always `ı`, including in Russian and Russian-through-Russian
+  loanwords: `сыр -> sır`, `вышка -> vışka`, `музыка -> muzıka`. A written
+  `ый` sequence remains `ıy`, as in `сыйр -> sıyr`.
 - `ь` and `ъ` are not Zamanalif letters. In Russian loanwords with softened
   consonants after back vowels, apostrophe may be used. Use the Turkic-style
   modifier letter apostrophe `ʼ` (U+02BC), not ASCII `'` or curly `’`:
@@ -166,8 +167,8 @@ Important caveats:
 ## Deliberately Excluded PDF Policies
 
 The target dataset will not use deliberate vowel-harmony restoration for words
-that are disharmonic in Cyrillic, and it will not use the PDF's rewritten month
-names. These are not registered DSL alternatives.
+that are disharmonic in Cyrillic, the PDF's rewritten month names, or phonetic
+lengthening of Cyrillic `ы` to `ıy`. These are not registered DSL alternatives.
 
 The generated PDF fixture still contains examples from both groups for audit
 purposes. They must not be interpreted as the preferred dataset policy during

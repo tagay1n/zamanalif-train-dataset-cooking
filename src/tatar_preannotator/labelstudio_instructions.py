@@ -24,13 +24,6 @@ RULE_GUIDANCE: dict[str, tuple[str, tuple[tuple[str, tuple[str, ...]], ...]]] = 
         "Choose whether Cyrillic ц is written s or ts.",
         (("немецләрне", ("nemeslärne", "nemetslärne")),),
     ),
-    "RL_Y": (
-        "Choose whether Russian-loan ы is represented as short ı or long ıy.",
-        (
-            ("сыр", ("sır", "sıyr")),
-            ("посылка", ("posılka", "posıylka")),
-        ),
-    ),
     "MOSTAQIL": (
         "Choose the attested spelling of the мөстәкыйль stem.",
         (("мөстәкыйль", ("möstäqil", "möstäqıyl")),),

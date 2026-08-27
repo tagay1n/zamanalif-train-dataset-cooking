@@ -401,9 +401,8 @@ unambiguous word forms with the same lemma, part of speech, predicted origin,
 and project. Longer forms cover their literal prefixes and same-length or
 shorter divergent siblings when the divergence starts after the full lemma and
 the sibling-only suffix contains none of the non-deterministic letters
-`вгекуцюяүщъьё`. Cyrillic `ы` after the analyzer-confirmed lemma boundary is
-treated as a deterministic Tatar suffix letter. Uncovered branches remain
-separate tasks. Hamza retains its stricter verified lexical-family grouping.
+`вгекуцюяүщъьё`. Uncovered branches remain separate tasks. Hamza retains its
+stricter verified lexical-family grouping.
 Install the local toolchain once:
 
 ```bash

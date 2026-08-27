@@ -66,9 +66,9 @@ contextual homonyms remain occurrence-level tasks.
 Export chooses longer representatives first. A representative covers its
 literal prefixes and shorter divergent siblings when divergence starts after
 the full lemma and the sibling-only suffix contains none of
-`вгекуцюяүщъьё`. Cyrillic `ы` after the analyzer-confirmed lemma boundary is
-treated as a deterministic Tatar suffix letter. Other divergent branches remain
-separate tasks. Accepting
+`вгекуцюяүщъьё`. Cyrillic `ы` is deterministic everywhere and does not make a
+branch unsafe. Other divergent
+branches remain separate tasks. Accepting
 the unchanged canonical conversion approves each covered form with that
 form's own canonical conversion. For example, `диалогларындагы` can approve
 `диалогларында`, `диалог`, and `диалогларда`, but not `диалогларга`. Editing the

@@ -125,7 +125,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertTrue(contains_conditional_letter("позиция"))
         self.assertFalse(contains_conditional_letter("шәһәр"))
         self.assertFalse(contains_conditional_letter("сыр"))
-        self.assertTrue(contains_rl_review_letter("сыр"))
+        self.assertFalse(contains_rl_review_letter("сыр"))
         self.assertTrue(contains_rl_review_letter("роль"))
         self.assertTrue(contains_rl_review_letter("шофёр"))
 
@@ -250,12 +250,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
             result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
 
         words = [task["data"]["cyrl_word"] for task in result.tasks]
-        self.assertEqual(words, ["роль", "сыр", "шофёр", "щетка"])
+        self.assertEqual(words, ["роль", "шофёр", "щетка"])
         by_word = {task["data"]["cyrl_word"]: task["data"] for task in result.tasks}
-        self.assertEqual(
-            by_word["сыр"]["auto_zamanalif"],
-            "s{{RL_Y|short=ı|long=ıy}}r",
-        )
         self.assertEqual(
             by_word["роль"]["auto_zamanalif"],
             "rol{{RUS_SIGN|omit=|preserve=ʼ}}",
@@ -265,12 +261,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             "şof{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}or",
         )
         self.assertEqual(by_word["щетка"]["auto_zamanalif"], "şçetka")
-        self.assertNotIn("<b>ы</b> ->", by_word["сыр"]["hints_html"])
         self.assertNotIn("<b>ь</b> ->", by_word["роль"]["hints_html"])
-        self.assertIn(
-            "Gemini's origin prediction: <b>loanword</b>",
-            by_word["сыр"]["hints_html"],
-        )
 
     def test_branch_analysis_only_reviews_origin_dependent_conversion(self) -> None:
         independent = conversion_branches("белән")
@@ -588,44 +579,26 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(resolve_dsl(dsl, {"E_GLIDE": "plain"}), plain)
                 self.assertEqual(resolve_dsl(dsl), glide)
 
-    def test_rl_y_is_policy_dsl(self) -> None:
+    def test_cyrillic_yery_is_deterministic_short_i(self) -> None:
         cases = [
-            ("музыка", "muz{{RL_Y|short=ı|long=ıy}}ka", "muzıka", "muzıyka"),
+            ("музыка", "muzıka", "muzıka"),
             (
                 "музыкаль",
-                "muz{{RL_Y|short=ı|long=ıy}}kal{{RUS_SIGN|omit=|preserve=ʼ}}",
-                "muzıkal",
-                "muzıykalʼ",
+                "muzıkal{{RUS_SIGN|omit=|preserve=ʼ}}",
+                "muzıkalʼ",
             ),
-            (
-                "музыкасын",
-                "muz{{RL_Y|short=ı|long=ıy}}kas{{RL_Y|short=ı|long=ıy}}n",
-                "muzıkasın",
-                "muzıykasıyn",
-            ),
-            (
-                "музыкасына",
-                "muz{{RL_Y|short=ı|long=ıy}}kas{{RL_Y|short=ı|long=ıy}}na",
-                "muzıkasına",
-                "muzıykasıyna",
-            ),
-            ("сыр", "s{{RL_Y|short=ı|long=ıy}}r", "sır", "sıyr"),
-            ("посылка", "pos{{RL_Y|short=ı|long=ıy}}lka", "posılka", "posıylka"),
-            ("вышка", "v{{RL_Y|short=ı|long=ıy}}şka", "vışka", "vıyşka"),
+            ("музыкасын", "muzıkasın", "muzıkasın"),
+            ("музыкасына", "muzıkasına", "muzıkasına"),
+            ("сыр", "sır", "sır"),
+            ("посылка", "posılka", "posılka"),
+            ("вышка", "vışka", "vışka"),
         ]
 
-        for word, expected_dsl, short, long in cases:
+        for word, expected_dsl, expected in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "RL")
                 self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(
-                    resolve_dsl(
-                        dsl,
-                        {"RL_Y": "short", "RUS_SIGN": "omit"},
-                    ),
-                    short,
-                )
-                self.assertEqual(resolve_dsl(dsl), long)
+                self.assertEqual(resolve_dsl(dsl), expected)
 
     def test_mostaqil_is_policy_dsl(self) -> None:
         cases = [
@@ -697,10 +670,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("классы", "RL"), "klassı")
         self.assertEqual(convert_for_annotation("руханый", "RL"), "ruxanıy")
         self.assertEqual(convert_for_annotation("сыйр", "RL"), "sıyr")
-        self.assertEqual(convert_for_annotation("сыр", "RL"), "sıyr")
-        self.assertEqual(convert_for_annotation("музыка", "RL"), "muzıyka")
-        self.assertEqual(convert_for_annotation("посылка", "RL"), "posıylka")
-        self.assertEqual(convert_for_annotation("вышка", "RL"), "vıyşka")
+        self.assertEqual(convert_for_annotation("сыр", "RL"), "sır")
+        self.assertEqual(convert_for_annotation("музыка", "RL"), "muzıka")
+        self.assertEqual(convert_for_annotation("посылка", "RL"), "posılka")
+        self.assertEqual(convert_for_annotation("вышка", "RL"), "vışka")
 
     def test_loanword_tatar_law_suffix_is_deterministic(self) -> None:
         cases = [
@@ -1458,6 +1431,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                         "tatar": True,
                         "tokens": [
                             {"text": "орфография", "label": "RL"},
+                            {"text": "музыка", "label": "RL"},
                             {"text": "сыр", "label": "RL"},
                             {"text": "объективлык", "label": "RL"},
                             {"text": "вакыт", "label": "N"},
@@ -1469,7 +1443,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             result = export_labelstudio_project_tasks_from_db(db_path, sort_by="word")
 
         self.assertIn("iya", result.projects)
-        self.assertIn("rl_y", result.projects)
+        self.assertNotIn("rl_y", result.projects)
         self.assertIn("rus_sign_e", result.projects)
         self.assertIn("catchall", result.projects)
         self.assertEqual(
@@ -1481,8 +1455,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
             {"cyrl_word", "zamanalif_variants", "gemini_origin", "hints_html"},
         )
         self.assertEqual(
-            result.projects["catchall"].tasks[0]["data"]["cyrl_word"],
-            "вакыт",
+            {task["data"]["cyrl_word"] for task in result.projects["catchall"].tasks},
+            {"вакыт", "музыка"},
         )
         self.assertEqual(result.report["exported_word_count"], 4)
 

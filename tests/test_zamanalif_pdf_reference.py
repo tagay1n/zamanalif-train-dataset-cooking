@@ -2479,7 +2479,7 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
             ("фото", "RL", "foto"),
             ("мотор", "RL", "motor"),
             ("шофёр", "RL", "şofyor"),
-            ("сыр", "RL", "sıyr"),
+            ("сыр", "RL", "sır"),  # Dataset policy keeps Cyrillic ы deterministic.
             ("роль", "RL", "rolʼ"),
             ("борщ", "RL", "borşç"),
             ("цинк", "RL", "sink"),
