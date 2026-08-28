@@ -32,7 +32,6 @@ from tatar_preannotator.conversion import (
     Literal,
     RULES,
     MASHGUL_STEM_RULE,
-    MONTH_NAME_RULE,
     MOSTAQIL_RULE,
     NATIVE_UW_RULE,
     RL_FINAL_KA_RULE,
@@ -1108,7 +1107,6 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
         return result
     result = result_with_russian_soft_sign_choices(word, compact, label)
     if result.has_choices:
-        result = result_with_month_name_choices(word, result)
         result = result_with_russian_jotated_softening_result(word, result, label)
         result = result_with_loanword_final_ka_choices(word, result, label)
         return result
@@ -1118,7 +1116,7 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_native_uw_choices(word, compact, label)
     if result.has_choices:
         return result_with_ie_glide_choices(word, result_with_iya_choices(word, result))
-    result = result_with_month_name_choices(word, ConversionResult((Literal(compact),)))
+    result = ConversionResult((Literal(compact),))
     result = result_with_russian_shch_yo_choices(word, result, label)
     result = result_with_russian_jotated_softening_result(word, result, label)
     result = result_with_loanword_final_ka_choices(word, result, label)
@@ -1351,62 +1349,6 @@ def result_with_project_e_choices(
             _append_literal_segment(segments, "pro")
             segments.append(Choice(E_GLIDE_RULE.rule_id, E_GLIDE_RULE.options))
             _append_literal_segment(segments, text[len("proye") :])
-            changed = True
-            continue
-        _append_literal_segment(segments, text)
-    return ConversionResult(tuple(segments)) if changed else result
-
-
-MONTH_NAME_CHOICES: tuple[tuple[str, str, str], ...] = (
-    ("гыйнвар", "ğıynwar", "ğinwar"),
-    ("февраль", "fevral", "fevral"),
-    ("март", "mart", "mart"),
-    ("апрель", "aprel", "aprel"),
-    ("май", "may", "may"),
-    ("июнь", "iyun", "iyün"),
-    ("июль", "iyul", "iyül"),
-    ("август", "avgust", "avgust"),
-    ("сентябрь", "sentyabr", "sentäbr"),
-    ("сентябр", "sentyabr", "sentäbr"),
-    ("октябрь", "oktyabr", "oktäbr"),
-    ("октябр", "oktyabr", "oktäbr"),
-    ("ноябрь", "noyabr", "noyäbr"),
-    ("декабрь", "dekabr", "dekäbr"),
-)
-
-
-def result_with_month_name_choices(source: str, result: ConversionResult) -> ConversionResult:
-    """Annotate PDF month-name spellings vs ordinary loanword spellings."""
-    folded = source.casefold()
-    matched = next(
-        (
-            (cyrillic_stem, ordinary_stem, pdf_stem)
-            for cyrillic_stem, ordinary_stem, pdf_stem in MONTH_NAME_CHOICES
-            if folded.startswith(cyrillic_stem)
-        ),
-        None,
-    )
-    if matched is None:
-        return result
-    _, ordinary_stem, pdf_stem = matched
-    if ordinary_stem == pdf_stem:
-        return result
-
-    segments: list[Literal | Choice] = []
-    changed = False
-    for segment in _merge_adjacent_literals(result).segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        text = segment.text
-        if not changed and text.startswith(ordinary_stem):
-            segments.append(
-                Choice(
-                    MONTH_NAME_RULE.rule_id,
-                    (("ordinary", ordinary_stem), ("pdf", pdf_stem)),
-                )
-            )
-            _append_literal_segment(segments, text[len(ordinary_stem) :])
             changed = True
             continue
         _append_literal_segment(segments, text)

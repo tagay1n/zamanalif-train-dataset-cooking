@@ -4,6 +4,7 @@ import unittest
 
 from tatar_preannotator.conversion import PDF_COMPACT_POLICY, PREFERRED_POLICY, resolve_dsl
 from tatar_preannotator.word_export import (
+    classify_project,
     conversion_branches,
     convert_for_annotation,
     convert_for_annotation_dsl,
@@ -166,26 +167,40 @@ class ConditionalConversionDslTests(unittest.TestCase):
             with self.subTest(word=word):
                 self.assertNotEqual(conversion_branches(word).state, "origin_independent")
 
-    def test_month_names_are_policy_dsl(self) -> None:
+    def test_month_names_use_ordinary_conversion_and_other_rules(self) -> None:
         cases = [
-            ("гыйнвар", "N", "{{MONTH_NAME|ordinary=ğıynwar|pdf=ğinwar}}", "ğıynwar", "ğinwar"),
-            ("июнь", "RL", "{{MONTH_NAME|ordinary=iyun|pdf=iyün}}{{RUS_SIGN|omit=|preserve=ʼ}}", "iyunʼ", "iyün"),
-            ("июль", "RL", "{{MONTH_NAME|ordinary=iyul|pdf=iyül}}{{RUS_SIGN|omit=|preserve=ʼ}}", "iyulʼ", "iyül"),
-            ("сентябрендә", "RL", "{{MONTH_NAME|ordinary=sentyabr|pdf=sentäbr}}endä", "sentyabrendä", "sentäbrendä"),
-            ("октябрь", "RL", "{{MONTH_NAME|ordinary=oktyabr|pdf=oktäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}", "oktyabrʼ", "oktäbr"),
-            ("ноябрь", "N", "{{MONTH_NAME|ordinary=noyabr|pdf=noyäbr}}", "noyabr", "noyäbr"),
-            ("декабрь", "RL", "{{MONTH_NAME|ordinary=dekabr|pdf=dekäbr}}{{RUS_SIGN|omit=|preserve=ʼ}}", "dekabrʼ", "dekäbr"),
+            ("гыйнвар", "N", "ğıynwar", "ğıynwar"),
+            ("июнь", "RL", "iyun{{RUS_SIGN|omit=|preserve=ʼ}}", "iyunʼ"),
+            ("июль", "RL", "iyul{{RUS_SIGN|omit=|preserve=ʼ}}", "iyulʼ"),
+            (
+                "сентябрендә",
+                "RL",
+                "sent{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}abrendä",
+                "sentyabrendä",
+            ),
+            (
+                "октябрь",
+                "RL",
+                "okt{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}abr"
+                "{{RUS_SIGN|omit=|preserve=ʼ}}",
+                "oktyabrʼ",
+            ),
+            ("ноябрь", "N", "noyabr", "noyabr"),
+            ("декабрь", "RL", "dekabr{{RUS_SIGN|omit=|preserve=ʼ}}", "dekabrʼ"),
         ]
 
-        for word, label, expected_dsl, ordinary, pdf in cases:
+        for word, label, expected_dsl, expected in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, label)
                 self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl), ordinary)
-                self.assertEqual(
-                    resolve_dsl(dsl, {"MONTH_NAME": "pdf", "RUS_SIGN": "omit"}),
-                    pdf,
-                )
+                self.assertEqual(resolve_dsl(dsl), expected)
+
+        self.assertEqual(classify_project("гыйнварга", "N")["key"], "catchall")
+        self.assertEqual(classify_project("июнь", "RL")["key"], "rus_sign")
+        self.assertEqual(
+            classify_project("октябрена", "RL")["key"],
+            "rus_jotation",
+        )
 
     def test_figyl_stem_is_policy_dsl(self) -> None:
         cases = [

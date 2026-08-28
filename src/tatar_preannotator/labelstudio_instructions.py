@@ -48,13 +48,6 @@ RULE_GUIDANCE: dict[str, tuple[str, tuple[tuple[str, tuple[str, ...]], ...]]] = 
         "Choose the attested spelling and harmony of the мәшгуль stem.",
         (("мәшгуль", ("mäşğul", "mäşğül")),),
     ),
-    "MONTH_NAME": (
-        "Choose ordinary transliteration or the special month-name spelling.",
-        (
-            ("гыйнвар", ("ğıynwar", "ğinwar")),
-            ("ноябрь", ("noyabr", "noyäbr")),
-        ),
-    ),
     "HAMZA": (
         "Choose whether an Arabic/Persian hamza is omitted or represented by ʼ.",
         (("коръән", ("qorän", "qorʼän")),),

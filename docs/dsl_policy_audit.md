@@ -20,6 +20,8 @@ of a DSL choice.
 
 - `RL_Y`: removed as DSL. Cyrillic `ы` is always `ı`; an explicit following
   `й` is required for `ıy`. Thus `сыр -> sır`, while `сыйр -> sıyr`.
+- `MONTH_NAME`: removed as DSL. Month names use the ordinary converter and
+  participate in the same origin and remaining-DSL routing as other words.
 - `ARABIC_INITIAL_GA`: removed as DSL. The `гади` family now follows the
   preferred plain initial `га` convention (`ğadi`, `ğadiläşterergä`); ANTAT
   front variants are preserved in fixture comments.

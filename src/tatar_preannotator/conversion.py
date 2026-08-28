@@ -126,12 +126,6 @@ MASHGUL_STEM_RULE = RuleDefinition(
     options=(("antat", "mäşğul"), ("pdf", "mäşğül")),
     default_option="antat",
 )
-MONTH_NAME_RULE = RuleDefinition(
-    rule_id="MONTH_NAME",
-    options=(("ordinary", ""), ("pdf", "")),
-    default_option="ordinary",
-    allow_custom_option_text=True,
-)
 HAMZA_RULE = RuleDefinition(
     rule_id="HAMZA",
     options=(("omit", ""), ("preserve", ZAMANALIF_APOSTROPHE)),
@@ -188,7 +182,6 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         IJTIMAGIY_STEM_RULE.rule_id: IJTIMAGIY_STEM_RULE,
         KAGAZ_STEM_RULE.rule_id: KAGAZ_STEM_RULE,
         MASHGUL_STEM_RULE.rule_id: MASHGUL_STEM_RULE,
-        MONTH_NAME_RULE.rule_id: MONTH_NAME_RULE,
         HAMZA_RULE.rule_id: HAMZA_RULE,
         RUS_SIGN_RULE.rule_id: RUS_SIGN_RULE,
         RUS_SIGN_E_RULE.rule_id: RUS_SIGN_E_RULE,
@@ -210,7 +203,6 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "IJTIMAGIY_STEM": "antat",
         "KAGAZ_STEM": "antat",
         "MASHGUL_STEM": "antat",
-        "MONTH_NAME": "ordinary",
         "HAMZA": "omit",
         "RUS_SIGN": "preserve",
         "RUS_SIGN_E": "glide",
@@ -232,7 +224,6 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "IJTIMAGIY_STEM": "pdf",
         "KAGAZ_STEM": "pdf",
         "MASHGUL_STEM": "pdf",
-        "MONTH_NAME": "pdf",
         "HAMZA": "preserve",
         "RUS_SIGN": "preserve",
         "RUS_SIGN_E": "glide",
