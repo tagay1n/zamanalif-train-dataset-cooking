@@ -300,6 +300,20 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ["TS", "IYA"],
         )
 
+    def test_unknown_categories_share_one_project(self) -> None:
+        words = (
+            "УУГ",
+            "торак-коммуналь",
+            "авиатөзелеш",
+            "видеоязма",
+            "альфонс",
+        )
+
+        self.assertEqual(
+            {classify_project(word, "U")["key"] for word in words},
+            {"unknown_origin"},
+        )
+
     def test_include_unknown_and_include_rl_flags(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
@@ -1771,7 +1785,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(multi_rule["key"], "ts")
         self.assertEqual(unknown["key"], "ts")
 
-    def test_split_export_routes_unknown_words_to_focused_projects(self) -> None:
+    def test_split_export_routes_unknown_words_to_one_focused_project(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
                 Path(tmpdir) / "zamanalif.sqlite",
@@ -1782,6 +1796,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                         "tokens": [
                             {"text": "УУГ", "label": "U"},
                             {"text": "торак-коммуналь", "label": "U"},
+                            {"text": "авиатөзелеш", "label": "U"},
                             {"text": "күпфункцияле", "label": "U"},
                             {"text": "видеоязма", "label": "U"},
                             {"text": "альфонс", "label": "U"},
@@ -1793,23 +1808,20 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
             result = export_labelstudio_project_tasks_from_db(db_path, sort_by="word")
 
-        self.assertIn("u_abbrev_fragment", result.projects)
-        self.assertIn("u_hyphenated", result.projects)
-        self.assertNotIn("u_tatar_specific", result.projects)
+        self.assertIn("unknown_origin", result.projects)
         self.assertIn("ts", result.projects)
-        self.assertIn("u_conditional_plain", result.projects)
-        self.assertIn("u_other", result.projects)
+        self.assertFalse(any(key.startswith("u_") for key in result.projects))
+        unknown = result.projects["unknown_origin"]
         self.assertEqual(
-            result.projects["u_abbrev_fragment"].tasks[0]["data"]["cyrl_word"],
-            "УУГ",
+            unknown.report["project_title"],
+            "Unknown-origin word review",
         )
         self.assertEqual(
-            result.projects["u_abbrev_fragment"].report["project_title"],
-            "Unknown abbreviations and fragments",
+            {task["data"]["cyrl_word"] for task in unknown.tasks},
+            {"УУГ", "торак-коммуналь", "авиатөзелеш", "видеоязма", "альфонс"},
         )
-        self.assertEqual(
-            result.projects["u_hyphenated"].tasks[0]["data"]["cyrl_word"],
-            "торак-коммуналь",
+        self.assertTrue(
+            all(task["meta"]["project_key"] == "unknown_origin" for task in unknown.tasks)
         )
         tatar_specific = result.projects["ts"].tasks[0]["data"]
         self.assertEqual(tatar_specific["cyrl_word"], "күпфункцияле")
@@ -1824,14 +1836,6 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertIn(
             "Simple origin heuristic: <b>loanword</b>",
             tatar_specific["hints_html"],
-        )
-        self.assertEqual(
-            result.projects["u_conditional_plain"].tasks[0]["data"]["cyrl_word"],
-            "видеоязма",
-        )
-        self.assertEqual(
-            result.projects["u_other"].tasks[0]["data"]["cyrl_word"],
-            "альфонс",
         )
         self.assertEqual(
             result.projects["catchall"].tasks[0]["data"]["cyrl_word"],

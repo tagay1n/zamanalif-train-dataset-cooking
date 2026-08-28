@@ -50,6 +50,7 @@ from .word_export import (
     is_safe_family_member,
     native_hamza_family,
     normalize_word,
+    word_belongs_to_project,
 )
 
 
@@ -792,7 +793,7 @@ def _propagate_imported_family(
             raise LabelStudioImportError(
                 f"{project_key} family morphology changed for {word!r}"
             )
-        if classify_project(word, origin)["key"] != project_key:
+        if not word_belongs_to_project(word, origin, project_key):
             continue
         member_canonical = conversion_branches(word).suggestion(origin)
         collapsed = _collapsed_family_member_variant(
@@ -902,7 +903,7 @@ def _backfill_reviewed_families(
             candidate is None
             or candidate.origin != origin
             or identity is None
-            or classify_project(word, origin)["key"] != project_key
+            or not word_belongs_to_project(word, origin, project_key)
         ):
             continue
         anchors.setdefault((identity, origin), []).append(word)
@@ -919,7 +920,9 @@ def _backfill_reviewed_families(
             for source in anchors.get((identity, candidate.origin), [])
             if is_safe_family_member(source, word, identity.lemma)
         ]
-        if not sources or classify_project(word, candidate.origin)["key"] != project_key:
+        if not sources or not word_belongs_to_project(
+            word, candidate.origin, project_key
+        ):
             continue
         source = min(
             sources,

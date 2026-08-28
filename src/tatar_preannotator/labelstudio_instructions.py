@@ -88,6 +88,13 @@ RULE_GUIDANCE: dict[str, tuple[str, tuple[tuple[str, tuple[str, ...]], ...]]] = 
 }
 
 UNKNOWN_GUIDANCE = {
+    "unknown_origin": (
+        "Gemini could not determine the word's origin. Review the complete written "
+        "form carefully: it may be a hyphenated compound, an abbreviation or "
+        "fragment, a Tatar-specific word, or a word with context-dependent letters. "
+        "Expand nothing, and skip the task when the word is not recognizable enough "
+        "to correct reliably."
+    ),
     "u_hyphenated": (
         "The origin of this hyphenated compound is unresolved. Check the complete "
         "written form and every component when correcting the proposed spelling."

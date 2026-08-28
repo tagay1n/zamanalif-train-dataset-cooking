@@ -20,6 +20,10 @@ where the conversion choice is not deterministic enough for the current rules.
 Project 1 is for unique word-form review. Annotators review a normalized word
 once, and the approved result is stored in `reviewed_words`.
 
+Unresolved-origin word forms share one `unknown_origin` review project rather
+than separate projects by surface type. Genuine conversion-policy cases and
+contextual homonyms remain in their focused projects.
+
 ### Excluded From Project 1
 
 - **Not mostly Tatar sentences.** If Gemini marks a sentence as

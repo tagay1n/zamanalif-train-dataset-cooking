@@ -334,16 +334,20 @@ multi-rule projects. Russian soft/hard-sign apostrophes remain in their
 `project_<key>_instructions.html` for every active category. Each dictionary
 word is exported once. If a word has multiple DSL rules it goes to
 `complex_multi_rule`; otherwise it goes to the matching DSL-rule project or to
-`catchall`. Unresolved `U` words are split into focused projects:
-`u_hyphenated`, `u_abbrev_fragment`, `u_tatar_specific`,
-`u_conditional_plain`, and `u_other`.
+`catchall`. Unresolved `U` words are collected into one focused
+`unknown_origin` project. This keeps unknown compounds,
+abbreviations/fragments, Tatar-specific words, conditional-letter words, and
+other unresolved words in one annotation queue. Unknown words containing `ц`
+remain in the `ts` project because they require that focused convention review.
 
-`u_tatar_specific` tasks receive an editable suggestion from a conservative
-origin heuristic. Russian-specific letters, common international prefixes,
-and mixed-harmony words whose Tatar-specific letter occurs after a stem-like
-prefix favor the loanword branch; other words favor the native branch. The
-stored Gemini origin remains `U`, and the task hint identifies the heuristic
-guess so it is not mistaken for a reviewed decision.
+Tatar-specific `unknown_origin` tasks receive an editable suggestion from a
+conservative origin heuristic. Russian-specific letters, common international
+prefixes, and mixed-harmony words whose Tatar-specific letter occurs after a
+stem-like prefix favor the loanword branch; other words favor the native
+branch. The stored Gemini origin remains `U`, and the task hint identifies the
+heuristic guess so it is not mistaken for a reviewed decision. All focused
+projects, including `unknown_origin`, show annotators plain Zamanalif variants;
+the internal DSL and policy mapping remain hidden in task metadata.
 
 `--max-items` is applied independently to dictionary words and contextual
 occurrences. Contextual tasks are ordered round-robin across homonym words,

@@ -56,6 +56,16 @@ TASK_SCHEMA_VERSION = 1
 LEGACY_FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION = 2
 FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION = 3
 CATCHALL_TASK_SCHEMA_VERSION = 3
+UNKNOWN_ORIGIN_PROJECT_KEY = "unknown_origin"
+LEGACY_UNKNOWN_PROJECT_KEYS = frozenset(
+    {
+        "u_hyphenated",
+        "u_abbrev_fragment",
+        "u_tatar_specific",
+        "u_conditional_plain",
+        "u_other",
+    }
+)
 DICTIONARY_DATA_FIELDS = frozenset(
     {"cyrl_word", "auto_zamanalif", "gemini_origin", "hints_html"}
 )
@@ -624,7 +634,7 @@ def attach_contextual_project(
 def classify_project(word: str, label: str) -> dict[str, Any]:
     """Return the focused Label Studio project metadata for one normalized word."""
     if label == "U":
-        key = _u_project_key(word)
+        key = UNKNOWN_ORIGIN_PROJECT_KEY
         suggestion = annotation_suggestion(word, label)
         rules = (
             list(dict.fromkeys(parse_dsl(suggestion).rule_ids)) if suggestion else []
@@ -650,6 +660,18 @@ def classify_project(word: str, label: str) -> dict[str, Any]:
         key = "catchall"
         title = "Catchall word review"
     return {"key": key, "title": title, "dsl_rules": rules}
+
+
+def word_belongs_to_project(word: str, origin: str, project_key: str) -> bool:
+    """Return whether a word belongs to a current or legacy dictionary project."""
+    if classify_project(word, origin)["key"] == project_key:
+        return True
+    return (
+        project_key in LEGACY_UNKNOWN_PROJECT_KEYS
+        and origin == "U"
+        and "ц" not in word.casefold()
+        and _u_project_key(word) == project_key
+    )
 
 
 NATIVE_HAMZA_FAMILIES: tuple[tuple[str, str, str], ...] = (
@@ -1077,7 +1099,7 @@ def eligible_project_words(
         strict=True,
     ):
         origin = task["data"]["gemini_origin"]
-        if classify_project(word, origin)["key"] == project_key:
+        if word_belongs_to_project(word, origin, project_key):
             eligible[word] = CatchallWord(word, origin, frequency)
     return eligible
 
@@ -3192,11 +3214,7 @@ def _ordered_project_keys(projects: dict[str, list[dict[str, Any]]]) -> list[str
         "contextual_homonym",
         "complex_multi_rule",
         *(_project_key_for_rule(rule_id) for rule_id in RULES),
-        "u_hyphenated",
-        "u_abbrev_fragment",
-        "u_tatar_specific",
-        "u_conditional_plain",
-        "u_other",
+        UNKNOWN_ORIGIN_PROJECT_KEY,
         "catchall",
     ]
     known = [key for key in priority if key in projects]
@@ -3215,6 +3233,8 @@ def project_title_for_key(project_key: str) -> str:
         return "Hamza review"
     if project_key == "complex_multi_rule":
         return "Complex multi-rule words"
+    if project_key == UNKNOWN_ORIGIN_PROJECT_KEY:
+        return "Unknown-origin word review"
     if project_key == "u_hyphenated":
         return "Unknown hyphenated compounds"
     if project_key == "u_abbrev_fragment":
@@ -3235,11 +3255,8 @@ def dictionary_project_keys() -> set[str]:
     return {
         "complex_multi_rule",
         *(_project_key_for_rule(rule_id) for rule_id in RULES),
-        "u_hyphenated",
-        "u_abbrev_fragment",
-        "u_tatar_specific",
-        "u_conditional_plain",
-        "u_other",
+        UNKNOWN_ORIGIN_PROJECT_KEY,
+        *LEGACY_UNKNOWN_PROJECT_KEYS,
         "catchall",
     }
 

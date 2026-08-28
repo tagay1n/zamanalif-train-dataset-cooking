@@ -62,6 +62,66 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(set(reviewed), {"вакыт"})
         self.assertEqual(reviewed["вакыт"].origin, "N")
 
+    def test_imports_legacy_unknown_project_after_consolidation(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, ["альфонс"], origin="U")
+            task = _task("альфонс", "", "U", project_key="u_other")
+            task["annotations"] = [
+                {
+                    "was_cancelled": False,
+                    "result": [
+                        {
+                            "from_name": "corrected_zamanalif",
+                            "type": "textarea",
+                            "value": {"text": ["alfons"]},
+                        }
+                    ],
+                }
+            ]
+            backup = _backup(root / "legacy-u-other.json", [task])
+
+            summary = import_labelstudio_annotations(db_path, backup)
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.project_key, "u_other")
+        self.assertEqual(summary.imported_items, 1)
+        self.assertEqual(reviewed["альфонс"].zamanalif_dsl, "alfons")
+        self.assertEqual(reviewed["альфонс"].origin, "U")
+
+    def test_imports_consolidated_unknown_project(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, ["альфонс"], origin="U")
+            exported = export_labelstudio_project_tasks_from_db(
+                db_path,
+                morphology_analyzer=self.analyzer,
+            )
+            task = exported.projects["unknown_origin"].tasks[0]
+            task["annotations"] = [
+                {
+                    "was_cancelled": False,
+                    "result": [
+                        {
+                            "from_name": "reviewed_zamanalif_variants",
+                            "type": "textarea",
+                            "value": {"text": ["alfons"]},
+                        }
+                    ],
+                }
+            ]
+            backup = _backup(root / "unknown-origin.json", [task])
+
+            summary = import_labelstudio_annotations(db_path, backup)
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.project_key, "unknown_origin")
+        self.assertEqual(summary.imported_items, 1)
+        self.assertEqual(reviewed["альфонс"].zamanalif_dsl, "alfons")
+        self.assertEqual(reviewed["альфонс"].origin, "U")
+
     def test_focused_variant_editor_preserves_policies_and_corrections(self) -> None:
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
