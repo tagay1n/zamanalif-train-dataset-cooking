@@ -260,7 +260,7 @@ def _focus(project_key: str, rule_ids: Iterable[str]) -> str:
 def _editing_rules(project_key: str) -> str:
     rejection_rule = (
         ""
-        if project_key == "catchall"
+        if project_key in {"catchall", "unknown_origin"}
         else (
             "\n    <li>Replace an invalid variant line with <b>-</b>. Keep the "
             "line order and at least one word; rejecting alternatives must leave "

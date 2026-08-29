@@ -1,0 +1,6002 @@
+[
+  {
+    "data": {
+      "cyrl_word": "ПАРШИКОВА",
+      "auto_zamanalif": "parşikova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "паспортаучетлы",
+      "auto_zamanalif": "pasportauçetlı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пассивлашкан",
+      "auto_zamanalif": "passivlaşkan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пассовның",
+      "auto_zamanalif": "passovnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пастернак",
+      "auto_zamanalif": "pasternak",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пастушестве",
+      "auto_zamanalif": "pastuşestve",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "патраков",
+      "auto_zamanalif": "patrakov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "патрикеева",
+      "auto_zamanalif": "patrikeyeva",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "патриютларның",
+      "auto_zamanalif": "patriyutlarnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "патшалыгыннан",
+      "auto_zamanalif": "patşalığınnan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "паукер",
+      "auto_zamanalif": "pauker",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "паул",
+      "auto_zamanalif": "pawl",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пауперга",
+      "auto_zamanalif": "pauperğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "паустовский",
+      "auto_zamanalif": "paustovskiy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пахолкив",
+      "auto_zamanalif": "paxolkiv",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пахомовны",
+      "auto_zamanalif": "paxomovnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пачкаларда",
+      "auto_zamanalif": "paçkalarda",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пашкова",
+      "auto_zamanalif": "paşkova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пашковскийга",
+      "auto_zamanalif": "paşkovskiyğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ПАЩЕНКО",
+      "auto_zamanalif": "paşçenko",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пбга",
+      "auto_zamanalif": "pbga",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пгмуга",
+      "auto_zamanalif": "pgmuga",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пгт",
+      "auto_zamanalif": "pgt",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ПГУ-ТЭС",
+      "auto_zamanalif": "pgu-tes",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "певгова",
+      "auto_zamanalif": "pevgova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "педагог-дефектолог",
+      "auto_zamanalif": "pedagog-defektolog",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "педагог-психологларның",
+      "auto_zamanalif": "pedagog-psixoloğlarnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "педагога",
+      "auto_zamanalif": "pedagoğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "педагогик-психологик",
+      "auto_zamanalif": "pedagogik-psixologik",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "педагогикадагы",
+      "auto_zamanalif": "pedagogikadağı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "педколлектив",
+      "auto_zamanalif": "pedkollektiv",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "педорганизатор",
+      "auto_zamanalif": "pedorganizator",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "педсоветларда",
+      "auto_zamanalif": "pedsovetlarda",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "педуниверситет",
+      "auto_zamanalif": "peduniversitet",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пейоратив",
+      "auto_zamanalif": "peyorativ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пен­си­я­лә­рен",
+      "auto_zamanalif": "pensiyalären",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пен­си­я­сен",
+      "auto_zamanalif": "pensiyasen",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пентатоникага",
+      "auto_zamanalif": "pentatonikağa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пентатоникада",
+      "auto_zamanalif": "pentatonikada",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "первомайск",
+      "auto_zamanalif": "pervomaysk",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "первухинның",
+      "auto_zamanalif": "pervuxinnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пергамент",
+      "auto_zamanalif": "pergament",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пергол",
+      "auto_zamanalif": "pergol",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пергола",
+      "auto_zamanalif": "pergola",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "перевалы",
+      "auto_zamanalif": "perevalı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "перево-ротны",
+      "auto_zamanalif": "perevo-rotnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "перево-ротның",
+      "auto_zamanalif": "perevo-rotnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "перевода",
+      "auto_zamanalif": "perevoda",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "переводлар",
+      "auto_zamanalif": "perevodlar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "переворотын",
+      "auto_zamanalif": "perevorotın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "переворотының",
+      "auto_zamanalif": "perevorotınıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "переговорлар",
+      "auto_zamanalif": "peregovorlar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "передаваемые",
+      "auto_zamanalif": "peredavayemıyı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "передвижкалар",
+      "auto_zamanalif": "peredvijkalar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "перекат",
+      "auto_zamanalif": "perekat",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "переправаларны",
+      "auto_zamanalif": "perepravalarnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "переходенко",
+      "auto_zamanalif": "perexodenko",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "перешейкасында",
+      "auto_zamanalif": "pereşeykasında",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "переяславский",
+      "auto_zamanalif": "pereyaslavskiy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "перспективаларга",
+      "auto_zamanalif": "perspektivalarğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "песков",
+      "auto_zamanalif": "peskov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петербуг",
+      "auto_zamanalif": "peterbug",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петергоф",
+      "auto_zamanalif": "petergof",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петрашевский",
+      "auto_zamanalif": "petraşevskiy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петренко",
+      "auto_zamanalif": "petrenko",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петренконың",
+      "auto_zamanalif": "petrenkonıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петривны",
+      "auto_zamanalif": "petrivnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петро-град",
+      "auto_zamanalif": "petro-grad",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петровичның",
+      "auto_zamanalif": "petroviçnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петровкин",
+      "auto_zamanalif": "petrovkin",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петровның",
+      "auto_zamanalif": "petrovnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петрово",
+      "auto_zamanalif": "petrovo",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петровск",
+      "auto_zamanalif": "petrovsk",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петровскига",
+      "auto_zamanalif": "petrovskiğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петровское",
+      "auto_zamanalif": "petrovskoyı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петрограддан",
+      "auto_zamanalif": "petrograddan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петрозаводскида",
+      "auto_zamanalif": "petrozavodskida",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петрозаводскиның",
+      "auto_zamanalif": "petrozavodskinıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петропавловскига",
+      "auto_zamanalif": "petropavlovskiğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петропавловский",
+      "auto_zamanalif": "petropavlovskiy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петропавловскийда",
+      "auto_zamanalif": "petropavlovskiyda",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "петрушевский",
+      "auto_zamanalif": "petruşevskiy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пешков",
+      "auto_zamanalif": "peşkov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ПЖКХ",
+      "auto_zamanalif": "pjkx",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пивоваров",
+      "auto_zamanalif": "pivovarov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пигалева",
+      "auto_zamanalif": "pigaleva",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пикантлы",
+      "auto_zamanalif": "pikantlı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пиктограммамы",
+      "auto_zamanalif": "piktogrammamı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пиктографик",
+      "auto_zamanalif": "piktografik",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пилипенко",
+      "auto_zamanalif": "pilipenko",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пилотлыгында",
+      "auto_zamanalif": "pilotlıgında",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пинеткаларының",
+      "auto_zamanalif": "pinetkalarınıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пинчув",
+      "auto_zamanalif": "pinçuv",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пионеркалары",
+      "auto_zamanalif": "pionerkaları",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пироглары",
+      "auto_zamanalif": "pirogları",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "писаревны",
+      "auto_zamanalif": "pisarevnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пискарев",
+      "auto_zamanalif": "piskarev",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пискунов",
+      "auto_zamanalif": "piskunov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пифагор",
+      "auto_zamanalif": "pifagor",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ПКФ",
+      "auto_zamanalif": "pkf",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плавни",
+      "auto_zamanalif": "plavni",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плавны",
+      "auto_zamanalif": "plavnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плакатин",
+      "auto_zamanalif": "plakatin",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плаксина",
+      "auto_zamanalif": "plaksina",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "план-графигын",
+      "auto_zamanalif": "plan-grafiğın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "план-графигында",
+      "auto_zamanalif": "plan-grafigında",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "план-графикларга",
+      "auto_zamanalif": "plan-grafiklarğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "план-графиклары",
+      "auto_zamanalif": "plan-grafikları",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "план-конспектын",
+      "auto_zamanalif": "plan-konspektın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "планировкалау",
+      "auto_zamanalif": "planirovkalaw",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "планк",
+      "auto_zamanalif": "plank",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "планкаларының",
+      "auto_zamanalif": "planqalarınıñ",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "планлаштырмауның",
+      "auto_zamanalif": "planlaştırmaunıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "планлаштыруы",
+      "auto_zamanalif": "planlaştıruı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "планлаштырылганнан",
+      "auto_zamanalif": "planlaştırılgannan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "планнары-графиклары",
+      "auto_zamanalif": "plannarı-grafikları",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "планнарын-графикларын",
+      "auto_zamanalif": "plannarın-grafikların",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "планны-коммунизм",
+      "auto_zamanalif": "plannı-kommunizm",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плановых",
+      "auto_zamanalif": "planovıx",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плансызлыкның",
+      "auto_zamanalif": "plansızlıknıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "планы-графигы",
+      "auto_zamanalif": "planı-grafigı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "планындарак",
+      "auto_zamanalif": "planındarak",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пластикасы",
+      "auto_zamanalif": "plastikası",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пластинкасын",
+      "auto_zamanalif": "plastinkasın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пластуновскаяны",
+      "auto_zamanalif": "plastunovskayanı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "платинровскаяны",
+      "auto_zamanalif": "platinrovskayanı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плаудыр",
+      "auto_zamanalif": "plawdır",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плевен",
+      "auto_zamanalif": "pleven",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плехановлар",
+      "auto_zamanalif": "plexanovlar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плехановларга",
+      "auto_zamanalif": "plexanovlarğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плехановтан",
+      "auto_zamanalif": "plexanovtan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плехановчыларның",
+      "auto_zamanalif": "plexanovçılarnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плехановчылары",
+      "auto_zamanalif": "plexanovçıları",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плешковоны",
+      "auto_zamanalif": "pleşkovonı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плещеев",
+      "auto_zamanalif": "pleşçeyev",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плеядасын",
+      "auto_zamanalif": "pleyadasın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плоскосток",
+      "auto_zamanalif": "ploskostok",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плотникова",
+      "auto_zamanalif": "plotnikova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "площадкаларында",
+      "auto_zamanalif": "ploşçadkalarında",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "площадках",
+      "auto_zamanalif": "ploşçadkax",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "плугатыреваның",
+      "auto_zamanalif": "plugatırevanıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пневмококк",
+      "auto_zamanalif": "pnevmokokk",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поверенный",
+      "auto_zamanalif": "poverennıy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "повесткалары",
+      "auto_zamanalif": "povestkaları",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "повестын",
+      "auto_zamanalif": "povestın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "повестында",
+      "auto_zamanalif": "povestında",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "повестындагы",
+      "auto_zamanalif": "povestındağı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ПОВЕТКИН",
+      "auto_zamanalif": "povetkin",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "повешенных",
+      "auto_zamanalif": "poveşennıx",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "повлечет",
+      "auto_zamanalif": "povleçet",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поводу",
+      "auto_zamanalif": "povodu",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "повозкадан",
+      "auto_zamanalif": "povozkadan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "повозканы",
+      "auto_zamanalif": "povozkanı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "повозкасы",
+      "auto_zamanalif": "povozkası",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "повседневности",
+      "auto_zamanalif": "povsednevnosti",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "погодинада",
+      "auto_zamanalif": "pogodinada",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "погодинның",
+      "auto_zamanalif": "pogodinnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "погосны",
+      "auto_zamanalif": "pogosnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пограничная",
+      "auto_zamanalif": "pograniçnaya",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пограничникларына",
+      "auto_zamanalif": "pograniçniklarına",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "погремушки",
+      "auto_zamanalif": "pogremuşki",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подарок",
+      "auto_zamanalif": "podarok",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подвалга",
+      "auto_zamanalif": "podvalğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подвздошная",
+      "auto_zamanalif": "podvzdoşnaya",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подвижных",
+      "auto_zamanalif": "podvijnıx",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подворник",
+      "auto_zamanalif": "podvornik",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подворный",
+      "auto_zamanalif": "podvornıy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подгруппам",
+      "auto_zamanalif": "podgruppam",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подданныйларыгыздан",
+      "auto_zamanalif": "poddannıylarıgızdan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подданствосының",
+      "auto_zamanalif": "poddanstvosınıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подделка",
+      "auto_zamanalif": "poddelka",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подкарпатская",
+      "auto_zamanalif": "podkarpatskaya",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подкаталог",
+      "auto_zamanalif": "podkatalog",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подлоглар",
+      "auto_zamanalif": "podloglar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поднаем",
+      "auto_zamanalif": "podnayem",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпискага",
+      "auto_zamanalif": "podpiskağa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпискасының",
+      "auto_zamanalif": "podpiskasınıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпрограммалар",
+      "auto_zamanalif": "podprogrammalar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпрограмманың",
+      "auto_zamanalif": "podprogrammanıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпрограммасы",
+      "auto_zamanalif": "podprogramması",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпукнтом",
+      "auto_zamanalif": "podpukntom",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпунктах",
+      "auto_zamanalif": "podpunktax",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпунктлар",
+      "auto_zamanalif": "podpunktlar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпунктларында",
+      "auto_zamanalif": "podpunktlarında",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпункттны",
+      "auto_zamanalif": "podpunkttnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпункты",
+      "auto_zamanalif": "podpunktı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпунктына",
+      "auto_zamanalif": "podpunktına",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпунктының",
+      "auto_zamanalif": "podpunktınıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подпускалары",
+      "auto_zamanalif": "podpuskaları",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подрывную",
+      "auto_zamanalif": "podrıvnuyu",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подтверждающих",
+      "auto_zamanalif": "podtverjdayuşçix",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подчасоктан",
+      "auto_zamanalif": "podçasoktan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "подчисткалар",
+      "auto_zamanalif": "podçistkalar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поеводалыгында",
+      "auto_zamanalif": "poyevodalıgında",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поезд-машиналар",
+      "auto_zamanalif": "poyezd-maşinalar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "познаньда",
+      "auto_zamanalif": "poznanda",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поисках",
+      "auto_zamanalif": "poiskax",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "показателей",
+      "auto_zamanalif": "pokazateley",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "покрау",
+      "auto_zamanalif": "pokrau",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "покрова",
+      "auto_zamanalif": "pokrova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "покровом",
+      "auto_zamanalif": "pokrovom",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "покровско-урустамак",
+      "auto_zamanalif": "pokrovsko-urustamak",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "покровскоены",
+      "auto_zamanalif": "pokrovskoyenı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "покрышкалар",
+      "auto_zamanalif": "pokrışkalar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "покрышкинның",
+      "auto_zamanalif": "pokrışkinnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "полевой",
+      "auto_zamanalif": "polevoy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "полевойның",
+      "auto_zamanalif": "polevoynıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "полевскойдан",
+      "auto_zamanalif": "polevskoydan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "полемикага",
+      "auto_zamanalif": "polemikağa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "полемикада",
+      "auto_zamanalif": "polemikada",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "полемикасында",
+      "auto_zamanalif": "polemikasında",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поливанов",
+      "auto_zamanalif": "polivanov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "полигоннарга",
+      "auto_zamanalif": "poligonnarğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поликарпова",
+      "auto_zamanalif": "polikarpova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поликлиникаларга",
+      "auto_zamanalif": "poliklinikalarğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "политикасызлыкны",
+      "auto_zamanalif": "politikasızlıknı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "политологлар",
+      "auto_zamanalif": "politologlar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "политпросвет",
+      "auto_zamanalif": "politprosvet",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "политругы",
+      "auto_zamanalif": "politrugı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "полкаларның",
+      "auto_zamanalif": "polkalarnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ПОЛКОВНИКОВА",
+      "auto_zamanalif": "polkovnikova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "полкта-тревога",
+      "auto_zamanalif": "polkta-trevoğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "половины",
+      "auto_zamanalif": "polovinı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "полпредлыктан",
+      "auto_zamanalif": "polpredlıktan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "полубояровның",
+      "auto_zamanalif": "poluboyarovnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "полуфабрикатлар",
+      "auto_zamanalif": "polufabrikatlar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "полуфабрикатларның",
+      "auto_zamanalif": "polufabrikatlarnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "полыгы",
+      "auto_zamanalif": "polıgı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "понамаренко",
+      "auto_zamanalif": "ponamarenko",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поневеж",
+      "auto_zamanalif": "ponevej",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "понимаем",
+      "auto_zamanalif": "ponimayem",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поога",
+      "auto_zamanalif": "pooga",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поп-академик",
+      "auto_zamanalif": "pop-akademik",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поп-корнсыз",
+      "auto_zamanalif": "pop-kornsız",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "попка",
+      "auto_zamanalif": "popka",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "попкова",
+      "auto_zamanalif": "popkova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поплавский",
+      "auto_zamanalif": "poplavskiy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "попович",
+      "auto_zamanalif": "popoviç",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поповичның",
+      "auto_zamanalif": "popoviçnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поповканы",
+      "auto_zamanalif": "popovkanı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поповны",
+      "auto_zamanalif": "popovnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "попово",
+      "auto_zamanalif": "popovo",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поповский",
+      "auto_zamanalif": "popovskiy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поповского",
+      "auto_zamanalif": "popovskogo",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "попудренкога",
+      "auto_zamanalif": "popudrenkoğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "породивший",
+      "auto_zamanalif": "porodivşiy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пороховой",
+      "auto_zamanalif": "poroxovoy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "портигы",
+      "auto_zamanalif": "portigı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "портка",
+      "auto_zamanalif": "portka",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "португалов",
+      "auto_zamanalif": "portugalov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "порфирородного",
+      "auto_zamanalif": "porfirorodnogo",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поселка",
+      "auto_zamanalif": "poselka",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поселкасы",
+      "auto_zamanalif": "poselkası",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поселкы",
+      "auto_zamanalif": "poselkı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поселогындә",
+      "auto_zamanalif": "poselogındä",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поселыгында",
+      "auto_zamanalif": "poselıgında",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "последовали",
+      "auto_zamanalif": "posledovali",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поспелов-кпсс",
+      "auto_zamanalif": "pospelov-kpss",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "посредством",
+      "auto_zamanalif": "posredstvom",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поставкаларны",
+      "auto_zamanalif": "postavkalarnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поставкщикларны",
+      "auto_zamanalif": "postavkşçiklarnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "постановкага",
+      "auto_zamanalif": "postanovkağa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "постановкаларда",
+      "auto_zamanalif": "postanovkalarda",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "постановкаларның",
+      "auto_zamanalif": "postanovkalarnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "постаулары",
+      "auto_zamanalif": "postauları",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "постка",
+      "auto_zamanalif": "postka",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "постников",
+      "auto_zamanalif": "postnikov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "постниковның",
+      "auto_zamanalif": "postnikovnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "постройком",
+      "auto_zamanalif": "postroykom",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "посттравматик",
+      "auto_zamanalif": "posttravmatik",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поступившего",
+      "auto_zamanalif": "postupivşego",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "посыбрак",
+      "auto_zamanalif": "posıbraq",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поташевага",
+      "auto_zamanalif": "potaşevağa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поташевалар",
+      "auto_zamanalif": "potaşevalar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "потресовлар",
+      "auto_zamanalif": "potresovlar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "потресовларга",
+      "auto_zamanalif": "potresovlarğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "потресовны",
+      "auto_zamanalif": "potresovnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "похвистнево",
+      "auto_zamanalif": "poxvistnevo",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "почва",
+      "auto_zamanalif": "poçva",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "почеркын",
+      "auto_zamanalif": "poçerkın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "почетного",
+      "auto_zamanalif": "poçetnogo",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "почмагыннан",
+      "auto_zamanalif": "poçmağınnan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "почмакларда",
+      "auto_zamanalif": "poçmaqlarda",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "почмакларның",
+      "auto_zamanalif": "poçmaklarnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "почмакларындагы",
+      "auto_zamanalif": "poçmaqlarındağı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "почмакларының",
+      "auto_zamanalif": "poçmaqlarınıñ",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "почмакны",
+      "auto_zamanalif": "poçmaqnı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "почтовая",
+      "auto_zamanalif": "poçtovaya",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "почтовым",
+      "auto_zamanalif": "poçtovım",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пошканда",
+      "auto_zamanalif": "poşqanda",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пошкырганын",
+      "auto_zamanalif": "poşqırğanın",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пошкыру",
+      "auto_zamanalif": "poşqıru",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "поэтиклаштыруы",
+      "auto_zamanalif": "poetiklaştıruı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "правасы",
+      "auto_zamanalif": "pravası",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "правденнелоре",
+      "auto_zamanalif": "pravdennelore",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "правдистларны",
+      "auto_zamanalif": "pravdistlarnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "праве",
+      "auto_zamanalif": "prave",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "правил",
+      "auto_zamanalif": "pravil",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "правилами",
+      "auto_zamanalif": "pravilami",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "правленпесе",
+      "auto_zamanalif": "pravlenpese",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "правобережных",
+      "auto_zamanalif": "pravoberejnıx",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "правовая",
+      "auto_zamanalif": "pravovaya",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "правога",
+      "auto_zamanalif": "pravoğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "праводан",
+      "auto_zamanalif": "pravodan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "правое",
+      "auto_zamanalif": "pravoyı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "правой",
+      "auto_zamanalif": "pravoy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "праволарны",
+      "auto_zamanalif": "pravolarnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "правоның",
+      "auto_zamanalif": "pravonıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "православ",
+      "auto_zamanalif": "pravoslav",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "православныйларга",
+      "auto_zamanalif": "pravoslavnıylarğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прагматиклык",
+      "auto_zamanalif": "pragmatiklıq",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прагматонимикасы",
+      "auto_zamanalif": "pragmatonimikası",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прайсвотерхаус",
+      "auto_zamanalif": "praysvoterxaus",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "практикадагы",
+      "auto_zamanalif": "praktikadağı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "практикаларга",
+      "auto_zamanalif": "praktikalarğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "практикантлары",
+      "auto_zamanalif": "praktikantları",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "практически",
+      "auto_zamanalif": "praktiçeski",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "практический",
+      "auto_zamanalif": "praktiçeskiy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "практическое",
+      "auto_zamanalif": "praktiçeskoyı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "праязык",
+      "auto_zamanalif": "prayazık",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "предвыборный",
+      "auto_zamanalif": "predvıbornıy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "предлог",
+      "auto_zamanalif": "predlog",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "предлогсыз",
+      "auto_zamanalif": "predlogsız",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "предполагаемой",
+      "auto_zamanalif": "predpolagayemoy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "предпосылка",
+      "auto_zamanalif": "predposılka",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "предпосылкадан",
+      "auto_zamanalif": "predposılkadan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "представители",
+      "auto_zamanalif": "predstaviteli",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "представлению",
+      "auto_zamanalif": "predstavleniyu",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "президиуумы",
+      "auto_zamanalif": "prezidiuumı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прекурсорлар",
+      "auto_zamanalif": "prekursorlar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "преподаваемыя",
+      "auto_zamanalif": "prepodavayemıya",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прерогатива",
+      "auto_zamanalif": "prerogativa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прибалтиканы",
+      "auto_zamanalif": "pribaltikanı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прибегоша",
+      "auto_zamanalif": "pribegoşa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "привалларны",
+      "auto_zamanalif": "privallarnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ПРИВАЛОВ",
+      "auto_zamanalif": "privalov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "приведенные",
+      "auto_zamanalif": "privedennıyı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "привезли",
+      "auto_zamanalif": "privezli",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прививали",
+      "auto_zamanalif": "privivali",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "приговорлар",
+      "auto_zamanalif": "prigovorlar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "приговоры",
+      "auto_zamanalif": "prigovorı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пригорый",
+      "auto_zamanalif": "prigorıy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "придаток",
+      "auto_zamanalif": "pridatok",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "признаков",
+      "auto_zamanalif": "priznakov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "приискылары",
+      "auto_zamanalif": "priiskıları",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "приказ-ларын",
+      "auto_zamanalif": "prikaz-ların",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "приказга",
+      "auto_zamanalif": "prikazğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "приказынынң",
+      "auto_zamanalif": "prikazınınñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прикамская",
+      "auto_zamanalif": "prikamskaya",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "приложению",
+      "auto_zamanalif": "prilojeniyu",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "примаков",
+      "auto_zamanalif": "primakov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "примитивлыктан",
+      "auto_zamanalif": "primitivlıktan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "принтерыгыз",
+      "auto_zamanalif": "printerıgız",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "приоритетлыкларын",
+      "auto_zamanalif": "prioritetlıkların",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "припискалар",
+      "auto_zamanalif": "pripiskalar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "припискаларга",
+      "auto_zamanalif": "pripiskalarğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прислугаларны",
+      "auto_zamanalif": "prislugalarnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пристанская",
+      "auto_zamanalif": "pristanskaya",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "присыпкой",
+      "auto_zamanalif": "prisıpkoy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прическалар",
+      "auto_zamanalif": "priçeskalar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пришвин",
+      "auto_zamanalif": "prişvin",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проактив",
+      "auto_zamanalif": "proaktiv",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проактивном",
+      "auto_zamanalif": "proaktivnom",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проблескалы",
+      "auto_zamanalif": "probleskalı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "провалга",
+      "auto_zamanalif": "provalğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "провалов",
+      "auto_zamanalif": "provalov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проваловның",
+      "auto_zamanalif": "provalovnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проведенный",
+      "auto_zamanalif": "provedennıy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "провел",
+      "auto_zamanalif": "provel",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "провизор",
+      "auto_zamanalif": "provizor",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "провислар",
+      "auto_zamanalif": "provislar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проводил",
+      "auto_zamanalif": "provodil",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проводник",
+      "auto_zamanalif": "provodnik",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "провокаторлыгын",
+      "auto_zamanalif": "provokatorlığın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прогаммасын",
+      "auto_zamanalif": "progammasın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прогнозируемые",
+      "auto_zamanalif": "prognoziruemıyı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прогнозлауга",
+      "auto_zamanalif": "prognozlauğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прогнозлаштыру",
+      "auto_zamanalif": "prognozlaştıru",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проголосовало",
+      "auto_zamanalif": "progolosovalo",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "программа-аппарат",
+      "auto_zamanalif": "programma-apparat",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "программа-максимум",
+      "auto_zamanalif": "programma-maksimum",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "программа-минимум",
+      "auto_zamanalif": "programma-minimum",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "программа-минимумында",
+      "auto_zamanalif": "programma-minimumında",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "программа-техник",
+      "auto_zamanalif": "programma-texnik",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "программалардан",
+      "auto_zamanalif": "programmalardan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "программалауга",
+      "auto_zamanalif": "programmalauğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "программаныкы",
+      "auto_zamanalif": "programmanıkı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "программанын",
+      "auto_zamanalif": "programmanın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "программист",
+      "auto_zamanalif": "programmist",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прогрессивлыгын",
+      "auto_zamanalif": "progressivlığın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прогрессиврак",
+      "auto_zamanalif": "progressivrak",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прогрессист",
+      "auto_zamanalif": "progressist",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прогулкадагы",
+      "auto_zamanalif": "progulkadağı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прогулкадан",
+      "auto_zamanalif": "progulkadan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прогулкаларда",
+      "auto_zamanalif": "progulkalarda",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прогулчыларга",
+      "auto_zamanalif": "progulçılarğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "продакшн",
+      "auto_zamanalif": "prodakşn",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "продмаг",
+      "auto_zamanalif": "prodmag",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "продуктаары",
+      "auto_zamanalif": "produktaarı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "продукталары",
+      "auto_zamanalif": "produktaları",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "продуктивлылыгын",
+      "auto_zamanalif": "produktivlılığın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "продуктлылыкны",
+      "auto_zamanalif": "produktlılıknı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проезды",
+      "auto_zamanalif": "proyezdı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проемнарының",
+      "auto_zamanalif": "proyemnarınıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прозаиков",
+      "auto_zamanalif": "prozaikov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "произведений",
+      "auto_zamanalif": "proizvedeniy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "производственник-активистлар",
+      "auto_zamanalif": "proizvodstvennik-aktivistlar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "производственный",
+      "auto_zamanalif": "proizvodstvennıy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "производство-финанс",
+      "auto_zamanalif": "proizvodstvo-finans",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "производствоныкы",
+      "auto_zamanalif": "proizvodstvonıkı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "производствочы",
+      "auto_zamanalif": "proizvodstvoçı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "производствочыл",
+      "auto_zamanalif": "proizvodstvoçıl",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "производствочылар",
+      "auto_zamanalif": "proizvodstvoçılar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "произвол",
+      "auto_zamanalif": "proizvol",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прокопенко",
+      "auto_zamanalif": "prokopenko",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прокопович",
+      "auto_zamanalif": "prokopoviç",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прокрустово",
+      "auto_zamanalif": "prokrustovo",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ПРОКУРОВО",
+      "auto_zamanalif": "prokurovo",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пролетариатныкы",
+      "auto_zamanalif": "proletariatnıkı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пролетарийларныкына",
+      "auto_zamanalif": "proletariylarnıkına",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пролетарлашуы",
+      "auto_zamanalif": "proletarlaşuı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "промвест",
+      "auto_zamanalif": "promvest",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "промкомбинатларында",
+      "auto_zamanalif": "promkombinatlarında",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "промтоварлар",
+      "auto_zamanalif": "promtovarlar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пропагандалавын",
+      "auto_zamanalif": "propagandalavın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пропагандасып",
+      "auto_zamanalif": "propagandasıp",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проповедей",
+      "auto_zamanalif": "propovedey",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пропогандисты-агроном",
+      "auto_zamanalif": "propogandistı-agronom",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пропускник",
+      "auto_zamanalif": "propusknik",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прорывны",
+      "auto_zamanalif": "prorıvnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "просадкалар",
+      "auto_zamanalif": "prosadkalar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "просак",
+      "auto_zamanalif": "prosak",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "просветителей",
+      "auto_zamanalif": "prosvetiteley",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проскуров",
+      "auto_zamanalif": "proskurov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "простакованың",
+      "auto_zamanalif": "prostakovanıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "проституткачылык",
+      "auto_zamanalif": "prostitutkaçılıq",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "простойлыктыр",
+      "auto_zamanalif": "prostoylıktır",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "протоколла-рын",
+      "auto_zamanalif": "protokolla-rın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "протопоповканы",
+      "auto_zamanalif": "protopopovkanı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "профактивтан",
+      "auto_zamanalif": "profaktivtan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "профгруппалар",
+      "auto_zamanalif": "profgruppalar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "профгруппорг",
+      "auto_zamanalif": "profgrupporg",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "профгруппоргларның",
+      "auto_zamanalif": "profgrupporglarnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "профессорлыкны",
+      "auto_zamanalif": "professorlıknı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "профилакторийлардагы",
+      "auto_zamanalif": "profilaktoriylardağı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "профком",
+      "auto_zamanalif": "profkom",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "профсоюз-комсомол",
+      "auto_zamanalif": "profsoyuz-komsomol",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прохоровның",
+      "auto_zamanalif": "proxorovnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "прудникова",
+      "auto_zamanalif": "prudnikova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пруссакларча",
+      "auto_zamanalif": "prussaklarça",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пруссаклыкның",
+      "auto_zamanalif": "prussaklıknıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "псевдогипертрофик",
+      "auto_zamanalif": "psevdogipertrofik",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "псевдодемократик",
+      "auto_zamanalif": "psevdodemokratik",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "псеев",
+      "auto_zamanalif": "pseyev",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "психолог-медик-педагогик",
+      "auto_zamanalif": "psixolog-medik-pedagogik",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "психологик-психотерапевтик",
+      "auto_zamanalif": "psixologik-psixoterapevtik",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "психотравма",
+      "auto_zamanalif": "psixotravma",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пуарены",
+      "auto_zamanalif": "puarenı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пугалога",
+      "auto_zamanalif": "pugaloğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пугач",
+      "auto_zamanalif": "pugaç",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пугачева",
+      "auto_zamanalif": "pugaçeva",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пугачевның",
+      "auto_zamanalif": "pugaçevnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пудакова",
+      "auto_zamanalif": "pudakova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пудовик",
+      "auto_zamanalif": "pudovik",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пузыревскийның",
+      "auto_zamanalif": "puzırevskiynıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пукнтын",
+      "auto_zamanalif": "pukntın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пукнтының",
+      "auto_zamanalif": "pukntınıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пуктта",
+      "auto_zamanalif": "puktta",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пуктына",
+      "auto_zamanalif": "puktına",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пулководагы",
+      "auto_zamanalif": "pulkovodağı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пунк­ты­на",
+      "auto_zamanalif": "punktına",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пунктачысын",
+      "auto_zamanalif": "punktaçısın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пунктирлап",
+      "auto_zamanalif": "punktirlap",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пунктларыннаң",
+      "auto_zamanalif": "punktlarınnañ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пунктн",
+      "auto_zamanalif": "punktn",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пунктчасыннан",
+      "auto_zamanalif": "punktçasınnan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пункча",
+      "auto_zamanalif": "punkça",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пункы",
+      "auto_zamanalif": "punkı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пункытча",
+      "auto_zamanalif": "punkıtça",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пупковны",
+      "auto_zamanalif": "pupkovnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пурга",
+      "auto_zamanalif": "purga",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пуришкевич",
+      "auto_zamanalif": "purişkeviç",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пуришкевичлар",
+      "auto_zamanalif": "purişkeviçlar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пуришкевичларны",
+      "auto_zamanalif": "purişkeviçlarnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пуркаев",
+      "auto_zamanalif": "purkayev",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пустоветов",
+      "auto_zamanalif": "pustovetov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "путевкага",
+      "auto_zamanalif": "putevkağa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "путевкаларны",
+      "auto_zamanalif": "putevkalarnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пуховның",
+      "auto_zamanalif": "puxovnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пучкова",
+      "auto_zamanalif": "puçkova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пушкарев",
+      "auto_zamanalif": "puşkarev",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пушков",
+      "auto_zamanalif": "puşkov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пуэрто-рико",
+      "auto_zamanalif": "puerto-riko",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пчеловод",
+      "auto_zamanalif": "pçelovod",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пыскытып",
+      "auto_zamanalif": "pısqıtıp",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пычагым",
+      "auto_zamanalif": "pıçağım",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пычрагы",
+      "auto_zamanalif": "pıçrağı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пычрагына",
+      "auto_zamanalif": "pıçrağına",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пычраклар",
+      "auto_zamanalif": "pıçraqlar",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пычраклардан",
+      "auto_zamanalif": "pıçraqlardan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  }
+]

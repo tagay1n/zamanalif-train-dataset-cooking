@@ -37,6 +37,7 @@ from .word_export import (
     DICTIONARY_META_FIELDS,
     FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION,
     FOCUSED_DICTIONARY_DATA_FIELDS,
+    SINGLE_SUGGESTION_PROJECT_KEYS,
     LEGACY_FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION,
     ReviewedVariant,
     TASK_SCHEMA_VERSION,
@@ -1428,7 +1429,17 @@ def _parse_task(
         expected_data_fields = CONTEXTUAL_DATA_FIELDS
         expected_meta_fields = CONTEXTUAL_META_FIELDS
         expected_schema_version = TASK_SCHEMA_VERSION
-    elif project_key == "catchall":
+    elif (
+        project_key == "unknown_origin"
+        and set(data) == FOCUSED_DICTIONARY_DATA_FIELDS
+    ):
+        # Accept schema-v3 exports created before unknown_origin adopted the
+        # catchall-style single-suggestion interface.
+        expected_data_fields = FOCUSED_DICTIONARY_DATA_FIELDS
+        expected_meta_fields = DICTIONARY_META_FIELDS
+        expected_schema_version = FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION
+        is_variant_schema = True
+    elif project_key in SINGLE_SUGGESTION_PROJECT_KEYS:
         expected_data_fields = DICTIONARY_DATA_FIELDS
         expected_meta_fields = CATCHALL_META_FIELDS
         expected_schema_version = CATCHALL_TASK_SCHEMA_VERSION

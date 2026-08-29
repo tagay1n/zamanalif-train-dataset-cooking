@@ -35,6 +35,7 @@ class LabelStudioInstructionTests(unittest.TestCase):
         self.assertIn("Tatar-specific word", html)
         self.assertIn("skip the task", html)
         self.assertNotIn("Examples:", html)
+        self.assertNotIn("Replace an invalid variant line", html)
 
     def test_catchall_has_short_conditional_letter_examples(self) -> None:
         html = render_project_instructions("catchall", "Catchall word review", [])

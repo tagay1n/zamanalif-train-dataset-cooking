@@ -57,6 +57,9 @@ LEGACY_FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION = 2
 FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION = 3
 CATCHALL_TASK_SCHEMA_VERSION = 3
 UNKNOWN_ORIGIN_PROJECT_KEY = "unknown_origin"
+SINGLE_SUGGESTION_PROJECT_KEYS = frozenset(
+    {"catchall", UNKNOWN_ORIGIN_PROJECT_KEY}
+)
 LEGACY_UNKNOWN_PROJECT_KEYS = frozenset(
     {
         "u_hyphenated",
@@ -160,23 +163,6 @@ TATAR_SUFFIXES_AFTER_QUOTE = frozenset(
     }
 )
 TATAR_SPECIFIC_PART_LETTERS = frozenset("әөүҗңһ")
-UNKNOWN_LOANWORD_MARKER_LETTERS = frozenset("ёцщьъ")
-UNKNOWN_LOANWORD_PREFIXES = (
-    "авиа",
-    "авто",
-    "агро",
-    "аудио",
-    "видео",
-    "гео",
-    "гидро",
-    "кино",
-    "макро",
-    "микро",
-    "радио",
-    "теле",
-    "фото",
-    "электро",
-)
 RL_REVIEW_LETTERS = frozenset("ёьъщ")
 FAMILY_DIVERGENCE_RISK_LETTERS = (
     frozenset(CONDITIONAL_LETTERS) | RL_REVIEW_LETTERS
@@ -327,29 +313,18 @@ def contains_rl_review_letter(word: str) -> bool:
 
 
 def guess_unknown_tatar_specific_origin(word: str) -> str:
-    """Conservatively guess an origin branch for an unresolved Tatar-looking word."""
-    folded = word.casefold()
-    if any(char in UNKNOWN_LOANWORD_MARKER_LETTERS for char in folded):
-        return "RL"
-    if folded.startswith(UNKNOWN_LOANWORD_PREFIXES):
-        return "RL"
-    first_specific = next(
-        (
-            index
-            for index, char in enumerate(folded)
-            if char in TATAR_SPECIFIC_PART_LETTERS
-        ),
-        -1,
+    """Guess the origin of an unresolved word from Tatar-specific letters."""
+    return (
+        "N"
+        if any(char in TATAR_SPECIFIC_PART_LETTERS for char in word.casefold())
+        else "RL"
     )
-    if first_specific >= 3 and vowel_harmony_class(folded) == "mixed_front_back":
-        return "RL"
-    return "N"
 
 
 def annotation_suggestion(word: str, label: str) -> str:
-    """Return the editable export suggestion, including focused unknown heuristics."""
+    """Return the editable export suggestion, including the unknown-origin heuristic."""
     branches = conversion_branches(word)
-    if label != "U" or _u_project_key(word) != "u_tatar_specific":
+    if label != "U":
         return branches.suggestion(label)
     guessed_origin = guess_unknown_tatar_specific_origin(word)
     preferred = (
@@ -1004,7 +979,10 @@ def _task_with_project_meta(
     project_key: str,
 ) -> dict[str, Any]:
     data = dict(task["data"])
-    if project_key == "catchall":
+    if project_key in SINGLE_SUGGESTION_PROJECT_KEYS:
+        if project_key == UNKNOWN_ORIGIN_PROJECT_KEY:
+            variants = annotation_variants(data["auto_zamanalif"])
+            data["auto_zamanalif"] = variants[0].zamanalif if variants else ""
         meta = {
             "schema_version": CATCHALL_TASK_SCHEMA_VERSION,
             "project_key": project_key,
@@ -1984,7 +1962,7 @@ def decision_html(entry: WordStats) -> str:
     """Build compact review context for Label Studio."""
     items: list[str] = []
     effective_label = entry.label
-    if entry.label == "U" and _u_project_key(entry.normalized) == "u_tatar_specific":
+    if entry.label == "U":
         effective_label = guess_unknown_tatar_specific_origin(entry.normalized)
     result = conversion_result_for_annotation(entry.normalized, effective_label)
     if result is not None and "IYA" in result.rule_ids:
@@ -2131,12 +2109,17 @@ def validate_split_export_result(result: SplitExportResult) -> None:
             )
             suggestion = (
                 data["auto_zamanalif"]
-                if project_key == "catchall"
+                if project_key in SINGLE_SUGGESTION_PROJECT_KEYS
                 else task["meta"]["suggested_zamanalif_dsl"]
             )
+            suggestion_for_rules = (
+                annotation_suggestion(expected_word, data["gemini_origin"])
+                if project_key == UNKNOWN_ORIGIN_PROJECT_KEY
+                else suggestion
+            )
             suggestion_rules = (
-                list(dict.fromkeys(parse_dsl(suggestion).rule_ids))
-                if suggestion
+                list(dict.fromkeys(parse_dsl(suggestion_for_rules).rule_ids))
+                if suggestion_for_rules
                 else []
             )
             expected_project = classify_project(expected_word, data["gemini_origin"])
@@ -2256,7 +2239,8 @@ def _validate_task(
     data = task.get("data")
     expected_data_fields = (
         FOCUSED_DICTIONARY_DATA_FIELDS
-        if project_key is not None and project_key != "catchall"
+        if project_key is not None
+        and project_key not in SINGLE_SUGGESTION_PROJECT_KEYS
         else DICTIONARY_DATA_FIELDS
     )
     if not isinstance(data, dict) or set(data) != expected_data_fields:
@@ -2267,7 +2251,7 @@ def _validate_task(
         meta = task.get("meta")
         expected_meta_fields = (
             CATCHALL_META_FIELDS
-            if project_key == "catchall"
+            if project_key in SINGLE_SUGGESTION_PROJECT_KEYS
             else DICTIONARY_META_FIELDS
         )
         if not isinstance(meta, dict) or set(meta) != expected_meta_fields:
@@ -2276,7 +2260,7 @@ def _validate_task(
             )
         expected_schema_version = (
             CATCHALL_TASK_SCHEMA_VERSION
-            if project_key == "catchall"
+            if project_key in SINGLE_SUGGESTION_PROJECT_KEYS
             else FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION
         )
         if meta.get("schema_version") != expected_schema_version:
@@ -2301,7 +2285,7 @@ def _validate_task(
     seen_words.add(normalized)
 
     expected_suggestion = annotation_suggestion(normalized, origin)
-    if project_key is not None and project_key != "catchall":
+    if project_key is not None and project_key not in SINGLE_SUGGESTION_PROJECT_KEYS:
         display_variants = data.get("zamanalif_variants")
         if not isinstance(display_variants, str):
             raise AnnotationExportError(f"{context} has invalid zamanalif_variants")
@@ -2338,7 +2322,11 @@ def _validate_task(
                 raise AnnotationExportError(
                     f"{context} has invalid visible Zamanalif suggestion: {exc}"
                 ) from exc
-        if display_suggestion != expected_suggestion:
+        expected_display_suggestion = expected_suggestion
+        if project_key == UNKNOWN_ORIGIN_PROJECT_KEY:
+            variants = annotation_variants(expected_suggestion)
+            expected_display_suggestion = variants[0].zamanalif if variants else ""
+        if display_suggestion != expected_display_suggestion:
             raise AnnotationExportError(
                 f"{context} suggestion does not match canonical conversion"
             )

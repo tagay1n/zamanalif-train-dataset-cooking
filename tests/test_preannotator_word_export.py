@@ -190,7 +190,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             result.tasks[1]["data"]["auto_zamanalif"],
             "pro{{E_GLIDE|plain=e|glide=ye}}kt",
         )
-        self.assertEqual(result.tasks[2]["data"]["auto_zamanalif"], "")
+        self.assertEqual(result.tasks[2]["data"]["auto_zamanalif"], "torak")
         self.assertEqual(result.tasks[1]["data"]["gemini_origin"], "RL")
         self.assertEqual(result.report["mixed_harmony_n_word_skipped_count"], 1)
         self.assertEqual(result.report["u_exported_word_count"], 1)
@@ -279,25 +279,29 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(unavailable.loanword_dsl, "k")
 
     def test_unknown_tatar_specific_origin_heuristic(self) -> None:
-        self.assertEqual(guess_unknown_tatar_specific_origin("күпфункцияле"), "RL")
-        self.assertEqual(guess_unknown_tatar_specific_origin("авиатөзелеш"), "RL")
-        self.assertEqual(guess_unknown_tatar_specific_origin("агросәнәгать"), "RL")
+        self.assertEqual(guess_unknown_tatar_specific_origin("күпфункцияле"), "N")
+        self.assertEqual(guess_unknown_tatar_specific_origin("авиатөзелеш"), "N")
+        self.assertEqual(guess_unknown_tatar_specific_origin("АГРОСӘНӘГАТЬ"), "N")
         self.assertEqual(guess_unknown_tatar_specific_origin("шәһәр"), "N")
+        self.assertEqual(guess_unknown_tatar_specific_origin("альфонс"), "RL")
 
     def test_unknown_tatar_specific_suggestion_uses_guessed_branch(self) -> None:
         self.assertEqual(
             annotation_suggestion("видеокүзәтү", "U"),
-            conversion_branches("видеокүзәтү").loanword_dsl,
+            conversion_branches("видеокүзәтү").native_dsl,
         )
         self.assertEqual(
             annotation_suggestion("шәһәр", "U"),
             conversion_branches("шәһәр").native_dsl,
         )
-        self.assertEqual(annotation_suggestion("торак", "U"), "")
+        self.assertEqual(
+            annotation_suggestion("торак", "U"),
+            conversion_branches("торак").loanword_dsl,
+        )
         self.assertEqual(classify_project("күпфункцияле", "U")["key"], "ts")
         self.assertEqual(
             classify_project("күпфункцияле", "U")["dsl_rules"],
-            ["TS", "IYA"],
+            ["IYA"],
         )
 
     def test_unknown_categories_share_one_project(self) -> None:
@@ -1823,18 +1827,36 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertTrue(
             all(task["meta"]["project_key"] == "unknown_origin" for task in unknown.tasks)
         )
+        self.assertTrue(
+            all(task["data"]["auto_zamanalif"] for task in unknown.tasks)
+        )
+        self.assertTrue(
+            all(
+                set(task["meta"]) == {"schema_version", "project_key"}
+                for task in unknown.tasks
+            )
+        )
+        unknown_by_word = {task["data"]["cyrl_word"]: task for task in unknown.tasks}
+        self.assertEqual(
+            unknown_by_word["торак-коммуналь"]["data"]["auto_zamanalif"],
+            "torak-kommunalʼ",
+        )
+        self.assertNotIn(
+            "zamanalif_variants",
+            unknown_by_word["торак-коммуналь"]["data"],
+        )
         tatar_specific = result.projects["ts"].tasks[0]["data"]
         self.assertEqual(tatar_specific["cyrl_word"], "күпфункцияле")
         self.assertEqual(
             tatar_specific["zamanalif_variants"].splitlines()[0],
-            "küpfunksiyäle",
+            "küpfunqsiyäle",
         )
         self.assertEqual(
             result.projects["ts"].tasks[0]["meta"]["suggested_zamanalif_dsl"],
-            conversion_branches("күпфункцияле").loanword_dsl,
+            conversion_branches("күпфункцияле").native_dsl,
         )
         self.assertIn(
-            "Simple origin heuristic: <b>loanword</b>",
+            "Simple origin heuristic: <b>native</b>",
             tatar_specific["hints_html"],
         )
         self.assertEqual(

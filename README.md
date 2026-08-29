@@ -340,14 +340,15 @@ abbreviations/fragments, Tatar-specific words, conditional-letter words, and
 other unresolved words in one annotation queue. Unknown words containing `ц`
 remain in the `ts` project because they require that focused convention review.
 
-Tatar-specific `unknown_origin` tasks receive an editable suggestion from a
-conservative origin heuristic. Russian-specific letters, common international
-prefixes, and mixed-harmony words whose Tatar-specific letter occurs after a
-stem-like prefix favor the loanword branch; other words favor the native
-branch. The stored Gemini origin remains `U`, and the task hint identifies the
-heuristic guess so it is not mistaken for a reviewed decision. All focused
-projects, including `unknown_origin`, show annotators plain Zamanalif variants;
-the internal DSL and policy mapping remain hidden in task metadata.
+All unknown-origin tasks receive an editable suggestion from a simple origin
+heuristic: a word containing any Tatar-specific Cyrillic letter (`ә`, `ө`, `ү`,
+`җ`, `ң`, or `һ`, in either case) uses the native branch; every other word uses
+the Russian-loanword branch. The stored Gemini origin remains `U`, and the task
+hint identifies the heuristic guess so it is not mistaken for a reviewed
+decision. The `unknown_origin` project uses the same single-suggestion labeling
+interface as `catchall`; when several convention variants are possible, the
+preferred plain rendering is shown for correction. Other focused projects show
+all plain Zamanalif variants and keep their DSL policy mapping in task metadata.
 
 `--max-items` is applied independently to dictionary words and contextual
 occurrences. Contextual tasks are ordered round-robin across homonym words,
@@ -393,8 +394,8 @@ of the active global DSL policy, and propagates to safe family members. Without
 training export selects the corrected line matching the active global policy.
 This keeps the annotation interface free of implementation syntax.
 
-Focused dictionary task `data` contains exactly those four fields. Catchall
-retains the single `auto_zamanalif` field. Contextual task
+Focused dictionary task `data` contains exactly those four fields. Catchall and
+`unknown_origin` retain the single `auto_zamanalif` field. Contextual task
 `data` additionally contains `sentence`, `context_html`, `native_zamanalif`,
 and `loanword_zamanalif`; its `meta` additionally contains `sample_id` and
 `token_index`. Project titles, batch fields, DSL rule lists, and custom task
@@ -434,7 +435,8 @@ Suffix-only edits remain representative-only. Historical reviews use the same
 safe-family rule. Inherited reviews are recorded in
 `reviewed_word_derivations`; exporting itself never writes review state.
 
-Label Studio layout:
+Focused-project Label Studio layout (except `unknown_origin`, which uses the
+catchall layout with `$auto_zamanalif` and `corrected_zamanalif`):
 
 ```xml
 <View>
