@@ -171,7 +171,7 @@ ALLOWED_ZAMANALIF = frozenset(
     "abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     "äÄöÖüÜñÑıİğĞşŞçÇ"
-    f"-—{ZAMANALIF_APOSTROPHE}()"
+    f"-/—{ZAMANALIF_APOSTROPHE}()"
 )
 @dataclass
 class WordStats:
@@ -2511,8 +2511,8 @@ def _origin_prediction(label: str) -> str:
 
 
 def _char_conversion(char: str, word: str, index: int, label: str) -> str:
-    if char == "-":
-        return "-"
+    if char in {"-", "/"}:
+        return char
     if char in APOSTROPHE_VARIANTS:
         return ZAMANALIF_APOSTROPHE
     if char in CONDITIONAL_LETTERS:

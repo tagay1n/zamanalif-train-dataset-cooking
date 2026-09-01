@@ -2576,31 +2576,6 @@
   },
   {
     "data": {
-      "cyrl_word": "килешүендә",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "kileşüwendä\nkileşüendä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "native_uw",
-      "suggested_zamanalif_dsl": "kileşü{{NATIVE_UW|plain=|glide=w}}endä",
-      "variant_policies": [
-        [
-          {
-            "NATIVE_UW": "glide"
-          }
-        ],
-        [
-          {
-            "NATIVE_UW": "plain"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "кулланылуын",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
@@ -2710,6 +2685,31 @@
       "schema_version": 3,
       "project_key": "native_uw",
       "suggested_zamanalif_dsl": "aşırılu{{NATIVE_UW|plain=|glide=w}}ına",
+      "variant_policies": [
+        [
+          {
+            "NATIVE_UW": "glide"
+          }
+        ],
+        [
+          {
+            "NATIVE_UW": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "килешүендә",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "kileşüwendä\nkileşüendä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "native_uw",
+      "suggested_zamanalif_dsl": "kileşü{{NATIVE_UW|plain=|glide=w}}endä",
       "variant_policies": [
         [
           {

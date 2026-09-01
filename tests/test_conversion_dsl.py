@@ -94,6 +94,9 @@ class ConversionDslTests(unittest.TestCase):
     def test_accepts_periods_in_abbreviation_literal(self) -> None:
         self.assertEqual(parse_dsl("s.g.v").to_dsl(), "s.g.v")
 
+    def test_accepts_preserved_slash_in_literal(self) -> None:
+        self.assertEqual(parse_dsl("gkal/säğ").to_dsl(), "gkal/säğ")
+
     def test_rejects_unknown_policy_rule_and_option(self) -> None:
         result = ConversionResult((Choice("IYA", (("compact", "ä"), ("explicit", "yä"))),))
 

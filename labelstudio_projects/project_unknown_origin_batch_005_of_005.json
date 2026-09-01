@@ -1,6 +1,342 @@
 [
   {
     "data": {
+      "cyrl_word": "ярашуын",
+      "auto_zamanalif": "yaraşuın",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ярвамаа",
+      "auto_zamanalif": "yarvamaa",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яровая",
+      "auto_zamanalif": "yarovaya",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ярым-обломовча",
+      "auto_zamanalif": "yarım-oblomovça",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ярымкалькалаштырылганда",
+      "auto_zamanalif": "yarımkalʼkalaştırılganda",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ярымколониаль",
+      "auto_zamanalif": "yarımkolonialʼ",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ярымкустарьчылык",
+      "auto_zamanalif": "yarımkustarʼçılıq",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ярымутрау",
+      "auto_zamanalif": "yarımutrau",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ясау-болар",
+      "auto_zamanalif": "yasau-bolar",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ясау-юл",
+      "auto_zamanalif": "yasau-yul",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яссылыкны",
+      "auto_zamanalif": "yassılıknı",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яуза",
+      "auto_zamanalif": "yauza",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яунмуйжа",
+      "auto_zamanalif": "yaunmuyja",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яурупалылар",
+      "auto_zamanalif": "yaurupalılar",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яшьләре-фронтовиклар",
+      "auto_zamanalif": "yäşläre-frontowiklar",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яшьрен",
+      "auto_zamanalif": "yäşʼren",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "яшәүче(ие",
+      "auto_zamanalif": "yäşäwçeiye",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ЯЮРЯПЯЯН-ЯРВИ",
+      "auto_zamanalif": "yayuryapyayan-yarvi",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ЯҮМР",
+      "auto_zamanalif": "yäwmr",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җинаятле-скандаллы",
+      "auto_zamanalif": "cinayatle-sqandallı",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җиркомбинат",
+      "auto_zamanalif": "cirqombinat",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җирлегебашкарма",
+      "auto_zamanalif": "cirlegebaşqarma",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җирләргәавыл",
+      "auto_zamanalif": "cirlärgäawıl",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җитештерү-комуналь",
+      "auto_zamanalif": "citeşterü-qomunal",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җитәкчесе-галимова",
+      "auto_zamanalif": "citäkçese-ğalimova",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "ҖК",
+      "auto_zamanalif": "c",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җылылык-газ-су",
+      "auto_zamanalif": "cılılıq-ğaz-su",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "җылылык-энергетика",
+      "auto_zamanalif": "cılılıq-energetiqa",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
       "cyrl_word": "җыр-музыкага",
       "auto_zamanalif": "cır-muzıqağa",
       "gemini_origin": "U",
@@ -219,6 +555,18 @@
     "data": {
       "cyrl_word": "әбәтифгал",
       "auto_zamanalif": "äbätifğal",
+      "gemini_origin": "U",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "unknown_origin"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "әгъза-корреспондент",
+      "auto_zamanalif": "äğza-qorrespondent",
       "gemini_origin": "U",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>"
     },

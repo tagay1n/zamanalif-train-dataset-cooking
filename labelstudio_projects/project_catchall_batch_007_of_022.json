@@ -1,8 +1,8 @@
 [
   {
     "data": {
-      "cyrl_word": "ФДКУ",
-      "auto_zamanalif": "fdku",
+      "cyrl_word": "касумовның",
+      "auto_zamanalif": "kasumovnıñ",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -13,10 +13,10 @@
   },
   {
     "data": {
-      "cyrl_word": "февр",
-      "auto_zamanalif": "fevr",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "касыймның",
+      "auto_zamanalif": "qasıymnıñ",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -25,10 +25,10 @@
   },
   {
     "data": {
-      "cyrl_word": "февралендагы",
-      "auto_zamanalif": "fevralendağı",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "касыймхан",
+      "auto_zamanalif": "qasıymxan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -37,10 +37,10 @@
   },
   {
     "data": {
-      "cyrl_word": "февралендэге",
-      "auto_zamanalif": "fevralendege",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "кат-ламнардан",
+      "auto_zamanalif": "qat-lamnardan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -49,8 +49,8 @@
   },
   {
     "data": {
-      "cyrl_word": "февралепда",
-      "auto_zamanalif": "fevralepda",
+      "cyrl_word": "катаевның",
+      "auto_zamanalif": "katayevnıñ",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -61,10 +61,10 @@
   },
   {
     "data": {
-      "cyrl_word": "федеративных",
-      "auto_zamanalif": "federativnıx",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катайның",
+      "auto_zamanalif": "qataynıñ",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -73,8 +73,8 @@
   },
   {
     "data": {
-      "cyrl_word": "федерико",
-      "auto_zamanalif": "federiko",
+      "cyrl_word": "каталун",
+      "auto_zamanalif": "katalun",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -85,8 +85,8 @@
   },
   {
     "data": {
-      "cyrl_word": "федорищевны",
-      "auto_zamanalif": "fedorişçevnı",
+      "cyrl_word": "катамараннарда",
+      "auto_zamanalif": "katamarannarda",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -97,8 +97,8 @@
   },
   {
     "data": {
-      "cyrl_word": "федоровичны",
-      "auto_zamanalif": "fedoroviçnı",
+      "cyrl_word": "катанович",
+      "auto_zamanalif": "katanoviç",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -109,8 +109,8 @@
   },
   {
     "data": {
-      "cyrl_word": "федоровканы",
-      "auto_zamanalif": "fedorovkanı",
+      "cyrl_word": "катаракта",
+      "auto_zamanalif": "katarakta",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -121,8 +121,8 @@
   },
   {
     "data": {
-      "cyrl_word": "федоровлар",
-      "auto_zamanalif": "fedorovlar",
+      "cyrl_word": "катастрофага",
+      "auto_zamanalif": "katastrofağa",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -133,8 +133,8 @@
   },
   {
     "data": {
-      "cyrl_word": "федоровнаны",
-      "auto_zamanalif": "fedorovnanı",
+      "cyrl_word": "катастрофик",
+      "auto_zamanalif": "katastrofik",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -145,10 +145,10 @@
   },
   {
     "data": {
-      "cyrl_word": "федоровның",
-      "auto_zamanalif": "fedorovnıñ",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катау",
+      "auto_zamanalif": "qataw",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -157,8 +157,8 @@
   },
   {
     "data": {
-      "cyrl_word": "федорово",
-      "auto_zamanalif": "fedorovo",
+      "cyrl_word": "катафоты",
+      "auto_zamanalif": "katafotı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -169,8 +169,8 @@
   },
   {
     "data": {
-      "cyrl_word": "федосеева",
-      "auto_zamanalif": "fedoseyeva",
+      "cyrl_word": "каташев",
+      "auto_zamanalif": "kataşev",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -181,10 +181,10 @@
   },
   {
     "data": {
-      "cyrl_word": "федотович",
-      "auto_zamanalif": "fedotoviç",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катган",
+      "auto_zamanalif": "qatğan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -193,10 +193,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фейхтвангер",
-      "auto_zamanalif": "feyxtvanger",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катгыйлыгын",
+      "auto_zamanalif": "qatğıylığın",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -205,10 +205,10 @@
   },
   {
     "data": {
-      "cyrl_word": "феодал-буржуаз",
-      "auto_zamanalif": "feodal-burjuaz",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "каткат",
+      "auto_zamanalif": "qatqat",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -217,10 +217,10 @@
   },
   {
     "data": {
-      "cyrl_word": "феофанович",
-      "auto_zamanalif": "feofanoviç",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катлавына",
+      "auto_zamanalif": "qatlawına",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -229,10 +229,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фербак-сил",
-      "auto_zamanalif": "ferbak-sil",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катлавында",
+      "auto_zamanalif": "qatlawında",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -241,10 +241,10 @@
   },
   {
     "data": {
-      "cyrl_word": "ферментатив",
-      "auto_zamanalif": "fermentativ",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катлавыннан",
+      "auto_zamanalif": "qatlawınnan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -253,10 +253,10 @@
   },
   {
     "data": {
-      "cyrl_word": "ферромагнетиклар",
-      "auto_zamanalif": "ferromagnetiklar",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катламдагы",
+      "auto_zamanalif": "qatlamdağı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -265,10 +265,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фершампенуаз",
-      "auto_zamanalif": "ferşampenuaz",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катламлап",
+      "auto_zamanalif": "qatlamlap",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -277,10 +277,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фестиваленнән",
-      "auto_zamanalif": "festivalennän",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катламлы",
+      "auto_zamanalif": "qatlamlı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -289,10 +289,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фиговые",
-      "auto_zamanalif": "figovıyı",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катлар",
+      "auto_zamanalif": "qatlar",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -301,10 +301,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фигуралап",
-      "auto_zamanalif": "figuralap",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катлаудан",
+      "auto_zamanalif": "qatlawdan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -313,10 +313,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фигуровскийлар",
-      "auto_zamanalif": "figurovskiylar",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катлауландырганда",
+      "auto_zamanalif": "qatlawlandırğanda",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -325,10 +325,10 @@
   },
   {
     "data": {
-      "cyrl_word": "физик-географик",
-      "auto_zamanalif": "fizik-geografik",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катлауларыннан",
+      "auto_zamanalif": "qatlawlarınnan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -337,10 +337,10 @@
   },
   {
     "data": {
-      "cyrl_word": "физикага",
-      "auto_zamanalif": "fizikağa",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катлаулыдан-катлаулы",
+      "auto_zamanalif": "qatlawlıdan-qatlawlı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -349,10 +349,10 @@
   },
   {
     "data": {
-      "cyrl_word": "физиологлар",
-      "auto_zamanalif": "fiziologlar",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катлаулыларның",
+      "auto_zamanalif": "qatlawlılarnıñ",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -361,8 +361,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фикерләвендәге",
-      "auto_zamanalif": "fikerläwendäge",
+      "cyrl_word": "катлаулылыгына",
+      "auto_zamanalif": "qatlawlılığına",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -373,8 +373,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фикерләвенә",
-      "auto_zamanalif": "fikerläwenä",
+      "cyrl_word": "катлауның",
+      "auto_zamanalif": "qatlawnıñ",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -385,8 +385,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фикерләүләр",
-      "auto_zamanalif": "fikerläwlär",
+      "cyrl_word": "катнаш-масыннан",
+      "auto_zamanalif": "qatnaş-masınnan",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -397,8 +397,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фикерләүләре",
-      "auto_zamanalif": "fikerläwläre",
+      "cyrl_word": "катнашканчыга",
+      "auto_zamanalif": "qatnaşqançığa",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -409,8 +409,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фикерләүче",
-      "auto_zamanalif": "fikerläwçe",
+      "cyrl_word": "катнашмавына",
+      "auto_zamanalif": "qatnaşmawına",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -421,10 +421,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фикус",
-      "auto_zamanalif": "fikus",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катнашмасы",
+      "auto_zamanalif": "qatnaşması",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -433,8 +433,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фикърәт",
-      "auto_zamanalif": "fiqrät",
+      "cyrl_word": "катнашмаучанлыкның",
+      "auto_zamanalif": "qatnaşmawçanlıqnıñ",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -445,10 +445,10 @@
   },
   {
     "data": {
-      "cyrl_word": "филимоновның",
-      "auto_zamanalif": "filimonovnıñ",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катнаштыра",
+      "auto_zamanalif": "qatnaştıra",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -457,10 +457,10 @@
   },
   {
     "data": {
-      "cyrl_word": "филипович",
-      "auto_zamanalif": "filipoviç",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катнаштыруга",
+      "auto_zamanalif": "qatnaştıruğa",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -469,10 +469,10 @@
   },
   {
     "data": {
-      "cyrl_word": "филиппович",
-      "auto_zamanalif": "filippoviç",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катнаштыруны",
+      "auto_zamanalif": "qatnaştırunı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -481,10 +481,10 @@
   },
   {
     "data": {
-      "cyrl_word": "филипповны",
-      "auto_zamanalif": "filippovnı",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катнаштырылалар",
+      "auto_zamanalif": "qatnaştırılalar",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -493,10 +493,10 @@
   },
   {
     "data": {
-      "cyrl_word": "филлиповна",
-      "auto_zamanalif": "fillipovna",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катнаштырылса",
+      "auto_zamanalif": "qatnaştırılsa",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -505,10 +505,10 @@
   },
   {
     "data": {
-      "cyrl_word": "финансланмау",
-      "auto_zamanalif": "finanslanmau",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катнашулар",
+      "auto_zamanalif": "qatnaşular",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -517,10 +517,10 @@
   },
   {
     "data": {
-      "cyrl_word": "финанслаү",
-      "auto_zamanalif": "finanslaü",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катнашулардан",
+      "auto_zamanalif": "qatnaşulardan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -529,10 +529,10 @@
   },
   {
     "data": {
-      "cyrl_word": "финно-угорскими",
-      "auto_zamanalif": "finno-ugorskimi",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катнашучалар",
+      "auto_zamanalif": "qatnaşuçalar",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -541,8 +541,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фиргәвеннәр",
-      "auto_zamanalif": "firgäwennär",
+      "cyrl_word": "катнашучыдан",
+      "auto_zamanalif": "qatnaşuçıdan",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -553,8 +553,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фиргәвеннәргә",
-      "auto_zamanalif": "firgäwennärgä",
+      "cyrl_word": "катнашучыларын",
+      "auto_zamanalif": "qatnaşuçıların",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -565,8 +565,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фирдәүс",
-      "auto_zamanalif": "firdäws",
+      "cyrl_word": "катнашучыларына",
+      "auto_zamanalif": "qatnaşuçılarına",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -577,8 +577,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фирюзә",
-      "auto_zamanalif": "firyüzä",
+      "cyrl_word": "катнашучыларының",
+      "auto_zamanalif": "qatnaşuçılarınıñ",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -589,10 +589,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фитнес-клублар",
-      "auto_zamanalif": "fitnes-klublar",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катнашучысының",
+      "auto_zamanalif": "qatnaşuçısınıñ",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -601,10 +601,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фишкалар",
-      "auto_zamanalif": "fişkalar",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катншучы",
+      "auto_zamanalif": "qatnşuçı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -613,8 +613,8 @@
   },
   {
     "data": {
-      "cyrl_word": "3-ФКЗ",
-      "auto_zamanalif": "fkz",
+      "cyrl_word": "катоклау",
+      "auto_zamanalif": "katoklaw",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -625,8 +625,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фкуның",
-      "auto_zamanalif": "fkunıñ",
+      "cyrl_word": "католикбе",
+      "auto_zamanalif": "katolikbe",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -637,8 +637,8 @@
   },
   {
     "data": {
-      "cyrl_word": "флажогы",
-      "auto_zamanalif": "flajogı",
+      "cyrl_word": "каторожный",
+      "auto_zamanalif": "katorojnıy",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -649,10 +649,10 @@
   },
   {
     "data": {
-      "cyrl_word": "флажоклар",
-      "auto_zamanalif": "flajoklar",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катпатыпда",
+      "auto_zamanalif": "qatpatıpda",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -661,10 +661,10 @@
   },
   {
     "data": {
-      "cyrl_word": "флангыдан",
-      "auto_zamanalif": "flangıdan",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катрашында",
+      "auto_zamanalif": "qatraşında",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -673,8 +673,8 @@
   },
   {
     "data": {
-      "cyrl_word": "флангысында",
-      "auto_zamanalif": "flangısında",
+      "cyrl_word": "катрич",
+      "auto_zamanalif": "katriç",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -685,8 +685,8 @@
   },
   {
     "data": {
-      "cyrl_word": "флектив",
-      "auto_zamanalif": "flektiv",
+      "cyrl_word": "катру",
+      "auto_zamanalif": "katru",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -697,10 +697,10 @@
   },
   {
     "data": {
-      "cyrl_word": "флешкартада",
-      "auto_zamanalif": "fleşkartada",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "каттый",
+      "auto_zamanalif": "qattıy",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -709,10 +709,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фликка",
-      "auto_zamanalif": "flikka",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "кату",
+      "auto_zamanalif": "qatu",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -721,10 +721,10 @@
   },
   {
     "data": {
-      "cyrl_word": "флёра",
-      "auto_zamanalif": "flyora",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "катушкалы",
+      "auto_zamanalif": "katuşkalı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -733,10 +733,10 @@
   },
   {
     "data": {
-      "cyrl_word": "флүсович",
-      "auto_zamanalif": "flüsoviç",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катыга",
+      "auto_zamanalif": "qatığa",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -745,8 +745,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фокарага",
-      "auto_zamanalif": "foqarağa",
+      "cyrl_word": "катылана",
+      "auto_zamanalif": "qatılana",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -757,10 +757,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фокке",
-      "auto_zamanalif": "fokke",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катыланганнан",
+      "auto_zamanalif": "qatılanğannan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -769,10 +769,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фолкленд",
-      "auto_zamanalif": "folklend",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катымда",
+      "auto_zamanalif": "qatımda",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -781,10 +781,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фоменконы",
-      "auto_zamanalif": "fomenkonı",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катыргы",
+      "auto_zamanalif": "qatırğı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -793,10 +793,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фомичевны",
-      "auto_zamanalif": "fomiçevnı",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катырмагыз",
+      "auto_zamanalif": "qatırmağız",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -805,10 +805,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фонвизин",
-      "auto_zamanalif": "fonvizin",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катыру",
+      "auto_zamanalif": "qatıru",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -817,10 +817,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фонвизинның",
-      "auto_zamanalif": "fonvizinnıñ",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катырылган",
+      "auto_zamanalif": "qatırılğan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -829,10 +829,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фонга",
-      "auto_zamanalif": "fonga",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катышкалавы",
+      "auto_zamanalif": "qatışqalawı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -841,10 +841,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фонема/графемалар",
-      "auto_zamanalif": "fonemagrafemalar",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катышмалы",
+      "auto_zamanalif": "qatışmalı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -853,10 +853,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фонетикага",
-      "auto_zamanalif": "fonetikağa",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "катыштырып",
+      "auto_zamanalif": "qatıştırıp",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -865,8 +865,8 @@
   },
   {
     "data": {
-      "cyrl_word": "форвард",
-      "auto_zamanalif": "forvard",
+      "cyrl_word": "каукемен",
+      "auto_zamanalif": "kaukemen",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -877,10 +877,10 @@
   },
   {
     "data": {
-      "cyrl_word": "формадагысы",
-      "auto_zamanalif": "formadagısı",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "каулаштылар",
+      "auto_zamanalif": "qawlaştılar",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -889,10 +889,10 @@
   },
   {
     "data": {
-      "cyrl_word": "формалаштырачак",
-      "auto_zamanalif": "formalaştıraçak",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "кауля",
+      "auto_zamanalif": "qawlya",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -901,8 +901,8 @@
   },
   {
     "data": {
-      "cyrl_word": "формалаштырыгыз",
-      "auto_zamanalif": "formalaştırıgız",
+      "cyrl_word": "каумберг",
+      "auto_zamanalif": "kaumberg",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -913,8 +913,8 @@
   },
   {
     "data": {
-      "cyrl_word": "формалаштырылганлыгын",
-      "auto_zamanalif": "formalaştırılganlığın",
+      "cyrl_word": "каунасны",
+      "auto_zamanalif": "kaunasnı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -925,10 +925,10 @@
   },
   {
     "data": {
-      "cyrl_word": "формашуына",
-      "auto_zamanalif": "formaşuına",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "каурый-каурый",
+      "auto_zamanalif": "qawrıy-qawrıy",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -937,8 +937,8 @@
   },
   {
     "data": {
-      "cyrl_word": "формовщик",
-      "auto_zamanalif": "formovşçik",
+      "cyrl_word": "каустик",
+      "auto_zamanalif": "kaustik",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -949,8 +949,8 @@
   },
   {
     "data": {
-      "cyrl_word": "формулашкан",
-      "auto_zamanalif": "formulaşkan",
+      "cyrl_word": "каутскийлары",
+      "auto_zamanalif": "kautskiyları",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -961,8 +961,8 @@
   },
   {
     "data": {
-      "cyrl_word": "формулировкалаган",
-      "auto_zamanalif": "formulirovkalağan",
+      "cyrl_word": "каутскиймы",
+      "auto_zamanalif": "kautskiymı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -973,8 +973,8 @@
   },
   {
     "data": {
-      "cyrl_word": "формулировкаланган",
-      "auto_zamanalif": "formulirovkalanğan",
+      "cyrl_word": "каутскийныкы",
+      "auto_zamanalif": "kautskiynıkı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -985,8 +985,8 @@
   },
   {
     "data": {
-      "cyrl_word": "формулировкалау",
-      "auto_zamanalif": "formulirovkalaw",
+      "cyrl_word": "каутскийча",
+      "auto_zamanalif": "kautskiyça",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -997,8 +997,8 @@
   },
   {
     "data": {
-      "cyrl_word": "формулировкалауда",
-      "auto_zamanalif": "formulirovkalauda",
+      "cyrl_word": "каутскийчыларның",
+      "auto_zamanalif": "kautskiyçılarnıñ",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1009,8 +1009,8 @@
   },
   {
     "data": {
-      "cyrl_word": "формулировкалый",
-      "auto_zamanalif": "formulirovkalıy",
+      "cyrl_word": "каутскийчылыгына",
+      "auto_zamanalif": "kautskiyçılıgına",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1021,8 +1021,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фотогалереясе",
-      "auto_zamanalif": "fotogalereyase",
+      "cyrl_word": "каутского",
+      "auto_zamanalif": "kautskogo",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1033,10 +1033,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фотограф-обзор",
-      "auto_zamanalif": "fotograf-obzor",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "каушаб",
+      "auto_zamanalif": "qawşab",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1045,10 +1045,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фотодокументлар",
-      "auto_zamanalif": "fotodokumentlar",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "каушатып",
+      "auto_zamanalif": "qawşatıp",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1057,10 +1057,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фотоконкурсы",
-      "auto_zamanalif": "fotokonkursı",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "каушау-буталу",
+      "auto_zamanalif": "qawşaw-butalu",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1069,10 +1069,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фотокросс",
-      "auto_zamanalif": "fotokross",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "каф",
+      "auto_zamanalif": "qaf",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1081,8 +1081,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фотопластинкаларда",
-      "auto_zamanalif": "fotoplastinkalarda",
+      "cyrl_word": "кафаров",
+      "auto_zamanalif": "kafarov",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1093,8 +1093,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фрагы",
-      "auto_zamanalif": "fragı",
+      "cyrl_word": "кафе-бистролар",
+      "auto_zamanalif": "kafe-bistrolar",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1105,8 +1105,8 @@
   },
   {
     "data": {
-      "cyrl_word": "франк",
-      "auto_zamanalif": "frank",
+      "cyrl_word": "кафедро",
+      "auto_zamanalif": "kafedro",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1117,10 +1117,10 @@
   },
   {
     "data": {
-      "cyrl_word": "франкалар",
-      "auto_zamanalif": "frankalar",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "кафтан",
+      "auto_zamanalif": "qaftan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1129,10 +1129,10 @@
   },
   {
     "data": {
-      "cyrl_word": "франклин",
-      "auto_zamanalif": "franklin",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "кафтанлы",
+      "auto_zamanalif": "qaftanlı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1141,10 +1141,10 @@
   },
   {
     "data": {
-      "cyrl_word": "франкога",
-      "auto_zamanalif": "frankoğa",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "каханнарның",
+      "auto_zamanalif": "qaxannarnıñ",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1153,10 +1153,10 @@
   },
   {
     "data": {
-      "cyrl_word": "франконы",
-      "auto_zamanalif": "frankonı",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "каханы",
+      "auto_zamanalif": "qaxanı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1165,10 +1165,10 @@
   },
   {
     "data": {
-      "cyrl_word": "франкфурт-майн",
-      "auto_zamanalif": "frankfurt-mayn",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "кахтан",
+      "auto_zamanalif": "qaxtan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1177,10 +1177,10 @@
   },
   {
     "data": {
-      "cyrl_word": "франкфуртер",
-      "auto_zamanalif": "frankfurter",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "кахул",
+      "auto_zamanalif": "qaxul",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1189,10 +1189,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фратович",
-      "auto_zamanalif": "fratoviç",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "качан",
+      "auto_zamanalif": "qaçan",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1201,8 +1201,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ФРГ",
-      "auto_zamanalif": "frg",
+      "cyrl_word": "качбаев",
+      "auto_zamanalif": "kaçbayev",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1213,8 +1213,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фрезерлауны",
-      "auto_zamanalif": "frezerlaunı",
+      "cyrl_word": "качественные",
+      "auto_zamanalif": "kaçestvennıyı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1225,10 +1225,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фрейбургны",
-      "auto_zamanalif": "freyburgnı",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "качкур-бай",
+      "auto_zamanalif": "qaçqur-bay",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1237,10 +1237,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фритредерство",
-      "auto_zamanalif": "fritrederstvo",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "качуб",
+      "auto_zamanalif": "qaçub",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1249,10 +1249,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фроленкога",
-      "auto_zamanalif": "frolenkoğa",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "качыб",
+      "auto_zamanalif": "qaçıb",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1261,10 +1261,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фроловна",
-      "auto_zamanalif": "frolovna",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "качырлар",
+      "auto_zamanalif": "qaçırlar",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1273,10 +1273,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фролово",
-      "auto_zamanalif": "frolovo",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "качырларның",
+      "auto_zamanalif": "qaçırlarnıñ",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1285,10 +1285,22 @@
   },
   {
     "data": {
-      "cyrl_word": "фронтовой",
-      "auto_zamanalif": "frontovoy",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "кашабы",
+      "auto_zamanalif": "qaşabı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кашагасындагы",
+      "auto_zamanalif": "qaşağasındağı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1297,10 +1309,22 @@
   },
   {
     "data": {
-      "cyrl_word": "фронттовикларның",
-      "auto_zamanalif": "fronttoviklarnıñ",
+      "cyrl_word": "кашаевлар",
+      "auto_zamanalif": "kaşayevlar",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кашапова",
+      "auto_zamanalif": "qaşapova",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1309,8 +1333,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фрукталар",
-      "auto_zamanalif": "fruktalar",
+      "cyrl_word": "кашаповага",
+      "auto_zamanalif": "kaşapovağa",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1321,8 +1345,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фундук",
-      "auto_zamanalif": "funduk",
+      "cyrl_word": "кашапованың",
+      "auto_zamanalif": "kaşapovanıñ",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1333,8 +1357,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фуражков",
-      "auto_zamanalif": "furajkov",
+      "cyrl_word": "КАШАРЫНЫ",
+      "auto_zamanalif": "kaşarını",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1345,8 +1369,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фуркан",
-      "auto_zamanalif": "furqan",
+      "cyrl_word": "кашбау",
+      "auto_zamanalif": "qaşbaw",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -1357,8 +1381,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фурмановның",
-      "auto_zamanalif": "furmanovnıñ",
+      "cyrl_word": "кашеваровларның",
+      "auto_zamanalif": "kaşevarovlarnıñ",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1369,8 +1393,8 @@
   },
   {
     "data": {
-      "cyrl_word": "футболкалар",
-      "auto_zamanalif": "futbolkalar",
+      "cyrl_word": "кашенны",
+      "auto_zamanalif": "kaşennı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1381,8 +1405,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ФХК",
-      "auto_zamanalif": "fxk",
+      "cyrl_word": "кашира",
+      "auto_zamanalif": "kaşira",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1393,8 +1417,8 @@
   },
   {
     "data": {
-      "cyrl_word": "філангысын",
-      "auto_zamanalif": "flangısın",
+      "cyrl_word": "каширин",
+      "auto_zamanalif": "kaşirin",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1405,10 +1429,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фәйзь",
-      "auto_zamanalif": "fäyz",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кашириннарны",
+      "auto_zamanalif": "kaşirinnarnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1417,10 +1441,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фәнәви",
-      "auto_zamanalif": "fänäwi",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кашкадамова",
+      "auto_zamanalif": "kaşkadamova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1429,8 +1453,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фәнәвил",
-      "auto_zamanalif": "fänäwil",
+      "cyrl_word": "кашкарбай",
+      "auto_zamanalif": "qaşqarbay",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -1441,8 +1465,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фәнәвис",
-      "auto_zamanalif": "fänäwis",
+      "cyrl_word": "кашкарый",
+      "auto_zamanalif": "qaşqarıy",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -1453,10 +1477,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фәрештәви",
-      "auto_zamanalif": "färeştäwi",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кашкурова",
+      "auto_zamanalif": "kaşkurova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1465,10 +1489,22 @@
   },
   {
     "data": {
-      "cyrl_word": "фәритяхин",
-      "auto_zamanalif": "färityäxin",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кашлатов",
+      "auto_zamanalif": "kaşlatov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "КАШОВ",
+      "auto_zamanalif": "kaşov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1477,8 +1513,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фәрёк",
-      "auto_zamanalif": "färyok",
+      "cyrl_word": "кашыгы",
+      "auto_zamanalif": "qaşığı",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -1489,8 +1525,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фәтвәләр",
-      "auto_zamanalif": "fätwälär",
+      "cyrl_word": "кашын",
+      "auto_zamanalif": "qaşın",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -1501,10 +1537,10 @@
   },
   {
     "data": {
-      "cyrl_word": "фәткуллин",
-      "auto_zamanalif": "fätkullin",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "каю",
+      "auto_zamanalif": "qayu",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1513,8 +1549,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фәттаховны",
-      "auto_zamanalif": "fättaxovnı",
+      "cyrl_word": "каюмович",
+      "auto_zamanalif": "kayumoviç",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1525,8 +1561,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фәттаховның",
-      "auto_zamanalif": "fättaxovnıñ",
+      "cyrl_word": "каюталарында",
+      "auto_zamanalif": "kayutalarında",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1537,8 +1573,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фәтхелбәян",
-      "auto_zamanalif": "fätxelbäyän",
+      "cyrl_word": "каңга",
+      "auto_zamanalif": "qañğa",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -1549,8 +1585,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фәхреддиневнең",
-      "auto_zamanalif": "fäxreddinewneñ",
+      "cyrl_word": "каңгылдавы",
+      "auto_zamanalif": "qañğıldawı",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -1561,8 +1597,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фәхретдиневнең",
-      "auto_zamanalif": "fäxretdinewneñ",
+      "cyrl_word": "каңгырап",
+      "auto_zamanalif": "qañğırap",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -1573,8 +1609,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фөрьяде",
-      "auto_zamanalif": "föryade",
+      "cyrl_word": "каһанлыгын",
+      "auto_zamanalif": "qahanlığın",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -1585,8 +1621,8 @@
   },
   {
     "data": {
-      "cyrl_word": "фөрьят",
-      "auto_zamanalif": "föryat",
+      "cyrl_word": "каһанлыгына",
+      "auto_zamanalif": "qahanlığına",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -1597,8 +1633,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ха-лык",
-      "auto_zamanalif": "xa-lıq",
+      "cyrl_word": "каһарманнарга",
+      "auto_zamanalif": "qaharmannarğa",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -1609,8 +1645,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ха-лыкны",
-      "auto_zamanalif": "xa-lıqnı",
+      "cyrl_word": "каһарманннар",
+      "auto_zamanalif": "qaharmannnar",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -1621,10 +1657,10 @@
   },
   {
     "data": {
-      "cyrl_word": "ха­кында",
-      "auto_zamanalif": "xaqında",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "каһиров",
+      "auto_zamanalif": "kahirov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1633,10 +1669,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хаварзэм",
-      "auto_zamanalif": "xawarzem",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "каһированың",
+      "auto_zamanalif": "kahirovanıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1645,8 +1681,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хавзага",
-      "auto_zamanalif": "xawzağa",
+      "cyrl_word": "каһтаранның",
+      "auto_zamanalif": "qahtarannıñ",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -1657,8 +1693,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хавыевларга",
-      "auto_zamanalif": "xavıyevlarğa",
+      "cyrl_word": "кв.км",
+      "auto_zamanalif": "kvkm",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1669,8 +1705,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хадыева",
-      "auto_zamanalif": "xadıyeva",
+      "cyrl_word": "кв/м",
+      "auto_zamanalif": "kv/m",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1681,8 +1717,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хазеев",
-      "auto_zamanalif": "xazeyev",
+      "cyrl_word": "квадратураларын",
+      "auto_zamanalif": "kvadraturaların",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1693,10 +1729,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хай-ваннар",
-      "auto_zamanalif": "xay-wannar",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квази-марксисттан",
+      "auto_zamanalif": "kvazi-marksisttan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1705,10 +1741,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хайванат",
-      "auto_zamanalif": "xaywanat",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квазиомонимнар",
+      "auto_zamanalif": "kvaziomonimnar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1717,10 +1753,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хакк",
-      "auto_zamanalif": "xaqq",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квакер",
+      "auto_zamanalif": "kvaker",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1729,10 +1765,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хаккы",
-      "auto_zamanalif": "xaqqı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квантитатив",
+      "auto_zamanalif": "kvantitativ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1741,10 +1777,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хаклап",
-      "auto_zamanalif": "xaqlap",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квантлау",
+      "auto_zamanalif": "kvantlaw",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1753,10 +1789,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хакларыбыз",
-      "auto_zamanalif": "xaqlarıbız",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кванториум",
+      "auto_zamanalif": "kvantorium",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1765,10 +1801,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хакларының",
-      "auto_zamanalif": "xaqlarınıñ",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квантун",
+      "auto_zamanalif": "kvantun",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1777,10 +1813,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хаклыбыз",
-      "auto_zamanalif": "xaqlıbız",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кварки",
+      "auto_zamanalif": "kvarki",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1789,10 +1825,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хаклыктан",
-      "auto_zamanalif": "xaqlıqtan",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кварталлап",
+      "auto_zamanalif": "kvartallap",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1801,10 +1837,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хаклылар",
-      "auto_zamanalif": "xaqlılar",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кварталынд",
+      "auto_zamanalif": "kvartalınd",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1813,10 +1849,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хаклылыгын",
-      "auto_zamanalif": "xaqlılığın",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квартирага",
+      "auto_zamanalif": "kvartirağa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1825,10 +1861,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хакның",
-      "auto_zamanalif": "xaqnıñ",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квартиралардагы",
+      "auto_zamanalif": "kvartiralardağı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1837,10 +1873,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хактыр",
-      "auto_zamanalif": "xaqtır",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "КВАШНИННЫҢ",
+      "auto_zamanalif": "kvaşninnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1849,10 +1885,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хакъдан",
-      "auto_zamanalif": "xaqdan",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квей-юн-чин",
+      "auto_zamanalif": "kvey-yun-çin",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1861,10 +1897,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хакътан",
-      "auto_zamanalif": "xaqtan",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квейс",
+      "auto_zamanalif": "kveys",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1873,10 +1909,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хакыбыз",
-      "auto_zamanalif": "xaqıbız",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квилникова",
+      "auto_zamanalif": "kvilnikova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1885,10 +1921,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хакыгызда",
-      "auto_zamanalif": "xaqığızda",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квинтетны",
+      "auto_zamanalif": "kvintetnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1897,10 +1933,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хакыгызның",
-      "auto_zamanalif": "xaqığıznıñ",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квислинг",
+      "auto_zamanalif": "kvisling",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1909,10 +1945,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хакымыз",
-      "auto_zamanalif": "xaqımız",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квислинглар",
+      "auto_zamanalif": "kvislinglar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1921,10 +1957,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хакындадыр",
-      "auto_zamanalif": "xaqındadır",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "квислингларга",
+      "auto_zamanalif": "kvislinglarğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1933,10 +1969,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хакындамы",
-      "auto_zamanalif": "xaqındamı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "КВСР",
+      "auto_zamanalif": "kvsr",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1945,10 +1981,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хакындан",
-      "auto_zamanalif": "xaqından",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "КГАЗС",
+      "auto_zamanalif": "kgazs",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1957,8 +1993,8 @@
   },
   {
     "data": {
-      "cyrl_word": "халдеев",
-      "auto_zamanalif": "xaldeyev",
+      "cyrl_word": "КГБ",
+      "auto_zamanalif": "kgb",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -1969,10 +2005,10 @@
   },
   {
     "data": {
-      "cyrl_word": "халкы-на",
-      "auto_zamanalif": "xalqı-na",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "КГМУ",
+      "auto_zamanalif": "kgmu",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -1981,8 +2017,8 @@
   },
   {
     "data": {
-      "cyrl_word": "халкыйкь",
-      "auto_zamanalif": "xalqıyq",
+      "cyrl_word": "кдуның",
+      "auto_zamanalif": "qdunıñ",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -1993,8 +2029,8 @@
   },
   {
     "data": {
-      "cyrl_word": "халкымызны",
-      "auto_zamanalif": "xalqımıznı",
+      "cyrl_word": "кеддюс",
+      "auto_zamanalif": "keddyüs",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2005,10 +2041,10 @@
   },
   {
     "data": {
-      "cyrl_word": "халкыны",
-      "auto_zamanalif": "xalqını",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кедровая",
+      "auto_zamanalif": "kedrovaya",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2017,10 +2053,10 @@
   },
   {
     "data": {
-      "cyrl_word": "халкынң",
-      "auto_zamanalif": "xalqınñ",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "келчевский",
+      "auto_zamanalif": "kelçevskiy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2029,8 +2065,8 @@
   },
   {
     "data": {
-      "cyrl_word": "халыкларнын",
-      "auto_zamanalif": "xalıqlarnın",
+      "cyrl_word": "келәүле",
+      "auto_zamanalif": "keläwle",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2041,10 +2077,10 @@
   },
   {
     "data": {
-      "cyrl_word": "халыклаштыру",
-      "auto_zamanalif": "xalıqlaştıru",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кемерево",
+      "auto_zamanalif": "kemerevo",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2053,10 +2089,46 @@
   },
   {
     "data": {
-      "cyrl_word": "халыкнын",
-      "auto_zamanalif": "xalıqnın",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кемеровода",
+      "auto_zamanalif": "kemerovoda",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кененбаев",
+      "auto_zamanalif": "kenenbayev",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "керамикадан",
+      "auto_zamanalif": "keramikadan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "кербабаев",
+      "auto_zamanalif": "kerbabayev",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2065,8 +2137,8 @@
   },
   {
     "data": {
-      "cyrl_word": "халыкнң",
-      "auto_zamanalif": "xalıqnñ",
+      "cyrl_word": "кермәвемезнең",
+      "auto_zamanalif": "kermäwemezneñ",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2077,8 +2149,8 @@
   },
   {
     "data": {
-      "cyrl_word": "халыктагы",
-      "auto_zamanalif": "xalıqtağı",
+      "cyrl_word": "кермәүгә",
+      "auto_zamanalif": "kermäwgä",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2089,8 +2161,8 @@
   },
   {
     "data": {
-      "cyrl_word": "халыкчыл",
-      "auto_zamanalif": "xalıqçıl",
+      "cyrl_word": "кермәүләрен",
+      "auto_zamanalif": "kermäwlären",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2101,8 +2173,8 @@
   },
   {
     "data": {
-      "cyrl_word": "халыкчыллык",
-      "auto_zamanalif": "xalıqçıllıq",
+      "cyrl_word": "кермәүче",
+      "auto_zamanalif": "kermäwçe",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2113,8 +2185,8 @@
   },
   {
     "data": {
-      "cyrl_word": "халыкының",
-      "auto_zamanalif": "xalıqınıñ",
+      "cyrl_word": "кертелмәве",
+      "auto_zamanalif": "kertelmäwe",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2125,8 +2197,8 @@
   },
   {
     "data": {
-      "cyrl_word": "халя",
-      "auto_zamanalif": "xalya",
+      "cyrl_word": "кертеля",
+      "auto_zamanalif": "kertelyä",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2137,8 +2209,8 @@
   },
   {
     "data": {
-      "cyrl_word": "халёк",
-      "auto_zamanalif": "xalyoq",
+      "cyrl_word": "кертмәве",
+      "auto_zamanalif": "kertmäwe",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2149,8 +2221,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хамадеева",
-      "auto_zamanalif": "xamadeyeva",
+      "cyrl_word": "кетлинская",
+      "auto_zamanalif": "ketlinskaya",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2161,10 +2233,10 @@
   },
   {
     "data": {
-      "cyrl_word": "ханикалаштырылган",
-      "auto_zamanalif": "xanikalaştırılğan",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "кешнәвен",
+      "auto_zamanalif": "keşnäwen",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2173,8 +2245,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ханнановаларның",
-      "auto_zamanalif": "xannanowalarnıñ",
+      "cyrl_word": "кзыл",
+      "auto_zamanalif": "qzıl",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2185,8 +2257,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ханнарыныкы",
-      "auto_zamanalif": "xannarınıqı",
+      "cyrl_word": "кзыл-тау",
+      "auto_zamanalif": "qzıl-taw",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2197,10 +2269,10 @@
   },
   {
     "data": {
-      "cyrl_word": "ханс-йорк",
-      "auto_zamanalif": "xans-york",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "кзылтау",
+      "auto_zamanalif": "qzıltaw",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2209,8 +2281,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хансиверов",
-      "auto_zamanalif": "xansiverov",
+      "cyrl_word": "кибәкова",
+      "auto_zamanalif": "kibäkova",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2221,8 +2293,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ханства",
-      "auto_zamanalif": "xanstva",
+      "cyrl_word": "кизеев",
+      "auto_zamanalif": "kizeyev",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2233,8 +2305,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ханство",
-      "auto_zamanalif": "xanstvo",
+      "cyrl_word": "кизиловны",
+      "auto_zamanalif": "kizilovnı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2245,8 +2317,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ханёк",
-      "auto_zamanalif": "xanyoq",
+      "cyrl_word": "килешенмәү",
+      "auto_zamanalif": "kileşenmäw",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2257,10 +2329,10 @@
   },
   {
     "data": {
-      "cyrl_word": "характердаг",
-      "auto_zamanalif": "xarakterdag",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "килешмәве",
+      "auto_zamanalif": "kileşmäwe",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2269,10 +2341,10 @@
   },
   {
     "data": {
-      "cyrl_word": "характере",
-      "auto_zamanalif": "xaraktere",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "килешмәвенә",
+      "auto_zamanalif": "kileşmäwenä",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2281,10 +2353,10 @@
   },
   {
     "data": {
-      "cyrl_word": "характерендагы",
-      "auto_zamanalif": "xarakterendağı",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "килмәвем",
+      "auto_zamanalif": "kilmäwem",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2293,10 +2365,10 @@
   },
   {
     "data": {
-      "cyrl_word": "характеризующая",
-      "auto_zamanalif": "xarakterizuyuşçaya",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "килмәүләре",
+      "auto_zamanalif": "kilmäwläre",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2305,8 +2377,8 @@
   },
   {
     "data": {
-      "cyrl_word": "характерларын",
-      "auto_zamanalif": "xarakterların",
+      "cyrl_word": "килограми",
+      "auto_zamanalif": "kilogrami",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2317,8 +2389,8 @@
   },
   {
     "data": {
-      "cyrl_word": "характерларында",
-      "auto_zamanalif": "xarakterlarında",
+      "cyrl_word": "килограммлап",
+      "auto_zamanalif": "kilogrammlap",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2329,8 +2401,8 @@
   },
   {
     "data": {
-      "cyrl_word": "характерларындагы",
-      "auto_zamanalif": "xarakterlarındağı",
+      "cyrl_word": "кимограф",
+      "auto_zamanalif": "kimograf",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2341,8 +2413,8 @@
   },
   {
     "data": {
-      "cyrl_word": "характерной",
-      "auto_zamanalif": "xarakternoy",
+      "cyrl_word": "кинетикасы",
+      "auto_zamanalif": "kinetikası",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2353,8 +2425,8 @@
   },
   {
     "data": {
-      "cyrl_word": "характерсызлыгы",
-      "auto_zamanalif": "xaraktersızlığı",
+      "cyrl_word": "кинодагы",
+      "auto_zamanalif": "kinodagı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2365,8 +2437,8 @@
   },
   {
     "data": {
-      "cyrl_word": "характерсызлык",
-      "auto_zamanalif": "xaraktersızlıq",
+      "cyrl_word": "кинокурс",
+      "auto_zamanalif": "kinokurs",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2377,8 +2449,8 @@
   },
   {
     "data": {
-      "cyrl_word": "характерсызлыклары",
-      "auto_zamanalif": "xaraktersızlıkları",
+      "cyrl_word": "кинопроизводствога",
+      "auto_zamanalif": "kinoproizvodstvoğa",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2389,8 +2461,8 @@
   },
   {
     "data": {
-      "cyrl_word": "характерсызлыкта",
-      "auto_zamanalif": "xaraktersızlıkta",
+      "cyrl_word": "киноустановкалар",
+      "auto_zamanalif": "kinoustanovkalar",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2401,8 +2473,8 @@
   },
   {
     "data": {
-      "cyrl_word": "характиристикалары",
-      "auto_zamanalif": "xaraktiristikaları",
+      "cyrl_word": "кинохрониканы",
+      "auto_zamanalif": "kinoxronikanı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2413,8 +2485,8 @@
   },
   {
     "data": {
-      "cyrl_word": "харисовларның",
-      "auto_zamanalif": "xarisovlarnıñ",
+      "cyrl_word": "киоскысын",
+      "auto_zamanalif": "kioskısın",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2425,8 +2497,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хаскова",
-      "auto_zamanalif": "xaskova",
+      "cyrl_word": "киреева",
+      "auto_zamanalif": "kireyeva",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2437,10 +2509,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хатыгызны",
-      "auto_zamanalif": "xatığıznı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кириллович",
+      "auto_zamanalif": "kirilloviç",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2449,10 +2521,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хатыкның",
-      "auto_zamanalif": "xatıqnıñ",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кириллович-крупская",
+      "auto_zamanalif": "kirilloviç-krupskaya",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2461,10 +2533,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хатын-кыз-ларның",
-      "auto_zamanalif": "xatın-qız-larnıñ",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кирилловичны",
+      "auto_zamanalif": "kirilloviçnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2473,10 +2545,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хатын-кыз-ларын",
-      "auto_zamanalif": "xatın-qız-ların",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кирилловна",
+      "auto_zamanalif": "kirillovna",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2485,10 +2557,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хатын-кыз-ларының",
-      "auto_zamanalif": "xatın-qız-larınıñ",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "киркалар",
+      "auto_zamanalif": "kirkalar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2497,10 +2569,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хатын-кыздагыны",
-      "auto_zamanalif": "xatın-qızdağını",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кировск",
+      "auto_zamanalif": "kirovsk",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2509,8 +2581,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хатын-кызларнын",
-      "auto_zamanalif": "xatın-qızlarnın",
+      "cyrl_word": "киртәләүләр",
+      "auto_zamanalif": "kirtäläwlär",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2521,8 +2593,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хатын-кызлары-ның",
-      "auto_zamanalif": "xatın-qızları-nıñ",
+      "cyrl_word": "кирәкмәве",
+      "auto_zamanalif": "kiräkmäwe",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2533,8 +2605,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хатын-кызларымыз",
-      "auto_zamanalif": "xatın-qızlarımız",
+      "cyrl_word": "кисвәне",
+      "auto_zamanalif": "kiswäne",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2545,8 +2617,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хатын-кызлык",
-      "auto_zamanalif": "xatın-qızlıq",
+      "cyrl_word": "кисешмәячәк",
+      "auto_zamanalif": "kiseşmäyäçäk",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2557,10 +2629,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хатынкызларга",
-      "auto_zamanalif": "xatınqızlarğa",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кисловодск",
+      "auto_zamanalif": "kislovodsk",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2569,34 +2641,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хатынкызлардан",
-      "auto_zamanalif": "xatınqızlardan",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "catchall"
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "хатынкызларны",
-      "auto_zamanalif": "xatınqızlarnı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "catchall"
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "хатынкызларның",
-      "auto_zamanalif": "xatınqızlarnıñ",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кисточканың",
+      "auto_zamanalif": "kistoçkanıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2605,8 +2653,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хатынкызлары",
-      "auto_zamanalif": "xatınqızları",
+      "cyrl_word": "кисәү",
+      "auto_zamanalif": "kisäw",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2617,10 +2665,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хатынкызларын",
-      "auto_zamanalif": "xatınqızların",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "китайская",
+      "auto_zamanalif": "kitayskaya",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2629,8 +2677,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хатыннарыгыз-ның",
-      "auto_zamanalif": "xatınnarığız-nıñ",
+      "cyrl_word": "китерелмәячәк",
+      "auto_zamanalif": "kiterelmäyäçäk",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2641,8 +2689,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хатыннарыгызга",
-      "auto_zamanalif": "xatınnarığızğa",
+      "cyrl_word": "киткәләвен",
+      "auto_zamanalif": "kitkäläwen",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2653,22 +2701,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хатын–кыз",
-      "auto_zamanalif": "xatınqız",
+      "cyrl_word": "китмәвенә",
+      "auto_zamanalif": "kitmäwenä",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "catchall"
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "хаустова",
-      "auto_zamanalif": "xaustova",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2677,8 +2713,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хафаланмагыз",
-      "auto_zamanalif": "xafalanmağız",
+      "cyrl_word": "китмәячәген",
+      "auto_zamanalif": "kitmäyäçägen",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2689,8 +2725,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хафня",
-      "auto_zamanalif": "xafnya",
+      "cyrl_word": "китмәү",
+      "auto_zamanalif": "kitmäw",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2701,8 +2737,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хачка",
-      "auto_zamanalif": "xaçqa",
+      "cyrl_word": "китмәүдә",
+      "auto_zamanalif": "kitmäwdä",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2713,8 +2749,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хаятка",
-      "auto_zamanalif": "xayatqa",
+      "cyrl_word": "кится",
+      "auto_zamanalif": "kitsyä",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -2725,8 +2761,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хва-лын",
-      "auto_zamanalif": "xva-lın",
+      "cyrl_word": "кичемасованын",
+      "auto_zamanalif": "kiçemasovanın",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2737,8 +2773,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хватина",
-      "auto_zamanalif": "xvatina",
+      "cyrl_word": "кишиневский",
+      "auto_zamanalif": "kişinevskiy",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2749,8 +2785,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ХВФ",
-      "auto_zamanalif": "xvf",
+      "cyrl_word": "кишиневы",
+      "auto_zamanalif": "kişinevı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2761,8 +2797,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хгфны",
-      "auto_zamanalif": "xgfnı",
+      "cyrl_word": "ККП",
+      "auto_zamanalif": "kkp",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2773,8 +2809,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хейсканен",
-      "auto_zamanalif": "xeyskanen",
+      "cyrl_word": "клаас",
+      "auto_zamanalif": "klaas",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2785,46 +2821,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хикмәтуллович",
-      "auto_zamanalif": "xikmätulloviç",
+      "cyrl_word": "клавирга",
+      "auto_zamanalif": "klavirğa",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "catchall"
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "хикәябезнең",
-      "auto_zamanalif": "xikäyäbezneñ",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "catchall"
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "хикәяи",
-      "auto_zamanalif": "xikäyäi",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "catchall"
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "хикәялелектән",
-      "auto_zamanalif": "xikäyälelektän",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2833,10 +2833,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хикәяләгән",
-      "auto_zamanalif": "xikäyälägän",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клад",
+      "auto_zamanalif": "klad",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2845,10 +2845,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хикәяләргә",
-      "auto_zamanalif": "xikäyälärgä",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кладкасының",
+      "auto_zamanalif": "kladkasınıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2857,10 +2857,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хикәяләрене",
-      "auto_zamanalif": "xikäyälärene",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кладовое",
+      "auto_zamanalif": "kladovoyı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2869,10 +2869,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хикәяләүгә",
-      "auto_zamanalif": "xikäyäläwgä",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кладовщикларга",
+      "auto_zamanalif": "kladovşçiklarğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2881,10 +2881,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хикәясенең",
-      "auto_zamanalif": "xikäyäseneñ",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клапанны",
+      "auto_zamanalif": "klapannı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2893,10 +2893,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хикәятне",
-      "auto_zamanalif": "xikäyätne",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клас",
+      "auto_zamanalif": "klas",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2905,10 +2905,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хикәячелеген",
-      "auto_zamanalif": "xikäyäçelegen",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "классигыбыз",
+      "auto_zamanalif": "klassigıbız",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2917,10 +2917,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хикәячелек",
-      "auto_zamanalif": "xikäyäçelek",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "классигын",
+      "auto_zamanalif": "klassiğın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2929,10 +2929,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хикәяңдәге",
-      "auto_zamanalif": "xikäyäñdäge",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "классигының",
+      "auto_zamanalif": "klassigınıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2941,10 +2941,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хиляф",
-      "auto_zamanalif": "xilyäf",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "классикларча",
+      "auto_zamanalif": "klassiklarça",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -2953,8 +2953,8 @@
   },
   {
     "data": {
-      "cyrl_word": "химвод",
-      "auto_zamanalif": "ximvod",
+      "cyrl_word": "классикларыбызны",
+      "auto_zamanalif": "klassiklarıbıznı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2965,8 +2965,8 @@
   },
   {
     "data": {
-      "cyrl_word": "химигы",
-      "auto_zamanalif": "ximigı",
+      "cyrl_word": "классикларыбызның",
+      "auto_zamanalif": "klassiklarıbıznıñ",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2977,8 +2977,8 @@
   },
   {
     "data": {
-      "cyrl_word": "химик-токсикологик",
-      "auto_zamanalif": "ximik-toksikologik",
+      "cyrl_word": "классташлар",
+      "auto_zamanalif": "klasstaşlar",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -2989,8 +2989,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хксның",
-      "auto_zamanalif": "xksnıñ",
+      "cyrl_word": "кластерда",
+      "auto_zamanalif": "klasterda",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3001,10 +3001,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хлак",
-      "auto_zamanalif": "xlaq",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кластерлар",
+      "auto_zamanalif": "klasterlar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3013,10 +3013,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хлакый",
-      "auto_zamanalif": "xlaqıy",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кластерларны",
+      "auto_zamanalif": "klasterlarnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3025,8 +3025,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хлороводород",
-      "auto_zamanalif": "xlorovodorod",
+      "cyrl_word": "кластерларның",
+      "auto_zamanalif": "klasterlarnıñ",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3037,8 +3037,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ХМЕЛЕВАЯ",
-      "auto_zamanalif": "xmelevaya",
+      "cyrl_word": "кластерларын",
+      "auto_zamanalif": "klasterların",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3049,8 +3049,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хованская",
-      "auto_zamanalif": "xovanskaya",
+      "cyrl_word": "кластерлы",
+      "auto_zamanalif": "klasterlı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3061,8 +3061,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ховдск",
-      "auto_zamanalif": "xovdsk",
+      "cyrl_word": "кластерын",
+      "auto_zamanalif": "klasterın",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3073,10 +3073,10 @@
   },
   {
     "data": {
-      "cyrl_word": "ходага",
-      "auto_zamanalif": "xodağa",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клаузуласы",
+      "auto_zamanalif": "klauzulası",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3085,10 +3085,10 @@
   },
   {
     "data": {
-      "cyrl_word": "ходайкол",
-      "auto_zamanalif": "xodayqol",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клевета",
+      "auto_zamanalif": "kleveta",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3097,8 +3097,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ходга",
-      "auto_zamanalif": "xodga",
+      "cyrl_word": "клейм-татуировканың",
+      "auto_zamanalif": "kleym-tatuirowqanıñ",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3109,8 +3109,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ходжаева",
-      "auto_zamanalif": "xodjayeva",
+      "cyrl_word": "КЛЕМЕНОВО",
+      "auto_zamanalif": "klemenovo",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3121,10 +3121,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хозурландык",
-      "auto_zamanalif": "xozurlandıq",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кленовый",
+      "auto_zamanalif": "klenovıy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3133,10 +3133,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хозурланмак",
-      "auto_zamanalif": "xozurlanmaq",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клерикализм-ның",
+      "auto_zamanalif": "klerikalizm-nıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3145,10 +3145,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хозурлыкта",
-      "auto_zamanalif": "xozurlıqta",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клерикализмын",
+      "auto_zamanalif": "klerikalizmın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3157,8 +3157,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хокку",
-      "auto_zamanalif": "xokku",
+      "cyrl_word": "клерикалларга",
+      "auto_zamanalif": "klerikallarğa",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3169,10 +3169,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хоку-кы",
-      "auto_zamanalif": "xoqu-qı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клеткалары",
+      "auto_zamanalif": "kletkaları",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3181,10 +3181,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хокук-ларын",
-      "auto_zamanalif": "xoquq-ların",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клетчаткаларның",
+      "auto_zamanalif": "kletçatkalarnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3193,10 +3193,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хокукдан",
-      "auto_zamanalif": "xoquqdan",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клика",
+      "auto_zamanalif": "klika",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3205,10 +3205,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хокукл",
-      "auto_zamanalif": "xoquql",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кликасы",
+      "auto_zamanalif": "klikası",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3217,10 +3217,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хокукларыннчы",
-      "auto_zamanalif": "xoquqlarınnçı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клименко",
+      "auto_zamanalif": "klimenko",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3229,10 +3229,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хокуклыгын",
-      "auto_zamanalif": "xoquqlığın",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клинкурдан",
+      "auto_zamanalif": "klinkurdan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3241,10 +3241,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хокуклык",
-      "auto_zamanalif": "xoquqlıq",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клод",
+      "auto_zamanalif": "klod",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3253,10 +3253,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хокуклылар",
-      "auto_zamanalif": "xoquqlılar",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клочкова",
+      "auto_zamanalif": "kloçkova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3265,10 +3265,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хокуксызлы",
-      "auto_zamanalif": "xoquqsızlı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клочковоны",
+      "auto_zamanalif": "kloçkovonı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3277,10 +3277,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хокукыгыз",
-      "auto_zamanalif": "xoquqığız",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "клубов",
+      "auto_zamanalif": "klubov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3289,8 +3289,8 @@
   },
   {
     "data": {
-      "cyrl_word": "холмогор",
-      "auto_zamanalif": "xolmogor",
+      "cyrl_word": "клушина",
+      "auto_zamanalif": "kluşina",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3301,8 +3301,8 @@
   },
   {
     "data": {
-      "cyrl_word": "холокост-наша",
-      "auto_zamanalif": "xolokost-naşa",
+      "cyrl_word": "клыковны",
+      "auto_zamanalif": "klıkovnı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3313,8 +3313,8 @@
   },
   {
     "data": {
-      "cyrl_word": "холыклылыгы",
-      "auto_zamanalif": "xolıqlılığı",
+      "cyrl_word": "клычова",
+      "auto_zamanalif": "qlıçova",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -3325,8 +3325,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хонка",
-      "auto_zamanalif": "xonka",
+      "cyrl_word": "КМПО",
+      "auto_zamanalif": "kmpo",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3337,8 +3337,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хорошевны",
-      "auto_zamanalif": "xoroşevnı",
+      "cyrl_word": "КНАЧУКОВА",
+      "auto_zamanalif": "knaçukova",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3349,10 +3349,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хосусыйлыгына",
-      "auto_zamanalif": "xosusıylığına",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "книгага",
+      "auto_zamanalif": "knigağa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3361,10 +3361,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хоукуларын",
-      "auto_zamanalif": "xouquların",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "книговорот",
+      "auto_zamanalif": "knigovorot",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3373,10 +3373,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хошугсыз",
-      "auto_zamanalif": "xoşuğsız",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "книгу",
+      "auto_zamanalif": "knigu",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3385,8 +3385,8 @@
   },
   {
     "data": {
-      "cyrl_word": "храмченкова",
-      "auto_zamanalif": "xramçenkova",
+      "cyrl_word": "книжкадан",
+      "auto_zamanalif": "knijkadan",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3397,8 +3397,8 @@
   },
   {
     "data": {
-      "cyrl_word": "христбург",
-      "auto_zamanalif": "xristburg",
+      "cyrl_word": "книжкаларны",
+      "auto_zamanalif": "knijkalarnı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3409,8 +3409,8 @@
   },
   {
     "data": {
-      "cyrl_word": "христианлыкның",
-      "auto_zamanalif": "xristianlıknıñ",
+      "cyrl_word": "книжкаларның",
+      "auto_zamanalif": "knijkalarnıñ",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3421,8 +3421,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хромовокислый",
-      "auto_zamanalif": "xromovokislıy",
+      "cyrl_word": "книжкаларының",
+      "auto_zamanalif": "knijkalarınıñ",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3433,8 +3433,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хроникаларда",
-      "auto_zamanalif": "xronikalarda",
+      "cyrl_word": "книжкасында",
+      "auto_zamanalif": "knijkasında",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3445,8 +3445,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хуанхэ",
-      "auto_zamanalif": "xuanxe",
+      "cyrl_word": "кнопкасы",
+      "auto_zamanalif": "knopkası",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3457,8 +3457,8 @@
   },
   {
     "data": {
-      "cyrl_word": "художественной",
-      "auto_zamanalif": "xudojestvennoy",
+      "cyrl_word": "кныш",
+      "auto_zamanalif": "knış",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3469,8 +3469,8 @@
   },
   {
     "data": {
-      "cyrl_word": "художников",
-      "auto_zamanalif": "xudojnikov",
+      "cyrl_word": "ко-лумб",
+      "auto_zamanalif": "ko-lumb",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3481,8 +3481,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хужалыгыннан",
-      "auto_zamanalif": "xujalığınnan",
+      "cyrl_word": "ко-ралланган",
+      "auto_zamanalif": "qo-rallanğan",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -3493,10 +3493,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хужалыкларны",
-      "auto_zamanalif": "xujalıqlarnı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коб-пиппов",
+      "auto_zamanalif": "kob-pippov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3505,10 +3505,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хужалыклары",
-      "auto_zamanalif": "xujalıqları",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кобра",
+      "auto_zamanalif": "kobra",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3517,10 +3517,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хужалыкларында",
-      "auto_zamanalif": "xujalıqlarında",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кобурасын",
+      "auto_zamanalif": "koburasın",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3529,10 +3529,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хужалыкны",
-      "auto_zamanalif": "xujalıqnı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кобылина",
+      "auto_zamanalif": "kobılina",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3541,10 +3541,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хужалыкта",
-      "auto_zamanalif": "xujalıqta",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "ков",
+      "auto_zamanalif": "kov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3553,10 +3553,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хужалыкчылар",
-      "auto_zamanalif": "xujalıqçılar",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "ковалева",
+      "auto_zamanalif": "kovaleva",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3565,8 +3565,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хунвейбиннары",
-      "auto_zamanalif": "xunveybinnarı",
+      "cyrl_word": "ковалевның",
+      "auto_zamanalif": "kovalevnıñ",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3577,8 +3577,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хунвэйбиннар",
-      "auto_zamanalif": "xunveybinnar",
+      "cyrl_word": "ковалевскийга",
+      "auto_zamanalif": "kovalevskiyğa",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3589,10 +3589,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хуплаганнары",
-      "auto_zamanalif": "xuplağannarı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "ковалевскийлар",
+      "auto_zamanalif": "kovalevskiylar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3601,10 +3601,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хуплауда",
-      "auto_zamanalif": "xuplawda",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коваленкога",
+      "auto_zamanalif": "kovalenkoğa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3613,10 +3613,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хуплауларыннан",
-      "auto_zamanalif": "xuplawlarınnan",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "ковардак",
+      "auto_zamanalif": "kovardak",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3625,10 +3625,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хупяау",
-      "auto_zamanalif": "xupyaaw",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коворкингларда",
+      "auto_zamanalif": "kovorkinglarda",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3637,10 +3637,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хурланганнарның",
-      "auto_zamanalif": "xurlanğannarnıñ",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "ковпак",
+      "auto_zamanalif": "kovpak",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3649,10 +3649,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хурлаудан",
-      "auto_zamanalif": "xurlawdan",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "ковтун",
+      "auto_zamanalif": "kovtun",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3661,10 +3661,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хурлыклыгы",
-      "auto_zamanalif": "xurlıqlığı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "ковтунов",
+      "auto_zamanalif": "kovtunov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3673,8 +3673,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хушавазлар",
-      "auto_zamanalif": "xuşawazlar",
+      "cyrl_word": "ковы",
+      "auto_zamanalif": "qowı",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -3685,10 +3685,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хущалыкны",
-      "auto_zamanalif": "xuşçalıqnı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коган",
+      "auto_zamanalif": "kogan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3697,10 +3697,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хуҗа-лыклардан",
-      "auto_zamanalif": "xuca-lıqlardan",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "когахоз",
+      "auto_zamanalif": "kogaxoz",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3709,10 +3709,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хуҗалагы",
-      "auto_zamanalif": "xucalağı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "когнитив",
+      "auto_zamanalif": "kognitiv",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3721,10 +3721,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хуҗалак",
-      "auto_zamanalif": "xucalaq",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "когогина",
+      "auto_zamanalif": "kogogina",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3733,10 +3733,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хуҗаларыгыз",
-      "auto_zamanalif": "xucalarığız",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "когогинаның",
+      "auto_zamanalif": "kogoginanıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3745,8 +3745,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хуҗалы-гы",
-      "auto_zamanalif": "xucalı-ğı",
+      "cyrl_word": "кодага",
+      "auto_zamanalif": "qodağa",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -3757,8 +3757,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хуҗалыгынын",
-      "auto_zamanalif": "xucalığının",
+      "cyrl_word": "кодалаган",
+      "auto_zamanalif": "qodalağan",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -3769,8 +3769,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хуҗалыклардагы",
-      "auto_zamanalif": "xucalıqlardağı",
+      "cyrl_word": "кодалашып",
+      "auto_zamanalif": "qodalaşıp",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -3781,8 +3781,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хуҗалыксызга",
-      "auto_zamanalif": "xucalıqsızğa",
+      "cyrl_word": "кодача",
+      "auto_zamanalif": "qodaça",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -3793,10 +3793,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хуҗасыныкы",
-      "auto_zamanalif": "xucasınıqı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кодаярова",
+      "auto_zamanalif": "kodayarova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3805,10 +3805,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хыялланганнар",
-      "auto_zamanalif": "xıyallanğannar",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кодексынын",
+      "auto_zamanalif": "kodeksının",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3817,10 +3817,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәвез",
-      "auto_zamanalif": "xäwez",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кодификаторда",
+      "auto_zamanalif": "kodifikatorda",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3829,10 +3829,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәвефлелеге",
-      "auto_zamanalif": "xäweflelege",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кодлаштырылган",
+      "auto_zamanalif": "kodlaştırılğan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3841,10 +3841,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәвефлелек",
-      "auto_zamanalif": "xäweflelek",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кодоскоп",
+      "auto_zamanalif": "kodoskop",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3853,10 +3853,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәвефләнү",
-      "auto_zamanalif": "xäweflänü",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кожгалантерея",
+      "auto_zamanalif": "kojgalantereya",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3865,10 +3865,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәвефләнүчән",
-      "auto_zamanalif": "xäweflänüçän",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кожевникова",
+      "auto_zamanalif": "kojevnikova",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3877,10 +3877,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәзерләвен",
-      "auto_zamanalif": "xäzerläwen",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кожедубның",
+      "auto_zamanalif": "kojedubnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3889,10 +3889,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәзерләүдәге",
-      "auto_zamanalif": "xäzerläwdäge",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кожина",
+      "auto_zamanalif": "kojina",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3901,10 +3901,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәзерләүләрен",
-      "auto_zamanalif": "xäzerläwlären",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кожомбердиев",
+      "auto_zamanalif": "kojomberdiev",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3913,10 +3913,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәйям",
-      "auto_zamanalif": "xäyyäm",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кожух",
+      "auto_zamanalif": "kojux",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3925,8 +3925,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хәлилевнең",
-      "auto_zamanalif": "xälilevneñ",
+      "cyrl_word": "коз-лов",
+      "auto_zamanalif": "koz-lov",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -3937,8 +3937,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хәлляж",
-      "auto_zamanalif": "xällyäj",
+      "cyrl_word": "коз­гыннар",
+      "auto_zamanalif": "qozğınnar",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -3949,10 +3949,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәляс",
-      "auto_zamanalif": "xälyäs",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "козаровичины",
+      "auto_zamanalif": "kozaroviçinı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3961,8 +3961,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хәмәдьяр",
-      "auto_zamanalif": "xämädyar",
+      "cyrl_word": "козауга",
+      "auto_zamanalif": "qozawğa",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -3973,8 +3973,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хәмәтвәли",
-      "auto_zamanalif": "xämätwäli",
+      "cyrl_word": "козгынчы",
+      "auto_zamanalif": "qozğınçı",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -3985,10 +3985,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәстәрләүнең",
-      "auto_zamanalif": "xästärläwneñ",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коздрат",
+      "auto_zamanalif": "kozdrat",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -3997,10 +3997,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәсәневләр",
-      "auto_zamanalif": "xäsänewlär",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "козенбаев",
+      "auto_zamanalif": "kozenbayev",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4009,8 +4009,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хәсәнованы",
-      "auto_zamanalif": "xäsänovanı",
+      "cyrl_word": "козленко",
+      "auto_zamanalif": "kozlenko",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -4021,8 +4021,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хәсәновны",
-      "auto_zamanalif": "xäsänovnı",
+      "cyrl_word": "козловны",
+      "auto_zamanalif": "kozlovnı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -4033,10 +4033,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәтерләвемне",
-      "auto_zamanalif": "xäterläwemne",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "козловтан",
+      "auto_zamanalif": "kozlovtan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4045,10 +4045,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәям",
-      "auto_zamanalif": "xäyäm",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коитиро",
+      "auto_zamanalif": "koitiro",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4057,10 +4057,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәятебезне",
-      "auto_zamanalif": "xäyätebezne",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коиттетының",
+      "auto_zamanalif": "koittetınıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4069,10 +4069,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хәятләрендә",
-      "auto_zamanalif": "xäyätlärendä",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "койвисто",
+      "auto_zamanalif": "koyvisto",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4081,8 +4081,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хәятне",
-      "auto_zamanalif": "xäyätne",
+      "cyrl_word": "койган",
+      "auto_zamanalif": "qoyğan",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4093,8 +4093,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хәяттә",
-      "auto_zamanalif": "xäyättä",
+      "cyrl_word": "койдыра",
+      "auto_zamanalif": "qoydıra",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4105,8 +4105,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хәяттән",
-      "auto_zamanalif": "xäyättän",
+      "cyrl_word": "коймагы",
+      "auto_zamanalif": "qoymağı",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4117,8 +4117,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хөрмәтләве",
-      "auto_zamanalif": "xörmätläwe",
+      "cyrl_word": "коймагыз",
+      "auto_zamanalif": "qoymağız",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4129,8 +4129,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хөрмәтләвеңезгә",
-      "auto_zamanalif": "xörmätläweñezgä",
+      "cyrl_word": "коймагын",
+      "auto_zamanalif": "qoymağın",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4141,8 +4141,8 @@
   },
   {
     "data": {
-      "cyrl_word": "хөсәеневкә",
-      "auto_zamanalif": "xösäyenewkä",
+      "cyrl_word": "коймак",
+      "auto_zamanalif": "qoymaq",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4153,46 +4153,10 @@
   },
   {
     "data": {
-      "cyrl_word": "хөсәеневнең",
-      "auto_zamanalif": "xösäyenewneñ",
+      "cyrl_word": "коймаладылар",
+      "auto_zamanalif": "qoymaladılar",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "catchall"
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "хөсәеновага",
-      "auto_zamanalif": "xösäyenovağa",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "catchall"
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "хөсәеновларның",
-      "auto_zamanalif": "xösäyenovlarnıñ",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "catchall"
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "хөсәеновны",
-      "auto_zamanalif": "xösäyenovnı",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4201,8 +4165,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чабаклар",
-      "auto_zamanalif": "çabaqlar",
+      "cyrl_word": "коймалау",
+      "auto_zamanalif": "qoymalaw",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4213,22 +4177,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чабаксардан",
-      "auto_zamanalif": "çabaqsardan",
+      "cyrl_word": "коймалауга",
+      "auto_zamanalif": "qoymalawğa",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "catchall"
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "чабановканы",
-      "auto_zamanalif": "çabanovkanı",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4237,8 +4189,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чабышкан",
-      "auto_zamanalif": "çabışqan",
+      "cyrl_word": "коймасын",
+      "auto_zamanalif": "qoymasın",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4249,10 +4201,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чагакова",
-      "auto_zamanalif": "çagakova",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "коймасында",
+      "auto_zamanalif": "qoymasında",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4261,8 +4213,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чагару",
-      "auto_zamanalif": "çağaru",
+      "cyrl_word": "коймасыннан",
+      "auto_zamanalif": "qoymasınnan",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4273,8 +4225,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чагатай",
-      "auto_zamanalif": "çağatay",
+      "cyrl_word": "коймасының",
+      "auto_zamanalif": "qoymasınıñ",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4285,8 +4237,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чагатайлар",
-      "auto_zamanalif": "çağataylar",
+      "cyrl_word": "койрыгына",
+      "auto_zamanalif": "qoyrığına",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4297,8 +4249,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чагры",
-      "auto_zamanalif": "çağrı",
+      "cyrl_word": "койрыкка",
+      "auto_zamanalif": "qoyrıqqa",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4309,8 +4261,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чагыбызда",
-      "auto_zamanalif": "çağıbızda",
+      "cyrl_word": "койрыкчылык",
+      "auto_zamanalif": "qoyrıqçılıq",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4321,10 +4273,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чагылдырмаган",
-      "auto_zamanalif": "çağıldırmağan",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кокин",
+      "auto_zamanalif": "kokin",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4333,10 +4285,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чагылдырыл-ган",
-      "auto_zamanalif": "çağıldırıl-ğan",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коккинаки",
+      "auto_zamanalif": "kokkinaki",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4345,10 +4297,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чагылмады",
-      "auto_zamanalif": "çağılmadı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кокорина",
+      "auto_zamanalif": "kokorina",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4357,10 +4309,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чагылудан",
-      "auto_zamanalif": "çağıludan",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кокошкин",
+      "auto_zamanalif": "kokoşkin",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4369,10 +4321,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чагылучы",
-      "auto_zamanalif": "çağıluçı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кокслана",
+      "auto_zamanalif": "kokslana",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4381,10 +4333,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чагылып-чагылып",
-      "auto_zamanalif": "çağılıp-çağılıp",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кокурин",
+      "auto_zamanalif": "kokurin",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4393,10 +4345,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чагыма",
-      "auto_zamanalif": "çağıma",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кокчетауда",
+      "auto_zamanalif": "kokçetauda",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4405,10 +4357,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чагына",
-      "auto_zamanalif": "çağına",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кокшайда",
+      "auto_zamanalif": "kokşayda",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4417,10 +4369,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чагыштыр-ганда",
-      "auto_zamanalif": "çağıştır-ğanda",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кокшайск",
+      "auto_zamanalif": "kokşaysk",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4429,10 +4381,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чагыштырманы",
-      "auto_zamanalif": "çağıştırmanı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кол-колхозны",
+      "auto_zamanalif": "kol-kolxoznı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4441,10 +4393,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чагыштырмасына",
-      "auto_zamanalif": "çağıştırmasına",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кол-лективның",
+      "auto_zamanalif": "kol-lektiwnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4453,10 +4405,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чагыштырмасында",
-      "auto_zamanalif": "çağıştırmasında",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "кол-лективына",
+      "auto_zamanalif": "kol-lektivına",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4465,8 +4417,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чагыштырсак",
-      "auto_zamanalif": "çağıştırsaq",
+      "cyrl_word": "колагыбыз",
+      "auto_zamanalif": "qolağıbız",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4477,8 +4429,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чагыштыру-ларны",
-      "auto_zamanalif": "çağıştıru-larnı",
+      "cyrl_word": "колагындагы",
+      "auto_zamanalif": "qolağındağı",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4489,8 +4441,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чагыштырылган",
-      "auto_zamanalif": "çağıştırılğan",
+      "cyrl_word": "колагыннан",
+      "auto_zamanalif": "qolağınnan",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4501,8 +4453,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чагыштырылучы",
-      "auto_zamanalif": "çağıştırıluçı",
+      "cyrl_word": "колагының",
+      "auto_zamanalif": "qolağınıñ",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4513,8 +4465,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чагыштырырлык",
-      "auto_zamanalif": "çağıştırırlıq",
+      "cyrl_word": "колак-тан-колакка",
+      "auto_zamanalif": "qolaq-tan-qolaqqa",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4525,10 +4477,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чагыңда",
-      "auto_zamanalif": "çağıñda",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коламбус",
+      "auto_zamanalif": "kolambus",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4537,10 +4489,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чайкалдырып",
-      "auto_zamanalif": "çayqaldırıp",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коламбусның",
+      "auto_zamanalif": "kolambusnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4549,8 +4501,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чайкалдырырлык",
-      "auto_zamanalif": "çayqaldırırlıq",
+      "cyrl_word": "колан",
+      "auto_zamanalif": "qolan",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4561,8 +4513,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чайковскийны",
-      "auto_zamanalif": "çaykovskiynı",
+      "cyrl_word": "коларов",
+      "auto_zamanalif": "kolarov",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -4573,10 +4525,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чакга",
-      "auto_zamanalif": "çaqğa",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колахметов",
+      "auto_zamanalif": "kolaxmetov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4585,8 +4537,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чаклар",
-      "auto_zamanalif": "çaqlar",
+      "cyrl_word": "колачлавы",
+      "auto_zamanalif": "qolaçlawı",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4597,8 +4549,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чакларындагы",
-      "auto_zamanalif": "çaqlarındağı",
+      "cyrl_word": "колачтагы",
+      "auto_zamanalif": "qolaçtağı",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4609,8 +4561,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чакруларын",
-      "auto_zamanalif": "çaqruların",
+      "cyrl_word": "колбай-мораса",
+      "auto_zamanalif": "qolbay-morasa",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4621,10 +4573,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чакрымга",
-      "auto_zamanalif": "çaqrımğa",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колбаны",
+      "auto_zamanalif": "kolbanı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4633,8 +4585,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чакрырга",
-      "auto_zamanalif": "çaqrırğa",
+      "cyrl_word": "колбашчыбыз",
+      "auto_zamanalif": "qolbaşçıbız",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4645,8 +4597,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чаксы",
-      "auto_zamanalif": "çaqsı",
+      "cyrl_word": "колгага",
+      "auto_zamanalif": "qolğağa",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4657,8 +4609,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чактырган",
-      "auto_zamanalif": "çaqtırğan",
+      "cyrl_word": "колгаларга",
+      "auto_zamanalif": "qolğalarğa",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4669,8 +4621,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чакы",
-      "auto_zamanalif": "çaqı",
+      "cyrl_word": "колганың",
+      "auto_zamanalif": "qolğanıñ",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4681,10 +4633,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чакыгалыйлар",
-      "auto_zamanalif": "çaqığalıylar",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колготки",
+      "auto_zamanalif": "kolgotki",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4693,10 +4645,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чакыргая",
-      "auto_zamanalif": "çaqırğaya",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колготкилар",
+      "auto_zamanalif": "kolgotkilar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4705,10 +4657,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чакырту",
-      "auto_zamanalif": "çaqırtu",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колдун",
+      "auto_zamanalif": "koldun",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4717,10 +4669,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чакыруга",
-      "auto_zamanalif": "çaqıruğa",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колерның",
+      "auto_zamanalif": "kolernıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4729,10 +4681,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чакыруларның",
-      "auto_zamanalif": "çaqırularnıñ",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колесах",
+      "auto_zamanalif": "kolesax",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4741,10 +4693,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чакыруларын",
-      "auto_zamanalif": "çaqıruların",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колесо",
+      "auto_zamanalif": "koleso",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4753,10 +4705,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чакыруның",
-      "auto_zamanalif": "çaqırunıñ",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колинкинны",
+      "auto_zamanalif": "kolinkinnı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4765,10 +4717,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чакырыга",
-      "auto_zamanalif": "çaqırığa",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "количество",
+      "auto_zamanalif": "koliçestvo",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4777,10 +4729,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чакырымын",
-      "auto_zamanalif": "çaqırımın",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коллажлар",
+      "auto_zamanalif": "kollajlar",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4789,10 +4741,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чакырысыз",
-      "auto_zamanalif": "çaqırısız",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коллективист",
+      "auto_zamanalif": "kollektivist",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4801,10 +4753,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чакырысын",
-      "auto_zamanalif": "çaqırısın",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коллективларның",
+      "auto_zamanalif": "kollektivlarnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4813,10 +4765,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чалгап",
-      "auto_zamanalif": "çalğap",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коллективларыннан",
+      "auto_zamanalif": "kollektivlarınnan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4825,10 +4777,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чалуга",
-      "auto_zamanalif": "çaluğa",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коллективлаштырды",
+      "auto_zamanalif": "kollektivlaştırdı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4837,10 +4789,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чалшайганда",
-      "auto_zamanalif": "çalşayğanda",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коллективлаштыруны",
+      "auto_zamanalif": "kollektivlaştırunı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4849,10 +4801,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чалыначак",
-      "auto_zamanalif": "çalınaçaq",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коллективлаштырылган",
+      "auto_zamanalif": "kollektivlaştırılğan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4861,10 +4813,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чалынганы",
-      "auto_zamanalif": "çalınğanı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коллективлашу",
+      "auto_zamanalif": "kollektivlaşu",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4873,10 +4825,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чалынмаганмы",
-      "auto_zamanalif": "çalınmağanmı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коллективлашуны",
+      "auto_zamanalif": "kollektivlaşunı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4885,10 +4837,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чалынмау",
-      "auto_zamanalif": "çalınmaw",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коллективлык",
+      "auto_zamanalif": "kollektivlıq",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4897,10 +4849,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чамадарак",
-      "auto_zamanalif": "çamadaraq",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коллективтагы",
+      "auto_zamanalif": "kollektivtağı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4909,10 +4861,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чангы",
-      "auto_zamanalif": "çanğı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коллективы-бызның",
+      "auto_zamanalif": "kollektivı-bıznıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4921,8 +4873,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чапаева",
-      "auto_zamanalif": "çapayeva",
+      "cyrl_word": "коллективыбыз",
+      "auto_zamanalif": "kollektivıbız",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -4933,8 +4885,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чапаевның",
-      "auto_zamanalif": "çapayevnıñ",
+      "cyrl_word": "коллекторлык",
+      "auto_zamanalif": "kollektorlıq",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -4945,8 +4897,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чапаевск",
-      "auto_zamanalif": "çapayevsk",
+      "cyrl_word": "коллоид",
+      "auto_zamanalif": "kolloid",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -4957,8 +4909,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чапкыр",
-      "auto_zamanalif": "çapqır",
+      "cyrl_word": "коллыгында",
+      "auto_zamanalif": "qollığında",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -4969,10 +4921,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чарасызлыгыннан",
-      "auto_zamanalif": "çarasızlığınnan",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колмогоров",
+      "auto_zamanalif": "kolmogorov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4981,10 +4933,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чарлаганнан",
-      "auto_zamanalif": "çarlağannan",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "КОЛО",
+      "auto_zamanalif": "kolo",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -4993,10 +4945,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чарлауга",
-      "auto_zamanalif": "çarlawğa",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колобов",
+      "auto_zamanalif": "kolobov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5005,8 +4957,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чарновский",
-      "auto_zamanalif": "çarnovskiy",
+      "cyrl_word": "кологривов",
+      "auto_zamanalif": "kologrivov",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5017,10 +4969,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чаршаулар",
-      "auto_zamanalif": "çarşawlar",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колодин",
+      "auto_zamanalif": "kolodin",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5029,8 +4981,8 @@
   },
   {
     "data": {
-      "cyrl_word": "часовойдан",
-      "auto_zamanalif": "çasovoydan",
+      "cyrl_word": "колодкина",
+      "auto_zamanalif": "kolodkina",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5041,8 +4993,8 @@
   },
   {
     "data": {
-      "cyrl_word": "частырак",
-      "auto_zamanalif": "çastırak",
+      "cyrl_word": "колоколов",
+      "auto_zamanalif": "kolokolov",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5053,10 +5005,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чатка",
-      "auto_zamanalif": "çatqa",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колокселин",
+      "auto_zamanalif": "kolokselin",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5065,10 +5017,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чатказ",
-      "auto_zamanalif": "çatqaz",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коломакны",
+      "auto_zamanalif": "kolomaknı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5077,10 +5029,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чаткы-очкыннардан",
-      "auto_zamanalif": "çatqı-oçqınnardan",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коломенское",
+      "auto_zamanalif": "kolomenskoyı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5089,10 +5041,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чатнаулар",
-      "auto_zamanalif": "çatnawlar",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "коломнадагы",
+      "auto_zamanalif": "kolomnadağı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5101,8 +5053,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чатовтан",
-      "auto_zamanalif": "çatovtan",
+      "cyrl_word": "колонизаторларга",
+      "auto_zamanalif": "kolonizatorlarğa",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5113,10 +5065,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чатыртау",
-      "auto_zamanalif": "çatırtaw",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колонизаторлык",
+      "auto_zamanalif": "kolonizatorlıq",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5125,10 +5077,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чатыртауны",
-      "auto_zamanalif": "çatırtawnı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колонна-лагерена",
+      "auto_zamanalif": "kolonna-lagerena",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5137,10 +5089,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чауламаучы",
-      "auto_zamanalif": "çawlamawçı",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колоннага",
+      "auto_zamanalif": "kolonnağa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5149,8 +5101,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чахаровский",
-      "auto_zamanalif": "çaxarovskiy",
+      "cyrl_word": "колонналы",
+      "auto_zamanalif": "kolonnalı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5161,8 +5113,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чахоткадан",
-      "auto_zamanalif": "çaxotkadan",
+      "cyrl_word": "колор",
+      "auto_zamanalif": "kolor",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5173,10 +5125,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чачак",
-      "auto_zamanalif": "çaçaq",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колористик",
+      "auto_zamanalif": "koloristik",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5185,10 +5137,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чачуга",
-      "auto_zamanalif": "çaçuğa",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колоритлы",
+      "auto_zamanalif": "koloritlı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5197,8 +5149,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чаяновлар",
-      "auto_zamanalif": "çayanovlar",
+      "cyrl_word": "колосау",
+      "auto_zamanalif": "kolosau",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5209,10 +5161,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чаҗгыру",
-      "auto_zamanalif": "çacğıru",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колпаков",
+      "auto_zamanalif": "kolpakov",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5221,10 +5173,22 @@
   },
   {
     "data": {
-      "cyrl_word": "чаңрак",
-      "auto_zamanalif": "çañraq",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "колпаковның",
+      "auto_zamanalif": "kolpakovnıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "колпачоктагы",
+      "auto_zamanalif": "kolpaçoktağı",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5233,8 +5197,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чванов",
-      "auto_zamanalif": "çvanov",
+      "cyrl_word": "колсанов",
+      "auto_zamanalif": "kolsanov",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5245,8 +5209,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чгыштырып",
-      "auto_zamanalif": "çğıştırıp",
+      "cyrl_word": "колтамагына",
+      "auto_zamanalif": "qoltamağına",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -5257,8 +5221,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чебоксардагы",
-      "auto_zamanalif": "çeboksardağı",
+      "cyrl_word": "колумб",
+      "auto_zamanalif": "kolumb",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5269,8 +5233,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чеботаревның",
-      "auto_zamanalif": "çebotarevnıñ",
+      "cyrl_word": "колумбарида",
+      "auto_zamanalif": "kolumbarida",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5281,8 +5245,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чегодаева",
-      "auto_zamanalif": "çegodayeva",
+      "cyrl_word": "колумбарийдагы",
+      "auto_zamanalif": "kolumbariydağı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5293,8 +5257,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чекага",
-      "auto_zamanalif": "çekaga",
+      "cyrl_word": "колхоз-совхозларда",
+      "auto_zamanalif": "kolxoz-sovxozlarda",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5305,8 +5269,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чекадан",
-      "auto_zamanalif": "çekadan",
+      "cyrl_word": "колхоздарда",
+      "auto_zamanalif": "kolxozdarda",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5317,8 +5281,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чеканов",
-      "auto_zamanalif": "çekanov",
+      "cyrl_word": "колхоздары",
+      "auto_zamanalif": "kolxozdarı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5329,8 +5293,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чекашев",
-      "auto_zamanalif": "çekaşev",
+      "cyrl_word": "колхозларди",
+      "auto_zamanalif": "kolxozlardi",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5341,8 +5305,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чекашов",
-      "auto_zamanalif": "çekaşov",
+      "cyrl_word": "колхозларнын",
+      "auto_zamanalif": "kolxozlarnın",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5353,8 +5317,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чекурское",
-      "auto_zamanalif": "çekurskoyı",
+      "cyrl_word": "колхозларынын",
+      "auto_zamanalif": "kolxozlarının",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5365,8 +5329,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ЧЕКУШИНА",
-      "auto_zamanalif": "çekuşina",
+      "cyrl_word": "колхозлаштырылуына",
+      "auto_zamanalif": "kolxozlaştırıluına",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5377,8 +5341,8 @@
   },
   {
     "data": {
-      "cyrl_word": "челноков",
-      "auto_zamanalif": "çelnokov",
+      "cyrl_word": "колхозная",
+      "auto_zamanalif": "kolxoznaya",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5389,8 +5353,8 @@
   },
   {
     "data": {
-      "cyrl_word": "челнокованы",
-      "auto_zamanalif": "çelnokovanı",
+      "cyrl_word": "колхознигы",
+      "auto_zamanalif": "kolxoznigı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5401,8 +5365,8 @@
   },
   {
     "data": {
-      "cyrl_word": "человеческих",
-      "auto_zamanalif": "çeloveçeskix",
+      "cyrl_word": "колхозник",
+      "auto_zamanalif": "kolxoznik",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5413,8 +5377,8 @@
   },
   {
     "data": {
-      "cyrl_word": "человеческом",
-      "auto_zamanalif": "çeloveçeskom",
+      "cyrl_word": "колхозниклар",
+      "auto_zamanalif": "kolxozniklar",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5425,8 +5389,8 @@
   },
   {
     "data": {
-      "cyrl_word": "человечный",
-      "auto_zamanalif": "çeloveçnıy",
+      "cyrl_word": "колхознын",
+      "auto_zamanalif": "kolxoznın",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5437,8 +5401,8 @@
   },
   {
     "data": {
-      "cyrl_word": "челуга",
-      "auto_zamanalif": "çeluga",
+      "cyrl_word": "колхозчилар",
+      "auto_zamanalif": "kolxozçilar",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5449,8 +5413,8 @@
   },
   {
     "data": {
-      "cyrl_word": "червен",
-      "auto_zamanalif": "çerven",
+      "cyrl_word": "колхозчылар-стаханчылар",
+      "auto_zamanalif": "kolxozçılar-staxançılar",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5461,8 +5425,8 @@
   },
   {
     "data": {
-      "cyrl_word": "червонный",
-      "auto_zamanalif": "çervonnıy",
+      "cyrl_word": "колхозчыларныкы",
+      "auto_zamanalif": "kolxozçılarnıkı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5473,8 +5437,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чердак",
-      "auto_zamanalif": "çerdak",
+      "cyrl_word": "колхозчыларнын",
+      "auto_zamanalif": "kolxozçılarnın",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5485,8 +5449,8 @@
   },
   {
     "data": {
-      "cyrl_word": "череванин",
-      "auto_zamanalif": "çerevanin",
+      "cyrl_word": "колхоэларда",
+      "auto_zamanalif": "kolxoelarda",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5497,8 +5461,8 @@
   },
   {
     "data": {
-      "cyrl_word": "череванский",
-      "auto_zamanalif": "çerevanskiy",
+      "cyrl_word": "колчаковщина",
+      "auto_zamanalif": "kolçakovşçina",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5509,8 +5473,8 @@
   },
   {
     "data": {
-      "cyrl_word": "черемшанская",
-      "auto_zamanalif": "çeremşanskaya",
+      "cyrl_word": "колчигинның",
+      "auto_zamanalif": "kolçiginnıñ",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5521,8 +5485,8 @@
   },
   {
     "data": {
-      "cyrl_word": "черепащук",
-      "auto_zamanalif": "çerepaşçuk",
+      "cyrl_word": "КОЛЧУК",
+      "auto_zamanalif": "kolçuk",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5533,8 +5497,8 @@
   },
   {
     "data": {
-      "cyrl_word": "череповский",
-      "auto_zamanalif": "çerepovskiy",
+      "cyrl_word": "колыбанов",
+      "auto_zamanalif": "kolıbanov",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5545,8 +5509,8 @@
   },
   {
     "data": {
-      "cyrl_word": "черкас",
-      "auto_zamanalif": "çerkas",
+      "cyrl_word": "колыван",
+      "auto_zamanalif": "kolıvan",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5557,10 +5521,10 @@
   },
   {
     "data": {
-      "cyrl_word": "черкасов",
-      "auto_zamanalif": "çerkasov",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "колыйга",
+      "auto_zamanalif": "qolıyğa",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5569,10 +5533,10 @@
   },
   {
     "data": {
-      "cyrl_word": "черкасово",
-      "auto_zamanalif": "çerkasovo",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "колык",
+      "auto_zamanalif": "qolıq",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5581,8 +5545,8 @@
   },
   {
     "data": {
-      "cyrl_word": "черкассы",
-      "auto_zamanalif": "çerkassı",
+      "cyrl_word": "колыманың",
+      "auto_zamanalif": "kolımanıñ",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5593,10 +5557,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чернавский",
-      "auto_zamanalif": "çernavskiy",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "колынный",
+      "auto_zamanalif": "qolınnıy",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5605,10 +5569,10 @@
   },
   {
     "data": {
-      "cyrl_word": "черниговская",
-      "auto_zamanalif": "çernigovskaya",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "колышчы",
+      "auto_zamanalif": "qolışçı",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5617,8 +5581,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ЧЕРНИКОВ",
-      "auto_zamanalif": "çernikov",
+      "cyrl_word": "ком-байнда",
+      "auto_zamanalif": "kom-baynda",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5629,8 +5593,8 @@
   },
   {
     "data": {
-      "cyrl_word": "черниковканы",
-      "auto_zamanalif": "çernikovkanı",
+      "cyrl_word": "ком-байнчысы",
+      "auto_zamanalif": "kom-baynçısı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5641,8 +5605,8 @@
   },
   {
     "data": {
-      "cyrl_word": "черниково",
-      "auto_zamanalif": "çernikovo",
+      "cyrl_word": "ком-плекслы",
+      "auto_zamanalif": "kom-plekslı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5653,10 +5617,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чернобровкинаның",
-      "auto_zamanalif": "çernobrovkinanıñ",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "ком-тоз",
+      "auto_zamanalif": "qom-toz",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5665,10 +5629,10 @@
   },
   {
     "data": {
-      "cyrl_word": "черновикларның",
-      "auto_zamanalif": "çernoviklarnıñ",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "кома",
+      "auto_zamanalif": "qoma",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5677,10 +5641,10 @@
   },
   {
     "data": {
-      "cyrl_word": "черновлар",
-      "auto_zamanalif": "çernovlar",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "комагай",
+      "auto_zamanalif": "qomağay",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5689,10 +5653,10 @@
   },
   {
     "data": {
-      "cyrl_word": "черновның",
-      "auto_zamanalif": "çernovnıñ",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+      "cyrl_word": "комагайлык",
+      "auto_zamanalif": "qomağaylıq",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5701,8 +5665,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чернышевскийны",
-      "auto_zamanalif": "çernışevskiynı",
+      "cyrl_word": "комадалары",
+      "auto_zamanalif": "komadaları",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5713,8 +5677,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чертовухамы",
-      "auto_zamanalif": "çertovuxamı",
+      "cyrl_word": "комадей",
+      "auto_zamanalif": "komadey",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5725,8 +5689,8 @@
   },
   {
     "data": {
-      "cyrl_word": "черчилльнең",
-      "auto_zamanalif": "çerçillneñ",
+      "cyrl_word": "комак",
+      "auto_zamanalif": "qomaq",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -5737,8 +5701,8 @@
   },
   {
     "data": {
-      "cyrl_word": "четаев",
-      "auto_zamanalif": "çetayev",
+      "cyrl_word": "коман",
+      "auto_zamanalif": "koman",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5749,8 +5713,8 @@
   },
   {
     "data": {
-      "cyrl_word": "четверти",
-      "auto_zamanalif": "çetverti",
+      "cyrl_word": "команд",
+      "auto_zamanalif": "komand",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5761,8 +5725,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чех-словаклар",
-      "auto_zamanalif": "çex-slovaklar",
+      "cyrl_word": "командалылыкны",
+      "auto_zamanalif": "komandalılıknı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5773,8 +5737,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чеховны",
-      "auto_zamanalif": "çexovnı",
+      "cyrl_word": "командирга",
+      "auto_zamanalif": "komandirğa",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5785,8 +5749,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чехославаклар",
-      "auto_zamanalif": "çexoslavaklar",
+      "cyrl_word": "командирлык",
+      "auto_zamanalif": "komandirlıq",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5797,8 +5761,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чехословакил",
-      "auto_zamanalif": "çexoslovakil",
+      "cyrl_word": "командировкаланган",
+      "auto_zamanalif": "komandirovkalanğan",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5809,8 +5773,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чечелевканы",
-      "auto_zamanalif": "çeçelevkanı",
+      "cyrl_word": "командировкаларга",
+      "auto_zamanalif": "komandirovkalarğa",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5821,8 +5785,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чигадаев",
-      "auto_zamanalif": "çigadayev",
+      "cyrl_word": "командировкалау",
+      "auto_zamanalif": "komandirovkalaw",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5833,10 +5797,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чигенмәвебезне",
-      "auto_zamanalif": "çigenmäwebezne",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "командировочкага",
+      "auto_zamanalif": "komandirovoçkağa",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5845,10 +5809,10 @@
   },
   {
     "data": {
-      "cyrl_word": "чигенмәячәкләре",
-      "auto_zamanalif": "çigenmäyäçäkläre",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "командуеның",
+      "auto_zamanalif": "komanduenıñ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5857,8 +5821,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чикаго",
-      "auto_zamanalif": "çikago",
+      "cyrl_word": "командующийлык",
+      "auto_zamanalif": "komanduyuşçiylıq",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5869,10 +5833,22 @@
   },
   {
     "data": {
-      "cyrl_word": "чикләнмәячәген",
-      "auto_zamanalif": "çiklänmäyäçägen",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "комарово",
+      "auto_zamanalif": "komarovo",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "комаровский",
+      "auto_zamanalif": "komarovskiy",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
@@ -5881,8 +5857,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чикләүләргә",
-      "auto_zamanalif": "çikläwlärgä",
+      "cyrl_word": "комачаулавы",
+      "auto_zamanalif": "qomaçawlawı",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -5893,8 +5869,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чикләүме",
-      "auto_zamanalif": "çikläwme",
+      "cyrl_word": "комачауламау",
+      "auto_zamanalif": "qomaçawlamaw",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -5905,8 +5881,8 @@
   },
   {
     "data": {
-      "cyrl_word": "ЧИЛЕКОВНЫ",
-      "auto_zamanalif": "çilekovnı",
+      "cyrl_word": "комбаиннарны",
+      "auto_zamanalif": "kombainnarnı",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5917,8 +5893,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чинга",
-      "auto_zamanalif": "çinga",
+      "cyrl_word": "комбайн-тракторда",
+      "auto_zamanalif": "kombayn-traktorda",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5929,8 +5905,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чиновнигын",
-      "auto_zamanalif": "çinovniğın",
+      "cyrl_word": "комбайнеркалары",
+      "auto_zamanalif": "kombaynerkaları",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5941,8 +5917,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чиркова",
-      "auto_zamanalif": "çirkova",
+      "cyrl_word": "комбайнерлары",
+      "auto_zamanalif": "kombaynerları",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5953,8 +5929,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чиркове",
-      "auto_zamanalif": "çirkove",
+      "cyrl_word": "комбайнерларына",
+      "auto_zamanalif": "kombaynerlarına",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5965,8 +5941,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чирковский",
-      "auto_zamanalif": "çirkovskiy",
+      "cyrl_word": "комбайнчи",
+      "auto_zamanalif": "kombaynçi",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
@@ -5977,8 +5953,8 @@
   },
   {
     "data": {
-      "cyrl_word": "чиркәвендә",
-      "auto_zamanalif": "çirkäwendä",
+      "cyrl_word": "комбайнының",
+      "auto_zamanalif": "qombaynınıñ",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
     },
@@ -5989,10 +5965,34 @@
   },
   {
     "data": {
-      "cyrl_word": "чирләүне",
-      "auto_zamanalif": "çirläwne",
-      "gemini_origin": "N",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>"
+      "cyrl_word": "комбанклардан",
+      "auto_zamanalif": "kombanklardan",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "комбатыбыз",
+      "auto_zamanalif": "kombatıbız",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "catchall"
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "комбинатив",
+      "auto_zamanalif": "kombinativ",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>"
     },
     "meta": {
       "schema_version": 3,
