@@ -402,12 +402,19 @@ and `loanword_zamanalif`; its `meta` additionally contains `sample_id` and
 IDs are not repeated in tasks.
 
 Every dictionary project uses the pinned Apertium-tat analyzer to group
-unambiguous word forms with the same lemma, part of speech, predicted origin,
-and project. Longer forms cover their literal prefixes and same-length or
-shorter divergent siblings when the divergence starts after the full lemma and
-the sibling-only suffix contains none of the non-deterministic letters
-`вгекуцюяүщъьё`. Uncovered branches remain separate tasks. Hamza retains its
-stricter verified lexical-family grouping.
+unambiguous word forms with the same lemma and part of speech. Predicted origin
+and annotation project do not split a family: accepting a representative makes
+its known `N` or `RL` origin authoritative for compatible members, including
+members predicted `U`. Ordinary propagation requires both surface forms to start with the
+full analyzer lemma literally and requires that lemma to contain a
+review-sensitive letter. A sibling of any length is covered only when the part
+it adds after the forms' shared prefix contains none of the non-deterministic
+letters `вгекуцюяүщъьё`. Thus suffix-only ambiguity and surface stem alternation
+remain separate tasks. Hamza retains its stricter verified lexical-family
+grouping. Candidate DSL policies must be represented by the source review;
+otherwise the candidate remains separate. Conflicting direct human origins are
+never merged. Previously inherited reviews that fail this rule are exposed
+again by export and removed transactionally during the next import.
 Install the local toolchain once:
 
 ```bash

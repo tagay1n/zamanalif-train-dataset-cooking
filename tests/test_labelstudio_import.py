@@ -274,6 +274,80 @@ class LabelStudioImportTests(unittest.TestCase):
             ("prayektı", "praektı"),
         )
 
+    def test_family_import_crosses_predicted_origin_and_project(self) -> None:
+        analyzer = FakeMorphologyAnalyzer(
+            {
+                "культура": ("культура", "n"),
+                "культураны": ("культура", "n"),
+                "культурада": ("культура", "n"),
+            }
+        )
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, ["культура"], origin="RL")
+            with sqlite3.connect(db_path) as conn:
+                conn.execute(
+                    "insert into samples(id, source_id, text) "
+                    "values ('sent_3', 'src', 'культураны')"
+                )
+                conn.execute(
+                    """
+                    insert into preannotation_state(
+                        sample_id, status, tatar, tokens_json
+                    ) values ('sent_3', 'annotated', 1, ?)
+                    """,
+                    (json.dumps([{"text": "культураны", "label": "N"}]),),
+                )
+                conn.execute(
+                    "insert into samples(id, source_id, text) "
+                    "values ('sent_4', 'src', 'культурада')"
+                )
+                conn.execute(
+                    """
+                    insert into preannotation_state(
+                        sample_id, status, tatar, tokens_json
+                    ) values ('sent_4', 'annotated', 1, ?)
+                    """,
+                    (json.dumps([{"text": "культурада", "label": "U"}]),),
+                )
+            exported = export_labelstudio_project_tasks_from_db(
+                db_path,
+                sort_by="word",
+                morphology_analyzer=analyzer,
+            )
+            task = next(
+                task
+                for task in exported.projects["catchall"].tasks
+                if task["data"]["cyrl_word"] == "культураны"
+            )
+            task["annotations"] = [
+                {
+                    "was_cancelled": False,
+                    "result": [
+                        {
+                            "from_name": "corrected_zamanalif",
+                            "type": "textarea",
+                            "value": {"text": [task["data"]["auto_zamanalif"]]},
+                        }
+                    ],
+                }
+            ]
+
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "cross-project-family.json", [task]),
+                morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.inherited_items, 2)
+        self.assertEqual(reviewed["культураны"].origin, "N")
+        self.assertEqual(reviewed["культура"].origin, "N")
+        self.assertEqual(reviewed["культура"].zamanalif_dsl, "qultura")
+        self.assertEqual(reviewed["культурада"].origin, "N")
+        self.assertEqual(reviewed["культурада"].zamanalif_dsl, "qulturada")
+
     def test_rejected_variant_becomes_family_wide_lexical_override(self) -> None:
         words = ["проект", "проектын"]
         analyzer = FakeMorphologyAnalyzer(
@@ -368,10 +442,10 @@ class LabelStudioImportTests(unittest.TestCase):
     def test_canonical_catchall_family_imports_every_member_with_provenance(self) -> None:
         analyzer = FakeMorphologyAnalyzer(
             {
-                "торган": ("тор", "v"),
-                "торганда": ("тор", "v"),
-                "торганнар": ("тор", "v"),
-                "торганнары": ("тор", "v"),
+                "казак": ("казак", "n"),
+                "казакта": ("казак", "n"),
+                "казаклар": ("казак", "n"),
+                "казаклары": ("казак", "n"),
             }
         )
         with TemporaryDirectory() as tmpdir:
@@ -379,11 +453,11 @@ class LabelStudioImportTests(unittest.TestCase):
             db_path = _database(root / "db.sqlite")
             _add_words(
                 db_path,
-                ["торган", "торганда", "торганнар", "торганнары"],
+                ["казак", "казакта", "казаклар", "казаклары"],
             )
             task = _task(
-                "торганнары",
-                "torğannarı",
+                "казаклары",
+                "qazaqları",
                 "N",
             )
 
@@ -411,14 +485,14 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(summary.inherited_source_families, 1)
         self.assertEqual(
             set(reviewed),
-            {"торган", "торганда", "торганнар", "торганнары"},
+            {"казак", "казакта", "казаклар", "казаклары"},
         )
         self.assertEqual(
             derivations,
             [
-                ("торган", "торганнары", "тор", "v"),
-                ("торганда", "торганнары", "тор", "v"),
-                ("торганнар", "торганнары", "тор", "v"),
+                ("казак", "казаклары", "казак", "n"),
+                ("казаклар", "казаклары", "казак", "n"),
+                ("казакта", "казаклары", "казак", "n"),
             ],
         )
         self.assertEqual(len(analyzer.calls), 1)
@@ -578,7 +652,7 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(summary.imported_items, 2)
         self.assertEqual(reviewed["идеяләренә"].zamanalif_dsl, "ideyälärenä")
 
-    def test_next_dictionary_import_backfills_safe_divergent_members(self) -> None:
+    def test_next_dictionary_import_does_not_backfill_suffix_only_family(self) -> None:
         analyzer = FakeMorphologyAnalyzer(
             {
                 "торган": ("тор", "v"),
@@ -604,11 +678,149 @@ class LabelStudioImportTests(unittest.TestCase):
             reviewed = load_reviewed_words(db_path)
 
         self.assertEqual(summary.imported_items, 1)
-        self.assertEqual(summary.inherited_items, 3)
+        self.assertEqual(summary.inherited_items, 0)
         self.assertEqual(
             set(reviewed),
-            {"вакыт", "торган", "торганда", "торганнар", "торганнары"},
+            {"вакыт", "торганнары"},
         )
+
+    def test_backfill_skips_family_with_conflicting_direct_origins(self) -> None:
+        words = ["культура", "культураны", "культурада"]
+        analyzer = FakeMorphologyAnalyzer(
+            {word: ("культура", "n") for word in words}
+        )
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, words)
+            save_reviewed_word(db_path, "культура", "qultura", "N")
+            save_reviewed_word(
+                db_path,
+                "культураны",
+                "kul{{RUS_SIGN|omit=|preserve=ʼ}}turanı",
+                "RL",
+            )
+
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "next.json", [_task("вакыт", "waqıt", "N")]),
+                morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.inherited_items, 0)
+        self.assertNotIn("культурада", reviewed)
+
+    def test_conflicting_current_family_origins_roll_back(self) -> None:
+        words = ["казакга", "казакка", "казакта"]
+        analyzer = FakeMorphologyAnalyzer(
+            {word: ("казак", "n") for word in words}
+        )
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, words)
+            with sqlite3.connect(db_path) as conn:
+                rows = conn.execute(
+                    "select sample_id, tokens_json from preannotation_state"
+                ).fetchall()
+                for sample_id, tokens_json in rows:
+                    tokens = json.loads(tokens_json)
+                    if tokens[0]["text"] == "казакга":
+                        tokens[0]["label"] = "RL"
+                    elif tokens[0]["text"] == "казакта":
+                        tokens[0]["label"] = "U"
+                    conn.execute(
+                        "update preannotation_state set tokens_json = ? "
+                        "where sample_id = ?",
+                        (json.dumps(tokens, ensure_ascii=False), sample_id),
+                    )
+            exported = export_labelstudio_project_tasks_from_db(
+                db_path,
+                sort_by="word",
+                morphology_analyzer=analyzer,
+            )
+            tasks = [
+                task
+                for task in exported.projects["catchall"].tasks
+                if task["data"]["cyrl_word"] in {"казакга", "казакка"}
+            ]
+            for task in tasks:
+                task["annotations"] = [
+                    {
+                        "was_cancelled": False,
+                        "result": [
+                            {
+                                "from_name": "corrected_zamanalif",
+                                "type": "textarea",
+                                "value": {
+                                    "text": [task["data"]["auto_zamanalif"]]
+                                },
+                            }
+                        ],
+                    }
+                ]
+
+            with self.assertRaisesRegex(
+                LabelStudioImportError,
+                "conflicting direct family origins",
+            ):
+                import_labelstudio_annotations(
+                    db_path,
+                    _backup(root / "conflicting-family.json", tasks),
+                    morphology_analyzer=analyzer,
+                )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(len(tasks), 2)
+        self.assertTrue(set(words).isdisjoint(reviewed))
+
+    def test_export_and_import_retire_unsafe_old_family_derivation(self) -> None:
+        analyzer = FakeMorphologyAnalyzer(
+            {
+                "торган": ("тор", "v"),
+                "торганнары": ("тор", "v"),
+            }
+        )
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, ["торган", "торганнары"])
+            save_reviewed_word(db_path, "торганнары", "torğannarı", "N")
+            save_reviewed_word(db_path, "торган", "torğan", "N")
+            with sqlite3.connect(db_path) as conn:
+                conn.execute(
+                    """
+                    insert into reviewed_word_derivations(
+                        normalized_word, source_word, lemma, part_of_speech,
+                        analyzer_revision, created_at
+                    ) values ('торган', 'торганнары', 'тор', 'v', 'old', 'old')
+                    """
+                )
+
+            exported = export_labelstudio_project_tasks_from_db(
+                db_path,
+                sort_by="word",
+                morphology_analyzer=analyzer,
+            )
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "next.json", [_task("вакыт", "waqıt", "N")]),
+                morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+            with sqlite3.connect(db_path) as conn:
+                derivation = conn.execute(
+                    """
+                    select source_word from reviewed_word_derivations
+                    where normalized_word = 'торган'
+                    """
+                ).fetchone()
+
+        self.assertIn("торган", exported.projects["catchall"].exported_words)
+        self.assertEqual(summary.inherited_items, 0)
+        self.assertEqual(set(reviewed), {"вакыт", "торганнары"})
+        self.assertIsNone(derivation)
 
     def test_imported_branch_propagates_only_to_safe_divergent_member(self) -> None:
         words = [
@@ -797,7 +1009,7 @@ class LabelStudioImportTests(unittest.TestCase):
         )
         self.assertEqual(
             next_export.projects["catchall"].exported_words,
-            ["вакыт", "торганнар"],
+            ["вакыт", "торган", "торганнар"],
         )
         self.assertEqual(
             next_export.projects["catchall"].report["covered_word_count"],

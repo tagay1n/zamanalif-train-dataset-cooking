@@ -400,12 +400,22 @@ def is_safe_family_member(
     candidate: str,
     lemma: str,
 ) -> bool:
-    """Return whether a non-longer family member is covered by this review."""
-    if candidate == representative or len(candidate) > len(representative):
+    """Return whether a review can safely cover another morphological form.
+
+    Family propagation is useful only when the review-sensitive spelling is in
+    the analyzer-confirmed, literally shared lemma.  The candidate may add or
+    replace suffix material, but its part after the shared prefix must be fully
+    deterministic.  Checking the literal lemma prefix also excludes surface
+    stem alternations such as ``срок`` -> ``срогы``.
+    """
+    if candidate == representative:
         return False
-    if representative.startswith(candidate):
-        return True
-    if not representative.startswith(lemma) or not candidate.startswith(lemma):
+    if (
+        not lemma
+        or not any(char in FAMILY_DIVERGENCE_RISK_LETTERS for char in lemma)
+        or not representative.startswith(lemma)
+        or not candidate.startswith(lemma)
+    ):
         return False
 
     common_length = 0
@@ -417,10 +427,39 @@ def is_safe_family_member(
         return False
 
     divergent_suffix = candidate[common_length:]
-    return bool(divergent_suffix) and all(
+    return all(
         CYRILLIC_RE.fullmatch(char)
         and char not in FAMILY_DIVERGENCE_RISK_LETTERS
         for char in divergent_suffix
+    )
+
+
+def is_compatible_family_member(
+    representative: str,
+    candidate: str,
+    lemma: str,
+    origin: str,
+) -> bool:
+    """Return whether family structure and conversion policies can propagate."""
+    if origin not in {"N", "RL"} or not is_safe_family_member(
+        representative,
+        candidate,
+        lemma,
+    ):
+        return False
+    source_dsl = conversion_branches(representative).suggestion(origin)
+    candidate_dsl = conversion_branches(candidate).suggestion(origin)
+    if not source_dsl or not candidate_dsl:
+        return False
+    source_policies = {
+        policy
+        for variant in annotation_variants(source_dsl)
+        for policy in variant.policies
+    }
+    return all(
+        policy in source_policies
+        for variant in annotation_variants(candidate_dsl)
+        for policy in variant.policies
     )
 
 
@@ -489,6 +528,12 @@ def export_labelstudio_project_tasks_from_db(
     morphology_analyzer: MorphologyAnalyzer | None = None,
 ) -> SplitExportResult:
     """Build focused Label Studio word-review project tasks from SQLite rows."""
+    analyzer = morphology_analyzer or default_morphology_analyzer()
+    if reviewed_words is None:
+        reviewed_words = set(load_reviewed_words(db_path))
+        reviewed_words.difference_update(
+            _unsafe_inherited_review_words(db_path)
+        )
     base = export_labelstudio_tasks_from_db(
         db_path,
         max_items=None,
@@ -499,7 +544,6 @@ def export_labelstudio_project_tasks_from_db(
         reviewed_words=reviewed_words,
         word_resolutions=word_resolutions,
     )
-    analyzer = morphology_analyzer or default_morphology_analyzer()
     return split_export_result(
         base,
         morphology_analyzer=analyzer,
@@ -909,8 +953,6 @@ def _export_units(
                 "family",
                 identity.lemma,
                 identity.part_of_speech,
-                label,
-                project_key,
             )
             if identity is not None
             else ("singleton", normalized, project_key)
@@ -925,13 +967,19 @@ def _export_units(
             representatives = []
             for item in sorted(
                 items,
-                key=lambda value: (-len(value[1]), -value[2], value[1]),
+                key=lambda value: (
+                    value[3] == "U",
+                    -len(value[1]),
+                    -value[2],
+                    value[1],
+                ),
             ):
                 if any(
-                    is_safe_family_member(
+                    is_compatible_family_member(
                         representative[1],
                         item[1],
                         identity.lemma,
+                        representative[3],
                     )
                     for representative in representatives
                 ):
@@ -944,10 +992,11 @@ def _export_units(
                 if item[1] == normalized
                 or (
                     identity is not None
-                    and is_safe_family_member(
+                    and is_compatible_family_member(
                         normalized,
                         item[1],
                         identity.lemma,
+                        task["data"]["gemini_origin"],
                     )
                 )
             ]
@@ -1048,11 +1097,10 @@ def eligible_catchall_words(
     return eligible_project_words(conn, "catchall")
 
 
-def eligible_project_words(
+def eligible_dictionary_words(
     conn: sqlite3.Connection,
-    project_key: str,
 ) -> dict[str, CatchallWord]:
-    """Return observed unreviewed candidates for one dictionary project."""
+    """Return every observed word currently eligible for dictionary review."""
     resolutions = {
         str(row[0]): str(row[1])
         for row in conn.execute(
@@ -1069,17 +1117,27 @@ def eligible_project_words(
         reviewed_words=set(),
         word_resolutions=resolutions,
     )
-    eligible: dict[str, CatchallWord] = {}
-    for task, word, frequency in zip(
-        result.tasks,
-        result.exported_words,
-        result.frequencies,
-        strict=True,
-    ):
-        origin = task["data"]["gemini_origin"]
-        if word_belongs_to_project(word, origin, project_key):
-            eligible[word] = CatchallWord(word, origin, frequency)
-    return eligible
+    return {
+        word: CatchallWord(word, task["data"]["gemini_origin"], frequency)
+        for task, word, frequency in zip(
+            result.tasks,
+            result.exported_words,
+            result.frequencies,
+            strict=True,
+        )
+    }
+
+
+def eligible_project_words(
+    conn: sqlite3.Connection,
+    project_key: str,
+) -> dict[str, CatchallWord]:
+    """Return observed unreviewed candidates for one dictionary project."""
+    return {
+        word: candidate
+        for word, candidate in eligible_dictionary_words(conn).items()
+        if word_belongs_to_project(word, candidate.origin, project_key)
+    }
 
 
 def convert_for_annotation(word: str, label: str) -> str:
@@ -2493,6 +2551,42 @@ def load_reviewed_words(db_path: str | Path) -> dict[str, ReviewedWord]:
         )
         for row in rows
     }
+
+
+def _unsafe_inherited_review_words(
+    db_path: str | Path,
+) -> set[str]:
+    """Return inherited reviews that no longer satisfy family safety rules."""
+    with closing(sqlite3.connect(db_path)) as conn:
+        rows = conn.execute(
+            """
+            select d.normalized_word, d.source_word, d.lemma,
+                   d.part_of_speech, s.origin
+            from reviewed_word_derivations d
+            left join reviewed_words s on s.normalized_word = d.source_word
+            """
+        ).fetchall()
+    unsafe: set[str] = set()
+    for normalized, source, lemma, part_of_speech, source_origin in rows:
+        normalized = str(normalized)
+        source = str(source)
+        lemma = str(lemma)
+        part_of_speech = str(part_of_speech)
+        if part_of_speech == "hamza":
+            if (
+                native_hamza_family(normalized) != lemma
+                or native_hamza_family(source) != lemma
+            ):
+                unsafe.add(normalized)
+            continue
+        if source_origin is None or not is_compatible_family_member(
+            source,
+            normalized,
+            lemma,
+            str(source_origin),
+        ):
+            unsafe.add(normalized)
+    return unsafe
 
 
 def _display_word(surface: str, normalized: str) -> str:

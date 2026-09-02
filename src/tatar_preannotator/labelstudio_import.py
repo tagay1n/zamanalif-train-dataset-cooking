@@ -46,9 +46,9 @@ from .word_export import (
     classify_project,
     conversion_branches,
     dictionary_project_keys,
-    eligible_project_words,
+    eligible_dictionary_words,
     ensure_review_state_schema,
-    is_safe_family_member,
+    is_compatible_family_member,
     native_hamza_family,
     normalize_word,
     word_belongs_to_project,
@@ -268,7 +268,16 @@ def import_labelstudio_annotations(
                         "dictionary project contains contextual homonyms: "
                         + ", ".join(homonyms[:20])
                     )
-                project_eligible = eligible_project_words(conn, parsed.project_key)
+                family_eligible = eligible_dictionary_words(conn)
+                project_eligible = {
+                    word: candidate
+                    for word, candidate in family_eligible.items()
+                    if word_belongs_to_project(
+                        word,
+                        candidate.origin,
+                        parsed.project_key,
+                    )
+                }
                 existing = {
                     str(row[0]): (str(row[1]), str(row[2]))
                     for row in conn.execute(
@@ -286,16 +295,27 @@ def import_labelstudio_annotations(
                     ).fetchall()
                 }
                 analysis_words = (
-                    set(project_eligible)
+                    set(family_eligible)
                     | (set(existing) - derived_words)
                     | regular_words
                 )
                 analyses = analyzer.analyze(sorted(analysis_words))
+                stale_derived_words = _remove_unsafe_inherited_reviews(
+                    conn,
+                    analyses,
+                    family_eligible,
+                    existing,
+                )
+                for word in stale_derived_words:
+                    existing.pop(word, None)
+                    existing_variants.pop(word, None)
+                    derived_words.discard(word)
                 if parsed.project_key != "hamza":
                     regular_items = [
                         _reconstruct_imported_family(
                             item,
                             analyses,
+                            family_eligible,
                             project_eligible,
                             analyzer,
                             parsed.project_key,
@@ -380,8 +400,7 @@ def import_labelstudio_annotations(
                         conn,
                         analyses,
                         analyzer.revision,
-                        project_eligible,
-                        parsed.project_key,
+                        family_eligible,
                         existing,
                         existing_variants,
                         derived_words,
@@ -686,11 +705,12 @@ def _store_homonym_decision(
 def _reconstruct_imported_family(
     item: ReviewedAnnotation,
     analyses: dict[str, MorphIdentity | None],
-    eligible: dict[str, Any],
+    family_eligible: dict[str, Any],
+    project_eligible: dict[str, Any],
     analyzer: MorphologyAnalyzer,
     project_key: str,
 ) -> ReviewedAnnotation:
-    candidate = eligible.get(item.normalized_word)
+    candidate = project_eligible.get(item.normalized_word)
     if candidate is None:
         raise LabelStudioImportError(
             f"{project_key} word is no longer eligible: {item.normalized_word!r}"
@@ -707,14 +727,14 @@ def _reconstruct_imported_family(
         related = sorted(
             (
                 word
-                for word, related_candidate in eligible.items()
+                for word in family_eligible
                 if word != item.normalized_word
-                and is_safe_family_member(
+                and is_compatible_family_member(
                     item.normalized_word,
                     word,
                     identity.lemma,
+                    item.suggested_origin or "",
                 )
-                and related_candidate.origin == item.suggested_origin
                 and analyses.get(word) == identity
             ),
             key=lambda word: (-len(word), word),
@@ -726,6 +746,56 @@ def _reconstruct_imported_family(
         morphology=identity,
         analyzer_revision=analyzer.revision,
     )
+
+
+def _remove_unsafe_inherited_reviews(
+    conn: sqlite3.Connection,
+    analyses: dict[str, MorphIdentity | None],
+    eligible: dict[str, Any],
+    existing: dict[str, tuple[str, str]],
+) -> set[str]:
+    """Drop inferred reviews in this project that violate current family rules."""
+    stale: set[str] = set()
+    rows = conn.execute(
+        """
+        select normalized_word, source_word, lemma, part_of_speech
+        from reviewed_word_derivations
+        """
+    ).fetchall()
+    for normalized, source, lemma, part_of_speech in rows:
+        normalized = str(normalized)
+        if normalized not in eligible or str(part_of_speech) == "hamza":
+            continue
+        source = str(source)
+        identity = MorphIdentity(str(lemma), str(part_of_speech))
+        source_review = existing.get(source)
+        if (
+            source_review is None
+            or analyses.get(normalized) != identity
+            or analyses.get(source) != identity
+            or not is_compatible_family_member(
+                source,
+                normalized,
+                identity.lemma,
+                source_review[1] if source_review is not None else "",
+            )
+        ):
+            stale.add(normalized)
+
+    for word in stale:
+        conn.execute(
+            "delete from reviewed_word_derivations where normalized_word = ?",
+            (word,),
+        )
+        conn.execute(
+            "delete from reviewed_word_variants where normalized_word = ?",
+            (word,),
+        )
+        conn.execute(
+            "delete from reviewed_words where normalized_word = ?",
+            (word,),
+        )
+    return stale
 
 
 def _reconstruct_imported_hamza_family(
@@ -782,10 +852,11 @@ def _propagate_imported_family(
     canonical = conversion_branches(item.normalized_word).suggestion(origin)
     inserted = 0
     for word in item.family_members[1:]:
-        if not is_safe_family_member(
+        if not is_compatible_family_member(
             item.normalized_word,
             word,
             identity.lemma,
+            origin,
         ):
             raise LabelStudioImportError(
                 f"{project_key} family member is not safely covered: {word!r}"
@@ -794,8 +865,6 @@ def _propagate_imported_family(
             raise LabelStudioImportError(
                 f"{project_key} family morphology changed for {word!r}"
             )
-        if not word_belongs_to_project(word, origin, project_key):
-            continue
         member_canonical = conversion_branches(word).suggestion(origin)
         collapsed = _collapsed_family_member_variant(
             canonical,
@@ -888,29 +957,22 @@ def _backfill_reviewed_families(
     analyses: dict[str, MorphIdentity | None],
     analyzer_revision: str,
     eligible: dict[str, Any],
-    project_key: str,
     existing: dict[str, tuple[str, str]],
     existing_variants: dict[str, tuple[ReviewedVariant, ...]],
     derived_words: set[str],
     now: str,
 ) -> int:
-    anchors: dict[tuple[MorphIdentity, str], list[str]] = {}
+    anchors: dict[MorphIdentity, list[str]] = {}
     for word, (zamanalif_dsl, origin) in existing.items():
         if word in derived_words or origin not in REVIEWED_ORIGINS:
             continue
-        candidate = eligible.get(word)
         identity = analyses.get(word)
-        if (
-            candidate is None
-            or candidate.origin != origin
-            or identity is None
-            or not word_belongs_to_project(word, origin, project_key)
-        ):
+        if word not in eligible or identity is None:
             continue
-        anchors.setdefault((identity, origin), []).append(word)
+        anchors.setdefault(identity, []).append(word)
 
     inserted = 0
-    for word, candidate in eligible.items():
+    for word in eligible:
         if word in existing:
             continue
         identity = analyses.get(word)
@@ -918,12 +980,16 @@ def _backfill_reviewed_families(
             continue
         sources = [
             source
-            for source in anchors.get((identity, candidate.origin), [])
-            if is_safe_family_member(source, word, identity.lemma)
+            for source in anchors.get(identity, [])
+            if is_compatible_family_member(
+                source,
+                word,
+                identity.lemma,
+                existing[source][1],
+            )
         ]
-        if not sources or not word_belongs_to_project(
-            word, candidate.origin, project_key
-        ):
+        source_origins = {existing[source][1] for source in sources}
+        if not sources or len(source_origins) != 1:
             continue
         source = min(
             sources,
@@ -933,8 +999,9 @@ def _backfill_reviewed_families(
                 value,
             ),
         )
-        member_canonical = conversion_branches(word).suggestion(candidate.origin)
-        source_canonical = conversion_branches(source).suggestion(candidate.origin)
+        origin = existing[source][1]
+        member_canonical = conversion_branches(word).suggestion(origin)
+        source_canonical = conversion_branches(source).suggestion(origin)
         source_variants = existing_variants.get(source, ())
         collapsed = _collapsed_family_member_variant(
             source_canonical,
@@ -964,7 +1031,7 @@ def _backfill_reviewed_families(
             conn,
             word=word,
             zamanalif_dsl=zamanalif_dsl,
-            origin=candidate.origin,
+            origin=origin,
             source_word=source,
             identity=identity,
             analyzer_revision=analyzer_revision,
@@ -1135,6 +1202,34 @@ def _store_inherited_review(
             and existing_variants.get(word, ()) != variants
         )
         if (previous != current or variants_changed) and word in derived_words:
+            derivation = conn.execute(
+                """
+                select source_word, created_at
+                from reviewed_word_derivations
+                where normalized_word = ?
+                """,
+                (word,),
+            ).fetchone()
+            if (
+                derivation is not None
+                and previous[1] != origin
+                and str(derivation[0]) != source_word
+                and str(derivation[0]) in existing
+                and str(derivation[0]) not in derived_words
+            ):
+                raise LabelStudioImportError(
+                    f"conflicting direct family origins imply both "
+                    f"{previous[1]!r} and {origin!r} for {word!r}"
+                )
+            if (
+                derivation is not None
+                and str(derivation[1]) == now
+                and str(derivation[0]) != source_word
+            ):
+                raise LabelStudioImportError(
+                    f"conflicting family annotations imply different reviews "
+                    f"for {word!r}"
+                )
             conn.execute(
                 """
                 update reviewed_words

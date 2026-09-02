@@ -61,18 +61,22 @@ dictionary review candidates.
 ### Dictionary Morphological Families
 
 Every dictionary project is reduced with the pinned Apertium-tat morphological
-analyzer. Words share one task only when every form has one unambiguous analysis
-with the same lemma and part of speech, predicted origin, and project. Ambiguous
-and unknown words remain independent tasks. Families never cross project
-boundaries. Hamza keeps its stricter verified lexical-family grouping, and
-contextual homonyms remain occurrence-level tasks.
+analyzer. The linguistic family identity is exactly an unambiguous `(lemma,
+part_of_speech)` pair. Predicted origin and project are not family boundaries:
+an accepted `N` or `RL` representative supplies the authoritative origin for
+safe compatible forms, including forms predicted `U`. A candidate remains
+separate when its DSL policies are not represented by the source review, and
+families with conflicting direct human origins are not merged. Ambiguous
+analyses remain independent tasks. Hamza keeps its stricter verified
+lexical-family grouping, and contextual homonyms remain occurrence-level tasks.
 
-Export chooses longer representatives first. A representative covers its
-literal prefixes and shorter divergent siblings when divergence starts after
-the full lemma and the sibling-only suffix contains none of
-`вгекуцюяүщъьё`. Cyrillic `ы` is deterministic everywhere and does not make a
-branch unsafe. Other divergent
-branches remain separate tasks. Accepting
+Ordinary family propagation requires the review-sensitive spelling to occur in
+the analyzer lemma and requires both surface forms to begin with that full
+lemma literally. This excludes suffix-only ambiguity and stem alternations such
+as `срок` -> `срогы`. A representative covers a sibling of any length when
+divergence starts after the full lemma and the sibling-only suffix contains none
+of `вгекуцюяүщъьё`. Cyrillic `ы` is deterministic everywhere and does not make
+a branch unsafe. Other divergent branches remain separate tasks. Accepting
 the unchanged canonical conversion approves each covered form with that
 form's own canonical conversion. For example, `диалогларындагы` can approve
 `диалогларында`, `диалог`, and `диалогларда`, but not `диалогларга`. Editing the
@@ -80,7 +84,9 @@ representative conversion can transfer a correction confined to the shared
 Latin prefix, including each edited focused-project variant. A suffix-only edit
 remains local. Historical reviews use the same safe-family rule. Derived
 approvals retain their source and analyzer revision in
-`reviewed_word_derivations`.
+`reviewed_word_derivations`. Export treats an older derived approval that no
+longer passes this rule as unreviewed; the next import for that project removes
+the stale derived approval transactionally.
 
 ### Native Hamza Families
 

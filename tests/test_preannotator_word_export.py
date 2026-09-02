@@ -1478,7 +1478,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         )
         self.assertEqual(result.report["exported_word_count"], 4)
 
-    def test_catchall_groups_unambiguous_morphological_family(self) -> None:
+    def test_catchall_does_not_group_when_conditional_letter_is_only_in_suffix(self) -> None:
         analyzer = FakeMorphologyAnalyzer(
             {
                 "торган": ("тор", "v"),
@@ -1509,7 +1509,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
             )
 
         catchall = result.projects["catchall"]
-        self.assertEqual(catchall.exported_words, ["торганнары"])
+        self.assertEqual(
+            catchall.exported_words,
+            ["торган", "торганнар", "торганнары"],
+        )
         self.assertEqual(
             catchall.tasks[0]["meta"],
             {
@@ -1517,7 +1520,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 "project_key": "catchall",
             },
         )
-        self.assertEqual(result.report["exported_word_count"], 1)
+        self.assertEqual(result.report["exported_word_count"], 3)
         self.assertEqual(result.report["covered_word_count"], 3)
         self.assertNotIn(
             "morphological family",
@@ -1635,6 +1638,20 @@ class PreannotatorWordExportTests(unittest.TestCase):
         )
         self.assertFalse(is_safe_family_member("баралар", "бала", "бар"))
 
+    def test_safe_family_member_requires_literal_review_sensitive_stem(self) -> None:
+        self.assertFalse(
+            is_safe_family_member("торганнары", "торган", "тор")
+        )
+        self.assertFalse(
+            is_safe_family_member("срогыннан", "срогы", "срок")
+        )
+        self.assertTrue(
+            is_safe_family_member("казак", "казакларны", "казак")
+        )
+        self.assertFalse(
+            is_safe_family_member("казак", "казакларга", "казак")
+        )
+
     def test_safe_family_member_allows_deterministic_suffix_y(self) -> None:
         representative = "проектыбызның"
         for member in ("проект", "проектының", "проектның", "проектлы"):
@@ -1646,11 +1663,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
             is_safe_family_member(representative, "проекттагы", "проект")
         )
 
-    def test_catchall_does_not_group_different_origins_or_ambiguous_words(self) -> None:
+    def test_family_crosses_predicted_origin_and_project_but_not_part_of_speech(self) -> None:
         analyzer = FakeMorphologyAnalyzer(
             {
-                "торган": ("тор", "v"),
-                "торганнары": ("тор", "v"),
+                "культура": ("культура", "n"),
+                "культураны": ("культура", "n"),
+                "культурада": ("культура", "n"),
+                "культуралар": ("культура", "adj"),
             }
         )
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1661,9 +1680,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
                         "id": "sent_1",
                         "tatar": True,
                         "tokens": [
-                            {"text": "торган", "label": "RL"},
-                            {"text": "торганнары", "label": "N"},
-                            {"text": "вакыт", "label": "N"},
+                            {"text": "культура", "label": "RL"},
+                            {"text": "культураны", "label": "N"},
+                            {"text": "культурада", "label": "U"},
+                            {"text": "культуралар", "label": "RL"},
                         ],
                     }
                 ],
@@ -1675,9 +1695,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 morphology_analyzer=analyzer,
             )
 
-        tasks = result.projects["catchall"].tasks
-        self.assertEqual(len(tasks), 3)
-        self.assertEqual(len(result.projects["catchall"].exported_words), 3)
+        self.assertEqual(result.projects["catchall"].exported_words, ["культураны"])
+        self.assertEqual(result.projects["rus_sign"].exported_words, ["культуралар"])
+        self.assertEqual(result.report["exported_word_count"], 2)
+        self.assertEqual(result.report["covered_word_count"], 4)
 
     def test_split_export_uses_complex_multi_rule_project(self) -> None:
         project = classify_project("бюрократия", "RL")
