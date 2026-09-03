@@ -203,6 +203,120 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertIn("Gemini's origin prediction: <b>native</b>", html)
         self.assertNotIn("Frequency for", html)
 
+    def test_catchall_hints_show_first_three_distinct_excerpts(self) -> None:
+        def context_row(sample_id: str, marker: str) -> dict:
+            token_texts = (
+                [f"left{i}" for i in range(14)]
+                + [marker, "вакыт"]
+                + [f"right{i}" for i in range(14)]
+            )
+            return {
+                "id": sample_id,
+                "text": " ".join(token_texts),
+                "tatar": True,
+                "tokens": [
+                    {
+                        "text": text,
+                        "label": "N" if text == "вакыт" else "U",
+                    }
+                    for text in token_texts
+                ],
+            }
+
+        rows = [
+            context_row("1", "context-one"),
+            context_row("2", "context-one"),
+            context_row("3", "context-two"),
+            context_row("4", "context-three"),
+            context_row("5", "context-four"),
+        ]
+        rows[1]["text"] = rows[0]["text"]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(Path(tmpdir) / "zamanalif.sqlite", rows)
+
+            result = export_labelstudio_project_tasks_from_db(
+                db_path,
+                sort_by="word",
+            )
+
+        task = next(
+            task
+            for task in result.projects["catchall"].tasks
+            if task["data"]["cyrl_word"] == "вакыт"
+        )
+        html = task["data"]["hints_html"]
+        self.assertIn("<p><b>Examples in context:</b></p>", html)
+        self.assertEqual(html.count("<mark>вакыт</mark>"), 3)
+        self.assertIn("… left3", html)
+        self.assertIn("right11 …", html)
+        self.assertIn("context-one", html)
+        self.assertIn("context-two", html)
+        self.assertIn("context-three", html)
+        self.assertNotIn("context-four", html)
+
+    def test_context_hints_are_escaped_and_scoped_to_single_suggestion(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "unknown",
+                        "text": "A < B торак & C",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "A", "label": "U"},
+                            {"text": "B", "label": "U"},
+                            {"text": "торак", "label": "U"},
+                            {"text": "C", "label": "U"},
+                        ],
+                    },
+                    {
+                        "id": "focused",
+                        "text": "Яңа проект әзер",
+                        "tatar": True,
+                        "tokens": [
+                            {"text": "Яңа", "label": "N"},
+                            {"text": "проект", "label": "RL"},
+                            {"text": "әзер", "label": "N"},
+                        ],
+                    },
+                ],
+            )
+
+            result = export_labelstudio_project_tasks_from_db(
+                db_path,
+                sort_by="word",
+            )
+
+        unknown = next(
+            task
+            for task in result.projects["unknown_origin"].tasks
+            if task["data"]["cyrl_word"] == "торак"
+        )
+        unknown_html = unknown["data"]["hints_html"]
+        self.assertIn("A &lt; B <mark>торак</mark> &amp; C", unknown_html)
+        focused_html = result.projects["e_glide"].tasks[0]["data"]["hints_html"]
+        self.assertNotIn("Examples in context", focused_html)
+
+    def test_unalignable_context_is_skipped_without_failing_export(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "1",
+                        "text": "Sentence does not contain the token",
+                        "tatar": True,
+                        "tokens": [{"text": "авыл", "label": "N"}],
+                    }
+                ],
+            )
+
+            result = export_labelstudio_project_tasks_from_db(db_path)
+
+        html = result.projects["catchall"].tasks[0]["data"]["hints_html"]
+        self.assertNotIn("Examples in context", html)
+
     def test_mixed_harmony_rl_is_kept_and_rl_without_conditional_is_skipped(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(

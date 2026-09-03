@@ -5,6 +5,7 @@ from contextlib import closing
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from functools import lru_cache
+from html import escape
 from itertools import product
 import json
 from pathlib import Path
@@ -52,6 +53,8 @@ if TYPE_CHECKING:
     from .contextual_review import ContextualExportResult, OccurrenceKey
 
 LABELSTUDIO_SPLIT_BATCH_SIZE = 500
+CONTEXT_EXCERPT_LIMIT = 3
+CONTEXT_EXCERPT_TOKEN_RADIUS = 12
 TASK_SCHEMA_VERSION = 1
 LEGACY_FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION = 2
 FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION = 3
@@ -180,6 +183,8 @@ class WordStats:
     label_counts: Counter[str] = field(default_factory=Counter)
     frequency: int = 0
     conditional_letters: set[str] = field(default_factory=set)
+    context_excerpts: list[str] = field(default_factory=list)
+    context_sentences: set[str] = field(default_factory=set)
 
     @property
     def label(self) -> str:
@@ -779,7 +784,13 @@ def _export_from_records(
         tokens = record.get("tokens")
         if not isinstance(tokens, list):
             continue
-        for token in tokens:
+        sentence = record.get("text")
+        context_spans = (
+            _context_token_spans(sentence, tokens)
+            if isinstance(sentence, str) and sentence
+            else None
+        )
+        for token_index, token in enumerate(tokens):
             if not isinstance(token, dict):
                 continue
             text = token.get("text")
@@ -801,6 +812,16 @@ def _export_from_records(
             if entry is None:
                 entry = WordStats(normalized=normalized, display=_display_word(text, normalized))
                 stats[normalized] = entry
+            if (
+                len(entry.context_excerpts) < CONTEXT_EXCERPT_LIMIT
+                and isinstance(sentence, str)
+                and context_spans is not None
+                and sentence not in entry.context_sentences
+            ):
+                entry.context_sentences.add(sentence)
+                entry.context_excerpts.append(
+                    _context_excerpt(sentence, context_spans, token_index)
+                )
             entry.frequency += 1
             effective_label = resolution if resolution in {"N", "RL", "U"} else label
             if native_hamza_family(normalized) is not None and effective_label == "U":
@@ -2033,7 +2054,72 @@ def decision_html(entry: WordStats) -> str:
         )
     if result is None:
         items.append("Automatic converter produced no clean Latin suggestion")
-    return "<ul>" + "".join(f"<li>{item}</li>" for item in items) + "</ul>"
+    context_html = ""
+    if (
+        classify_project(entry.normalized, entry.label)["key"]
+        in SINGLE_SUGGESTION_PROJECT_KEYS
+        and entry.context_excerpts
+    ):
+        context_html = (
+            "<p><b>Examples in context:</b></p><ul>"
+            + "".join(f"<li>{excerpt}</li>" for excerpt in entry.context_excerpts)
+            + "</ul>"
+        )
+    return (
+        context_html
+        + "<ul>"
+        + "".join(f"<li>{item}</li>" for item in items)
+        + "</ul>"
+    )
+
+
+def _context_token_spans(
+    sentence: str,
+    tokens: list[Any],
+) -> list[tuple[int, int]] | None:
+    """Return ordered token spans, or None when source alignment is invalid."""
+    cursor = 0
+    spans: list[tuple[int, int]] = []
+    for token in tokens:
+        if not isinstance(token, dict):
+            return None
+        text = token.get("text")
+        if not isinstance(text, str) or not text:
+            return None
+        found = sentence.find(text, cursor)
+        if found < 0:
+            return None
+        spans.append((found, found + len(text)))
+        cursor = found + len(text)
+    return spans
+
+
+def _context_excerpt(
+    sentence: str,
+    spans: list[tuple[int, int]],
+    target_index: int,
+) -> str:
+    """Render a safely escaped token window around one source occurrence."""
+    first_index = max(0, target_index - CONTEXT_EXCERPT_TOKEN_RADIUS)
+    last_index = min(
+        len(spans) - 1,
+        target_index + CONTEXT_EXCERPT_TOKEN_RADIUS,
+    )
+    excerpt_start = 0 if first_index == 0 else spans[first_index][0]
+    excerpt_end = (
+        len(sentence) if last_index == len(spans) - 1 else spans[last_index][1]
+    )
+    target_start, target_end = spans[target_index]
+    pieces = [
+        escape(sentence[excerpt_start:target_start]),
+        f"<mark>{escape(sentence[target_start:target_end])}</mark>",
+        escape(sentence[target_end:excerpt_end]),
+    ]
+    if excerpt_start:
+        pieces.insert(0, "… ")
+    if excerpt_end < len(sentence):
+        pieces.append(" …")
+    return "".join(pieces)
 
 
 def write_split_outputs(

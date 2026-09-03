@@ -350,6 +350,13 @@ interface as `catchall`; when several convention variants are possible, the
 preferred plain rendering is shown for correction. Other focused projects show
 all plain Zamanalif variants and keep their DSL policy mapping in task metadata.
 
+The Hints card in `catchall` and `unknown_origin` also shows up to three
+distinct source excerpts for the displayed word. Excerpts are selected in
+stable corpus order, highlight the occurrence, and include at most twelve
+tokens on either side. Ellipses indicate trimmed text. Grouped morphological
+tasks use contexts for the displayed representative form only; missing or
+unalignable source sentences are skipped.
+
 `--max-items` is applied independently to dictionary words and contextual
 occurrences. Contextual tasks are ordered round-robin across homonym words,
 with explicit Gemini homonym flags first.
