@@ -1,31 +1,6 @@
 [
   {
     "data": {
-      "cyrl_word": "киньябулатовның",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "kinʼyabulatovnıñ\nkinyabulatovnıñ"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rus_sign",
-      "suggested_zamanalif_dsl": "kin{{RUS_SIGN|omit=|preserve=ʼ}}yabulatovnıñ",
-      "variant_policies": [
-        [
-          {
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_SIGN": "omit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "кипень",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -985,6 +960,31 @@
       "schema_version": 3,
       "project_key": "rus_sign",
       "suggested_zamanalif_dsl": "kontrol{{RUS_SIGN|omit=|preserve=ʼ}}dan",
+      "variant_policies": [
+        [
+          {
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SIGN": "omit"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "контрольлегендә",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "kontrolʼlegendä\nkontrollegendä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_sign",
+      "suggested_zamanalif_dsl": "kontrol{{RUS_SIGN|omit=|preserve=ʼ}}legendä",
       "variant_policies": [
         [
           {
@@ -2285,6 +2285,56 @@
       "schema_version": 3,
       "project_key": "rus_sign",
       "suggested_zamanalif_dsl": "kul{{RUS_SIGN|omit=|preserve=ʼ}}turalaştırılğan",
+      "variant_policies": [
+        [
+          {
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SIGN": "omit"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "культуралылыгы",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "kulʼturalılığı\nkulturalılığı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_sign",
+      "suggested_zamanalif_dsl": "kul{{RUS_SIGN|omit=|preserve=ʼ}}turalılığı",
+      "variant_policies": [
+        [
+          {
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SIGN": "omit"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "культуралылыгын",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "kulʼturalılığın\nkulturalılığın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_sign",
+      "suggested_zamanalif_dsl": "kul{{RUS_SIGN|omit=|preserve=ʼ}}turalılığın",
       "variant_policies": [
         [
           {
@@ -4260,31 +4310,6 @@
       "schema_version": 3,
       "project_key": "rus_sign",
       "suggested_zamanalif_dsl": "material{{RUS_SIGN|omit=|preserve=ʼ}}nıy",
-      "variant_policies": [
-        [
-          {
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_SIGN": "omit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "матерналь",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "maternalʼ\nmaternal"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rus_sign",
-      "suggested_zamanalif_dsl": "maternal{{RUS_SIGN|omit=|preserve=ʼ}}",
       "variant_policies": [
         [
           {
@@ -11910,31 +11935,6 @@
       "schema_version": 3,
       "project_key": "rus_sign",
       "suggested_zamanalif_dsl": "prosvetitel{{RUS_SIGN|omit=|preserve=ʼ}}stve",
-      "variant_policies": [
-        [
-          {
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_SIGN": "omit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "просрессиональ",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "prosressionalʼ\nprosressional"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rus_sign",
-      "suggested_zamanalif_dsl": "prosressional{{RUS_SIGN|omit=|preserve=ʼ}}",
       "variant_policies": [
         [
           {

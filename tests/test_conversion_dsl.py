@@ -94,6 +94,9 @@ class ConversionDslTests(unittest.TestCase):
     def test_accepts_periods_in_abbreviation_literal(self) -> None:
         self.assertEqual(parse_dsl("s.g.v").to_dsl(), "s.g.v")
 
+    def test_accepts_digits_in_identifier_literal(self) -> None:
+        self.assertEqual(parse_dsl("vn-5507-mr").to_dsl(), "vn-5507-mr")
+
     def test_accepts_preserved_slash_in_literal(self) -> None:
         self.assertEqual(parse_dsl("gkal/säğ").to_dsl(), "gkal/säğ")
 

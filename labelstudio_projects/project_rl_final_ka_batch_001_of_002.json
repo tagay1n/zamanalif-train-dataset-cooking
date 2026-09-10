@@ -276,15 +276,15 @@
   },
   {
     "data": {
-      "cyrl_word": "политика",
+      "cyrl_word": "фронтка",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "politiqa\npolitika"
+      "zamanalif_variants": "frontqa\nfrontka"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "rl_final_ka",
-      "suggested_zamanalif_dsl": "politi{{RL_FINAL_KA|suffix=q|stem=k}}a",
+      "suggested_zamanalif_dsl": "front{{RL_FINAL_KA|suffix=q|stem=k}}a",
       "variant_policies": [
         [
           {
@@ -301,15 +301,15 @@
   },
   {
     "data": {
-      "cyrl_word": "фронтка",
+      "cyrl_word": "политика",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "frontqa\nfrontka"
+      "zamanalif_variants": "politiqa\npolitika"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "rl_final_ka",
-      "suggested_zamanalif_dsl": "front{{RL_FINAL_KA|suffix=q|stem=k}}a",
+      "suggested_zamanalif_dsl": "politi{{RL_FINAL_KA|suffix=q|stem=k}}a",
       "variant_policies": [
         [
           {
@@ -551,31 +551,6 @@
   },
   {
     "data": {
-      "cyrl_word": "пролетариатка",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "proletariatqa\nproletariatka"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rl_final_ka",
-      "suggested_zamanalif_dsl": "proletariat{{RL_FINAL_KA|suffix=q|stem=k}}a",
-      "variant_policies": [
-        [
-          {
-            "RL_FINAL_KA": "suffix"
-          }
-        ],
-        [
-          {
-            "RL_FINAL_KA": "stem"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "фабрика",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -610,6 +585,31 @@
       "schema_version": 3,
       "project_key": "rl_final_ka",
       "suggested_zamanalif_dsl": "garant{{RL_FINAL_KA|suffix=q|stem=k}}a",
+      "variant_policies": [
+        [
+          {
+            "RL_FINAL_KA": "suffix"
+          }
+        ],
+        [
+          {
+            "RL_FINAL_KA": "stem"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "пролетариатка",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "proletariatqa\nproletariatka"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_final_ka",
+      "suggested_zamanalif_dsl": "proletariat{{RL_FINAL_KA|suffix=q|stem=k}}a",
       "variant_policies": [
         [
           {
@@ -3276,31 +3276,6 @@
   },
   {
     "data": {
-      "cyrl_word": "заводка",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "zavodqa\nzavodka"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rl_final_ka",
-      "suggested_zamanalif_dsl": "zavod{{RL_FINAL_KA|suffix=q|stem=k}}a",
-      "variant_policies": [
-        [
-          {
-            "RL_FINAL_KA": "suffix"
-          }
-        ],
-        [
-          {
-            "RL_FINAL_KA": "stem"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "ЗАПИСКА",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -4160,6 +4135,31 @@
       "schema_version": 3,
       "project_key": "rl_final_ka",
       "suggested_zamanalif_dsl": "dialekti{{RL_FINAL_KA|suffix=q|stem=k}}a",
+      "variant_policies": [
+        [
+          {
+            "RL_FINAL_KA": "suffix"
+          }
+        ],
+        [
+          {
+            "RL_FINAL_KA": "stem"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "заводка",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "zavodqa\nzavodka"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_final_ka",
+      "suggested_zamanalif_dsl": "zavod{{RL_FINAL_KA|suffix=q|stem=k}}a",
       "variant_policies": [
         [
           {
@@ -9801,31 +9801,6 @@
   },
   {
     "data": {
-      "cyrl_word": "СТЕПАНОВКА",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "stepanovqa\nstepanovka"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rl_final_ka",
-      "suggested_zamanalif_dsl": "stepanov{{RL_FINAL_KA|suffix=q|stem=k}}a",
-      "variant_policies": [
-        [
-          {
-            "RL_FINAL_KA": "suffix"
-          }
-        ],
-        [
-          {
-            "RL_FINAL_KA": "stem"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "табличка",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -12485,6 +12460,31 @@
       "schema_version": 3,
       "project_key": "rl_final_ka",
       "suggested_zamanalif_dsl": "gataulloviç{{RL_FINAL_KA|suffix=q|stem=k}}a",
+      "variant_policies": [
+        [
+          {
+            "RL_FINAL_KA": "suffix"
+          }
+        ],
+        [
+          {
+            "RL_FINAL_KA": "stem"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "гафуровка",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "gafurovqa\ngafurovka"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_final_ka",
+      "suggested_zamanalif_dsl": "gafurov{{RL_FINAL_KA|suffix=q|stem=k}}a",
       "variant_policies": [
         [
           {

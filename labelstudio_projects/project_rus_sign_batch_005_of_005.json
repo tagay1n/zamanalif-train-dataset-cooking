@@ -4376,31 +4376,6 @@
   },
   {
     "data": {
-      "cyrl_word": "СТРЕЛЬНИКИ",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "strelʼniki\nstrelniki"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rus_sign",
-      "suggested_zamanalif_dsl": "strel{{RUS_SIGN|omit=|preserve=ʼ}}niki",
-      "variant_policies": [
-        [
-          {
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_SIGN": "omit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "строгаль",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -5060,6 +5035,31 @@
       "schema_version": 3,
       "project_key": "rus_sign",
       "suggested_zamanalif_dsl": "tabel{{RUS_SIGN|omit=|preserve=ʼ}}",
+      "variant_policies": [
+        [
+          {
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SIGN": "omit"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "тайвань",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "tayvanʼ\ntayvan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_sign",
+      "suggested_zamanalif_dsl": "tayvan{{RUS_SIGN|omit=|preserve=ʼ}}",
       "variant_policies": [
         [
           {
@@ -6060,31 +6060,6 @@
       "schema_version": 3,
       "project_key": "rus_sign",
       "suggested_zamanalif_dsl": "t{{RUS_SIGN|omit=|preserve=ʼ}}yutordan",
-      "variant_policies": [
-        [
-          {
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_SIGN": "omit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "увольнение",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "uvolʼnenie\nuvolnenie"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rus_sign",
-      "suggested_zamanalif_dsl": "uvol{{RUS_SIGN|omit=|preserve=ʼ}}nenie",
       "variant_policies": [
         [
           {

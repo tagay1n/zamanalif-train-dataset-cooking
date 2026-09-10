@@ -1,56 +1,6 @@
 [
   {
     "data": {
-      "cyrl_word": "ульяновский",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "ulʼyanovskiy\nulyanovskiy"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rus_sign",
-      "suggested_zamanalif_dsl": "ul{{RUS_SIGN|omit=|preserve=ʼ}}yanovskiy",
-      "variant_policies": [
-        [
-          {
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_SIGN": "omit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "уральскидан",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "uralʼskidan\nuralskidan"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rus_sign",
-      "suggested_zamanalif_dsl": "ural{{RUS_SIGN|omit=|preserve=ʼ}}skidan",
-      "variant_policies": [
-        [
-          {
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_SIGN": "omit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "уральский",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -5326,15 +5276,65 @@
   },
   {
     "data": {
-      "cyrl_word": "властьлылык",
+      "cyrl_word": "властьлылыгы",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "vlastʼlılıq\nvlastlılıq"
+      "zamanalif_variants": "vlastʼlılığı\nvlastlılığı"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "rus_sign",
-      "suggested_zamanalif_dsl": "vlast{{RUS_SIGN|omit=|preserve=ʼ}}lılıq",
+      "suggested_zamanalif_dsl": "vlast{{RUS_SIGN|omit=|preserve=ʼ}}lılığı",
+      "variant_policies": [
+        [
+          {
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SIGN": "omit"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "властьлылыгын",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "vlastʼlılığın\nvlastlılığın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_sign",
+      "suggested_zamanalif_dsl": "vlast{{RUS_SIGN|omit=|preserve=ʼ}}lılığın",
+      "variant_policies": [
+        [
+          {
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SIGN": "omit"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "властьлылыгыннан",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "vlastʼlılıgınnan\nvlastlılıgınnan"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_sign",
+      "suggested_zamanalif_dsl": "vlast{{RUS_SIGN|omit=|preserve=ʼ}}lılıgınnan",
       "variant_policies": [
         [
           {
@@ -6685,31 +6685,6 @@
       "schema_version": 3,
       "project_key": "rus_sign",
       "suggested_zamanalif_dsl": "gil{{RUS_SIGN|omit=|preserve=ʼ}}bo",
-      "variant_policies": [
-        [
-          {
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_SIGN": "omit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "гильгамеш",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "gilʼgameş\ngilgameş"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rus_sign",
-      "suggested_zamanalif_dsl": "gil{{RUS_SIGN|omit=|preserve=ʼ}}gameş",
       "variant_policies": [
         [
           {
@@ -12485,6 +12460,31 @@
       "schema_version": 3,
       "project_key": "rus_sign",
       "suggested_zamanalif_dsl": "kinovideofil{{RUS_SIGN|omit=|preserve=ʼ}}mnar",
+      "variant_policies": [
+        [
+          {
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SIGN": "omit"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "киньябулатовның",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "kinʼyabulatovnıñ\nkinyabulatovnıñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_sign",
+      "suggested_zamanalif_dsl": "kin{{RUS_SIGN|omit=|preserve=ʼ}}yabulatovnıñ",
       "variant_policies": [
         [
           {

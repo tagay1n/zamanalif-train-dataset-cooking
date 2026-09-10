@@ -1,0 +1,161 @@
+Good job. Now let's generate next portion of tasks for annotation
+
+Hey! I completed annotation of project 33. Please export it. First audit. Also there were several skipped tasks. We discuss each of them.  Auth token is 
+
+hamza
+omonyms
+disharmonyzm
+month names
+e/ё in lonwords
+rome numerals
+TS - Ц
+
+what apostrophus to choose?
+ихтыяри—ixtıyarıy
+
+month names
+
+numerals bigger than 10
+abbreviations
+5-e, 20-se, 9-ı, 5-är, 7-şär, 40%-lı, 40o-tan tübän
+poyezd-dan > poyezdan
+
+Rustan häm rus tele aşa [ы] awazı belän kergän alınmalarda ы xärefe rınına
+latinitsada ıy yazıla: сы
+
+мәктәбара
+reconsider DSL's policies to generalize them
+
+ак + russian lowan words like  акгвардеец, кызыл грардеец and 2+ words separated by hyphen
+
+surnames and locations should be processed more carefully
+
+
+Пәйгамбәребез (с.г.с.)
+partoyışma
+konsert
+ideyä
+prikazığ(g)ıznı
+әүвәл
+наемы -> nayomı
+әүвәлге -> äüwälge
+Add homonyms for: qaq, Kızıl (Tuva), orğan, sawa
+
+ваз кичәргә
+
+[ц] [с] [ч] [щ] [ш] [з] [ж] [җ] [н] [л] [р], тел уртасы [й], тел арты [к] [г], кече тел (увуляр) [қ][ғ] [х] [ң], 
+
+-лык always -lıq, not -lık
+
+zayom
+
+казакларның -> qazaqlarnıñ
+
+къ shpuld be always as q
+
+zayom, федоровна
+
+инкяр, зәкят, кяфер
+
+awrupa???
+
+troubles with: initials, abbreviations, yo
+
+Бердәм кизү-диспетчерлык хезмәте
+
+check always nıqı, not nıkı
+
+гыйльман how correctly?
+
+кальгасының
+
+карагруһлары
+кәлям
+
+ядкарь
+
+ильдеряк, имля, лязим, лязем, никях, ядкяр how  is pronounced
+
+should be always suffix -ka: fondka 
+
+мфцга
+
+e in surnames
+
+ЕМСДГА -  YMSD or EMSDga, есиагаI
+
+игълям
+
+contry names, geografik naming
+
+ислях, киляб, кятиб, кәляме, ляихә, әхкяме, салят, вәссәллям
+
+кальганың
+
+камзулы - q or k
+
+Гц -> Gts
+
+suffix лау should be always -law
+
+крым should start with Q 
+
+catch all has missing gliding e cases
+
+how to pronounce алляров?
+
+сыр and it variations, does not it should be a separate DSL?
+
+яхья is yaxya or yäxyä
+
+check words strting with әү, like әүвәлге it must not be äww
+
+
+torak-kommunalʼ? krestʼyan qommunal' kul'tura-könküreş küpprofil'le kontrolʼ-xisap
+
+дәвалау ensure it is converted as däwalaw pay attention to last у
+
+oyıştıru, not oyeştıru
+
+proekt or proyekt
+
+akçurin
+
+
+риваять -> riwayät?
+
+шинельсез, шильнебаш appostrof problems
+
+акчурина should be ak or aq
+
+how to wtite ватан
+
+кауме how to pronounce?Ple
+
+әүвәлгеләрнең, әүхәди ->  äw or äü?
+
+вәдим
+
+гайб -> ğäyb or ğayb
+
+галлямов -> gallyamov?
+
+should be Bawlı everywhere
+
+writing of all months
+
+үтүе -> shoule be -we?
+
+interv'yu
+
+истикълял
+
+
+
+
+quqmara not kukmara
+
+диккать
+маньчжурия
+
+кытай -> q

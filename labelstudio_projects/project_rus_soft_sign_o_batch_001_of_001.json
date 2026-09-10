@@ -1,15 +1,15 @@
 [
   {
     "data": {
-      "cyrl_word": "павильоннарында",
+      "cyrl_word": "батальонга",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "pavilʼonnarında\npavilonnarında\npavilʼyonnarında"
+      "zamanalif_variants": "batalʼonğa\nbatalonğa\nbatalʼyonğa"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "rus_soft_sign_o",
-      "suggested_zamanalif_dsl": "pavil{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnarında",
+      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onğa",
       "variant_policies": [
         [
           {
@@ -31,15 +31,15 @@
   },
   {
     "data": {
-      "cyrl_word": "батальонга",
+      "cyrl_word": "павильоннарында",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "batalʼonğa\nbatalonğa\nbatalʼyonğa"
+      "zamanalif_variants": "pavilʼonnarında\npavilonnarında\npavilʼyonnarında"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "rus_soft_sign_o",
-      "suggested_zamanalif_dsl": "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onğa",
+      "suggested_zamanalif_dsl": "pavil{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onnarında",
       "variant_policies": [
         [
           {
@@ -250,36 +250,6 @@
       "schema_version": 3,
       "project_key": "rus_soft_sign_o",
       "suggested_zamanalif_dsl": "muril{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}onıñ",
-      "variant_policies": [
-        [
-          {
-            "RUS_SOFT_SIGN_O": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_SOFT_SIGN_O": "omit"
-          }
-        ],
-        [
-          {
-            "RUS_SOFT_SIGN_O": "apostrophe_y"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "шампольон",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "şampolʼon\nşampolon\nşampolʼyon"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rus_soft_sign_o",
-      "suggested_zamanalif_dsl": "şampol{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}on",
       "variant_policies": [
         [
           {

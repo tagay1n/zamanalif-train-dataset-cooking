@@ -1,31 +1,6 @@
 [
   {
     "data": {
-      "cyrl_word": "гафуровка",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "gafurovqa\ngafurovka"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rl_final_ka",
-      "suggested_zamanalif_dsl": "gafurov{{RL_FINAL_KA|suffix=q|stem=k}}a",
-      "variant_policies": [
-        [
-          {
-            "RL_FINAL_KA": "suffix"
-          }
-        ],
-        [
-          {
-            "RL_FINAL_KA": "stem"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "геоинформатика",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -1435,31 +1410,6 @@
       "schema_version": 3,
       "project_key": "rl_final_ka",
       "suggested_zamanalif_dsl": "zagib{{RL_FINAL_KA|suffix=q|stem=k}}a",
-      "variant_policies": [
-        [
-          {
-            "RL_FINAL_KA": "suffix"
-          }
-        ],
-        [
-          {
-            "RL_FINAL_KA": "stem"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "ЗАГОРАВКА",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "zagoravqa\nzagoravka"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rl_final_ka",
-      "suggested_zamanalif_dsl": "zagorav{{RL_FINAL_KA|suffix=q|stem=k}}a",
       "variant_policies": [
         [
           {
@@ -9201,6 +9151,31 @@
   },
   {
     "data": {
+      "cyrl_word": "степановка",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "stepanovqa\nstepanovka"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rl_final_ka",
+      "suggested_zamanalif_dsl": "stepanov{{RL_FINAL_KA|suffix=q|stem=k}}a",
+      "variant_policies": [
+        [
+          {
+            "RL_FINAL_KA": "suffix"
+          }
+        ],
+        [
+          {
+            "RL_FINAL_KA": "stem"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
       "cyrl_word": "стерлингка",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -11160,31 +11135,6 @@
       "schema_version": 3,
       "project_key": "rl_final_ka",
       "suggested_zamanalif_dsl": "çepiç{{RL_FINAL_KA|suffix=q|stem=k}}a",
-      "variant_policies": [
-        [
-          {
-            "RL_FINAL_KA": "suffix"
-          }
-        ],
-        [
-          {
-            "RL_FINAL_KA": "stem"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "ЧЕРЕДАЕВКА",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "çeredayevqa\nçeredayevka"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "rl_final_ka",
-      "suggested_zamanalif_dsl": "çeredayev{{RL_FINAL_KA|suffix=q|stem=k}}a",
       "variant_policies": [
         [
           {

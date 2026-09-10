@@ -173,6 +173,7 @@ FAMILY_DIVERGENCE_RISK_LETTERS = (
 ALLOWED_ZAMANALIF = frozenset(
     "abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    "0123456789"
     "äÄöÖüÜñÑıİğĞşŞçÇ"
     f"-/—{ZAMANALIF_APOSTROPHE}()"
 )

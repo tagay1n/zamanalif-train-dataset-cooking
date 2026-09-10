@@ -1,6 +1,126 @@
 [
   {
     "data": {
+      "cyrl_word": "стерякова",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "steryakova\nsterʼakova\nsterakova"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_jotation",
+      "suggested_zamanalif_dsl": "ster{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}akova",
+      "variant_policies": [
+        [
+          {
+            "RUS_JOTATION": "glide"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "столяр",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "stolyar\nstolʼar\nstolar"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_jotation",
+      "suggested_zamanalif_dsl": "stol{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}ar",
+      "variant_policies": [
+        [
+          {
+            "RUS_JOTATION": "glide"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "столяр-коммунист",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "stolyar-kommunist\nstolʼar-kommunist\nstolar-kommunist"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_jotation",
+      "suggested_zamanalif_dsl": "stol{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}ar-kommunist",
+      "variant_policies": [
+        [
+          {
+            "RUS_JOTATION": "glide"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "столярный",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "stolyarnıy\nstolʼarnıy\nstolarnıy"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "rus_jotation",
+      "suggested_zamanalif_dsl": "stol{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}arnıy",
+      "variant_policies": [
+        [
+          {
+            "RUS_JOTATION": "glide"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
       "cyrl_word": "столярова",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",

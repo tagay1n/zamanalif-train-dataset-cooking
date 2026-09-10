@@ -12,6 +12,7 @@ APOSTROPHE_VARIANTS = frozenset({"'", "’", ZAMANALIF_APOSTROPHE})
 ZAMANALIF_CHARACTERS = frozenset(
     "abcdefghijklmnopqrstuvwxyz"
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    "0123456789"
     "äÄöÖüÜñÑıİğĞşŞçÇ"
     f"-./{ZAMANALIF_APOSTROPHE}—()"
 )

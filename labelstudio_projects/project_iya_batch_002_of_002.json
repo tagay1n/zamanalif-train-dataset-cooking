@@ -1,6 +1,31 @@
 [
   {
     "data": {
+      "cyrl_word": "англиядәгегә",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "angliyädägegä\nangliädägegä"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "iya",
+      "suggested_zamanalif_dsl": "angli{{IYA|compact=ä|explicit=yä}}dägegä",
+      "variant_policies": [
+        [
+          {
+            "IYA": "explicit"
+          }
+        ],
+        [
+          {
+            "IYA": "compact"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
       "cyrl_word": "англиядәгедән",
       "gemini_origin": "RL",
       "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -510,31 +535,6 @@
       "schema_version": 3,
       "project_key": "iya",
       "suggested_zamanalif_dsl": "burgundi{{IYA|compact=ä|explicit=yä}}dä",
-      "variant_policies": [
-        [
-          {
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "IYA": "compact"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "бурскуазия",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "burskuaziyä\nburskuaziä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "iya",
-      "suggested_zamanalif_dsl": "burskuazi{{IYA|compact=ä|explicit=yä}}",
       "variant_policies": [
         [
           {
@@ -1260,31 +1260,6 @@
       "schema_version": 3,
       "project_key": "iya",
       "suggested_zamanalif_dsl": "garanti{{IYA|compact=ä|explicit=yä}}libez",
-      "variant_policies": [
-        [
-          {
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "IYA": "compact"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "гарантиялэр",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "garantiyäler\ngarantiäler"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "iya",
-      "suggested_zamanalif_dsl": "garanti{{IYA|compact=ä|explicit=yä}}ler",
       "variant_policies": [
         [
           {
@@ -2960,6 +2935,31 @@
       "schema_version": 3,
       "project_key": "iya",
       "suggested_zamanalif_dsl": "ki{{IYA|compact=ä|explicit=yä}}wemezgä",
+      "variant_policies": [
+        [
+          {
+            "IYA": "explicit"
+          }
+        ],
+        [
+          {
+            "IYA": "compact"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "киявенең",
+      "gemini_origin": "N",
+      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>native</b></li></ul>",
+      "zamanalif_variants": "kiyäweneñ\nkiäweneñ"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "iya",
+      "suggested_zamanalif_dsl": "ki{{IYA|compact=ä|explicit=yä}}weneñ",
       "variant_policies": [
         [
           {
@@ -5451,31 +5451,6 @@
   },
   {
     "data": {
-      "cyrl_word": "психологияеея",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "psixologiyäeyeya\npsixologiäeyeya"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "iya",
-      "suggested_zamanalif_dsl": "psixologi{{IYA|compact=ä|explicit=yä}}eyeya",
-      "variant_policies": [
-        [
-          {
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "IYA": "compact"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "радиоспектроскопия",
       "gemini_origin": "RL",
       "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -6585,31 +6560,6 @@
       "schema_version": 3,
       "project_key": "iya",
       "suggested_zamanalif_dsl": "telekompani{{IYA|compact=ä|explicit=yä}}lär",
-      "variant_policies": [
-        [
-          {
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "IYA": "compact"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "телекомпаниясе",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "telekompaniyäse\ntelekompaniäse"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "iya",
-      "suggested_zamanalif_dsl": "telekompani{{IYA|compact=ä|explicit=yä}}se",
       "variant_policies": [
         [
           {

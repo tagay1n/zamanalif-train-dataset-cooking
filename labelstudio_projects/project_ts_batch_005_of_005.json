@@ -215,31 +215,6 @@
   },
   {
     "data": {
-      "cyrl_word": "цивилизациялареннән",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "sivilizatsiyälarennän\nsivilizatsiälarennän"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "ts",
-      "suggested_zamanalif_dsl": "sivilizatsi{{IYA|compact=ä|explicit=yä}}larennän",
-      "variant_policies": [
-        [
-          {
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "IYA": "compact"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "цивилизацияләнеп",
       "gemini_origin": "RL",
       "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -1696,6 +1671,31 @@
   },
   {
     "data": {
+      "cyrl_word": "эксплуатацияләве",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "ekspluatatsiyäläve\nekspluatatsiäläve"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "ts",
+      "suggested_zamanalif_dsl": "ekspluatatsi{{IYA|compact=ä|explicit=yä}}läve",
+      "variant_policies": [
+        [
+          {
+            "IYA": "explicit"
+          }
+        ],
+        [
+          {
+            "IYA": "compact"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
       "cyrl_word": "эксплуатацияләнгән",
       "gemini_origin": "RL",
       "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -2053,6 +2053,56 @@
         [
           {
             "IYA": "compact"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эмоциональлеге",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "emotsionalʼlege\nemotsionallege"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "ts",
+      "suggested_zamanalif_dsl": "emotsional{{RUS_SIGN|omit=|preserve=ʼ}}lege",
+      "variant_policies": [
+        [
+          {
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SIGN": "omit"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "эмоциональлеген",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "emotsionalʼlegen\nemotsionallegen"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "ts",
+      "suggested_zamanalif_dsl": "emotsional{{RUS_SIGN|omit=|preserve=ʼ}}legen",
+      "variant_policies": [
+        [
+          {
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SIGN": "omit"
           }
         ]
       ]
@@ -2697,15 +2747,15 @@
   },
   {
     "data": {
-      "cyrl_word": "үзепец",
+      "cyrl_word": "үзенец",
       "gemini_origin": "N",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>native</b></li></ul>",
-      "zamanalif_variants": "üzepes"
+      "zamanalif_variants": "üzenes"
     },
     "meta": {
       "schema_version": 3,
       "project_key": "ts",
-      "suggested_zamanalif_dsl": "üzepes",
+      "suggested_zamanalif_dsl": "üzenes",
       "variant_policies": [
         [
           {}

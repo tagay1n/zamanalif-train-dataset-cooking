@@ -1,81 +1,6 @@
 [
   {
     "data": {
-      "cyrl_word": "модернизацияләүне",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "modernizatsiyäläüne\nmodernizatsiäläüne"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "ts",
-      "suggested_zamanalif_dsl": "modernizatsi{{IYA|compact=ä|explicit=yä}}läüne",
-      "variant_policies": [
-        [
-          {
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "IYA": "compact"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "модификациягә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "modifikatsiyägä\nmodifikatsiägä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "ts",
-      "suggested_zamanalif_dsl": "modifikatsi{{IYA|compact=ä|explicit=yä}}gä",
-      "variant_policies": [
-        [
-          {
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "IYA": "compact"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "модификацияләргә",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "modifikatsiyälärgä\nmodifikatsiälärgä"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "ts",
-      "suggested_zamanalif_dsl": "modifikatsi{{IYA|compact=ä|explicit=yä}}lärgä",
-      "variant_policies": [
-        [
-          {
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "IYA": "compact"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "модификацияләрнең",
       "gemini_origin": "RL",
       "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -1159,6 +1084,24 @@
           {
             "IYA": "compact"
           }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "народоволец",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "narodovolets"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "ts",
+      "suggested_zamanalif_dsl": "narodovolets",
+      "variant_policies": [
+        [
+          {}
         ]
       ]
     }
@@ -2810,31 +2753,6 @@
           {
             "TS": "ts",
             "RL_FINAL_KA": "stem"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "полководецларыннан",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "polkovodeslarınnan\npolkovodetslarınnan"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "ts",
-      "suggested_zamanalif_dsl": "polkovode{{TS|s=s|ts=ts}}larınnan",
-      "variant_policies": [
-        [
-          {
-            "TS": "s"
-          }
-        ],
-        [
-          {
-            "TS": "ts"
           }
         ]
       ]
@@ -4910,6 +4828,56 @@
   },
   {
     "data": {
+      "cyrl_word": "реакционлыгы",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "reaksionlığı\nreaktsionlığı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "ts",
+      "suggested_zamanalif_dsl": "reak{{TS|s=s|ts=ts}}ionlığı",
+      "variant_policies": [
+        [
+          {
+            "TS": "s"
+          }
+        ],
+        [
+          {
+            "TS": "ts"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "реакционлыгына",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "reaksionlıgına\nreaktsionlıgına"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "ts",
+      "suggested_zamanalif_dsl": "reak{{TS|s=s|ts=ts}}ionlıgına",
+      "variant_policies": [
+        [
+          {
+            "TS": "s"
+          }
+        ],
+        [
+          {
+            "TS": "ts"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
       "cyrl_word": "реакционлыкны",
       "gemini_origin": "RL",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
@@ -5446,6 +5414,66 @@
       "schema_version": 3,
       "project_key": "ts",
       "suggested_zamanalif_dsl": "revol{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}utsionlaşuınnan",
+      "variant_policies": [
+        [
+          {
+            "RUS_JOTATION": "glide"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "революционлыгы",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "revolyutsionlığı\nrevolʼutsionlığı\nrevolutsionlığı"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "ts",
+      "suggested_zamanalif_dsl": "revol{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}utsionlığı",
+      "variant_policies": [
+        [
+          {
+            "RUS_JOTATION": "glide"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "apostrophe"
+          }
+        ],
+        [
+          {
+            "RUS_JOTATION": "plain"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "революционлыгын",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "revolyutsionlığın\nrevolʼutsionlığın\nrevolutsionlığın"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "ts",
+      "suggested_zamanalif_dsl": "revol{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}utsionlığın",
       "variant_policies": [
         [
           {
@@ -6832,84 +6860,6 @@
   },
   {
     "data": {
-      "cyrl_word": "репродукцияле",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "reproduksiyäle\nreproduksiäle\nreproduktsiäle\nreproduktsiyäle"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "ts",
-      "suggested_zamanalif_dsl": "reproduk{{TS|s=s|ts=ts}}i{{IYA|compact=ä|explicit=yä}}le",
-      "variant_policies": [
-        [
-          {
-            "TS": "s",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "TS": "s",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "TS": "ts",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "TS": "ts",
-            "IYA": "explicit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "репродукциясе",
-      "gemini_origin": "RL",
-      "hints_html": "<ul><li><b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)</li><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
-      "zamanalif_variants": "reproduksiyäse\nreproduksiäse\nreproduktsiäse\nreproduktsiyäse"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "ts",
-      "suggested_zamanalif_dsl": "reproduk{{TS|s=s|ts=ts}}i{{IYA|compact=ä|explicit=yä}}se",
-      "variant_policies": [
-        [
-          {
-            "TS": "s",
-            "IYA": "explicit"
-          }
-        ],
-        [
-          {
-            "TS": "s",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "TS": "ts",
-            "IYA": "compact"
-          }
-        ],
-        [
-          {
-            "TS": "ts",
-            "IYA": "explicit"
-          }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
       "cyrl_word": "ресоциальләштерү",
       "gemini_origin": "U",
       "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>native</b> (editable suggestion)</li></ul>",
@@ -7308,31 +7258,6 @@
       "variant_policies": [
         [
           {}
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "рыцарьларын",
-      "gemini_origin": "U",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>",
-      "zamanalif_variants": "rıtsarʼların\nrıtsarların"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "ts",
-      "suggested_zamanalif_dsl": "rıtsar{{RUS_SIGN|omit=|preserve=ʼ}}ların",
-      "variant_policies": [
-        [
-          {
-            "RUS_SIGN": "preserve"
-          }
-        ],
-        [
-          {
-            "RUS_SIGN": "omit"
-          }
         ]
       ]
     }
@@ -9124,6 +9049,95 @@
       "variant_policies": [
         [
           {}
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "специальносте",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "spetsialʼnoste\nspetsialnoste"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "ts",
+      "suggested_zamanalif_dsl": "spetsial{{RUS_SIGN|omit=|preserve=ʼ}}noste",
+      "variant_policies": [
+        [
+          {
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SIGN": "omit"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "специальностена",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "spetsialʼnostena\nspetsialnostena"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "ts",
+      "suggested_zamanalif_dsl": "spetsial{{RUS_SIGN|omit=|preserve=ʼ}}nostena",
+      "variant_policies": [
+        [
+          {
+            "RUS_SIGN": "preserve"
+          }
+        ],
+        [
+          {
+            "RUS_SIGN": "omit"
+          }
+        ]
+      ]
+    }
+  },
+  {
+    "data": {
+      "cyrl_word": "специальностька",
+      "gemini_origin": "RL",
+      "hints_html": "<ul><li>Gemini's origin prediction: <b>loanword</b></li></ul>",
+      "zamanalif_variants": "spetsialʼnostʼqa\nspetsialnostqa\nspetsialnostka\nspetsialʼnostʼka"
+    },
+    "meta": {
+      "schema_version": 3,
+      "project_key": "ts",
+      "suggested_zamanalif_dsl": "spetsial{{RUS_SIGN|omit=|preserve=ʼ}}nost{{RUS_SIGN|omit=|preserve=ʼ}}{{RL_FINAL_KA|suffix=q|stem=k}}a",
+      "variant_policies": [
+        [
+          {
+            "RUS_SIGN": "preserve",
+            "RL_FINAL_KA": "suffix"
+          }
+        ],
+        [
+          {
+            "RUS_SIGN": "omit",
+            "RL_FINAL_KA": "suffix"
+          }
+        ],
+        [
+          {
+            "RUS_SIGN": "omit",
+            "RL_FINAL_KA": "stem"
+          }
+        ],
+        [
+          {
+            "RUS_SIGN": "preserve",
+            "RL_FINAL_KA": "stem"
+          }
         ]
       ]
     }
@@ -11055,24 +11069,6 @@
             "TS": "ts",
             "IYA": "explicit"
           }
-        ]
-      ]
-    }
-  },
-  {
-    "data": {
-      "cyrl_word": "фиргавецкек",
-      "gemini_origin": "U",
-      "hints_html": "<ul><li>Gemini's origin prediction: <b>unknown</b></li><li>Simple origin heuristic: <b>loanword</b> (editable suggestion)</li></ul>",
-      "zamanalif_variants": "firgavetskek"
-    },
-    "meta": {
-      "schema_version": 3,
-      "project_key": "ts",
-      "suggested_zamanalif_dsl": "firgavetskek",
-      "variant_policies": [
-        [
-          {}
         ]
       ]
     }
