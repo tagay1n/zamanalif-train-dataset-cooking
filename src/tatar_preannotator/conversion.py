@@ -16,6 +16,7 @@ ZAMANALIF_CHARACTERS = frozenset(
     "äÄöÖüÜñÑıİğĞşŞçÇ"
     f"-./{ZAMANALIF_APOSTROPHE}—()"
 )
+ZAMANALIF_LITERAL_CHARACTERS = ZAMANALIF_CHARACTERS | {" "}
 IDENTIFIER_RE = re.compile(r"[A-Z][A-Z0-9_]*")
 OPTION_RE = re.compile(r"[a-z][a-z0-9_]*")
 
@@ -264,6 +265,7 @@ def parse_dsl(value: str) -> ConversionResult:
     if not isinstance(value, str) or not value:
         raise DslError("conversion DSL must be a non-empty string")
     value = normalize_zamanalif_apostrophes(value)
+    _validate_spacing(value, "conversion DSL")
 
     segments: list[Segment] = []
     position = 0
@@ -274,13 +276,13 @@ def parse_dsl(value: str) -> ConversionResult:
             raise DslError(f"unexpected closing delimiter at position {stray_closing}")
         if opening == -1:
             literal = value[position:]
-            _validate_zamanalif(literal, "literal")
+            _validate_zamanalif(literal, "literal", allow_space=True)
             _append_literal(segments, literal)
             position = len(value)
             break
 
         literal = value[position:opening]
-        _validate_zamanalif(literal, "literal")
+        _validate_zamanalif(literal, "literal", allow_space=True)
         _append_literal(segments, literal)
         closing = value.find("}}", opening + 2)
         if closing == -1:
@@ -302,7 +304,7 @@ def serialize_dsl(result: ConversionResult) -> str:
     for segment in result.segments:
         if isinstance(segment, Literal):
             text = normalize_zamanalif_apostrophes(segment.text)
-            _validate_zamanalif(text, "literal")
+            _validate_zamanalif(text, "literal", allow_space=True)
             parts.append(text)
             continue
         rule = _validated_choice(segment)
@@ -311,6 +313,7 @@ def serialize_dsl(result: ConversionResult) -> str:
     value = "".join(parts)
     if not value:
         raise DslError("conversion DSL must not be empty")
+    _validate_spacing(value, "conversion DSL")
     return value
 
 
@@ -333,7 +336,7 @@ def resolve_result(
     for segment in result.segments:
         if isinstance(segment, Literal):
             text = normalize_zamanalif_apostrophes(segment.text)
-            _validate_zamanalif(text, "literal")
+            _validate_zamanalif(text, "literal", allow_space=True)
             parts.append(text)
             continue
         choice = _validated_choice(segment)
@@ -344,7 +347,8 @@ def resolve_result(
             raise DslError(f"unknown option {option_id!r} for rule {choice.rule_id}")
         parts.append(options[option_id])
     value = "".join(parts)
-    _validate_zamanalif(value, "resolved conversion")
+    _validate_zamanalif(value, "resolved conversion", allow_space=True)
+    _validate_spacing(value, "resolved conversion")
     if not value:
         raise DslError("resolved conversion must not be empty")
     return value
@@ -405,12 +409,23 @@ def _validated_choice(choice: Choice) -> Choice:
     return choice
 
 
-def _validate_zamanalif(value: str, context: str) -> None:
+def _validate_zamanalif(
+    value: str,
+    context: str,
+    *,
+    allow_space: bool = False,
+) -> None:
     value = normalize_zamanalif_apostrophes(value)
-    invalid = sorted(set(value) - ZAMANALIF_CHARACTERS)
+    allowed = ZAMANALIF_LITERAL_CHARACTERS if allow_space else ZAMANALIF_CHARACTERS
+    invalid = sorted(set(value) - allowed)
     if invalid:
         rendered = " ".join(repr(char) for char in invalid)
         raise DslError(f"invalid characters in {context}: {rendered}")
+
+
+def _validate_spacing(value: str, context: str) -> None:
+    if value.startswith(" ") or value.endswith(" ") or "  " in value:
+        raise DslError(f"invalid spacing in {context}")
 
 
 def normalize_zamanalif_apostrophes(value: str) -> str:

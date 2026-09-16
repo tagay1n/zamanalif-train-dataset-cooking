@@ -125,6 +125,44 @@ class LabelStudioImportTests(unittest.TestCase):
         )
         self.assertEqual(reviewed["альфонс"].origin, "U")
 
+    def test_imports_multiword_conversion_with_ascii_space(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            word = "нефть автоматлары"
+            _add_words(db_path, [word], origin="U")
+            exported = export_labelstudio_project_tasks_from_db(
+                db_path,
+                morphology_analyzer=self.analyzer,
+            )
+            task = next(
+                task
+                for task in exported.projects["unknown_origin"].tasks
+                if task["data"]["cyrl_word"] == word
+            )
+            task["annotations"] = [
+                {
+                    "was_cancelled": False,
+                    "result": [
+                        {
+                            "from_name": "corrected_zamanalif",
+                            "type": "textarea",
+                            "value": {"text": ["neftʼ avtomatları"]},
+                        }
+                    ],
+                }
+            ]
+            backup = _backup(root / "unknown-origin.json", [task])
+
+            summary = import_labelstudio_annotations(db_path, backup)
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.imported_items, 1)
+        self.assertEqual(
+            reviewed[word].zamanalif_dsl,
+            "neftʼ avtomatları",
+        )
+
     def test_imports_pre_single_suggestion_unknown_backup(self) -> None:
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

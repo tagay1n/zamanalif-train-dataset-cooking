@@ -100,6 +100,18 @@ class ConversionDslTests(unittest.TestCase):
     def test_accepts_preserved_slash_in_literal(self) -> None:
         self.assertEqual(parse_dsl("gkal/säğ").to_dsl(), "gkal/säğ")
 
+    def test_accepts_single_ascii_spaces_between_words(self) -> None:
+        value = "neftʼ avtomatları"
+
+        self.assertEqual(parse_dsl(value).to_dsl(), value)
+        self.assertEqual(resolve_dsl(value), value)
+
+    def test_rejects_malformed_literal_spacing(self) -> None:
+        for value in (" neftʼ", "neftʼ ", "neftʼ  avtomatları"):
+            with self.subTest(value=value):
+                with self.assertRaisesRegex(DslError, "invalid spacing"):
+                    parse_dsl(value)
+
     def test_rejects_unknown_policy_rule_and_option(self) -> None:
         result = ConversionResult((Choice("IYA", (("compact", "ä"), ("explicit", "yä"))),))
 
