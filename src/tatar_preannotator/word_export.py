@@ -700,6 +700,7 @@ def word_belongs_to_project(word: str, origin: str, project_key: str) -> bool:
 
 
 NATIVE_HAMZA_FAMILIES: tuple[tuple[str, str, str], ...] = (
+    ("иэтиляф", "ietilyäf", "iʼtiläf"),
     ("маэмай", "maemay", "maʼmay"),
     ("таэмин", "taemin", "täʼmin"),
     ("тәэмин", "täemin", "täʼmin"),
@@ -711,6 +712,7 @@ NATIVE_HAMZA_FAMILIES: tuple[tuple[str, str, str], ...] = (
 )
 
 LOANWORD_HAMZA_PREFIXES: dict[str, str] = {
+    "иэтиляф": "ietilyaf",
     "маэмай": "maemay",
     "таэмин": "taemin",
     "тәэмин": "täemin",

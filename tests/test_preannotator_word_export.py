@@ -1067,6 +1067,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_verified_native_hamza_stems_share_one_policy(self) -> None:
         cases = [
+            ("иэтиляф", "iʼtiläf", "itiläf"),
             ("маэмай", "maʼmay", "mamay"),
             ("таэмин", "täʼmin", "tämin"),
             ("тәэмин", "täʼmin", "tämin"),
@@ -1086,6 +1087,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     resolve_dsl(dsl, {"HAMZA": "preserve"}),
                     preserved,
                 )
+                self.assertEqual(classify_project(word, "N")["key"], "hamza")
 
     def test_hamza_policy_preserves_resolved_loanword_surname_suffix(self) -> None:
         self.assertEqual(

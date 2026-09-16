@@ -121,8 +121,8 @@ or `U`.
 ## Native Hamza Policy
 
 Verified lexical families use `{{HAMZA|omit=|preserve=ʼ}}` at the known hamza
-position: `маэмай`, `таэмин`/`тәэмин`, `тәэсир`, `мөэмин`, `мәсьәлә`,
-`җөрьәт`, and `коръән`. The ordinary policy omits the sign, while the PDF
+position: `иэтиляф`, `маэмай`, `таэмин`/`тәэмин`, `тәэсир`, `мөэмин`,
+`мәсьәлә`, `җөрьәт`, and `коръән`. The ordinary policy omits the sign, while the PDF
 policy preserves U+02BC `ʼ`. This is an explicit lexical allowlist, not a
 general conversion rule for Cyrillic `э`, `ь`, or `ъ`.
 

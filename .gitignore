@@ -5,4 +5,5 @@ __pycache__/
 .tools/
 data/
 config.yaml
+labelstudio_projects/
 *.egg-info/
