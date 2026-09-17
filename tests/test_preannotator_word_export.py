@@ -415,7 +415,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(classify_project("күпфункцияле", "U")["key"], "ts")
         self.assertEqual(
             classify_project("күпфункцияле", "U")["dsl_rules"],
-            ["IYA"],
+            [],
         )
 
     def test_unknown_categories_share_one_project(self) -> None:
@@ -467,7 +467,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("ю", "N"), "yü")
         self.assertEqual(
             convert_for_annotation_dsl("фамилия", "N"),
-            "famili{{IYA|compact=ä|explicit=yä}}",
+            "familiyä",
         )
 
     def test_homonym_word_is_deferred_even_if_another_occurrence_is_unmarked(self) -> None:
@@ -556,16 +556,16 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
             save_reviewed_word(
                 db_path,
-                "орфография",
-                "orfografi{{IYA|compact=ä|explicit=yä}}",
+                "проект",
+                "pro{{E_GLIDE|plain=e|glide=ye}}kt",
                 "RL",
             )
             reviewed = load_reviewed_words(db_path)
 
-        self.assertEqual(reviewed["орфография"].origin, "RL")
+        self.assertEqual(reviewed["проект"].origin, "RL")
         self.assertEqual(
-            reviewed["орфография"].zamanalif_dsl,
-            "orfografi{{IYA|compact=ä|explicit=yä}}",
+            reviewed["проект"].zamanalif_dsl,
+            "pro{{E_GLIDE|plain=e|glide=ye}}kt",
         )
 
     def test_reviewed_word_never_reappears_after_import(self) -> None:
@@ -588,9 +588,9 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(result.report["reviewed_words_skipped_count"], 1)
 
     def test_ya_conversion_context_rules(self) -> None:
-        self.assertEqual(convert_for_annotation("әдәбият", "N"), "ädäbiät")
-        self.assertEqual(convert_for_annotation("позиция", "RL"), "pozitsiä")
-        self.assertEqual(convert_for_annotation("фамилия", "N"), "familiä")
+        self.assertEqual(convert_for_annotation("әдәбият", "N"), "ädäbiyat")
+        self.assertEqual(convert_for_annotation("позиция", "RL"), "pozitsiyä")
+        self.assertEqual(convert_for_annotation("фамилия", "N"), "familiyä")
         self.assertEqual(convert_for_annotation("як", "N"), "yaq")
         self.assertEqual(convert_for_annotation("ял", "N"), "yal")
         self.assertEqual(convert_for_annotation("ян", "N"), "yan")
@@ -631,7 +631,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("еш", "N"), "yış")
         self.assertEqual(convert_for_annotation("европа", "RL"), "yevropa")
         self.assertEqual(convert_for_annotation("европалы", "RL"), "yevropalı")
-        self.assertEqual(convert_for_annotation("евразияле", "N"), "yewraziäle")
+        self.assertEqual(convert_for_annotation("евразияле", "N"), "yewraziyäle")
         self.assertEqual(convert_for_annotation("епископ", "RL"), "yepiskop")
         self.assertEqual(
             resolve_dsl(
@@ -662,34 +662,21 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(resolve_dsl(dsl, {"E_GLIDE": "glide"}), glide)
                 self.assertEqual(resolve_dsl(dsl), glide)
 
-    def test_hard_iya_stems_use_hard_iya_policy_text(self) -> None:
+    def test_iya_stems_use_deterministic_explicit_glide(self) -> None:
         cases = [
-            ("әдәбият", "ädäbi{{IYA|compact=a|explicit=ya}}t", "ädäbiyat", "ädäbiat"),
-            ("әүлия", "äwli{{IYA|compact=a|explicit=ya}}", "äwliya", "äwlia"),
-            (
-                "әүлиялек",
-                "äwli{{IYA|compact=a|explicit=ya}}lek",
-                "äwliyalek",
-                "äwlialek",
-            ),
-            ("риялы", "ri{{IYA|compact=a|explicit=ya}}lı", "riyalı", "rialı"),
+            ("әдәбият", "ädäbiyat"),
+            ("әүлия", "äwliya"),
+            ("әүлиялек", "äwliyalek"),
+            ("риялы", "riyalı"),
+            ("риясыз", "riyäsız"),
+            ("риялану", "riyälanu"),
         ]
 
-        for word, expected_dsl, explicit, compact in cases:
+        for word, expected in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "N")
-                self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl), explicit)
-                self.assertEqual(resolve_dsl(dsl, {"IYA": "compact"}), compact)
-
-        self.assertEqual(
-            convert_for_annotation_dsl("риясыз", "N"),
-            "ri{{IYA|compact=ä|explicit=yä}}sız",
-        )
-        self.assertEqual(
-            convert_for_annotation_dsl("риялану", "N"),
-            "ri{{IYA|compact=ä|explicit=yä}}lanu",
-        )
+                self.assertEqual(dsl, expected)
+                self.assertNotIn("{{", dsl)
 
     def test_project_e_is_policy_dsl(self) -> None:
         cases = [
@@ -1034,25 +1021,19 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
-    def test_jamgiyat_stem_has_compact_pdf_iya_policy(self) -> None:
+    def test_jamgiyat_stem_has_deterministic_explicit_glide(self) -> None:
         cases = [
-            ("җәмгыять", "cämği{{IYA|compact=ä|explicit=yä}}t", "cämğiyät", "cämğiät"),
-            ("җәмгыяте", "cämği{{IYA|compact=ä|explicit=yä}}te", "cämğiyäte", "cämğiäte"),
-            (
-                "җәмгыятьтәге",
-                "cämği{{IYA|compact=ä|explicit=yä}}ttäge",
-                "cämğiyättäge",
-                "cämğiättäge",
-            ),
+            ("җәмгыять", "cämğiyät"),
+            ("җәмгыяте", "cämğiyäte"),
+            ("җәмгыятьтәге", "cämğiyättäge"),
         ]
 
-        for word, expected_dsl, explicit, compact in cases:
+        for word, expected in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "N")
-                self.assertEqual(convert_for_annotation(word, "N"), explicit)
-                self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl), explicit)
-                self.assertEqual(resolve_dsl(dsl, {"IYA": "compact"}), compact)
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertEqual(dsl, expected)
+                self.assertNotIn("{{", dsl)
 
     def test_verified_native_hamza_stems_share_one_policy(self) -> None:
         cases = [
@@ -1358,13 +1339,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual(
             dsl,
-            "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}urokrati{{IYA|compact=ä|explicit=yä}}",
+            "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}urokratiyä",
         )
         self.assertEqual(resolve_dsl(dsl), "byurokratiyä")
         self.assertEqual(
             resolve_dsl(
                 dsl,
-                {"RUS_JOTATION": "apostrophe", "IYA": "explicit"},
+                {"RUS_JOTATION": "apostrophe"},
             ),
             "bʼurokratiyä",
         )
@@ -1374,13 +1355,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual(
             dsl,
-            "izol{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}atsi{{IYA|compact=ä|explicit=yä}}läw",
+            "izol{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}atsiyäläw",
         )
         self.assertEqual(resolve_dsl(dsl), "izolyatsiyäläw")
         self.assertEqual(
             resolve_dsl(
                 dsl,
-                {"RUS_JOTATION": "apostrophe", "IYA": "explicit"},
+                {"RUS_JOTATION": "apostrophe"},
             ),
             "izolʼatsiyäläw",
         )
@@ -1439,24 +1420,24 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_miyaw_stem_rule_does_not_rewrite_other_iya_u_words(self) -> None:
         self.assertEqual(
             convert_for_annotation_dsl("кияү", "N"),
-            "ki{{IYA|compact=ä|explicit=yä}}w",
+            "kiyäw",
         )
         self.assertEqual(
             convert_for_annotation_dsl("тәрбияви", "N"),
-            "tärbi{{IYA|compact=ä|explicit=yä}}wi",
+            "tärbiyäwi",
         )
 
     def test_reviewed_yu_conversions(self) -> None:
-        self.assertEqual(convert_for_annotation("революция", "RL"), "revolyutsiä")
-        self.assertEqual(convert_for_annotation("революциясе", "RL"), "revolyutsiäse")
+        self.assertEqual(convert_for_annotation("революция", "RL"), "revolyutsiyä")
+        self.assertEqual(convert_for_annotation("революциясе", "RL"), "revolyutsiyäse")
         self.assertEqual(convert_for_annotation("тию", "N"), "tiyü")
 
     def test_loanword_stems_with_native_lau_suffix_use_w(self) -> None:
         cases = [
-            ("аннотацияләү", "annotatsi{{IYA|compact=ä|explicit=yä}}läw"),
-            ("реабилитацияләү", "reabilitatsi{{IYA|compact=ä|explicit=yä}}läw"),
-            ("регистрацияләү", "registratsi{{IYA|compact=ä|explicit=yä}}läw"),
-            ("колонизацияләү", "kolonizatsi{{IYA|compact=ä|explicit=yä}}läw"),
+            ("аннотацияләү", "annotatsiyäläw"),
+            ("реабилитацияләү", "reabilitatsiyäläw"),
+            ("регистрацияләү", "registratsiyäläw"),
+            ("колонизацияләү", "kolonizatsiyäläw"),
         ]
 
         for word, expected_dsl in cases:
@@ -1565,21 +1546,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
             result = export_labelstudio_project_tasks_from_db(db_path, sort_by="word")
 
-        self.assertIn("iya", result.projects)
+        self.assertNotIn("iya", result.projects)
         self.assertNotIn("rl_y", result.projects)
         self.assertIn("rus_sign_e", result.projects)
         self.assertIn("catchall", result.projects)
         self.assertEqual(
-            result.projects["iya"].tasks[0]["meta"]["project_key"],
-            "iya",
-        )
-        self.assertEqual(
-            set(result.projects["iya"].tasks[0]["data"]),
-            {"cyrl_word", "zamanalif_variants", "gemini_origin", "hints_html"},
-        )
-        self.assertEqual(
             {task["data"]["cyrl_word"] for task in result.projects["catchall"].tasks},
-            {"вакыт", "музыка"},
+            {"вакыт", "музыка", "орфография"},
         )
         self.assertEqual(result.report["exported_word_count"], 4)
 
@@ -1805,11 +1778,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(result.report["exported_word_count"], 2)
         self.assertEqual(result.report["covered_word_count"], 4)
 
-    def test_split_export_uses_complex_multi_rule_project(self) -> None:
+    def test_split_export_uses_remaining_focused_rule_project(self) -> None:
         project = classify_project("бюрократия", "RL")
 
-        self.assertEqual(project["key"], "complex_multi_rule")
-        self.assertEqual(project["dsl_rules"], ["RUS_JOTATION", "IYA"])
+        self.assertEqual(project["key"], "rus_jotation")
+        self.assertEqual(project["dsl_rules"], ["RUS_JOTATION"])
 
     def test_split_export_routes_literal_and_policy_hamza_out_of_catchall(self) -> None:
         cases = (
@@ -2028,17 +2001,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
                     ]
                 )
 
-            iya = json.loads(
-                (output_dir / "project_iya_batch_001_of_001.json").read_text(encoding="utf-8")
-            )
             catchall = json.loads(
                 (output_dir / "project_catchall_batch_001_of_001.json").read_text(
                     encoding="utf-8"
                 )
             )
-            iya_instructions = (
-                output_dir / "project_iya_instructions.html"
-            ).read_text(encoding="utf-8")
             catchall_instructions = (
                 output_dir / "project_catchall_instructions.html"
             ).read_text(encoding="utf-8")
@@ -2055,45 +2022,30 @@ class PreannotatorWordExportTests(unittest.TestCase):
             inactive_instructions_exist = (
                 output_dir / "project_ts_instructions.html"
             ).exists()
+            iya_instructions_exist = (
+                output_dir / "project_iya_instructions.html"
+            ).exists()
 
         self.assertEqual(exit_code, 0)
-        self.assertEqual(
-            iya[0]["meta"],
-            {
-                "schema_version": 3,
-                "project_key": "iya",
-                "suggested_zamanalif_dsl": (
-                    "orfografi{{IYA|compact=ä|explicit=yä}}"
-                ),
-                "variant_policies": [
-                    [{"IYA": "explicit"}],
-                    [{"IYA": "compact"}],
-                ],
-            },
-        )
-        self.assertEqual(
-            iya[0]["data"]["zamanalif_variants"],
-            "orfografiyä\norfografiä",
-        )
-        self.assertEqual(
-            set(iya[0]["data"]),
-            {"cyrl_word", "zamanalif_variants", "gemini_origin", "hints_html"},
-        )
-        self.assertEqual(
-            catchall[0]["meta"],
-            {
-                "schema_version": 3,
-                "project_key": "catchall",
-            },
-        )
+        self.assertEqual(len(catchall), 2)
+        by_word = {task["data"]["cyrl_word"]: task for task in catchall}
+        self.assertEqual(set(by_word), {"вакыт", "орфография"})
+        self.assertEqual(by_word["орфография"]["data"]["auto_zamanalif"], "orfografiyä")
+        for task in catchall:
+            self.assertEqual(
+                task["meta"],
+                {
+                    "schema_version": 3,
+                    "project_key": "catchall",
+                },
+            )
         self.assertFalse(report_files_exist)
         self.assertFalse(stale_exists)
         self.assertFalse(legacy_exists)
         self.assertEqual(unrelated_text, "keep me\n")
-        self.assertIn("orfografiä", iya_instructions)
-        self.assertIn("orfografiyä", iya_instructions)
         self.assertIn("вакыт → waqıt", catchall_instructions)
         self.assertFalse(inactive_instructions_exist)
+        self.assertFalse(iya_instructions_exist)
         self.assertIn("annotation export complete", output.getvalue())
 
     def test_export_validation_rejects_extraneous_data_fields(self) -> None:

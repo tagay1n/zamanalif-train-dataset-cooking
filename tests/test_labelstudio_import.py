@@ -1058,11 +1058,11 @@ class LabelStudioImportTests(unittest.TestCase):
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             dsl_task = _task(
-                "орфография",
-                "orfografiä",
+                "проект",
+                "proyekt",
                 "RL",
                 annotations=[_homonym_annotation()],
-                project_key="iya",
+                project_key="e_glide",
             )
             parsed = parse_labelstudio_export(
                 _backup(root / "dsl-homonym.json", [dsl_task])

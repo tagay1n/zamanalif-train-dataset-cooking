@@ -14,11 +14,11 @@ class LabelStudioInstructionTests(unittest.TestCase):
         self.assertEqual(set(RULE_GUIDANCE), set(RULES))
 
     def test_rule_project_uses_curated_examples_and_plain_output_instruction(self) -> None:
-        html = render_project_instructions("iya", "IYA", ["IYA"])
+        html = render_project_instructions("e_glide", "E glide", ["E_GLIDE"])
 
-        self.assertIn("орфография", html)
-        self.assertIn("orfografiä", html)
-        self.assertIn("orfografiyä", html)
+        self.assertIn("проект", html)
+        self.assertIn("proekt", html)
+        self.assertIn("proyekt", html)
         self.assertIn("Enter the complete word, not DSL syntax", html)
         self.assertNotIn("Origin Labels", html)
         self.assertNotIn("Choose <b>N</b> or <b>RL</b>", html)

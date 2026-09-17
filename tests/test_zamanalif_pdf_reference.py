@@ -3,11 +3,7 @@ from __future__ import annotations
 import re
 import unittest
 
-from tatar_preannotator.conversion import (
-    PDF_COMPACT_POLICY,
-    ZAMANALIF_APOSTROPHE,
-    resolve_dsl,
-)
+from tatar_preannotator.conversion import ZAMANALIF_APOSTROPHE
 from tatar_preannotator.word_export import convert_for_annotation, convert_for_annotation_dsl
 
 
@@ -2484,7 +2480,7 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
             ("борщ", "RL", "borşç"),
             ("цинк", "RL", "sink"),
             ("кварц", "RL", "kvars"),
-            ("позиция", "RL", "pozitsiä"),
+            ("позиция", "RL", "pozitsiyä"),
         ]
 
         self.assert_conversions(cases)
@@ -2498,29 +2494,26 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
 
         self.assert_conversions(cases)
 
-    def test_i_before_ya_economy_examples(self) -> None:
+    def test_i_before_ya_uses_selected_explicit_standard(self) -> None:
         cases = [
-            ("ия", "N", "iä"),
+            ("ия", "N", "iyä"),
         ]
 
         self.assert_conversions(cases)
 
-    def test_iya_cases_are_reachable_through_compact_pdf_policy(self) -> None:
+    def test_iya_is_deterministic_despite_compact_pdf_spelling(self) -> None:
         cases = [
-            ("ия", "N", "iä"),
-            ("орфография", "RL", "orfografiä"),
-            ("позиция", "RL", "pozitsiä"),
+            ("ия", "N", "iyä"),
+            ("орфография", "RL", "orfografiyä"),
+            ("позиция", "RL", "pozitsiyä"),
+            ("әдәбият", "N", "ädäbiyat"),
         ]
 
         for source, label, expected in cases:
             with self.subTest(source=source):
                 dsl = convert_for_annotation_dsl(source, label)
-                self.assertIn("{{IYA|compact=ä|explicit=yä}}", dsl)
-                self.assertEqual(resolve_dsl(dsl, PDF_COMPACT_POLICY), expected)
-
-        dsl = convert_for_annotation_dsl("әдәбият", "N")
-        self.assertIn("{{IYA|compact=a|explicit=ya}}", dsl)
-        self.assertEqual(resolve_dsl(dsl, PDF_COMPACT_POLICY), "ädäbiat")
+                self.assertEqual(dsl, expected)
+                self.assertNotIn("{{", dsl)
 
     def test_outputs_use_clean_zamanalif_unicode(self) -> None:
         cases = [
@@ -2581,7 +2574,7 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
                 ("интермеццо", "RL", "intermetso"),
                 ("папарацци", "RL", "paparatsi"),
                 ("лаццарони", "RL", "latsaroni"),
-                ("пиццерия", "RL", "pitseriä"),
+                ("пиццерия", "RL", "pitseriyä"),
             ]
         )
 

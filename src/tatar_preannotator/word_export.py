@@ -28,7 +28,6 @@ from tatar_preannotator.conversion import (
     FIGYL_STEM_RULE,
     HAMZA_RULE,
     IJTIMAGIY_STEM_RULE,
-    IYA_RULE,
     KAGAZ_STEM_RULE,
     Literal,
     RULES,
@@ -1201,67 +1200,8 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_erzya_ya_choices(word, result)
     result = result_with_kagaz_stem_choices(word, result)
     result = result_with_mashgul_stem_choices(word, result)
-    result = result_with_iya_choices(word, result)
     result = result_with_ie_glide_choices(word, result)
-    result = result_with_jamgiyat_iya_choices(word, result, label)
     return result_with_mostaqil_choices(word, result, label)
-
-
-def result_with_iya_choices(source: str, result: ConversionResult) -> ConversionResult:
-    """Annotate aligned Cyrillic ``ия`` / compact ``iä`` spans in a result."""
-    source_count = source.casefold().count("ия")
-    output_count = sum(
-        segment.text.casefold().count("iä")
-        for segment in result.segments
-        if isinstance(segment, Literal)
-    )
-    if source_count == 0 or source_count != output_count:
-        return result
-
-    options = _iya_options_for_source(source)
-    segments: list[Literal | Choice] = []
-    for segment in _merge_adjacent_literals(result).segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        start = 0
-        for match in re.finditer("iä", segment.text, flags=re.IGNORECASE):
-            _append_literal_segment(segments, segment.text[start : match.start() + 1])
-            segments.append(Choice(IYA_RULE.rule_id, options))
-            start = match.end()
-        _append_literal_segment(segments, segment.text[start:])
-    return ConversionResult(tuple(segments))
-
-
-def _iya_options_for_source(source: str) -> tuple[tuple[str, str], ...]:
-    folded = source.casefold()
-    if folded.startswith(("әдәбия", "әүлия", "риялы")):
-        return (("compact", "a"), ("explicit", "ya"))
-    return IYA_RULE.options
-
-
-def result_with_jamgiyat_iya_choices(
-    source: str, result: ConversionResult, label: str
-) -> ConversionResult:
-    """Annotate ``җәмгыят*`` compact PDF ``iä`` vs explicit ``iyä`` convention."""
-    if label != "N" or not source.casefold().startswith("җәмгыят"):
-        return result
-
-    segments: list[Literal | Choice] = []
-    changed = False
-    for segment in _merge_adjacent_literals(result).segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        text = segment.text
-        start = 0
-        for match in re.finditer("iyä", text, flags=re.IGNORECASE):
-            _append_literal_segment(segments, text[start : match.start() + 1])
-            segments.append(Choice(IYA_RULE.rule_id, IYA_RULE.options))
-            start = match.end()
-            changed = True
-        _append_literal_segment(segments, text[start:])
-    return ConversionResult(tuple(segments)) if changed else result
 
 
 def result_with_ie_glide_choices(source: str, result: ConversionResult) -> ConversionResult:
@@ -1930,8 +1870,6 @@ def decision_html(entry: WordStats) -> str:
     if entry.label == "U":
         effective_label = guess_unknown_tatar_specific_origin(entry.normalized)
     result = conversion_result_for_annotation(entry.normalized, effective_label)
-    if result is not None and "IYA" in result.rule_ids:
-        items.append("<b>ия</b> -> <b>iä</b> or <b>iyä</b> (<b>IYA</b>)")
     items.append(f"Gemini's origin prediction: <b>{_origin_prediction(entry.label)}</b>")
     if effective_label != entry.label:
         items.append(
@@ -2795,7 +2733,7 @@ NATIVE_FRAGMENT_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("төяк", "töyäq", "töyäk"),
     ("гүяки", "güyäqi", "güyäki"),
     ("өянке", "öyänqe", "öyänke"),
-    ("мияу", "miäw", "miyaw"),
+    ("мияу", "miyäw", "miyaw"),
     ("җилкуар", "cilkuar", "cilquar"),
     ("гыйбад", "ğıybad", "ğibäd"),
     ("гыйбар", "ğıybar", "ğibär"),
@@ -3007,7 +2945,9 @@ def _ts_conversion(word: str, index: int) -> str:
 def _ya_conversion(word: str, index: int, label: str) -> str:
     previous = word[index - 1] if index > 0 else ""
     if previous == "и":
-        return "ä"
+        if word.casefold().startswith(("әдәбия", "әүлия", "риялы")):
+            return "ya"
+        return "yä"
     if previous in {"ь", "ъ"}:
         return "ya"
     if label == "RL" and index > 0:

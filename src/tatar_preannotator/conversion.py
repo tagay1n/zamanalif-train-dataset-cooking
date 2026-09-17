@@ -76,12 +76,6 @@ class RuleDefinition:
     allow_custom_option_text: bool = False
 
 
-IYA_RULE = RuleDefinition(
-    rule_id="IYA",
-    options=(("compact", "ä"), ("explicit", "yä")),
-    default_option="explicit",
-    allow_custom_option_text=True,
-)
 YA_RULE = RuleDefinition(
     rule_id="YA",
     options=(("ya", "ya"), ("ya_front", "yä"), ("a", "a"), ("ae", "ä")),
@@ -163,7 +157,6 @@ RUS_JOTATION_RULE = RuleDefinition(
 )
 RULES: Mapping[str, RuleDefinition] = MappingProxyType(
     {
-        IYA_RULE.rule_id: IYA_RULE,
         YA_RULE.rule_id: YA_RULE,
         E_GLIDE_RULE.rule_id: E_GLIDE_RULE,
         TS_RULE.rule_id: TS_RULE,
@@ -182,7 +175,6 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
 )
 PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
     {
-        "IYA": "explicit",
         "YA": "ya",
         "E_GLIDE": "glide",
         "TS": "s",
@@ -201,7 +193,6 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
 )
 PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
     {
-        "IYA": "compact",
         "YA": "ae",
         "E_GLIDE": "glide",
         "TS": "s",
@@ -218,29 +209,6 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "RUS_JOTATION": "glide",
     }
 )
-
-
-def result_with_iya_choices(source: str, compact_zamanalif: str) -> ConversionResult:
-    """Annotate aligned Cyrillic ``ия`` / compact ``iä`` occurrences with IYA choices.
-
-    The word converter already handles lexical exceptions. A choice is emitted only
-    when every source ``ия`` occurrence aligns with a compact ``iä`` occurrence. If
-    alignment is uncertain, the plain result is retained for human review rather than
-    inventing a policy choice.
-    """
-    source_count = source.casefold().count("ия")
-    output_count = compact_zamanalif.casefold().count("iä")
-    if source_count == 0 or source_count != output_count:
-        return ConversionResult((Literal(compact_zamanalif),))
-
-    segments: list[Segment] = []
-    start = 0
-    for match in re.finditer("iä", compact_zamanalif, flags=re.IGNORECASE):
-        _append_literal(segments, compact_zamanalif[start : match.start() + 1])
-        segments.append(Choice(IYA_RULE.rule_id, IYA_RULE.options))
-        start = match.end()
-    _append_literal(segments, compact_zamanalif[start:])
-    return ConversionResult(tuple(segments))
 
 
 def parse_dsl(value: str) -> ConversionResult:

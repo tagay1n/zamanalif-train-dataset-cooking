@@ -7,7 +7,6 @@ of a DSL choice.
 
 ## Kept as DSL
 
-- `IYA`: compact `iä` and explicit `iyä` are both supported by project policy.
 - `E_GLIDE`: kept pending a separate audit of `ие -> ie/iye`.
 - `RUS_SIGN`, `RUS_JOTATION`: kept for Russian
   sign/apostrophe policy differences.
@@ -28,6 +27,9 @@ of a DSL choice.
   following vowel: `baruı`, `kilüe`, `bua`, `buın`, `tuu`, and `cilquar`.
   Genuine `w`, including verbal-noun forms after stems ending in `a/ä`, remains
   deterministic: `cırlaw`, `aşaw`, `söyläw`, `däwalaw`.
+- `IYA`: removed as DSL. The dataset intentionally keeps the former preferred
+  explicit-glide standard despite the reference PDF's compact spelling:
+  `ия -> iyä`, `орфография -> orfografiyä`, and `әдәбият -> ädäbiyat`.
 - `ARABIC_INITIAL_GA`: removed as DSL. The `гади` family now follows the
   preferred plain initial `га` convention (`ğadi`, `ğadiläşterergä`); ANTAT
   front variants are preserved in fixture comments.

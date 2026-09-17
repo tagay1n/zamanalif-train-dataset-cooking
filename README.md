@@ -314,17 +314,17 @@ Accepted convention choices are preserved internally with inline DSL. For
 example:
 
 ```text
-orfografi{{IYA|compact=ä|explicit=yä}}
+pro{{E_GLIDE|plain=e|glide=ye}}kt
 ```
 
-`IYA` is the stable rule identifier. `compact` and `explicit` are named
-options. The preferred policy currently resolves it to `orfografiyä`; the
-compact PDF policy resolves it to `orfografiä`. Label Studio annotators see
-every distinct plain rendering as one editable line in `zamanalif_variants`,
-while the DSL and each line's policy mapping are stored only in task `meta`.
+`E_GLIDE` is the stable rule identifier. `plain` and `glide` are named options.
+The preferred policy currently resolves it to `proyekt`. Label Studio
+annotators see every distinct plain rendering as one editable line in
+`zamanalif_variants`, while the DSL and each line's policy mapping are stored
+only in task `meta`.
 
 The command writes 500-task batch files such as
-`project_iya_batch_001_of_003.json`, `project_rus_sign_batch_001_of_004.json`,
+`project_e_glide_batch_001_of_003.json`, `project_rus_sign_batch_001_of_004.json`,
 `project_complex_multi_rule_batch_001_of_002.json`, and
 `project_hamza_batch_001_of_001.json`, and
 `project_contextual_homonym_batch_001_of_027.json`. Import each batch into the
@@ -375,18 +375,18 @@ task-data columns:
 ```json
 {
   "data": {
-    "cyrl_word": "орфография",
-    "zamanalif_variants": "orfografiyä\norfografiä",
+    "cyrl_word": "проект",
+    "zamanalif_variants": "proyekt\nproekt",
     "gemini_origin": "RL",
     "hints_html": "..."
   },
   "meta": {
     "schema_version": 3,
-    "project_key": "iya",
-    "suggested_zamanalif_dsl": "orfografi{{IYA|compact=ä|explicit=yä}}",
+    "project_key": "e_glide",
+    "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}kt",
     "variant_policies": [
-      [{"IYA": "explicit"}],
-      [{"IYA": "compact"}]
+      [{"E_GLIDE": "glide"}],
+      [{"E_GLIDE": "plain"}]
     ]
   }
 }
@@ -871,8 +871,8 @@ The public DSL helpers are in `tatar_preannotator.conversion`:
 
 - `parse_dsl(value)` validates and parses DSL;
 - `resolve_dsl(value, policy)` produces plain Zamanalif;
-- `PREFERRED_POLICY` currently selects `IYA=explicit`;
-- `PDF_COMPACT_POLICY` selects `IYA=compact`.
+- `PREFERRED_POLICY` contains the registered default for each remaining rule;
+- `PDF_COMPACT_POLICY` contains the selected PDF-oriented alternatives.
 
 Malformed syntax, unknown rules, unknown options, and non-Zamanalif output fail
 with an explicit `DslError`.
@@ -895,8 +895,8 @@ Override a convention with a repeatable `--choice RULE=OPTION` argument:
 ```bash
 python -m tatar_preannotator training-export \
   --db data/zamanalif.sqlite \
-  --output data/training_compact.jsonl \
-  --choice IYA=compact
+  --output data/training_plain_e.jsonl \
+  --choice E_GLIDE=plain
 ```
 
 Each output line has only the sentence ID and the text pair:

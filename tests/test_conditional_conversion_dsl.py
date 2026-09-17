@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from tatar_preannotator.conversion import PDF_COMPACT_POLICY, PREFERRED_POLICY, resolve_dsl
+from tatar_preannotator.conversion import resolve_dsl
 from tatar_preannotator.word_export import (
     classify_project,
     conversion_branches,
@@ -26,19 +26,9 @@ class ConditionalConversionDslTests(unittest.TestCase):
         self.assertEqual(branches.native_dsl, native)
         self.assertEqual(branches.loanword_dsl, loanword)
 
-    def test_iya_is_the_v1_policy_dsl_rule(self) -> None:
-        dsl = convert_for_annotation_dsl("орфография", "RL")
-
-        self.assertEqual(dsl, "orfografi{{IYA|compact=ä|explicit=yä}}")
-        self.assertEqual(resolve_dsl(dsl, PREFERRED_POLICY), "orfografiyä")
-        self.assertEqual(resolve_dsl(dsl, PDF_COMPACT_POLICY), "orfografiä")
-
-    def test_iya_dsl_marks_only_the_differing_span(self) -> None:
-        dsl = convert_for_annotation_dsl("әдәбият", "N")
-
-        self.assertEqual(dsl, "ädäbi{{IYA|compact=a|explicit=ya}}t")
-        self.assertEqual(resolve_dsl(dsl, PREFERRED_POLICY), "ädäbiyat")
-        self.assertEqual(resolve_dsl(dsl, PDF_COMPACT_POLICY), "ädäbiat")
+    def test_iya_is_deterministic_explicit_glide(self) -> None:
+        self.assertEqual(convert_for_annotation_dsl("орфография", "RL"), "orfografiyä")
+        self.assertEqual(convert_for_annotation_dsl("әдәбият", "N"), "ädäbiyat")
 
     def test_origin_branch_difference_is_not_inline_dsl(self) -> None:
         branches = conversion_branches("авыл")
@@ -53,7 +43,7 @@ class ConditionalConversionDslTests(unittest.TestCase):
         cases = [
             ("вакыт", "N", "waqıt"),
             ("проект", "RL", "proyekt"),
-            ("позиция", "RL", "pozitsiä"),
+            ("позиция", "RL", "pozitsiyä"),
             ("яңа", "N", "yaña"),
             ("ел", "N", "yıl"),
             ("юл", "N", "yul"),
@@ -72,11 +62,11 @@ class ConditionalConversionDslTests(unittest.TestCase):
 
         self.assertEqual(
             dsl,
-            "retrospek{{TS|s=s|ts=ts}}i{{IYA|compact=ä|explicit=yä}}",
+            "retrospek{{TS|s=s|ts=ts}}iyä",
         )
         self.assertEqual(resolve_dsl(dsl), "retrospeksiyä")
         self.assertEqual(
-            resolve_dsl(dsl, {"TS": "ts", "IYA": "explicit"}),
+            resolve_dsl(dsl, {"TS": "ts"}),
             "retrospektsiyä",
         )
 

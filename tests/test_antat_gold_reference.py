@@ -99,10 +99,11 @@ class AntatGoldReferenceTests(unittest.TestCase):
     def test_generated_antat_word_cases_are_available_for_review(self) -> None:
         self.assertGreater(len(ANTAT_GOLD_WORD_CASES), 9000)
 
-    def test_antat_iya_variant_is_covered_by_preferred_policy(self) -> None:
+    def test_antat_iya_variant_is_deterministic(self) -> None:
         dsl = convert_for_annotation_dsl("академия", "RL")
 
-        self.assertEqual(resolve_dsl(dsl), "akademiyä")
+        self.assertEqual(dsl, "akademiyä")
+        self.assertNotIn("{{", dsl)
 
     def test_antat_audit_checks_every_dsl_option(self) -> None:
         dsl = "atel{{RUS_SIGN_E|glide=y|apostrophe=ʼ|apostrophe_glide=ʼy}}e"

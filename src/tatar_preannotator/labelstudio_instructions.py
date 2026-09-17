@@ -5,13 +5,6 @@ from typing import Iterable
 
 
 RULE_GUIDANCE: dict[str, tuple[str, tuple[tuple[str, tuple[str, ...]], ...]]] = {
-    "IYA": (
-        "Choose whether Cyrillic ия is written compactly or with an explicit y glide.",
-        (
-            ("орфография", ("orfografiä", "orfografiyä")),
-            ("әдәбият", ("ädäbiat", "ädäbiyat")),
-        ),
-    ),
     "YA": (
         "Choose the contextual Zamanalif form of я: ya, yä, a, or ä.",
         (("мордва-ерзя", ("mordva-erzya", "mordva-erzä")),),

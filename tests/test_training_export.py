@@ -68,9 +68,9 @@ class TrainingExportTests(unittest.TestCase):
                 [
                     {
                         "id": "sent_000001",
-                        "text": "Орфография һәм ШӘҺӘР.",
+                        "text": "Проект һәм ШӘҺӘР.",
                         "tokens": [
-                            {"text": "Орфография", "label": "RL"},
+                            {"text": "Проект", "label": "RL"},
                             {"text": "һәм", "label": "N"},
                             {"text": "ШӘҺӘР", "label": "N"},
                         ],
@@ -79,8 +79,8 @@ class TrainingExportTests(unittest.TestCase):
             )
             save_reviewed_word(
                 db_path,
-                "орфография",
-                "orfografi{{IYA|compact=ä|explicit=yä}}",
+                "проект",
+                "pro{{E_GLIDE|plain=e|glide=ye}}kt",
                 "RL",
             )
             output = root / "train.jsonl"
@@ -94,8 +94,8 @@ class TrainingExportTests(unittest.TestCase):
             [
                 {
                     "id": "sent_000001",
-                    "cyrillic": "Орфография һәм ШӘҺӘР.",
-                    "zamanalif": "Orfografiyä häm ŞÄHÄR.",
+                    "cyrillic": "Проект һәм ШӘҺӘР.",
+                    "zamanalif": "Proyekt häm ŞÄHÄR.",
                 }
             ],
         )
@@ -104,7 +104,7 @@ class TrainingExportTests(unittest.TestCase):
         self.assertEqual(manifest["overrides"], {})
         self.assertEqual(manifest["counts"]["exported_sentences"], 1)
 
-    def test_cli_choice_override_selects_compact_iya(self) -> None:
+    def test_cli_choice_override_selects_plain_e(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             db_path = _write_db(
@@ -112,15 +112,15 @@ class TrainingExportTests(unittest.TestCase):
                 [
                     {
                         "id": "sent_1",
-                        "text": "Орфография.",
-                        "tokens": [{"text": "Орфография", "label": "RL"}],
+                        "text": "Проект.",
+                        "tokens": [{"text": "Проект", "label": "RL"}],
                     }
                 ],
             )
             save_reviewed_word(
                 db_path,
-                "орфография",
-                "orfografi{{IYA|compact=ä|explicit=yä}}",
+                "проект",
+                "pro{{E_GLIDE|plain=e|glide=ye}}kt",
                 "RL",
             )
             output = root / "compact.jsonl"
@@ -135,7 +135,7 @@ class TrainingExportTests(unittest.TestCase):
                         "--output",
                         str(output),
                         "--choice",
-                        "IYA=compact",
+                        "E_GLIDE=plain",
                     ]
                 )
             row = _read_jsonl(output)[0]
@@ -144,8 +144,8 @@ class TrainingExportTests(unittest.TestCase):
             )
 
         self.assertEqual(exit_code, 0)
-        self.assertEqual(row["zamanalif"], "Orfografiä.")
-        self.assertEqual(manifest["overrides"], {"IYA": "compact"})
+        self.assertEqual(row["zamanalif"], "Proekt.")
+        self.assertEqual(manifest["overrides"], {"E_GLIDE": "plain"})
         self.assertIn("training export complete", stdout.getvalue())
 
     def test_reviewed_variant_corrections_follow_policy(self) -> None:
@@ -156,15 +156,15 @@ class TrainingExportTests(unittest.TestCase):
                 [
                     {
                         "id": "sent_1",
-                        "text": "Орфография.",
-                        "tokens": [{"text": "Орфография", "label": "RL"}],
+                        "text": "Проект.",
+                        "tokens": [{"text": "Проект", "label": "RL"}],
                     }
                 ],
             )
             save_reviewed_word(
                 db_path,
-                "орфография",
-                "orfografi{{IYA|compact=ä|explicit=yä}}",
+                "проект",
+                "pro{{E_GLIDE|plain=e|glide=ye}}kt",
                 "RL",
             )
             with sqlite3.connect(db_path) as conn:
@@ -173,11 +173,11 @@ class TrainingExportTests(unittest.TestCase):
                     insert into reviewed_word_variants(
                         normalized_word, position, zamanalif,
                         policies_json, updated_at
-                    ) values ('орфография', ?, ?, ?, 'now')
+                    ) values ('проект', ?, ?, ?, 'now')
                     """,
                     [
-                        (0, "urphografiyä", '[{"IYA":"explicit"}]'),
-                        (1, "urphografiä", '[{"IYA":"compact"}]'),
+                        (0, "pruyekt", '[{"E_GLIDE":"glide"}]'),
+                        (1, "pruekt", '[{"E_GLIDE":"plain"}]'),
                     ],
                 )
 
@@ -185,13 +185,13 @@ class TrainingExportTests(unittest.TestCase):
             export_training_dataset(
                 db_path,
                 root / "compact.jsonl",
-                choice_overrides=["IYA=compact"],
+                choice_overrides=["E_GLIDE=plain"],
             )
             preferred = _read_jsonl(root / "preferred.jsonl")
             compact = _read_jsonl(root / "compact.jsonl")
 
-        self.assertEqual(preferred[0]["zamanalif"], "Urphografiyä.")
-        self.assertEqual(compact[0]["zamanalif"], "Urphografiä.")
+        self.assertEqual(preferred[0]["zamanalif"], "Pruyekt.")
+        self.assertEqual(compact[0]["zamanalif"], "Pruekt.")
 
     def test_single_reviewed_variant_overrides_every_global_policy(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -541,18 +541,18 @@ class TrainingExportTests(unittest.TestCase):
                 export_training_dataset(db_path, root / "train.jsonl")
 
     def test_policy_override_validation(self) -> None:
-        effective, overrides = parse_policy_overrides(["IYA=compact"])
-        self.assertEqual(effective, {**dict(PREFERRED_POLICY), "IYA": "compact"})
-        self.assertEqual(overrides, {"IYA": "compact"})
+        effective, overrides = parse_policy_overrides(["E_GLIDE=plain"])
+        self.assertEqual(effective, {**dict(PREFERRED_POLICY), "E_GLIDE": "plain"})
+        self.assertEqual(overrides, {"E_GLIDE": "plain"})
 
         with self.assertRaisesRegex(TrainingExportError, "duplicate"):
-            parse_policy_overrides(["IYA=compact", "IYA=explicit"])
+            parse_policy_overrides(["E_GLIDE=plain", "E_GLIDE=glide"])
         with self.assertRaisesRegex(TrainingExportError, "unknown DSL rule"):
             parse_policy_overrides(["OTHER=value"])
         with self.assertRaisesRegex(TrainingExportError, "unknown option"):
-            parse_policy_overrides(["IYA=other"])
+            parse_policy_overrides(["E_GLIDE=other"])
         with self.assertRaisesRegex(TrainingExportError, "RULE=OPTION"):
-            parse_policy_overrides(["IYA"])
+            parse_policy_overrides(["E_GLIDE"])
 
 
 def _write_db(path: Path, rows: list[dict]) -> Path:

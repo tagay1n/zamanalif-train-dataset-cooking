@@ -11,7 +11,6 @@ from tatar_preannotator.conversion import (
     PREFERRED_POLICY,
     parse_dsl,
     resolve_dsl,
-    result_with_iya_choices,
 )
 from tatar_preannotator.word_export import (
     conversion_result_for_annotation,
@@ -20,30 +19,21 @@ from tatar_preannotator.word_export import (
 
 
 class ConversionDslTests(unittest.TestCase):
-    def test_iya_serialization_marks_only_differing_span(self) -> None:
-        result = result_with_iya_choices("орфография", "orfografiä")
+    def test_e_glide_resolves_under_named_policies(self) -> None:
+        value = "pro{{E_GLIDE|plain=e|glide=ye}}kt"
 
-        self.assertEqual(
-            result.to_dsl(),
-            "orfografi{{IYA|compact=ä|explicit=yä}}",
-        )
-        self.assertEqual(result.rule_ids, ("IYA",))
-
-    def test_iya_resolves_under_named_policies(self) -> None:
-        value = "orfografi{{IYA|compact=ä|explicit=yä}}"
-
-        self.assertEqual(resolve_dsl(value, PREFERRED_POLICY), "orfografiyä")
-        self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "orfografiä")
-        self.assertEqual(resolve_dsl(value), "orfografiyä")
+        self.assertEqual(resolve_dsl(value, PREFERRED_POLICY), "proyekt")
+        self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "proyekt")
+        self.assertEqual(resolve_dsl(value), "proyekt")
 
     def test_round_trip_multiple_choices(self) -> None:
-        value = "i{{IYA|compact=ä|explicit=yä}}-i{{IYA|compact=ä|explicit=yä}}"
+        value = "ti{{E_GLIDE|plain=e|glide=ye}}ş-mi{{E_GLIDE|plain=e|glide=ye}}"
 
         parsed = parse_dsl(value)
 
         self.assertEqual(parsed.to_dsl(), value)
-        self.assertEqual(parsed.resolve(PDF_COMPACT_POLICY), "iä-iä")
-        self.assertEqual(parsed.resolve(PREFERRED_POLICY), "iyä-iyä")
+        self.assertEqual(parsed.resolve(PDF_COMPACT_POLICY), "tiyeş-miye")
+        self.assertEqual(parsed.resolve(PREFERRED_POLICY), "tiyeş-miye")
 
     def test_deterministic_result_has_no_dsl(self) -> None:
         result = conversion_result_for_annotation("шәһәр", "N")
@@ -53,17 +43,12 @@ class ConversionDslTests(unittest.TestCase):
         self.assertFalse(result.has_choices)
         self.assertEqual(result.to_dsl(), "şähär")
 
-    def test_annotation_converter_emits_iya_dsl(self) -> None:
-        self.assertEqual(
-            convert_for_annotation_dsl("әдәбият", "N"),
-            "ädäbi{{IYA|compact=a|explicit=ya}}t",
-        )
+    def test_annotation_converter_emits_deterministic_iya(self) -> None:
+        self.assertEqual(convert_for_annotation_dsl("әдәбият", "N"), "ädäbiyat")
 
-    def test_uncertain_alignment_does_not_invent_choice(self) -> None:
-        result = result_with_iya_choices("мияубикә", "miyawbikä")
-
-        self.assertEqual(result, ConversionResult((Literal("miyawbikä"),)))
-        self.assertFalse(result.has_choices)
+    def test_rejects_removed_iya_rule(self) -> None:
+        with self.assertRaisesRegex(DslError, "unknown rule id"):
+            parse_dsl("orfografi{{IYA|compact=ä|explicit=yä}}")
 
     def test_rejects_unknown_rule(self) -> None:
         with self.assertRaisesRegex(DslError, "unknown rule id"):
@@ -71,18 +56,17 @@ class ConversionDslTests(unittest.TestCase):
 
     def test_rejects_duplicate_option(self) -> None:
         with self.assertRaisesRegex(DslError, "duplicate option"):
-            parse_dsl("x{{IYA|compact=ä|compact=yä}}")
+            parse_dsl("x{{E_GLIDE|plain=e|plain=ye}}")
 
-    def test_accepts_custom_iya_vowel_quality_with_canonical_option_ids(self) -> None:
-        value = "x{{IYA|compact=a|explicit=ya}}"
-
-        self.assertEqual(parse_dsl(value).to_dsl(), value)
+    def test_rejects_custom_text_for_fixed_rule(self) -> None:
+        with self.assertRaisesRegex(DslError, "options for E_GLIDE"):
+            parse_dsl("x{{E_GLIDE|plain=a|glide=ya}}")
 
     def test_rejects_nested_and_unclosed_choices(self) -> None:
         with self.assertRaisesRegex(DslError, "nested choices"):
-            parse_dsl("x{{IYA|compact={{x}}|explicit=yä}}")
+            parse_dsl("x{{E_GLIDE|plain={{x}}|glide=ye}}")
         with self.assertRaisesRegex(DslError, "unclosed choice"):
-            parse_dsl("x{{IYA|compact=ä|explicit=yä")
+            parse_dsl("x{{E_GLIDE|plain=e|glide=ye")
 
     def test_rejects_invalid_zamanalif_characters(self) -> None:
         with self.assertRaisesRegex(DslError, "invalid characters"):
@@ -113,12 +97,12 @@ class ConversionDslTests(unittest.TestCase):
                     parse_dsl(value)
 
     def test_rejects_unknown_policy_rule_and_option(self) -> None:
-        result = ConversionResult((Choice("IYA", (("compact", "ä"), ("explicit", "yä"))),))
+        result = ConversionResult((Choice("E_GLIDE", (("plain", "e"), ("glide", "ye"))),))
 
         with self.assertRaisesRegex(DslError, "unknown policy rules"):
             result.resolve({"OTHER": "one"})
         with self.assertRaisesRegex(DslError, "unknown option"):
-            result.resolve({"IYA": "other"})
+            result.resolve({"E_GLIDE": "other"})
 
     def test_russian_sign_glide_rule_resolves_by_policy(self) -> None:
         value = "komp{{RUS_SIGN|omit=|preserve=ʼ}}yuter"

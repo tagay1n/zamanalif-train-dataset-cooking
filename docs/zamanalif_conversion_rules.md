@@ -22,14 +22,9 @@ The pipeline distinguishes four cases:
 
 Converter uncertainty is not an accepted variant. It must remain a review item.
 
-The first registered convention choice is Cyrillic `ия`:
-
-```text
-орфография -> orfografi{{IYA|compact=ä|explicit=yä}}
-```
-
-- preferred policy: `IYA=explicit` -> `orfografiyä`;
-- compact PDF policy: `IYA=compact` -> `orfografiä`.
+The dataset intentionally writes an explicit `y` in Cyrillic `ия`, despite the
+reference PDF's compact convention: `ия -> iyä`, `орфография -> orfografiyä`,
+and `әдәбият -> ädäbiyat`. This is deterministic and is not represented by DSL.
 
 Rule and option names are stable API identifiers. DSL choices cover only the
 substring that differs.
