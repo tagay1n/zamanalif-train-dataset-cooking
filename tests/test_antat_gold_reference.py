@@ -30,6 +30,21 @@ DELIBERATELY_EXCLUDED_ANTAT_POLICIES = frozenset(
         ("посылка", 6005),  # Dataset policy maps every written ы to ı.
     }
 )
+NATIVE_UW_FOLLOWING_VOWELS = frozenset("аәоуөыэеиү")
+
+
+def _uses_excluded_antat_native_uw_policy(cyrillic: str, expected: str) -> bool:
+    """Return whether Antat writes the explicit native glide rejected by policy."""
+    if "w" not in expected.casefold():
+        return False
+    folded = cyrillic.casefold()
+    for index, char in enumerate(folded[:-1]):
+        next_char = folded[index + 1]
+        if char == "у" and next_char in NATIVE_UW_FOLLOWING_VOWELS - {"е"}:
+            return True
+        if char in {"ү", "ю"} and next_char in NATIVE_UW_FOLLOWING_VOWELS:
+            return True
+    return False
 
 
 def _normalize_gold_zamanalif(value: str) -> str:
@@ -57,7 +72,10 @@ class AntatGoldReferenceTests(unittest.TestCase):
     def assert_antat_gold_conversions(self, cases: list[tuple[str, str, str, int]]) -> None:
         failures: list[str] = []
         for cyrillic, expected, headword, align_id in cases:
-            if (cyrillic, align_id) in DELIBERATELY_EXCLUDED_ANTAT_POLICIES:
+            if (
+                (cyrillic, align_id) in DELIBERATELY_EXCLUDED_ANTAT_POLICIES
+                or _uses_excluded_antat_native_uw_policy(cyrillic, expected)
+            ):
                 continue
             possible: set[str] = set()
             rendered: dict[str, str] = {}

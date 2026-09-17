@@ -352,48 +352,36 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertNotIn("{{", convert_for_annotation_dsl(word, "N"))
 
-    def test_native_u_before_non_e_vowel_is_policy_dsl(self) -> None:
+    def test_native_u_before_vowel_uses_pdf_plain_spelling(self) -> None:
         cases = [
-            ("буа", "bu{{NATIVE_UW|plain=|glide=w}}a", "bua", "buwa"),
-            ("буар", "bu{{NATIVE_UW|plain=|glide=w}}ar", "buar", "buwar"),
-            ("буын", "bu{{NATIVE_UW|plain=|glide=w}}ın", "buın", "buwın"),
-            ("булуы", "bulu{{NATIVE_UW|plain=|glide=w}}ı", "buluı", "buluwı"),
-            ("атуы", "atu{{NATIVE_UW|plain=|glide=w}}ı", "atuı", "atuwı"),
-            ("куыш", "qu{{NATIVE_UW|plain=|glide=w}}ış", "quış", "quwış"),
-            ("юа", "yu{{NATIVE_UW|plain=|glide=w}}a", "yua", "yuwa"),
-            ("юу", "yu{{NATIVE_UW|plain=|glide=w}}u", "yuu", "yuwu"),
-            ("китүе", "kitü{{NATIVE_UW|plain=|glide=w}}e", "kitüe", "kitüwe"),
+            ("буа", "bua"),
+            ("буар", "buar"),
+            ("буын", "buın"),
+            ("булуы", "buluı"),
+            ("атуы", "atuı"),
+            ("куыш", "quış"),
+            ("юа", "yua"),
+            ("юу", "yuu"),
+            ("китүе", "kitüe"),
         ]
 
-        for word, expected_dsl, plain, glide in cases:
+        for word, expected in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "N")
-                self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl, {"NATIVE_UW": "plain"}), plain)
-                self.assertEqual(resolve_dsl(dsl, {"NATIVE_UW": "glide"}), glide)
+                self.assertEqual(dsl, expected)
+                self.assertNotIn("{{", dsl)
 
-    def test_cilquar_stem_reuses_native_uw_policy_dsl(self) -> None:
+    def test_cilquar_stem_uses_pdf_plain_spelling(self) -> None:
         cases = [
-            (
-                "җилкуар",
-                "cilqu{{NATIVE_UW|plain=|glide=w}}ar",
-                "cilquar",
-                "cilquwar",
-            ),
-            (
-                "җилкуарлык",
-                "cilqu{{NATIVE_UW|plain=|glide=w}}arlıq",
-                "cilquarlıq",
-                "cilquwarlıq",
-            ),
+            ("җилкуар", "cilquar"),
+            ("җилкуарлык", "cilquarlıq"),
         ]
 
-        for word, expected_dsl, plain, glide in cases:
+        for word, expected in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "N")
-                self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl, {"NATIVE_UW": "plain"}), plain)
-                self.assertEqual(resolve_dsl(dsl, {"NATIVE_UW": "glide"}), glide)
+                self.assertEqual(dsl, expected)
+                self.assertNotIn("{{", dsl)
 
     def test_native_u_before_e_keeps_existing_e_glide_rule(self) -> None:
         self.assertEqual(convert_for_annotation("куелган", "N"), "quyılğan")

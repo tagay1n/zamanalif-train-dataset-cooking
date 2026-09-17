@@ -158,6 +158,9 @@ Important caveats:
 - Final native `[u]/[ü]` words like `бу`, `су`, `үсү` are written with `u/ü`,
   not final `w`. The `w` case is for forms such as verbal nouns after stems
   ending in `а/ә`: `җырлау -> cırlaw`, `сөйләү -> söyläw`.
+- A perceived glide before a following vowel is likewise omitted under the
+  reference PDF's economy principle: `баруы -> baruı`, `килүе -> kilüe`,
+  `буа -> bua`, and `буын -> buın`.
 - `g/ğ` and `k/q` cannot be decided only by front/back vowels in every word.
   Examples such as `гармун`, `гараж`, `вагон`, `кәгазь`, `кодрәт`, and `куәт`
   are why these letters remain dictionary-review targets.

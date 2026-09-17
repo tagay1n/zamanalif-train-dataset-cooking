@@ -159,13 +159,11 @@ class ConversionDslTests(unittest.TestCase):
         self.assertEqual(resolve_dsl(value, {"RUS_JOTATION": "apostrophe"}), "şçʼotka")
         self.assertEqual(resolve_dsl(value, {"RUS_JOTATION": "plain"}), "şçotka")
 
-    def test_native_uw_rule_resolves_by_policy(self) -> None:
+    def test_rejects_removed_native_uw_rule(self) -> None:
         value = "bu{{NATIVE_UW|plain=|glide=w}}a"
 
-        self.assertEqual(resolve_dsl(value), "buwa")
-        self.assertEqual(resolve_dsl(value, {"NATIVE_UW": "plain"}), "bua")
-        self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "bua")
-        self.assertEqual(resolve_dsl(value, PREFERRED_POLICY), "buwa")
+        with self.assertRaisesRegex(DslError, "unknown rule id"):
+            parse_dsl(value)
 
     def test_e_glide_rule_resolves_by_policy(self) -> None:
         value = "ti{{E_GLIDE|plain=e|glide=ye}}ş"

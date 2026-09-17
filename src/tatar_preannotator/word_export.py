@@ -34,7 +34,6 @@ from tatar_preannotator.conversion import (
     RULES,
     MASHGUL_STEM_RULE,
     MOSTAQIL_RULE,
-    NATIVE_UW_RULE,
     RUS_JOTATION_RULE,
     RUS_SIGN_E_RULE,
     RUS_SOFT_SIGN_O_RULE,
@@ -1190,12 +1189,6 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     if result.has_choices:
         result = result_with_russian_jotated_softening_result(word, result, label)
         return result
-    result = result_with_cilquar_native_uw_choices(word, compact, label)
-    if result.has_choices:
-        return result
-    result = result_with_native_uw_choices(word, compact, label)
-    if result.has_choices:
-        return result_with_ie_glide_choices(word, result_with_iya_choices(word, result))
     result = ConversionResult((Literal(compact),))
     result = result_with_russian_shch_yo_choices(word, result, label)
     result = result_with_russian_jotated_softening_result(word, result, label)
@@ -1913,57 +1906,6 @@ def _is_russian_jotated_softening_position(source: str, index: int) -> bool:
     }:
         return False
     return bool(CYRILLIC_RE.fullmatch(previous))
-
-
-def result_with_cilquar_native_uw_choices(
-    source: str,
-    converted: str,
-    label: str,
-) -> ConversionResult:
-    """Annotate ``җилкуар`` after deterministic ``k -> q`` stem normalization."""
-    if label != "N" or not source.casefold().startswith("җилкуар"):
-        return ConversionResult((Literal(converted),))
-    if not converted.startswith("cilquar"):
-        return ConversionResult((Literal(converted),))
-    return ConversionResult(
-        (
-            Literal("cilqu"),
-            Choice(NATIVE_UW_RULE.rule_id, NATIVE_UW_RULE.options),
-            Literal(converted[len("cilqu") :]),
-        )
-    )
-
-
-def result_with_native_uw_choices(
-    source: str,
-    converted: str,
-    label: str,
-) -> ConversionResult:
-    """Annotate native ``у/ү/ю`` glide conventions as plain-vs-glide choices."""
-    if label != "N" or not any(char in source for char in "уүю"):
-        return ConversionResult((Literal(converted),))
-
-    segments: list[Literal | Choice] = []
-    source_index = 0
-    converted_index = 0
-    while source_index < len(source):
-        char = source[source_index]
-        latin = _char_conversion(char, source, source_index, label)
-        if latin and converted.startswith(latin, converted_index):
-            _append_literal_segment(segments, latin)
-            converted_index += len(latin)
-        elif not latin:
-            pass
-        else:
-            return ConversionResult((Literal(converted),))
-
-        if _native_uw_insertion_needs_choice(source, source_index):
-            segments.append(Choice(NATIVE_UW_RULE.rule_id, NATIVE_UW_RULE.options))
-        source_index += 1
-
-    if converted_index != len(converted):
-        return ConversionResult((Literal(converted),))
-    return ConversionResult(tuple(segments))
 
 
 def convert_for_annotation_dsl(word: str, label: str) -> str:
@@ -3182,18 +3124,6 @@ def _right_vowel_context(word: str, index: int) -> str:
     if next_char in BACK_VOWELS | {"я"}:
         return "back"
     return ""
-
-
-def _native_uw_insertion_needs_choice(word: str, index: int) -> bool:
-    char = word[index]
-    next_char = _next_char(word, index)
-    if char == "у":
-        return next_char in (FRONT_VOWELS | BACK_VOWELS) - {"е"}
-    if char == "ү":
-        return next_char == "е" or next_char in (FRONT_VOWELS | BACK_VOWELS) - {"е"}
-    if char == "ю":
-        return next_char in FRONT_VOWELS | BACK_VOWELS
-    return False
 
 
 def _deterministic_char(char: str) -> str:

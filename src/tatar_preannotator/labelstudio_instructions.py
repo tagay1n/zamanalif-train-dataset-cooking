@@ -71,13 +71,6 @@ RULE_GUIDANCE: dict[str, tuple[str, tuple[tuple[str, tuple[str, ...]], ...]]] = 
         "Choose whether Russian я/ю uses a y glide, an apostrophe, or neither.",
         (("бюро", ("byuro", "bʼuro", "buro")),),
     ),
-    "NATIVE_UW": (
-        "Choose whether native у/ү before another vowel has an explicit w glide.",
-        (
-            ("буа", ("bua", "buwa")),
-            ("китүе", ("kitüe", "kitüwe")),
-        ),
-    ),
 }
 
 UNKNOWN_GUIDANCE = {
