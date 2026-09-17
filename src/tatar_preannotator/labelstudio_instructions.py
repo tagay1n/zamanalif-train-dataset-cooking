@@ -71,13 +71,6 @@ RULE_GUIDANCE: dict[str, tuple[str, tuple[tuple[str, tuple[str, ...]], ...]]] = 
         "Choose whether Russian я/ю uses a y glide, an apostrophe, or neither.",
         (("бюро", ("byuro", "bʼuro", "buro")),),
     ),
-    "RL_FINAL_KA": (
-        "Decide whether к belongs to the Russian stem or starts a Tatar suffix.",
-        (
-            ("булавка", ("bulavqa", "bulavka")),
-            ("кубка", ("kubqa", "kubka")),
-        ),
-    ),
     "NATIVE_UW": (
         "Choose whether native у/ү before another vowel has an explicit w glide.",
         (

@@ -35,7 +35,6 @@ from tatar_preannotator.conversion import (
     MASHGUL_STEM_RULE,
     MOSTAQIL_RULE,
     NATIVE_UW_RULE,
-    RL_FINAL_KA_RULE,
     RUS_JOTATION_RULE,
     RUS_SIGN_E_RULE,
     RUS_SOFT_SIGN_O_RULE,
@@ -1190,7 +1189,6 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = result_with_russian_soft_sign_choices(word, compact, label)
     if result.has_choices:
         result = result_with_russian_jotated_softening_result(word, result, label)
-        result = result_with_loanword_final_ka_choices(word, result, label)
         return result
     result = result_with_cilquar_native_uw_choices(word, compact, label)
     if result.has_choices:
@@ -1201,7 +1199,6 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = ConversionResult((Literal(compact),))
     result = result_with_russian_shch_yo_choices(word, result, label)
     result = result_with_russian_jotated_softening_result(word, result, label)
-    result = result_with_loanword_final_ka_choices(word, result, label)
     result = result_with_kts_after_k_choices(word, result, label)
     result = result_with_final_ts_suffix_choices(word, result, label)
     result = result_with_project_e_choices(word, result, label)
@@ -1916,62 +1913,6 @@ def _is_russian_jotated_softening_position(source: str, index: int) -> bool:
     }:
         return False
     return bool(CYRILLIC_RE.fullmatch(previous))
-
-
-def result_with_loanword_final_ka_choices(
-    source: str,
-    result: ConversionResult,
-    label: str,
-) -> ConversionResult:
-    """Annotate RL final ``-ка`` as Tatar suffix ``q`` vs loanword stem ``k``."""
-    if label != "RL" or not source.endswith("ка"):
-        return result
-    short_result = result_with_short_loanword_final_ka_choices(source, result)
-    if short_result != result:
-        return short_result
-
-    segments: list[Literal | Choice] = []
-    changed = False
-    for segment in _merge_adjacent_literals(result).segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        text = segment.text
-        if not changed and text.endswith("qa"):
-            _append_literal_segment(segments, text[:-2])
-            segments.append(Choice(RL_FINAL_KA_RULE.rule_id, RL_FINAL_KA_RULE.options))
-            _append_literal_segment(segments, "a")
-            changed = True
-            continue
-        _append_literal_segment(segments, text)
-    return ConversionResult(tuple(segments)) if changed else result
-
-
-SHORT_LOANWORD_FINAL_KA_CHOICES = frozenset({"кубка"})
-
-
-def result_with_short_loanword_final_ka_choices(
-    source: str, result: ConversionResult
-) -> ConversionResult:
-    """Annotate known short RL stems where final ``-ка`` is a Tatar suffix."""
-    if source.casefold() not in SHORT_LOANWORD_FINAL_KA_CHOICES:
-        return result
-
-    segments: list[Literal | Choice] = []
-    changed = False
-    for segment in _merge_adjacent_literals(result).segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        text = segment.text
-        if not changed and text.endswith("ka"):
-            _append_literal_segment(segments, text[:-2])
-            segments.append(Choice(RL_FINAL_KA_RULE.rule_id, RL_FINAL_KA_RULE.options))
-            _append_literal_segment(segments, "a")
-            changed = True
-            continue
-        _append_literal_segment(segments, text)
-    return ConversionResult(tuple(segments)) if changed else result
 
 
 def result_with_cilquar_native_uw_choices(
@@ -2802,6 +2743,12 @@ LOANWORD_MIXED_SUFFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("закончалык", "zakonçalık", "zakonçalıq"),
 )
 
+# Verified loanword stems observed with an attached Tatar dative suffix.  Other
+# final -ка forms default to Russian stem k and remain editable in catchall.
+LOANWORD_FINAL_KA_SUFFIX_STEMS = frozenset(
+    {"алфавит", "архив", "вирус", "каталог", "конус"}
+)
+
 
 def _loanword_final_ets_sequence_conversion(
     word: str, index: int, label: str
@@ -3029,13 +2976,12 @@ def _loanword_suffix_gk_conversion(char: str, word: str, index: int) -> str:
         stem = word[: -4]
         if len(stem) >= 5:
             return "ğ" if word.endswith(("дагы", "тагы")) else "g"
-    if char == "к" and suffix in {
-        "ка",
-        "кә",
-    } and len(prefix) >= 5:
+    if char == "к" and suffix == "ка":
+        return "q" if prefix.casefold() in LOANWORD_FINAL_KA_SUFFIX_STEMS else "k"
+    if char == "к" and suffix == "кә" and len(prefix) >= 5:
         if prefix.endswith("л"):
             return ""
-        return "q" if suffix.startswith(("ка", "лык")) else "k"
+        return "k"
     if char == "к" and index == len(word) - 1 and word.endswith(
         ("лык", "лек", "лыкка", "леккә", "лыгын", "леген")
     ):

@@ -11,7 +11,6 @@ of a DSL choice.
 - `E_GLIDE`: kept pending a separate audit of `ие -> ie/iye`.
 - `RUS_SIGN`, `RUS_JOTATION`: kept for Russian
   sign/apostrophe policy differences.
-- `RL_FINAL_KA`: kept pending a separate morphology audit.
 - `NATIVE_UW`: kept pending a separate `u/ü + vowel` glide audit. For
   `җилкуар`-style stems, the base is normalized to `q` first, then the same
   policy is reused: `cilqu{{NATIVE_UW|plain=|glide=w}}ar`.
@@ -22,6 +21,11 @@ of a DSL choice.
   `й` is required for `ıy`. Thus `сыр -> sır`, while `сыйр -> sıyr`.
 - `MONTH_NAME`: removed as DSL. Month names use the ordinary converter and
   participate in the same origin and remaining-DSL routing as other words.
+- `RL_FINAL_KA`: removed as DSL. Whether final Cyrillic `-ка` contains a
+  Russian stem `к` or a Tatar suffix consonant is a lexical boundary decision,
+  not a global spelling policy. Verified suffixed stems are converted
+  deterministically; the ordinary converter supplies one suggestion for other
+  forms, and unresolved forms are reviewed in catchall.
 - `ARABIC_INITIAL_GA`: removed as DSL. The `гади` family now follows the
   preferred plain initial `га` convention (`ğadi`, `ğadiläşterergä`); ANTAT
   front variants are preserved in fixture comments.
@@ -38,5 +42,4 @@ of a DSL choice.
 ## Next Audit Candidates
 
 - `E_GLIDE`
-- `RL_FINAL_KA`
 - `NATIVE_UW`

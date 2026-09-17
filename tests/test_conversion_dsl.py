@@ -175,12 +175,11 @@ class ConversionDslTests(unittest.TestCase):
         self.assertEqual(resolve_dsl(value, {"E_GLIDE": "glide"}), "tiyeş")
         self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "tiyeş")
 
-    def test_loanword_final_ka_rule_resolves_by_policy(self) -> None:
+    def test_rejects_removed_loanword_final_ka_rule(self) -> None:
         value = "bulav{{RL_FINAL_KA|suffix=q|stem=k}}a"
 
-        self.assertEqual(resolve_dsl(value), "bulavqa")
-        self.assertEqual(resolve_dsl(value, {"RL_FINAL_KA": "suffix"}), "bulavqa")
-        self.assertEqual(resolve_dsl(value, {"RL_FINAL_KA": "stem"}), "bulavka")
+        with self.assertRaisesRegex(DslError, "unknown rule id"):
+            parse_dsl(value)
 
     def test_mostaqil_rule_accepts_custom_option_text(self) -> None:
         base = "möstä{{MOSTAQIL|pdf=qil|antat=qıyl}}"

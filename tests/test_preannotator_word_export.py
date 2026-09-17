@@ -940,40 +940,29 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "RL"), expected)
                 self.assertEqual(resolve_dsl(convert_for_annotation_dsl(word, "RL")), expected)
 
-    def test_loanword_final_ka_is_policy_dsl(self) -> None:
+    def test_loanword_final_ka_is_not_policy_dsl(self) -> None:
         cases = [
-            ("кубка", "kub{{RL_FINAL_KA|suffix=q|stem=k}}a", "kubqa", "kubka"),
-            ("булавка", "bulav{{RL_FINAL_KA|suffix=q|stem=k}}a", "bulavqa", "bulavka"),
-            ("палатка", "palat{{RL_FINAL_KA|suffix=q|stem=k}}a", "palatqa", "palatka"),
-            ("форсунка", "forsun{{RL_FINAL_KA|suffix=q|stem=k}}a", "forsunqa", "forsunka"),
+            ("кубка", "kubka"),
+            ("булавка", "bulavka"),
+            ("палатка", "palatka"),
+            ("форсунка", "forsunka"),
             (
                 "фотоплёнка",
-                "fotopl{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}on{{RL_FINAL_KA|suffix=q|stem=k}}a",
-                "fotoplyonqa",
-                "fotoplʼonka",
+                "fotopl{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}onka",
             ),
         ]
 
-        for word, expected_dsl, suffix, stem in cases:
+        for word, expected_dsl in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "RL")
                 self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl), suffix)
-                self.assertEqual(
-                    resolve_dsl(
-                        dsl,
-                        {
-                            "RUS_JOTATION": "apostrophe",
-                            "RL_FINAL_KA": "stem",
-                        },
-                    ),
-                    stem,
-                )
+                self.assertNotIn("RL_FINAL_KA", dsl)
 
-    def test_short_loanword_final_ka_policy_is_narrow(self) -> None:
-        for word in ["маска", "папка", "рамка"]:
-            with self.subTest(word=word):
-                self.assertNotIn("RL_FINAL_KA", convert_for_annotation_dsl(word, "RL"))
+        self.assertEqual(classify_project("булавка", "RL")["key"], "catchall")
+        self.assertEqual(
+            classify_project("фотоплёнка", "RL")["key"],
+            "rus_jotation",
+        )
 
     def test_conflicting_arabic_initial_ga_uses_plain_preferred_form(self) -> None:
         cases = [
@@ -1405,16 +1394,16 @@ class PreannotatorWordExportTests(unittest.TestCase):
         )
         self.assertEqual(resolve_dsl(dsl), "vestibyulʼ")
 
-    def test_russian_soft_sign_composes_with_final_ka_policy(self) -> None:
+    def test_russian_soft_sign_composes_with_plain_final_ka(self) -> None:
         dsl = convert_for_annotation_dsl("геральдика", "RL")
 
         self.assertEqual(
             dsl,
-            "geral{{RUS_SIGN|omit=|preserve=ʼ}}di{{RL_FINAL_KA|suffix=q|stem=k}}a",
+            "geral{{RUS_SIGN|omit=|preserve=ʼ}}dika",
         )
-        self.assertEqual(resolve_dsl(dsl), "geralʼdiqa")
+        self.assertEqual(resolve_dsl(dsl), "geralʼdika")
         self.assertEqual(
-            resolve_dsl(dsl, {"RUS_SIGN": "preserve", "RL_FINAL_KA": "stem"}),
+            resolve_dsl(dsl, {"RUS_SIGN": "preserve"}),
             "geralʼdika",
         )
 
