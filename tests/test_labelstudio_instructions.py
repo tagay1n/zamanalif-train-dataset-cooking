@@ -44,6 +44,8 @@ class LabelStudioInstructionTests(unittest.TestCase):
         self.assertIn("вакыт → waqıt", html)
         self.assertIn("проект → proyekt", html)
         self.assertIn("саклау → saqlaw", html)
+        self.assertIn("федераль → federalʼ", html)
+        self.assertIn("Edit the plain text to keep or remove ʼ", html)
 
 
 if __name__ == "__main__":

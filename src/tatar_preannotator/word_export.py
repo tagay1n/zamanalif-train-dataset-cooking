@@ -676,8 +676,12 @@ def classify_project(word: str, label: str) -> dict[str, Any]:
         key = "complex_multi_rule"
         title = "Complex multi-rule words"
     elif len(rules) == 1:
-        key = _project_key_for_rule(rules[0])
-        title = project_title_for_key(key)
+        if rules[0] == RUS_SIGN_RULE.rule_id:
+            key = "catchall"
+            title = project_title_for_key(key)
+        else:
+            key = _project_key_for_rule(rules[0])
+            title = project_title_for_key(key)
     else:
         key = "catchall"
         title = "Catchall word review"
@@ -686,7 +690,16 @@ def classify_project(word: str, label: str) -> dict[str, Any]:
 
 def word_belongs_to_project(word: str, origin: str, project_key: str) -> bool:
     """Return whether a word belongs to a current or legacy dictionary project."""
-    if classify_project(word, origin)["key"] == project_key:
+    classification = classify_project(word, origin)
+    if classification["key"] == project_key:
+        return True
+    if (
+        project_key == "rus_sign"
+        and origin == "RL"
+        and classification["dsl_rules"] == [RUS_SIGN_RULE.rule_id]
+    ):
+        # Prior focused rus_sign exports remain importable after ordinary sign
+        # reviews moved to catchall. Do not apply this to multi-rule words.
         return True
     return (
         project_key in LEGACY_UNKNOWN_PROJECT_KEYS
@@ -1050,7 +1063,7 @@ def _task_with_project_meta(
 ) -> dict[str, Any]:
     data = dict(task["data"])
     if project_key in SINGLE_SUGGESTION_PROJECT_KEYS:
-        if project_key == UNKNOWN_ORIGIN_PROJECT_KEY:
+        if project_key in {"catchall", UNKNOWN_ORIGIN_PROJECT_KEY}:
             variants = annotation_variants(data["auto_zamanalif"])
             data["auto_zamanalif"] = variants[0].zamanalif if variants else ""
         meta = {
@@ -2082,7 +2095,7 @@ def validate_split_export_result(result: SplitExportResult) -> None:
             )
             suggestion_for_rules = (
                 annotation_suggestion(expected_word, data["gemini_origin"])
-                if project_key == UNKNOWN_ORIGIN_PROJECT_KEY
+                if project_key in {"catchall", UNKNOWN_ORIGIN_PROJECT_KEY}
                 else suggestion
             )
             suggestion_rules = (
@@ -2291,7 +2304,7 @@ def _validate_task(
                     f"{context} has invalid visible Zamanalif suggestion: {exc}"
                 ) from exc
         expected_display_suggestion = expected_suggestion
-        if project_key == UNKNOWN_ORIGIN_PROJECT_KEY:
+        if project_key in {"catchall", UNKNOWN_ORIGIN_PROJECT_KEY}:
             variants = annotation_variants(expected_suggestion)
             expected_display_suggestion = variants[0].zamanalif if variants else ""
         if display_suggestion != expected_display_suggestion:

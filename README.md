@@ -324,21 +324,25 @@ annotators see every distinct plain rendering as one editable line in
 only in task `meta`.
 
 The command writes 500-task batch files such as
-`project_e_glide_batch_001_of_003.json`, `project_rus_sign_batch_001_of_004.json`,
+`project_e_glide_batch_001_of_003.json`, `project_catchall_batch_001_of_004.json`,
 `project_complex_multi_rule_batch_001_of_002.json`, and
 `project_hamza_batch_001_of_001.json`, and
 `project_contextual_homonym_batch_001_of_027.json`. Import each batch into the
 matching Label Studio project. Hamza has routing priority over catchall and
-multi-rule projects. Russian soft/hard-sign apostrophes remain in their
-`rus_*` projects. The command also writes
-`project_<key>_instructions.html` for every active category. Each dictionary
-word is exported once. If a word has multiple DSL rules it goes to
-`complex_multi_rule`; otherwise it goes to the matching DSL-rule project or to
-`catchall`. Unresolved `U` words are collected into one focused
-`unknown_origin` project. This keeps unknown compounds,
-abbreviations/fragments, Tatar-specific words, conditional-letter words, and
-other unresolved words in one annotation queue. Unknown words containing `ц`
-remain in the `ts` project because they require that focused convention review.
+multi-rule projects. Ordinary Russian soft/hard-sign cases (`RUS_SIGN`) now go
+to `catchall` with the preferred apostrophe-preserving spelling shown as plain
+editable text. The specialized sign-plus-vowel rules `RUS_SIGN_E`,
+`RUS_SOFT_SIGN_O`, and `RUS_JOTATION` remain in their focused projects. The
+command also writes `project_<key>_instructions.html` for every active
+category. Each dictionary word is exported once. If a word has multiple DSL
+rules it goes to `complex_multi_rule`; otherwise it goes to the matching
+DSL-rule project or to `catchall` (including ordinary `RUS_SIGN` words).
+Previously exported focused `rus_sign` batches remain importable. Unresolved
+`U` words are collected into one focused `unknown_origin` project. This keeps
+unknown compounds, abbreviations/fragments, Tatar-specific words,
+conditional-letter words, and other unresolved words in one annotation queue.
+Unknown words containing `ц` remain in the `ts` project because they require
+that focused convention review.
 
 All unknown-origin tasks receive an editable suggestion from a simple origin
 heuristic: a word containing any Tatar-specific Cyrillic letter (`ә`, `ө`, `ү`,

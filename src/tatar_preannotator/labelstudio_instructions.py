@@ -193,7 +193,12 @@ def _focus(project_key: str, rule_ids: Iterable[str]) -> str:
             "cases:</p>\n"
             "  <ul>\n    "
             + "\n    ".join(items)
-            + "\n  </ul>\n</section>"
+            + "\n  </ul>\n"
+            "  <p>For ordinary Russian soft or hard signs (ь/ъ), the suggestion "
+            "preserves the sign as ʼ, for example федераль → federalʼ, культура → "
+            "kulʼtura, and роль → rolʼ. Edit the plain text to keep or remove ʼ as "
+            "appropriate. Signs before е, о, я, or ю may use a focused project.</p>\n"
+            "</section>"
         )
 
     unknown = UNKNOWN_GUIDANCE.get(project_key)

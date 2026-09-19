@@ -1773,8 +1773,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 morphology_analyzer=analyzer,
             )
 
-        self.assertEqual(result.projects["catchall"].exported_words, ["культураны"])
-        self.assertEqual(result.projects["rus_sign"].exported_words, ["культуралар"])
+        self.assertEqual(
+            set(result.projects["catchall"].exported_words),
+            {"культураны", "культуралар"},
+        )
+        self.assertNotIn("rus_sign", result.projects)
         self.assertEqual(result.report["exported_word_count"], 2)
         self.assertEqual(result.report["covered_word_count"], 4)
 
@@ -1805,8 +1808,65 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_russian_apostrophe_is_not_routed_as_hamza(self) -> None:
         project = classify_project("культура", "RL")
 
-        self.assertEqual(project["key"], "rus_sign")
+        self.assertEqual(project["key"], "catchall")
         self.assertEqual(project["dsl_rules"], ["RUS_SIGN"])
+
+    def test_ordinary_russian_signs_export_to_catchall_as_plain_preferred_text(self) -> None:
+        words = ["федераль", "культурага", "роль"]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_annotation_db(
+                root / "zamanalif.sqlite",
+                [
+                    {
+                        "id": f"sent_{index}",
+                        "tatar": True,
+                        "tokens": [{"text": word, "label": "RL"}],
+                    }
+                    for index, word in enumerate(words, start=1)
+                ],
+            )
+            result = export_labelstudio_project_tasks_from_db(
+                db_path,
+                sort_by="word",
+            )
+            output_dir = root / "projects"
+            paths = write_split_outputs(result, output_dir)
+
+        self.assertEqual(set(result.projects), {"catchall"})
+        catchall = result.projects["catchall"]
+        suggestions = {
+            task["data"]["cyrl_word"]: task["data"]["auto_zamanalif"]
+            for task in catchall.tasks
+        }
+        self.assertEqual(
+            suggestions,
+            {
+                "федераль": "federalʼ",
+                "культурага": "kulʼturağa",
+                "роль": "rolʼ",
+            },
+        )
+        self.assertTrue(all("{{" not in value for value in suggestions.values()))
+        self.assertEqual(catchall.report["dsl_rule_counts"], {"RUS_SIGN": 3})
+        self.assertEqual(
+            [path.name for path in paths],
+            ["project_catchall_batch_001_of_001.json"],
+        )
+        self.assertFalse(any("rus_sign" in path.name for path in paths))
+
+    def test_sign_plus_vowel_and_multi_rule_projects_remain_focused(self) -> None:
+        cases = (
+            ("объект", "rus_sign_e", ["RUS_SIGN_E"]),
+            ("батальон", "rus_soft_sign_o", ["RUS_SOFT_SIGN_O"]),
+            ("бюро", "rus_jotation", ["RUS_JOTATION"]),
+            ("октябрь", "complex_multi_rule", ["RUS_JOTATION", "RUS_SIGN"]),
+        )
+        for word, expected_key, expected_rules in cases:
+            with self.subTest(word=word):
+                project = classify_project(word, "RL")
+                self.assertEqual(project["key"], expected_key)
+                self.assertEqual(project["dsl_rules"], expected_rules)
 
     def test_literal_hamza_project_writes_dedicated_output_and_instructions(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

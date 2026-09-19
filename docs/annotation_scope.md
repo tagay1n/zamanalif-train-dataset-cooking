@@ -35,7 +35,11 @@ contextual homonyms remain in their focused projects.
 - **Native hamza conversions.** Verified lexical families use the global
   `HAMZA` omit/preserve policy and are routed only to the `hamza` dictionary
   project. One representative covers every observed form of the exact lexical
-  family. Russian soft/hard-sign apostrophes remain separate `rus_*` cases.
+  family. Ordinary Russian soft/hard-sign cases (`RUS_SIGN`) go to `catchall`,
+  where the preferred suggestion preserves ʼ as editable plain text. The
+  specialized sign-plus-vowel rules `RUS_SIGN_E`, `RUS_SOFT_SIGN_O`, and
+  `RUS_JOTATION` remain in their focused projects. Words with multiple rules
+  remain in `complex_multi_rule`.
 - **Native-looking mixed-harmony words.** If Gemini labels a word `N` and the
   word has mixed front/back vowels, skip it for Project 1 unless it belongs to
   a verified lexical hamza family. Keep matching `RL` and `U` words.

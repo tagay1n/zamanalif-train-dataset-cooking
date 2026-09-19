@@ -186,7 +186,7 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 self.assertEqual(resolve_dsl(dsl), expected)
 
         self.assertEqual(classify_project("гыйнварга", "N")["key"], "catchall")
-        self.assertEqual(classify_project("июнь", "RL")["key"], "rus_sign")
+        self.assertEqual(classify_project("июнь", "RL")["key"], "catchall")
         self.assertEqual(
             classify_project("октябрена", "RL")["key"],
             "rus_jotation",

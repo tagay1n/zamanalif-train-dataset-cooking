@@ -22,6 +22,8 @@ from tatar_preannotator.labelstudio_import import (
     parse_labelstudio_export,
 )
 from tatar_preannotator.word_export import (
+    annotation_variants,
+    convert_for_annotation_dsl,
     export_labelstudio_project_tasks_from_db,
     load_reviewed_words,
     save_reviewed_word,
@@ -61,6 +63,107 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(summary.skipped_unannotated_tasks, 1)
         self.assertEqual(set(reviewed), {"вакыт"})
         self.assertEqual(reviewed["вакыт"].origin, "N")
+
+    def test_imports_plain_catchall_russian_sign_suggestion_and_edit(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            words = ["федераль", "роль"]
+            _add_words(db_path, words, origin="RL")
+            exported = export_labelstudio_project_tasks_from_db(
+                db_path,
+                morphology_analyzer=self.analyzer,
+            )
+            tasks = exported.projects["catchall"].tasks
+            by_word = {task["data"]["cyrl_word"]: task for task in tasks}
+            self.assertEqual(
+                {word: by_word[word]["data"]["auto_zamanalif"] for word in words},
+                {"федераль": "federalʼ", "роль": "rolʼ"},
+            )
+            by_word["федераль"]["annotations"] = [
+                {
+                    "was_cancelled": False,
+                    "result": [
+                        {
+                            "from_name": "corrected_zamanalif",
+                            "type": "textarea",
+                            "value": {"text": ["federalʼ"]},
+                        }
+                    ],
+                }
+            ]
+            by_word["роль"]["annotations"] = [
+                {
+                    "was_cancelled": False,
+                    "result": [
+                        {
+                            "from_name": "corrected_zamanalif",
+                            "type": "textarea",
+                            "value": {"text": ["rol"]},
+                        }
+                    ],
+                }
+            ]
+            annotated_tasks = [by_word[word] for word in words]
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "ordinary-signs.json", annotated_tasks),
+                morphology_analyzer=self.analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.project_key, "catchall")
+        self.assertEqual(summary.imported_items, 2)
+        self.assertEqual(reviewed["федераль"].zamanalif_dsl, "federalʼ")
+        self.assertEqual(reviewed["роль"].zamanalif_dsl, "rol")
+
+    def test_imports_legacy_rus_sign_focused_batch(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, ["роль"], origin="RL")
+            suggestion_dsl = convert_for_annotation_dsl("роль", "RL")
+            variants = annotation_variants(suggestion_dsl)
+            visible = "\n".join(variant.zamanalif for variant in variants)
+            task: dict[str, object] = {
+                "data": {
+                    "cyrl_word": "роль",
+                    "zamanalif_variants": visible,
+                    "gemini_origin": "RL",
+                    "hints_html": "",
+                },
+                "meta": {
+                    "schema_version": 3,
+                    "project_key": "rus_sign",
+                    "suggested_zamanalif_dsl": suggestion_dsl,
+                    "variant_policies": [
+                        [dict(policy) for policy in variant.policies]
+                        for variant in variants
+                    ],
+                },
+                "annotations": [
+                    {
+                        "was_cancelled": False,
+                        "result": [
+                            {
+                                "from_name": "reviewed_zamanalif_variants",
+                                "type": "textarea",
+                                "value": {"text": [visible]},
+                            }
+                        ],
+                    }
+                ],
+            }
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "legacy-rus-sign.json", [task]),
+                morphology_analyzer=self.analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.project_key, "rus_sign")
+        self.assertEqual(summary.imported_items, 1)
+        self.assertEqual(reviewed["роль"].zamanalif_dsl, suggestion_dsl)
 
     def test_imports_legacy_unknown_project_after_consolidation(self) -> None:
         with TemporaryDirectory() as tmpdir:
