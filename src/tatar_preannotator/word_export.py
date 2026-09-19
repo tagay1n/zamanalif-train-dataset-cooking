@@ -38,7 +38,6 @@ from tatar_preannotator.conversion import (
     RUS_SOFT_SIGN_O_RULE,
     RUS_SIGN_RULE,
     SHIGYR_STEM_RULE,
-    TS_RULE,
     YA_RULE,
     ZAMANALIF_APOSTROPHE,
     normalize_zamanalif_apostrophes,
@@ -365,7 +364,11 @@ def annotation_display_variants(
     return tuple(variants)
 
 
-def annotation_variants(zamanalif_dsl: str) -> tuple[AnnotationVariant, ...]:
+def annotation_variants(
+    zamanalif_dsl: str,
+    *,
+    default_policy: dict[str, str] | None = None,
+) -> tuple[AnnotationVariant, ...]:
     """Return every distinct plain rendering and the policies that select it."""
     if not zamanalif_dsl:
         return ()
@@ -379,13 +382,13 @@ def annotation_variants(zamanalif_dsl: str) -> tuple[AnnotationVariant, ...]:
 
     grouped: dict[str, list[tuple[tuple[str, str], ...]]] = {}
     order: list[str] = []
-    preferred = result.resolve()
+    preferred = result.resolve(default_policy)
     order.append(preferred)
     grouped[preferred] = []
     for selected in product(*(choices.values())):
         policy = tuple(zip(choices, selected, strict=True))
         try:
-            rendered = result.resolve(dict(policy))
+            rendered = result.resolve({**(default_policy or {}), **dict(policy)})
         except DslError:
             continue
         if rendered not in grouped:
@@ -661,15 +664,10 @@ def classify_project(word: str, label: str) -> dict[str, Any]:
         rules = (
             list(dict.fromkeys(parse_dsl(suggestion).rule_ids)) if suggestion else []
         )
-        if "ц" in word.casefold():
-            key = _project_key_for_rule(TS_RULE.rule_id)
         return {"key": key, "title": project_title_for_key(key), "dsl_rules": rules}
     result = conversion_result_for_annotation(word, label)
     rules = list(dict.fromkeys(result.rule_ids)) if result is not None else []
-    if "ц" in word.casefold():
-        key = _project_key_for_rule(TS_RULE.rule_id)
-        title = project_title_for_key(key)
-    elif native_hamza_family(word) is not None and _contains_hamza(result):
+    if native_hamza_family(word) is not None and _contains_hamza(result):
         key = _project_key_for_rule(HAMZA_RULE.rule_id)
         title = project_title_for_key(key)
     elif len(rules) > 1:
@@ -692,6 +690,9 @@ def word_belongs_to_project(word: str, origin: str, project_key: str) -> bool:
     """Return whether a word belongs to a current or legacy dictionary project."""
     classification = classify_project(word, origin)
     if classification["key"] == project_key:
+        return True
+    if project_key == "ts" and "ц" in word.casefold():
+        # Keep legacy ts project backups importable without routing new tasks there.
         return True
     if (
         project_key == "rus_sign"
@@ -1177,10 +1178,17 @@ def eligible_project_words(
 def convert_for_annotation(word: str, label: str) -> str:
     """Convert one normalized word using the branch implied by Gemini label."""
     label = label.strip()
+    source_is_upper = word.isupper()
+    source_is_title = bool(word) and word[0].isupper() and word[1:].islower()
+    word = word.lower()
     if label not in {"N", "RL"}:
         converted = _best_effort_unknown(word)
     else:
         converted = _convert_known_label(word, label)
+    if source_is_upper:
+        converted = converted.upper()
+    elif source_is_title and converted:
+        converted = converted[0].upper() + converted[1:]
     return converted if _is_clean_zamanalif(converted) else ""
 
 
@@ -1204,8 +1212,6 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     result = ConversionResult((Literal(compact),))
     result = result_with_russian_shch_yo_choices(word, result, label)
     result = result_with_russian_jotated_softening_result(word, result, label)
-    result = result_with_kts_after_k_choices(word, result, label)
-    result = result_with_final_ts_suffix_choices(word, result, label)
     result = result_with_project_e_choices(word, result, label)
     result = result_with_figyl_stem_choices(word, result)
     result = result_with_shigyr_stem_choices(word, result)
@@ -1241,118 +1247,6 @@ def result_with_ie_glide_choices(source: str, result: ConversionResult) -> Conve
             segments.append(Choice(E_GLIDE_RULE.rule_id, E_GLIDE_RULE.options))
             start = match.end()
         _append_literal_segment(segments, segment.text[start:])
-    return ConversionResult(tuple(segments))
-
-
-def result_with_kts_after_k_choices(
-    source: str, result: ConversionResult, label: str
-) -> ConversionResult:
-    """Annotate loanword Cyrillic ``кц`` as an attested ``ks`` vs ``kts`` policy."""
-    if label != "RL":
-        return result
-    source_count = source.casefold().count("кц")
-    output_count = sum(
-        segment.text.casefold().count("ks")
-        for segment in result.segments
-        if isinstance(segment, Literal)
-    )
-    if source_count == 0 or source_count != output_count:
-        return result
-
-    segments: list[Literal | Choice] = []
-    for segment in _merge_adjacent_literals(result).segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        start = 0
-        for match in re.finditer("ks", segment.text, flags=re.IGNORECASE):
-            _append_literal_segment(segments, segment.text[start : match.start() + 1])
-            segments.append(Choice(TS_RULE.rule_id, TS_RULE.options))
-            start = match.end()
-        _append_literal_segment(segments, segment.text[start:])
-    return ConversionResult(tuple(segments))
-
-
-TATAR_SUFFIXES_AFTER_FINAL_TS: tuple[str, ...] = (
-    "лары",
-    "ләре",
-    "ларга",
-    "ләргә",
-    "ларда",
-    "ләрдә",
-    "лардан",
-    "ләрдән",
-    "ларын",
-    "ләрен",
-    "ларының",
-    "ләренең",
-    "ларны",
-    "ләрне",
-    "лар",
-    "ләр",
-    "ының",
-    "енең",
-    "ында",
-    "ендә",
-    "ыннан",
-    "еннән",
-    "ына",
-    "енә",
-    "ны",
-    "не",
-    "ның",
-    "нең",
-    "дан",
-    "дән",
-    "тан",
-    "тән",
-    "да",
-    "дә",
-    "та",
-    "тә",
-    "га",
-    "гә",
-    "ка",
-    "кә",
-)
-
-
-def result_with_final_ts_suffix_choices(
-    source: str, result: ConversionResult, label: str
-) -> ConversionResult:
-    """Annotate loanword stem-final ``ц`` before Tatar suffix as ``s`` vs ``ts``."""
-    if label != "RL":
-        return result
-    folded = source.casefold()
-    source_count = sum(
-        1
-        for index, char in enumerate(folded)
-        if char == "ц" and folded[index + 1 :].startswith(TATAR_SUFFIXES_AFTER_FINAL_TS)
-    )
-    output_count = sum(
-        segment.text.casefold().count("ts")
-        for segment in result.segments
-        if isinstance(segment, Literal)
-    )
-    if source_count == 0 or source_count > output_count:
-        return result
-
-    segments: list[Literal | Choice] = []
-    remaining = source_count
-    for segment in _merge_adjacent_literals(result).segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        text = segment.text
-        start = 0
-        for match in re.finditer("ts", text, flags=re.IGNORECASE):
-            if remaining <= 0:
-                break
-            _append_literal_segment(segments, text[start : match.start()])
-            segments.append(Choice(TS_RULE.rule_id, TS_RULE.options))
-            start = match.end()
-            remaining -= 1
-        _append_literal_segment(segments, text[start:])
     return ConversionResult(tuple(segments))
 
 
@@ -2567,23 +2461,14 @@ def _convert_known_label_without_hyphen(word: str, label: str) -> str:
     index = 0
     while index < len(word):
         char = word[index]
-        loanword_ets_conversion = _loanword_final_ets_sequence_conversion(word, index, label)
         surname_conversion = _surname_sequence_conversion(word, index)
-        if loanword_ets_conversion is not None:
-            latin, consumed = loanword_ets_conversion
-            converted.append(latin)
-            index += consumed - 1
-        elif surname_conversion is not None:
+        if surname_conversion is not None:
             latin, consumed = surname_conversion
             converted.append(latin)
             index += consumed - 1
         elif label == "N" and char in {"г", "к"} and _next_char(word, index) == "ъ":
             converted.append("ğ" if char == "г" else "q")
             index += 1
-        elif char == "ц" and index + 1 < len(word) and word[index + 1] == "ц":
-            while index + 1 < len(word) and word[index + 1] == "ц":
-                index += 1
-            converted.append("ts")
         else:
             converted.append(_char_conversion(char, word, index, label))
         index += 1
@@ -2641,19 +2526,6 @@ LOANWORD_MIXED_SUFFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
 LOANWORD_FINAL_KA_SUFFIX_STEMS = frozenset(
     {"алфавит", "архив", "вирус", "каталог", "конус"}
 )
-
-
-def _loanword_final_ets_sequence_conversion(
-    word: str, index: int, label: str
-) -> tuple[str, int] | None:
-    if label != "RL":
-        return None
-    suffix = word[index:]
-    if suffix == "еец":
-        return "eyets", 3
-    if suffix == "ец":
-        return "ets", 2
-    return None
 
 
 NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
@@ -2843,7 +2715,7 @@ def _loanword_conditional_char(char: str, word: str, index: int) -> str:
         "ю": "yu",
         "у": "u",
         "ү": "ü",
-        "ц": _ts_conversion(word, index),
+        "ц": _ts_conversion(),
     }.get(char, "")
 
 
@@ -2943,16 +2815,12 @@ def _native_conditional_char(char: str, word: str, index: int) -> str:
     if char == "е":
         return _e_conversion(word, index, "N")
     if char == "ц":
-        return _ts_conversion(word, index)
+        return _ts_conversion()
     return ""
 
 
-def _ts_conversion(word: str, index: int) -> str:
-    if index == len(word) - 1:
-        return "s"
-    if index > 0 and word[index - 1] in FRONT_VOWELS | BACK_VOWELS | {"е", "ё", "ю", "я"}:
-        return "ts"
-    return "s"
+def _ts_conversion() -> str:
+    return "ts"
 
 
 def _ya_conversion(word: str, index: int, label: str) -> str:
@@ -3254,7 +3122,11 @@ def dictionary_project_keys() -> set[str]:
     """Return every strict project key produced by dictionary split export."""
     return {
         "complex_multi_rule",
-        *(_project_key_for_rule(rule_id) for rule_id in RULES),
+        *(
+            _project_key_for_rule(rule_id)
+            for rule_id in RULES
+            if rule_id != "TS"
+        ),
         UNKNOWN_ORIGIN_PROJECT_KEY,
         *LEGACY_UNKNOWN_PROJECT_KEYS,
         "catchall",

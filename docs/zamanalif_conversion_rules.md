@@ -105,7 +105,12 @@ Words containing these letters deserve converter analysis:
 - `е`: initial native back-vowel `yı`, initial native front-vowel `ye`,
   internal native after consonant `e`, after `и` `e`. Loanword behavior needs
   review.
-- `ц`: loanword `s` at word start/end or after consonants, `ts` after vowels.
+- `ц`: always defaults to `ts`, at every position and in every origin branch
+  (for example, `цирк -> tsirk` and `позиция -> pozitsiyä`). Annotators may
+  edit a catch-all suggestion to `s` only for a verified lexical exception.
+
+`ц` no longer controls project routing. Tasks go to catchall, unknown-origin,
+or a focused project according to their other remaining review requirements.
 
 This list does not determine Project 1 export. The word exporter computes both
 the native and loanword conversion branches. A form needs dictionary review

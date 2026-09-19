@@ -14,8 +14,8 @@ RULE_GUIDANCE: dict[str, tuple[str, tuple[tuple[str, tuple[str, ...]], ...]]] = 
         (("проект", ("proekt", "proyekt")),),
     ),
     "TS": (
-        "Choose whether Cyrillic ц is written s or ts.",
-        (("немецләрне", ("nemeslärne", "nemetslärne")),),
+        "Legacy stored TS choices can still be read; new suggestions are plain and default to ts.",
+        (),
     ),
     "MOSTAQIL": (
         "Choose the attested spelling of the мөстәкыйль stem.",
@@ -108,6 +108,11 @@ CATCHALL_GUIDANCE = (
         ("халык → xalıq", "кеше → keşe", "комитет → komitet"),
     ),
     (
+        "ц",
+        "defaults to ts; edit the plain suggestion only for a verified lexical exception",
+        ("цирк → tsirk", "позиция → pozitsiyä"),
+    ),
+    (
         "г",
         "often ğ in back-vowel native words, g in front-vowel words and many loanwords",
         ("туган → tuğan", "гөл → göl", "грант → grant"),
@@ -126,11 +131,6 @@ CATCHALL_GUIDANCE = (
         "ю",
         "may be yu, yü, or another contextual form",
         ("юл → yul", "юкә → yükä", "бию → biü"),
-    ),
-    (
-        "ц",
-        "may be s or ts, mostly in loanwords",
-        ("цирк → sirk", "позиция → pozitsiä"),
     ),
     (
         "у / ү",

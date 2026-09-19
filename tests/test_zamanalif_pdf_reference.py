@@ -1586,7 +1586,7 @@ PDF_GENERATED_WORD_CASES = [
     ('сингармонизмга', 'singarmonizmğa', 'N'),
     ('цинк', 'sink', 'RL'),
     ('сир', 'sir', 'N'),
-    ('цирк', 'sirk', 'RL'),
+    ('цирк', 'tsirk', 'RL'),
     ('сирәгрәк', 'sirägräk', 'N'),
     ('сирәк', 'siräk', 'N'),
     ('система', 'sistema', 'RL'),
@@ -2478,8 +2478,8 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
             ("сыр", "RL", "sır"),  # Dataset policy keeps Cyrillic ы deterministic.
             ("роль", "RL", "rolʼ"),
             ("борщ", "RL", "borşç"),
-            ("цинк", "RL", "sink"),
-            ("кварц", "RL", "kvars"),
+            ("цинк", "RL", "tsink"),
+            ("кварц", "RL", "kvarts"),
             ("позиция", "RL", "pozitsiyä"),
         ]
 
@@ -2564,17 +2564,17 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
             ]
         )
 
-    def test_todo_pizza_ts_is_written_once(self) -> None:
+    def test_each_c_in_italian_loans_defaults_to_ts(self) -> None:
         self.assert_conversions(
             [
-                ("пицца", "RL", "pitsa"),
-                ("моццарелла", "RL", "motsarella"),
-                ("палаццо", "RL", "palatso"),
-                ("меццо", "RL", "metso"),
-                ("интермеццо", "RL", "intermetso"),
-                ("папарацци", "RL", "paparatsi"),
-                ("лаццарони", "RL", "latsaroni"),
-                ("пиццерия", "RL", "pitseriyä"),
+                ("пицца", "RL", "pitstsa"),
+                ("моццарелла", "RL", "motstsarella"),
+                ("палаццо", "RL", "palatstso"),
+                ("меццо", "RL", "metstso"),
+                ("интермеццо", "RL", "intermetstso"),
+                ("папарацци", "RL", "paparatstsi"),
+                ("лаццарони", "RL", "latstsaroni"),
+                ("пиццерия", "RL", "pitstseriyä"),
             ]
         )
 

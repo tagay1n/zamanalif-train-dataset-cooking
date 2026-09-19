@@ -49,36 +49,32 @@ class ConditionalConversionDslTests(unittest.TestCase):
             ("юл", "N", "yul"),
             ("юкә", "N", "yükä"),
             ("тию", "N", "tiyü"),
-            ("пицца", "RL", "pitsa"),
-            ("меццо", "RL", "metso"),
+            ("пицца", "RL", "pitstsa"),
+            ("меццо", "RL", "metstso"),
         ]
 
         for word, label, expected in cases:
             with self.subTest(word=word, label=label):
                 self.assertEqual(convert_for_annotation(word, label), expected)
 
-    def test_loanword_kts_after_k_is_policy_dsl(self) -> None:
-        dsl = convert_for_annotation_dsl("ретроспекция", "RL")
+    def test_every_c_defaults_to_ts_without_inline_dsl(self) -> None:
+        for word, expected in [
+            ("ретроспекция", "retrospektsiyä"),
+            ("немецләрне", "nemetslärne"),
+            ("принцип", "printsip"),
+            ("пицца", "pitstsa"),
+        ]:
+            with self.subTest(word=word):
+                suggestion = convert_for_annotation_dsl(word, "RL")
+                self.assertEqual(suggestion, expected)
+                self.assertNotIn("{{", suggestion)
 
-        self.assertEqual(
-            dsl,
-            "retrospek{{TS|s=s|ts=ts}}iyä",
-        )
-        self.assertEqual(resolve_dsl(dsl), "retrospeksiyä")
-        self.assertEqual(
-            resolve_dsl(dsl, {"TS": "ts"}),
-            "retrospektsiyä",
-        )
+    def test_legacy_ts_dsl_still_resolves_explicit_choices(self) -> None:
+        legacy = "retrospek{{TS|s=s|ts=ts}}iyä"
 
-    def test_kts_after_k_policy_does_not_cover_other_consonant_ts(self) -> None:
-        self.assertEqual(convert_for_annotation_dsl("принцип", "RL"), "prinsip")
-
-    def test_loanword_final_ts_before_tatar_suffix_is_policy_dsl(self) -> None:
-        dsl = convert_for_annotation_dsl("немецләрне", "RL")
-
-        self.assertEqual(dsl, "neme{{TS|s=s|ts=ts}}lärne")
-        self.assertEqual(resolve_dsl(dsl), "nemeslärne")
-        self.assertEqual(resolve_dsl(dsl, {"TS": "ts"}), "nemetslärne")
+        self.assertEqual(resolve_dsl(legacy, {"TS": "s"}), "retrospeksiyä")
+        self.assertEqual(resolve_dsl(legacy, {"TS": "ts"}), "retrospektsiyä")
+        self.assertEqual(resolve_dsl(legacy), "retrospektsiyä")
 
     def test_final_ts_suffix_policy_does_not_cover_internal_root_ts(self) -> None:
         self.assertEqual(convert_for_annotation_dsl("лицей", "RL"), "litsey")
@@ -90,7 +86,7 @@ class ConditionalConversionDslTests(unittest.TestCase):
     def test_loanword_stems_use_tatar_g_k_suffix_conversion(self) -> None:
         cases = [
             ("законга", "zakonğa"),
-            ("принципларга", "prinsiplarğa"),
+            ("принципларга", "printsiplarğa"),
             ("аббревиатурадагы", "abbreviaturadağı"),
             ("архивка", "arxivqa"),
             ("алфавитка", "alfavitqa"),

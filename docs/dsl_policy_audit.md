@@ -11,6 +11,11 @@ of a DSL choice.
 - `RUS_SIGN`, `RUS_JOTATION`: kept for Russian
   sign/apostrophe policy differences.
 
+## Legacy DSL Parsing
+
+- `TS` remains parseable in stored legacy reviews, but new conversions always
+  render `ц` as plain `ts` and never generate a `TS` choice.
+
 ## Converted Back To Deterministic Rules
 
 - `RL_Y`: removed as DSL. Cyrillic `ы` is always `ı`; an explicit following

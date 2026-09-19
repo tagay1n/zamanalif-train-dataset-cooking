@@ -89,7 +89,7 @@ E_GLIDE_RULE = RuleDefinition(
 TS_RULE = RuleDefinition(
     rule_id="TS",
     options=(("s", "s"), ("ts", "ts")),
-    default_option="s",
+    default_option="ts",
 )
 MOSTAQIL_RULE = RuleDefinition(
     rule_id="MOSTAQIL",
@@ -177,7 +177,7 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
     {
         "YA": "ya",
         "E_GLIDE": "glide",
-        "TS": "s",
+        "TS": "ts",
         "MOSTAQIL": "antat",
         "FIGYL_STEM": "antat",
         "SHIGYR_STEM": "antat",
@@ -195,7 +195,7 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
     {
         "YA": "ae",
         "E_GLIDE": "glide",
-        "TS": "s",
+        "TS": "ts",
         "MOSTAQIL": "pdf",
         "FIGYL_STEM": "pdf",
         "SHIGYR_STEM": "pdf",

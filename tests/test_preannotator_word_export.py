@@ -412,7 +412,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             annotation_suggestion("торак", "U"),
             conversion_branches("торак").loanword_dsl,
         )
-        self.assertEqual(classify_project("күпфункцияле", "U")["key"], "ts")
+        self.assertEqual(classify_project("күпфункцияле", "U")["key"], "unknown_origin")
         self.assertEqual(
             classify_project("күпфункцияле", "U")["dsl_rules"],
             [],
@@ -1935,18 +1935,54 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_split_export_counts_distinct_rules_not_repeated_occurrences(self) -> None:
         project = classify_project("социаль-икътисадый", "RL")
 
-        self.assertEqual(project["key"], "ts")
+        self.assertEqual(project["key"], "catchall")
         self.assertEqual(project["dsl_rules"], ["RUS_SIGN"])
 
-    def test_split_export_quarantines_all_ts_words(self) -> None:
+    def test_c_words_follow_their_remaining_review_requirements(self) -> None:
         plain = classify_project("концерт", "RL")
-        multi_rule = classify_project("социаль-икътисадый", "RL")
+        former_ts_choice = classify_project("немецләрне", "RL")
+        hamza = classify_project("тәэсирц", "N")
+        rus_sign = classify_project("социаль-цирк", "RL")
+        jotation = classify_project("бюроц", "RL")
+        multi_rule = classify_project("октябрьц", "RL")
         unknown = classify_project("күпфункцияле", "U")
 
-        self.assertEqual(plain["key"], "ts")
+        self.assertEqual(plain["key"], "catchall")
         self.assertEqual(plain["dsl_rules"], [])
-        self.assertEqual(multi_rule["key"], "ts")
-        self.assertEqual(unknown["key"], "ts")
+        self.assertEqual(former_ts_choice["key"], "catchall")
+        self.assertEqual(former_ts_choice["dsl_rules"], [])
+        self.assertEqual(convert_for_annotation_dsl("немецләрне", "RL"), "nemetslärne")
+        self.assertEqual(hamza["key"], "hamza")
+        self.assertEqual(rus_sign["key"], "catchall")
+        self.assertEqual(rus_sign["dsl_rules"], ["RUS_SIGN"])
+        self.assertEqual(jotation["key"], "rus_jotation")
+        self.assertEqual(jotation["dsl_rules"], ["RUS_JOTATION"])
+        self.assertEqual(multi_rule["key"], "complex_multi_rule")
+        self.assertEqual(multi_rule["dsl_rules"], ["RUS_JOTATION", "RUS_SIGN"])
+        self.assertEqual(unknown["key"], "unknown_origin")
+        self.assertIn("ts", annotation_suggestion("күпфункцияле", "U"))
+        self.assertNotIn("{{", annotation_suggestion("күпфункцияле", "U"))
+
+    def test_c_conversion_defaults_at_every_position_and_preserves_case(self) -> None:
+        cases = [
+            ("цирк", "tsirk"),
+            ("позиция", "pozitsiyä"),
+            ("редакция", "redaktsiyä"),
+            ("конференция", "konferentsiyä"),
+            ("продукция", "produktsiyä"),
+            ("аукцион", "auktsion"),
+            ("процент", "protsent"),
+            ("функция", "funktsiyä"),
+            ("пицца", "pitstsa"),
+        ]
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "RL"), expected)
+        for origin in ("N", "RL", "U"):
+            with self.subTest(origin=origin):
+                self.assertEqual(convert_for_annotation("цирк", origin), "tsirk")
+        self.assertEqual(convert_for_annotation("ЦИРК", "RL"), "TSIRK")
+        self.assertEqual(convert_for_annotation("Цирк", "RL"), "Tsirk")
 
     def test_split_export_routes_unknown_words_to_one_focused_project(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1961,6 +1997,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                             {"text": "торак-коммуналь", "label": "U"},
                             {"text": "авиатөзелеш", "label": "U"},
                             {"text": "күпфункцияле", "label": "U"},
+                            {"text": "концерт", "label": "RL"},
                             {"text": "видеоязма", "label": "U"},
                             {"text": "альфонс", "label": "U"},
                             {"text": "вакыт", "label": "N"},
@@ -1972,7 +2009,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             result = export_labelstudio_project_tasks_from_db(db_path, sort_by="word")
 
         self.assertIn("unknown_origin", result.projects)
-        self.assertIn("ts", result.projects)
+        self.assertNotIn("ts", result.projects)
         self.assertFalse(any(key.startswith("u_") for key in result.projects))
         unknown = result.projects["unknown_origin"]
         self.assertEqual(
@@ -1981,7 +2018,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         )
         self.assertEqual(
             {task["data"]["cyrl_word"] for task in unknown.tasks},
-            {"УУГ", "торак-коммуналь", "авиатөзелеш", "видеоязма", "альфонс"},
+            {"УУГ", "торак-коммуналь", "авиатөзелеш", "видеоязма", "альфонс", "күпфункцияле"},
         )
         self.assertTrue(
             all(task["meta"]["project_key"] == "unknown_origin" for task in unknown.tasks)
@@ -2004,23 +2041,20 @@ class PreannotatorWordExportTests(unittest.TestCase):
             "zamanalif_variants",
             unknown_by_word["торак-коммуналь"]["data"],
         )
-        tatar_specific = result.projects["ts"].tasks[0]["data"]
-        self.assertEqual(tatar_specific["cyrl_word"], "күпфункцияле")
-        self.assertEqual(
-            tatar_specific["zamanalif_variants"].splitlines()[0],
-            "küpfunqsiyäle",
-        )
-        self.assertEqual(
-            result.projects["ts"].tasks[0]["meta"]["suggested_zamanalif_dsl"],
-            conversion_branches("күпфункцияле").native_dsl,
-        )
+        tatar_specific = unknown_by_word["күпфункцияле"]["data"]
+        self.assertEqual(tatar_specific["auto_zamanalif"], "küpfunqtsiyäle")
+        self.assertNotIn("zamanalif_variants", tatar_specific)
+        self.assertNotIn("{{", tatar_specific["auto_zamanalif"])
         self.assertIn(
             "Simple origin heuristic: <b>native</b>",
             tatar_specific["hints_html"],
         )
         self.assertEqual(
-            result.projects["catchall"].tasks[0]["data"]["cyrl_word"],
-            "вакыт",
+            {
+                task["data"]["cyrl_word"]: task["data"]["auto_zamanalif"]
+                for task in result.projects["catchall"].tasks
+            },
+            {"концерт": "kontsert", "вакыт": "waqıt"},
         )
 
     def test_cli_writes_split_labelstudio_json_only(self) -> None:

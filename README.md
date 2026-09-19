@@ -337,12 +337,14 @@ command also writes `project_<key>_instructions.html` for every active
 category. Each dictionary word is exported once. If a word has multiple DSL
 rules it goes to `complex_multi_rule`; otherwise it goes to the matching
 DSL-rule project or to `catchall` (including ordinary `RUS_SIGN` words).
-Previously exported focused `rus_sign` batches remain importable. Unresolved
-`U` words are collected into one focused `unknown_origin` project. This keeps
-unknown compounds, abbreviations/fragments, Tatar-specific words,
+Previously exported focused `rus_sign` and `ts` batches remain importable.
+Unresolved `U` words are collected into one focused `unknown_origin` project.
+This keeps unknown compounds, abbreviations/fragments, Tatar-specific words,
 conditional-letter words, and other unresolved words in one annotation queue.
-Unknown words containing `ц` remain in the `ts` project because they require
-that focused convention review.
+Words containing `ц` need no special project routing. Cyrillic `ц` now defaults
+to `ts` in plain Zamanalif suggestions; `ц` does not control project routing.
+Annotators can edit a catch-all suggestion to `s` for a verified lexical
+exception.
 
 All unknown-origin tasks receive an editable suggestion from a simple origin
 heuristic: a word containing any Tatar-specific Cyrillic letter (`ә`, `ө`, `ү`,

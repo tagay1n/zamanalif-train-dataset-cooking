@@ -310,7 +310,20 @@ def import_labelstudio_annotations(
                     existing.pop(word, None)
                     existing_variants.pop(word, None)
                     derived_words.discard(word)
-                if parsed.project_key != "hamza":
+                if parsed.project_key == "ts":
+                    # Old ts exports can contain words that are deterministic
+                    # under the current ц -> ts default. Import their reviewed
+                    # spelling as a lexical review, without family propagation.
+                    regular_items = [
+                        replace(
+                            item,
+                            family_members=(item.normalized_word,),
+                            morphology=None,
+                            analyzer_revision="legacy-ts-import",
+                        )
+                        for item in regular_items
+                    ]
+                elif parsed.project_key != "hamza":
                     regular_items = [
                         _reconstruct_imported_family(
                             item,
@@ -1499,7 +1512,7 @@ def _project_key(tasks: list[Any]) -> str:
     if len(keys) != 1:
         raise LabelStudioImportError("Label Studio backup mixes project types")
     project_key = next(iter(keys))
-    allowed = dictionary_project_keys() | {CONTEXTUAL_PROJECT_KEY}
+    allowed = dictionary_project_keys() | {CONTEXTUAL_PROJECT_KEY, "ts"}
     if project_key not in allowed:
         raise LabelStudioImportError(f"unknown project_key: {project_key!r}")
     return project_key
@@ -1573,6 +1586,10 @@ def _parse_task(
     normalized = normalize_word(surface)
     if not normalized:
         raise LabelStudioImportError(f"{context} has no Cyrillic word")
+    if project_key == "ts" and "ц" not in normalized.casefold():
+        raise LabelStudioImportError(
+            f"{context} is not a legacy ts project word: {normalized!r}"
+        )
     suggested_origin = data.get("gemini_origin")
     if suggested_origin not in SUGGESTED_ORIGINS:
         raise LabelStudioImportError(f"{context} has invalid data.gemini_origin")
@@ -1588,7 +1605,11 @@ def _parse_task(
                 f"{context} has invalid meta.suggested_zamanalif_dsl"
             )
         try:
-            canonical_variants = annotation_variants(hidden_suggestion)
+            # Legacy ts batches displayed the old s default first.
+            canonical_variants = annotation_variants(
+                hidden_suggestion,
+                default_policy={"TS": "s"} if project_key == "ts" else None,
+            )
         except DslError as exc:
             raise LabelStudioImportError(
                 f"{context} has invalid hidden Zamanalif DSL: {exc}"

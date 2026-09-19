@@ -9,6 +9,7 @@ from tatar_preannotator.conversion import (
     Literal,
     PDF_COMPACT_POLICY,
     PREFERRED_POLICY,
+    TS_RULE,
     parse_dsl,
     resolve_dsl,
 )
@@ -19,6 +20,12 @@ from tatar_preannotator.word_export import (
 
 
 class ConversionDslTests(unittest.TestCase):
+    def test_legacy_ts_rule_defaults_to_ts_in_registered_policies(self) -> None:
+        self.assertEqual(TS_RULE.default_option, "ts")
+        self.assertEqual(PREFERRED_POLICY["TS"], "ts")
+        self.assertEqual(PDF_COMPACT_POLICY["TS"], "ts")
+        self.assertEqual(resolve_dsl("{{TS|s=s|ts=ts}}"), "ts")
+
     def test_e_glide_resolves_under_named_policies(self) -> None:
         value = "pro{{E_GLIDE|plain=e|glide=ye}}kt"
 
