@@ -9,10 +9,6 @@ RULE_GUIDANCE: dict[str, tuple[str, tuple[tuple[str, tuple[str, ...]], ...]]] = 
         "Choose the contextual Zamanalif form of я: ya, yä, a, or ä.",
         (("мордва-ерзя", ("mordva-erzya", "mordva-erzä")),),
     ),
-    "E_GLIDE": (
-        "Choose whether е is plain e or has an explicit y glide.",
-        (("проект", ("proekt", "proyekt")),),
-    ),
     "MOSTAQIL": (
         "Choose the attested spelling of the мөстәкыйль stem.",
         (("мөстәкыйль", ("möstäqil", "möstäqıyl")),),
@@ -100,8 +96,8 @@ CATCHALL_GUIDANCE = (
     ),
     (
         "е",
-        "may be ye, yı, or e depending on position and word type",
-        ("егет → yeget", "ел → yıl", "проект → proyekt"),
+        "may be ye, yı, or e depending on position and word type; eligible ие is deterministically iye",
+        ("егет → yeget", "ел → yıl", "проект → proyekt", "тиеш → tiyeş"),
     ),
     (
         "я",
@@ -186,6 +182,9 @@ def _focus(project_key: str, rule_ids: Iterable[str]) -> str:
             "Russian consonant + я/ю/ё uses an explicit <b>y</b> glide.</p>\n"
             "  <p>The specialized <b>RUS_SOFT_SIGN_O</b> rule remains a focused "
             "project; all other Russian-sign conventions are deterministic.</p>\n"
+            "  <p>Eligible Cyrillic <b>ие</b> is deterministically <b>iye</b> "
+            "in new conversions, including the проект family. Exact surname endings "
+            "-иев, -иева, -әев, and -әева retain their established spellings.</p>\n"
             "</section>"
         )
 

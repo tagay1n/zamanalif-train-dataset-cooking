@@ -47,6 +47,13 @@ catch-all annotator may edit `ts` to `s` for a verified lexical exception.
   generate DSL choices. `RUS_SOFT_SIGN_O` remains the focused Russian-sign
   rule. Words
   with multiple rules remain in `complex_multi_rule`.
+- **Eligible `ие`.** New conversions deterministically write `ие` as `iye`,
+  including `проект -> proyekt` and `тиеш -> tiyeş`; former candidates follow
+  ordinary routing, normally `catchall`. Exact surname endings `-иев`,
+  `-иева`, `-әев`, and `-әева` retain their established spellings, but not
+  longer derived forms such as `Дмитриевка -> Dmitriyevka`. `E_GLIDE` remains
+  readable only in existing stored reviews and is never generated for a new
+  task or focused project.
 - **Native-looking mixed-harmony words.** If Gemini labels a word `N` and the
   word has mixed front/back vowels, skip it for Project 1 unless it belongs to
   a verified lexical hamza family. Keep matching `RL` and `U` words.

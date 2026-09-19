@@ -47,6 +47,22 @@ def _uses_excluded_antat_native_uw_policy(cyrillic: str, expected: str) -> bool:
     return False
 
 
+def _uses_deterministic_ie_policy(cyrillic: str, expected: str) -> bool:
+    """Return whether ANTAT's compact ie/proekt conflicts with dataset policy."""
+    folded = cyrillic.casefold()
+    # This is deliberately limited to the new explicit-glide policy, not a
+    # general waiver for ANTAT mismatches. Exact surname endings remain outside
+    # the policy because they preserve their established compact spelling.
+    return (
+        (folded.startswith("проект") and expected.casefold().startswith("proekt"))
+        or (
+            "ие" in folded
+            and not folded.endswith(("иев", "иева", "әев", "әева"))
+            and "ie" in expected.casefold()
+        )
+    )
+
+
 def _uses_retired_russian_dsl_policy(cyrillic: str, expected: str) -> bool:
     """Return whether Antat uses an alternative now made deterministic."""
     folded = cyrillic.casefold()
@@ -91,6 +107,7 @@ class AntatGoldReferenceTests(unittest.TestCase):
                 (cyrillic, align_id) in DELIBERATELY_EXCLUDED_ANTAT_POLICIES
                 or _uses_excluded_antat_native_uw_policy(cyrillic, expected)
                 or _uses_retired_russian_dsl_policy(cyrillic, expected)
+                or _uses_deterministic_ie_policy(cyrillic, expected)
             ):
                 continue
             possible: set[str] = set()

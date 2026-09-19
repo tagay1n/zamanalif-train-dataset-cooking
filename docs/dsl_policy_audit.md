@@ -5,10 +5,12 @@ Zamanalif outputs for the same Cyrillic input or for the same clear convention.
 If PDF and ANTAT agree, the converter should emit a deterministic result instead
 of a DSL choice.
 
-## Kept as DSL
+## Kept as Active DSL
 
-- `E_GLIDE`: kept pending a separate audit of `ие -> ie/iye`.
 - `RUS_SOFT_SIGN_O`: the remaining focused Russian-sign choice.
+
+`E_GLIDE` remains parseable and resolvable only for legacy stored reviews. It
+is not an active annotation rule and no new conversion or export emits it.
 
 ## Converted Back To Deterministic Rules
 
@@ -17,6 +19,12 @@ of a DSL choice.
   conversions.
 - Cyrillic `ц` always renders as plain `ts` in new conversions.
 - Russian `ье` always renders as `ʼye`; Russian `ъе` always renders as `ye`.
+- Eligible Cyrillic `ие` always renders as `iye` in new conversions. This
+  includes the `проект` family (`проект -> proyekt`) and native forms such as
+  `тиеш -> tiyeş`. Exact surname endings `-иев`, `-иева`, `-әев`, and `-әева`
+  retain their established spellings; this exception does not cover longer
+  derived forms such as `Дмитриевка -> Dmitriyevka`. ANTAT `proekt` and the PDF
+  `tieş` are deliberately excluded by this narrow dataset policy.
 - `TS`, `RUS_SIGN`, `RUS_JOTATION`, and `RUS_SIGN_E` are retired: they are not
   registered DSL rules and old projects using them are unsupported.
 - `RL_Y`: removed as DSL. Cyrillic `ы` is always `ı`; an explicit following
@@ -50,5 +58,3 @@ of a DSL choice.
   while unrelated words such as `гасыр` stay `ğasır`.
 
 ## Next Audit Candidates
-
-- `E_GLIDE`

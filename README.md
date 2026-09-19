@@ -310,21 +310,21 @@ Each generated batch is a Label Studio JSON array:
 }
 ```
 
-Accepted convention choices are preserved internally with inline DSL. For
-example:
+Older stored reviews can contain inline DSL such as:
 
 ```text
 pro{{E_GLIDE|plain=e|glide=ye}}kt
 ```
 
-`E_GLIDE` is the stable rule identifier. `plain` and `glide` are named options.
-The preferred policy currently resolves it to `proyekt`. Label Studio
-annotators see every distinct plain rendering as one editable line in
-`zamanalif_variants`, while the DSL and each line's policy mapping are stored
-only in task `meta`.
+`E_GLIDE` remains readable for those legacy stored reviews (`plain` and
+`glide` resolve normally), but is not active for new conversions. Eligible
+Cyrillic `ие` deterministically becomes `iye`: the `проект` family uses
+`proyekt`, and `тиеш` uses `tiyeş`. Exact surname endings `-иев`, `-иева`,
+`-әев`, and `-әева` retain their established spelling; longer derived forms do
+not (`Дмитриевка -> Dmitriyevka`).
 
 The command writes 500-task batch files such as
-`project_e_glide_batch_001_of_003.json`, `project_catchall_batch_001_of_004.json`,
+`project_catchall_batch_001_of_004.json`,
 `project_complex_multi_rule_batch_001_of_002.json`, and
 `project_hamza_batch_001_of_001.json`, and
 `project_contextual_homonym_batch_001_of_027.json`. Import each batch into the
@@ -336,8 +336,10 @@ Russian `ъе` becomes `ye`. They follow ordinary routing and appear as plain
 editable text when review is otherwise required. `RUS_SOFT_SIGN_O` remains the
 only focused Russian-sign rule. The
 command also writes `project_<key>_instructions.html` for every active
-category. Each dictionary word is exported once. If a word has multiple DSL
-rules it goes to `complex_multi_rule`; otherwise it goes to the matching
+category. Each dictionary word is exported once. No new `e_glide` project is
+generated: former E-glide candidates follow ordinary routing, normally
+`catchall`, with a plain deterministic suggestion. If a word has multiple
+active DSL rules it goes to `complex_multi_rule`; otherwise it goes to the matching
 DSL-rule project or to `catchall`.
 Unresolved `U` words are collected into one focused `unknown_origin` project.
 This keeps unknown compounds, abbreviations/fragments, Tatar-specific words,
@@ -382,18 +384,13 @@ task-data columns:
 {
   "data": {
     "cyrl_word": "проект",
-    "zamanalif_variants": "proyekt\nproekt",
+    "auto_zamanalif": "proyekt",
     "gemini_origin": "RL",
     "hints_html": "..."
   },
   "meta": {
     "schema_version": 3,
-    "project_key": "e_glide",
-    "suggested_zamanalif_dsl": "pro{{E_GLIDE|plain=e|glide=ye}}kt",
-    "variant_policies": [
-      [{"E_GLIDE": "glide"}],
-      [{"E_GLIDE": "plain"}]
-    ]
+    "project_key": "catchall"
   }
 }
 ```

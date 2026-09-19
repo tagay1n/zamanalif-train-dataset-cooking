@@ -145,6 +145,16 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         RUS_SOFT_SIGN_O_RULE.rule_id: RUS_SOFT_SIGN_O_RULE,
     }
 )
+# ``RULES`` is the complete parseable registry.  E_GLIDE remains here solely so
+# reviewed rows written by older exports can still be parsed and resolved.
+# New conversion and annotation routing use ``ACTIVE_RULES`` instead.
+ACTIVE_RULES: Mapping[str, RuleDefinition] = MappingProxyType(
+    {
+        rule_id: definition
+        for rule_id, definition in RULES.items()
+        if rule_id != "E_GLIDE"
+    }
+)
 PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
     {
         "YA": "ya",

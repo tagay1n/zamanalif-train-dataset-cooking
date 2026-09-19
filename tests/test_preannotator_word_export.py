@@ -188,7 +188,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(result.tasks[0]["data"]["auto_zamanalif"], "waqıtında")
         self.assertEqual(
             result.tasks[1]["data"]["auto_zamanalif"],
-            "pro{{E_GLIDE|plain=e|glide=ye}}kt",
+            "proyekt",
         )
         self.assertEqual(result.tasks[2]["data"]["auto_zamanalif"], "torak")
         self.assertEqual(result.tasks[1]["data"]["gemini_origin"], "RL")
@@ -295,8 +295,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
         )
         unknown_html = unknown["data"]["hints_html"]
         self.assertIn("A &lt; B <mark>торак</mark> &amp; C", unknown_html)
-        focused_html = result.projects["e_glide"].tasks[0]["data"]["hints_html"]
-        self.assertNotIn("Examples in context", focused_html)
+        catchall_html = result.projects["catchall"].tasks[0]["data"]["hints_html"]
+        self.assertIn("Examples in context", catchall_html)
 
     def test_unalignable_context_is_skipped_without_failing_export(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -339,7 +339,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual([task["data"]["cyrl_word"] for task in result.tasks], ["банк", "проект"])
         self.assertEqual(
             result.tasks[1]["data"]["auto_zamanalif"],
-            "pro{{E_GLIDE|plain=e|glide=ye}}kt",
+            "proyekt",
         )
 
     def test_russian_loanword_review_letters_are_exported_for_rl_only(self) -> None:
@@ -635,22 +635,22 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("килүе", "N"), "kilüe")
         self.assertEqual(convert_for_annotation("пьеса", "N"), "pyesa")
 
-    def test_e_glide_is_policy_dsl(self) -> None:
+    def test_ie_glide_is_deterministic_for_new_conversion(self) -> None:
         cases = [
-            ("тиеш", "N", "ti{{E_GLIDE|plain=e|glide=ye}}ş", "tieş", "tiyeş"),
-            ("тиен", "N", "ti{{E_GLIDE|plain=e|glide=ye}}n", "tien", "tiyen"),
-            ("мие", "N", "mi{{E_GLIDE|plain=e|glide=ye}}", "mie", "miye"),
-            ("задание", "RL", "zadani{{E_GLIDE|plain=e|glide=ye}}", "zadanie", "zadaniye"),
-            ("имение", "RL", "imeni{{E_GLIDE|plain=e|glide=ye}}", "imenie", "imeniye"),
+            ("тиеш", "N", "tiyeş"), ("тиен", "N", "tiyen"),
+            ("мие", "N", "miye"), ("задание", "RL", "zadaniye"),
+            ("имение", "RL", "imeniye"), ("приемник", "RL", "priyemnik"),
+            ("ориенталистика", "RL", "oriyentalistika"),
+            ("Дмитриевка", "RL", "Dmitriyevka"),
+            ("ПРОЕКТ", "RL", "PROYEKT"), ("Тиеш", "N", "Tiyeş"),
+            ("иение", "RL", "iyeniye"),
         ]
 
-        for word, label, expected_dsl, plain, glide in cases:
+        for word, label, expected in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, label)
-                self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl, {"E_GLIDE": "plain"}), plain)
-                self.assertEqual(resolve_dsl(dsl, {"E_GLIDE": "glide"}), glide)
-                self.assertEqual(resolve_dsl(dsl), glide)
+                self.assertEqual(dsl, expected)
+                self.assertNotIn("E_GLIDE", dsl)
 
     def test_iya_stems_use_deterministic_explicit_glide(self) -> None:
         cases = [
@@ -668,25 +668,29 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(dsl, expected)
                 self.assertNotIn("{{", dsl)
 
-    def test_project_e_is_policy_dsl(self) -> None:
+    def test_project_family_is_deterministic(self) -> None:
         cases = [
-            ("проект", "pro{{E_GLIDE|plain=e|glide=ye}}kt", "proekt", "proyekt"),
-            ("проекты", "pro{{E_GLIDE|plain=e|glide=ye}}ktı", "proektı", "proyektı"),
-            ("проектын", "pro{{E_GLIDE|plain=e|glide=ye}}ktın", "proektın", "proyektın"),
-            (
-                "проектының",
-                "pro{{E_GLIDE|plain=e|glide=ye}}ktınıñ",
-                "proektınıñ",
-                "proyektınıñ",
-            ),
+            ("проект", "proyekt"), ("проекты", "proyektı"),
+            ("проектын", "proyektın"), ("проектының", "proyektınıñ"),
         ]
 
-        for word, expected_dsl, plain, glide in cases:
+        for word, expected in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "RL")
-                self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl, {"E_GLIDE": "plain"}), plain)
-                self.assertEqual(resolve_dsl(dsl), glide)
+                self.assertEqual(dsl, expected)
+                classification = classify_project(word, "RL")
+                self.assertEqual(classification["key"], "catchall")
+                self.assertEqual(classification["dsl_rules"], [])
+
+    def test_no_new_e_glide_project_or_dsl_metadata_is_generated(self) -> None:
+        words = ["проект", "тиеш", "задание"]
+        for word in words:
+            with self.subTest(word=word):
+                self.assertEqual(classify_project(word, "RL" if word != "тиеш" else "N"), {
+                    "key": "catchall",
+                    "title": "Catchall word review",
+                    "dsl_rules": [],
+                })
 
     def test_cyrillic_yery_is_deterministic_short_i(self) -> None:
         cases = [
@@ -765,7 +769,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_surname_v_endings_are_converted_as_v(self) -> None:
         self.assertEqual(convert_for_annotation("мәһдиев", "N"), "mähdiev")
         self.assertEqual(convert_for_annotation("әлмиев", "N"), "älmiev")
-        self.assertEqual(convert_for_annotation("әлмиевкә", "N"), "älmievkä")
+        self.assertEqual(convert_for_annotation("Нуриев", "RL"), "Nuriev")
+        self.assertEqual(convert_for_annotation("әлмиевкә", "N"), "älmiyewkä")
         self.assertEqual(convert_for_annotation("сәлимев", "N"), "sälimev")
         self.assertEqual(convert_for_annotation("юлдашев", "N"), "yuldaşev")
         self.assertEqual(convert_for_annotation("юлдашева", "N"), "yuldaşeva")
@@ -1579,9 +1584,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 morphology_analyzer=analyzer,
             )
 
-        e_glide = result.projects["e_glide"]
-        self.assertEqual(e_glide.exported_words, ["проекте", "проектын"])
-        self.assertEqual(e_glide.report["covered_word_count"], len(words))
+        catchall = result.projects["catchall"]
+        self.assertNotIn("e_glide", result.projects)
+        self.assertEqual(catchall.exported_words, ["проекте", "проектын"])
+        self.assertEqual(catchall.report["covered_word_count"], len(words))
         self.assertEqual(result.report["covered_word_count"], len(words))
 
     def test_catchall_exports_each_maximal_prefix_branch(self) -> None:

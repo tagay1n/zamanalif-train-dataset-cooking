@@ -21,16 +21,15 @@ from tatar_preannotator.morphology import (
 )
 from tatar_preannotator.conversion import (
     APOSTROPHE_VARIANTS,
+    ACTIVE_RULES,
     Choice,
     ConversionResult,
     DslError,
-    E_GLIDE_RULE,
     FIGYL_STEM_RULE,
     HAMZA_RULE,
     IJTIMAGIY_STEM_RULE,
     KAGAZ_STEM_RULE,
     Literal,
-    RULES,
     MASHGUL_STEM_RULE,
     MOSTAQIL_RULE,
     RUS_SOFT_SIGN_O_RULE,
@@ -65,6 +64,9 @@ LEGACY_UNKNOWN_PROJECT_KEYS = frozenset(
         "u_other",
     }
 )
+# Accepted when reading a previously exported backup, but deliberately absent
+# from active routing and generated project-key lists.
+LEGACY_E_GLIDE_PROJECT_KEY = "e_glide"
 DICTIONARY_DATA_FIELDS = frozenset(
     {"cyrl_word", "auto_zamanalif", "gemini_origin", "hints_html"}
 )
@@ -684,6 +686,17 @@ def word_belongs_to_project(word: str, origin: str, project_key: str) -> bool:
     classification = classify_project(word, origin)
     if classification["key"] == project_key:
         return True
+    if project_key == LEGACY_E_GLIDE_PROJECT_KEY:
+        # Old focused backups must remain importable even though a fresh export
+        # now routes the same words through catchall.
+        return (
+            origin in {"N", "RL"}
+            and not word.casefold().endswith(("иев", "иева", "әев", "әева"))
+            and (
+                word.casefold().startswith("проект")
+                or "ие" in word.casefold()
+            )
+        )
     return (
         project_key in LEGACY_UNKNOWN_PROJECT_KEYS
         and origin == "U"
@@ -1175,7 +1188,7 @@ def convert_for_annotation(word: str, label: str) -> str:
 
 
 def conversion_result_for_annotation(word: str, label: str) -> ConversionResult | None:
-    """Return structured annotation output with accepted convention choices."""
+    """Return structured output for active annotation choices only."""
     compact = convert_for_annotation(word, label)
     if not compact:
         return None
@@ -1188,66 +1201,13 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     if result.has_choices:
         return result
     result = ConversionResult((Literal(compact),))
-    result = result_with_project_e_choices(word, result, label)
     result = result_with_figyl_stem_choices(word, result)
     result = result_with_shigyr_stem_choices(word, result)
     result = result_with_ijtimagiy_stem_choices(word, result)
     result = result_with_erzya_ya_choices(word, result)
     result = result_with_kagaz_stem_choices(word, result)
     result = result_with_mashgul_stem_choices(word, result)
-    result = result_with_ie_glide_choices(word, result)
     return result_with_mostaqil_choices(word, result, label)
-
-
-def result_with_ie_glide_choices(source: str, result: ConversionResult) -> ConversionResult:
-    """Annotate Cyrillic ``ие`` as a plain ``ie`` vs glide ``iye`` convention."""
-    if source.casefold().endswith(("иев", "иева", "әев", "әева")):
-        return result
-    source_count = source.casefold().count("ие")
-    output_count = sum(
-        segment.text.casefold().count("ie")
-        for segment in result.segments
-        if isinstance(segment, Literal)
-    )
-    if source_count == 0 or source_count != output_count:
-        return result
-
-    segments: list[Literal | Choice] = []
-    for segment in _merge_adjacent_literals(result).segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        start = 0
-        for match in re.finditer("ie", segment.text, flags=re.IGNORECASE):
-            _append_literal_segment(segments, segment.text[start : match.start() + 1])
-            segments.append(Choice(E_GLIDE_RULE.rule_id, E_GLIDE_RULE.options))
-            start = match.end()
-        _append_literal_segment(segments, segment.text[start:])
-    return ConversionResult(tuple(segments))
-
-
-def result_with_project_e_choices(
-    source: str, result: ConversionResult, label: str
-) -> ConversionResult:
-    """Annotate the attested ``проект`` / ``proekt`` vs ``proyekt`` convention."""
-    if label != "RL" or not source.casefold().startswith("проект"):
-        return result
-
-    segments: list[Literal | Choice] = []
-    changed = False
-    for segment in result.segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        text = segment.text
-        if not changed and text.startswith("proyekt"):
-            _append_literal_segment(segments, "pro")
-            segments.append(Choice(E_GLIDE_RULE.rule_id, E_GLIDE_RULE.options))
-            _append_literal_segment(segments, text[len("proye") :])
-            changed = True
-            continue
-        _append_literal_segment(segments, text)
-    return ConversionResult(tuple(segments)) if changed else result
 
 
 def result_with_figyl_stem_choices(source: str, result: ConversionResult) -> ConversionResult:
@@ -2438,6 +2398,10 @@ def _next_char(word: str, index: int) -> str:
 
 
 def _surname_sequence_conversion(word: str, index: int) -> tuple[str, int] | None:
+    # Exact surname endings are established lexical exceptions.  Do not apply
+    # them to longer derived forms such as Дмитриевка.
+    if index and word[index:] not in {"иева", "әева", "иев", "әев"}:
+        return None
     for cyrillic, latin in (
         ("иева", "ieva"),
         ("әева", "äyeva"),
@@ -2615,7 +2579,11 @@ def _ya_conversion(word: str, index: int, label: str) -> str:
 
 def _e_conversion(word: str, index: int, label: str) -> str:
     previous = word[index - 1] if index > 0 else ""
-    if previous in {"и", "ү"}:
+    if previous == "и":
+        # New conversions render eligible Cyrillic ие explicitly as iye.
+        # Exact surname endings were consumed before reaching this branch.
+        return "ye"
+    if previous == "ү":
         return "e"
     if previous in {"ь", "ъ"}:
         if label == "N" and previous == "ъ":
@@ -2841,7 +2809,7 @@ def _ordered_project_keys(projects: dict[str, list[dict[str, Any]]]) -> list[str
     priority = [
         "contextual_homonym",
         "complex_multi_rule",
-        *(_project_key_for_rule(rule_id) for rule_id in RULES),
+        *(_project_key_for_rule(rule_id) for rule_id in ACTIVE_RULES),
         UNKNOWN_ORIGIN_PROJECT_KEY,
         "catchall",
     ]
@@ -2879,12 +2847,13 @@ def project_title_for_key(project_key: str) -> str:
 
 
 def dictionary_project_keys() -> set[str]:
-    """Return every strict project key produced by dictionary split export."""
+    """Return active keys plus legacy keys accepted by backup import."""
     return {
         "complex_multi_rule",
-        *(_project_key_for_rule(rule_id) for rule_id in RULES),
+        *(_project_key_for_rule(rule_id) for rule_id in ACTIVE_RULES),
         UNKNOWN_ORIGIN_PROJECT_KEY,
         *LEGACY_UNKNOWN_PROJECT_KEYS,
+        LEGACY_E_GLIDE_PROJECT_KEY,
         "catchall",
     }
 

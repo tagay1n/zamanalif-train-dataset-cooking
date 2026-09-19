@@ -26,6 +26,15 @@ The dataset intentionally writes an explicit `y` in Cyrillic `ия`, despite the
 reference PDF's compact convention: `ия -> iyä`, `орфография -> orfografiyä`,
 and `әдәбият -> ädäbiyat`. This is deterministic and is not represented by DSL.
 
+For new conversions, eligible Cyrillic `ие` is likewise deterministic: it is
+written `iye`, including `проект -> proyekt`, `тиеш -> tiyeş`, and
+`Дмитриевка -> Dmitriyevka`. The exact surname endings `-иев`, `-иева`,
+`-әев`, and `-әева` keep their established spelling (for example,
+`Нуриев -> Nuriev`); the exception does not extend to longer derived forms.
+This deliberately differs from ANTAT's `proekt` and the PDF's `tieş`.
+`E_GLIDE` is only retained to read and resolve legacy stored reviews; it is not
+an active DSL choice or Label Studio project for new annotation tasks.
+
 Rule and option names are stable API identifiers. DSL choices cover only the
 substring that differs.
 
@@ -103,7 +112,7 @@ Words containing these letters deserve converter analysis:
 - `ю`: native back-vowel `yu`, native front-vowel `yü`, after `и` is `iü`,
   loanword usually `yu`.
 - `е`: initial native back-vowel `yı`, initial native front-vowel `ye`,
-  internal native after consonant `e`, after `и` `e`. Loanword behavior needs
+  internal native after consonant `e`, after eligible `и` `ye` (so `ие -> iye`). Loanword behavior needs
   review.
 - `ц`: defaults to `ts`, at every position and in every origin branch; a
   consecutive `цц` pair collapses to one `ts` (for example, `цирк -> tsirk`,
