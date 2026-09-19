@@ -948,7 +948,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(classify_project("булавка", "RL")["key"], "catchall")
         self.assertEqual(
             classify_project("фотоплёнка", "RL")["key"],
-            "rus_jotation",
+            "catchall",
         )
 
     def test_conflicting_arabic_initial_ga_uses_plain_preferred_form(self) -> None:
@@ -1784,7 +1784,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_split_export_uses_remaining_focused_rule_project(self) -> None:
         project = classify_project("бюрократия", "RL")
 
-        self.assertEqual(project["key"], "rus_jotation")
+        self.assertEqual(project["key"], "catchall")
         self.assertEqual(project["dsl_rules"], ["RUS_JOTATION"])
 
     def test_split_export_routes_literal_and_policy_hamza_out_of_catchall(self) -> None:
@@ -1855,11 +1855,63 @@ class PreannotatorWordExportTests(unittest.TestCase):
         )
         self.assertFalse(any("rus_sign" in path.name for path in paths))
 
+    def test_pure_russian_jotation_exports_to_catchall_as_plain_glide_text(self) -> None:
+        expected = {
+            "бюджет": "byudjet",
+            "бюро": "byuro",
+            "отряд": "otryad",
+            "сюжет": "syujet",
+            "валюта": "valyuta",
+            "шофёр": "şofyor",
+            "щётка": "şçyotka",
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_annotation_db(
+                root / "zamanalif.sqlite",
+                [
+                    {
+                        "id": f"sent_{index}",
+                        "tatar": True,
+                        "tokens": [{"text": word, "label": "RL"}],
+                    }
+                    for index, word in enumerate(expected, start=1)
+                ],
+            )
+            result = export_labelstudio_project_tasks_from_db(db_path, sort_by="word")
+
+        self.assertEqual(set(result.projects), {"catchall"})
+        suggestions = {
+            task["data"]["cyrl_word"]: task["data"]["auto_zamanalif"]
+            for task in result.projects["catchall"].tasks
+        }
+        self.assertEqual(suggestions, expected)
+        self.assertTrue(
+            all("{{" not in value and "\n" not in value for value in suggestions.values())
+        )
+        self.assertEqual(
+            result.projects["catchall"].report["dsl_rule_counts"],
+            {"RUS_JOTATION": len(expected)},
+        )
+        self.assertEqual(
+            resolve_dsl(annotation_suggestion("БЮРО", "RL")), "BYURO"
+        )
+        self.assertEqual(
+            resolve_dsl(convert_for_annotation_dsl("бюджетю", "RL")),
+            "byudjetyu",
+        )
+        self.assertEqual(
+            classify_project("бюджетю", "RL")["key"], "catchall"
+        )
+        self.assertEqual(
+            classify_project("бюро", "U")["key"], "unknown_origin"
+        )
+
     def test_sign_plus_vowel_and_multi_rule_projects_remain_focused(self) -> None:
         cases = (
             ("объект", "rus_sign_e", ["RUS_SIGN_E"]),
             ("батальон", "rus_soft_sign_o", ["RUS_SOFT_SIGN_O"]),
-            ("бюро", "rus_jotation", ["RUS_JOTATION"]),
+            ("бюро", "catchall", ["RUS_JOTATION"]),
             ("октябрь", "complex_multi_rule", ["RUS_JOTATION", "RUS_SIGN"]),
         )
         for word, expected_key, expected_rules in cases:
@@ -1955,7 +2007,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(hamza["key"], "hamza")
         self.assertEqual(rus_sign["key"], "catchall")
         self.assertEqual(rus_sign["dsl_rules"], ["RUS_SIGN"])
-        self.assertEqual(jotation["key"], "rus_jotation")
+        self.assertEqual(jotation["key"], "catchall")
         self.assertEqual(jotation["dsl_rules"], ["RUS_JOTATION"])
         self.assertEqual(multi_rule["key"], "complex_multi_rule")
         self.assertEqual(multi_rule["dsl_rules"], ["RUS_JOTATION", "RUS_SIGN"])

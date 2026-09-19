@@ -8,8 +8,10 @@ of a DSL choice.
 ## Kept as DSL
 
 - `E_GLIDE`: kept pending a separate audit of `ие -> ie/iye`.
-- `RUS_SIGN`, `RUS_JOTATION`: kept for Russian
-  sign/apostrophe policy differences.
+- `RUS_SIGN`, `RUS_JOTATION`: kept for Russian sign/apostrophe policy
+  differences. Pure `RUS_JOTATION` is displayed in catchall as its preferred
+  plain explicit-`y` spelling; the DSL remains available for stored reviews
+  and training export. `RUS_SIGN_E` and `RUS_SOFT_SIGN_O` remain focused.
 
 ## Legacy DSL Parsing
 

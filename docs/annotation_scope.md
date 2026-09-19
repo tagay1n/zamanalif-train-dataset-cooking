@@ -43,9 +43,11 @@ catch-all annotator may edit `ts` to `s` for a verified lexical exception.
   project. One representative covers every observed form of the exact lexical
   family. Ordinary Russian soft/hard-sign cases (`RUS_SIGN`) go to `catchall`,
   where the preferred suggestion preserves ʼ as editable plain text. The
-  specialized sign-plus-vowel rules `RUS_SIGN_E`, `RUS_SOFT_SIGN_O`, and
-  `RUS_JOTATION` remain in their focused projects. Words with multiple rules
-  remain in `complex_multi_rule`.
+  pure Russian consonant + `я/ю/ё` (`RUS_JOTATION`) cases also go to
+  `catchall`, with an explicit `y` glide in the editable suggestion; edit only
+  verified lexical exceptions. The specialized sign-plus-vowel rules
+  `RUS_SIGN_E` and `RUS_SOFT_SIGN_O` remain in their focused projects. Words
+  with multiple rules remain in `complex_multi_rule`.
 - **Native-looking mixed-harmony words.** If Gemini labels a word `N` and the
   word has mixed front/back vowels, skip it for Project 1 unless it belongs to
   a verified lexical hamza family. Keep matching `RL` and `U` words.

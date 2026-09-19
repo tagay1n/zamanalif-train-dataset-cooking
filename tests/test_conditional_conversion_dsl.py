@@ -185,7 +185,7 @@ class ConditionalConversionDslTests(unittest.TestCase):
         self.assertEqual(classify_project("июнь", "RL")["key"], "catchall")
         self.assertEqual(
             classify_project("октябрена", "RL")["key"],
-            "rus_jotation",
+            "catchall",
         )
 
     def test_figyl_stem_is_policy_dsl(self) -> None:

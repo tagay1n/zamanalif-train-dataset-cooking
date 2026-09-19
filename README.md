@@ -331,13 +331,17 @@ The command writes 500-task batch files such as
 matching Label Studio project. Hamza has routing priority over catchall and
 multi-rule projects. Ordinary Russian soft/hard-sign cases (`RUS_SIGN`) now go
 to `catchall` with the preferred apostrophe-preserving spelling shown as plain
-editable text. The specialized sign-plus-vowel rules `RUS_SIGN_E`,
-`RUS_SOFT_SIGN_O`, and `RUS_JOTATION` remain in their focused projects. The
+editable text. Pure Russian consonant + `я/ю/ё` (`RUS_JOTATION`) cases also go
+to `catchall`, with the preferred explicit `y` glide shown as one plain
+editable spelling; edit it to an apostrophe or plain form only for a verified
+exception. The specialized sign-plus-vowel rules `RUS_SIGN_E` and
+`RUS_SOFT_SIGN_O` remain in their focused projects. The
 command also writes `project_<key>_instructions.html` for every active
 category. Each dictionary word is exported once. If a word has multiple DSL
 rules it goes to `complex_multi_rule`; otherwise it goes to the matching
 DSL-rule project or to `catchall` (including ordinary `RUS_SIGN` words).
-Previously exported focused `rus_sign` and `ts` batches remain importable.
+Previously exported focused `rus_sign`, `rus_jotation`, and `ts` batches remain
+importable.
 Unresolved `U` words are collected into one focused `unknown_origin` project.
 This keeps unknown compounds, abbreviations/fragments, Tatar-specific words,
 conditional-letter words, and other unresolved words in one annotation queue.

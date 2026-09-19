@@ -202,6 +202,50 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(summary.imported_items, 1)
         self.assertEqual(reviewed["роль"].zamanalif_dsl, suggestion_dsl)
 
+    def test_imports_legacy_rus_jotation_focused_batch(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            _add_words(db_path, ["бюро"], origin="RL")
+            suggestion_dsl = convert_for_annotation_dsl("бюро", "RL")
+            variants = annotation_variants(suggestion_dsl)
+            visible = "\n".join(variant.zamanalif for variant in variants)
+            task: dict[str, object] = {
+                "data": {
+                    "cyrl_word": "бюро",
+                    "zamanalif_variants": visible,
+                    "gemini_origin": "RL",
+                    "hints_html": "",
+                },
+                "meta": {
+                    "schema_version": 3,
+                    "project_key": "rus_jotation",
+                    "suggested_zamanalif_dsl": suggestion_dsl,
+                    "variant_policies": [
+                        [dict(policy) for policy in variant.policies]
+                        for variant in variants
+                    ],
+                },
+                "annotations": [{
+                    "was_cancelled": False,
+                    "result": [{
+                        "from_name": "reviewed_zamanalif_variants",
+                        "type": "textarea",
+                        "value": {"text": [visible]},
+                    }],
+                }],
+            }
+            summary = import_labelstudio_annotations(
+                db_path,
+                _backup(root / "legacy-rus-jotation.json", [task]),
+                morphology_analyzer=self.analyzer,
+            )
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(summary.project_key, "rus_jotation")
+        self.assertEqual(summary.imported_items, 1)
+        self.assertEqual(reviewed["бюро"].zamanalif_dsl, suggestion_dsl)
+
     def test_imports_legacy_unknown_project_after_consolidation(self) -> None:
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

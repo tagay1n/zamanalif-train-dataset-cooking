@@ -133,6 +133,11 @@ CATCHALL_GUIDANCE = (
         ("юл → yul", "юкә → yükä", "бию → biü"),
     ),
     (
+        "Russian consonant + я/ю/ё",
+        "defaults to an explicit y glide; edit the plain suggestion for a verified exception",
+        ("бюро → byuro", "шофёр → şofyor", "щётка → şçyotka"),
+    ),
+    (
         "у / ү",
         "may interact with nearby vowels or produce a w-like glide",
         ("уку → uqu", "күрү → kürü", "саклау → saqlaw"),
@@ -197,7 +202,12 @@ def _focus(project_key: str, rule_ids: Iterable[str]) -> str:
             "  <p>For ordinary Russian soft or hard signs (ь/ъ), the suggestion "
             "preserves the sign as ʼ, for example федераль → federalʼ, культура → "
             "kulʼtura, and роль → rolʼ. Edit the plain text to keep or remove ʼ as "
-            "appropriate. Signs before е, о, я, or ю may use a focused project.</p>\n"
+            "appropriate. Signs before е or о may use a focused project.</p>\n"
+            "  <p>Russian consonant + я/ю/ё is reviewed here as one plain editable "
+            "preferred spelling with an explicit <b>y</b> glide. Edit it to an "
+            "apostrophe or plain form only for a verified lexical exception. The "
+            "specialized sign-plus-vowel rules <b>RUS_SIGN_E</b> and "
+            "<b>RUS_SOFT_SIGN_O</b> remain focused projects.</p>\n"
             "</section>"
         )
 

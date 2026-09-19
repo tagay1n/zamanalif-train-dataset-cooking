@@ -1512,7 +1512,9 @@ def _project_key(tasks: list[Any]) -> str:
     if len(keys) != 1:
         raise LabelStudioImportError("Label Studio backup mixes project types")
     project_key = next(iter(keys))
-    allowed = dictionary_project_keys() | {CONTEXTUAL_PROJECT_KEY, "ts"}
+    # `rus_jotation` is accepted only for backups exported before pure
+    # jotation reviews moved to catchall; it is not a current export project.
+    allowed = dictionary_project_keys() | {CONTEXTUAL_PROJECT_KEY, "ts", "rus_jotation"}
     if project_key not in allowed:
         raise LabelStudioImportError(f"unknown project_key: {project_key!r}")
     return project_key

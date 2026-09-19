@@ -674,7 +674,7 @@ def classify_project(word: str, label: str) -> dict[str, Any]:
         key = "complex_multi_rule"
         title = "Complex multi-rule words"
     elif len(rules) == 1:
-        if rules[0] == RUS_SIGN_RULE.rule_id:
+        if rules[0] in {RUS_SIGN_RULE.rule_id, RUS_JOTATION_RULE.rule_id}:
             key = "catchall"
             title = project_title_for_key(key)
         else:
@@ -700,6 +700,14 @@ def word_belongs_to_project(word: str, origin: str, project_key: str) -> bool:
         and classification["dsl_rules"] == [RUS_SIGN_RULE.rule_id]
     ):
         # Prior focused rus_sign exports remain importable after ordinary sign
+        # reviews moved to catchall. Do not apply this to multi-rule words.
+        return True
+    if (
+        project_key == "rus_jotation"
+        and origin != "U"
+        and classification["dsl_rules"] == [RUS_JOTATION_RULE.rule_id]
+    ):
+        # Prior focused jotation exports remain importable after pure jotation
         # reviews moved to catchall. Do not apply this to multi-rule words.
         return True
     return (
@@ -3129,7 +3137,7 @@ def dictionary_project_keys() -> set[str]:
         *(
             _project_key_for_rule(rule_id)
             for rule_id in RULES
-            if rule_id != "TS"
+            if rule_id not in {"TS", RUS_JOTATION_RULE.rule_id}
         ),
         UNKNOWN_ORIGIN_PROJECT_KEY,
         *LEGACY_UNKNOWN_PROJECT_KEYS,
