@@ -1210,16 +1210,10 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
             word,
             ConversionResult((Literal(compact),)),
         )
-    result = result_with_russian_sign_glide_choices(word, compact, label)
+    result = result_with_specialized_russian_sign_choices(word, compact, label)
     if result.has_choices:
-        return result
-    result = result_with_russian_soft_sign_choices(word, compact, label)
-    if result.has_choices:
-        result = result_with_russian_jotated_softening_result(word, result, label)
         return result
     result = ConversionResult((Literal(compact),))
-    result = result_with_russian_shch_yo_choices(word, result, label)
-    result = result_with_russian_jotated_softening_result(word, result, label)
     result = result_with_project_e_choices(word, result, label)
     result = result_with_figyl_stem_choices(word, result)
     result = result_with_shigyr_stem_choices(word, result)
@@ -1488,12 +1482,15 @@ def _append_literal_segment(segments: list[Literal | Choice], text: str) -> None
     segments.append(Literal(text))
 
 
-def result_with_russian_sign_glide_choices(
+def result_with_specialized_russian_sign_choices(
     source: str,
     converted: str,
     label: str,
 ) -> ConversionResult:
-    """Annotate Russian soft/hard signs before glide letters as a policy choice."""
+    """Annotate only the remaining sign-plus-e/o policy choices.
+
+    Ordinary Russian signs and signs before я/ю are deterministic apostrophes.
+    """
     if label != "RL" or not any(sign in source for sign in "ьъ"):
         return ConversionResult((Literal(converted),))
 
@@ -1530,9 +1527,10 @@ def result_with_russian_sign_glide_choices(
                 )
                 source_index += 1
                 continue
-            if converted.startswith(ZAMANALIF_APOSTROPHE, converted_index):
-                converted_index += 1
-            segments.append(Choice(RUS_SIGN_RULE.rule_id, RUS_SIGN_RULE.options))
+            if not converted.startswith(ZAMANALIF_APOSTROPHE, converted_index):
+                return ConversionResult((Literal(converted),))
+            segments.append(Literal(ZAMANALIF_APOSTROPHE))
+            converted_index += 1
             source_index += 1
             continue
 
@@ -1555,137 +1553,6 @@ def result_with_russian_sign_glide_choices(
     return ConversionResult(tuple(segments))
 
 
-def result_with_russian_soft_sign_choices(
-    source: str,
-    converted: str,
-    label: str,
-) -> ConversionResult:
-    """Annotate ordinary Russian soft/hard signs as a preserve-vs-omit choice."""
-    if (
-        label != "RL"
-        or not any(sign in source for sign in "ьъ")
-        or ZAMANALIF_APOSTROPHE not in converted
-    ):
-        return ConversionResult((Literal(converted),))
-    if "ия" in source and "iä" in converted:
-        return ConversionResult((Literal(converted),))
-
-    segments: list[Literal | Choice] = []
-    source_index = 0
-    converted_index = 0
-    while source_index < len(source):
-        char = source[source_index]
-        if char in {"ь", "ъ"}:
-            if (
-                source_index + 1 < len(source)
-                and source[source_index + 1] in {"я", "ю", "е"}
-            ):
-                return ConversionResult((Literal(converted),))
-            if converted.startswith(ZAMANALIF_APOSTROPHE, converted_index):
-                segments.append(Choice(RUS_SIGN_RULE.rule_id, RUS_SIGN_RULE.options))
-                converted_index += 1
-                source_index += 1
-                continue
-
-        latin = _char_conversion(char, source, source_index, label)
-        if latin and converted.startswith(latin, converted_index):
-            segments.append(Literal(latin))
-            converted_index += len(latin)
-        elif not latin:
-            pass
-        else:
-            return ConversionResult((Literal(converted),))
-        source_index += 1
-
-    if converted_index != len(converted):
-        return ConversionResult((Literal(converted),))
-    return ConversionResult(tuple(segments))
-
-
-def result_with_russian_shch_yo_choices(
-    source: str, result: ConversionResult, label: str
-) -> ConversionResult:
-    """Annotate Russian loanword ``щё`` after ``щ`` as y/apostrophe/plain policy."""
-    if label != "RL" or "щё" not in source.casefold():
-        return result
-
-    segments: list[Literal | Choice] = []
-    changed = False
-    pending_count = source.casefold().count("щё")
-    for segment in _merge_adjacent_literals(result).segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        text = segment.text
-        start = 0
-        while pending_count:
-            match_index = text.find("şçy", start)
-            if match_index < 0:
-                break
-            choice_index = match_index + len("şç")
-            _append_literal_segment(segments, text[start:choice_index])
-            segments.append(Choice(RUS_JOTATION_RULE.rule_id, RUS_JOTATION_RULE.options))
-            start = choice_index + 1
-            pending_count -= 1
-            changed = True
-        _append_literal_segment(segments, text[start:])
-    return ConversionResult(tuple(segments)) if changed else result
-
-
-def result_with_russian_jotated_softening_result(
-    source: str, result: ConversionResult, label: str
-) -> ConversionResult:
-    """Compose consonant + RL ``я/ю/ё`` softening with existing sign choices."""
-    if label != "RL" or not any(char in source for char in "яюё"):
-        return result
-    if "ерзя" in source or source.casefold().startswith("вестибюль"):
-        return result
-
-    replacements: list[tuple[str, str]] = []
-    for index, char in enumerate(source):
-        if char not in {"я", "ю", "ё"} or not _is_russian_jotated_softening_position(source, index):
-            continue
-        if char == "ё" and source[index - 1].casefold() == "щ":
-            continue
-        previous = source[index - 1]
-        previous_latin = _char_conversion(previous, source, index - 1, label)
-        latin = _char_conversion(char, source, index, label)
-        if not previous_latin or not latin.startswith("y"):
-            continue
-        replacements.append((previous_latin + latin, previous_latin))
-
-    if not replacements:
-        return result
-
-    segments: list[Literal | Choice] = []
-    changed = False
-    pending = replacements.copy()
-    for segment in _merge_adjacent_literals(result).segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        text = segment.text
-        start = 0
-        while pending:
-            pattern, prefix = pending[0]
-            match_index = text.find(pattern, start)
-            if match_index < 0:
-                break
-            choice_index = match_index + len(prefix)
-            _append_literal_segment(segments, text[start:choice_index])
-            segments.append(
-                Choice(
-                    RUS_JOTATION_RULE.rule_id,
-                    RUS_JOTATION_RULE.options,
-                )
-            )
-            start = choice_index + 1
-            pending.pop(0)
-            changed = True
-        _append_literal_segment(segments, text[start:])
-    return ConversionResult(tuple(segments)) if changed else result
-
-
 def _merge_adjacent_literals(result: ConversionResult) -> ConversionResult:
     segments: list[Literal | Choice] = []
     for segment in result.segments:
@@ -1694,75 +1561,6 @@ def _merge_adjacent_literals(result: ConversionResult) -> ConversionResult:
         else:
             segments.append(segment)
     return ConversionResult(tuple(segments))
-
-
-def result_with_russian_jotated_softening_choices(
-    source: str,
-    converted: str,
-    label: str,
-) -> ConversionResult:
-    """Annotate RL consonant + ``я/ю/ё`` as y-glide vs apostrophe convention."""
-    if label != "RL" or not any(char in source for char in "яюё"):
-        return ConversionResult((Literal(converted),))
-    if "ерзя" in source or source.casefold().startswith("вестибюль"):
-        return ConversionResult((Literal(converted),))
-
-    segments: list[Literal | Choice] = []
-    source_index = 0
-    converted_index = 0
-    while source_index < len(source):
-        char = source[source_index]
-        latin = _char_conversion(char, source, source_index, label)
-        if not latin:
-            source_index += 1
-            continue
-
-        if (
-            char in {"я", "ю", "ё"}
-            and _is_russian_jotated_softening_position(source, source_index)
-            and not (char == "ё" and source[source_index - 1].casefold() == "щ")
-            and latin.startswith("y")
-            and converted.startswith(latin, converted_index)
-        ):
-            segments.append(
-                Choice(
-                    RUS_JOTATION_RULE.rule_id,
-                    RUS_JOTATION_RULE.options,
-                )
-            )
-            _append_literal_segment(segments, latin[1:])
-            converted_index += len(latin)
-            source_index += 1
-            continue
-
-        if converted.startswith(latin, converted_index):
-            _append_literal_segment(segments, latin)
-            converted_index += len(latin)
-        else:
-            return ConversionResult((Literal(converted),))
-        source_index += 1
-
-    if converted_index != len(converted):
-        return ConversionResult((Literal(converted),))
-    return ConversionResult(tuple(segments))
-
-
-def _is_russian_jotated_softening_position(source: str, index: int) -> bool:
-    if index == 0:
-        return False
-    previous = source[index - 1]
-    if previous in FRONT_VOWELS | BACK_VOWELS | {
-        "е",
-        "ё",
-        "ю",
-        "я",
-        "ь",
-        "ъ",
-        "-",
-        ZAMANALIF_APOSTROPHE,
-    }:
-        return False
-    return bool(CYRILLIC_RE.fullmatch(previous))
 
 
 def convert_for_annotation_dsl(word: str, label: str) -> str:

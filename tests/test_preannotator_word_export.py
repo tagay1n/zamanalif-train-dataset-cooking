@@ -364,15 +364,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
             result = export_labelstudio_tasks_from_db(db_path, sort_by="word")
 
         words = [task["data"]["cyrl_word"] for task in result.tasks]
-        self.assertEqual(words, ["роль", "шофёр", "щетка"])
+        self.assertEqual(words, ["роль", "щетка"])
         by_word = {task["data"]["cyrl_word"]: task["data"] for task in result.tasks}
         self.assertEqual(
             by_word["роль"]["auto_zamanalif"],
-            "rol{{RUS_SIGN|omit=|preserve=ʼ}}",
-        )
-        self.assertEqual(
-            by_word["шофёр"]["auto_zamanalif"],
-            "şof{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}or",
+            "rolʼ",
         )
         self.assertEqual(by_word["щетка"]["auto_zamanalif"], "şçetka")
         self.assertNotIn("<b>ь</b> ->", by_word["роль"]["hints_html"])
@@ -608,7 +604,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("һәръяклап", "N"), "häryaqlap")
         self.assertEqual(
             convert_for_annotation_dsl("ладья", "RL"),
-            "lad{{RUS_SIGN|omit=|preserve=ʼ}}ya",
+            "ladʼya",
         )
 
     def test_e_conversion_uses_pdf_context_rules(self) -> None:
@@ -638,7 +634,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 convert_for_annotation_dsl("епископаль", "RL"),
                 {"RUS_SIGN": "omit"},
             ),
-            "yepiskopal",
+            "yepiskopalʼ",
         )
         self.assertEqual(convert_for_annotation("ефәксыман", "N"), "yefäksıman")
         self.assertEqual(convert_for_annotation("е", "N"), "yı")
@@ -703,7 +699,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("музыка", "muzıka", "muzıka"),
             (
                 "музыкаль",
-                "muzıkal{{RUS_SIGN|omit=|preserve=ʼ}}",
+                "muzıkalʼ",
                 "muzıkalʼ",
             ),
             ("музыкасын", "muzıkasın", "muzıkasın"),
@@ -935,7 +931,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("форсунка", "forsunka"),
             (
                 "фотоплёнка",
-                "fotopl{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}onka",
+                "fotoplyonka",
             ),
         ]
 
@@ -1251,26 +1247,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("роль", "RL"), "rolʼ")
         self.assertEqual(convert_for_annotation("культура", "RL"), "kulʼtura")
         self.assertEqual(convert_for_annotation("секретарь", "RL"), "sekretarʼ")
-        self.assertEqual(
-            convert_for_annotation_dsl("роль", "RL"),
-            "rol{{RUS_SIGN|omit=|preserve=ʼ}}",
-        )
-        self.assertEqual(
-            convert_for_annotation_dsl("культура", "RL"),
-            "kul{{RUS_SIGN|omit=|preserve=ʼ}}tura",
-        )
-        self.assertEqual(
-            convert_for_annotation_dsl("секретарь", "RL"),
-            "sekretar{{RUS_SIGN|omit=|preserve=ʼ}}",
-        )
-        self.assertEqual(
-            convert_for_annotation_dsl("коньяк", "RL"),
-            "kon{{RUS_SIGN|omit=|preserve=ʼ}}yak",
-        )
-        self.assertEqual(
-            convert_for_annotation_dsl("тальян", "RL"),
-            "tal{{RUS_SIGN|omit=|preserve=ʼ}}yan",
-        )
+        self.assertEqual(convert_for_annotation_dsl("роль", "RL"), "rolʼ")
+        self.assertEqual(convert_for_annotation_dsl("культура", "RL"), "kulʼtura")
+        self.assertEqual(convert_for_annotation_dsl("секретарь", "RL"), "sekretarʼ")
+        self.assertEqual(convert_for_annotation_dsl("коньяк", "RL"), "konʼyak")
+        self.assertEqual(convert_for_annotation_dsl("тальян", "RL"), "talʼyan")
         self.assertEqual(
             convert_for_annotation_dsl("объективлык", "RL"),
             "ob{{RUS_SIGN_E|glide=y|apostrophe=ʼ|apostrophe_glide=ʼy}}ektivlıq",
@@ -1309,69 +1290,40 @@ class PreannotatorWordExportTests(unittest.TestCase):
             "poçtalʼyon",
         )
 
-    def test_russian_jotated_softening_is_policy_dsl(self) -> None:
+    def test_russian_jotated_softening_is_deterministic(self) -> None:
         cases = [
-            ("бюро", "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uro", "byuro", "bʼuro"),
-            ("вафля", "vafl{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}a", "vaflya", "vaflʼa"),
-            ("шофёр", "şof{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}or", "şofyor", "şofʼor"),
+            ("бюро", "byuro"),
+            ("вафля", "vaflya"),
+            ("шофёр", "şofyor"),
         ]
 
-        for word, expected_dsl, glide, apostrophe in cases:
+        for word, expected in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "RL")
-                self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl), glide)
-                self.assertEqual(
-                    resolve_dsl(dsl, {"RUS_JOTATION": "apostrophe"}),
-                    apostrophe,
-                )
+                self.assertEqual(dsl, expected)
+                self.assertNotIn("RUS_JOTATION", dsl)
 
-    def test_russian_shch_yo_is_narrow_policy_dsl(self) -> None:
+    def test_russian_shch_yo_is_deterministic(self) -> None:
         dsl = convert_for_annotation_dsl("щётка", "RL")
 
-        self.assertEqual(dsl, "şç{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}otka")
-        self.assertEqual(resolve_dsl(dsl), "şçyotka")
-        self.assertEqual(resolve_dsl(dsl, {"RUS_JOTATION": "apostrophe"}), "şçʼotka")
-        self.assertEqual(resolve_dsl(dsl, {"RUS_JOTATION": "plain"}), "şçotka")
+        self.assertEqual(dsl, "şçyotka")
 
-    def test_russian_jotated_softening_composes_with_iya(self) -> None:
+    def test_russian_jotated_softening_composes_with_iya_deterministically(self) -> None:
         dsl = convert_for_annotation_dsl("бюрократия", "RL")
 
-        self.assertEqual(
-            dsl,
-            "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}urokratiyä",
-        )
-        self.assertEqual(resolve_dsl(dsl), "byurokratiyä")
-        self.assertEqual(
-            resolve_dsl(
-                dsl,
-                {"RUS_JOTATION": "apostrophe"},
-            ),
-            "bʼurokratiyä",
-        )
+        self.assertEqual(dsl, "byurokratiyä")
 
-    def test_russian_jotated_softening_composes_with_iya_and_suffixes(self) -> None:
+    def test_russian_jotated_softening_composes_with_suffixes_deterministically(self) -> None:
         dsl = convert_for_annotation_dsl("изоляцияләү", "RL")
 
-        self.assertEqual(
-            dsl,
-            "izol{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}atsiyäläw",
-        )
-        self.assertEqual(resolve_dsl(dsl), "izolyatsiyäläw")
-        self.assertEqual(
-            resolve_dsl(
-                dsl,
-                {"RUS_JOTATION": "apostrophe"},
-            ),
-            "izolʼatsiyäläw",
-        )
+        self.assertEqual(dsl, "izolyatsiyäläw")
 
     def test_russian_bu_front_is_deterministic(self) -> None:
         dsl = convert_for_annotation_dsl("вестибюль", "RL")
 
         self.assertEqual(
             dsl,
-            "vestibyul{{RUS_SIGN|omit=|preserve=ʼ}}",
+            "vestibyulʼ",
         )
         self.assertEqual(resolve_dsl(dsl), "vestibyulʼ")
 
@@ -1380,7 +1332,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual(
             dsl,
-            "geral{{RUS_SIGN|omit=|preserve=ʼ}}dika",
+            "geralʼdika",
         )
         self.assertEqual(resolve_dsl(dsl), "geralʼdika")
         self.assertEqual(
@@ -1388,21 +1340,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
             "geralʼdika",
         )
 
-    def test_russian_jotated_softening_composes_with_final_soft_sign(self) -> None:
+    def test_russian_jotated_softening_and_final_soft_sign_are_deterministic(self) -> None:
         dsl = convert_for_annotation_dsl("князь", "RL")
 
-        self.assertEqual(
-            dsl,
-            "kn{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}az{{RUS_SIGN|omit=|preserve=ʼ}}",
-        )
-        self.assertEqual(resolve_dsl(dsl), "knyazʼ")
-        self.assertEqual(
-            resolve_dsl(
-                dsl,
-                {"RUS_JOTATION": "apostrophe", "RUS_SIGN": "omit"},
-            ),
-            "knʼaz",
-        )
+        self.assertEqual(dsl, "knyazʼ")
 
     def test_native_miyaw_stem_is_deterministic(self) -> None:
         cases = [
@@ -1785,7 +1726,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         project = classify_project("бюрократия", "RL")
 
         self.assertEqual(project["key"], "catchall")
-        self.assertEqual(project["dsl_rules"], ["RUS_JOTATION"])
+        self.assertEqual(project["dsl_rules"], [])
 
     def test_split_export_routes_literal_and_policy_hamza_out_of_catchall(self) -> None:
         cases = (
@@ -1809,7 +1750,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         project = classify_project("культура", "RL")
 
         self.assertEqual(project["key"], "catchall")
-        self.assertEqual(project["dsl_rules"], ["RUS_SIGN"])
+        self.assertEqual(project["dsl_rules"], [])
 
     def test_ordinary_russian_signs_export_to_catchall_as_plain_preferred_text(self) -> None:
         words = ["федераль", "культурага", "роль"]
@@ -1848,14 +1789,14 @@ class PreannotatorWordExportTests(unittest.TestCase):
             },
         )
         self.assertTrue(all("{{" not in value for value in suggestions.values()))
-        self.assertEqual(catchall.report["dsl_rule_counts"], {"RUS_SIGN": 3})
+        self.assertEqual(catchall.report["dsl_rule_counts"], {})
         self.assertEqual(
             [path.name for path in paths],
             ["project_catchall_batch_001_of_001.json"],
         )
         self.assertFalse(any("rus_sign" in path.name for path in paths))
 
-    def test_pure_russian_jotation_exports_to_catchall_as_plain_glide_text(self) -> None:
+    def test_russian_jotation_is_plain_and_uses_ordinary_export_selection(self) -> None:
         expected = {
             "бюджет": "byudjet",
             "бюро": "byuro",
@@ -1880,19 +1821,21 @@ class PreannotatorWordExportTests(unittest.TestCase):
             )
             result = export_labelstudio_project_tasks_from_db(db_path, sort_by="word")
 
-        self.assertEqual(set(result.projects), {"catchall"})
+        self.assertNotIn("rus_jotation", result.projects)
         suggestions = {
             task["data"]["cyrl_word"]: task["data"]["auto_zamanalif"]
             for task in result.projects["catchall"].tasks
         }
-        self.assertEqual(suggestions, expected)
+        self.assertEqual(
+            suggestions,
+            {word: expected[word] for word in ("бюджет", "валюта", "сюжет", "щётка")},
+        )
+        for word, value in expected.items():
+            self.assertEqual(convert_for_annotation_dsl(word, "RL"), value)
         self.assertTrue(
             all("{{" not in value and "\n" not in value for value in suggestions.values())
         )
-        self.assertEqual(
-            result.projects["catchall"].report["dsl_rule_counts"],
-            {"RUS_JOTATION": len(expected)},
-        )
+        self.assertEqual(result.projects["catchall"].report["dsl_rule_counts"], {})
         self.assertEqual(
             resolve_dsl(annotation_suggestion("БЮРО", "RL")), "BYURO"
         )
@@ -1911,8 +1854,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
         cases = (
             ("объект", "rus_sign_e", ["RUS_SIGN_E"]),
             ("батальон", "rus_soft_sign_o", ["RUS_SOFT_SIGN_O"]),
-            ("бюро", "catchall", ["RUS_JOTATION"]),
-            ("октябрь", "complex_multi_rule", ["RUS_JOTATION", "RUS_SIGN"]),
+            ("бюро", "catchall", []),
+            ("октябрь", "catchall", []),
         )
         for word, expected_key, expected_rules in cases:
             with self.subTest(word=word):
@@ -1988,7 +1931,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         project = classify_project("социаль-икътисадый", "RL")
 
         self.assertEqual(project["key"], "catchall")
-        self.assertEqual(project["dsl_rules"], ["RUS_SIGN"])
+        self.assertEqual(project["dsl_rules"], [])
 
     def test_c_words_follow_their_remaining_review_requirements(self) -> None:
         plain = classify_project("концерт", "RL")
@@ -2006,11 +1949,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation_dsl("немецләрне", "RL"), "nemetslärne")
         self.assertEqual(hamza["key"], "hamza")
         self.assertEqual(rus_sign["key"], "catchall")
-        self.assertEqual(rus_sign["dsl_rules"], ["RUS_SIGN"])
+        self.assertEqual(rus_sign["dsl_rules"], [])
         self.assertEqual(jotation["key"], "catchall")
-        self.assertEqual(jotation["dsl_rules"], ["RUS_JOTATION"])
-        self.assertEqual(multi_rule["key"], "complex_multi_rule")
-        self.assertEqual(multi_rule["dsl_rules"], ["RUS_JOTATION", "RUS_SIGN"])
+        self.assertEqual(jotation["dsl_rules"], [])
+        self.assertEqual(multi_rule["key"], "catchall")
+        self.assertEqual(multi_rule["dsl_rules"], [])
         self.assertEqual(unknown["key"], "unknown_origin")
         self.assertIn("ts", annotation_suggestion("күпфункцияле", "U"))
         self.assertNotIn("{{", annotation_suggestion("күпфункцияле", "U"))

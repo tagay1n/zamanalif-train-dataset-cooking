@@ -310,16 +310,16 @@ def import_labelstudio_annotations(
                     existing.pop(word, None)
                     existing_variants.pop(word, None)
                     derived_words.discard(word)
-                if parsed.project_key == "ts":
-                    # Old ts exports can contain words that are deterministic
-                    # under the current ц -> ts default. Import their reviewed
-                    # spelling as a lexical review, without family propagation.
+                if parsed.project_key in {"ts", "rus_sign", "rus_jotation"}:
+                    # Retired focused projects can contain words that are now
+                    # deterministic. Import their reviewed spelling as a lexical
+                    # review without reconstructing a current annotation family.
                     regular_items = [
                         replace(
                             item,
                             family_members=(item.normalized_word,),
                             morphology=None,
-                            analyzer_revision="legacy-ts-import",
+                            analyzer_revision=f"legacy-{parsed.project_key}-import",
                         )
                         for item in regular_items
                     ]

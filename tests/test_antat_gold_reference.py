@@ -47,6 +47,15 @@ def _uses_excluded_antat_native_uw_policy(cyrillic: str, expected: str) -> bool:
     return False
 
 
+def _uses_retired_russian_dsl_policy(cyrillic: str, expected: str) -> bool:
+    """Return whether Antat uses an alternative now made deterministic."""
+    folded = cyrillic.casefold()
+    normalized_expected = _normalize_gold_zamanalif(expected)
+    if normalized_expected.count("ʼ") < sum(folded.count(sign) for sign in "ьъ"):
+        return True
+    return any(char in folded for char in "яюё") and "ʼ" in normalized_expected
+
+
 def _normalize_gold_zamanalif(value: str) -> str:
     return normalize_zamanalif_apostrophes(value).casefold()
 
@@ -79,6 +88,7 @@ class AntatGoldReferenceTests(unittest.TestCase):
             if (
                 (cyrillic, align_id) in DELIBERATELY_EXCLUDED_ANTAT_POLICIES
                 or _uses_excluded_antat_native_uw_policy(cyrillic, expected)
+                or _uses_retired_russian_dsl_policy(cyrillic, expected)
             ):
                 continue
             possible: set[str] = set()

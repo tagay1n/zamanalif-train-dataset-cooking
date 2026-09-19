@@ -41,11 +41,9 @@ catch-all annotator may edit `ts` to `s` for a verified lexical exception.
 - **Native hamza conversions.** Verified lexical families use the global
   `HAMZA` omit/preserve policy and are routed only to the `hamza` dictionary
   project. One representative covers every observed form of the exact lexical
-  family. Ordinary Russian soft/hard-sign cases (`RUS_SIGN`) go to `catchall`,
-  where the preferred suggestion preserves ʼ as editable plain text. The
-  pure Russian consonant + `я/ю/ё` (`RUS_JOTATION`) cases also go to
-  `catchall`, with an explicit `y` glide in the editable suggestion; edit only
-  verified lexical exceptions. The specialized sign-plus-vowel rules
+  family. New conversions deterministically preserve ordinary Russian
+  soft/hard signs as ʼ and use an explicit `y` glide for Russian consonant +
+  `я/ю/ё`; these no longer generate DSL choices. The specialized sign-plus-vowel rules
   `RUS_SIGN_E` and `RUS_SOFT_SIGN_O` remain in their focused projects. Words
   with multiple rules remain in `complex_multi_rule`.
 - **Native-looking mixed-harmony words.** If Gemini labels a word `N` and the

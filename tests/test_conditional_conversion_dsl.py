@@ -156,23 +156,12 @@ class ConditionalConversionDslTests(unittest.TestCase):
     def test_month_names_use_ordinary_conversion_and_other_rules(self) -> None:
         cases = [
             ("гыйнвар", "N", "ğıynwar", "ğıynwar"),
-            ("июнь", "RL", "iyun{{RUS_SIGN|omit=|preserve=ʼ}}", "iyunʼ"),
-            ("июль", "RL", "iyul{{RUS_SIGN|omit=|preserve=ʼ}}", "iyulʼ"),
-            (
-                "сентябрендә",
-                "RL",
-                "sent{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}abrendä",
-                "sentyabrendä",
-            ),
-            (
-                "октябрь",
-                "RL",
-                "okt{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}abr"
-                "{{RUS_SIGN|omit=|preserve=ʼ}}",
-                "oktyabrʼ",
-            ),
+            ("июнь", "RL", "iyunʼ", "iyunʼ"),
+            ("июль", "RL", "iyulʼ", "iyulʼ"),
+            ("сентябрендә", "RL", "sentyabrendä", "sentyabrendä"),
+            ("октябрь", "RL", "oktyabrʼ", "oktyabrʼ"),
             ("ноябрь", "N", "noyabr", "noyabr"),
-            ("декабрь", "RL", "dekabr{{RUS_SIGN|omit=|preserve=ʼ}}", "dekabrʼ"),
+            ("декабрь", "RL", "dekabrʼ", "dekabrʼ"),
         ]
 
         for word, label, expected_dsl, expected in cases:
@@ -271,39 +260,36 @@ class ConditionalConversionDslTests(unittest.TestCase):
                     dsl = convert_for_annotation_dsl(word, label)
                     self.assertNotIn("DISHARMONY", dsl)
 
-    def test_russian_sign_before_glide_is_policy_dsl(self) -> None:
+    def test_russian_sign_before_glide_is_deterministic(self) -> None:
         cases = [
-            ("компьютер", "komp{{RUS_SIGN|omit=|preserve=ʼ}}yuter", "kompyuter", "kompʼyuter"),
-            ("нью-йорк", "n{{RUS_SIGN|omit=|preserve=ʼ}}yu-york", "nyu-york", "nʼyu-york"),
+            ("компьютер", "kompʼyuter"),
+            ("нью-йорк", "nʼyu-york"),
         ]
 
-        for word, expected_dsl, omitted, preserved in cases:
+        for word, expected in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "RL")
-                self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl), preserved)
-                self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN": "omit"}), omitted)
-                self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN": "preserve"}), preserved)
+                self.assertEqual(dsl, expected)
+                self.assertNotIn("RUS_SIGN", dsl)
 
         dsl = convert_for_annotation_dsl("барьер", "RL")
         self.assertEqual(dsl, "bar{{RUS_SIGN_E|glide=y|apostrophe=ʼ|apostrophe_glide=ʼy}}er")
         self.assertEqual(resolve_dsl(dsl), "baryer")
         self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN_E": "apostrophe_glide"}), "barʼyer")
 
-    def test_russian_soft_sign_is_policy_dsl(self) -> None:
+    def test_russian_soft_sign_is_deterministic(self) -> None:
         cases = [
-            ("роль", "rol{{RUS_SIGN|omit=|preserve=ʼ}}", "rol", "rolʼ"),
-            ("культура", "kul{{RUS_SIGN|omit=|preserve=ʼ}}tura", "kultura", "kulʼtura"),
-            ("секретарь", "sekretar{{RUS_SIGN|omit=|preserve=ʼ}}", "sekretar", "sekretarʼ"),
-            ("автомобиль", "avtomobil{{RUS_SIGN|omit=|preserve=ʼ}}", "avtomobil", "avtomobilʼ"),
+            ("роль", "rolʼ"),
+            ("культура", "kulʼtura"),
+            ("секретарь", "sekretarʼ"),
+            ("автомобиль", "avtomobilʼ"),
         ]
 
-        for word, expected_dsl, omitted, preserved in cases:
+        for word, expected in cases:
             with self.subTest(word=word):
                 dsl = convert_for_annotation_dsl(word, "RL")
-                self.assertEqual(dsl, expected_dsl)
-                self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN": "omit"}), omitted)
-                self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN": "preserve"}), preserved)
+                self.assertEqual(dsl, expected)
+                self.assertNotIn("RUS_SIGN", dsl)
 
     def test_arabic_persian_g_hard_sign_and_k_hard_sign_are_general_rules(self) -> None:
         cases = [

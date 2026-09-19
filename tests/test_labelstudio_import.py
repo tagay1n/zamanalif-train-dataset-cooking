@@ -159,7 +159,7 @@ class LabelStudioImportTests(unittest.TestCase):
             root = Path(tmpdir)
             db_path = _database(root / "db.sqlite")
             _add_words(db_path, ["роль"], origin="RL")
-            suggestion_dsl = convert_for_annotation_dsl("роль", "RL")
+            suggestion_dsl = "rol{{RUS_SIGN|omit=|preserve=ʼ}}"
             variants = annotation_variants(suggestion_dsl)
             visible = "\n".join(variant.zamanalif for variant in variants)
             task: dict[str, object] = {
@@ -207,7 +207,7 @@ class LabelStudioImportTests(unittest.TestCase):
             root = Path(tmpdir)
             db_path = _database(root / "db.sqlite")
             _add_words(db_path, ["бюро"], origin="RL")
-            suggestion_dsl = convert_for_annotation_dsl("бюро", "RL")
+            suggestion_dsl = "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uro"
             variants = annotation_variants(suggestion_dsl)
             visible = "\n".join(variant.zamanalif for variant in variants)
             task: dict[str, object] = {
