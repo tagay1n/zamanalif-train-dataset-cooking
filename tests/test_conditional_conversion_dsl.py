@@ -69,13 +69,6 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 self.assertEqual(suggestion, expected)
                 self.assertNotIn("{{", suggestion)
 
-    def test_legacy_ts_dsl_still_resolves_explicit_choices(self) -> None:
-        legacy = "retrospek{{TS|s=s|ts=ts}}iyä"
-
-        self.assertEqual(resolve_dsl(legacy, {"TS": "s"}), "retrospeksiyä")
-        self.assertEqual(resolve_dsl(legacy, {"TS": "ts"}), "retrospektsiyä")
-        self.assertEqual(resolve_dsl(legacy), "retrospektsiyä")
-
     def test_final_ts_suffix_policy_does_not_cover_internal_root_ts(self) -> None:
         self.assertEqual(convert_for_annotation_dsl("лицей", "RL"), "litsey")
 
@@ -272,10 +265,7 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 self.assertEqual(dsl, expected)
                 self.assertNotIn("RUS_SIGN", dsl)
 
-        dsl = convert_for_annotation_dsl("барьер", "RL")
-        self.assertEqual(dsl, "bar{{RUS_SIGN_E|glide=y|apostrophe=ʼ|apostrophe_glide=ʼy}}er")
-        self.assertEqual(resolve_dsl(dsl), "baryer")
-        self.assertEqual(resolve_dsl(dsl, {"RUS_SIGN_E": "apostrophe_glide"}), "barʼyer")
+        self.assertEqual(convert_for_annotation_dsl("барьер", "RL"), "barʼyer")
 
     def test_russian_soft_sign_is_deterministic(self) -> None:
         cases = [

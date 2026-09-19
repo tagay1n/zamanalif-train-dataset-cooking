@@ -46,6 +46,16 @@ class LabelStudioImportTests(unittest.TestCase):
         self.addCleanup(self._analyzer_patch.stop)
         self.addCleanup(self._cli_analyzer_patch.stop)
 
+    def _assert_retired_project_is_rejected(self, project_key: str) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            task = _task("роль", "rolʼ", "RL", project_key=project_key)
+            with self.assertRaisesRegex(LabelStudioImportError, "unknown project_key"):
+                parse_labelstudio_export(_backup(root / f"{project_key}.json", [task]))
+
+    def test_retired_russian_sign_e_project_is_rejected(self) -> None:
+        self._assert_retired_project_is_rejected("rus_sign_e")
+
     def test_imports_strict_dictionary_backup_and_skips_unannotated(self) -> None:
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
@@ -155,6 +165,8 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(reviewed[word].zamanalif_dsl, "konsert")
 
     def test_imports_legacy_rus_sign_focused_batch(self) -> None:
+        self._assert_retired_project_is_rejected("rus_sign")
+        return
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             db_path = _database(root / "db.sqlite")
@@ -203,6 +215,8 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(reviewed["роль"].zamanalif_dsl, suggestion_dsl)
 
     def test_imports_legacy_rus_jotation_focused_batch(self) -> None:
+        self._assert_retired_project_is_rejected("rus_jotation")
+        return
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             db_path = _database(root / "db.sqlite")
@@ -317,6 +331,8 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(reviewed[word].origin, "U")
 
     def test_imports_legacy_ts_project_and_preserves_reviewed_spelling(self) -> None:
+        self._assert_retired_project_is_rejected("ts")
+        return
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             db_path = _database(root / "db.sqlite")
@@ -967,7 +983,7 @@ class LabelStudioImportTests(unittest.TestCase):
             save_reviewed_word(
                 db_path,
                 "культураны",
-                "kul{{RUS_SIGN|omit=|preserve=ʼ}}turanı",
+                "kulʼturanı",
                 "RL",
             )
 

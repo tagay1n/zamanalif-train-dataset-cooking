@@ -8,12 +8,7 @@ of a DSL choice.
 ## Kept as DSL
 
 - `E_GLIDE`: kept pending a separate audit of `ие -> ie/iye`.
-- `RUS_SIGN_E` and `RUS_SOFT_SIGN_O`: kept as focused sign-plus-vowel choices.
-
-## Legacy DSL Parsing
-
-- `TS`, `RUS_SIGN`, and `RUS_JOTATION` remain parseable in stored legacy
-  reviews, but new conversions never generate these choices.
+- `RUS_SOFT_SIGN_O`: the remaining focused Russian-sign choice.
 
 ## Converted Back To Deterministic Rules
 
@@ -21,6 +16,9 @@ of a DSL choice.
 - Russian consonant + `я/ю/ё` always uses an explicit `y` glide in new
   conversions.
 - Cyrillic `ц` always renders as plain `ts` in new conversions.
+- Russian `ье` always renders as `ʼye`; Russian `ъе` always renders as `ye`.
+- `TS`, `RUS_SIGN`, `RUS_JOTATION`, and `RUS_SIGN_E` are retired: they are not
+  registered DSL rules and old projects using them are unsupported.
 - `RL_Y`: removed as DSL. Cyrillic `ы` is always `ı`; an explicit following
   `й` is required for `ıy`. Thus `сыр -> sır`, while `сыйр -> sıyr`.
 - `MONTH_NAME`: removed as DSL. Month names use the ordinary converter and

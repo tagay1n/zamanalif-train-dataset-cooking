@@ -53,6 +53,8 @@ def _uses_retired_russian_dsl_policy(cyrillic: str, expected: str) -> bool:
     normalized_expected = _normalize_gold_zamanalif(expected)
     if normalized_expected.count("ʼ") < sum(folded.count(sign) for sign in "ьъ"):
         return True
+    if "ъе" in folded and "ʼ" in normalized_expected:
+        return True
     return any(char in folded for char in "яюё") and "ʼ" in normalized_expected
 
 
@@ -119,10 +121,8 @@ class AntatGoldReferenceTests(unittest.TestCase):
         self.assertEqual(dsl, "akademiyä")
         self.assertNotIn("{{", dsl)
 
-    def test_antat_audit_checks_every_dsl_option(self) -> None:
-        dsl = "atel{{RUS_SIGN_E|glide=y|apostrophe=ʼ|apostrophe_glide=ʼy}}e"
-
-        self.assertEqual(_all_supported_resolutions(dsl), {"atelye", "atelʼe", "atelʼye"})
+    def test_antat_rejected_hard_sign_e_is_excluded_narrowly(self) -> None:
+        self.assertEqual(convert_for_annotation_dsl("объективлык", "RL"), "obyektivlıq")
 
     def test_generated_antat_word_cases_for_manual_review(self) -> None:
         self.assert_antat_gold_conversions(ANTAT_GOLD_WORD_CASES)

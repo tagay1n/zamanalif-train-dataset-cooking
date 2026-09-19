@@ -9,7 +9,6 @@ from tatar_preannotator.conversion import (
     Literal,
     PDF_COMPACT_POLICY,
     PREFERRED_POLICY,
-    TS_RULE,
     parse_dsl,
     resolve_dsl,
 )
@@ -20,11 +19,14 @@ from tatar_preannotator.word_export import (
 
 
 class ConversionDslTests(unittest.TestCase):
-    def test_legacy_ts_rule_defaults_to_ts_in_registered_policies(self) -> None:
-        self.assertEqual(TS_RULE.default_option, "ts")
-        self.assertEqual(PREFERRED_POLICY["TS"], "ts")
-        self.assertEqual(PDF_COMPACT_POLICY["TS"], "ts")
-        self.assertEqual(resolve_dsl("{{TS|s=s|ts=ts}}"), "ts")
+    def test_retired_rules_are_rejected(self) -> None:
+        for rule_id in ("TS", "RUS_SIGN", "RUS_JOTATION", "RUS_SIGN_E"):
+            with self.subTest(rule_id=rule_id):
+                with self.assertRaisesRegex(DslError, "unknown rule id"):
+                    parse_dsl(f"x{{{{{rule_id}|one=a|two=b}}}}")
+                result = ConversionResult((Literal("x"),))
+                with self.assertRaisesRegex(DslError, "unknown policy rules"):
+                    result.resolve({rule_id: "one"})
 
     def test_e_glide_resolves_under_named_policies(self) -> None:
         value = "pro{{E_GLIDE|plain=e|glide=ye}}kt"
@@ -110,45 +112,6 @@ class ConversionDslTests(unittest.TestCase):
             result.resolve({"OTHER": "one"})
         with self.assertRaisesRegex(DslError, "unknown option"):
             result.resolve({"E_GLIDE": "other"})
-
-    def test_russian_sign_glide_rule_resolves_by_policy(self) -> None:
-        value = "komp{{RUS_SIGN|omit=|preserve=ʼ}}yuter"
-
-        self.assertEqual(resolve_dsl(value), "kompʼyuter")
-        self.assertEqual(resolve_dsl(value, {"RUS_SIGN": "omit"}), "kompyuter")
-        self.assertEqual(
-            resolve_dsl(value, {"RUS_SIGN": "preserve"}),
-            "kompʼyuter",
-        )
-
-    def test_russian_soft_sign_rule_resolves_by_policy(self) -> None:
-        value = "rol{{RUS_SIGN|omit=|preserve=ʼ}}"
-
-        self.assertEqual(resolve_dsl(value), "rolʼ")
-        self.assertEqual(resolve_dsl(value, {"RUS_SIGN": "omit"}), "rol")
-        self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "rolʼ")
-        self.assertEqual(resolve_dsl(value, PREFERRED_POLICY), "rolʼ")
-
-    def test_russian_jotation_rule_resolves_by_policy(self) -> None:
-        value = "b{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}uro"
-
-        self.assertEqual(resolve_dsl(value), "byuro")
-        self.assertEqual(
-            resolve_dsl(value, {"RUS_JOTATION": "glide"}),
-            "byuro",
-        )
-        self.assertEqual(
-            resolve_dsl(value, {"RUS_JOTATION": "apostrophe"}),
-            "bʼuro",
-        )
-        self.assertEqual(resolve_dsl(value, PDF_COMPACT_POLICY), "byuro")
-
-    def test_russian_shch_yo_uses_jotation_plain_option(self) -> None:
-        value = "şç{{RUS_JOTATION|glide=y|apostrophe=ʼ|plain=}}otka"
-
-        self.assertEqual(resolve_dsl(value), "şçyotka")
-        self.assertEqual(resolve_dsl(value, {"RUS_JOTATION": "apostrophe"}), "şçʼotka")
-        self.assertEqual(resolve_dsl(value, {"RUS_JOTATION": "plain"}), "şçotka")
 
     def test_rejects_removed_native_uw_rule(self) -> None:
         value = "bu{{NATIVE_UW|plain=|glide=w}}a"

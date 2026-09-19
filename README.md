@@ -331,23 +331,20 @@ The command writes 500-task batch files such as
 matching Label Studio project. Hamza has routing priority over catchall and
 multi-rule projects. New conversions deterministically preserve ordinary
 Russian soft/hard signs as `ʼ` and use an explicit `y` glide for Russian
-consonant + `я/ю/ё`. They follow ordinary routing and appear as plain editable
-text when review is otherwise required. The specialized sign-plus-vowel rules `RUS_SIGN_E` and
-`RUS_SOFT_SIGN_O` remain in their focused projects. The
+consonant + `я/ю/ё`. Russian `ье` deterministically becomes `ʼye`, while
+Russian `ъе` becomes `ye`. They follow ordinary routing and appear as plain
+editable text when review is otherwise required. `RUS_SOFT_SIGN_O` remains the
+only focused Russian-sign rule. The
 command also writes `project_<key>_instructions.html` for every active
 category. Each dictionary word is exported once. If a word has multiple DSL
 rules it goes to `complex_multi_rule`; otherwise it goes to the matching
 DSL-rule project or to `catchall`.
-Previously exported focused `rus_sign`, `rus_jotation`, and `ts` batches remain
-importable.
 Unresolved `U` words are collected into one focused `unknown_origin` project.
 This keeps unknown compounds, abbreviations/fragments, Tatar-specific words,
 conditional-letter words, and other unresolved words in one annotation queue.
 Words containing `ц` need no special project routing. Cyrillic `ц` now defaults
 to `ts` in plain Zamanalif suggestions, while consecutive `цц` collapses to one
 `ts`; `ц` does not control project routing.
-Annotators can edit a catch-all suggestion to `s` for a verified lexical
-exception.
 
 All unknown-origin tasks receive an editable suggestion from a simple origin
 heuristic: a word containing any Tatar-specific Cyrillic letter (`ә`, `ө`, `ү`,

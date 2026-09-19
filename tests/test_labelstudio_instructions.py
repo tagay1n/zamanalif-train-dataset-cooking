@@ -47,7 +47,7 @@ class LabelStudioInstructionTests(unittest.TestCase):
         self.assertIn("defaults to ts", html)
         self.assertIn("цирк → tsirk", html)
         self.assertIn("федераль → federalʼ", html)
-        self.assertIn("Edit the plain text to keep or remove ʼ", html)
+        self.assertIn("ье converts to ʼye and ъе to ye", html)
 
 
 if __name__ == "__main__":

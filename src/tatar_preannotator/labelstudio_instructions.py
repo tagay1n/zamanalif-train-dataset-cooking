@@ -13,10 +13,6 @@ RULE_GUIDANCE: dict[str, tuple[str, tuple[tuple[str, tuple[str, ...]], ...]]] = 
         "Choose whether е is plain e or has an explicit y glide.",
         (("проект", ("proekt", "proyekt")),),
     ),
-    "TS": (
-        "Legacy stored TS choices can still be read; new suggestions are plain and default to ts.",
-        (),
-    ),
     "MOSTAQIL": (
         "Choose the attested spelling of the мөстәкыйль stem.",
         (("мөстәкыйль", ("möstäqil", "möstäqıyl")),),
@@ -45,24 +41,9 @@ RULE_GUIDANCE: dict[str, tuple[str, tuple[tuple[str, tuple[str, ...]], ...]]] = 
         "Choose whether an Arabic/Persian hamza is omitted or represented by ʼ.",
         (("коръән", ("qorän", "qorʼän")),),
     ),
-    "RUS_SIGN": (
-        "Choose whether a Russian soft or hard sign is omitted or represented by ʼ.",
-        (
-            ("роль", ("rol", "rolʼ")),
-            ("компьютер", ("kompyuter", "kompʼyuter")),
-        ),
-    ),
-    "RUS_SIGN_E": (
-        "Choose how a Russian sign before е is represented: y, ʼ, or ʼy.",
-        (("барьер", ("baryer", "barʼer", "barʼyer")),),
-    ),
     "RUS_SOFT_SIGN_O": (
         "Choose how a Russian soft sign before о is represented.",
         (("батальон", ("batalon", "batalʼon", "batalʼyon")),),
-    ),
-    "RUS_JOTATION": (
-        "Choose whether Russian я/ю uses a y glide, an apostrophe, or neither.",
-        (("бюро", ("byuro", "bʼuro", "buro")),),
     ),
 }
 
@@ -201,13 +182,10 @@ def _focus(project_key: str, rule_ids: Iterable[str]) -> str:
             + "\n  </ul>\n"
             "  <p>For ordinary Russian soft or hard signs (ь/ъ), the suggestion "
             "preserves the sign as ʼ, for example федераль → federalʼ, культура → "
-            "kulʼtura, and роль → rolʼ. Edit the plain text to keep or remove ʼ as "
-            "appropriate. Signs before е or о may use a focused project.</p>\n"
-            "  <p>Russian consonant + я/ю/ё is reviewed here as one plain editable "
-            "preferred spelling with an explicit <b>y</b> glide. Edit it to an "
-            "apostrophe or plain form only for a verified lexical exception. The "
-            "specialized sign-plus-vowel rules <b>RUS_SIGN_E</b> and "
-            "<b>RUS_SOFT_SIGN_O</b> remain focused projects.</p>\n"
+            "kulʼtura, and роль → rolʼ. Russian ье converts to ʼye and ъе to ye. "
+            "Russian consonant + я/ю/ё uses an explicit <b>y</b> glide.</p>\n"
+            "  <p>The specialized <b>RUS_SOFT_SIGN_O</b> rule remains a focused "
+            "project; all other Russian-sign conventions are deterministic.</p>\n"
             "</section>"
         )
 

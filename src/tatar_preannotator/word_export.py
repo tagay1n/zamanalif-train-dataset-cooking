@@ -33,10 +33,7 @@ from tatar_preannotator.conversion import (
     RULES,
     MASHGUL_STEM_RULE,
     MOSTAQIL_RULE,
-    RUS_JOTATION_RULE,
-    RUS_SIGN_E_RULE,
     RUS_SOFT_SIGN_O_RULE,
-    RUS_SIGN_RULE,
     SHIGYR_STEM_RULE,
     YA_RULE,
     ZAMANALIF_APOSTROPHE,
@@ -674,12 +671,8 @@ def classify_project(word: str, label: str) -> dict[str, Any]:
         key = "complex_multi_rule"
         title = "Complex multi-rule words"
     elif len(rules) == 1:
-        if rules[0] in {RUS_SIGN_RULE.rule_id, RUS_JOTATION_RULE.rule_id}:
-            key = "catchall"
-            title = project_title_for_key(key)
-        else:
-            key = _project_key_for_rule(rules[0])
-            title = project_title_for_key(key)
+        key = _project_key_for_rule(rules[0])
+        title = project_title_for_key(key)
     else:
         key = "catchall"
         title = "Catchall word review"
@@ -687,28 +680,9 @@ def classify_project(word: str, label: str) -> dict[str, Any]:
 
 
 def word_belongs_to_project(word: str, origin: str, project_key: str) -> bool:
-    """Return whether a word belongs to a current or legacy dictionary project."""
+    """Return whether a word belongs to a current dictionary project."""
     classification = classify_project(word, origin)
     if classification["key"] == project_key:
-        return True
-    if project_key == "ts" and "ц" in word.casefold():
-        # Keep legacy ts project backups importable without routing new tasks there.
-        return True
-    if (
-        project_key == "rus_sign"
-        and origin == "RL"
-        and classification["dsl_rules"] == [RUS_SIGN_RULE.rule_id]
-    ):
-        # Prior focused rus_sign exports remain importable after ordinary sign
-        # reviews moved to catchall. Do not apply this to multi-rule words.
-        return True
-    if (
-        project_key == "rus_jotation"
-        and origin != "U"
-        and classification["dsl_rules"] == [RUS_JOTATION_RULE.rule_id]
-    ):
-        # Prior focused jotation exports remain importable after pure jotation
-        # reviews moved to catchall. Do not apply this to multi-rule words.
         return True
     return (
         project_key in LEGACY_UNKNOWN_PROJECT_KEYS
@@ -1487,58 +1461,32 @@ def result_with_specialized_russian_sign_choices(
     converted: str,
     label: str,
 ) -> ConversionResult:
-    """Annotate only the remaining sign-plus-e/o policy choices.
-
-    Ordinary Russian signs and signs before я/ю are deterministic apostrophes.
-    """
+    """Annotate the remaining focused Russian soft-sign-plus-o choice only."""
     if label != "RL" or not any(sign in source for sign in "ьъ"):
         return ConversionResult((Literal(converted),))
 
     segments: list[Literal | Choice] = []
     source_index = 0
     converted_index = 0
-    previous_sign_before_e = False
     while source_index < len(source):
         char = source[source_index]
         if (
             char in {"ь", "ъ"}
             and source_index + 1 < len(source)
-            and source[source_index + 1] in {"я", "ю", "е", "о"}
+            and source[source_index + 1] == "о"
+            and char == "ь"
         ):
-            next_char = source[source_index + 1]
-            if next_char == "е":
-                if converted.startswith("y", converted_index):
-                    converted_index += 1
-                elif converted.startswith(ZAMANALIF_APOSTROPHE, converted_index):
-                    converted_index += 1
-                else:
-                    return ConversionResult((Literal(converted),))
-                segments.append(Choice(RUS_SIGN_E_RULE.rule_id, RUS_SIGN_E_RULE.options))
-                previous_sign_before_e = True
-                source_index += 1
-                continue
-            if next_char == "о":
-                if converted.startswith(ZAMANALIF_APOSTROPHE + "y", converted_index):
-                    converted_index += 2
-                elif converted.startswith(ZAMANALIF_APOSTROPHE, converted_index):
-                    converted_index += 1
-                segments.append(
-                    Choice(RUS_SOFT_SIGN_O_RULE.rule_id, RUS_SOFT_SIGN_O_RULE.options)
-                )
-                source_index += 1
-                continue
-            if not converted.startswith(ZAMANALIF_APOSTROPHE, converted_index):
-                return ConversionResult((Literal(converted),))
-            segments.append(Literal(ZAMANALIF_APOSTROPHE))
-            converted_index += 1
+            if converted.startswith(ZAMANALIF_APOSTROPHE + "y", converted_index):
+                converted_index += 2
+            elif converted.startswith(ZAMANALIF_APOSTROPHE, converted_index):
+                converted_index += 1
+            segments.append(
+                Choice(RUS_SOFT_SIGN_O_RULE.rule_id, RUS_SOFT_SIGN_O_RULE.options)
+            )
             source_index += 1
             continue
 
-        if char == "е" and previous_sign_before_e:
-            latin = "e"
-            previous_sign_before_e = False
-        else:
-            latin = _char_conversion(char, source, source_index, label)
+        latin = _char_conversion(char, source, source_index, label)
         if latin and converted.startswith(latin, converted_index):
             segments.append(Literal(latin))
             converted_index += len(latin)
@@ -2240,7 +2188,7 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
         return _conditional_char_conversion(char, word, index, label)
     if label == "RL" and char in {"ь", "ъ"}:
         if index + 1 < len(word) and word[index + 1] == "е":
-            return ""
+            return ZAMANALIF_APOSTROPHE if char == "ь" else ""
         return ZAMANALIF_APOSTROPHE
     return _deterministic_char(char)
 
@@ -2670,6 +2618,8 @@ def _e_conversion(word: str, index: int, label: str) -> str:
     if previous in {"и", "ү"}:
         return "e"
     if previous in {"ь", "ъ"}:
+        if label == "N" and previous == "ъ":
+            return "ye"
         if label == "N" and word[index:].startswith("ел"):
             return "yı"
         return "ye"
@@ -2932,11 +2882,7 @@ def dictionary_project_keys() -> set[str]:
     """Return every strict project key produced by dictionary split export."""
     return {
         "complex_multi_rule",
-        *(
-            _project_key_for_rule(rule_id)
-            for rule_id in RULES
-            if rule_id not in {"TS", RUS_JOTATION_RULE.rule_id}
-        ),
+        *(_project_key_for_rule(rule_id) for rule_id in RULES),
         UNKNOWN_ORIGIN_PROJECT_KEY,
         *LEGACY_UNKNOWN_PROJECT_KEYS,
         "catchall",

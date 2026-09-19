@@ -629,13 +629,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("европалы", "RL"), "yevropalı")
         self.assertEqual(convert_for_annotation("евразияле", "N"), "yewraziyäle")
         self.assertEqual(convert_for_annotation("епископ", "RL"), "yepiskop")
-        self.assertEqual(
-            resolve_dsl(
-                convert_for_annotation_dsl("епископаль", "RL"),
-                {"RUS_SIGN": "omit"},
-            ),
-            "yepiskopalʼ",
-        )
+        self.assertEqual(convert_for_annotation_dsl("епископаль", "RL"), "yepiskopalʼ")
         self.assertEqual(convert_for_annotation("ефәксыман", "N"), "yefäksıman")
         self.assertEqual(convert_for_annotation("е", "N"), "yı")
         self.assertEqual(convert_for_annotation("килүе", "N"), "kilüe")
@@ -1252,24 +1246,8 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation_dsl("секретарь", "RL"), "sekretarʼ")
         self.assertEqual(convert_for_annotation_dsl("коньяк", "RL"), "konʼyak")
         self.assertEqual(convert_for_annotation_dsl("тальян", "RL"), "talʼyan")
-        self.assertEqual(
-            convert_for_annotation_dsl("объективлык", "RL"),
-            "ob{{RUS_SIGN_E|glide=y|apostrophe=ʼ|apostrophe_glide=ʼy}}ektivlıq",
-        )
-        self.assertEqual(
-            resolve_dsl(
-                convert_for_annotation_dsl("объективлык", "RL"),
-                {"RUS_SIGN_E": "apostrophe"},
-            ),
-            "obʼektivlıq",
-        )
-        self.assertEqual(
-            resolve_dsl(
-                convert_for_annotation_dsl("ателье", "RL"),
-                {"RUS_SIGN_E": "apostrophe_glide"},
-            ),
-            "atelʼye",
-        )
+        self.assertEqual(convert_for_annotation_dsl("объективлык", "RL"), "obyektivlıq")
+        self.assertEqual(convert_for_annotation_dsl("ателье", "RL"), "atelʼye")
         self.assertEqual(
             convert_for_annotation_dsl("батальон", "RL"),
             "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}on",
@@ -1289,6 +1267,39 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ),
             "poçtalʼyon",
         )
+
+    def test_russian_sign_e_is_deterministic_in_every_context(self) -> None:
+        cases = {
+            "пьеса": "pʼyesa",
+            "ателье": "atelʼye",
+            "барьер": "barʼyer",
+            "премьер": "premʼyer",
+            "печенье": "peçenʼye",
+            "объект": "obyekt",
+            "съезд": "syezd",
+            "подъезд": "podyezd",
+            "субъект": "subyekt",
+            "пьесахье": "pʼyesaxʼye",
+            "пьесапьеса": "pʼyesapʼyesa",
+            "Пьеса": "Pʼyesa",
+            "ПЬЕСА": "PʼYESA",
+        }
+        for word, expected in cases.items():
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "RL"), expected)
+                dsl = convert_for_annotation_dsl(word, "RL")
+                self.assertEqual(dsl, expected)
+                self.assertNotIn("RUS_SIGN_E", dsl)
+
+    def test_native_sign_e_sequences_remain_native(self) -> None:
+        for word, expected in {
+            "йөзьеллык": "yözyıllıq",
+            "меңьеллык": "meñyıllıq",
+            "унъеллык": "unyellıq",
+        }.items():
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
     def test_russian_jotated_softening_is_deterministic(self) -> None:
         cases = [
@@ -1335,10 +1346,6 @@ class PreannotatorWordExportTests(unittest.TestCase):
             "geralʼdika",
         )
         self.assertEqual(resolve_dsl(dsl), "geralʼdika")
-        self.assertEqual(
-            resolve_dsl(dsl, {"RUS_SIGN": "preserve"}),
-            "geralʼdika",
-        )
 
     def test_russian_jotated_softening_and_final_soft_sign_are_deterministic(self) -> None:
         dsl = convert_for_annotation_dsl("князь", "RL")
@@ -1489,11 +1496,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertNotIn("iya", result.projects)
         self.assertNotIn("rl_y", result.projects)
-        self.assertIn("rus_sign_e", result.projects)
+        self.assertNotIn("rus_sign_e", result.projects)
         self.assertIn("catchall", result.projects)
         self.assertEqual(
             {task["data"]["cyrl_word"] for task in result.projects["catchall"].tasks},
-            {"вакыт", "музыка", "орфография"},
+            {"вакыт", "музыка", "орфография", "объективлык"},
         )
         self.assertEqual(result.report["exported_word_count"], 4)
 
@@ -1852,7 +1859,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_sign_plus_vowel_and_multi_rule_projects_remain_focused(self) -> None:
         cases = (
-            ("объект", "rus_sign_e", ["RUS_SIGN_E"]),
+            ("объект", "catchall", []),
             ("батальон", "rus_soft_sign_o", ["RUS_SOFT_SIGN_O"]),
             ("бюро", "catchall", []),
             ("октябрь", "catchall", []),
@@ -2202,12 +2209,12 @@ class PreannotatorWordExportTests(unittest.TestCase):
             )
             result = export_labelstudio_project_tasks_from_db(db_path)
             result.projects["catchall"].tasks[0]["data"]["auto_zamanalif"] = (
-                "waqı{{TS|s=s|ts=ts}}t"
+                "waqı{{UNKNOWN|one=a|two=b}}t"
             )
 
             with self.assertRaisesRegex(
                 AnnotationExportError,
-                "suggestion does not match canonical conversion",
+                "invalid visible Zamanalif suggestion",
             ):
                 validate_split_export_result(result)
 

@@ -42,9 +42,10 @@ catch-all annotator may edit `ts` to `s` for a verified lexical exception.
   `HAMZA` omit/preserve policy and are routed only to the `hamza` dictionary
   project. One representative covers every observed form of the exact lexical
   family. New conversions deterministically preserve ordinary Russian
-  soft/hard signs as ʼ and use an explicit `y` glide for Russian consonant +
-  `я/ю/ё`; these no longer generate DSL choices. The specialized sign-plus-vowel rules
-  `RUS_SIGN_E` and `RUS_SOFT_SIGN_O` remain in their focused projects. Words
+  soft/hard signs as ʼ, use an explicit `y` glide for Russian consonant +
+  `я/ю/ё`, convert `ье` to `ʼye`, and convert `ъе` to `ye`; these no longer
+  generate DSL choices. `RUS_SOFT_SIGN_O` remains the focused Russian-sign
+  rule. Words
   with multiple rules remain in `complex_multi_rule`.
 - **Native-looking mixed-harmony words.** If Gemini labels a word `N` and the
   word has mixed front/back vowels, skip it for Project 1 unless it belongs to

@@ -86,11 +86,6 @@ E_GLIDE_RULE = RuleDefinition(
     options=(("plain", "e"), ("glide", "ye")),
     default_option="glide",
 )
-TS_RULE = RuleDefinition(
-    rule_id="TS",
-    options=(("s", "s"), ("ts", "ts")),
-    default_option="ts",
-)
 MOSTAQIL_RULE = RuleDefinition(
     rule_id="MOSTAQIL",
     options=(("pdf", "qil"), ("antat", "qıyl")),
@@ -127,20 +122,6 @@ HAMZA_RULE = RuleDefinition(
     options=(("omit", ""), ("preserve", ZAMANALIF_APOSTROPHE)),
     default_option="omit",
 )
-RUS_SIGN_RULE = RuleDefinition(
-    rule_id="RUS_SIGN",
-    options=(("omit", ""), ("preserve", ZAMANALIF_APOSTROPHE)),
-    default_option="preserve",
-)
-RUS_SIGN_E_RULE = RuleDefinition(
-    rule_id="RUS_SIGN_E",
-    options=(
-        ("glide", "y"),
-        ("apostrophe", ZAMANALIF_APOSTROPHE),
-        ("apostrophe_glide", ZAMANALIF_APOSTROPHE + "y"),
-    ),
-    default_option="glide",
-)
 RUS_SOFT_SIGN_O_RULE = RuleDefinition(
     rule_id="RUS_SOFT_SIGN_O",
     options=(
@@ -150,16 +131,10 @@ RUS_SOFT_SIGN_O_RULE = RuleDefinition(
     ),
     default_option="preserve",
 )
-RUS_JOTATION_RULE = RuleDefinition(
-    rule_id="RUS_JOTATION",
-    options=(("glide", "y"), ("apostrophe", ZAMANALIF_APOSTROPHE), ("plain", "")),
-    default_option="glide",
-)
 RULES: Mapping[str, RuleDefinition] = MappingProxyType(
     {
         YA_RULE.rule_id: YA_RULE,
         E_GLIDE_RULE.rule_id: E_GLIDE_RULE,
-        TS_RULE.rule_id: TS_RULE,
         MOSTAQIL_RULE.rule_id: MOSTAQIL_RULE,
         FIGYL_STEM_RULE.rule_id: FIGYL_STEM_RULE,
         SHIGYR_STEM_RULE.rule_id: SHIGYR_STEM_RULE,
@@ -167,17 +142,13 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         KAGAZ_STEM_RULE.rule_id: KAGAZ_STEM_RULE,
         MASHGUL_STEM_RULE.rule_id: MASHGUL_STEM_RULE,
         HAMZA_RULE.rule_id: HAMZA_RULE,
-        RUS_SIGN_RULE.rule_id: RUS_SIGN_RULE,
-        RUS_SIGN_E_RULE.rule_id: RUS_SIGN_E_RULE,
         RUS_SOFT_SIGN_O_RULE.rule_id: RUS_SOFT_SIGN_O_RULE,
-        RUS_JOTATION_RULE.rule_id: RUS_JOTATION_RULE,
     }
 )
 PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
     {
         "YA": "ya",
         "E_GLIDE": "glide",
-        "TS": "ts",
         "MOSTAQIL": "antat",
         "FIGYL_STEM": "antat",
         "SHIGYR_STEM": "antat",
@@ -185,17 +156,13 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "KAGAZ_STEM": "antat",
         "MASHGUL_STEM": "antat",
         "HAMZA": "omit",
-        "RUS_SIGN": "preserve",
-        "RUS_SIGN_E": "glide",
         "RUS_SOFT_SIGN_O": "preserve",
-        "RUS_JOTATION": "glide",
     }
 )
 PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
     {
         "YA": "ae",
         "E_GLIDE": "glide",
-        "TS": "ts",
         "MOSTAQIL": "pdf",
         "FIGYL_STEM": "pdf",
         "SHIGYR_STEM": "pdf",
@@ -203,10 +170,7 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "KAGAZ_STEM": "pdf",
         "MASHGUL_STEM": "pdf",
         "HAMZA": "preserve",
-        "RUS_SIGN": "preserve",
-        "RUS_SIGN_E": "glide",
         "RUS_SOFT_SIGN_O": "preserve",
-        "RUS_JOTATION": "glide",
     }
 )
 
