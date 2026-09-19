@@ -122,15 +122,6 @@ HAMZA_RULE = RuleDefinition(
     options=(("omit", ""), ("preserve", ZAMANALIF_APOSTROPHE)),
     default_option="omit",
 )
-RUS_SOFT_SIGN_O_RULE = RuleDefinition(
-    rule_id="RUS_SOFT_SIGN_O",
-    options=(
-        ("omit", ""),
-        ("preserve", ZAMANALIF_APOSTROPHE),
-        ("apostrophe_y", ZAMANALIF_APOSTROPHE + "y"),
-    ),
-    default_option="preserve",
-)
 RULES: Mapping[str, RuleDefinition] = MappingProxyType(
     {
         YA_RULE.rule_id: YA_RULE,
@@ -142,7 +133,6 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         KAGAZ_STEM_RULE.rule_id: KAGAZ_STEM_RULE,
         MASHGUL_STEM_RULE.rule_id: MASHGUL_STEM_RULE,
         HAMZA_RULE.rule_id: HAMZA_RULE,
-        RUS_SOFT_SIGN_O_RULE.rule_id: RUS_SOFT_SIGN_O_RULE,
     }
 )
 # ``RULES`` is the complete parseable registry.  E_GLIDE remains here solely so
@@ -166,7 +156,6 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "KAGAZ_STEM": "antat",
         "MASHGUL_STEM": "antat",
         "HAMZA": "omit",
-        "RUS_SOFT_SIGN_O": "preserve",
     }
 )
 PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
@@ -180,7 +169,6 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "KAGAZ_STEM": "pdf",
         "MASHGUL_STEM": "pdf",
         "HAMZA": "preserve",
-        "RUS_SOFT_SIGN_O": "preserve",
     }
 )
 

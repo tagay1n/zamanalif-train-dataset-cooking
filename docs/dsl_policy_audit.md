@@ -7,7 +7,7 @@ of a DSL choice.
 
 ## Kept as Active DSL
 
-- `RUS_SOFT_SIGN_O`: the remaining focused Russian-sign choice.
+No Russian-sign DSL rules remain.
 
 `E_GLIDE` remains parseable and resolvable only for legacy stored reviews. It
 is not an active annotation rule and no new conversion or export emits it.
@@ -19,6 +19,9 @@ is not an active annotation rule and no new conversion or export emits it.
   conversions.
 - Cyrillic `ц` always renders as plain `ts` in new conversions.
 - Russian `ье` always renders as `ʼye`; Russian `ъе` always renders as `ye`.
+- Russian `ьо` always renders as `ʼo`; neither `ʼyo` nor omission is active.
+  Former `ьо` words use ordinary routing and may still require catchall review
+  because of other conditional letters.
 - Eligible Cyrillic `ие` always renders as `iye` in new conversions. This
   includes the `проект` family (`проект -> proyekt`) and native forms such as
   `тиеш -> tiyeş`. Exact surname endings `-иев`, `-иева`, `-әев`, and `-әева`

@@ -331,10 +331,11 @@ The command writes 500-task batch files such as
 matching Label Studio project. Hamza has routing priority over catchall and
 multi-rule projects. New conversions deterministically preserve ordinary
 Russian soft/hard signs as `ʼ` and use an explicit `y` glide for Russian
-consonant + `я/ю/ё`. Russian `ье` deterministically becomes `ʼye`, while
-Russian `ъе` becomes `ye`. They follow ordinary routing and appear as plain
-editable text when review is otherwise required. `RUS_SOFT_SIGN_O` remains the
-only focused Russian-sign rule. The
+consonant + `я/ю/ё`. Russian `ье` deterministically becomes `ʼye`, Russian
+`ъе` becomes `ye`, and Russian `ьо` becomes `ʼo`. These have no DSL
+alternatives and follow ordinary routing, appearing as plain editable text
+when review is otherwise required; other conditional letters may still send a
+word to catchall. The
 command also writes `project_<key>_instructions.html` for every active
 category. Each dictionary word is exported once. No new `e_glide` project is
 generated: former E-glide candidates follow ordinary routing, normally

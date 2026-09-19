@@ -32,7 +32,6 @@ from tatar_preannotator.conversion import (
     Literal,
     MASHGUL_STEM_RULE,
     MOSTAQIL_RULE,
-    RUS_SOFT_SIGN_O_RULE,
     SHIGYR_STEM_RULE,
     YA_RULE,
     ZAMANALIF_APOSTROPHE,
@@ -1197,9 +1196,6 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
             word,
             ConversionResult((Literal(compact),)),
         )
-    result = result_with_specialized_russian_sign_choices(word, compact, label)
-    if result.has_choices:
-        return result
     result = ConversionResult((Literal(compact),))
     result = result_with_figyl_stem_choices(word, result)
     result = result_with_shigyr_stem_choices(word, result)
@@ -1414,51 +1410,6 @@ def _append_literal_segment(segments: list[Literal | Choice], text: str) -> None
         segments[-1] = Literal(segments[-1].text + text)
         return
     segments.append(Literal(text))
-
-
-def result_with_specialized_russian_sign_choices(
-    source: str,
-    converted: str,
-    label: str,
-) -> ConversionResult:
-    """Annotate the remaining focused Russian soft-sign-plus-o choice only."""
-    if label != "RL" or not any(sign in source for sign in "ьъ"):
-        return ConversionResult((Literal(converted),))
-
-    segments: list[Literal | Choice] = []
-    source_index = 0
-    converted_index = 0
-    while source_index < len(source):
-        char = source[source_index]
-        if (
-            char in {"ь", "ъ"}
-            and source_index + 1 < len(source)
-            and source[source_index + 1] == "о"
-            and char == "ь"
-        ):
-            if converted.startswith(ZAMANALIF_APOSTROPHE + "y", converted_index):
-                converted_index += 2
-            elif converted.startswith(ZAMANALIF_APOSTROPHE, converted_index):
-                converted_index += 1
-            segments.append(
-                Choice(RUS_SOFT_SIGN_O_RULE.rule_id, RUS_SOFT_SIGN_O_RULE.options)
-            )
-            source_index += 1
-            continue
-
-        latin = _char_conversion(char, source, source_index, label)
-        if latin and converted.startswith(latin, converted_index):
-            segments.append(Literal(latin))
-            converted_index += len(latin)
-        elif char == "ц" and source_index > 0 and source[source_index - 1] == "ц":
-            pass
-        else:
-            return ConversionResult((Literal(converted),))
-        source_index += 1
-
-    if converted_index != len(converted):
-        return ConversionResult((Literal(converted),))
-    return ConversionResult(tuple(segments))
 
 
 def _merge_adjacent_literals(result: ConversionResult) -> ConversionResult:

@@ -13,7 +13,7 @@ from tests.morphology_fakes import FakeMorphologyAnalyzer
 from tatar_preannotator.cli import main
 from tatar_preannotator.conflict_resolver import save_word_resolution
 from tatar_preannotator.contextual_review import export_contextual_tasks_from_db
-from tatar_preannotator.conversion import resolve_dsl
+from tatar_preannotator.conversion import DslError, parse_dsl, resolve_dsl
 from tatar_preannotator.word_export import (
     AnnotationExportError,
     annotation_suggestion,
@@ -23,6 +23,7 @@ from tatar_preannotator.word_export import (
     conversion_branches,
     convert_for_annotation,
     convert_for_annotation_dsl,
+    dictionary_project_keys,
     export_labelstudio_project_tasks_from_db,
     export_labelstudio_tasks_from_db,
     guess_unknown_tatar_specific_origin,
@@ -1253,25 +1254,33 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation_dsl("тальян", "RL"), "talʼyan")
         self.assertEqual(convert_for_annotation_dsl("объективлык", "RL"), "obyektivlıq")
         self.assertEqual(convert_for_annotation_dsl("ателье", "RL"), "atelʼye")
-        self.assertEqual(
-            convert_for_annotation_dsl("батальон", "RL"),
-            "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}on",
-        )
-        self.assertEqual(resolve_dsl(convert_for_annotation_dsl("батальон", "RL")), "batalʼon")
-        self.assertEqual(
-            resolve_dsl(
-                convert_for_annotation_dsl("батальон", "RL"),
-                {"RUS_SOFT_SIGN_O": "apostrophe_y"},
-            ),
-            "batalʼyon",
-        )
-        self.assertEqual(
-            resolve_dsl(
-                convert_for_annotation_dsl("почтальон", "RL"),
-                {"RUS_SOFT_SIGN_O": "apostrophe_y"},
-            ),
-            "poçtalʼyon",
-        )
+        cases = {
+            "батальон": "batalʼon",
+            "павильон": "pavilʼon",
+            "компаньон": "kompanʼon",
+            "почтальон": "poçtalʼon",
+            "гильотина": "gilʼotina",
+            "мурильо": "murilʼo",
+            "казаньоргсинтез": "kazanʼorgsintez",
+            "батальонга": "batalʼonğa",
+            "павильоннарында": "pavilʼonnarında",
+            "Батальон": "Batalʼon",
+            "БАТАЛЬОН": "BATALʼON",
+            "батьобьо": "batʼobʼo",
+        }
+        for word, expected in cases.items():
+            with self.subTest(word=word):
+                converted = convert_for_annotation_dsl(word, "RL")
+                self.assertEqual(converted, expected)
+                self.assertNotIn("RUS_SOFT_SIGN_O", converted)
+                self.assertNotIn("ʼyo", converted.casefold())
+
+    def test_removed_russian_soft_sign_o_dsl_is_unknown(self) -> None:
+        old_dsl = "batal{{RUS_SOFT_SIGN_O|omit=|preserve=ʼ|apostrophe_y=ʼy}}on"
+        with self.assertRaisesRegex(DslError, "unknown rule id: RUS_SOFT_SIGN_O"):
+            parse_dsl(old_dsl)
+        with self.assertRaisesRegex(DslError, "unknown policy rules: RUS_SOFT_SIGN_O"):
+            resolve_dsl("batalʼon", {"RUS_SOFT_SIGN_O": "apostrophe_y"})
 
     def test_russian_sign_e_is_deterministic_in_every_context(self) -> None:
         cases = {
@@ -1863,10 +1872,10 @@ class PreannotatorWordExportTests(unittest.TestCase):
             classify_project("бюро", "U")["key"], "unknown_origin"
         )
 
-    def test_sign_plus_vowel_and_multi_rule_projects_remain_focused(self) -> None:
+    def test_sign_plus_vowel_words_follow_ordinary_routing(self) -> None:
         cases = (
             ("объект", "catchall", []),
-            ("батальон", "rus_soft_sign_o", ["RUS_SOFT_SIGN_O"]),
+            ("батальон", "catchall", []),
             ("бюро", "catchall", []),
             ("октябрь", "catchall", []),
         )
@@ -1875,6 +1884,26 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 project = classify_project(word, "RL")
                 self.assertEqual(project["key"], expected_key)
                 self.assertEqual(project["dsl_rules"], expected_rules)
+        self.assertNotIn("rus_soft_sign_o", classify_project("батальон", "RL")["key"])
+        self.assertNotIn("rus_soft_sign_o", dictionary_project_keys())
+        self.assertEqual(conversion_branches("ц").state, "origin_independent")
+
+    def test_former_soft_sign_o_catchall_suggestion_is_plain(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [{"id": "sent_1", "tatar": True, "tokens": [
+                    {"text": "Батальон", "label": "RL"},
+                ]}],
+            )
+            result = export_labelstudio_project_tasks_from_db(
+                db_path, morphology_analyzer=self.analyzer
+            )
+        task = result.projects["catchall"].tasks[0]
+        self.assertEqual(task["data"]["auto_zamanalif"], "batalʼon")
+        self.assertNotIn("{{", task["data"]["auto_zamanalif"])
+        self.assertNotIn("\n", task["data"]["auto_zamanalif"])
+        self.assertNotIn("rus_soft_sign_o", result.projects)
 
     def test_literal_hamza_project_writes_dedicated_output_and_instructions(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

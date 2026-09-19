@@ -43,9 +43,9 @@ catch-all annotator may edit `ts` to `s` for a verified lexical exception.
   project. One representative covers every observed form of the exact lexical
   family. New conversions deterministically preserve ordinary Russian
   soft/hard signs as ʼ, use an explicit `y` glide for Russian consonant +
-  `я/ю/ё`, convert `ье` to `ʼye`, and convert `ъе` to `ye`; these no longer
-  generate DSL choices. `RUS_SOFT_SIGN_O` remains the focused Russian-sign
-  rule. Words
+  `я/ю/ё`, convert `ье` to `ʼye`, convert `ъе` to `ye`, and convert `ьо` to
+  `ʼo`; no Russian-sign DSL rules remain. Former `ьо` cases follow ordinary
+  routing, so other conditional letters can still require catchall review. Words
   with multiple rules remain in `complex_multi_rule`.
 - **Eligible `ие`.** New conversions deterministically write `ие` as `iye`,
   including `проект -> proyekt` and `тиеш -> tiyeş`; former candidates follow

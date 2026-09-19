@@ -74,6 +74,11 @@ def _uses_retired_russian_dsl_policy(cyrillic: str, expected: str) -> bool:
     return any(char in folded for char in "яюё") and "ʼ" in normalized_expected
 
 
+def _uses_deterministic_russian_soft_sign_o_policy(cyrillic: str, expected: str) -> bool:
+    """Exclude only ANTAT's former ьо alternatives, not general soft signs."""
+    return "ьо" in cyrillic.casefold() and "ʼyo" in _normalize_gold_zamanalif(expected)
+
+
 def _normalize_gold_zamanalif(value: str) -> str:
     return normalize_zamanalif_apostrophes(value).casefold()
 
@@ -107,6 +112,7 @@ class AntatGoldReferenceTests(unittest.TestCase):
                 (cyrillic, align_id) in DELIBERATELY_EXCLUDED_ANTAT_POLICIES
                 or _uses_excluded_antat_native_uw_policy(cyrillic, expected)
                 or _uses_retired_russian_dsl_policy(cyrillic, expected)
+                or _uses_deterministic_russian_soft_sign_o_policy(cyrillic, expected)
                 or _uses_deterministic_ie_policy(cyrillic, expected)
             ):
                 continue

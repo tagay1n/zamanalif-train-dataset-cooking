@@ -119,8 +119,9 @@ Words containing these letters deserve converter analysis:
   `позиция -> pozitsiyä`, and `пицца -> pitsa`). Annotators may
   edit a catch-all suggestion to `s` only for a verified lexical exception.
 - In Russian-origin words, ordinary `ь/ъ` becomes `ʼ`, consonant + `я/ю/ё`
-  uses explicit `y`, `ье` becomes `ʼye`, and `ъе` becomes `ye`. The only
-  focused Russian-sign DSL rule is `RUS_SOFT_SIGN_O`.
+  uses explicit `y`, `ье` becomes `ʼye`, `ъе` becomes `ye`, and `ьо` becomes
+  `ʼo`. Russian-sign conversions are deterministic: `ʼyo` and omission are
+  not alternatives.
 
 `ц` no longer controls project routing. Tasks go to catchall, unknown-origin,
 or a focused project according to their other remaining review requirements.

@@ -56,6 +56,9 @@ class LabelStudioImportTests(unittest.TestCase):
     def test_retired_russian_sign_e_project_is_rejected(self) -> None:
         self._assert_retired_project_is_rejected("rus_sign_e")
 
+    def test_retired_russian_soft_sign_o_project_is_rejected(self) -> None:
+        self._assert_retired_project_is_rejected("rus_soft_sign_o")
+
     def test_imports_strict_dictionary_backup_and_skips_unannotated(self) -> None:
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

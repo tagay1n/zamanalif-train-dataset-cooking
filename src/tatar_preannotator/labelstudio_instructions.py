@@ -37,10 +37,6 @@ RULE_GUIDANCE: dict[str, tuple[str, tuple[tuple[str, tuple[str, ...]], ...]]] = 
         "Choose whether an Arabic/Persian hamza is omitted or represented by ʼ.",
         (("коръән", ("qorän", "qorʼän")),),
     ),
-    "RUS_SOFT_SIGN_O": (
-        "Choose how a Russian soft sign before о is represented.",
-        (("батальон", ("batalon", "batalʼon", "batalʼyon")),),
-    ),
 }
 
 UNKNOWN_GUIDANCE = {
@@ -180,8 +176,9 @@ def _focus(project_key: str, rule_ids: Iterable[str]) -> str:
             "preserves the sign as ʼ, for example федераль → federalʼ, культура → "
             "kulʼtura, and роль → rolʼ. Russian ье converts to ʼye and ъе to ye. "
             "Russian consonant + я/ю/ё uses an explicit <b>y</b> glide.</p>\n"
-            "  <p>The specialized <b>RUS_SOFT_SIGN_O</b> rule remains a focused "
-            "project; all other Russian-sign conventions are deterministic.</p>\n"
+            "  <p>Russian soft sign + о is deterministic: <b>ьо → ʼo</b>. "
+            "Neither ʼyo nor omission is an active alternative; words with other "
+            "conditional letters still follow ordinary catch-all review.</p>\n"
             "  <p>Eligible Cyrillic <b>ие</b> is deterministically <b>iye</b> "
             "in new conversions, including the проект family. Exact surname endings "
             "-иев, -иева, -әев, and -әева retain their established spellings.</p>\n"
