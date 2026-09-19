@@ -105,8 +105,9 @@ Words containing these letters deserve converter analysis:
 - `е`: initial native back-vowel `yı`, initial native front-vowel `ye`,
   internal native after consonant `e`, after `и` `e`. Loanword behavior needs
   review.
-- `ц`: always defaults to `ts`, at every position and in every origin branch
-  (for example, `цирк -> tsirk` and `позиция -> pozitsiyä`). Annotators may
+- `ц`: defaults to `ts`, at every position and in every origin branch; a
+  consecutive `цц` pair collapses to one `ts` (for example, `цирк -> tsirk`,
+  `позиция -> pozitsiyä`, and `пицца -> pitsa`). Annotators may
   edit a catch-all suggestion to `s` only for a verified lexical exception.
 
 `ц` no longer controls project routing. Tasks go to catchall, unknown-origin,

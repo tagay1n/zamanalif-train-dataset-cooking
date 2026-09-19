@@ -2564,17 +2564,17 @@ class ZamanalifPdfReferenceTests(unittest.TestCase):
             ]
         )
 
-    def test_each_c_in_italian_loans_defaults_to_ts(self) -> None:
+    def test_double_c_in_italian_loans_collapses_to_one_ts(self) -> None:
         self.assert_conversions(
             [
-                ("пицца", "RL", "pitstsa"),
-                ("моццарелла", "RL", "motstsarella"),
-                ("палаццо", "RL", "palatstso"),
-                ("меццо", "RL", "metstso"),
-                ("интермеццо", "RL", "intermetstso"),
-                ("папарацци", "RL", "paparatstsi"),
-                ("лаццарони", "RL", "latstsaroni"),
-                ("пиццерия", "RL", "pitstseriyä"),
+                ("пицца", "RL", "pitsa"),
+                ("моццарелла", "RL", "motsarella"),
+                ("палаццо", "RL", "palatso"),
+                ("меццо", "RL", "metso"),
+                ("интермеццо", "RL", "intermetso"),
+                ("папарацци", "RL", "paparatsi"),
+                ("лаццарони", "RL", "latsaroni"),
+                ("пиццерия", "RL", "pitseriyä"),
             ]
         )
 

@@ -24,7 +24,8 @@ Unresolved-origin word forms share one `unknown_origin` review project rather
 than separate projects by surface type. Genuine conversion-policy cases and
 contextual homonyms remain in their focused projects.
 
-Cyrillic `ц` now defaults to `ts` at every position. It does not control
+Cyrillic `ц` now defaults to `ts` at every position, with consecutive `цц`
+collapsing to one `ts`. It does not control
 project routing: words containing `ц` go to `catchall`, `unknown_origin`, or a
 focused project based on their other remaining review requirements. A
 catch-all annotator may edit `ts` to `s` for a verified lexical exception.

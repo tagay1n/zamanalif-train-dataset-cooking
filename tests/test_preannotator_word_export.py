@@ -1973,7 +1973,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
             ("аукцион", "auktsion"),
             ("процент", "protsent"),
             ("функция", "funktsiyä"),
-            ("пицца", "pitstsa"),
+            ("пицца", "pitsa"),
         ]
         for word, expected in cases:
             with self.subTest(word=word):

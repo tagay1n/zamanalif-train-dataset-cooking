@@ -49,8 +49,8 @@ class ConditionalConversionDslTests(unittest.TestCase):
             ("юл", "N", "yul"),
             ("юкә", "N", "yükä"),
             ("тию", "N", "tiyü"),
-            ("пицца", "RL", "pitstsa"),
-            ("меццо", "RL", "metstso"),
+            ("пицца", "RL", "pitsa"),
+            ("меццо", "RL", "metso"),
         ]
 
         for word, label, expected in cases:
@@ -62,7 +62,7 @@ class ConditionalConversionDslTests(unittest.TestCase):
             ("ретроспекция", "retrospektsiyä"),
             ("немецләрне", "nemetslärne"),
             ("принцип", "printsip"),
-            ("пицца", "pitstsa"),
+            ("пицца", "pitsa"),
         ]:
             with self.subTest(word=word):
                 suggestion = convert_for_annotation_dsl(word, "RL")

@@ -1536,6 +1536,8 @@ def result_with_russian_sign_glide_choices(
         if latin and converted.startswith(latin, converted_index):
             segments.append(Literal(latin))
             converted_index += len(latin)
+        elif char == "ц" and source_index > 0 and source[source_index - 1] == "ц":
+            pass
         else:
             return ConversionResult((Literal(converted),))
         source_index += 1
@@ -2426,6 +2428,8 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
         return char
     if char in APOSTROPHE_VARIANTS:
         return ZAMANALIF_APOSTROPHE
+    if char == "ц" and index > 0 and word[index - 1] == "ц":
+        return ""
     if char in CONDITIONAL_LETTERS:
         return _conditional_char_conversion(char, word, index, label)
     if label == "RL" and char in {"ь", "ъ"}:

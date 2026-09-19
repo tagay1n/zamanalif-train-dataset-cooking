@@ -342,7 +342,8 @@ Unresolved `U` words are collected into one focused `unknown_origin` project.
 This keeps unknown compounds, abbreviations/fragments, Tatar-specific words,
 conditional-letter words, and other unresolved words in one annotation queue.
 Words containing `ц` need no special project routing. Cyrillic `ц` now defaults
-to `ts` in plain Zamanalif suggestions; `ц` does not control project routing.
+to `ts` in plain Zamanalif suggestions, while consecutive `цц` collapses to one
+`ts`; `ц` does not control project routing.
 Annotators can edit a catch-all suggestion to `s` for a verified lexical
 exception.
 
