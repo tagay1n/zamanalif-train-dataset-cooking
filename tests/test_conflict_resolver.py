@@ -10,7 +10,6 @@ from tatar_preannotator.conflict_resolver import (
     ConflictReviewService,
     HTML_PAGE,
     auto_resolve_conflicts,
-    auto_resolve_unknowns,
     build_conflict_candidates,
     conservative_auto_decision,
     load_word_resolutions,
@@ -176,56 +175,6 @@ class ConflictResolverTests(unittest.TestCase):
 
         self.assertEqual(summary.inspected, 0)
         self.assertEqual(resolutions["йөз"].decision, "U")
-
-    def test_auto_resolve_unknowns_resolves_surname_like_u_words(self) -> None:
-        with tempfile.TemporaryDirectory() as tmpdir:
-            db_path = _write_db(
-                Path(tmpdir) / "zamanalif.sqlite",
-                [
-                    ("sent_1", "Булатовага сүз.", [
-                        {"text": "Булатовага", "label": "U"},
-                        {"text": "торак-коммуналь", "label": "U"},
-                        {"text": "авыл", "label": "N"},
-                        {"text": "проект", "label": "RL"},
-                    ]),
-                    ("sent_2", "Аббясовичка сүз.", [
-                        {"text": "Аббясовичка", "label": "U"},
-                        {"text": "проект", "label": "U"},
-                    ]),
-                ],
-            )
-
-            dry = auto_resolve_unknowns(db_path, dry_run=True)
-            self.assertEqual(load_word_resolutions(db_path), {})
-
-            summary = auto_resolve_unknowns(db_path)
-            resolutions = load_word_resolutions(db_path)
-
-        self.assertTrue(dry.dry_run)
-        self.assertEqual(dry.auto_resolved, 2)
-        self.assertEqual(summary.auto_resolved, 2)
-        self.assertEqual(summary.by_decision, {"RL": 2})
-        self.assertEqual(resolutions["булатовага"].decision, "RL")
-        self.assertEqual(resolutions["аббясовичка"].decision, "RL")
-        self.assertNotIn("торак-коммуналь", resolutions)
-        self.assertNotIn("проект", resolutions)
-        self.assertEqual(summary.skipped_by_category["hyphenated"], 1)
-        self.assertEqual(summary.skipped_by_category["mixed_evidence"], 1)
-
-    def test_auto_resolve_unknowns_does_not_overwrite_existing_resolution(self) -> None:
-        with tempfile.TemporaryDirectory() as tmpdir:
-            db_path = _write_db(
-                Path(tmpdir) / "zamanalif.sqlite",
-                [("sent_1", "Булатовага.", [{"text": "Булатовага", "label": "U"}])],
-            )
-            with sqlite3.connect(db_path) as conn:
-                save_word_resolution(conn, "булатовага", "N")
-
-            summary = auto_resolve_unknowns(db_path)
-            resolutions = load_word_resolutions(db_path)
-
-        self.assertEqual(summary.inspected, 0)
-        self.assertEqual(resolutions["булатовага"].decision, "N")
 
     def test_page_has_requested_keyboard_shortcuts(self) -> None:
         self.assertIn("Keyboard: N=native", HTML_PAGE)

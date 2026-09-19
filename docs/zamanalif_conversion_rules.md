@@ -123,22 +123,11 @@ Words containing these letters deserve converter analysis:
   `ʼo`. Russian-sign conversions are deterministic: `ʼyo` and omission are
   not alternatives.
 
-`ц` no longer controls project routing. Tasks go to catchall, unknown-origin,
-or a focused project according to their other remaining review requirements.
-
 This list does not determine Project 1 export. The word exporter computes both
 the native and loanword conversion branches. A form needs dictionary review
 only when those canonical DSL outputs differ or one branch is unavailable.
 Identical branches are safe regardless of whether Gemini predicted `N`, `RL`,
 or `U`.
-
-## Native Hamza Policy
-
-Verified lexical families use `{{HAMZA|omit=|preserve=ʼ}}` at the known hamza
-position: `иэтиляф`, `маэмай`, `таэмин`/`тәэмин`, `тәэсир`, `мөэмин`,
-`мәсьәлә`, `җөрьәт`, and `коръән`. The ordinary policy omits the sign, while the PDF
-policy preserves U+02BC `ʼ`. This is an explicit lexical allowlist, not a
-general conversion rule for Cyrillic `э`, `ь`, or `ъ`.
 
 ## Russian-Loan Review Cases
 

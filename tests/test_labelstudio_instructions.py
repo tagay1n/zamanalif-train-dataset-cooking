@@ -13,20 +13,6 @@ class LabelStudioInstructionTests(unittest.TestCase):
     def test_every_dsl_rule_has_curated_guidance(self) -> None:
         self.assertEqual(set(RULE_GUIDANCE), set(ACTIVE_RULES))
 
-    def test_unknown_project_tells_annotator_to_skip_uncertain_items(self) -> None:
-        html = render_project_instructions(
-            "unknown_origin",
-            "Unknown-origin word review",
-            [],
-        )
-
-        self.assertIn("hyphenated compound", html)
-        self.assertIn("abbreviation or", html)
-        self.assertIn("Tatar-specific word", html)
-        self.assertIn("skip the task", html)
-        self.assertNotIn("Examples:", html)
-        self.assertNotIn("Replace an invalid variant line", html)
-
     def test_catchall_has_short_conditional_letter_examples(self) -> None:
         html = render_project_instructions("catchall", "Catchall word review", [])
 

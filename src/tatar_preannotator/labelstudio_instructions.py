@@ -33,20 +33,9 @@ RULE_GUIDANCE: dict[str, tuple[str, tuple[tuple[str, tuple[str, ...]], ...]]] = 
         "Choose the attested spelling and harmony of the мәшгуль stem.",
         (("мәшгуль", ("mäşğul", "mäşğül")),),
     ),
-    "HAMZA": (
-        "Choose whether an Arabic/Persian hamza is omitted or represented by ʼ.",
-        (("коръән", ("qorän", "qorʼän")),),
-    ),
 }
 
 UNKNOWN_GUIDANCE = {
-    "unknown_origin": (
-        "Gemini could not determine the word's origin. Review the complete written "
-        "form carefully: it may be a hyphenated compound, an abbreviation or "
-        "fragment, a Tatar-specific word, or a word with context-dependent letters. "
-        "Expand nothing, and skip the task when the word is not recognizable enough "
-        "to correct reliably."
-    ),
     "u_hyphenated": (
         "The origin of this hyphenated compound is unresolved. Check the complete "
         "written form and every component when correcting the proposed spelling."
@@ -195,8 +184,6 @@ def _focus(project_key: str, rule_ids: Iterable[str]) -> str:
         )
 
     ordered_rules = tuple(dict.fromkeys(rule_ids))
-    if project_key == "hamza" and "HAMZA" not in ordered_rules:
-        ordered_rules = ("HAMZA", *ordered_rules)
     if not ordered_rules:
         raise ValueError(f"project {project_key!r} has no instruction guidance")
     items: list[str] = []
@@ -228,7 +215,7 @@ def _focus(project_key: str, rule_ids: Iterable[str]) -> str:
 def _editing_rules(project_key: str) -> str:
     rejection_rule = (
         ""
-        if project_key in {"catchall", "unknown_origin"}
+        if project_key == "catchall"
         else (
             "\n    <li>Replace an invalid variant line with <b>-</b>. Keep the "
             "line order and at least one word; rejecting alternatives must leave "

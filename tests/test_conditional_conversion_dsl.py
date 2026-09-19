@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from tatar_preannotator.conversion import resolve_dsl
+from tatar_preannotator.conversion import DslError, parse_dsl, resolve_dsl
 from tatar_preannotator.word_export import (
     classify_project,
     conversion_branches,
@@ -239,13 +239,6 @@ class ConditionalConversionDslTests(unittest.TestCase):
                     pdf,
                 )
 
-    def test_qoran_hamza_is_policy_dsl(self) -> None:
-        dsl = convert_for_annotation_dsl("коръән", "N")
-
-        self.assertEqual(dsl, "qor{{HAMZA|omit=|preserve=ʼ}}än")
-        self.assertEqual(resolve_dsl(dsl), "qorän")
-        self.assertEqual(resolve_dsl(dsl, {"HAMZA": "preserve"}), "qorʼän")
-
     def test_excluded_disharmony_policy_is_not_registered_as_dsl(self) -> None:
         for word in ["мәшгуль"]:
             with self.subTest(word=word):
@@ -332,6 +325,10 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 dsl = convert_for_annotation_dsl(word, "N")
                 self.assertEqual(dsl, expected)
                 self.assertNotIn("{{", dsl)
+
+    def test_removed_rule_is_rejected(self) -> None:
+        with self.assertRaises(DslError):
+            parse_dsl("qor{{HAMZA|omit=|preserve=ʼ}}än")
 
     def test_cilquar_stem_uses_pdf_plain_spelling(self) -> None:
         cases = [

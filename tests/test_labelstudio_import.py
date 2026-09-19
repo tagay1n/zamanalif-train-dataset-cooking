@@ -31,6 +31,18 @@ from tatar_preannotator.word_export import (
 
 
 class LabelStudioImportTests(unittest.TestCase):
+    def test_removed_project_keys_are_rejected(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            for project_key in ("hamza", "unknown_origin"):
+                with self.subTest(project_key=project_key):
+                    backup = _backup(
+                        root / f"{project_key}.json",
+                        [_task("коръән", "qorän", "N", project_key=project_key)],
+                    )
+                    with self.assertRaises(LabelStudioImportError):
+                        parse_labelstudio_export(backup)
+
     def setUp(self) -> None:
         self.analyzer = FakeMorphologyAnalyzer()
         self._analyzer_patch = patch(
@@ -263,7 +275,7 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(summary.imported_items, 1)
         self.assertEqual(reviewed["бюро"].zamanalif_dsl, suggestion_dsl)
 
-    def test_imports_legacy_unknown_project_after_consolidation(self) -> None:
+    def test_removed_legacy_project_is_rejected(self) -> None:
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             db_path = _database(root / "db.sqlite")
@@ -283,55 +295,8 @@ class LabelStudioImportTests(unittest.TestCase):
             ]
             backup = _backup(root / "legacy-u-other.json", [task])
 
-            summary = import_labelstudio_annotations(db_path, backup)
-            reviewed = load_reviewed_words(db_path)
-
-        self.assertEqual(summary.project_key, "u_other")
-        self.assertEqual(summary.imported_items, 1)
-        self.assertEqual(reviewed["альфонс"].zamanalif_dsl, "alfons")
-        self.assertEqual(reviewed["альфонс"].origin, "U")
-
-    def test_imports_consolidated_unknown_project(self) -> None:
-        with TemporaryDirectory() as tmpdir:
-            root = Path(tmpdir)
-            db_path = _database(root / "db.sqlite")
-            word = "күпфункцияле"
-            _add_words(db_path, [word], origin="U")
-            exported = export_labelstudio_project_tasks_from_db(
-                db_path,
-                morphology_analyzer=self.analyzer,
-            )
-            task = next(
-                item
-                for item in exported.projects["unknown_origin"].tasks
-                if item["data"]["cyrl_word"] == word
-            )
-            self.assertIn("ts", task["data"]["auto_zamanalif"])
-            self.assertNotIn("{{", task["data"]["auto_zamanalif"])
-            task["annotations"] = [
-                {
-                    "was_cancelled": False,
-                    "result": [
-                        {
-                            "from_name": "corrected_zamanalif",
-                            "type": "textarea",
-                            "value": {"text": [task["data"]["auto_zamanalif"]]},
-                        }
-                    ],
-                }
-            ]
-            backup = _backup(root / "unknown-origin.json", [task])
-
-            summary = import_labelstudio_annotations(db_path, backup)
-            reviewed = load_reviewed_words(db_path)
-
-        self.assertEqual(summary.project_key, "unknown_origin")
-        self.assertEqual(summary.imported_items, 1)
-        self.assertEqual(
-            reviewed[word].zamanalif_dsl,
-            task["data"]["auto_zamanalif"],
-        )
-        self.assertEqual(reviewed[word].origin, "U")
+            with self.assertRaises(LabelStudioImportError):
+                import_labelstudio_annotations(db_path, backup)
 
     def test_imports_legacy_ts_project_and_preserves_reviewed_spelling(self) -> None:
         self._assert_retired_project_is_rejected("ts")
@@ -375,83 +340,6 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(summary.project_key, "ts")
         self.assertEqual(summary.imported_items, 1)
         self.assertEqual(reviewed[word].zamanalif_dsl, "retrospeksiyä")
-
-    def test_imports_multiword_conversion_with_ascii_space(self) -> None:
-        with TemporaryDirectory() as tmpdir:
-            root = Path(tmpdir)
-            db_path = _database(root / "db.sqlite")
-            word = "нефть автоматлары"
-            _add_words(db_path, [word], origin="U")
-            exported = export_labelstudio_project_tasks_from_db(
-                db_path,
-                morphology_analyzer=self.analyzer,
-            )
-            task = next(
-                task
-                for task in exported.projects["unknown_origin"].tasks
-                if task["data"]["cyrl_word"] == word
-            )
-            task["annotations"] = [
-                {
-                    "was_cancelled": False,
-                    "result": [
-                        {
-                            "from_name": "corrected_zamanalif",
-                            "type": "textarea",
-                            "value": {"text": ["neftʼ avtomatları"]},
-                        }
-                    ],
-                }
-            ]
-            backup = _backup(root / "unknown-origin.json", [task])
-
-            summary = import_labelstudio_annotations(db_path, backup)
-            reviewed = load_reviewed_words(db_path)
-
-        self.assertEqual(summary.imported_items, 1)
-        self.assertEqual(
-            reviewed[word].zamanalif_dsl,
-            "neftʼ avtomatları",
-        )
-
-    def test_imports_pre_single_suggestion_unknown_backup(self) -> None:
-        with TemporaryDirectory() as tmpdir:
-            root = Path(tmpdir)
-            db_path = _database(root / "db.sqlite")
-            _add_words(db_path, ["альфонс"], origin="U")
-            task = {
-                "data": {
-                    "cyrl_word": "альфонс",
-                    "zamanalif_variants": "alfons",
-                    "gemini_origin": "U",
-                    "hints_html": "",
-                },
-                "meta": {
-                    "schema_version": 3,
-                    "project_key": "unknown_origin",
-                    "suggested_zamanalif_dsl": "alfons",
-                    "variant_policies": [[{}]],
-                },
-                "annotations": [
-                    {
-                        "was_cancelled": False,
-                        "result": [
-                            {
-                                "from_name": "reviewed_zamanalif_variants",
-                                "type": "textarea",
-                                "value": {"text": ["alfons"]},
-                            }
-                        ],
-                    }
-                ],
-            }
-            backup = _backup(root / "old-unknown-origin.json", [task])
-
-            summary = import_labelstudio_annotations(db_path, backup)
-            reviewed = load_reviewed_words(db_path)
-
-        self.assertEqual(summary.imported_items, 1)
-        self.assertEqual(reviewed["альфонс"].zamanalif_dsl, "alfons")
 
     @unittest.skip("E_GLIDE is legacy-readable only; new exports use catchall")
     def test_focused_variant_editor_preserves_policies_and_corrections(self) -> None:
@@ -1161,33 +1049,6 @@ class LabelStudioImportTests(unittest.TestCase):
             <= set(reviewed)
         )
         self.assertNotIn("диалогларга", reviewed)
-
-    def test_hamza_import_propagates_policy_to_entire_lexical_family(self) -> None:
-        words = ["тәэсир", "тәэсире", "тәэсирле", "тәэсирләр"]
-        with TemporaryDirectory() as tmpdir:
-            root = Path(tmpdir)
-            db_path = _database(root / "db.sqlite")
-            _add_words(db_path, words)
-            task = _task(
-                "тәэсир",
-                "tä{{HAMZA|omit=|preserve=ʼ}}sir",
-                "N",
-                project_key="hamza",
-            )
-
-            summary = import_labelstudio_annotations(
-                db_path,
-                _backup(root / "hamza-family.json", [task]),
-            )
-            reviewed = load_reviewed_words(db_path)
-
-        self.assertEqual(summary.imported_items, 1)
-        self.assertEqual(summary.inherited_items, 3)
-        self.assertEqual(set(reviewed) & set(words), set(words))
-        self.assertEqual(
-            reviewed["тәэсирле"].zamanalif_dsl,
-            "tä{{HAMZA|omit=|preserve=ʼ}}sirle",
-        )
 
     def test_homonym_annotation_routes_word_to_contextual_export_idempotently(self) -> None:
         with TemporaryDirectory() as tmpdir:

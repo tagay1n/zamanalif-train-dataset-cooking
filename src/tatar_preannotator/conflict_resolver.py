@@ -90,18 +90,6 @@ class AutoResolveSummary:
     dry_run: bool
 
 
-@dataclass(frozen=True)
-class AutoResolveUnknownsSummary:
-    """Counts produced by conservative automatic unknown-origin resolution."""
-
-    inspected: int
-    auto_resolved: int
-    skipped_by_category: dict[str, int]
-    by_decision: dict[str, int]
-    examples_by_category: dict[str, list[str]]
-    dry_run: bool
-
-
 def ensure_word_resolution_schema(conn: sqlite3.Connection) -> None:
     """Create the auxiliary table for word-level conflict decisions."""
     conn.execute(
@@ -203,79 +191,6 @@ def auto_resolve_conflicts(
         skipped_homonym_conflict=skipped_homonym,
         skipped_manual=skipped_manual,
         by_decision=dict(sorted(by_decision.items())),
-        dry_run=dry_run,
-    )
-
-
-def auto_resolve_unknowns(
-    db_path: str | Path,
-    *,
-    dry_run: bool = False,
-) -> AutoResolveUnknownsSummary:
-    """Conservatively save low-risk decisions for unresolved U-only words."""
-    database = Path(db_path)
-    if not database.exists():
-        raise ConflictResolverError(f"database file does not exist: {database}")
-
-    with closing(db.connect(database)) as conn:
-        db.ensure_preannotation_schema(conn)
-        ensure_word_resolution_schema(conn)
-        existing = {
-            str(row["normalized_word"])
-            for row in conn.execute("select normalized_word from word_resolutions")
-        }
-        rows = conn.execute(
-            """
-            select p.tokens_json
-            from preannotation_state p
-            where p.status = 'annotated'
-              and p.tatar = 1
-              and p.tokens_json is not null
-            """
-        ).fetchall()
-
-    label_counts = _token_label_counts(rows)
-    decisions: list[tuple[str, str]] = []
-    skipped: Counter[str] = Counter()
-    examples: dict[str, list[str]] = defaultdict(list)
-    inspected = 0
-
-    for normalized in sorted(label_counts):
-        if normalized in existing:
-            continue
-        counts = label_counts[normalized]
-        if not counts["U"]:
-            continue
-        inspected += 1
-        category = _unknown_word_category(normalized, counts)
-        if category == "surname_like":
-            decisions.append((normalized, "RL"))
-            _append_example(examples, "surname_like", normalized)
-        else:
-            skipped[category] += 1
-            _append_example(examples, category, normalized)
-
-    by_decision = Counter(decision for _, decision in decisions)
-    if not dry_run and decisions:
-        with closing(db.connect(database)) as conn:
-            ensure_word_resolution_schema(conn)
-            now = _now()
-            conn.executemany(
-                """
-                insert into word_resolutions(normalized_word, decision, updated_at)
-                values (?, ?, ?)
-                on conflict(normalized_word) do nothing
-                """,
-                [(word, decision, now) for word, decision in decisions],
-            )
-            conn.commit()
-
-    return AutoResolveUnknownsSummary(
-        inspected=inspected,
-        auto_resolved=len(decisions),
-        skipped_by_category=dict(sorted(skipped.items())),
-        by_decision=dict(sorted(by_decision.items())),
-        examples_by_category={key: value for key, value in sorted(examples.items())},
         dry_run=dry_run,
     )
 
@@ -420,25 +335,6 @@ def _token_label_counts(rows: list[sqlite3.Row]) -> dict[str, Counter[str]]:
             if normalized:
                 labels[normalized][str(label)] += 1
     return labels
-
-
-def _unknown_word_category(normalized: str, label_counts: Counter[str]) -> str:
-    if label_counts["N"] or label_counts["RL"]:
-        return "mixed_evidence"
-    if "-" in normalized:
-        return "hyphenated"
-    if "/" in normalized or "." in normalized:
-        return "abbrev_fragment"
-    if len(normalized) <= 3:
-        return "abbrev_fragment"
-    if SURNAME_LIKE_RE.fullmatch(normalized):
-        return "surname_like"
-    return "other"
-
-
-def _append_example(examples: dict[str, list[str]], category: str, word: str) -> None:
-    if len(examples[category]) < 10:
-        examples[category].append(word)
 
 
 def _has_homonym_conflict(candidate: ConflictCandidate) -> bool:

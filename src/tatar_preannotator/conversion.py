@@ -117,11 +117,6 @@ MASHGUL_STEM_RULE = RuleDefinition(
     options=(("antat", "mäşğul"), ("pdf", "mäşğül")),
     default_option="antat",
 )
-HAMZA_RULE = RuleDefinition(
-    rule_id="HAMZA",
-    options=(("omit", ""), ("preserve", ZAMANALIF_APOSTROPHE)),
-    default_option="omit",
-)
 RULES: Mapping[str, RuleDefinition] = MappingProxyType(
     {
         YA_RULE.rule_id: YA_RULE,
@@ -132,7 +127,6 @@ RULES: Mapping[str, RuleDefinition] = MappingProxyType(
         IJTIMAGIY_STEM_RULE.rule_id: IJTIMAGIY_STEM_RULE,
         KAGAZ_STEM_RULE.rule_id: KAGAZ_STEM_RULE,
         MASHGUL_STEM_RULE.rule_id: MASHGUL_STEM_RULE,
-        HAMZA_RULE.rule_id: HAMZA_RULE,
     }
 )
 # ``RULES`` is the complete parseable registry.  E_GLIDE remains here solely so
@@ -155,7 +149,6 @@ PREFERRED_POLICY: Mapping[str, str] = MappingProxyType(
         "IJTIMAGIY_STEM": "antat",
         "KAGAZ_STEM": "antat",
         "MASHGUL_STEM": "antat",
-        "HAMZA": "omit",
     }
 )
 PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
@@ -168,7 +161,6 @@ PDF_COMPACT_POLICY: Mapping[str, str] = MappingProxyType(
         "IJTIMAGIY_STEM": "pdf",
         "KAGAZ_STEM": "pdf",
         "MASHGUL_STEM": "pdf",
-        "HAMZA": "preserve",
     }
 )
 

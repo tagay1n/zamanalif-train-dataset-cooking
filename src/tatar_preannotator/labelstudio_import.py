@@ -49,7 +49,6 @@ from .word_export import (
     eligible_dictionary_words,
     ensure_review_state_schema,
     is_compatible_family_member,
-    native_hamza_family,
     normalize_word,
     word_belongs_to_project,
 )
@@ -310,26 +309,13 @@ def import_labelstudio_annotations(
                     existing.pop(word, None)
                     existing_variants.pop(word, None)
                     derived_words.discard(word)
-                if parsed.project_key != "hamza":
-                    regular_items = [
-                        _reconstruct_imported_family(
-                            item,
-                            analyses,
-                            family_eligible,
-                            project_eligible,
-                            analyzer,
-                            parsed.project_key,
-                        )
-                        for item in regular_items
-                    ]
-                elif parsed.project_key == "hamza":
-                    regular_items = [
-                        _reconstruct_imported_hamza_family(
-                            item,
-                            project_eligible,
-                        )
-                        for item in regular_items
-                    ]
+                regular_items = [
+                    _reconstruct_imported_family(
+                        item, analyses, family_eligible, project_eligible,
+                        analyzer, parsed.project_key,
+                    )
+                    for item in regular_items
+                ]
                 for item in regular_items:
                     origin, zamanalif_dsl = _regular_values(item)
                     current = (zamanalif_dsl, origin)
@@ -375,37 +361,14 @@ def import_labelstudio_annotations(
                     existing_variants[item.normalized_word] = item.variants
                     imported += 1
                 for item in regular_items:
-                    if parsed.project_key != "hamza":
-                        inherited += _propagate_imported_family(
-                            conn,
-                            item,
-                            analyses,
-                            analyzer.revision,
-                            parsed.project_key,
-                            existing,
-                            existing_variants,
-                            derived_words,
-                            now,
-                        )
-                    elif parsed.project_key == "hamza":
-                        inherited += _propagate_imported_hamza_family(
-                            conn,
-                            item,
-                            existing,
-                            derived_words,
-                            now,
-                        )
-                if parsed.project_key != "hamza":
-                    inherited += _backfill_reviewed_families(
-                        conn,
-                        analyses,
-                        analyzer.revision,
-                        family_eligible,
-                        existing,
-                        existing_variants,
-                        derived_words,
-                        now,
+                    inherited += _propagate_imported_family(
+                        conn, item, analyses, analyzer.revision, parsed.project_key,
+                        existing, existing_variants, derived_words, now,
                     )
+                inherited += _backfill_reviewed_families(
+                    conn, analyses, analyzer.revision, family_eligible, existing,
+                    existing_variants, derived_words, now,
+                )
                 new_derivations = conn.execute(
                     """
                     select normalized_word, source_word
@@ -764,7 +727,7 @@ def _remove_unsafe_inherited_reviews(
     ).fetchall()
     for normalized, source, lemma, part_of_speech in rows:
         normalized = str(normalized)
-        if normalized not in eligible or str(part_of_speech) == "hamza":
+        if normalized not in eligible:
             continue
         source = str(source)
         identity = MorphIdentity(str(lemma), str(part_of_speech))
@@ -796,42 +759,6 @@ def _remove_unsafe_inherited_reviews(
             (word,),
         )
     return stale
-
-
-def _reconstruct_imported_hamza_family(
-    item: ReviewedAnnotation,
-    eligible: dict[str, Any],
-) -> ReviewedAnnotation:
-    candidate = eligible.get(item.normalized_word)
-    if candidate is None:
-        raise LabelStudioImportError(
-            f"hamza word is no longer eligible: {item.normalized_word!r}"
-        )
-    if candidate.origin != item.suggested_origin:
-        raise LabelStudioImportError(
-            f"hamza word changed predicted origin: {item.normalized_word!r}"
-        )
-    family = native_hamza_family(item.normalized_word)
-    if family is None:
-        raise LabelStudioImportError(
-            f"hamza word has no verified lexical family: {item.normalized_word!r}"
-        )
-    related = sorted(
-        (
-            word
-            for word, related_candidate in eligible.items()
-            if word != item.normalized_word
-            and related_candidate.origin == item.suggested_origin
-            and native_hamza_family(word) == family
-        ),
-        key=lambda word: (len(word), word),
-    )
-    return replace(
-        item,
-        family_members=(item.normalized_word, *related),
-        morphology=MorphIdentity(family, "hamza"),
-        analyzer_revision="lexical-hamza-v1",
-    )
 
 
 def _propagate_imported_family(
@@ -901,51 +828,6 @@ def _propagate_imported_family(
             existing=existing,
             variants=member_variants,
             existing_variants=existing_variants,
-            derived_words=derived_words,
-            now=now,
-        )
-    return inserted
-
-
-def _propagate_imported_hamza_family(
-    conn: sqlite3.Connection,
-    item: ReviewedAnnotation,
-    existing: dict[str, tuple[str, str]],
-    derived_words: set[str],
-    now: str,
-) -> int:
-    identity = item.morphology
-    if identity is None or len(item.family_members) == 1:
-        return 0
-    origin, zamanalif_dsl = _regular_values(item)
-    canonical = conversion_branches(item.normalized_word).suggestion(origin)
-    inserted = 0
-    for word in item.family_members[1:]:
-        if native_hamza_family(word) != identity.lemma:
-            raise LabelStudioImportError(
-                f"hamza family changed for {word!r}"
-            )
-        if classify_project(word, origin)["key"] != "hamza":
-            raise LabelStudioImportError(
-                f"hamza family member changed project for {word!r}"
-            )
-        member_canonical = conversion_branches(word).suggestion(origin)
-        member_zamanalif = _family_member_zamanalif(
-            canonical,
-            zamanalif_dsl,
-            member_canonical,
-        )
-        if not member_zamanalif:
-            continue
-        inserted += _store_inherited_review(
-            conn,
-            word=word,
-            zamanalif_dsl=member_zamanalif,
-            origin=origin,
-            source_word=item.normalized_word,
-            identity=identity,
-            analyzer_revision=item.analyzer_revision or "lexical-hamza-v1",
-            existing=existing,
             derived_words=derived_words,
             now=now,
         )
@@ -1524,16 +1406,6 @@ def _parse_task(
         expected_data_fields = CONTEXTUAL_DATA_FIELDS
         expected_meta_fields = CONTEXTUAL_META_FIELDS
         expected_schema_version = TASK_SCHEMA_VERSION
-    elif (
-        project_key == "unknown_origin"
-        and set(data) == FOCUSED_DICTIONARY_DATA_FIELDS
-    ):
-        # Accept schema-v3 exports created before unknown_origin adopted the
-        # catchall-style single-suggestion interface.
-        expected_data_fields = FOCUSED_DICTIONARY_DATA_FIELDS
-        expected_meta_fields = DICTIONARY_META_FIELDS
-        expected_schema_version = FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION
-        is_variant_schema = True
     elif project_key in SINGLE_SUGGESTION_PROJECT_KEYS:
         expected_data_fields = DICTIONARY_DATA_FIELDS
         expected_meta_fields = CATCHALL_META_FIELDS

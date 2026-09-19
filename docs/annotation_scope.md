@@ -20,14 +20,8 @@ where the conversion choice is not deterministic enough for the current rules.
 Project 1 is for unique word-form review. Annotators review a normalized word
 once, and the approved result is stored in `reviewed_words`.
 
-Unresolved-origin word forms share one `unknown_origin` review project rather
-than separate projects by surface type. Genuine conversion-policy cases and
-contextual homonyms remain in their focused projects.
-
 Cyrillic `ц` now defaults to `ts` at every position, with consecutive `цц`
-collapsing to one `ts`. It does not control
-project routing: words containing `ц` go to `catchall`, `unknown_origin`, or a
-focused project based on their other remaining review requirements. A
+collapsing to one `ts`. It does not control project routing. A
 catch-all annotator may edit `ts` to `s` for a verified lexical exception.
 
 ### Excluded From Project 1
@@ -38,15 +32,6 @@ catch-all annotator may edit `ts` to `s` for a verified lexical exception.
   `reviewed_words`, do not export it again.
 - **Contextual homonyms.** Effective homonyms are excluded from every dictionary
   project, including catchall.
-- **Native hamza conversions.** Verified lexical families use the global
-  `HAMZA` omit/preserve policy and are routed only to the `hamza` dictionary
-  project. One representative covers every observed form of the exact lexical
-  family. New conversions deterministically preserve ordinary Russian
-  soft/hard signs as ʼ, use an explicit `y` glide for Russian consonant +
-  `я/ю/ё`, convert `ье` to `ʼye`, convert `ъе` to `ye`, and convert `ьо` to
-  `ʼo`; no Russian-sign DSL rules remain. Former `ьо` cases follow ordinary
-  routing, so other conditional letters can still require catchall review. Words
-  with multiple rules remain in `complex_multi_rule`.
 - **Eligible `ие`.** New conversions deterministically write `ие` as `iye`,
   including `проект -> proyekt` and `тиеш -> tiyeş`; former candidates follow
   ordinary routing, normally `catchall`. Exact surname endings `-иев`,
@@ -55,8 +40,7 @@ catch-all annotator may edit `ts` to `s` for a verified lexical exception.
   readable only in existing stored reviews and is never generated for a new
   task or focused project.
 - **Native-looking mixed-harmony words.** If Gemini labels a word `N` and the
-  word has mixed front/back vowels, skip it for Project 1 unless it belongs to
-  a verified lexical hamza family. Keep matching `RL` and `U` words.
+  word has mixed front/back vowels, skip it for Project 1.
 - **Origin-independent words.** If native and Russian-loanword conversion
   branches produce the same Zamanalif result, skip the word because origin
   annotation cannot change the target text.
@@ -85,8 +69,7 @@ an accepted `N` or `RL` representative supplies the authoritative origin for
 safe compatible forms, including forms predicted `U`. A candidate remains
 separate when its DSL policies are not represented by the source review, and
 families with conflicting direct human origins are not merged. Ambiguous
-analyses remain independent tasks. Hamza keeps its stricter verified
-lexical-family grouping, and contextual homonyms remain occurrence-level tasks.
+analyses remain independent tasks, and contextual homonyms remain occurrence-level tasks.
 
 Ordinary family propagation requires the review-sensitive spelling to occur in
 the analyzer lemma and requires both surface forms to begin with that full
@@ -105,16 +88,6 @@ approvals retain their source and analyzer revision in
 `reviewed_word_derivations`. Export treats an older derived approval that no
 longer passes this rule as unreviewed; the next import for that project removes
 the stale derived approval transactionally.
-
-### Native Hamza Families
-
-The verified families `маэмай`, `таэмин`/`тәэмин`, `тәэсир`, `мөэмин`,
-`мәсьәлә`, `җөрьәт`, and `коръән` use one global `HAMZA` choice. For example,
-`тәэсир` is stored as `tä{{HAMZA|omit=|preserve=ʼ}}sir`. Export groups only by
-these exact lexical prefixes and resolved origin branch; it never infers hamza
-from an arbitrary `э`, `ь`, or `ъ`. Importing an unchanged representative
-propagates the structured policy to every matching family form while preserving
-each form's canonical suffix.
 
 ## Contextual Homonym Review
 

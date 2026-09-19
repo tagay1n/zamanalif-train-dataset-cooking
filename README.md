@@ -150,8 +150,7 @@ Recommended post-Gemini cleanup order:
    usable Tatar/non-Tatar and token-origin decision.
 3. Run `auto-resolve-conflicts` to save low-risk word conflict decisions.
 4. Run `resolve-conflicts` for the remaining meaningful word conflicts.
-5. Run `auto-resolve-unknowns` to save low-risk surname/patronymic decisions.
-6. Export Label Studio Project 1 word-review tasks with `annotation-export`.
+5. Export Label Studio Project 1 word-review tasks with `annotation-export`.
 
 ### Local repair of unprocessable rows
 
@@ -195,8 +194,6 @@ noisy rows. Review these conflicts in a separate local browser UI:
 python -m tatar_preannotator auto-resolve-conflicts --dry-run
 python -m tatar_preannotator auto-resolve-conflicts
 python -m tatar_preannotator resolve-conflicts
-python -m tatar_preannotator auto-resolve-unknowns --dry-run
-python -m tatar_preannotator auto-resolve-unknowns
 ```
 
 `auto-resolve-conflicts` writes only conservative decisions to
@@ -204,12 +201,6 @@ python -m tatar_preannotator auto-resolve-unknowns
 minority-label noise, plus no-homonym cases where one concrete origin appears
 at least 10 times more often than the other. It does not auto-resolve homonym
 conflicts and never overwrites existing decisions.
-
-`auto-resolve-unknowns` handles only unresolved `U` words that look like
-Russian-style surnames or patronymics, such as `-ов`, `-ев`, `-ова`, `-ева`,
-`-ович`, and `-евич` with common Tatar suffixes. It writes them as `RL`, skips
-hyphenated compounds and abbreviation/fragments, and never overwrites existing
-decisions.
 
 The command starts at `http://127.0.0.1:8766` by default. It shows each
 conflicting normalized word, label counts, homonym counts, and example sentence
@@ -274,7 +265,6 @@ Selection rules:
 - skip words whose conversion is identical under both origins, including `U`
   words, because origin cannot change their target text;
 - skip native-looking `"N"` words with mixed front/back vowel harmony, except
-  verified lexical hamza families;
 - exclude every effective homonym from all dictionary projects, including
   catchall;
 - automatically convert homonym occurrences whose native and loanword branches
@@ -286,9 +276,6 @@ Selection rules:
   `К. Ушинский` separate;
 - use contextual-only native fallbacks `г → ğ` and `к → q` when an isolated
   homonym has no vowel context; dictionary and catchall conversion stay unchanged;
-- encode verified native hamza families with the global `HAMZA` omit/preserve
-  policy and route them to `hamza`, never catchall;
-- collapse every observed hamza family to one representative task and propagate
   an unchanged policy review to all forms in that exact lexical family;
 - always skip forms already approved in `reviewed_words`;
 - deduplicate by lowercase normalized Cyrillic word form.
@@ -326,9 +313,7 @@ not (`Дмитриевка -> Dmitriyevka`).
 The command writes 500-task batch files such as
 `project_catchall_batch_001_of_004.json`,
 `project_complex_multi_rule_batch_001_of_002.json`, and
-`project_hamza_batch_001_of_001.json`, and
 `project_contextual_homonym_batch_001_of_027.json`. Import each batch into the
-matching Label Studio project. Hamza has routing priority over catchall and
 multi-rule projects. New conversions deterministically preserve ordinary
 Russian soft/hard signs as `ʼ` and use an explicit `y` glide for Russian
 consonant + `я/ю/ё`. Russian `ье` deterministically becomes `ʼye`, Russian
@@ -342,25 +327,18 @@ generated: former E-glide candidates follow ordinary routing, normally
 `catchall`, with a plain deterministic suggestion. If a word has multiple
 active DSL rules it goes to `complex_multi_rule`; otherwise it goes to the matching
 DSL-rule project or to `catchall`.
-Unresolved `U` words are collected into one focused `unknown_origin` project.
-This keeps unknown compounds, abbreviations/fragments, Tatar-specific words,
-conditional-letter words, and other unresolved words in one annotation queue.
+Unresolved `U` words use the ordinary `catchall` queue and retain their stored
+origin. The catchall suggestion uses the preferred deterministic conversion.
 Words containing `ц` need no special project routing. Cyrillic `ц` now defaults
 to `ts` in plain Zamanalif suggestions, while consecutive `цц` collapses to one
 `ts`; `ц` does not control project routing.
 
-All unknown-origin tasks receive an editable suggestion from a simple origin
-heuristic: a word containing any Tatar-specific Cyrillic letter (`ә`, `ө`, `ү`,
-`җ`, `ң`, or `һ`, in either case) uses the native branch; every other word uses
-the Russian-loanword branch. The stored Gemini origin remains `U`, and the task
-hint identifies the heuristic guess so it is not mistaken for a reviewed
-decision. The `unknown_origin` project uses the same single-suggestion labeling
-interface as `catchall`; when several convention variants are possible, the
-preferred plain rendering is shown for correction. Other focused projects show
+When several convention variants are possible, the preferred plain rendering
+is shown for correction. Other focused projects show
 all plain Zamanalif variants and keep their DSL policy mapping in task metadata.
 
-The Hints card in `catchall` and `unknown_origin` also shows up to three
-distinct source excerpts for the displayed word. Excerpts are selected in
+Catchall hints show up to three distinct source excerpts for the displayed word.
+Excerpts are selected in
 stable corpus order, highlight the occurrence, and include at most twelve
 tokens on either side. Ellipses indicate trimmed text. Grouped morphological
 tasks use contexts for the displayed representative form only; missing or
@@ -406,7 +384,6 @@ training export selects the corrected line matching the active global policy.
 This keeps the annotation interface free of implementation syntax.
 
 Focused dictionary task `data` contains exactly those four fields. Catchall and
-`unknown_origin` retain the single `auto_zamanalif` field. Contextual task
 `data` additionally contains `sentence`, `context_html`, `native_zamanalif`,
 and `loanword_zamanalif`; its `meta` additionally contains `sample_id` and
 `token_index`. Project titles, batch fields, DSL rule lists, and custom task
@@ -421,7 +398,6 @@ full analyzer lemma literally and requires that lemma to contain a
 review-sensitive letter. A sibling of any length is covered only when the part
 it adds after the forms' shared prefix contains none of the non-deterministic
 letters `вгекуцюяүщъьё`. Thus suffix-only ambiguity and surface stem alternation
-remain separate tasks. Hamza retains its stricter verified lexical-family
 grouping. Candidate DSL policies must be represented by the source review;
 otherwise the candidate remains separate. Conflicting direct human origins are
 never merged. Previously inherited reviews that fail this rule are exposed
@@ -453,7 +429,6 @@ Suffix-only edits remain representative-only. Historical reviews use the same
 safe-family rule. Inherited reviews are recorded in
 `reviewed_word_derivations`; exporting itself never writes review state.
 
-Focused-project Label Studio layout (except `unknown_origin`, which uses the
 catchall layout with `$auto_zamanalif` and `corrected_zamanalif`):
 
 ```xml

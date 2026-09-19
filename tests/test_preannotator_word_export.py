@@ -26,7 +26,6 @@ from tatar_preannotator.word_export import (
     dictionary_project_keys,
     export_labelstudio_project_tasks_from_db,
     export_labelstudio_tasks_from_db,
-    guess_unknown_tatar_specific_origin,
     is_safe_family_member,
     load_reviewed_words,
     normalize_word,
@@ -39,6 +38,12 @@ from tatar_preannotator.word_export import (
 
 
 class PreannotatorWordExportTests(unittest.TestCase):
+    def test_removed_workflows_use_deterministic_catchall_output(self) -> None:
+        self.assertEqual(convert_for_annotation("иэтиляф", "N"), "itiläf")
+        self.assertEqual(annotation_suggestion("америка-һинд", "U"), "amerika-hind")
+        self.assertEqual(classify_project("америка-һинд", "U")["key"], "catchall")
+        self.assertNotIn("hamza", dictionary_project_keys())
+        self.assertNotIn("unknown_origin", dictionary_project_keys())
     def setUp(self) -> None:
         self.analyzer = FakeMorphologyAnalyzer()
         patchers = (
@@ -255,50 +260,6 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertIn("context-three", html)
         self.assertNotIn("context-four", html)
 
-    def test_context_hints_are_escaped_and_scoped_to_single_suggestion(self) -> None:
-        with tempfile.TemporaryDirectory() as tmpdir:
-            db_path = _write_annotation_db(
-                Path(tmpdir) / "zamanalif.sqlite",
-                [
-                    {
-                        "id": "unknown",
-                        "text": "A < B торак & C",
-                        "tatar": True,
-                        "tokens": [
-                            {"text": "A", "label": "U"},
-                            {"text": "B", "label": "U"},
-                            {"text": "торак", "label": "U"},
-                            {"text": "C", "label": "U"},
-                        ],
-                    },
-                    {
-                        "id": "focused",
-                        "text": "Яңа проект әзер",
-                        "tatar": True,
-                        "tokens": [
-                            {"text": "Яңа", "label": "N"},
-                            {"text": "проект", "label": "RL"},
-                            {"text": "әзер", "label": "N"},
-                        ],
-                    },
-                ],
-            )
-
-            result = export_labelstudio_project_tasks_from_db(
-                db_path,
-                sort_by="word",
-            )
-
-        unknown = next(
-            task
-            for task in result.projects["unknown_origin"].tasks
-            if task["data"]["cyrl_word"] == "торак"
-        )
-        unknown_html = unknown["data"]["hints_html"]
-        self.assertIn("A &lt; B <mark>торак</mark> &amp; C", unknown_html)
-        catchall_html = result.projects["catchall"].tasks[0]["data"]["hints_html"]
-        self.assertIn("Examples in context", catchall_html)
-
     def test_unalignable_context_is_skipped_without_failing_export(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(
@@ -388,46 +349,6 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(unavailable.state, "unconvertible")
         self.assertEqual(unavailable.native_dsl, "")
         self.assertEqual(unavailable.loanword_dsl, "k")
-
-    def test_unknown_tatar_specific_origin_heuristic(self) -> None:
-        self.assertEqual(guess_unknown_tatar_specific_origin("күпфункцияле"), "N")
-        self.assertEqual(guess_unknown_tatar_specific_origin("авиатөзелеш"), "N")
-        self.assertEqual(guess_unknown_tatar_specific_origin("АГРОСӘНӘГАТЬ"), "N")
-        self.assertEqual(guess_unknown_tatar_specific_origin("шәһәр"), "N")
-        self.assertEqual(guess_unknown_tatar_specific_origin("альфонс"), "RL")
-
-    def test_unknown_tatar_specific_suggestion_uses_guessed_branch(self) -> None:
-        self.assertEqual(
-            annotation_suggestion("видеокүзәтү", "U"),
-            conversion_branches("видеокүзәтү").native_dsl,
-        )
-        self.assertEqual(
-            annotation_suggestion("шәһәр", "U"),
-            conversion_branches("шәһәр").native_dsl,
-        )
-        self.assertEqual(
-            annotation_suggestion("торак", "U"),
-            conversion_branches("торак").loanword_dsl,
-        )
-        self.assertEqual(classify_project("күпфункцияле", "U")["key"], "unknown_origin")
-        self.assertEqual(
-            classify_project("күпфункцияле", "U")["dsl_rules"],
-            [],
-        )
-
-    def test_unknown_categories_share_one_project(self) -> None:
-        words = (
-            "УУГ",
-            "торак-коммуналь",
-            "авиатөзелеш",
-            "видеоязма",
-            "альфонс",
-        )
-
-        self.assertEqual(
-            {classify_project(word, "U")["key"] for word in words},
-            {"unknown_origin"},
-        )
 
     def test_include_unknown_and_include_rl_flags(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -818,13 +739,6 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, label), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, label), expected)
 
-    def test_native_hamza_lexical_cases(self) -> None:
-        self.assertEqual(convert_for_annotation("маэмай", "N"), "maʼmay")
-        self.assertEqual(
-            convert_for_annotation_dsl("маэмай", "N"),
-            "ma{{HAMZA|omit=|preserve=ʼ}}may",
-        )
-
     def test_native_k_g_use_local_vowel_context(self) -> None:
         self.assertEqual(convert_for_annotation("китап", "N"), "kitap")
         self.assertEqual(convert_for_annotation("мәктәп", "N"), "mäktäp")
@@ -1030,37 +944,6 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(dsl, expected)
                 self.assertNotIn("{{", dsl)
-
-    def test_verified_native_hamza_stems_share_one_policy(self) -> None:
-        cases = [
-            ("иэтиляф", "iʼtiläf", "itiläf"),
-            ("маэмай", "maʼmay", "mamay"),
-            ("таэмин", "täʼmin", "tämin"),
-            ("тәэмин", "täʼmin", "tämin"),
-            ("тәэсирендә", "täʼsirendä", "täsirendä"),
-            ("мөэминнәр", "möʼminnär", "möminnär"),
-            ("мәсьәләләр", "mäsʼälälär", "mäsälälär"),
-            ("җөрьәт", "cörʼät", "cörät"),
-            ("коръәнгә", "qorʼängä", "qorängä"),
-        ]
-
-        for word, preserved, omitted in cases:
-            with self.subTest(word=word):
-                dsl = convert_for_annotation_dsl(word, "N")
-                self.assertEqual(convert_for_annotation(word, "N"), preserved)
-                self.assertEqual(resolve_dsl(dsl), omitted)
-                self.assertEqual(
-                    resolve_dsl(dsl, {"HAMZA": "preserve"}),
-                    preserved,
-                )
-                self.assertEqual(classify_project(word, "N")["key"], "hamza")
-
-    def test_hamza_policy_preserves_resolved_loanword_surname_suffix(self) -> None:
-        self.assertEqual(
-            convert_for_annotation_dsl("мөэминованың", "RL"),
-            "mö{{HAMZA|omit=|preserve=ʼ}}minovanıñ",
-        )
-        self.assertEqual(classify_project("мөэминованың", "RL")["key"], "hamza")
 
     def test_native_ek_to_iyq_words_are_deterministic(self) -> None:
         cases = [
@@ -1750,30 +1633,6 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(project["key"], "catchall")
         self.assertEqual(project["dsl_rules"], [])
 
-    def test_split_export_routes_literal_and_policy_hamza_out_of_catchall(self) -> None:
-        cases = (
-            "маэмай",
-            "тәэмин",
-            "тәэсир",
-            "мөэмин",
-            "мәсьәлә",
-            "җөрьәт",
-            "коръән",
-        )
-
-        for word in cases:
-            with self.subTest(word=word):
-                project = classify_project(word, "N")
-                self.assertEqual(project["key"], "hamza")
-                self.assertEqual(project["title"], "Hamza review")
-                self.assertEqual(project["dsl_rules"], ["HAMZA"])
-
-    def test_russian_apostrophe_is_not_routed_as_hamza(self) -> None:
-        project = classify_project("культура", "RL")
-
-        self.assertEqual(project["key"], "catchall")
-        self.assertEqual(project["dsl_rules"], [])
-
     def test_ordinary_russian_signs_export_to_catchall_as_plain_preferred_text(self) -> None:
         words = ["федераль", "культурага", "роль"]
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1818,60 +1677,6 @@ class PreannotatorWordExportTests(unittest.TestCase):
         )
         self.assertFalse(any("rus_sign" in path.name for path in paths))
 
-    def test_russian_jotation_is_plain_and_uses_ordinary_export_selection(self) -> None:
-        expected = {
-            "бюджет": "byudjet",
-            "бюро": "byuro",
-            "отряд": "otryad",
-            "сюжет": "syujet",
-            "валюта": "valyuta",
-            "шофёр": "şofyor",
-            "щётка": "şçyotka",
-        }
-        with tempfile.TemporaryDirectory() as tmpdir:
-            root = Path(tmpdir)
-            db_path = _write_annotation_db(
-                root / "zamanalif.sqlite",
-                [
-                    {
-                        "id": f"sent_{index}",
-                        "tatar": True,
-                        "tokens": [{"text": word, "label": "RL"}],
-                    }
-                    for index, word in enumerate(expected, start=1)
-                ],
-            )
-            result = export_labelstudio_project_tasks_from_db(db_path, sort_by="word")
-
-        self.assertNotIn("rus_jotation", result.projects)
-        suggestions = {
-            task["data"]["cyrl_word"]: task["data"]["auto_zamanalif"]
-            for task in result.projects["catchall"].tasks
-        }
-        self.assertEqual(
-            suggestions,
-            {word: expected[word] for word in ("бюджет", "валюта", "сюжет", "щётка")},
-        )
-        for word, value in expected.items():
-            self.assertEqual(convert_for_annotation_dsl(word, "RL"), value)
-        self.assertTrue(
-            all("{{" not in value and "\n" not in value for value in suggestions.values())
-        )
-        self.assertEqual(result.projects["catchall"].report["dsl_rule_counts"], {})
-        self.assertEqual(
-            resolve_dsl(annotation_suggestion("БЮРО", "RL")), "BYURO"
-        )
-        self.assertEqual(
-            resolve_dsl(convert_for_annotation_dsl("бюджетю", "RL")),
-            "byudjetyu",
-        )
-        self.assertEqual(
-            classify_project("бюджетю", "RL")["key"], "catchall"
-        )
-        self.assertEqual(
-            classify_project("бюро", "U")["key"], "unknown_origin"
-        )
-
     def test_sign_plus_vowel_words_follow_ordinary_routing(self) -> None:
         cases = (
             ("объект", "catchall", []),
@@ -1905,100 +1710,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertNotIn("\n", task["data"]["auto_zamanalif"])
         self.assertNotIn("rus_soft_sign_o", result.projects)
 
-    def test_literal_hamza_project_writes_dedicated_output_and_instructions(self) -> None:
-        with tempfile.TemporaryDirectory() as tmpdir:
-            db_path = _write_annotation_db(
-                Path(tmpdir) / "zamanalif.sqlite",
-                [
-                    {
-                        "id": "sent_1",
-                        "tatar": True,
-                        "tokens": [{"text": "Тәэмин", "label": "N"}],
-                    }
-                ],
-            )
-            output_dir = Path(tmpdir) / "projects"
-
-            result = export_labelstudio_project_tasks_from_db(db_path)
-            write_split_outputs(result, output_dir)
-            tasks = json.loads(
-                (output_dir / "project_hamza_batch_001_of_001.json").read_text(
-                    encoding="utf-8"
-                )
-            )
-            instructions = (
-                output_dir / "project_hamza_instructions.html"
-            ).read_text(encoding="utf-8")
-
-        self.assertEqual(set(result.projects), {"hamza"})
-        self.assertEqual(tasks[0]["meta"]["project_key"], "hamza")
-        self.assertEqual(
-            tasks[0]["data"]["zamanalif_variants"],
-            "tämin\ntäʼmin",
-        )
-        self.assertEqual(
-            tasks[0]["meta"]["suggested_zamanalif_dsl"],
-            "tä{{HAMZA|omit=|preserve=ʼ}}min",
-        )
-        self.assertIn("Arabic/Persian hamza", instructions)
-
-    def test_hamza_export_collapses_each_verified_lexical_family(self) -> None:
-        words = ["тәэсир", "тәэсире", "тәэсирле", "мөэмин", "мөэминнәр"]
-        with tempfile.TemporaryDirectory() as tmpdir:
-            db_path = _write_annotation_db(
-                Path(tmpdir) / "zamanalif.sqlite",
-                [
-                    {
-                        "id": "sent_1",
-                        "tatar": True,
-                        "tokens": [
-                            {"text": word, "label": "N"} for word in words
-                        ],
-                    }
-                ],
-            )
-
-            result = export_labelstudio_project_tasks_from_db(
-                db_path,
-                sort_by="word",
-                morphology_analyzer=FakeMorphologyAnalyzer(),
-            )
-
-        hamza = result.projects["hamza"]
-        self.assertEqual(hamza.exported_words, ["мөэмин", "тәэсир"])
-        self.assertEqual(hamza.report["covered_word_count"], len(words))
-        self.assertEqual(result.report["covered_word_count"], len(words))
-
     def test_split_export_counts_distinct_rules_not_repeated_occurrences(self) -> None:
         project = classify_project("социаль-икътисадый", "RL")
 
         self.assertEqual(project["key"], "catchall")
         self.assertEqual(project["dsl_rules"], [])
-
-    def test_c_words_follow_their_remaining_review_requirements(self) -> None:
-        plain = classify_project("концерт", "RL")
-        former_ts_choice = classify_project("немецләрне", "RL")
-        hamza = classify_project("тәэсирц", "N")
-        rus_sign = classify_project("социаль-цирк", "RL")
-        jotation = classify_project("бюроц", "RL")
-        multi_rule = classify_project("октябрьц", "RL")
-        unknown = classify_project("күпфункцияле", "U")
-
-        self.assertEqual(plain["key"], "catchall")
-        self.assertEqual(plain["dsl_rules"], [])
-        self.assertEqual(former_ts_choice["key"], "catchall")
-        self.assertEqual(former_ts_choice["dsl_rules"], [])
-        self.assertEqual(convert_for_annotation_dsl("немецләрне", "RL"), "nemetslärne")
-        self.assertEqual(hamza["key"], "hamza")
-        self.assertEqual(rus_sign["key"], "catchall")
-        self.assertEqual(rus_sign["dsl_rules"], [])
-        self.assertEqual(jotation["key"], "catchall")
-        self.assertEqual(jotation["dsl_rules"], [])
-        self.assertEqual(multi_rule["key"], "catchall")
-        self.assertEqual(multi_rule["dsl_rules"], [])
-        self.assertEqual(unknown["key"], "unknown_origin")
-        self.assertIn("ts", annotation_suggestion("күпфункцияле", "U"))
-        self.assertNotIn("{{", annotation_suggestion("күпфункцияле", "U"))
 
     def test_c_conversion_defaults_at_every_position_and_preserves_case(self) -> None:
         cases = [
@@ -2020,79 +1736,6 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation("цирк", origin), "tsirk")
         self.assertEqual(convert_for_annotation("ЦИРК", "RL"), "TSIRK")
         self.assertEqual(convert_for_annotation("Цирк", "RL"), "Tsirk")
-
-    def test_split_export_routes_unknown_words_to_one_focused_project(self) -> None:
-        with tempfile.TemporaryDirectory() as tmpdir:
-            db_path = _write_annotation_db(
-                Path(tmpdir) / "zamanalif.sqlite",
-                [
-                    {
-                        "id": "sent_1",
-                        "tatar": True,
-                        "tokens": [
-                            {"text": "УУГ", "label": "U"},
-                            {"text": "торак-коммуналь", "label": "U"},
-                            {"text": "авиатөзелеш", "label": "U"},
-                            {"text": "күпфункцияле", "label": "U"},
-                            {"text": "концерт", "label": "RL"},
-                            {"text": "видеоязма", "label": "U"},
-                            {"text": "альфонс", "label": "U"},
-                            {"text": "вакыт", "label": "N"},
-                        ],
-                    }
-                ],
-            )
-
-            result = export_labelstudio_project_tasks_from_db(db_path, sort_by="word")
-
-        self.assertIn("unknown_origin", result.projects)
-        self.assertNotIn("ts", result.projects)
-        self.assertFalse(any(key.startswith("u_") for key in result.projects))
-        unknown = result.projects["unknown_origin"]
-        self.assertEqual(
-            unknown.report["project_title"],
-            "Unknown-origin word review",
-        )
-        self.assertEqual(
-            {task["data"]["cyrl_word"] for task in unknown.tasks},
-            {"УУГ", "торак-коммуналь", "авиатөзелеш", "видеоязма", "альфонс", "күпфункцияле"},
-        )
-        self.assertTrue(
-            all(task["meta"]["project_key"] == "unknown_origin" for task in unknown.tasks)
-        )
-        self.assertTrue(
-            all(task["data"]["auto_zamanalif"] for task in unknown.tasks)
-        )
-        self.assertTrue(
-            all(
-                set(task["meta"]) == {"schema_version", "project_key"}
-                for task in unknown.tasks
-            )
-        )
-        unknown_by_word = {task["data"]["cyrl_word"]: task for task in unknown.tasks}
-        self.assertEqual(
-            unknown_by_word["торак-коммуналь"]["data"]["auto_zamanalif"],
-            "torak-kommunalʼ",
-        )
-        self.assertNotIn(
-            "zamanalif_variants",
-            unknown_by_word["торак-коммуналь"]["data"],
-        )
-        tatar_specific = unknown_by_word["күпфункцияле"]["data"]
-        self.assertEqual(tatar_specific["auto_zamanalif"], "küpfunqtsiyäle")
-        self.assertNotIn("zamanalif_variants", tatar_specific)
-        self.assertNotIn("{{", tatar_specific["auto_zamanalif"])
-        self.assertIn(
-            "Simple origin heuristic: <b>native</b>",
-            tatar_specific["hints_html"],
-        )
-        self.assertEqual(
-            {
-                task["data"]["cyrl_word"]: task["data"]["auto_zamanalif"]
-                for task in result.projects["catchall"].tasks
-            },
-            {"концерт": "kontsert", "вакыт": "waqıt"},
-        )
 
     def test_cli_writes_split_labelstudio_json_only(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

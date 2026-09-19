@@ -26,7 +26,6 @@ from tatar_preannotator.conversion import (
     ConversionResult,
     DslError,
     FIGYL_STEM_RULE,
-    HAMZA_RULE,
     IJTIMAGIY_STEM_RULE,
     KAGAZ_STEM_RULE,
     Literal,
@@ -50,19 +49,7 @@ TASK_SCHEMA_VERSION = 1
 LEGACY_FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION = 2
 FOCUSED_DICTIONARY_TASK_SCHEMA_VERSION = 3
 CATCHALL_TASK_SCHEMA_VERSION = 3
-UNKNOWN_ORIGIN_PROJECT_KEY = "unknown_origin"
-SINGLE_SUGGESTION_PROJECT_KEYS = frozenset(
-    {"catchall", UNKNOWN_ORIGIN_PROJECT_KEY}
-)
-LEGACY_UNKNOWN_PROJECT_KEYS = frozenset(
-    {
-        "u_hyphenated",
-        "u_abbrev_fragment",
-        "u_tatar_specific",
-        "u_conditional_plain",
-        "u_other",
-    }
-)
+SINGLE_SUGGESTION_PROJECT_KEYS = frozenset({"catchall"})
 # Accepted when reading a previously exported backup, but deliberately absent
 # from active routing and generated project-key lists.
 LEGACY_E_GLIDE_PROJECT_KEY = "e_glide"
@@ -159,8 +146,8 @@ TATAR_SUFFIXES_AFTER_QUOTE = frozenset(
         "лекнең",
     }
 )
-TATAR_SPECIFIC_PART_LETTERS = frozenset("әөүҗңһ")
 RL_REVIEW_LETTERS = frozenset("ёьъщ")
+TATAR_SPECIFIC_PART_LETTERS = frozenset("әөүҗңһ")
 FAMILY_DIVERGENCE_RISK_LETTERS = (
     frozenset(CONDITIONAL_LETTERS) | RL_REVIEW_LETTERS
 )
@@ -312,26 +299,12 @@ def contains_rl_review_letter(word: str) -> bool:
     return any(char in CONDITIONAL_LETTERS or char in RL_REVIEW_LETTERS for char in word)
 
 
-def guess_unknown_tatar_specific_origin(word: str) -> str:
-    """Guess the origin of an unresolved word from Tatar-specific letters."""
-    return (
-        "N"
-        if any(char in TATAR_SPECIFIC_PART_LETTERS for char in word.casefold())
-        else "RL"
-    )
-
-
 def annotation_suggestion(word: str, label: str) -> str:
-    """Return the editable export suggestion, including the unknown-origin heuristic."""
+    """Return the editable export suggestion."""
     branches = conversion_branches(word)
     if label != "U":
         return branches.suggestion(label)
-    guessed_origin = guess_unknown_tatar_specific_origin(word)
-    preferred = (
-        branches.native_dsl if guessed_origin == "N" else branches.loanword_dsl
-    )
-    fallback = branches.loanword_dsl if guessed_origin == "N" else branches.native_dsl
-    return preferred or fallback
+    return branches.loanword_dsl or branches.native_dsl
 
 
 def annotation_display_variants(
@@ -657,18 +630,10 @@ def attach_contextual_project(
 def classify_project(word: str, label: str) -> dict[str, Any]:
     """Return the focused Label Studio project metadata for one normalized word."""
     if label == "U":
-        key = UNKNOWN_ORIGIN_PROJECT_KEY
-        suggestion = annotation_suggestion(word, label)
-        rules = (
-            list(dict.fromkeys(parse_dsl(suggestion).rule_ids)) if suggestion else []
-        )
-        return {"key": key, "title": project_title_for_key(key), "dsl_rules": rules}
+        return {"key": "catchall", "title": "Catchall word review", "dsl_rules": []}
     result = conversion_result_for_annotation(word, label)
     rules = list(dict.fromkeys(result.rule_ids)) if result is not None else []
-    if native_hamza_family(word) is not None and _contains_hamza(result):
-        key = _project_key_for_rule(HAMZA_RULE.rule_id)
-        title = project_title_for_key(key)
-    elif len(rules) > 1:
+    if len(rules) > 1:
         key = "complex_multi_rule"
         title = "Complex multi-rule words"
     elif len(rules) == 1:
@@ -696,77 +661,7 @@ def word_belongs_to_project(word: str, origin: str, project_key: str) -> bool:
                 or "ие" in word.casefold()
             )
         )
-    return (
-        project_key in LEGACY_UNKNOWN_PROJECT_KEYS
-        and origin == "U"
-        and "ц" not in word.casefold()
-        and _u_project_key(word) == project_key
-    )
-
-
-NATIVE_HAMZA_FAMILIES: tuple[tuple[str, str, str], ...] = (
-    ("иэтиляф", "ietilyäf", "iʼtiläf"),
-    ("маэмай", "maemay", "maʼmay"),
-    ("таэмин", "taemin", "täʼmin"),
-    ("тәэмин", "täemin", "täʼmin"),
-    ("тәэсир", "täesir", "täʼsir"),
-    ("мөэмин", "möemin", "möʼmin"),
-    ("мәсьәлә", "mäsälä", "mäsʼälä"),
-    ("җөрьәт", "cörät", "cörʼät"),
-    ("коръән", "qorän", "qorʼän"),
-)
-
-LOANWORD_HAMZA_PREFIXES: dict[str, str] = {
-    "иэтиляф": "ietilyaf",
-    "маэмай": "maemay",
-    "таэмин": "taemin",
-    "тәэмин": "täemin",
-    "тәэсир": "täesir",
-    "мөэмин": "möemin",
-    "мәсьәлә": "mäsʼälä",
-    "җөрьәт": "cörʼät",
-    "коръән": "korʼän",
-}
-
-
-def native_hamza_family(word: str) -> str | None:
-    """Return the verified lexical hamza stem for a word."""
-    folded = word.casefold()
-    family = next(
-        (
-            cyrillic_prefix
-            for cyrillic_prefix, _, _ in NATIVE_HAMZA_FAMILIES
-            if folded.startswith(cyrillic_prefix)
-        ),
-        None,
-    )
-    return "тәэмин" if family == "таэмин" else family
-
-
-def _contains_hamza(result: ConversionResult | None) -> bool:
-    if result is None:
-        return False
-    return HAMZA_RULE.rule_id in result.rule_ids or any(
-        isinstance(segment, Literal) and ZAMANALIF_APOSTROPHE in segment.text
-        for segment in result.segments
-    )
-
-
-def _u_project_key(word: str) -> str:
-    if "-" in word:
-        return "u_hyphenated"
-    if _is_u_abbrev_fragment(word):
-        return "u_abbrev_fragment"
-    if any(char in TATAR_SPECIFIC_PART_LETTERS for char in word):
-        return "u_tatar_specific"
-    if contains_conditional_letter(word):
-        return "u_conditional_plain"
-    return "u_other"
-
-
-def _is_u_abbrev_fragment(word: str) -> bool:
-    cyrillic_count = len(CYRILLIC_RE.findall(word))
-    return cyrillic_count <= 3 or "." in word or "/" in word
+    return False
 
 
 def _export_from_records(
@@ -832,8 +727,6 @@ def _export_from_records(
                 )
             entry.frequency += 1
             effective_label = resolution if resolution in {"N", "RL", "U"} else label
-            if native_hamza_family(normalized) is not None and effective_label == "U":
-                effective_label = "N"
             entry.label_counts[effective_label] += 1
             entry.conditional_letters.update(
                 char for char in normalized if char in CONDITIONAL_LETTERS
@@ -861,13 +754,11 @@ def _export_from_records(
         if (
             entry.label == "N"
             and vowel_harmony_class(entry.normalized) == "mixed_front_back"
-            and native_hamza_family(entry.normalized) is None
         ):
             mixed_harmony_n_skipped += 1
             continue
         if (
             branches.state == "origin_independent"
-            and native_hamza_family(entry.normalized) is None
         ):
             continue
         if entry.frequency < min_frequency:
@@ -924,7 +815,6 @@ def _export_units(
 
     ordinary: list[_ExportUnit] = []
     family_candidates: list[tuple[dict[str, Any], str, int, str, str]] = []
-    hamza: dict[tuple[str, str], list[tuple[dict[str, Any], str, int, str]]] = {}
     for task, normalized, frequency in zip(
         result.tasks,
         result.exported_words,
@@ -933,40 +823,8 @@ def _export_units(
     ):
         label = task["data"]["gemini_origin"]
         project_key = classify_project(normalized, label)["key"]
-        if project_key == "hamza" and (
-            family := native_hamza_family(normalized)
-        ) is not None:
-            hamza.setdefault((family, label), []).append(
-                (task, normalized, frequency, label)
-            )
-        else:
-            family_candidates.append(
-                (task, normalized, frequency, label, project_key)
-            )
-
-    for items in hamza.values():
-        representative = min(
-            items,
-            key=lambda item: (len(item[1]), -item[2], item[1]),
-        )
-        ordinary.append(
-            _ExportUnit(
-                task=representative[0],
-                normalized_word=representative[1],
-                project_key="hamza",
-                frequency=sum(item[2] for item in items),
-                family_members=tuple(
-                    item[1]
-                    for item in sorted(
-                        items,
-                        key=lambda item: (
-                            item[1] != representative[1],
-                            len(item[1]),
-                            item[1],
-                        ),
-                    )
-                ),
-            )
+        family_candidates.append(
+            (task, normalized, frequency, label, project_key)
         )
 
     identities = morphology_analyzer.analyze(item[1] for item in family_candidates)
@@ -1058,7 +916,7 @@ def _task_with_project_meta(
 ) -> dict[str, Any]:
     data = dict(task["data"])
     if project_key in SINGLE_SUGGESTION_PROJECT_KEYS:
-        if project_key in {"catchall", UNKNOWN_ORIGIN_PROJECT_KEY}:
+        if project_key == "catchall":
             variants = annotation_variants(data["auto_zamanalif"])
             data["auto_zamanalif"] = variants[0].zamanalif if variants else ""
         meta = {
@@ -1191,11 +1049,6 @@ def conversion_result_for_annotation(word: str, label: str) -> ConversionResult 
     compact = convert_for_annotation(word, label)
     if not compact:
         return None
-    if native_hamza_family(word) is not None:
-        return result_with_native_hamza_choices(
-            word,
-            ConversionResult((Literal(compact),)),
-        )
     result = ConversionResult((Literal(compact),))
     result = result_with_figyl_stem_choices(word, result)
     result = result_with_shigyr_stem_choices(word, result)
@@ -1335,42 +1188,6 @@ def result_with_mashgul_stem_choices(source: str, result: ConversionResult) -> C
     return ConversionResult(tuple(segments)) if changed else result
 
 
-def result_with_native_hamza_choices(
-    source: str,
-    result: ConversionResult,
-) -> ConversionResult:
-    """Represent verified native lexical hamza as one global policy choice."""
-    family = native_hamza_family(source)
-    if family is None:
-        return result
-    preserved_prefix = next(
-        preserved
-        for cyrillic, _, preserved in NATIVE_HAMZA_FAMILIES
-        if cyrillic == family
-    )
-    apostrophe_index = preserved_prefix.index(ZAMANALIF_APOSTROPHE)
-
-    segments: list[Literal | Choice] = []
-    changed = False
-    for segment in _merge_adjacent_literals(result).segments:
-        if isinstance(segment, Choice):
-            segments.append(segment)
-            continue
-        text = segment.text
-        if not changed and text.startswith(preserved_prefix):
-            _append_literal_segment(segments, preserved_prefix[:apostrophe_index])
-            segments.append(Choice(HAMZA_RULE.rule_id, HAMZA_RULE.options))
-            _append_literal_segment(
-                segments,
-                preserved_prefix[apostrophe_index + 1 :]
-                + text[len(preserved_prefix) :],
-            )
-            changed = True
-            continue
-        _append_literal_segment(segments, text)
-    return ConversionResult(tuple(segments)) if changed else result
-
-
 def result_with_mostaqil_choices(
     source: str, result: ConversionResult, label: str
 ) -> ConversionResult:
@@ -1442,14 +1259,9 @@ def decision_html(entry: WordStats) -> str:
     items: list[str] = []
     effective_label = entry.label
     if entry.label == "U":
-        effective_label = guess_unknown_tatar_specific_origin(entry.normalized)
+        effective_label = "N"
     result = conversion_result_for_annotation(entry.normalized, effective_label)
     items.append(f"Gemini's origin prediction: <b>{_origin_prediction(entry.label)}</b>")
-    if effective_label != entry.label:
-        items.append(
-            "Simple origin heuristic: "
-            f"<b>{_origin_prediction(effective_label)}</b> (editable suggestion)"
-        )
     if result is None:
         items.append("Automatic converter produced no clean Latin suggestion")
     context_html = ""
@@ -1656,7 +1468,7 @@ def validate_split_export_result(result: SplitExportResult) -> None:
             )
             suggestion_for_rules = (
                 annotation_suggestion(expected_word, data["gemini_origin"])
-                if project_key in {"catchall", UNKNOWN_ORIGIN_PROJECT_KEY}
+                if project_key == "catchall"
                 else suggestion
             )
             suggestion_rules = (
@@ -1865,7 +1677,7 @@ def _validate_task(
                     f"{context} has invalid visible Zamanalif suggestion: {exc}"
                 ) from exc
         expected_display_suggestion = expected_suggestion
-        if project_key in {"catchall", UNKNOWN_ORIGIN_PROJECT_KEY}:
+        if project_key == "catchall":
             variants = annotation_variants(expected_suggestion)
             expected_display_suggestion = variants[0].zamanalif if variants else ""
         if display_suggestion != expected_display_suggestion:
@@ -2056,13 +1868,6 @@ def _unsafe_inherited_review_words(
         source = str(source)
         lemma = str(lemma)
         part_of_speech = str(part_of_speech)
-        if part_of_speech == "hamza":
-            if (
-                native_hamza_family(normalized) != lemma
-                or native_hamza_family(source) != lemma
-            ):
-                unsafe.add(normalized)
-            continue
         if source_origin is None or not is_compatible_family_member(
             source,
             normalized,
@@ -2111,18 +1916,10 @@ def _convert_known_label(word: str, label: str) -> str:
         if all(part_label == label for part_label in part_labels):
             return _convert_known_label_without_hyphen(word, label)
         return "-".join(
-            _convert_known_label_without_hyphen(part, part_label)
-            if part
-            else ""
+            _convert_known_label_without_hyphen(part, part_label) if part else ""
             for part, part_label in zip(parts, part_labels, strict=True)
         )
     return _convert_known_label_without_hyphen(word, label)
-
-
-def _guess_hyphen_part_label(part: str, parent_label: str) -> str:
-    if any(char in TATAR_SPECIFIC_PART_LETTERS for char in part.casefold()):
-        return "N"
-    return parent_label
 
 
 def _convert_known_label_without_hyphen(word: str, label: str) -> str:
@@ -2148,25 +1945,7 @@ def _convert_known_label_without_hyphen(word: str, label: str) -> str:
         output = _apply_native_lexical_conventions(word, output)
     if label == "RL":
         output = _apply_loanword_lexical_conventions(word, output)
-    return _apply_verified_hamza_lexical_convention(word, output, label)
-
-
-def _apply_verified_hamza_lexical_convention(
-    word: str,
-    converted: str,
-    label: str,
-) -> str:
-    folded = word.casefold()
-    for cyrillic, native_plain, preserved in NATIVE_HAMZA_FAMILIES:
-        if not folded.startswith(cyrillic):
-            continue
-        branch_prefix = native_plain if label == "N" else LOANWORD_HAMZA_PREFIXES[cyrillic]
-        if converted.startswith(preserved):
-            return converted
-        if converted.startswith(branch_prefix):
-            return preserved + converted[len(branch_prefix) :]
-        return converted
-    return converted
+    return output
 
 
 def _apply_loanword_lexical_conventions(word: str, converted: str) -> str:
@@ -2198,7 +1977,15 @@ LOANWORD_FINAL_KA_SUFFIX_STEMS = frozenset(
 
 
 NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
-    *NATIVE_HAMZA_FAMILIES,
+    ("иэтиляф", "ietilyäf", "itiläf"),
+    ("маэмай", "maemay", "mamay"),
+    ("таэмин", "taemin", "tämin"),
+    ("тәэмин", "täemin", "tämin"),
+    ("тәэсир", "täesir", "täsir"),
+    ("мөэмин", "möemin", "mömin"),
+    ("мәсьәлә", "mäsälä", "mäsälä"),
+    ("җөрьәт", "cörät", "cörät"),
+    ("коръән", "qorän", "qorän"),
     ("аек", "ayık", "ayıq"),
     ("беркай", "berkay", "berqay"),
     ("беркая", "berkaya", "berqaya"),
@@ -2761,7 +2548,6 @@ def _ordered_project_keys(projects: dict[str, list[dict[str, Any]]]) -> list[str
         "contextual_homonym",
         "complex_multi_rule",
         *(_project_key_for_rule(rule_id) for rule_id in ACTIVE_RULES),
-        UNKNOWN_ORIGIN_PROJECT_KEY,
         "catchall",
     ]
     known = [key for key in priority if key in projects]
@@ -2776,22 +2562,8 @@ def _project_key_for_rule(rule_id: str) -> str:
 def project_title_for_key(project_key: str) -> str:
     if project_key == "contextual_homonym":
         return "Contextual homonyms"
-    if project_key == "hamza":
-        return "Hamza review"
     if project_key == "complex_multi_rule":
         return "Complex multi-rule words"
-    if project_key == UNKNOWN_ORIGIN_PROJECT_KEY:
-        return "Unknown-origin word review"
-    if project_key == "u_hyphenated":
-        return "Unknown hyphenated compounds"
-    if project_key == "u_abbrev_fragment":
-        return "Unknown abbreviations and fragments"
-    if project_key == "u_tatar_specific":
-        return "Unknown Tatar-specific words"
-    if project_key == "u_conditional_plain":
-        return "Unknown conditional-letter words"
-    if project_key == "u_other":
-        return "Other unknown-origin words"
     if project_key == "catchall":
         return "Catchall word review"
     return project_key.upper().replace("_", " ")
@@ -2802,8 +2574,6 @@ def dictionary_project_keys() -> set[str]:
     return {
         "complex_multi_rule",
         *(_project_key_for_rule(rule_id) for rule_id in ACTIVE_RULES),
-        UNKNOWN_ORIGIN_PROJECT_KEY,
-        *LEGACY_UNKNOWN_PROJECT_KEYS,
         LEGACY_E_GLIDE_PROJECT_KEY,
         "catchall",
     }
@@ -2854,3 +2624,7 @@ def _split_report(
         ],
         "base_report": result.report,
     }
+def _guess_hyphen_part_label(part: str, parent_label: str) -> str:
+    if any(char in TATAR_SPECIFIC_PART_LETTERS for char in part.casefold()):
+        return "N"
+    return parent_label
