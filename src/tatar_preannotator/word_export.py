@@ -1481,7 +1481,10 @@ def validate_split_export_result(result: SplitExportResult) -> None:
                 raise AnnotationExportError(
                     f"{context} belongs to project {expected_project['key']!r}"
                 )
-            if suggestion_rules != expected_project["dsl_rules"]:
+            if (
+                data["gemini_origin"] != "U"
+                and suggestion_rules != expected_project["dsl_rules"]
+            ):
                 raise AnnotationExportError(f"{context} has inconsistent DSL rules")
         flattened_words.extend(project.exported_words)
 
