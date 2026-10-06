@@ -11,7 +11,7 @@ import sqlite3
 import tempfile
 from typing import Iterable
 
-from .conversion import DslError, RULES, parse_dsl, resolve_dsl
+from .conversion import CYRILLIC_LETTER_REFERENCES, DslError, RULES, parse_dsl, resolve_dsl
 from .conflict_resolver import load_word_resolutions
 from .contextual_review import (
     ContextualReview,
@@ -456,8 +456,13 @@ def _reviewed_variant_for_policy(
 def _validate_resolved_sentence(sample_id: str, value: str) -> None:
     if DSL_DELIMITER_RE.search(value):
         raise TrainingExportError(f"{sample_id}: unresolved DSL remained in output")
-    match = CYRILLIC_RE.search(value)
-    if match:
+    for match in CYRILLIC_RE.finditer(value):
+        if (
+            match.group() in CYRILLIC_LETTER_REFERENCES
+            and (match.start() == 0 or not re.match(r"\w", value[match.start() - 1]))
+            and (match.end() == len(value) or not re.match(r"\w", value[match.end()]))
+        ):
+            continue
         raise TrainingExportError(
             f"{sample_id}: unresolved Cyrillic character remained in output: {match.group()!r}"
         )

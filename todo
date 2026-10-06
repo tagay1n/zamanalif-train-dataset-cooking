@@ -1,6 +1,10 @@
 Good job. Now let's generate next portion of tasks for annotation
 
-I completed annotation of project 35. Please export it but do not import yet. We discuss each of them.  Auth token is 
+
+
+If nothing blocking please import project and then repost about results, especially how many family members were autoresolved. If were will be conflicts during importing stop and we resolve them togetehr. 
+
+export all remaining for annotation catchall tasks in batches of 500 and report how many cases require annotation
 
 hamzaкараргяһы
 omonyms
@@ -10,6 +14,7 @@ e/ё in lonwords
 rome numerals
 TS - Ц
 
+лишь -> liş
 what apostrophus to choose?
 ихтыяри—ixtıyarıy
 
@@ -53,8 +58,17 @@ zayom
 
 къ shpuld be always as q
 
+-ка suffix or part of the loan word
+
+-я endings coversion
+
+лыкка -> always lıqqa
+
+surname + ka versus village names ending with -ka
+
 zayom, федоровна
 
+ауруы -> awruı 
 инкяр, зәкят, кяфер
 
 awrupa???
@@ -88,7 +102,7 @@ e in surnames
 
 contry names, geografik naming
 
-ислях, киляб, кятиб, кәляме, ляихә, әхкяме, салят, вәссәллям, закят, иминят, имкян, истикълял
+ислях, киляб, кятиб, кәляме, ляихә, әхкяме, салят, вәссәллям, закят, иминят, имкян, истикълял, һилял, әгъян, әфкяр, иэтиля, лязим
 
 кальганың
 
@@ -147,10 +161,13 @@ writing of all months
 үтүе -> shoule be -we?
 
 interv'yu
+лишь: lişʼ → liş
 
+лукьянчикова
+vyetnamnıñ or v`yetnamnıñ
 истикълял
 
-
+коэффициент preserve as ye?
 
 
 quqmara not kukmara
@@ -172,3 +189,186 @@ import 2 projects
 export new catchall
 export +1 other project
 design review tools
+һиляле
+яушевлардан yauşevlardan
+ялкаулыгын -> yalqawlığın
+
+
+- батальон → batalʼon
+- павильон → pavilʼon
+- компаньон → kompanʼon
+- почтальон → poçtalʼon
+- гильотина → gilʼotina
+- мурильо → murilʼo
+- казаньоргсинтез → kazanʼorgsintez
+
+
+   Project                    Tasks
+  ━━━━━━━━━━━━━━━━━━━━━━━━  ━━━━━━━━
+   Catchall                   9,053
+  ────────────────────────  ────────
+   Complex multi-rule           140
+  ────────────────────────  ────────
+   Contextual homonyms          137
+  ────────────────────────  ────────
+   Hamza                          1
+  ────────────────────────  ────────
+   Unknown origin                 1
+  ────────────────────────  ────────
+   Total                     15,435
+
+ь in names альбина, эльмира
+
+сагв. -> sağw
+
+сауты
+
+сахаутдинова
+
+саксаул
+
+роальд сагдеев
+
+плетцензее
+
+Голль
+
+д'артаньян
+
+коэфициент, проект
+
+волчья
+
+помощь
+
+интерьер
+
+т + ц 
+
+плеценз -> плyoценз
+
+приемник or приёмник 
+pärhizqär
+Пәһләви
+
+proyavlyayutsya - proyavl'ayuts'a - proyavlayutsa, bel'ayev, вязьма
+
+дальняя, gulyay, крайняя
+fizkul'tura
+КЦСР, 
+selʼdʼ
+
+кратц
+
+… күреп, таң кала... һәм Кукмара музеена түбәндәге хатны юллый: «Дорогие учредители музея Кукмора!
+
+Хәсән Сарьян
+
+повлечь
+
+поволжье
+
+бьярмия
+
+бельцский цс
+
+колосау
+
+керчь -> kerç
+
+вәлиевка -> wäliyevqa
+
+däwalaw
+
+ляихәне, кямил, кятиб, qähin, кяшки
+
+qäferlek
+
+Әбу Люьлюьә 
+
+кямал, миллят, кяне, микяил, нязиф, мөкяләмә, мунълау, мәкян
+
+курганга -> qurğanğa
+
+монолитспецсервис -> monolitspetsservis
+
+мөнәүвәр -> mönäwwär, мөрәүвәт
+
+вәли
+
+мәсьүл
+
+ночь -> noç
+
+
+мәсьүлиятне, мунълау
+
+нокса
+
+соловьев -> *NOT* solovʼyev
+
+рәүҗият
+
+с.г.у.с
+
+сотыеннан -> sotıyinnan
+
+сиракьюз
+
+рауф -> rauf
+
+товар -> towar
+
+ сәркятип-> särqätip 
+
+ сягать
+
+ säläxiätläre,
+ сәркятиб
+ тәъвил
+
+ траектория -> traektoriya
+
+ тяжелые
+
+ каи
+
+ шөрәкясе -> şöräqäse
+
+ шәүхүд
+
+әүвәл
+хюнтцигер
+ядкяр
+
+ЭЙЗЕНХАУЭР
+
+ЦСКА
+
+хиляф, хәляс
+
+фирдәүс
+
+әүлия
+
+әүс
+
+әхкям
+
+янгляев
+
+хәлляж
+
+цклары
+чувствовать
+
+
+checks:
+- count of letters match
+- count of words in sentence match
+- punctuation marks preserved
+- case preeserved 
+
+Альта
+
+Ә Җирән Кашка башын чайкаган, кыңгыравын көчле итеп бер шалтыраткан — көтү бергә җыелган, тагын бер шалтыраткан да сөйләргә тотынган: — Күрдегезме сүземнең дөреслеген: аерылганнар аюдан өркеп һәлак булдылар, бүленгәннәр бүрегә очрадылар, — дигән дә кыңгыравын өченче мәртәбә шалтыраткан һәм барлык аргамакларын болынга җыйган.

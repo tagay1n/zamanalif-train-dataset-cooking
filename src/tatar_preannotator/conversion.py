@@ -17,6 +17,9 @@ ZAMANALIF_CHARACTERS = frozenset(
     f"-./{ZAMANALIF_APOSTROPHE}—()"
 )
 ZAMANALIF_LITERAL_CHARACTERS = ZAMANALIF_CHARACTERS | {" "}
+# Metalinguistic references to Cyrillic hard/soft signs retain the named letter.
+# This exception applies to a whole token, never to letters within a word.
+CYRILLIC_LETTER_REFERENCES = frozenset({"ъ", "Ъ", "ь", "Ь"})
 IDENTIFIER_RE = re.compile(r"[A-Z][A-Z0-9_]*")
 OPTION_RE = re.compile(r"[a-z][a-z0-9_]*")
 
@@ -171,6 +174,8 @@ def parse_dsl(value: str) -> ConversionResult:
         raise DslError("conversion DSL must be a non-empty string")
     value = normalize_zamanalif_apostrophes(value)
     _validate_spacing(value, "conversion DSL")
+    if value in CYRILLIC_LETTER_REFERENCES:
+        return ConversionResult((Literal(value),))
 
     segments: list[Segment] = []
     position = 0
@@ -205,6 +210,12 @@ def parse_dsl(value: str) -> ConversionResult:
 
 def serialize_dsl(result: ConversionResult) -> str:
     """Serialize structured conversion output to canonical inline DSL."""
+    if (
+        len(result.segments) == 1
+        and isinstance(result.segments[0], Literal)
+        and result.segments[0].text in CYRILLIC_LETTER_REFERENCES
+    ):
+        return result.segments[0].text
     parts: list[str] = []
     for segment in result.segments:
         if isinstance(segment, Literal):
@@ -236,6 +247,12 @@ def resolve_result(
     unknown_policy_rules = sorted(set(selected_policy) - set(RULES))
     if unknown_policy_rules:
         raise DslError(f"unknown policy rules: {', '.join(unknown_policy_rules)}")
+    if (
+        len(result.segments) == 1
+        and isinstance(result.segments[0], Literal)
+        and result.segments[0].text in CYRILLIC_LETTER_REFERENCES
+    ):
+        return result.segments[0].text
 
     parts: list[str] = []
     for segment in result.segments:

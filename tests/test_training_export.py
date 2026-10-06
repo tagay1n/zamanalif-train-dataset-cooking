@@ -21,6 +21,23 @@ from tatar_preannotator.word_export import save_reviewed_word
 
 
 class TrainingExportTests(unittest.TestCase):
+    def test_exports_reviewed_literal_cyrillic_sign_references(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(
+                root / "zamanalif.sqlite",
+                [{"id": "signs", "text": "(ь) һәм (ъ).", "tokens": [
+                    {"text": "ь", "label": "N"},
+                    {"text": "һәм", "label": "N"},
+                    {"text": "ъ", "label": "N"},
+                ]}],
+            )
+            save_reviewed_word(db_path, "ь", "ь", "N")
+            save_reviewed_word(db_path, "ъ", "ъ", "N")
+            summary = export_training_dataset(db_path, root / "train.jsonl")
+            self.assertEqual(summary.exported_count, 1)
+            self.assertEqual(_read_jsonl(root / "train.jsonl")[0]["zamanalif"], "(ь) häm (ъ).")
+
     def test_internal_quotes_are_preserved_after_shared_word_conversion(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

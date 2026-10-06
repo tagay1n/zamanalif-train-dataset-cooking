@@ -19,6 +19,19 @@ from tatar_preannotator.word_export import (
 
 
 class ConversionDslTests(unittest.TestCase):
+    def test_preserves_standalone_cyrillic_sign_reference(self) -> None:
+        for value in ("ъ", "Ъ", "ь", "Ь"):
+            with self.subTest(value=value):
+                result = parse_dsl(value)
+                self.assertEqual(result.to_dsl(), value)
+                self.assertEqual(result.resolve(), value)
+                self.assertEqual(resolve_dsl(value), value)
+
+    def test_sign_exception_does_not_allow_mixed_script_words(self) -> None:
+        for value in ("tъ", "ъt", "ъ ъ", "tь", "ьt", "ь ь", "аб", "tatар"):
+            with self.subTest(value=value), self.assertRaises(DslError):
+                parse_dsl(value)
+
     def test_retired_rules_are_rejected(self) -> None:
         for rule_id in ("TS", "RUS_SIGN", "RUS_JOTATION", "RUS_SIGN_E"):
             with self.subTest(rule_id=rule_id):
