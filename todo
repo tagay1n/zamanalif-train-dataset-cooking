@@ -381,10 +381,26 @@ However, the broader check found unresolved cases outside those queues:
 - **Partially resolved 2026-10-07:** of the 15,996 unreviewed native-labelled mixed-harmony forms,
   7,173 whose native and loanword conversion branches agree now convert automatically during training export.
   Of the 8,823 origin-dependent forms, 111 across 36 families were recovered from existing direct human reviews,
-  preserving human spellings, variants, and source/analyzer provenance. The remaining 8,712 forms stay excluded
-  from annotation queues and training export. All pre-existing review rows were retained unchanged.
+  preserving human spellings, variants, and source/analyzer provenance. After that recovery, 8,712 forms remained
+  excluded from annotation queues and training export. All pre-existing review rows were retained unchanged.
   After recovery, all 47,259 reviewed words and 479 variants pass dictionary validation.
   Entries, validation, manifest, and full database backup: [docs/mixed_harmony_family_recovery.md](docs/mixed_harmony_family_recovery.md).
+- **Source corrected 2026-10-07:** the user confirmed all ten flagged hyphen boundaries were internal word breaks.
+  All eleven occurrences were joined in both source sentences and token annotations, preserving case, punctuation,
+  labels, and token indices. Human review tables were unchanged. The exclusion count is now 8,704 unique forms,
+  including 827 hyphenated forms. Original-row backup and occurrence list:
+  [docs/hyphen_boundary_source_corrections.md](docs/hyphen_boundary_source_corrections.md).
+- **Recovery audited 2026-10-07 (read-only):** 371 compounds have existing component/family evidence;
+  an experimental deterministic-suffix check adds 95 forms and 10 compounds, preserving ten human corrections.
+  The 476 candidates cover 1,596 occurrences and would leave 8,228 excluded if recovered; the actual count
+  was 8,704 at audit time. Boundary clues hold out 54 compounds. Converter tracing also found 29 forms that silently
+  omit conditional letters despite producing nonempty Latin output. No source, reviews, or conversion rules changed.
+  Evidence, limitations, candidate spellings, and reproduction: [docs/mixed_harmony_recovery_audit.md](docs/mixed_harmony_recovery_audit.md).
+- **Compounds recovered 2026-10-07:** the authorized first tier recovered 371 compounds / 748 occurrences
+  using reviewed, deterministic, and existing safe-family components, with complete component provenance.
+  The remaining 8,333 forms, including all 105 expanded-rule candidates, stay excluded. All pre-existing
+  source and review rows were preserved. Loaders reject stale component evidence; direct human reviews dominate.
+  Backup, manifest, validation, and all spellings: [docs/mixed_harmony_compound_recovery.md](docs/mixed_harmony_compound_recovery.md).
 - **Resolved 2026-10-07:** all 114 stored `HAMZA` reviews were migrated to preserved `ʼ` (U+02BC) spellings.
   Preferred policy: preserve hamza wherever possible. All other reviewed text and origins were retained.
   At that migration, all 47,148 reviewed words and 478 reviewed variants passed dictionary validation.

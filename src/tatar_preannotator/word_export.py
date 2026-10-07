@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections import Counter
 from contextlib import closing
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from functools import lru_cache
 from html import escape
@@ -16,6 +16,7 @@ from typing import TYPE_CHECKING, Any, Iterable
 
 from tatar_preannotator.labelstudio_instructions import render_project_instructions
 from tatar_preannotator.morphology import (
+    APERTIUM_TAT_REVISION,
     MorphologyAnalyzer,
     default_morphology_analyzer,
 )
@@ -1809,6 +1810,10 @@ def save_reviewed_word(
             "delete from reviewed_word_variants where normalized_word = ?",
             (normalized,),
         )
+        conn.execute(
+            "delete from reviewed_word_compound_derivations where normalized_word = ?",
+            (normalized,),
+        )
 
 
 def load_reviewed_words(db_path: str | Path) -> dict[str, ReviewedWord]:
@@ -1839,7 +1844,7 @@ def load_reviewed_words(db_path: str | Path) -> dict[str, ReviewedWord]:
         variants_by_word.setdefault(str(word), []).append(
             ReviewedVariant(str(zamanalif), policies)
         )
-    return {
+    reviewed = {
         row[0]: ReviewedWord(
             normalized_word=row[0],
             zamanalif_dsl=row[1],
@@ -1848,6 +1853,82 @@ def load_reviewed_words(db_path: str | Path) -> dict[str, ReviewedWord]:
         )
         for row in rows
     }
+    return _filter_valid_compound_reviews(db_path, reviewed)
+
+
+def _filter_valid_compound_reviews(
+    db_path: str | Path, reviewed: dict[str, ReviewedWord],
+    *, connection: sqlite3.Connection | None = None,
+) -> dict[str, ReviewedWord]:
+    """Keep bounded compound recoveries only while their component evidence holds.
+
+    Compound rows use U: each component retains its own origin in provenance,
+    and the whole spelling must not become a direct N/RL family-review donor.
+    Human edits invalidate dependent compounds until they are recomposed; a
+    direct whole-word review clears this provenance and takes precedence.
+    """
+    from .labelstudio_import import _family_member_zamanalif
+
+    query = ("select normalized_word, components_json, analyzer_revision "
+             "from reviewed_word_compound_derivations")
+    if connection is None:
+        with closing(sqlite3.connect(db_path)) as conn:
+            rows = conn.execute(query).fetchall()
+    else:
+        rows = connection.execute(query).fetchall()
+    invalid: set[str] = set()
+    signatures: dict[str, Any] = {}
+
+    def signature(word: str) -> Any:
+        if word not in signatures:
+            value = reviewed.get(word)
+            signatures[word] = json.loads(json.dumps(asdict(value))) if value else None
+        return signatures[word]
+
+    for word, raw_components, revision in rows:
+        approval = reviewed.get(word)
+        try:
+            components = json.loads(raw_components)
+            valid = (
+                revision == APERTIUM_TAT_REVISION
+                and approval is not None and approval.origin == "U"
+                and not approval.variants
+                and "-".join(c["word"] for c in components) == word
+                and "-".join(c["dsl"] for c in components) == approval.zamanalif_dsl
+            )
+            for component in components:
+                part = component["word"]
+                valid &= all(signature(s["word"]) == s["signature"]
+                             for s in component["source_reviews"])
+                status = component["status"]
+                if status == "deterministic":
+                    branches = conversion_branches(part)
+                    valid &= branches.state == "origin_independent" and branches.native_dsl == component["dsl"]
+                    current = reviewed.get(part)
+                    if current is not None:
+                        valid &= current.zamanalif_dsl == component["dsl"] and not current.variants
+                elif status in {"direct_review", "inherited_review"}:
+                    valid &= signature(part) == component["component_review"]
+                    if status == "inherited_review":
+                        source, lemma, _, _ = component["derivation"]
+                        valid &= is_compatible_family_member(source, part, lemma, reviewed[source].origin)
+                elif status == "existing_family_rule":
+                    proof = component["family"]
+                    source = proof["source_word"]
+                    origin = reviewed[source].origin
+                    valid &= is_compatible_family_member(source, part, proof["lemma"], origin)
+                    valid &= _family_member_zamanalif(
+                        conversion_branches(source).suggestion(origin),
+                        reviewed[source].zamanalif_dsl,
+                        conversion_branches(part).suggestion(origin),
+                    ) == component["dsl"]
+                else:
+                    valid = False
+            if not valid:
+                invalid.add(word)
+        except (KeyError, TypeError, ValueError):
+            invalid.add(word)
+    return {word: value for word, value in reviewed.items() if word not in invalid}
 
 
 def _unsafe_inherited_review_words(
@@ -2525,6 +2606,18 @@ def ensure_review_state_schema(conn: sqlite3.Connection) -> None:
             updated_at text not null,
             primary key(normalized_word, position),
             foreign key(normalized_word) references reviewed_words(normalized_word)
+        )
+        """
+    )
+    conn.execute(
+        """
+        create table if not exists reviewed_word_compound_derivations (
+            normalized_word text primary key,
+            components_json text not null,
+            analyzer_revision text not null,
+            created_at text not null,
+            foreign key(normalized_word) references reviewed_words(normalized_word)
+                on delete cascade
         )
         """
     )

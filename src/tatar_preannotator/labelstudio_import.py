@@ -336,6 +336,10 @@ def import_labelstudio_annotations(
                             """,
                             (item.normalized_word,),
                         )
+                        conn.execute(
+                            "delete from reviewed_word_compound_derivations where normalized_word = ?",
+                            (item.normalized_word,),
+                        )
                         derived_words.discard(item.normalized_word)
                         continue
                     conn.execute(
@@ -612,6 +616,10 @@ def _store_homonym_decision(
     existing_resolutions: dict[str, str],
     now: str,
 ) -> bool:
+    conn.execute(
+        "delete from reviewed_word_compound_derivations where normalized_word = ?",
+        (word,),
+    )
     derived_members = [
         str(row[0])
         for row in conn.execute(
