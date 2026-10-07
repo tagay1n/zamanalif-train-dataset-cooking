@@ -170,7 +170,10 @@ The exporter uses a simple vowel-harmony signal:
   back vowel.
 
 Project 1 skips native-looking `N` words with mixed front/back vowel harmony,
-but keeps matching `RL` and `U` words.
+but keeps matching `RL` and `U` review candidates. Mixed-harmony `N` words whose
+native and loanword branches produce the same result convert automatically
+without review. Other unreviewed mixed-harmony `N` words remain excluded from
+both the dictionary queue and training export.
 
 Important caveats:
 

@@ -751,15 +751,13 @@ def _export_from_records(
             continue
         if entry.label == "U" and not include_unknown:
             continue
+        if branches.state == "origin_independent":
+            continue
         if (
             entry.label == "N"
             and vowel_harmony_class(entry.normalized) == "mixed_front_back"
         ):
             mixed_harmony_n_skipped += 1
-            continue
-        if (
-            branches.state == "origin_independent"
-        ):
             continue
         if entry.frequency < min_frequency:
             continue

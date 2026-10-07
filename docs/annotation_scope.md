@@ -45,7 +45,10 @@ letters follow ordinary routing; hamza alone does not require review.
   readable only in existing stored reviews and is never generated for a new
   task or focused project.
 - **Native-looking mixed-harmony words.** If Gemini labels a word `N` and the
-  word has mixed front/back vowels, skip it for Project 1.
+  word has mixed front/back vowels, skip it for Project 1 when the native and
+  loanword conversion branches differ or either is unavailable. These forms
+  remain blocked from training export until reviewed. If both branches produce
+  the same result, convert automatically without human review.
 - **Origin-independent words.** If native and Russian-loanword conversion
   branches produce the same Zamanalif result, skip the word because origin
   annotation cannot change the target text.
@@ -109,6 +112,10 @@ they never approve the normalized word globally.
 The final training dataset should contain plain Zamanalif text, not DSL syntax.
 DSL variants are an internal review/storage mechanism and must be resolved
 before training export.
+
+For dictionary words, human-reviewed spellings and stored policy variants take
+precedence over automatic conversion, including deterministic mixed-harmony
+forms. Automatic conversion applies only when no approved word review exists.
 
 If an annotator rejects DSL alternatives with `-` and leaves one spelling, that
 spelling is a lexical override for every global policy. It propagates only to

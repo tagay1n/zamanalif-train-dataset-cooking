@@ -21,6 +21,57 @@ from tatar_preannotator.word_export import save_reviewed_word
 
 
 class TrainingExportTests(unittest.TestCase):
+    def test_native_mixed_harmony_auto_converts_only_when_origin_independent(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(
+                root / "zamanalif.sqlite",
+                [
+                    {
+                        "id": "automatic",
+                        "text": "Елның тарихи ҮЗАРА.",
+                        "tokens": [
+                            {"text": "Елның", "label": "N"},
+                            {"text": "тарихи", "label": "N"},
+                            {"text": "ҮЗАРА", "label": "N"},
+                        ],
+                    },
+                    {
+                        "id": "blocked",
+                        "text": "Тарихи мәгълүмат.",
+                        "tokens": [
+                            {"text": "Тарихи", "label": "N"},
+                            {"text": "мәгълүмат", "label": "N"},
+                        ],
+                    },
+                    {
+                        "id": "reviewed",
+                        "text": "Идарә.",
+                        "tokens": [{"text": "Идарә", "label": "N"}],
+                    },
+                ],
+            )
+            save_reviewed_word(db_path, "идарә", "idarä", "N")
+            with sqlite3.connect(db_path) as conn:
+                conn.execute(
+                    """
+                    insert into reviewed_word_variants(
+                        normalized_word, position, zamanalif, policies_json, updated_at
+                    ) values ('идарә', 0, 'idärä', '[{}]', 'now')
+                    """
+                )
+            summary = export_training_dataset(db_path, root / "train.jsonl")
+            rows = _read_jsonl(root / "train.jsonl")
+            manifest = json.loads(summary.manifest_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(
+            [(row["id"], row["zamanalif"]) for row in rows],
+            [("automatic", "Yılnıñ tarixi ÜZARA."), ("reviewed", "İdärä.")],
+        )
+        self.assertEqual(manifest["skipped_by_reason"], {"mixed_harmony_word": 1})
+        self.assertEqual(summary.exported_count, 2)
+        self.assertEqual(summary.skipped_count, 1)
+
     def test_unreviewed_origin_independent_hamza_exports_preserved(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

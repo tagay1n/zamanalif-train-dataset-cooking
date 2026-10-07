@@ -140,6 +140,29 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(vowel_harmony_class("бара"), "back_only")
         self.assertEqual(vowel_harmony_class("гадел"), "mixed_front_back")
 
+    def test_deterministic_native_mixed_harmony_forms_are_not_review_blockers(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = _write_annotation_db(
+                Path(tmpdir) / "zamanalif.sqlite",
+                [{
+                    "id": "mixed",
+                    "tatar": True,
+                    "tokens": [
+                        {"text": word, "label": "N"}
+                        for word in ("елның", "тарихи", "үзара", "буенча", "кадәр")
+                    ],
+                }],
+            )
+            result = export_labelstudio_tasks_from_db(db_path)
+            split = export_labelstudio_project_tasks_from_db(db_path)
+
+        self.assertEqual(result.tasks, [])
+        self.assertEqual(result.exported_words, [])
+        self.assertEqual(result.report["origin_independent_word_count"], 3)
+        self.assertEqual(result.report["mixed_harmony_n_word_skipped_count"], 2)
+        self.assertEqual(split.exported_words, [])
+        self.assertEqual(split.report["base_report"]["mixed_harmony_n_word_skipped_count"], 2)
+
     def test_export_filters_deduplicates_and_generates_decisions(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             db_path = _write_annotation_db(

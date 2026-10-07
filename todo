@@ -378,10 +378,16 @@ checks:
 
 However, the broader check found unresolved cases outside those queues:
 
-- **15,996 unreviewed word forms** labelled native are excluded because of mixed vowel harmony.
+- **Partially resolved 2026-10-07:** of the 15,996 unreviewed native-labelled mixed-harmony forms,
+  7,173 whose native and loanword conversion branches agree now convert automatically during training export.
+  Of the 8,823 origin-dependent forms, 111 across 36 families were recovered from existing direct human reviews,
+  preserving human spellings, variants, and source/analyzer provenance. The remaining 8,712 forms stay excluded
+  from annotation queues and training export. All pre-existing review rows were retained unchanged.
+  After recovery, all 47,259 reviewed words and 479 variants pass dictionary validation.
+  Entries, validation, manifest, and full database backup: [docs/mixed_harmony_family_recovery.md](docs/mixed_harmony_family_recovery.md).
 - **Resolved 2026-10-07:** all 114 stored `HAMZA` reviews were migrated to preserved `ʼ` (U+02BC) spellings.
   Preferred policy: preserve hamza wherever possible. All other reviewed text and origins were retained.
-  All 47,148 reviewed words and 478 reviewed variants pass dictionary validation.
+  At that migration, all 47,148 reviewed words and 478 reviewed variants passed dictionary validation.
   Original entries, migrated spellings, and backup location: [docs/hamza_stored_reviews.md](docs/hamza_stored_reviews.md).
   Converter updated 2026-10-07: verified hamza families preserve `ʼ` deterministically in both origin branches, suffix forms, and hyphenated components; the retired DSL/project stays removed.
 

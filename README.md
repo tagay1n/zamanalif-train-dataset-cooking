@@ -264,7 +264,9 @@ Selection rules:
 - export the word only when those branches differ or one branch is unavailable;
 - skip words whose conversion is identical under both origins, including `U`
   words, because origin cannot change their target text;
-- skip native-looking `"N"` words with mixed front/back vowel harmony, except
+- skip native-looking `"N"` words with mixed front/back vowel harmony when
+  their conversion depends on origin or a branch is unavailable; automatically
+  convert them during training export when both branches produce the same result;
 - exclude every effective homonym from all dictionary projects, including
   catchall;
 - automatically convert homonym occurrences whose native and loanword branches
@@ -897,12 +899,13 @@ The exporter:
 - reads `tatar=true` Gemini-annotated sentences from SQLite;
 - uses exact contextual occurrence reviews, then approved `reviewed_words`;
 - automatically converts words whose native and loanword branches are
-  identical;
+  identical, including native-labelled mixed-harmony words;
 - preserves sentence punctuation, whitespace, and ordinary word casing,
   including a closing quote between a converted stem and its Tatar suffix
   (`турында”гы -> turında”ğı`);
 - skips sentences that still contain unreviewed origin-dependent words,
-  mixed-harmony native review cases, or unresolved contextual occurrences;
+  origin-dependent or unconvertible mixed-harmony native words, or unresolved
+  contextual occurrences;
 - fails without replacing the existing output on malformed DSL, invalid
   policy choices, converter failures, or token alignment errors;
 - rejects any final target containing DSL delimiters or Cyrillic letters.

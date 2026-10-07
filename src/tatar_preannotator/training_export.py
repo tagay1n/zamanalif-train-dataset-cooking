@@ -286,12 +286,12 @@ def _convert_sentence(
                     policy,
                 )
             else:
-                if (
-                    effective_label == "N"
-                    and vowel_harmony_class(normalized) == "mixed_front_back"
-                ):
-                    return _NotReady("mixed_harmony_word")
                 if branches.state != "origin_independent":
+                    if (
+                        effective_label == "N"
+                        and vowel_harmony_class(normalized) == "mixed_front_back"
+                    ):
+                        return _NotReady("mixed_harmony_word")
                     return _NotReady("unreviewed_word")
                 dsl = branches.suggestion(effective_label)
                 if not dsl:
