@@ -372,3 +372,19 @@ checks:
 Альта
 
 Ә Җирән Кашка башын чайкаган, кыңгыравын көчле итеп бер шалтыраткан — көтү бергә җыелган, тагын бер шалтыраткан да сөйләргә тотынган: — Күрдегезме сүземнең дөреслеген: аерылганнар аюдан өркеп һәлак булдылар, бүленгәннәр бүрегә очрадылар, — дигән дә кыңгыравын өченче мәртәбә шалтыраткан һәм барлык аргамакларын болынга җыйган.
+
+
+**All exportable annotation queues are empty:** 0 dictionary tasks and 0 contextual homonym tasks.
+
+However, the broader check found unresolved cases outside those queues:
+
+- **15,996 unreviewed word forms** labelled native are excluded because of mixed vowel harmony.
+- **Resolved 2026-10-07:** all 114 stored `HAMZA` reviews were migrated to preserved `ʼ` (U+02BC) spellings.
+  Preferred policy: preserve hamza wherever possible. All other reviewed text and origins were retained.
+  All 47,148 reviewed words and 478 reviewed variants pass dictionary validation.
+  Original entries, migrated spellings, and backup location: [docs/hamza_stored_reviews.md](docs/hamza_stored_reviews.md).
+  Converter updated 2026-10-07: verified hamza families preserve `ʼ` deterministically in both origin branches, suffix forms, and hyphenated components; the retired DSL/project stays removed.
+
+Earlier completion counts covered the exported queues only. So the current projects are complete, but I can’t yet confirm that the entire dataset needs no further review or cleanup.
+
+Full completion check (data/annotation\_completion\_check.json)

@@ -4,6 +4,7 @@ import unittest
 
 from tatar_preannotator.conversion import DslError, parse_dsl, resolve_dsl
 from tatar_preannotator.word_export import (
+    annotation_suggestion,
     classify_project,
     conversion_branches,
     convert_for_annotation,
@@ -329,6 +330,59 @@ class ConditionalConversionDslTests(unittest.TestCase):
     def test_removed_rule_is_rejected(self) -> None:
         with self.assertRaises(DslError):
             parse_dsl("qor{{HAMZA|omit=|preserve=ʼ}}än")
+
+    def test_verified_hamza_families_preserve_plain_apostrophe(self) -> None:
+        cases = [
+            ("иэтиляф", "iʼtiläf", "iʼtilaf"),
+            ("маэмай", "maʼmay", "maʼmay"),
+            ("таэмин", "täʼmin", "täʼmin"),
+            ("тәэмин", "täʼmin", "täʼmin"),
+            ("тәэсир", "täʼsir", "täʼsir"),
+            ("мөэмин", "möʼmin", "möʼmin"),
+            ("мәсьәлә", "mäsʼälä", "mäsʼälä"),
+            ("җөрьәт", "cörʼät", "cörʼät"),
+            ("коръән", "qorʼän", "korʼän"),
+            ("тәэминатның", "täʼminatnıñ", "täʼminatnıñ"),
+            ("тәэминләү", "täʼminläw", "täʼminläw"),
+            ("тәэсирләү", "täʼsirläw", "täʼsirläw"),
+            ("тәэсирендә", "täʼsirendä", "täʼsirendä"),
+            ("мәсьәләләрендәге", "mäsʼälälärendäge", "mäsʼälälärendäge"),
+            ("мөэминова", "möʼminova", "möʼminova"),
+            ("мөэминованың", "möʼminowanıñ", "möʼminovanıñ"),
+        ]
+        for word, native, loanword in cases:
+            for label, expected in (("N", native), ("RL", loanword)):
+                with self.subTest(word=word, label=label):
+                    self.assertEqual(convert_for_annotation(word, label), expected)
+                    dsl = convert_for_annotation_dsl(word, label)
+                    self.assertEqual(dsl, expected)
+                    self.assertFalse(parse_dsl(dsl).has_choices)
+            with self.subTest(word=word, label="U"):
+                self.assertEqual(annotation_suggestion(word, "U"), loanword)
+
+    def test_hamza_preserves_case_and_hyphen_components(self) -> None:
+        cases = [
+            ("Коръән", "Qorʼän"),
+            ("КОРЪӘН", "QORʼÄN"),
+            ("коръән-кәримнең", "qorʼän-kärimneñ"),
+            ("мөэмин-мөэминә", "möʼmin-möʼminä"),
+            ("әл-коръән", "äl-qorʼän"),
+        ]
+        for word, expected in cases:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
+
+    def test_hamza_is_not_inferred_from_arbitrary_signs_or_e(self) -> None:
+        for word, expected in [
+            ("поэма", "poema"),
+            ("мәсәлән", "mäsälän"),
+            ("мәгънә", "mäğnä"),
+            ("игътибар", "iğtibar"),
+            ("тәкъдим", "täqdim"),
+            ("микъдар", "miqdar"),
+        ]:
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
     def test_cilquar_stem_uses_pdf_plain_spelling(self) -> None:
         cases = [

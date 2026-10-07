@@ -333,6 +333,14 @@ Words containing `ц` need no special project routing. Cyrillic `ц` now default
 to `ts` in plain Zamanalif suggestions, while consecutive `цц` collapses to one
 `ts`; `ц` does not control project routing.
 
+Verified hamza families now preserve `ʼ` deterministically, including suffix
+forms and each hyphenated component: for example, `мәсьәлә -> mäsʼälä`,
+`тәэсирендә -> täʼsirendä`, and native `коръән -> qorʼän`. Both origin branches
+preserve known hamza positions. No `HAMZA` DSL choice or focused project is
+generated; any other origin-dependent letters follow ordinary routing. See
+[conversion rules](docs/zamanalif_conversion_rules.md#deterministic-hamza-preservation)
+for the lexical allowlist.
+
 When several convention variants are possible, the preferred plain rendering
 is shown for correction. Other focused projects show
 all plain Zamanalif variants and keep their DSL policy mapping in task metadata.

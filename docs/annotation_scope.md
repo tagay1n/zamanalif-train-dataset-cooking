@@ -24,6 +24,11 @@ Cyrillic `ц` now defaults to `ts` at every position, with consecutive `цц`
 collapsing to one `ts`. It does not control project routing. A
 catch-all annotator may edit `ts` to `s` for a verified lexical exception.
 
+Verified hamza families preserve `ʼ` deterministically in both origin
+branches, including suffixes and individual hyphenated components. They have
+no `HAMZA` DSL choice or focused project. Any remaining origin-dependent
+letters follow ordinary routing; hamza alone does not require review.
+
 ### Excluded From Project 1
 
 - **Not mostly Tatar sentences.** If Gemini marks a sentence as

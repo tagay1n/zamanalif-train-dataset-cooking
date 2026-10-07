@@ -129,6 +129,22 @@ only when those canonical DSL outputs differ or one branch is unavailable.
 Identical branches are safe regardless of whether Gemini predicted `N`, `RL`,
 or `U`.
 
+## Deterministic Hamza Preservation
+
+The converter preserves verified hamza positions as `ʼ` (U+02BC) in the
+lexical families `иэтиляф`, `маэмай`, `таэмин`/`тәэмин`, `тәэсир`, `мөэмин`,
+`мәсьәлә`, `җөрьәт`, and `коръән`, including suffix forms and individual
+hyphenated components. Native examples are `iʼtiläf`, `maʼmay`, `täʼmin`,
+`täʼsirendä`, `möʼmin`, `mäsʼälä`, `cörʼät`, and `qorʼän`.
+
+Both origin branches preserve hamza, although other letters can still depend
+on origin (`коръән`: native `qorʼän`, loanword `korʼän`). Unknown-origin
+annotation suggestions use those same branches. Hamza itself produces plain
+text, never a DSL choice or a focused annotation project. The retired `HAMZA`
+rule remains unsupported. This is a lexical allowlist; arbitrary Cyrillic
+`э`, `ь`, or `ъ` does not establish a hamza position. Existing approved reviews
+continue to take precedence over automatic conversion in training export.
+
 ## Russian-Loan Review Cases
 
 These cases are especially relevant for words marked by Gemini as `RL`:

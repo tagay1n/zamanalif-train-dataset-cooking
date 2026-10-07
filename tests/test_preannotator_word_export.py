@@ -39,7 +39,7 @@ from tatar_preannotator.word_export import (
 
 class PreannotatorWordExportTests(unittest.TestCase):
     def test_removed_workflows_use_deterministic_catchall_output(self) -> None:
-        self.assertEqual(convert_for_annotation("иэтиляф", "N"), "itiläf")
+        self.assertEqual(convert_for_annotation("иэтиляф", "N"), "iʼtiläf")
         self.assertEqual(annotation_suggestion("америка-һинд", "U"), "amerika-hind")
         self.assertEqual(classify_project("америка-һинд", "U")["key"], "catchall")
         self.assertNotIn("hamza", dictionary_project_keys())

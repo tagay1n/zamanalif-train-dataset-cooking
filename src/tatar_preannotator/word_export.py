@@ -1916,7 +1916,14 @@ def _convert_known_label(word: str, label: str) -> str:
     if "-" in word:
         parts = word.split("-")
         part_labels = [_guess_hyphen_part_label(part, label) for part in parts]
-        if all(part_label == label for part_label in part_labels):
+        # Convert each verified hamza component separately so a later component
+        # receives its lexical spelling too, e.g. мөэмин-мөэминә.
+        later_hamza = any(
+            part.startswith(prefix)
+            for part in parts[1:]
+            for prefix, _, _ in NATIVE_HAMZA_PREFIX_REPLACEMENTS
+        )
+        if all(part_label == label for part_label in part_labels) and not later_hamza:
             return _convert_known_label_without_hyphen(word, label)
         return "-".join(
             _convert_known_label_without_hyphen(part, part_label) if part else ""
@@ -1953,6 +1960,10 @@ def _convert_known_label_without_hyphen(word: str, label: str) -> str:
 
 def _apply_loanword_lexical_conventions(word: str, converted: str) -> str:
     folded = word.casefold()
+    for cyrillic_prefix, plain_text, expected_text in LOANWORD_HAMZA_PREFIX_REPLACEMENTS:
+        if folded.startswith(cyrillic_prefix) and converted.startswith(plain_text):
+            converted = expected_text + converted[len(plain_text) :]
+            break
     for cyrillic_prefix, plain_text, expected_text in LOANWORD_MIXED_SUFFIX_REPLACEMENTS:
         if not folded.startswith(cyrillic_prefix) or not converted.startswith(plain_text):
             continue
@@ -1968,6 +1979,17 @@ def _apply_loanword_lexical_conventions(word: str, converted: str) -> str:
     return converted
 
 
+LOANWORD_HAMZA_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
+    # Verified hamza positions remain explicit even in the loanword branch.
+    ("иэтиляф", "ietilyaf", "iʼtilaf"),
+    ("маэмай", "maemay", "maʼmay"),
+    ("таэмин", "taemin", "täʼmin"),
+    ("тәэмин", "täemin", "täʼmin"),
+    ("тәэсир", "täesir", "täʼsir"),
+    ("мөэмин", "möemin", "möʼmin"),
+)
+
+
 LOANWORD_MIXED_SUFFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
     ("закончалык", "zakonçalık", "zakonçalıq"),
 )
@@ -1979,16 +2001,22 @@ LOANWORD_FINAL_KA_SUFFIX_STEMS = frozenset(
 )
 
 
-NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
-    ("иэтиляф", "ietilyäf", "itiläf"),
-    ("маэмай", "maemay", "mamay"),
-    ("таэмин", "taemin", "tämin"),
-    ("тәэмин", "täemin", "tämin"),
-    ("тәэсир", "täesir", "täsir"),
-    ("мөэмин", "möemin", "mömin"),
-    ("мәсьәлә", "mäsälä", "mäsälä"),
-    ("җөрьәт", "cörät", "cörät"),
-    ("коръән", "qorän", "qorän"),
+# Only these verified lexical prefixes identify hamza. Ordinary э/ь/ъ do not.
+# The loanword branch already preserves ь/ъ in the last three families.
+NATIVE_HAMZA_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
+    ("иэтиляф", "ietilyäf", "iʼtiläf"),
+    ("маэмай", "maemay", "maʼmay"),
+    ("таэмин", "taemin", "täʼmin"),
+    ("тәэмин", "täemin", "täʼmin"),
+    ("тәэсир", "täesir", "täʼsir"),
+    ("мөэмин", "möemin", "möʼmin"),
+    ("мәсьәлә", "mäsälä", "mäsʼälä"),
+    ("җөрьәт", "cörät", "cörʼät"),
+    ("коръән", "qorän", "qorʼän"),
+)
+
+
+NATIVE_PREFIX_REPLACEMENTS: tuple[tuple[str, str, str], ...] = NATIVE_HAMZA_PREFIX_REPLACEMENTS + (
     ("аек", "ayık", "ayıq"),
     ("беркай", "berkay", "berqay"),
     ("беркая", "berkaya", "berqaya"),

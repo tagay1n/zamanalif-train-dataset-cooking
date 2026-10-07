@@ -28,6 +28,9 @@ ANTAT_GOLD_WORD_CASES = _load_antat_gold_cases()
 DELIBERATELY_EXCLUDED_ANTAT_POLICIES = frozenset(
     {
         ("посылка", 6005),  # Dataset policy maps every written ы to ı.
+        ("коръән", 5077),  # Dataset policy preserves verified lexical hamza.
+        ("коръәнгә", 5078),
+        ("мәсьәлә", 2066),
     }
 )
 NATIVE_UW_FOLLOWING_VOWELS = frozenset("аәоуөыэеиү")

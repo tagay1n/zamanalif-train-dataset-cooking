@@ -14,6 +14,13 @@ is not an active annotation rule and no new conversion or export emits it.
 
 ## Converted Back To Deterministic Rules
 
+- `HAMZA`: removed as DSL. Verified lexical families now deterministically
+  preserve `ʼ` (U+02BC): `иэтиляф`, `маэмай`, `таэмин`/`тәэмин`, `тәэсир`,
+  `мөэмин`, `мәсьәлә`, `җөрьәт`, and `коръән`. Suffix forms and each
+  hyphenated component retain the known hamza position in both origin branches.
+  Ordinary `э/ь/ъ` are not treated as hamza outside this allowlist. The retired
+  rule and focused project remain unsupported; 114 old reviews were migrated
+  to plain preserved spellings on 2026-10-07.
 - Ordinary Russian `ь/ъ` signs are always preserved as `ʼ` in new conversions.
 - Russian consonant + `я/ю/ё` always uses an explicit `y` glide in new
   conversions.

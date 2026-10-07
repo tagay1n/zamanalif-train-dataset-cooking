@@ -21,6 +21,20 @@ from tatar_preannotator.word_export import save_reviewed_word
 
 
 class TrainingExportTests(unittest.TestCase):
+    def test_unreviewed_origin_independent_hamza_exports_preserved(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(
+                root / "zamanalif.sqlite",
+                [{"id": "hamza", "text": "Тәэсирендә мәсьәлә.", "tokens": [
+                    {"text": "Тәэсирендә", "label": "N"},
+                    {"text": "мәсьәлә", "label": "N"},
+                ]}],
+            )
+            summary = export_training_dataset(db_path, root / "train.jsonl")
+            self.assertEqual(summary.exported_count, 1)
+            self.assertEqual(_read_jsonl(root / "train.jsonl")[0]["zamanalif"], "Täʼsirendä mäsʼälä.")
+
     def test_exports_reviewed_literal_cyrillic_sign_references(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
