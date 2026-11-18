@@ -293,6 +293,11 @@ def import_labelstudio_annotations(
                         "select normalized_word from reviewed_word_derivations"
                     ).fetchall()
                 }
+                compound_derived_words = {
+                    str(row[0]) for row in conn.execute(
+                        "select normalized_word from reviewed_word_compound_derivations"
+                    ).fetchall()
+                }
                 analysis_words = (
                     set(family_eligible)
                     | (set(existing) - derived_words)
@@ -321,14 +326,28 @@ def import_labelstudio_annotations(
                     current = (zamanalif_dsl, origin)
                     previous = existing.get(item.normalized_word)
                     if previous is not None:
-                        if previous != current or existing_variants.get(
+                        changed = previous != current or existing_variants.get(
                             item.normalized_word, ()
-                        ) != item.variants:
-                            raise LabelStudioImportError(
-                                f"reviewed word conflict for {item.normalized_word!r}: "
-                                "database and import decisions differ"
+                        ) != item.variants
+                        if changed:
+                            if item.normalized_word not in derived_words | compound_derived_words:
+                                raise LabelStudioImportError(
+                                    f"reviewed word conflict for {item.normalized_word!r}: "
+                                    "database and import decisions differ"
+                                )
+                            # A completed human review outranks an earlier
+                            # inferred approval, including a stale batch task.
+                            conn.execute(
+                                "update reviewed_words set zamanalif_dsl=?, origin=?, updated_at=? "
+                                "where normalized_word=?",
+                                (zamanalif_dsl, origin, now, item.normalized_word),
                             )
-                        unchanged += 1
+                            _replace_stored_variants(conn, item.normalized_word, item.variants, now)
+                            existing[item.normalized_word] = current
+                            existing_variants[item.normalized_word] = item.variants
+                            imported += 1
+                        else:
+                            unchanged += 1
                         conn.execute(
                             """
                             delete from reviewed_word_derivations
@@ -341,6 +360,7 @@ def import_labelstudio_annotations(
                             (item.normalized_word,),
                         )
                         derived_words.discard(item.normalized_word)
+                        compound_derived_words.discard(item.normalized_word)
                         continue
                     conn.execute(
                         """
@@ -1583,6 +1603,16 @@ def _parse_task(
     if len(decisions) != 1:
         raise LabelStudioImportError(f"{context} has conflicting annotations")
     decision = next(iter(decisions))
+    if project_key == "catchall" and not decision.is_homonym and not decision.variants:
+        canonical = conversion_branches(normalized).suggestion(suggested_origin)
+        if (canonical and parse_dsl(canonical).has_choices
+                and not parse_dsl(decision.zamanalif_dsl).has_choices):
+            # A plain catchall review selects one lexical spelling for every
+            # policy. Retain its preferred-policy mapping for family transfer.
+            preferred = annotation_variants(canonical)[0]
+            decision = replace(decision, variants=(
+                ReviewedVariant(decision.zamanalif_dsl, preferred.policies),
+            ))
     reviewed = ReviewedAnnotation(
         normalized_word=normalized,
         zamanalif_dsl=decision.zamanalif_dsl,

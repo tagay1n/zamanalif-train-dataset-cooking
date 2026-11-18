@@ -44,11 +44,6 @@ letters follow ordinary routing; hamza alone does not require review.
   longer derived forms such as `Дмитриевка -> Dmitriyevka`. `E_GLIDE` remains
   readable only in existing stored reviews and is never generated for a new
   task or focused project.
-- **Native-looking mixed-harmony words.** If Gemini labels a word `N` and the
-  word has mixed front/back vowels, skip it for Project 1 when the native and
-  loanword conversion branches differ or either is unavailable. These forms
-  remain blocked from training export until reviewed. If both branches produce
-  the same result, convert automatically without human review.
 - **Origin-independent words.** If native and Russian-loanword conversion
   branches produce the same Zamanalif result, skip the word because origin
   annotation cannot change the target text.
@@ -60,6 +55,19 @@ letters follow ordinary routing; hamza alone does not require review.
 
 Exporting alone never suppresses a word. It remains eligible until a successful
 Label Studio import stores its completed review.
+
+Native-labelled mixed front/back vowel forms enter **catchall** when their
+origin branches differ or a branch is unavailable. Catchall shows the preferred
+plain spelling even when the suggestion has convention choices. Gemini's label
+remains a prediction; the approved spelling is human evidence. Identical
+branches still convert automatically. Unreviewed dependent forms remain blocked
+from training export.
+
+Review at most 500 entries per batch, import completed reviews, then regenerate
+the next batch. Imports propagate safe family decisions and backfill eligible
+forms from older direct reviews. A human review of a task that has since
+inherited a spelling overrides that derived approval; conflicting direct human
+reviews still require resolution.
 
 Annotators can mark any dictionary task as a contextual homonym. That decision
 overrides an existing N/RL/U word resolution, ignores the task's origin and
@@ -84,11 +92,15 @@ the analyzer lemma and requires both surface forms to begin with that full
 lemma literally. This excludes suffix-only ambiguity and stem alternations such
 as `срок` -> `срогы`. A representative covers a sibling of any length when
 divergence starts after the full lemma and the sibling-only suffix contains none
-of `вгекуцюяүщъьё`. Cyrillic `ы` is deterministic everywhere and does not make
-a branch unsafe. Other divergent branches remain separate tasks. Accepting
+of `вгекуцюяүщъьё`. Conditional-letter suffixes can also transfer when both
+origin branches retain stable shared-prefix spellings and produce identical
+divergent tails for both representative and sibling, with compatible convention
+policies. Cyrillic `ы` is deterministic everywhere and does not make a branch
+unsafe. Other divergent branches remain separate tasks. Accepting
 the unchanged canonical conversion approves each covered form with that
 form's own canonical conversion. For example, `диалогларындагы` can approve
-`диалогларында`, `диалог`, and `диалогларда`, but not `диалогларга`. Editing the
+`диалогларында`, `диалог`, `диалогларда`, and `диалогларга` when the divergent
+tail passes that equality check. Editing the
 representative conversion can transfer a correction confined to the shared
 Latin prefix, including each edited focused-project variant. A suffix-only edit
 remains local. Historical reviews use the same safe-family rule. Derived
@@ -96,6 +108,10 @@ approvals retain their source and analyzer revision in
 `reviewed_word_derivations`. Export treats an older derived approval that no
 longer passes this rule as unreviewed; the next import for that project removes
 the stale derived approval transactionally.
+
+A plain catchall review of a word with convention choices is stored as a
+single-spelling lexical override. The preferred option's policy mapping is
+retained so the selected spelling and human shared-prefix edits can propagate.
 
 ## Contextual Homonym Review
 

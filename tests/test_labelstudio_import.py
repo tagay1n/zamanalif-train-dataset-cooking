@@ -678,6 +678,42 @@ class LabelStudioImportTests(unittest.TestCase):
         )
         self.assertEqual(len(analyzer.calls), 1)
 
+    def test_small_mixed_catchall_import_transfers_human_edit_and_shrinks_next_export(self) -> None:
+        words = ["вазгыять", "вазгыятьне", "вазгыятьнең", "гамәл"]
+        analyzer = FakeMorphologyAnalyzer({w: ("вазгыять", "n") for w in words[:3]})
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db = _database(root / "db.sqlite")
+            _add_words(db, words, origin="N")
+            task = _task("вазгыять", "wazğıyat", "N")
+            task["annotations"][0]["result"][0]["value"]["text"] = ["wazğıyät"]
+            summary = import_labelstudio_annotations(
+                db, _backup(root / "first.json", [task]), morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db)
+            next_export = export_labelstudio_project_tasks_from_db(db, morphology_analyzer=analyzer)
+        self.assertEqual(summary.imported_items, 1)
+        self.assertEqual(summary.inherited_items, 2)
+        self.assertEqual(reviewed["вазгыятьне"].zamanalif_dsl, "wazğıyätne")
+        self.assertEqual(reviewed["вазгыятьнең"].zamanalif_dsl, "wazğıyätneñ")
+        self.assertEqual(set(next_export.projects["catchall"].exported_words), {"вакыт", "гамәл"})
+
+    def test_plain_mixed_catchall_policy_review_becomes_transferable_lexical_override(self) -> None:
+        words = ["шигырь", "шигырьләре"]
+        analyzer = FakeMorphologyAnalyzer({w: ("шигырь", "n") for w in words})
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db = _database(root / "db.sqlite")
+            _add_words(db, words, origin="N")
+            summary = import_labelstudio_annotations(
+                db, _backup(root / "poetry.json", [_task("шигырь", "şiğır", "N")]),
+                morphology_analyzer=analyzer,
+            )
+            reviewed = load_reviewed_words(db)
+        self.assertEqual(summary.inherited_items, 1)
+        self.assertEqual(reviewed["шигырьләре"].zamanalif_dsl, "şiğırläre")
+        self.assertEqual(len(reviewed["шигырьләре"].variants), 1)
+
     def test_edited_representative_does_not_propagate(self) -> None:
         analyzer = FakeMorphologyAnalyzer(
             {
@@ -1035,7 +1071,7 @@ class LabelStudioImportTests(unittest.TestCase):
             reviewed = load_reviewed_words(db_path)
 
         self.assertEqual(summary.imported_items, 1)
-        self.assertEqual(summary.inherited_items, 6)
+        self.assertEqual(summary.inherited_items, 7)
         self.assertTrue(
             {
                 "диалог",
@@ -1048,7 +1084,7 @@ class LabelStudioImportTests(unittest.TestCase):
             }
             <= set(reviewed)
         )
-        self.assertNotIn("диалогларга", reviewed)
+        self.assertIn("диалогларга", reviewed)
 
     def test_homonym_annotation_routes_word_to_contextual_export_idempotently(self) -> None:
         with TemporaryDirectory() as tmpdir:

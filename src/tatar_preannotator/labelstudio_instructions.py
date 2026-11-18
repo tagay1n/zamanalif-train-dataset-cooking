@@ -158,6 +158,9 @@ def _focus(project_key: str, rule_ids: Iterable[str]) -> str:
             "  <h3>Conversion Focus</h3>\n"
             "  <p>Check the proposed spelling, especially these common conditional "
             "cases:</p>\n"
+            "  <p>Mixed front/back vowels are included here. Gemini's origin label "
+            "is a prediction; approve the complete spelling using the source excerpts. "
+            "If the suggestion is blank, enter the full Zamanalif spelling.</p>\n"
             "  <ul>\n    "
             + "\n    ".join(items)
             + "\n  </ul>\n"

@@ -264,7 +264,7 @@ Selection rules:
 - export the word only when those branches differ or one branch is unavailable;
 - skip words whose conversion is identical under both origins, including `U`
   words, because origin cannot change their target text;
-- skip native-looking `"N"` words with mixed front/back vowel harmony when
+- route native-labelled `"N"` mixed front/back vowel forms into catchall when
   their conversion depends on origin or a branch is unavailable; automatically
   convert them during training export when both branches produce the same result;
 - exclude every effective homonym from all dictionary projects, including
@@ -326,11 +326,13 @@ word to catchall. The
 command also writes `project_<key>_instructions.html` for every active
 category. Each dictionary word is exported once. No new `e_glide` project is
 generated: former E-glide candidates follow ordinary routing, normally
-`catchall`, with a plain deterministic suggestion. If a word has multiple
-active DSL rules it goes to `complex_multi_rule`; otherwise it goes to the matching
+`catchall`, with a plain deterministic suggestion. Native-labelled mixed-harmony
+forms always go to `catchall`, showing a preferred plain spelling. Other words
+with multiple active DSL rules go to `complex_multi_rule`; otherwise they go to the matching
 DSL-rule project or to `catchall`.
 Unresolved `U` words use the ordinary `catchall` queue and retain their stored
 origin. The catchall suggestion uses the preferred deterministic conversion.
+An unavailable suggestion is blank and requires a complete human spelling.
 Words containing `ц` need no special project routing. Cyrillic `ц` now defaults
 to `ts` in plain Zamanalif suggestions, while consecutive `цц` collapses to one
 `ts`; `ц` does not control project routing.
@@ -346,6 +348,28 @@ for the lexical allowlist.
 When several convention variants are possible, the preferred plain rendering
 is shown for correction. Other focused projects show
 all plain Zamanalif variants and keep their DSL policy mapping in task metadata.
+
+For incremental mixed-harmony review, export the next 500 grouped dictionary
+entries, annotate and import the catchall file, then re-export after propagation:
+
+```bash
+python -m tatar_preannotator annotation-export \
+  --db data/zamanalif.sqlite \
+  --output-dir labelstudio_projects/next_review_batch \
+  --max-items 500 --batch-size 500
+
+python -m tatar_preannotator annotation-import \
+  --db data/zamanalif.sqlite --input /path/to/completed_labelstudio_export.json
+```
+
+Use the freshly generated catchall file each round. Imports reuse past direct
+reviews and propagate human shared-prefix edits to analyzer-confirmed family
+members. Conditional-letter suffixes may propagate when their native and
+loanword tails agree in the full word and policies are compatible. A direct
+human annotation of an inferred form replaces that derivation.
+
+The [mixed-harmony workflow record](docs/mixed_harmony_catchall_workflow.md)
+contains the current queue counts, initial batch location, and converter fixes.
 
 Catchall hints show up to three distinct source excerpts for the displayed word.
 Excerpts are selected in

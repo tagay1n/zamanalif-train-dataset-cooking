@@ -169,11 +169,18 @@ The exporter uses a simple vowel-harmony signal:
 - `mixed_front_back` means the normalized word has at least one front and one
   back vowel.
 
-Project 1 skips native-looking `N` words with mixed front/back vowel harmony,
-but keeps matching `RL` and `U` review candidates. Mixed-harmony `N` words whose
-native and loanword branches produce the same result convert automatically
-without review. Other unreviewed mixed-harmony `N` words remain excluded from
-both the dictionary queue and training export.
+Project 1 routes native-labelled `N` mixed front/back vowel forms to catchall
+when their branches differ or either branch is unavailable. Catchall shows a
+preferred plain spelling even when the underlying suggestion has convention
+choices. Forms whose branches agree convert automatically. Other unreviewed
+forms remain blocked from training export until an approved spelling is stored.
+
+Hyphenated components are converted separately, preventing vowel and lexical
+context from leaking across the hyphen. Initial `е` uses nearby vowel context
+when the remaining vowels are mixed. If a conditional letter still cannot be
+resolved, the entire suggestion is unavailable: a letter is never silently
+removed to produce a partial Latin spelling. Catchall allows a blank suggestion
+and requires the annotator to enter a complete spelling.
 
 Important caveats:
 

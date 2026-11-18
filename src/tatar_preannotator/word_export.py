@@ -419,10 +419,9 @@ def is_compatible_family_member(
     origin: str,
 ) -> bool:
     """Return whether family structure and conversion policies can propagate."""
-    if origin not in {"N", "RL"} or not is_safe_family_member(
-        representative,
-        candidate,
-        lemma,
+    if origin not in {"N", "RL"} or not (
+        is_safe_family_member(representative, candidate, lemma)
+        or _has_deterministic_family_tails(representative, candidate, lemma)
     ):
         return False
     source_dsl = conversion_branches(representative).suggestion(origin)
@@ -439,6 +438,39 @@ def is_compatible_family_member(
         for variant in annotation_variants(candidate_dsl)
         for policy in variant.policies
     )
+
+
+def _has_deterministic_family_tails(source: str, candidate: str, lemma: str) -> bool:
+    """Allow conditional suffix letters only with stable, equal N/RL tails."""
+    if (source == candidate or not lemma
+            or not any(c in FAMILY_DIVERGENCE_RISK_LETTERS for c in lemma)
+            or not source.startswith(lemma) or not candidate.startswith(lemma)):
+        return False
+    length = 0
+    for left, right in zip(source, candidate):
+        if left != right:
+            break
+        length += 1
+    if not all(CYRILLIC_RE.fullmatch(c) for c in source[length:] + candidate[length:]):
+        return False
+    prefix = conversion_branches(candidate[:length])
+    if not prefix.native_dsl or not prefix.loanword_dsl:
+        return False
+    for word in (source, candidate):
+        branches = conversion_branches(word)
+        if (not branches.native_dsl.startswith(prefix.native_dsl)
+                or not branches.loanword_dsl.startswith(prefix.loanword_dsl)):
+            return False
+        native_tail = branches.native_dsl[len(prefix.native_dsl):]
+        loan_tail = branches.loanword_dsl[len(prefix.loanword_dsl):]
+        if native_tail != loan_tail:
+            return False
+        try:
+            if native_tail:
+                parse_dsl(native_tail)
+        except DslError:
+            return False
+    return True
 
 
 def requires_dictionary_review(word: str, label: str) -> bool:
@@ -634,6 +666,8 @@ def classify_project(word: str, label: str) -> dict[str, Any]:
         return {"key": "catchall", "title": "Catchall word review", "dsl_rules": []}
     result = conversion_result_for_annotation(word, label)
     rules = list(dict.fromkeys(result.rule_ids)) if result is not None else []
+    if label == "N" and vowel_harmony_class(word) == "mixed_front_back":
+        return {"key": "catchall", "title": "Catchall word review", "dsl_rules": rules}
     if len(rules) > 1:
         key = "complex_multi_rule"
         title = "Complex multi-rule words"
@@ -651,6 +685,14 @@ def word_belongs_to_project(word: str, origin: str, project_key: str) -> bool:
     classification = classify_project(word, origin)
     if classification["key"] == project_key:
         return True
+    # Keep previously created focused backups importable after catchall routing.
+    if origin == "N" and vowel_harmony_class(word) == "mixed_front_back":
+        result = conversion_result_for_annotation(word, origin)
+        rules = list(dict.fromkeys(result.rule_ids)) if result is not None else []
+        previous = ("complex_multi_rule" if len(rules) > 1 else
+                    _project_key_for_rule(rules[0]) if rules else "catchall")
+        if project_key == previous:
+            return True
     if project_key == LEGACY_E_GLIDE_PROJECT_KEY:
         # Old focused backups must remain importable even though a fresh export
         # now routes the same words through catchall.
@@ -753,12 +795,6 @@ def _export_from_records(
         if entry.label == "U" and not include_unknown:
             continue
         if branches.state == "origin_independent":
-            continue
-        if (
-            entry.label == "N"
-            and vowel_harmony_class(entry.normalized) == "mixed_front_back"
-        ):
-            mixed_harmony_n_skipped += 1
             continue
         if entry.frequency < min_frequency:
             continue
@@ -1667,7 +1703,7 @@ def _validate_task(
         if not isinstance(display_suggestion, str):
             raise AnnotationExportError(f"{context} has invalid auto_zamanalif")
         if not display_suggestion:
-            if origin != "U":
+            if origin != "U" and expected_suggestion:
                 raise AnnotationExportError(
                     f"{context} has an empty suggestion for origin {origin}"
                 )
@@ -1983,7 +2019,9 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
     if char == "ц" and index > 0 and word[index - 1] == "ц":
         return ""
     if char in CONDITIONAL_LETTERS:
-        return _conditional_char_conversion(char, word, index, label)
+        # An unresolved conditional letter must invalidate the suggestion,
+        # rather than disappear from an otherwise clean-looking Latin word.
+        return _conditional_char_conversion(char, word, index, label) or char
     if label == "RL" and char in {"ь", "ъ"}:
         if index + 1 < len(word) and word[index + 1] == "е":
             return ZAMANALIF_APOSTROPHE if char == "ь" else ""
@@ -1995,15 +2033,7 @@ def _convert_known_label(word: str, label: str) -> str:
     if "-" in word:
         parts = word.split("-")
         part_labels = [_guess_hyphen_part_label(part, label) for part in parts]
-        # Convert each verified hamza component separately so a later component
-        # receives its lexical spelling too, e.g. мөэмин-мөэминә.
-        later_hamza = any(
-            part.startswith(prefix)
-            for part in parts[1:]
-            for prefix, _, _ in NATIVE_HAMZA_PREFIX_REPLACEMENTS
-        )
-        if all(part_label == label for part_label in part_labels) and not later_hamza:
-            return _convert_known_label_without_hyphen(word, label)
+        # Harmony and lexical context must not leak across component boundaries.
         return "-".join(
             _convert_known_label_without_hyphen(part, part_label) if part else ""
             for part, part_label in zip(parts, part_labels, strict=True)
@@ -2470,12 +2500,21 @@ def _native_vowel_e_conversion(previous: str) -> str:
 
 
 def _initial_e_conversion(word: str, index: int) -> str:
+    # Preserve the attested ерзя spelling, including as a hyphen component;
+    # its я still receives the existing YA policy choice.
+    if word.startswith("ерзя"):
+        return "e"
     if word.startswith(("европ", "евраз", "епископ", "ефәк")):
         return "ye"
     harmony = _vowel_harmony_without_index(word, index)
     if harmony == "front_only":
         return "ye"
     if harmony in {"back_only", "no_vowels"}:
+        return "yı"
+    context = _local_vowel_context(word, index)
+    if context == "front":
+        return "ye"
+    if context == "back":
         return "yı"
     return ""
 

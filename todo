@@ -374,7 +374,10 @@ checks:
 Ә Җирән Кашка башын чайкаган, кыңгыравын көчле итеп бер шалтыраткан — көтү бергә җыелган, тагын бер шалтыраткан да сөйләргә тотынган: — Күрдегезме сүземнең дөреслеген: аерылганнар аюдан өркеп һәлак булдылар, бүленгәннәр бүрегә очрадылар, — дигән дә кыңгыравын өченче мәртәбә шалтыраткан һәм барлык аргамакларын болынга җыйган.
 
 
-**All exportable annotation queues are empty:** 0 dictionary tasks and 0 contextual homonym tasks.
+**Current annotation queue (2026-10-07):** 6,112 grouped catchall dictionary tasks
+covering 8,337 forms, with 0 pending contextual homonym tasks. Exported in batches
+of at most 500; import and regenerate after each batch to reuse family decisions.
+Current workflow and verification: [docs/mixed_harmony_catchall_workflow.md](docs/mixed_harmony_catchall_workflow.md).
 
 However, the broader check found unresolved cases outside those queues:
 
@@ -401,6 +404,12 @@ However, the broader check found unresolved cases outside those queues:
   The remaining 8,333 forms, including all 105 expanded-rule candidates, stay excluded. All pre-existing
   source and review rows were preserved. Loaders reject stale component evidence; direct human reviews dominate.
   Backup, manifest, validation, and all spellings: [docs/mixed_harmony_compound_recovery.md](docs/mixed_harmony_compound_recovery.md).
+- **Catchall enabled 2026-10-07:** the remaining native-labelled mixed-vowel forms now enter annotation.
+  Converter fixes make 51 of the former 8,333 forms origin-independent; 8,282 still require review.
+  Separate hyphen component conversion exposes 55 additional dependent forms. Safe expanded suffix
+  propagation and direct-human-over-derived precedence support frequent small imports. Of 29 audited
+  silent omissions, 28 now have complete proposals; the unresolved fragment stays blank for human review.
+  All 371 recovered approvals remain valid; exporting changed no database rows.
 - **Resolved 2026-10-07:** all 114 stored `HAMZA` reviews were migrated to preserved `ʼ` (U+02BC) spellings.
   Preferred policy: preserve hamza wherever possible. All other reviewed text and origins were retained.
   At that migration, all 47,148 reviewed words and 478 reviewed variants passed dictionary validation.

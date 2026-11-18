@@ -26,6 +26,7 @@ from tatar_preannotator.word_export import (
     dictionary_project_keys,
     export_labelstudio_project_tasks_from_db,
     export_labelstudio_tasks_from_db,
+    is_compatible_family_member,
     is_safe_family_member,
     load_reviewed_words,
     normalize_word,
@@ -156,12 +157,51 @@ class PreannotatorWordExportTests(unittest.TestCase):
             result = export_labelstudio_tasks_from_db(db_path)
             split = export_labelstudio_project_tasks_from_db(db_path)
 
-        self.assertEqual(result.tasks, [])
-        self.assertEqual(result.exported_words, [])
+        self.assertEqual(result.exported_words, ["буенча", "кадәр"])
         self.assertEqual(result.report["origin_independent_word_count"], 3)
-        self.assertEqual(result.report["mixed_harmony_n_word_skipped_count"], 2)
-        self.assertEqual(split.exported_words, [])
-        self.assertEqual(split.report["base_report"]["mixed_harmony_n_word_skipped_count"], 2)
+        self.assertEqual(result.report["mixed_harmony_n_word_skipped_count"], 0)
+        self.assertEqual(set(split.exported_words), {"буенча", "кадәр"})
+        self.assertEqual(set(split.projects), {"catchall"})
+        self.assertEqual(split.report["base_report"]["mixed_harmony_n_word_skipped_count"], 0)
+
+    def test_native_mixed_policy_words_use_plain_catchall(self) -> None:
+        words = ["кәгазь", "мәшгуль", "мөстәкыйль", "шигырь"]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db = _write_annotation_db(Path(tmpdir) / "db.sqlite", [{
+                "id": "mixed", "tatar": True,
+                "tokens": [{"text": word, "label": "N"} for word in words],
+            }])
+            result = export_labelstudio_project_tasks_from_db(
+                db, morphology_analyzer=FakeMorphologyAnalyzer(),
+            )
+            validate_split_export_result(result)
+        self.assertEqual(set(result.projects), {"catchall"})
+        self.assertEqual(set(result.exported_words), set(words))
+        self.assertTrue(all("{{" not in t["data"]["auto_zamanalif"]
+                            for t in result.projects["catchall"].tasks))
+
+    def test_unresolved_conditional_letter_exports_blank_instead_of_truncated_word(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db = _write_annotation_db(Path(tmpdir) / "db.sqlite", [{
+                "id": "fragment", "tatar": True,
+                "tokens": [{"text": "к-көнбатыш", "label": "N"}],
+            }])
+            result = export_labelstudio_project_tasks_from_db(
+                db, morphology_analyzer=FakeMorphologyAnalyzer(),
+            )
+            validate_split_export_result(result)
+        self.assertEqual(convert_for_annotation("к-көнбатыш", "N"), "")
+        self.assertEqual(result.projects["catchall"].tasks[0]["data"]["auto_zamanalif"], "")
+
+    def test_initial_e_and_hyphen_components_do_not_lose_letters(self) -> None:
+        cases = {
+            "елмаеп": "yılmayıp", "егетсымак": "yegetsımaq",
+            "егет-кызлар": "yeget-qızlar", "елга-елга": "yılğa-yılğa",
+            "игътибар-юл": "iğtibar-yul", "шифаханә-ял": "şifaxanä-yal",
+        }
+        for word, expected in cases.items():
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
 
     def test_export_filters_deduplicates_and_generates_decisions(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -212,16 +252,16 @@ class PreannotatorWordExportTests(unittest.TestCase):
         words = [task["data"]["cyrl_word"] for task in result.tasks]
         self.assertEqual(
             words,
-            ["вакытында", "проект", "торак"],
+            ["вакытында", "гадел", "проект", "торак"],
         )
         self.assertEqual(result.tasks[0]["data"]["auto_zamanalif"], "waqıtında")
         self.assertEqual(
-            result.tasks[1]["data"]["auto_zamanalif"],
+            result.tasks[2]["data"]["auto_zamanalif"],
             "proyekt",
         )
-        self.assertEqual(result.tasks[2]["data"]["auto_zamanalif"], "torak")
-        self.assertEqual(result.tasks[1]["data"]["gemini_origin"], "RL")
-        self.assertEqual(result.report["mixed_harmony_n_word_skipped_count"], 1)
+        self.assertEqual(result.tasks[3]["data"]["auto_zamanalif"], "torak")
+        self.assertEqual(result.tasks[2]["data"]["gemini_origin"], "RL")
+        self.assertEqual(result.report["mixed_harmony_n_word_skipped_count"], 0)
         self.assertEqual(result.report["u_exported_word_count"], 1)
         self.assertGreater(result.report["origin_independent_word_count"], 0)
         self.assertGreater(result.report["origin_dependent_word_count"], 0)
@@ -1501,7 +1541,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         catchall = result.projects["catchall"]
         self.assertNotIn("e_glide", result.projects)
-        self.assertEqual(catchall.exported_words, ["проекте", "проектын"])
+        self.assertEqual(catchall.exported_words, ["проектын"])
         self.assertEqual(catchall.report["covered_word_count"], len(words))
         self.assertEqual(result.report["covered_word_count"], len(words))
 
@@ -1542,7 +1582,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         catchall = result.projects["catchall"]
         self.assertEqual(
             catchall.exported_words,
-            ["диалогларга", "диалогларындагы"],
+            ["диалогларындагы"],
         )
         self.assertEqual(catchall.report["covered_word_count"], len(words))
         self.assertEqual(result.report["covered_word_count"], len(words))
@@ -1584,6 +1624,23 @@ class PreannotatorWordExportTests(unittest.TestCase):
             )
         )
         self.assertFalse(is_safe_family_member("баралар", "бала", "бар"))
+
+    def test_conditional_family_tails_must_agree_under_both_origins(self) -> None:
+        for origin in ("N", "RL"):
+            with self.subTest(origin=origin):
+                self.assertTrue(is_compatible_family_member(
+                    "диалоглар", "диалогларга", "диалог", origin,
+                ))
+                # га is stable here, while ка differs as qa vs ka.
+                self.assertFalse(is_compatible_family_member(
+                    "диалоглар", "диалогка", "диалог", origin,
+                ))
+                self.assertFalse(is_compatible_family_member(
+                    "срогыннан", "срогы", "срок", origin,
+                ))
+        self.assertFalse(is_compatible_family_member(
+            "диалоглар", "диалогларга", "диалог", "U",
+        ))
 
     def test_safe_family_member_requires_literal_review_sensitive_stem(self) -> None:
         self.assertFalse(
