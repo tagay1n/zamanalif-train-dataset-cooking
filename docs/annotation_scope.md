@@ -15,6 +15,9 @@ Tatar Cyrillic sentence -> Zamanalif Latin sentence
 The rule-based converter is a helper. Human annotation should focus on words
 where the conversion choice is not deterministic enough for the current rules.
 
+Generate or regenerate Label Studio task/import files only when the user
+explicitly requests it.
+
 ## Project 1: Word Dictionary Review
 
 Project 1 is for unique word-form review. Annotators review a normalized word
@@ -132,6 +135,12 @@ before training export.
 For dictionary words, human-reviewed spellings and stored policy variants take
 precedence over automatic conversion, including deterministic mixed-harmony
 forms. Automatic conversion applies only when no approved word review exists.
+
+The `җәмгыят…` stem preserves written `ы` as `ı`: `җәмгыять -> cämğıyät`
+and `җәмгыяте -> cämğıyäte`. The existing `yä` handling is retained. This
+explicit dataset policy supersedes ANTAT's `cämğiyät` convention. Existing
+stored spellings in this family were migrated with the user's authorization;
+this is not a general permission to overwrite human reviews.
 
 If an annotator rejects DSL alternatives with `-` and leaves one spelling, that
 spelling is a lexical override for every global policy. It propagates only to

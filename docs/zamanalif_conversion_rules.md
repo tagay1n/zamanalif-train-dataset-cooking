@@ -195,6 +195,9 @@ Important caveats:
   are why these letters remain dictionary-review targets.
 - Arabic-Persian loans include lexical exceptions, so dictionary review is
   still useful even when the automatic suggestion looks plausible.
+- The `җәмгыят…` stem uses `ı` while retaining `yä`: `җәмгыять -> cämğıyät`,
+  `җәмгыяте -> cämğıyäte`. This dataset choice intentionally differs from
+  ANTAT's `cämğiyät`; it does not change other lexical vowel conventions.
 
 ## Deliberately Excluded PDF Policies
 

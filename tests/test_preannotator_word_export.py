@@ -994,11 +994,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
-    def test_jamgiyat_stem_has_deterministic_explicit_glide(self) -> None:
+    def test_jamgiyat_stem_preserves_dotless_i_and_explicit_glide(self) -> None:
         cases = [
-            ("җәмгыять", "cämğiyät"),
-            ("җәмгыяте", "cämğiyäte"),
-            ("җәмгыятьтәге", "cämğiyättäge"),
+            ("җәмгыять", "cämğıyät"),
+            ("җәмгыяте", "cämğıyäte"),
+            ("җәмгыятьтәге", "cämğıyättäge"),
+            ("җәмгыять-җәмгыять", "cämğıyät-cämğıyät"),
+            ("Җәмгыяте", "Cämğıyäte"),
         ]
 
         for word, expected in cases:

@@ -31,6 +31,8 @@ DELIBERATELY_EXCLUDED_ANTAT_POLICIES = frozenset(
         ("коръән", 5077),  # Dataset policy preserves verified lexical hamza.
         ("коръәнгә", 5078),
         ("мәсьәлә", 2066),
+        ("җәмгыять", 1849),  # Dataset preserves ы as ı in this stem.
+        ("җәмгыятьтәге", 7960),
     }
 )
 NATIVE_UW_FOLLOWING_VOWELS = frozenset("аәоуөыэеиү")
