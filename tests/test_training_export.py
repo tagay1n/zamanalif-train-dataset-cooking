@@ -21,6 +21,18 @@ from tatar_preannotator.word_export import save_reviewed_word
 
 
 class TrainingExportTests(unittest.TestCase):
+    def test_existing_mixed_vowel_review_keeps_approved_vowels(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db = _write_db(root / "db.sqlite", [{
+                "id": "reviewed", "text": "Сәгать.",
+                "tokens": [{"text": "Сәгать", "label": "N"}],
+            }])
+            save_reviewed_word(db, "сәгать", "säğät", "N")
+            summary = export_training_dataset(db, root / "train.jsonl")
+            self.assertEqual(summary.exported_count, 1)
+            self.assertEqual(_read_jsonl(root / "train.jsonl")[0]["zamanalif"], "Säğät.")
+
     def test_native_mixed_harmony_auto_converts_only_when_origin_independent(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

@@ -1149,9 +1149,10 @@ def result_with_ijtimagiy_stem_choices(source: str, result: ConversionResult) ->
             segments.append(segment)
             continue
         text = segment.text
-        if not changed and text.startswith("ictimaği"):
+        stem = next((stem for stem in ("ictimağıy", "ictimaği") if text.startswith(stem)), "")
+        if not changed and stem:
             segments.append(Choice(IJTIMAGIY_STEM_RULE.rule_id, IJTIMAGIY_STEM_RULE.options))
-            _append_literal_segment(segments, text[len("ictimaği") :])
+            _append_literal_segment(segments, text[len(stem) :])
             changed = True
             continue
         _append_literal_segment(segments, text)
@@ -2240,10 +2241,28 @@ NATIVE_FRAGMENT_REPLACEMENTS: tuple[tuple[str, str, str], ...] = (
 )
 
 
+def _allows_native_lexical_replacement(
+    word: str, rule: tuple[str, str, str],
+) -> bool:
+    """Keep mixed-word vowels, while preserving verified hamza conventions."""
+    if (vowel_harmony_class(word) != "mixed_front_back"
+            or rule in NATIVE_HAMZA_PREFIX_REPLACEMENTS):
+        return True
+    vowels = frozenset("aeiouäöüı")
+    return (
+        tuple(char for char in rule[1] if char in vowels)
+        == tuple(char for char in rule[2] if char in vowels)
+    )
+
+
 def _apply_native_lexical_conventions(word: str, converted: str) -> str:
     folded = word.casefold()
     for cyrillic_prefix, plain_text, expected_text in NATIVE_PREFIX_REPLACEMENTS:
         if not folded.startswith(cyrillic_prefix) or not converted.startswith(plain_text):
+            continue
+        if not _allows_native_lexical_replacement(
+            folded, (cyrillic_prefix, plain_text, expected_text),
+        ):
             continue
         return _apply_native_surname_suffix_conventions(
             folded,
@@ -2251,6 +2270,10 @@ def _apply_native_lexical_conventions(word: str, converted: str) -> str:
         )
     for cyrillic_fragment, plain_text, expected_text in NATIVE_FRAGMENT_REPLACEMENTS:
         if cyrillic_fragment not in folded or plain_text not in converted:
+            continue
+        if not _allows_native_lexical_replacement(
+            folded, (cyrillic_fragment, plain_text, expected_text),
+        ):
             continue
         return _apply_native_surname_suffix_conventions(
             folded,

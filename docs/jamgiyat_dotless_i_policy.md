@@ -24,3 +24,8 @@ tests because this sandbox prohibits socket creation.
 No Label Studio task/import files were generated or regenerated. Existing batch
 files retain their original suggestions. Future generation requires an explicit
 user request.
+
+The subsequent mixed-vowel policy supersedes the automatic `yä` adjustment:
+new suggestions use `cämğıyat` / `cämğıyate`. The nine migrated stored approvals
+retain their approved `ä`; no second migration was performed. See
+[the current scope](annotation_scope.md#final-training-dataset-policy).

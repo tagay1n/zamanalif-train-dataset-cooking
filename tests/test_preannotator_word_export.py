@@ -444,7 +444,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation("канат", " RL"), "kanat")
         self.assertEqual(convert_for_annotation("саескан", "N"), "sayısqan")
         self.assertEqual(convert_for_annotation("тавышкиметкеч", "N"), "tawışkimetkeç")
-        self.assertEqual(convert_for_annotation("бакырелан", "N"), "baqıryılan")
+        self.assertEqual(convert_for_annotation("бакырелан", "N"), "baqırelan")
         self.assertEqual(convert_for_annotation("ю", "N"), "yü")
         self.assertEqual(
             convert_for_annotation_dsl("фамилия", "N"),
@@ -936,15 +936,15 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(dsl, expected)
                 self.assertEqual(resolve_dsl(dsl), expected)
 
-    def test_coherent_arabic_initial_ga_fronting_is_deterministic(self) -> None:
+    def test_initial_ga_respects_mixed_word_vowels(self) -> None:
         cases = [
-            ("гадәт", "ğädät"),
-            ("гаеп", "ğäyep"),
+            ("гадәт", "ğadät"),
+            ("гаеп", "ğayıp"),
             ("гаярь", "ğäyär"),
             ("гаять", "ğäyät"),
-            ("гаскәр", "ğäskär"),
-            ("гамәлдә", "ğämäldä"),
-            ("гарип", "ğärip"),
+            ("гаскәр", "ğaskär"),
+            ("гамәлдә", "ğamäldä"),
+            ("гарип", "ğarip"),
             ("гасыр", "ğasır"),
         ]
 
@@ -953,16 +953,16 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
-    def test_selected_giy_compaction_is_deterministic(self) -> None:
+    def test_giy_compaction_respects_mixed_word_vowels(self) -> None:
         cases = [
-            ("гыйбадәт", "ğibädät"),
-            ("гыйбадәтханә", "ğibädätxanä"),
-            ("гыйбарә", "ğibärä"),
-            ("гыйльми", "ğilmi"),
-            ("зәгыйфь", "zäğif"),
+            ("гыйбадәт", "ğıybadät"),
+            ("гыйбадәтханә", "ğıybadätxanä"),
+            ("гыйбарә", "ğıybarä"),
+            ("гыйльми", "ğıylmi"),
+            ("зәгыйфь", "zäğıyf"),
             ("шагыйрь", "şağir"),
-            ("кагыйдә", "qağidä"),
-            ("табигый", "tabiği"),
+            ("кагыйдә", "qağıydä"),
+            ("табигый", "tabiğıy"),
         ]
 
         for word, expected in cases:
@@ -975,18 +975,18 @@ class PreannotatorWordExportTests(unittest.TestCase):
         self.assertEqual(convert_for_annotation_dsl("гыйсъян", "N"), "ğıysyan")
         self.assertEqual(convert_for_annotation_dsl("гыйшык", "N"), "ğıyşıq")
 
-    def test_selected_arabic_final_at_fronting_is_deterministic(self) -> None:
+    def test_final_at_respects_mixed_word_vowels(self) -> None:
         cases = [
             ("васыять", "wasıyät"),
-            ("итагатьсез", "itağätsez"),
-            ("канәгатьләндерергә", "qanäğätländerergä"),
-            ("риваять", "riwayät"),
-            ("сәгать", "säğät"),
-            ("сәнгате", "sänğäte"),
-            ("табигатьтән", "tabiğättän"),
-            ("җәмәгать", "cämäğät"),
-            ("мөрәҗәгать", "möräcäğät"),
-            ("җинаятьчелек", "cinayätçelek"),
+            ("итагатьсез", "itağatsez"),
+            ("канәгатьләндерергә", "qanäğatländerergä"),
+            ("риваять", 'riwayat'),
+            ("сәгать", "säğat"),
+            ("сәнгате", "sänğate"),
+            ("табигатьтән", "tabiğattän"),
+            ("җәмәгать", "cämäğat"),
+            ("мөрәҗәгать", "möräcäğat"),
+            ("җинаятьчелек", 'cinayatçelek'),
         ]
 
         for word, expected in cases:
@@ -994,13 +994,24 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
+    def test_mixed_vowels_bypass_lexical_rewrites_but_keep_other_corrections(self) -> None:
+        cases = {
+            "гарәпләренең": "ğaräpläreneñ", "сәгать": "säğat",
+            "мәгариф": "mäğarif", "гамәл": "ğamäl",
+            "мәкалә": "mäqalä", "гарипов": "ğaripov",
+            "коръән": "qorʼän", "таэмин": "täʼmin",
+        }
+        for word, expected in cases.items():
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
+
     def test_jamgiyat_stem_preserves_dotless_i_and_explicit_glide(self) -> None:
         cases = [
-            ("җәмгыять", "cämğıyät"),
-            ("җәмгыяте", "cämğıyäte"),
-            ("җәмгыятьтәге", "cämğıyättäge"),
-            ("җәмгыять-җәмгыять", "cämğıyät-cämğıyät"),
-            ("Җәмгыяте", "Cämğıyäte"),
+            ("җәмгыять", "cämğıyat"),
+            ("җәмгыяте", "cämğıyate"),
+            ("җәмгыятьтәге", "cämğıyattäge"),
+            ("җәмгыять-җәмгыять", "cämğıyat-cämğıyat"),
+            ("Җәмгыяте", "Cämğıyate"),
         ]
 
         for word, expected in cases:
@@ -1103,11 +1114,11 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
     def test_vazifa_arabic_stem_is_deterministic(self) -> None:
         cases = [
-            ("вазифа", "wazıyfa"),
-            ("вазифага", "wazıyfağa"),
-            ("вазифалары", "wazıyfaları"),
-            ("вазифаны", "wazıyfanı"),
-            ("вазифасы", "wazıyfası"),
+            ("вазифа", 'wazifa'),
+            ("вазифага", "wazifağa"),
+            ("вазифалары", "wazifaları"),
+            ("вазифаны", "wazifanı"),
+            ("вазифасы", "wazifası"),
         ]
 
         for word, expected in cases:
@@ -1158,18 +1169,18 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
-    def test_arabic_persian_ya_fronting_stems_are_deterministic(self) -> None:
+    def test_ya_stems_preserve_mixed_word_vowels(self) -> None:
         cases = [
-            ("киная", "kinayä"),
-            ("кинаяле", "kinayäle"),
-            ("кинаяләп", "kinayäläp"),
-            ("кыяфәт", "qıyäfät"),
-            ("кыяфәте", "qıyäfäte"),
-            ("кыяфәтле", "qıyäfätle"),
-            ("кыяфәттә", "qıyäfättä"),
-            ("хыянәт", "xıyänät"),
-            ("хыянәтче", "xıyänätçe"),
-            ("хыянәтчеләрчә", "xıyänätçelärçä"),
+            ("киная", 'kinaya'),
+            ("кинаяле", 'kinayale'),
+            ("кинаяләп", "kinayaläp"),
+            ("кыяфәт", "qıyafät"),
+            ("кыяфәте", "qıyafäte"),
+            ("кыяфәтле", "qıyafätle"),
+            ("кыяфәттә", "qıyafättä"),
+            ("хыянәт", "xıyanät"),
+            ("хыянәтче", "xıyanätçe"),
+            ("хыянәтчеләрчә", "xıyanätçelärçä"),
         ]
 
         for word, expected in cases:
@@ -1177,13 +1188,13 @@ class PreannotatorWordExportTests(unittest.TestCase):
                 self.assertEqual(convert_for_annotation(word, "N"), expected)
                 self.assertEqual(convert_for_annotation_dsl(word, "N"), expected)
 
-    def test_arabic_persian_gha_fronting_stems_are_deterministic(self) -> None:
+    def test_gha_stems_preserve_mixed_word_vowels(self) -> None:
         cases = [
-            ("мөгаллим", "möğällim"),
-            ("мөгамәлә", "möğämälä"),
-            ("мөгамәләле", "möğämäläle"),
-            ("пәйгамбәр", "päyğämbär"),
-            ("пәйгамбәрлек", "päyğämbärlek"),
+            ("мөгаллим", "möğallim"),
+            ("мөгамәлә", "möğamälä"),
+            ("мөгамәләле", "möğamäläle"),
+            ("пәйгамбәр", "päyğambär"),
+            ("пәйгамбәрлек", "päyğambärlek"),
         ]
 
         for word, expected in cases:
@@ -1314,12 +1325,12 @@ class PreannotatorWordExportTests(unittest.TestCase):
 
         self.assertEqual(dsl, "knyazʼ")
 
-    def test_native_miyaw_stem_is_deterministic(self) -> None:
+    def test_miyaw_lexical_override_respects_mixed_word_vowels(self) -> None:
         cases = [
-            ("мияубикә", "miyawbikä"),
-            ("мияулап", "miyawlap"),
-            ("мияуларга", "miyawlarğa"),
-            ("мияулау", "miyawlaw"),
+            ("мияубикә", "miyäwbikä"),
+            ("мияулап", "miyäwlap"),
+            ("мияуларга", "miyäwlarğa"),
+            ("мияулау", "miyäwlaw"),
         ]
 
         for word, expected in cases:
@@ -1357,7 +1368,7 @@ class PreannotatorWordExportTests(unittest.TestCase):
     def test_native_yu_uses_local_vowel_context(self) -> None:
         cases = [
             ("ерагаю", "yırağayu"),
-            ("югыйсә", "yuğisä"),
+            ("югыйсә", "yuğıysä"),
             ("юк", "yuq"),
             ("юк-бар", "yuq-bar"),
             ("юка", "yuqa"),

@@ -4,6 +4,8 @@ import importlib.util
 from pathlib import Path
 import unittest
 
+from tests.mixed_vowel_policy_cases import MIXED_VOWEL_POLICY_CASES
+
 from tatar_preannotator.conversion import (
     Choice,
     Literal,
@@ -106,9 +108,16 @@ def _all_supported_resolutions(value: str) -> set[str]:
 
 
 class AntatGoldReferenceTests(unittest.TestCase):
+    def test_mixed_vowel_policy_does_not_waive_unrelated_reference_mismatches(self) -> None:
+        with self.assertRaisesRegex(AssertionError, "Antat gold mismatches: 1"):
+            self.assert_antat_gold_conversions([
+                ("гарәп", "ğäröp", "incorrect reference", -1),
+            ])
+
     def assert_antat_gold_conversions(self, cases: list[tuple[str, str, str, int]]) -> None:
         failures: list[str] = []
         for cyrillic, expected, headword, align_id in cases:
+            expected = MIXED_VOWEL_POLICY_CASES.get((cyrillic, expected), expected)
             # The dataset's ц -> ts policy intentionally overrides Antat's
             # positional s spellings; those cases are covered by policy tests.
             if "ц" in cyrillic.casefold():

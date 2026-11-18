@@ -136,11 +136,20 @@ For dictionary words, human-reviewed spellings and stored policy variants take
 precedence over automatic conversion, including deterministic mixed-harmony
 forms. Automatic conversion applies only when no approved word review exists.
 
-The `җәмгыят…` stem preserves written `ы` as `ı`: `җәмгыять -> cämğıyät`
-and `җәмгыяте -> cämğıyäte`. The existing `yä` handling is retained. This
-explicit dataset policy supersedes ANTAT's `cämğiyät` convention. Existing
-stored spellings in this family were migrated with the user's authorization;
-this is not a general permission to overwrite human reviews.
+For native words classified as mixed front/back, lexical prefix and fragment
+replacements must not change the Latin vowel sequence. For example,
+`гарәпләренең -> ğaräpläreneñ`, `сәгать -> säğat`, and
+`җәмгыяте -> cämğıyate`. Conditional-letter context rules still apply;
+this is not character-for-character transliteration. Hyphen components are
+checked independently. Verified hamza conventions are retained, including their
+established vowel spellings; consonant-only and surname corrections remain.
+Words outside the mixed-vowel class retain their existing lexical conventions.
+Explicit convention choices remain available for human review.
+
+This supersedes the earlier `җәмгыят…` rule retaining `yä` in automatic
+suggestions. Previously approved spellings, including the nine reviews migrated
+on 2026-11-18, remain authoritative. This policy change does not migrate reviews
+or authorize generating Label Studio task/import files.
 
 If an annotator rejects DSL alternatives with `-` and leaves one spelling, that
 spelling is a lexical override for every global policy. It propagates only to

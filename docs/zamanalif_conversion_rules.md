@@ -195,9 +195,11 @@ Important caveats:
   are why these letters remain dictionary-review targets.
 - Arabic-Persian loans include lexical exceptions, so dictionary review is
   still useful even when the automatic suggestion looks plausible.
-- The `җәмгыят…` stem uses `ı` while retaining `yä`: `җәмгыять -> cämğıyät`,
-  `җәмгыяте -> cämğıyäte`. This dataset choice intentionally differs from
-  ANTAT's `cämğiyät`; it does not change other lexical vowel conventions.
+- Native mixed front/back words bypass lexical replacements that change their
+  Latin vowel sequence: `гарәп -> ğaräp`, `сәгать -> säğat`,
+  `җәмгыяте -> cämğıyate`. Contextual letter rules, verified hamza spellings,
+  consonant corrections, surname conventions, and explicit review choices remain.
+  This policy applies per hyphen component. Existing human reviews take precedence.
 
 ## Deliberately Excluded PDF Policies
 
