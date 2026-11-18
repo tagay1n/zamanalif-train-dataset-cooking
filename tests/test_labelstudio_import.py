@@ -89,6 +89,50 @@ class LabelStudioImportTests(unittest.TestCase):
         self.assertEqual(set(reviewed), {"вакыт"})
         self.assertEqual(reviewed["вакыт"].origin, "N")
 
+    def test_historical_origin_independent_review_is_preserved_and_idempotent(self) -> None:
+        with TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _database(root / "db.sqlite")
+            word = "хыянәтләрнең"
+            _add_words(db_path, [word])
+            exported = export_labelstudio_project_tasks_from_db(
+                db_path, morphology_analyzer=self.analyzer,
+            )
+            self.assertNotIn(word, exported.exported_words)
+            backup = _backup(
+                root / "historical.json", [_task(word, "xıyänätlärneñ", "N")],
+            )
+            first = import_labelstudio_annotations(db_path, backup)
+            second = import_labelstudio_annotations(db_path, backup)
+            reviewed = load_reviewed_words(db_path)
+
+        self.assertEqual(first.imported_items, 1)
+        self.assertEqual(second.imported_items, 0)
+        self.assertEqual(second.unchanged_items, 1)
+        self.assertEqual(reviewed[word].zamanalif_dsl, "xıyänätlärneñ")
+
+    def test_historical_review_still_requires_corpus_origin_and_nonhomonym(self) -> None:
+        for case in ("missing", "changed_origin", "homonym"):
+            with self.subTest(case=case), TemporaryDirectory() as tmpdir:
+                root = Path(tmpdir)
+                db_path = _database(root / "db.sqlite")
+                word = "хыянәтләрнең"
+                if case != "missing":
+                    _add_words(db_path, [word], origin="RL" if case == "changed_origin" else "N")
+                if case == "homonym":
+                    with sqlite3.connect(db_path) as conn:
+                        conn.execute(
+                            "insert into word_resolutions values (?, 'contextual_homonym', 'now')",
+                            (word,),
+                        )
+                backup = _backup(root / "historical.json", [
+                    _task("вакыт", "waqıt", "N"),
+                    _task(word, "xıyänätlärneñ", "N"),
+                ])
+                with self.assertRaises(LabelStudioImportError):
+                    import_labelstudio_annotations(db_path, backup)
+                self.assertEqual(load_reviewed_words(db_path), {})
+
     def test_imports_plain_catchall_russian_sign_suggestion_and_edit(self) -> None:
         with TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

@@ -854,6 +854,10 @@ tasks are accepted when their decisions agree. Conflicting decisions for one
 reference abort the complete import. Consistent historical initial reviews are
 also backfilled during contextual import.
 Unannotated and cancelled tasks are skipped.
+Historical dictionary tasks remain importable when their native and loanword
+branches now agree. Their reviewed spellings are preserved; corpus presence,
+predicted origin, project routing, and homonym checks still apply. Fresh exports
+continue to omit origin-independent words.
 Identical reimports are idempotent; conflicting decisions fail atomically.
 After a successful dictionary import, the command prints family-propagation
 counts for the current batch and historical backfill, split between literal

@@ -267,7 +267,10 @@ def import_labelstudio_annotations(
                         "dictionary project contains contextual homonyms: "
                         + ", ".join(homonyms[:20])
                     )
-                family_eligible = eligible_dictionary_words(conn)
+                family_eligible = eligible_dictionary_words(
+                    conn,
+                    include_origin_independent=frozenset(regular_words),
+                )
                 project_eligible = {
                     word: candidate
                     for word, candidate in family_eligible.items()

@@ -717,6 +717,7 @@ def _export_from_records(
     sort_by: str,
     reviewed_words: set[str],
     word_resolutions: dict[str, str],
+    include_origin_independent: frozenset[str] = frozenset(),
 ) -> ExportResult:
     stats: dict[str, WordStats] = {}
     total_sentences = 0
@@ -794,7 +795,10 @@ def _export_from_records(
             continue
         if entry.label == "U" and not include_unknown:
             continue
-        if branches.state == "origin_independent":
+        if (
+            branches.state == "origin_independent"
+            and entry.normalized not in include_origin_independent
+        ):
             continue
         if entry.frequency < min_frequency:
             continue
@@ -1021,8 +1025,15 @@ def eligible_catchall_words(
 
 def eligible_dictionary_words(
     conn: sqlite3.Connection,
+    *,
+    include_origin_independent: frozenset[str] = frozenset(),
 ) -> dict[str, CatchallWord]:
-    """Return every observed word currently eligible for dictionary review."""
+    """Return eligible words, optionally retaining historical review targets.
+
+    Import can preserve human reviews whose origin branches now agree. These
+    targets still pass corpus, origin, and homonym checks; fresh exports omit
+    them by default.
+    """
     resolutions = {
         str(row[0]): str(row[1])
         for row in conn.execute(
@@ -1038,6 +1049,7 @@ def eligible_dictionary_words(
         sort_by="word",
         reviewed_words=set(),
         word_resolutions=resolutions,
+        include_origin_independent=include_origin_independent,
     )
     return {
         word: CatchallWord(word, task["data"]["gemini_origin"], frequency)
