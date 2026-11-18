@@ -7,7 +7,75 @@ loanword outputs differ or either output is unavailable. Gemini's `N` label is
 still a prediction. A complete human-approved spelling takes precedence during
 training conversion; unreviewed origin-dependent forms remain blocked.
 
-## Current queue
+## Reviewed rounds on 2026-11-18
+
+Projects 55 (Catchall #35) and 56 (Catchall #36) were downloaded, audited,
+corrected through annotator discussion, rehearsed on database copies, and
+imported after creating project-specific SQLite backups.
+
+| Project | Direct reviews | Family approvals propagated | Reviewed words after import |
+| --- | ---: | ---: | ---: |
+| 55 | 500 | 1,802 | 49,928 |
+| 56 | 500 | 277 | 50,705 |
+
+Project 55 included 14 spelling corrections and completion of the skipped
+`гаетләрдә -> ğayetlärdä` task. Project 56 included 14 spelling corrections.
+All imported spellings were checked against their finalized review files, the
+complete reviewed dictionary validated, and SQLite integrity and foreign-key
+checks passed. Existing direct reviews were preserved. Project 55 refreshed
+four older inferred `шагыйрь` forms; project 56 replaced no existing reviews.
+
+The decisions below are human lexical approvals, not new global converter
+rules. They take precedence for the reviewed words and analyzer-confirmed safe
+family members:
+
+- Keep written `а -> a` in reviewed mixed-vowel forms, including the
+  `мәгариф`, `гаскәр`, `сәнгать`, and `җәмәгать` examples.
+- Retain reviewed `yä` choices in the `кыяфәт`, `җинаять`, `шикаять`,
+  `риваять`, `хыянәт`, `кыямәт`, and `җәмгыят` families. The latter retains
+  dotless `ı`: `cämğıyät`. These approvals coexist with the current automatic
+  mixed-vowel policy; they do not authorize a blanket `я -> yä` replacement.
+- Use reviewed `гаеп -> ğayep` and `гает -> ğayet` spellings without changing
+  the general `ае -> ayı` rule used by words such as `аерым -> ayırım`.
+- Preserve compound components in `җидееллык -> cideyıllıq`,
+  `берьюлы -> beryulı`, `төбәкара -> töbäkara`, and
+  `торбаүткәргечләр -> torbaütkärgeçlär`. The source variant `жидееллык`
+  retains its written initial consonant: `jideyıllıq`.
+- Retain `мөстәкыйль -> möstäqıyl` without an apostrophe before suffixes,
+  surname `v` before Tatar suffixes, and the reviewed name spelling
+  `Гафиятуллин/Гафиятуллина -> ğafiyatullin/ğafiyatullina`.
+- Approve `казые -> qazıyı`, `уе -> uyı`, and `абруе -> abruyı`.
+  Stored ANTAT evidence includes `абруеңны -> abruyıñnı` and
+  `буе -> buyı`; the exact three target forms were not found there.
+- Approve `Варкләд-Бодья -> varkläd-bodʼya` as an explicit proper-name
+  decision. The [official bilingual catalogue](https://fpd.tatarstan.ru/file/fpd/File/%D0%90%D0%B3%D1%80%D1%8B%D0%B7%D1%81%D0%BA%D0%B8%D0%B9%20%D1%80%D0%B0%D0%B9%D0%BE%D0%BD.%20%D3%98%D0%B3%D0%B5%D1%80%D2%97%D0%B5%20%D1%80%D0%B0%D0%B9%D0%BE%D0%BD%D1%8B%281%29.pdf)
+  attests the Tatar `ә`, while the
+  [field study](https://ojs.utlib.ee/index.php/JEF/article/view/22721)
+  uses `Varkled-Böd’ya`. The approved dataset spelling combines that evidence
+  with the loanword sign convention; no Tatar pronunciation recording was
+  verified. The exported origin label was preserved.
+
+The importer compatibility fix is committed as `5dede7e`. It preserves
+historical human reviews when origin branches now agree, while retaining
+corpus, origin, routing, and homonym checks. Fresh exports still omit those
+origin-independent words. The fix passed 392 tests, with four skips.
+
+Raw downloads, working annotation files, decision histories, import results,
+and SQLite backups remain local under ignored `data/`. The round summaries
+are `data/labelstudio_project_55_review_20261118.md` and
+`data/labelstudio_project_56_review_20261118.md`.
+
+The annotator requested the next round as one file of 1,000 tasks, overriding
+the usual 500-task default for this export:
+
+```sh
+.venv/bin/python -m tatar_preannotator annotation-export \
+  --db data/zamanalif.sqlite \
+  --output-dir labelstudio_projects/after_project56_20261118_1000 \
+  --max-items 1000 --batch-size 1000
+```
+
+## Initial queue snapshot
 
 | Item | Count |
 | --- | ---: |
