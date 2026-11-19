@@ -75,6 +75,63 @@ the usual 500-task default for this export:
   --max-items 1000 --batch-size 1000
 ```
 
+## Project 57 review on 2026-11-19
+
+All 1,000 entries in Catchall #37 were audited, including the 907 submissions
+that accepted their suggestions unchanged. The audit identified 12 proposed
+corrections and two further name choices; every flagged case was discussed.
+The finalized batch has eight spelling corrections and six explicitly retained
+spellings. No global converter rules were changed.
+
+The user approved these lexical decisions:
+
+- Keep standalone `Гафият -> ğafiyät`. Correct the older direct review
+  `Гафиятовка -> ğafiyatovqa`, while preserving the earlier
+  `Гафиятуллин/Гафиятуллина` approvals. These are separate reviewed names,
+  not a blanket family-wide vowel replacement.
+- Retain submitted `iye` in `bahawiyev`, `möxämmätğaliyeva`,
+  `möxämmätğaliyev`, `ğaziyev`, and `ğayniyev`. Historical reconciliation
+  is deferred: the pre-import dictionary contained 32 direct bare-surname
+  reviews using `ie` and 23 using `iye`. The automatic exact-surname-ending
+  policy was not changed, and earlier approvals were not migrated.
+- Use `җинаятьләрне -> cinayätlärne` and
+  `жәмгыятеннән -> jämğıyätennän`, preserving source `ж -> j`.
+- Use `тәрәккыятебез -> täräqqıyätebez`, `сабантуе -> sabantuyı`,
+  `таткультресурсүзәге -> tatkulʼtresursüzäge`, and `Мукден -> mukden`.
+- Use `Галәветдинов -> ğaläwetdinov` and `Кавиев -> qawiyev`.
+  Confirm the existing `Кави -> qawi` review and correct the older direct
+  `Кавиева` review to `qawiyeva`.
+
+The two older direct-review corrections each had a separate SQLite backup and
+changed only the requested spelling and its timestamp, preserving origins and
+all other rows. The finalized project then passed a full import rehearsal and
+was imported after a project-specific backup:
+
+| Direct reviews | Family approvals propagated | Reviewed words after import |
+| ---: | ---: | ---: |
+| 1,000 | 137 | 51,842 |
+
+All 1,000 imported spellings match the finalized working file, the complete
+reviewed dictionary validates, and SQLite integrity and foreign-key checks
+pass. The project import preserved all existing reviews and source tables.
+The archived hosted project and original download were left unchanged.
+
+The local audit, all-entry coverage record, decisions, and import result are
+`data/labelstudio_project_57_review_20261119.md`,
+`data/labelstudio_project_57_full_coverage_20261119.json`,
+`data/labelstudio_project_57_review_decisions.json`, and
+`data/labelstudio_project_57_import_result.json`. The project backup is
+`data/zamanalif_before_project57_import_20261119T162252Z.sqlite`.
+
+Generate the next requested round as one file of 1,000 tasks:
+
+```sh
+.venv/bin/python -m tatar_preannotator annotation-export \
+  --db data/zamanalif.sqlite \
+  --output-dir labelstudio_projects/after_project57_20261119_1000 \
+  --max-items 1000 --batch-size 1000
+```
+
 ## Initial queue snapshot
 
 | Item | Count |
