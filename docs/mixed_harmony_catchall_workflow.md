@@ -132,6 +132,80 @@ Generate the next requested round as one file of 1,000 tasks:
   --max-items 1000 --batch-size 1000
 ```
 
+## Project 58 review on 2026-11-20
+
+All 1,000 entries in Catchall #38 were audited, including 840 unchanged
+submissions and three skipped entries. All flagged groups were discussed.
+The finalized file has 13 spelling corrections, two explicitly confirmed
+spellings, and two completed skipped entries. The third skipped entry was
+resolved by repairing its source typo. No global converter rules were changed.
+
+The user approved these lexical decisions:
+
+- Complete `консидеранның -> konsiderannıñ` and
+  `чишмә-кнс -> çişmä-kns`, retaining the acronym without expansion.
+- Repair `гаее -> гаебе` in sample `sent_014112` and token 29 of its
+  preannotation, reusing the existing `гаебе -> ğayebe` review. Keep the
+  corrupt-word task cancelled instead of adding a `гаее` dictionary entry.
+- Use `корьән -> qorʼän`, preserving the hamza and the source spelling.
+- Use `музей-тыюлык -> muzey-tıyulıq`,
+  `сәнгатькярләребез -> sänğatkyärlärebez`, and
+  `бүлекара -> bülekara`, preserving component consonants.
+- Use `унъеллыгында -> unyıllığında`, matching the recent
+  `унъеллыкта -> unyıllıqta` approval. Older inconsistent reviews remain
+  deferred, along with the previously deferred surname `ie`/`iye` choices.
+- Use `хәятына -> xäyätına` and `хәятының -> xäyätınıñ`, retaining
+  their submitted suffixes and the reviewed `хәят -> xäyät` stem.
+- Use `әдәбиятчы-галим -> ädäbiyatçı-ğalim`, preserving the documented
+  `әдәбият -> ädäbiyat` exception.
+- Normalize ASCII apostrophes to U+02BC in
+  `актуальләштерелә -> aktualʼläşterelä` and `барьева -> barʼyeva`.
+- Use `балтаевага -> baltayevağa` and `г.исхакый -> ğ.isxaqıy`.
+- Keep `никяхларының -> niqäxlarınıñ`, consistent with the existing
+  `никях -> niqäx` and `никях-талак -> niqäx-talaq` reviews, separately
+  from the reviewed `никах -> niqax` spelling.
+- Keep `сырдәрья -> sırdäryä` and use `амудәрья -> amudäryä`, matching
+  the existing `дәрья -> däryä` review in both river names.
+
+The source repair had its own backup and changed exactly one sample row and
+one preannotation row. After that repair, the finalized project passed an
+import rehearsal and was imported after another database backup:
+
+| Direct reviews | Family approvals propagated | Reviewed words after import |
+| ---: | ---: | ---: |
+| 999 | 11 | 52,852 |
+
+All 999 imported spellings and origins match the finalized working file.
+The complete reviewed dictionary validates, SQLite integrity and foreign-key
+checks pass, and the main database matches the rehearsal. The import preserved
+every existing review and all source tables. The raw download is unchanged.
+
+Local artifacts under ignored `data/` include
+`labelstudio_project_58_tasks_reviewed.json`,
+`labelstudio_project_58_review_decisions.json`,
+`labelstudio_project_58_final_coverage.json`, and
+`labelstudio_project_58_final_import_validation.json`.
+The source repair is recorded in `gaee_source_repair_20261120T160744Z.json`;
+the final import backup is
+`zamanalif_before_project58_import_20261120T163030Z.sqlite`.
+
+Generate the next requested round as one file of 1,000 tasks:
+
+```sh
+.venv/bin/python -m tatar_preannotator annotation-export \
+  --db data/zamanalif.sqlite \
+  --output-dir labelstudio_projects/after_project58_20261120_1000 \
+  --max-items 1000 --batch-size 1000
+```
+
+The exported `project_catchall_batch_001_of_001.json` contains exactly 1,000
+unique tasks with context, using catchall schema version 3. It has no overlap
+with reviewed words, project 58, or the preceding three completed batch
+exports. Serialized task validation passed and the database hash is unchanged.
+The single blank suggestion is `к-көнбатыш`, whose isolated initial `к`
+requires a human spelling decision. Export validation is recorded in
+`data/after_project58_20261120_1000_validation.json`.
+
 ## Initial queue snapshot
 
 | Item | Count |
