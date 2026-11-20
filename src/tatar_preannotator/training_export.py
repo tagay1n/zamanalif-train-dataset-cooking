@@ -249,80 +249,107 @@ def _convert_sentence(
             )
         pieces.append(record.text[cursor:found])
 
-        normalized = normalize_word(text)
-        if not normalized:
-            pieces.append(text)
-            cursor = found + len(text)
-            continue
-        branches = conversion_branches(normalized)
-        resolution = word_resolutions.get(normalized)
-        is_contextual_homonym = resolution == "contextual_homonym" or (
-            token.get("homonym") is True
-            and resolution not in {"N", "RL", "U"}
+        conversion = resolve_training_token(
+            record.sample_id, token_index, token, reviewed, contextual_reviews,
+            policy, word_resolutions,
         )
-        contextual = contextual_reviews.get(
-            OccurrenceKey(record.sample_id, token_index)
-        )
-        reviewed_resolution: str | None = None
-        if is_contextual_homonym and branches.state == "origin_independent":
-            dsl = branches.native_dsl
-        elif contextual is not None:
-            if contextual.normalized_word != normalized:
-                raise TrainingExportError(
-                    f"{record.sample_id}: contextual review is stale at token "
-                    f"{token_index}"
-                )
-            dsl = contextual.zamanalif_dsl
-        else:
-            if is_contextual_homonym:
-                return _NotReady("contextual_homonym")
-            effective_label = resolution if resolution in {"N", "RL", "U"} else label
-
-            approved = reviewed.get(normalized)
-            if approved is not None:
-                dsl = approved.zamanalif_dsl
-                reviewed_resolution = _reviewed_variant_for_policy(
-                    approved,
-                    policy,
-                )
-            else:
-                if branches.state != "origin_independent":
-                    if (
-                        effective_label == "N"
-                        and vowel_harmony_class(normalized) == "mixed_front_back"
-                    ):
-                        return _NotReady("mixed_harmony_word")
-                    return _NotReady("unreviewed_word")
-                dsl = branches.suggestion(effective_label)
-                if not dsl:
-                    raise TrainingExportError(
-                        f"{record.sample_id}: converter failed for token {text!r}"
-                    )
-
-        if reviewed_resolution is not None:
-            resolved = reviewed_resolution
-        else:
-            try:
-                resolved = resolve_dsl(dsl, policy)
-            except DslError as exc:
-                raise TrainingExportError(
-                    f"{record.sample_id}: invalid DSL for {normalized!r}: {exc}"
-                ) from exc
-        with_internal_punctuation = _restore_internal_word_punctuation(
-            text,
-            resolved,
-            policy,
-        )
-        pieces.append(
-            _apply_source_case(
-                text,
-                _restore_edge_punctuation(text, with_internal_punctuation),
-            )
-        )
+        if conversion.text is None:
+            return _NotReady(conversion.source)
+        pieces.append(conversion.text)
         cursor = found + len(text)
 
     pieces.append(record.text[cursor:])
     return "".join(pieces)
+
+
+@dataclass(frozen=True)
+class TokenConversion:
+    normalized_word: str
+    text: str | None
+    origin: str
+    source: str
+
+
+def resolve_training_token(
+    sample_id: str,
+    token_index: int,
+    token: dict,
+    reviewed: dict[str, ReviewedWord],
+    contextual_reviews: dict[OccurrenceKey, ContextualReview],
+    policy: dict[str, str],
+    word_resolutions: dict[str, str],
+) -> TokenConversion:
+    """Resolve one aligned token under the same policy used for training export."""
+    text, label = token["text"], token["label"]
+    normalized = normalize_word(text)
+    if not normalized:
+        return TokenConversion("", text, label, "unchanged")
+    branches = conversion_branches(normalized)
+    resolution = word_resolutions.get(normalized)
+    is_contextual_homonym = resolution == "contextual_homonym" or (
+        token.get("homonym") is True
+        and resolution not in {"N", "RL", "U"}
+    )
+    contextual = contextual_reviews.get(
+        OccurrenceKey(sample_id, token_index)
+    )
+    reviewed_resolution: str | None = None
+    origin = resolution if resolution in {"N", "RL", "U"} else label
+    source = "automatic"
+    if is_contextual_homonym and branches.state == "origin_independent":
+        dsl = branches.native_dsl
+    elif contextual is not None:
+        if contextual.normalized_word != normalized:
+            raise TrainingExportError(
+                f"{sample_id}: contextual review is stale at token "
+                f"{token_index}"
+            )
+        dsl = contextual.zamanalif_dsl
+        origin, source = contextual.origin, "contextual"
+    else:
+        if is_contextual_homonym:
+            return TokenConversion(normalized, None, origin, "contextual_homonym")
+
+        approved = reviewed.get(normalized)
+        if approved is not None:
+            dsl = approved.zamanalif_dsl
+            origin, source = approved.origin, "dictionary"
+            reviewed_resolution = _reviewed_variant_for_policy(
+                approved,
+                policy,
+            )
+        else:
+            if branches.state != "origin_independent":
+                if (
+                    origin == "N"
+                    and vowel_harmony_class(normalized) == "mixed_front_back"
+                ):
+                    return TokenConversion(normalized, None, origin, "mixed_harmony_word")
+                return TokenConversion(normalized, None, origin, "unreviewed_word")
+            dsl = branches.suggestion(origin)
+            if not dsl:
+                raise TrainingExportError(
+                    f"{sample_id}: converter failed for token {text!r}"
+                )
+
+    if reviewed_resolution is not None:
+        resolved = reviewed_resolution
+    else:
+        try:
+            resolved = resolve_dsl(dsl, policy)
+        except DslError as exc:
+            raise TrainingExportError(
+                f"{sample_id}: invalid DSL for {normalized!r}: {exc}"
+            ) from exc
+    with_internal_punctuation = _restore_internal_word_punctuation(
+        text,
+        resolved,
+        policy,
+    )
+    rendered = _apply_source_case(
+        text, _restore_edge_punctuation(text, with_internal_punctuation)
+    )
+    return TokenConversion(normalized, rendered, origin, source)
 
 
 def _restore_edge_punctuation(source: str, target: str) -> str:

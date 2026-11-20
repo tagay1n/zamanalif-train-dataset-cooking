@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections import Counter
-from contextlib import closing
+from contextlib import closing, nullcontext
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from functools import lru_cache
@@ -1865,10 +1865,15 @@ def save_reviewed_word(
         )
 
 
-def load_reviewed_words(db_path: str | Path) -> dict[str, ReviewedWord]:
+def load_reviewed_words(
+    db_path: str | Path, *, connection: sqlite3.Connection | None = None,
+) -> dict[str, ReviewedWord]:
     """Load the human-approved word dictionary keyed by normalized Cyrillic form."""
-    with closing(sqlite3.connect(db_path)) as conn, conn:
-        ensure_review_state_schema(conn)
+    manager = nullcontext(connection) if connection is not None else closing(sqlite3.connect(db_path))
+    with manager as conn:
+        if connection is None:
+            with conn:
+                ensure_review_state_schema(conn)
         rows = conn.execute(
             """
             select normalized_word, zamanalif_dsl, origin
@@ -1902,7 +1907,7 @@ def load_reviewed_words(db_path: str | Path) -> dict[str, ReviewedWord]:
         )
         for row in rows
     }
-    return _filter_valid_compound_reviews(db_path, reviewed)
+    return _filter_valid_compound_reviews(db_path, reviewed, connection=connection)
 
 
 def _filter_valid_compound_reviews(

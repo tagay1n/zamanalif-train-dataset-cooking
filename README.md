@@ -955,3 +955,67 @@ instructions.
 ```bash
 python3 -m unittest discover -s tests
 ```
+
+## Search and correct the finished corpus
+
+After the final Label Studio import, build the local search index and open
+Datasette. The index uses the training export defaults. Pass the same
+`--choice RULE=OPTION` overrides to `corpus-audit reindex` and
+`training-export` when evaluating an alternate policy.
+
+```sh
+python -m pip install -e '.[audit]'
+python -m tatar_preannotator corpus-audit reindex --db data/zamanalif.sqlite
+python -m tatar_preannotator corpus-audit serve --db data/zamanalif.sqlite
+```
+
+Datasette opens at [Corpus search](http://127.0.0.1:8767/corpus/search?field=cyrillic&mode=contains&limit=100).
+Search `cyrillic` or `zamanalif` using `contains` or `exact`. A result groups
+occurrences by normalized word, resolved spelling, origin, and decision source.
+Open its occurrence count to see the exact spelling and highlighted source
+sentence. Use the correction links for dictionary entries, contextual
+occurrences, and Cyrillic repairs. A split or merge takes a zero-based token
+range with an exclusive end, replacement text, and the resulting token texts
+and origins. The form can also record contextual decisions and dictionary
+approvals for the newly introduced forms.
+
+Use **Preview a replacement in these matches** for literal bulk replacement.
+Enter result form IDs to limit the selection. Search is case-insensitive and
+preserves Tatar letter distinctions. Replacement matches the stored text as
+typed. For policy-dependent spellings, select a stored variant to keep its
+policy mapping. If the preview requests an explicit correction for a dependent
+word, include it in the same correction batch.
+
+The CLI prints the same search rows as JSON. Use `--form-id` to list
+occurrences and `--after` or `--after-sample` with `--after-token` to continue
+paging.
+
+```sh
+python -m tatar_preannotator corpus-audit search --query лял
+python -m tatar_preannotator corpus-audit preview --input corrections.json > preview.json
+python -m tatar_preannotator corpus-audit apply --input preview.json
+```
+
+The correction input is a JSON array. These are examples of individual requests.
+
+```json
+[
+  {"kind":"dictionary","word":"идарә","variant":0,"value":"idärä"},
+  {"kind":"contextual","sample_id":"sent_000001","token_index":12,"origin":"RL","value":"riza"},
+  {"kind":"source","sample_id":"sent_014112","start":29,"value":"гаебе"},
+  {"kind":"bulk","field":"cyrillic","mode":"contains","query":"лял","target":"dictionary","find":"lya","replace":"lä"}
+]
+```
+
+For a source split or merge, add `end` and an ordered `tokens` array with each
+replacement token's `text` and `label` (`N`, `RL`, or `U`). For contextual
+reviews inside the replaced range, supply an explicit `contextual` array of
+`offset`, `origin`, and `value` objects, or an empty array to remove those
+reviews. Contextual offsets are relative to the new token list. Surviving
+reviews outside the edited range follow their original tokens.
+
+Each apply creates a SQLite backup alongside the corpus and records the changes
+in `audit_history`. The index updates in the same transaction. Run
+`corpus-audit reindex` again after any external annotation database edits or
+export policy changes. Reindex reports legacy alignment or conversion issues.
+Run `training-export` after completing your audit.

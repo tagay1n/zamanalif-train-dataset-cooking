@@ -12,6 +12,7 @@ from zamanalif_selector.progress import RichCliProgress
 from .annotate import run_annotation
 from .antat_reference import download_antat_reference
 from .config import load_config
+from .corpus_cli import add_corpus_commands, run_corpus_command
 from .conflict_resolver import (
     ConflictResolverError,
     auto_resolve_conflicts,
@@ -215,7 +216,11 @@ def main(argv: list[str] | None = None) -> int:
         help="Report decisions without writing word_resolutions.",
     )
 
+    add_corpus_commands(subparsers, DEFAULT_DB_PATH)
+
     args = parser.parse_args(argv)
+    if args.command == "corpus-audit":
+        return run_corpus_command(args)
     if args.command == "annotate":
         return _annotate(args)
     if args.command == "repair-unprocessable":

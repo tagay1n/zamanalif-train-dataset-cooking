@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Corpus correction{% endblock %}
+{% block content %}
+<p><a href="{{ details.search_url }}">Corpus search</a></p>
+<h1>Corpus correction</h1>
+{% if error %}<p class="message-error" role="alert">{{ error }}</p>{% endif %}
+{% if result %}
+<p role="status">Applied correction {{ result.correction_id }} across {{ result.sentences }} sentences.</p>
+<p>Backup at <code>{{ result.backup }}</code></p>
+{% elif preview %}
+<h2>Preview</h2>
+<p>{{ preview.words }} dictionary entries, {{ preview.occurrences }} occurrences, {{ preview.sentences }} sentences.</p>
+<div class="table-wrapper">
+<table class="rows-and-columns">
+<thead><tr><th>Change</th><th>Before</th><th>After</th></tr></thead>
+<tbody>
+{% for change in preview.changes %}
+<tr>
+<td>{{ change.kind }} {{ change.word or change.sample_id }}{% if change.token_index is defined %} · token {{ change.token_index }}{% endif %}</td>
+{% if change.kind == 'source' %}
+<td>{{ change.before.text }}<p>{{ change.before.zamanalif or "Unresolved" }}</p><details><summary>Tokens and contextual reviews</summary><pre>{{ change.before|tojson(indent=2) }}</pre></details></td>
+<td>{{ change.after.text }}<p>{{ change.after.zamanalif or "Unresolved" }}</p><details><summary>Tokens and contextual reviews</summary><pre>{{ change.after|tojson(indent=2) }}</pre></details></td>
+{% else %}
+<td><pre>{{ change.before|tojson(indent=2) }}</pre></td>
+<td><pre>{{ change.after|tojson(indent=2) }}</pre></td>
+{% endif %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% if preview.examples %}
+<h3>Converted occurrences</h3>
+<ul>
+{% for example in preview.examples %}
+<li>{{ example.sample_id }} · token {{ example.token_index }} · {{ example.before or 'unresolved' }} → {{ example.after or 'unresolved' }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+<form method="post">
+<input type="hidden" name="csrftoken" value="{{ csrftoken() }}">
+<input type="hidden" name="operation" value="apply">
+<input type="hidden" name="approved" value="{{ approval|tojson|forceescape }}">
+<button type="submit">Apply corrections</button>
+</form>
+{% elif details.revision is defined %}
+{% if details.sample_id %}
+<p>{{ details.sample_id }} · token {{ details.token_index }}</p>
+<p>{{ details.before_token }}<mark>{{ details.surface }}</mark>{{ details.after_token }}</p>
+{% endif %}
+<form method="post">
+<input type="hidden" name="csrftoken" value="{{ csrftoken() }}">
+<input type="hidden" name="kind" value="{{ details.kind }}">
+<input type="hidden" name="revision" value="{{ details.revision }}">
+{% if details.kind == 'bulk' %}
+<p><label>Search field <select name="field"><option value="cyrillic">Cyrillic</option><option value="zamanalif"{% if details.field == 'zamanalif' %} selected{% endif %}>Zamanalif</option></select></label>
+<label>Match <select name="mode"><option value="contains">Contains</option><option value="exact"{% if details.mode == 'exact' %} selected{% endif %}>Exact</option></select></label>
+<label>Query <input name="query" required value="{{ details.query }}"></label></p>
+<p><label>Edit <select name="target"><option value="dictionary">Dictionary spelling</option><option value="contextual">Contextual spelling</option><option value="source">Cyrillic token</option></select></label></p>
+<p><label>Form IDs, optional <input name="form_ids" placeholder="All matching forms" value="{{ values.get('form_ids', '') }}"></label></p>
+<p><label>Policy variant position, optional <input type="number" name="variant" min="0" value="{{ values.get('variant', '') }}"></label></p>
+<p><label>Find literal text <input name="find" required value="{{ values.get('find', '') }}"></label>
+<label>Replace with <input name="replace" value="{{ values.get('replace', '') }}"></label></p>
+{% elif details.kind == 'dictionary' %}
+<p><label>Normalized Cyrillic word <input name="word" required value="{{ details.word }}"></label></p>
+{% if details.review %}<p>Stored spelling <code>{{ details.review.zamanalif_dsl }}</code> · {{ details.review.origin }}</p>{% endif %}
+{% if details.variants %}
+<p><label>Policy variant <select name="variant"><option value="">Origin only</option>
+{% for variant in details.variants %}<option value="{{ variant.position }}">{{ variant.zamanalif }} · {{ variant.policies_json }}</option>{% endfor %}
+</select></label></p>
+{% endif %}
+<p><label>New spelling <input name="value" value="{{ values.get('value', '') }}"></label></p>
+<p><label>Origin <select name="origin"><option value="">Keep current</option><option>N</option><option>RL</option><option>U</option></select></label></p>
+{% elif details.kind == 'contextual' %}
+<input type="hidden" name="sample_id" value="{{ details.sample_id }}">
+<input type="hidden" name="token_index" value="{{ details.token_index }}">
+<p><label>Approved spelling <input name="value" required value="{{ values.get('value', details.contextual.zamanalif_dsl or '') }}"></label></p>
+<p><label>Origin <select name="origin"><option>N</option><option{% if values.get('origin', details.contextual.origin) == 'RL' %} selected{% endif %}>RL</option></select></label></p>
+{% elif details.kind == 'source' %}
+<input type="hidden" name="sample_id" value="{{ details.sample_id }}">
+<p><label>First token (zero-based) <input type="number" name="token_index" min="0" max="{{ details.tokens|length - 1 }}" required value="{{ details.token_index }}"></label>
+<label>End (exclusive) <input type="number" name="end" min="1" max="{{ details.tokens|length }}" required value="{{ values.get('end', details.token_index + 1) }}"></label></p>
+<details><summary>Sentence tokens</summary><ol start="0">{% for token in details.tokens %}<li>{{ token.text }} · {{ token.label }}</li>{% endfor %}</ol></details>
+<p><label>Replacement text <input name="value" required value="{{ values.get('value', details.surface) }}"></label></p>
+<p><label>Resulting tokens for a split or merge<br>
+<textarea name="tokens" rows="5" cols="45" placeholder="token | N">{{ values.get('tokens', '') }}</textarea></label><br>
+Enter one token per line as <code>text | origin</code>. Add <code>| contextual spelling</code> for a new contextual review.</p>
+<p><label><input type="checkbox" name="replace_context" value="1"> Remove contextual decisions attached to the replaced tokens</label></p>
+<p><label>Dictionary approvals for new forms, if needed<br>
+<textarea name="approvals" rows="3" cols="45" placeholder="word | N | spelling">{{ values.get('approvals', '') }}</textarea></label></p>
+{% elif details.kind == 'batch' %}
+<p><label>Correction requests (JSON array)<br><textarea name="batch" rows="12" cols="70" required>{{ values.get('batch', '') }}</textarea></label></p>
+{% endif %}
+<button type="submit">Preview corrections</button>
+</form>
+{% endif %}
+{% endblock %}

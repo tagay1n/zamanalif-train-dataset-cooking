@@ -1,0 +1,22 @@
+{% extends "query.html" %}
+{% block title %}{{ metadata.title }}{% endblock %}
+{% block description_source_license %}
+{% if canned_query == "search" %}
+<p>Use <code>cyrillic</code> or <code>zamanalif</code> and choose <code>contains</code> or <code>exact</code>.</p>
+{% if request.args.get("query") %}
+<p><a href="/-/corpus-edit?kind=bulk&amp;field={{ request.args.get('field', '')|urlencode }}&amp;mode={{ request.args.get('mode', '')|urlencode }}&amp;query={{ request.args.get('query', '')|urlencode }}">Preview a replacement in these matches</a></p>
+{% endif %}
+{% elif canned_query == "occurrences" %}
+<p><a href="/corpus/search?field=cyrillic&amp;mode=contains&amp;limit=100">Back to corpus search</a></p>
+{% endif %}
+{% endblock %}
+{% block content %}
+{{ super() }}
+{% if display_rows and canned_query == "search" and display_rows|length == request.args.get('limit', '100')|int %}
+{% set form_id = display_rows[-1][0] %}
+<p><a href="?field={{ request.args.get('field', '')|urlencode }}&amp;mode={{ request.args.get('mode', '')|urlencode }}&amp;query={{ request.args.get('query', '')|urlencode }}&amp;limit={{ request.args.get('limit', '100')|urlencode }}&amp;after={{ form_id|urlencode }}">Next page</a></p>
+{% elif display_rows and canned_query == "occurrences" and display_rows|length == request.args.get('limit', '100')|int %}
+{% set sample_id = display_rows[-1][0]|string %}
+<p><a href="?form_id={{ request.args.get('form_id', '')|urlencode }}&amp;limit={{ request.args.get('limit', '100')|urlencode }}&amp;after_sample={{ sample_id|urlencode }}&amp;after_token={{ display_rows[-1][1] }}">Next page</a></p>
+{% endif %}
+{% endblock %}
