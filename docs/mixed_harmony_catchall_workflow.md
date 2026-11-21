@@ -206,6 +206,73 @@ The single blank suggestion is `к-көнбатыш`, whose isolated initial `к
 requires a human spelling decision. Export validation is recorded in
 `data/after_project58_20261120_1000_validation.json`.
 
+## Project 59 partial import and pre-review on 2026-11-20–21
+
+The first 31 completed tasks in Catchall #39 were downloaded and individually
+audited, including 27 unchanged submissions and four edited spellings. The
+user approved two source repairs after discussing each one:
+
+- `итүго -> итүгә` in sample `sent_025073`, token 31. The repaired form
+  converts to `itügä` identically in both origin branches.
+- `камилләшштерү -> камилләштерү` in sample `sent_026182`, token 24.
+  Reuse the existing `камилләштерү -> qamilläşterü` review.
+
+Each repair had a separate backup and changed exactly one sample row and its
+preannotation row. The original 31-task download remains unchanged. The two
+erroneous forms were excluded from the dictionary import; all other 29 human
+annotations were retained and imported. No family approvals propagated. The
+reviewed dictionary reached 52,881 words, and the rehearsal, full dictionary,
+SQLite integrity, foreign-key, and existing-review preservation checks passed.
+
+The import and coverage records are
+`data/labelstudio_project_59_partial_import_validation.json` and
+`data/labelstudio_project_59_partial_final_coverage.json`; decisions and source
+repair records are referenced from
+`data/labelstudio_project_59_review_decisions.json`.
+
+The user then requested a review of suggestions before human annotation.
+The fresh 1,000-task file had 110 Latin suggestions corrected and 82 entries
+flagged for particular attention. Source words, excerpts, origins, and the
+database were preserved. `к-көнбатыш` retained its blank suggestion.
+The per-entry record is `data/project59_next1000_prereview.json`.
+
+On 2026-11-21, the user retained that file and requested all other remaining
+entries, in batches of at most 500. All 2,054 entries were individually
+reviewed: 266 suggestions were updated and 1,788 were retained. The review
+flagged 160 entries. The source form `конкѵреш` received a blank suggestion
+because its nonstandard character could not be interpreted reliably; its
+source spelling was preserved.
+
+| Batch | Tasks | Suggestions updated | Flagged tasks |
+| ---: | ---: | ---: | ---: |
+| 1 | 500 | 40 | 75 |
+| 2 | 500 | 67 | 29 |
+| 3 | 500 | 56 | 19 |
+| 4 | 500 | 92 | 34 |
+| 5 | 54 | 11 | 3 |
+
+Family propagation was checked for every remaining entry. The analyzer
+recognized 257 forms, including 43 identities shared by multiple forms, but
+no additional pair passed the existing literal-stem, suffix, and spelling
+transfer safeguards. A disposable import simulation confirmed zero inherited
+forms. No new family rules or inferred stem alternations were introduced.
+The simulation did not approve candidates in the application database.
+
+Pre-review changes only `auto_zamanalif`. Preserve Cyrillic words, source
+sentences, tokens, excerpts, and origin labels even when a typo is suspected;
+flag source issues for annotation. Preserve native stem `w` when correcting a
+surname ending to `v`, and keep the deferred exact-surname `ie`/`iye` choices.
+Suggested corrections remain unapproved until the human annotation is imported.
+
+The five JSON files and review notes are in
+`labelstudio_projects/remaining_after_project59_20261121_reviewed_500/`, also
+packaged as `labelstudio_projects/remaining_after_project59_20261121_reviewed_500.zip`.
+Every entry has a record in `data/remaining_2054_prereview_20261121.json`;
+delivery validation is in `data/remaining_2054_delivery_20261121.json`.
+The files exclude the retained 1,000 tasks and all existing project 59 tasks.
+The hosted project and application database were unchanged by this pre-review.
+These data artifacts remain local under the existing Git ignore policy.
+
 ## Initial queue snapshot
 
 | Item | Count |
