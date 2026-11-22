@@ -42,6 +42,7 @@ from .word_export import (
 
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
 DSL_DELIMITER_RE = re.compile(r"{{|}}")
+DIGIT_RUN_RE = re.compile(r"\d+")
 CASE_SEPARATORS_RE = re.compile(r"([-\u2019'()])")
 E_GLIDE_RE = re.compile(r"Y[EOI]")
 MAX_FAILURE_EXAMPLES = 10
@@ -87,6 +88,8 @@ class _ConvertedSentence:
     punctuation_error: str | None = None
     character_count_error: str | None = None
     capitalization_error: str | None = None
+    digit_error: str | None = None
+    usable_output_error: str | None = None
 
 
 def parse_policy_overrides(values: Iterable[str]) -> tuple[dict[str, str], dict[str, str]]:
@@ -121,6 +124,7 @@ def export_training_dataset(
     output_path: str | Path,
     *,
     choice_overrides: Iterable[str] = (),
+    allow_empty: bool = False,
 ) -> TrainingExportSummary:
     """Export fully resolved Cyrillic/Zamanalif sentence pairs as JSONL."""
     database = Path(db_path)
@@ -144,10 +148,14 @@ def export_training_dataset(
     tatar_sentences = 0
     non_tatar_sentences = 0
     exported_count = 0
+    duplicate_pairs = 0
+    targets_by_source: dict[str, dict[str, str]] = {}
     word_alignment_errors: list[str] = []
     punctuation_errors: list[str] = []
     character_count_errors: list[str] = []
     capitalization_errors: list[str] = []
+    digit_errors: list[str] = []
+    usable_output_errors: list[str] = []
     target_errors: list[str] = []
     conversion_errors: list[str] = []
 
@@ -185,6 +193,16 @@ def export_training_dataset(
                     character_count_errors.append(converted.character_count_error)
                 if converted.capitalization_error:
                     capitalization_errors.append(converted.capitalization_error)
+                if converted.digit_error:
+                    digit_errors.append(converted.digit_error)
+                if converted.usable_output_error:
+                    usable_output_errors.append(converted.usable_output_error)
+                else:
+                    targets = targets_by_source.setdefault(record.text, {})
+                    if converted.text in targets:
+                        duplicate_pairs += 1
+                    else:
+                        targets[converted.text] = record.sample_id
                 try:
                     _validate_resolved_sentence(record.sample_id, converted.text)
                 except TrainingExportError as exc:
@@ -195,6 +213,8 @@ def export_training_dataset(
                     or converted.punctuation_error
                     or converted.character_count_error
                     or converted.capitalization_error
+                    or converted.digit_error
+                    or converted.usable_output_error
                 ):
                     continue
                 handle.write(
@@ -211,22 +231,35 @@ def export_training_dataset(
                 )
                 exported_count += 1
 
+        duplicate_errors = [
+            ", ".join(f"{sample_id} -> {target!r}" for target, sample_id in targets.items())
+            for targets in targets_by_source.values()
+            if len(targets) > 1
+        ]
         error_groups = (
-            ("Word alignment", word_alignment_errors),
-            ("Punctuation and whitespace", punctuation_errors),
-            ("Character count", character_count_errors),
-            ("Capitalization", capitalization_errors),
-            ("Target validation", target_errors),
-            ("Conversion", conversion_errors),
+            ("Word alignment", "sentence(s)", word_alignment_errors),
+            ("Punctuation and whitespace", "sentence(s)", punctuation_errors),
+            ("Character count", "sentence(s)", character_count_errors),
+            ("Capitalization", "sentence(s)", capitalization_errors),
+            ("Digit preservation", "sentence(s)", digit_errors),
+            ("Conflicting duplicates", "source group(s)", duplicate_errors),
+            ("Usable output", "sentence(s)", usable_output_errors),
+            ("Target validation", "sentence(s)", target_errors),
+            ("Conversion", "sentence(s)", conversion_errors),
         )
         failures: list[str] = []
-        for check, errors in error_groups:
+        for check, unit, errors in error_groups:
             if errors:
                 examples = errors[:MAX_FAILURE_EXAMPLES]
-                failures.append(f"{check} failed for {len(errors)} sentence(s):")
+                failures.append(f"{check} failed for {len(errors)} {unit}:")
                 failures.extend(f"  {error}" for error in examples)
                 if len(errors) > len(examples):
                     failures.append(f"  … {len(errors) - len(examples)} more")
+        if not exported_count and not allow_empty:
+            failures.append(
+                f"Usable output failed: zero usable pairs ({sum(skipped.values())} awaiting review). "
+                "Use --allow-empty for an intentional zero-row export."
+            )
         if failures:
             raise TrainingExportError("\n".join(failures))
 
@@ -238,6 +271,7 @@ def export_training_dataset(
                 "tatar_sentences": tatar_sentences,
                 "non_tatar_sentences_ignored": non_tatar_sentences,
                 "exported_sentences": exported_count,
+                "duplicate_pairs": duplicate_pairs,
                 "skipped_not_ready_sentences": sum(skipped.values()),
             },
             "skipped_by_reason": dict(sorted(skipped.items())),
@@ -308,6 +342,7 @@ def _convert_sentence(
     punctuation_error = None
     character_count_error = None
     capitalization_error = None
+    digit_error = None
     cursor = 0
     for token_index, token in enumerate(record.tokens):
         if not isinstance(token, dict):
@@ -368,13 +403,25 @@ def _convert_sentence(
                 f"{record.sample_id}: capitalization mismatch at token {token_index} "
                 f"{text!r} -> {conversion.text!r}"
             )
+        if digit_error is None:
+            digit_error = _digit_mismatch(
+                f"{record.sample_id}: token {token_index}", text, conversion.text,
+            )
         pieces.append(conversion.text)
         cursor = end
 
     pieces.append(record.text[cursor:])
     converted = "".join(pieces)
+    if digit_error is None:
+        digit_error = _digit_mismatch(f"{record.sample_id}: sentence", record.text, converted)
     source_count = _count_words(record.text)
     target_count = _count_words(converted)
+    usable_output_error = None
+    if not source_count or not target_count:
+        usable_output_error = (
+            f"{record.sample_id}: each side needs a word or number "
+            f"(Cyrillic={source_count}, Zamanalif={target_count})"
+        )
     alignment_error = None
     if source_count != target_count or token_count_changes:
         alignment_error = (
@@ -395,9 +442,22 @@ def _convert_sentence(
                 )
                 break
     return _ConvertedSentence(
-        converted, alignment_error, punctuation_error, character_count_error,
-        capitalization_error,
+        text=converted,
+        word_alignment_error=alignment_error,
+        punctuation_error=punctuation_error,
+        character_count_error=character_count_error,
+        capitalization_error=capitalization_error,
+        digit_error=digit_error,
+        usable_output_error=usable_output_error,
     )
+
+
+def _digit_mismatch(location: str, source: str, target: str) -> str | None:
+    source_digits = DIGIT_RUN_RE.findall(source)
+    target_digits = DIGIT_RUN_RE.findall(target)
+    if source_digits != target_digits:
+        return f"{location}: digit runs differ (Cyrillic={source_digits!r}, Zamanalif={target_digits!r})"
+    return None
 
 
 def _count_words(value: str) -> int:

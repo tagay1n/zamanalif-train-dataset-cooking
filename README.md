@@ -951,6 +951,14 @@ The exporter:
   its expansion, as in `Цирк → Tsirk`. All-caps words use uppercase throughout,
   as in `ЦИРК → TSİRK`. A run of capitals inside a mixed-case word can use
   either style for its expanded letters.
+- checks that decimal digit runs match exactly in aligned spans and full
+  sentences, including leading zeros and digits inside identifiers.
+- rejects conflicting Zamanalif targets for an identical Cyrillic sentence.
+  Identical pairs stay in the export and repeated occurrences are counted in
+  the manifest as `duplicate_pairs`.
+- requires a word or number on both sides of each pair and at least one usable
+  pair per export. `--allow-empty` permits an intentional zero-row export when
+  all other checks pass.
 - fails without replacing the existing output on malformed DSL, invalid
   policy choices, converter failures, or quality check failures;
 - rejects any final target containing DSL delimiters or Cyrillic letters.

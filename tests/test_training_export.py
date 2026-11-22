@@ -423,7 +423,7 @@ class TrainingExportTests(unittest.TestCase):
             )
             output = root / "train.jsonl"
 
-            summary = export_training_dataset(db_path, output)
+            summary = export_training_dataset(db_path, output, allow_empty=True)
             manifest = json.loads(summary.manifest_path.read_text(encoding="utf-8"))
 
             self.assertEqual(output.read_text(encoding="utf-8"), "")
@@ -494,7 +494,12 @@ class TrainingExportTests(unittest.TestCase):
                 save_word_resolution(conn, "авыл", "N")
             output = root / "train.jsonl"
 
-            summary = export_training_dataset(db_path, output)
+            with self.assertRaisesRegex(TrainingExportError, r"zero usable pairs \(1 awaiting review\)"):
+                export_training_dataset(db_path, output)
+            self.assertFalse(output.exists())
+            self.assertFalse(Path(str(output) + ".manifest.json").exists())
+
+            summary = export_training_dataset(db_path, output, allow_empty=True)
             manifest = json.loads(summary.manifest_path.read_text(encoding="utf-8"))
             output_text = output.read_text(encoding="utf-8")
 
@@ -813,6 +818,99 @@ class TrainingExportTests(unittest.TestCase):
             self.assertNotIn("Character count failed", message)
             self.assertFalse(output.exists())
             self.assertFalse((root / "training.jsonl.manifest.json").exists())
+
+    def test_retains_exact_duplicates_and_preserves_digit_runs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            text = "вн-005507-мр (٢٣)."
+            ids = ["first", "second", "third"]
+            db_path = _write_db(root / "zamanalif.sqlite", [
+                {"id": sample_id, "text": text, "tokens": [{"text": "вн-005507-мр", "label": "N"}]}
+                for sample_id in ids
+            ])
+            save_reviewed_word(db_path, "вн-005507-мр", "wn-005507-mr", "N")
+            output = root / "training.jsonl"
+
+            summary = export_training_dataset(db_path, output)
+
+            self.assertEqual(_read_jsonl(output), [
+                {"id": sample_id, "cyrillic": text, "zamanalif": "wn-005507-mr (٢٣)."}
+                for sample_id in ids
+            ])
+            counts = json.loads(summary.manifest_path.read_text(encoding="utf-8"))["counts"]
+            self.assertEqual(counts["exported_sentences"], 3)
+            self.assertEqual(counts["duplicate_pairs"], 2)
+
+    def test_new_gates_report_failures_together_and_preserve_existing_output(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(root / "zamanalif.sqlite", [
+                {"id": "changed", "text": "вн-005507-мр", "tokens": [{"text": "вн-005507-мр", "label": "N"}]},
+                {"id": "moved", "text": "ми12н шат", "tokens": [
+                    {"text": "ми12н", "label": "N"}, {"text": "шат", "label": "N"},
+                ]},
+                {"id": "blank", "text": " \t", "tokens": []},
+                {"id": "punctuation_only", "text": "…", "tokens": []},
+                *[
+                    {"id": sample_id, "text": "Акты.", "tokens": [
+                        {"text": "Акты", "label": "RL", "homonym": True},
+                    ]}
+                    for sample_id in ("left", "right")
+                ],
+            ])
+            save_reviewed_word(db_path, "вн-005507-мр", "wn-005501-mr", "N")
+            save_reviewed_word(db_path, "шат", "12şat", "N")
+            with sqlite3.connect(db_path) as conn:
+                save_word_resolution(conn, "акты", "contextual_homonym")
+                ensure_contextual_review_schema(conn)
+                conn.executemany(
+                    """
+                    insert into contextual_reviews(
+                        sample_id, token_index, normalized_word, zamanalif_dsl, origin, updated_at
+                    ) values (?, 0, 'акты', ?, ?, 'now')
+                    """,
+                    [("left", "aqtı", "N"), ("right", "aktı", "RL")],
+                )
+            output = root / "training.jsonl"
+            manifest = root / "training.jsonl.manifest.json"
+            output.write_text("previous dataset\n", encoding="utf-8")
+            manifest.write_text("previous manifest\n", encoding="utf-8")
+
+            with self.assertRaises(TrainingExportError) as failure:
+                export_training_dataset(db_path, output, allow_empty=True)
+
+            message = str(failure.exception)
+            self.assertIn("Digit preservation failed for 2 sentence(s)", message)
+            self.assertIn("changed: token 0: digit runs differ (Cyrillic=['005507'], Zamanalif=['005501'])", message)
+            self.assertIn("moved: token 0: digit runs differ (Cyrillic=['12'], Zamanalif=[])", message)
+            self.assertIn("Conflicting duplicates failed for 1 source group(s)", message)
+            self.assertIn("left -> 'Aqtı.', right -> 'Aktı.'", message)
+            self.assertIn("Usable output failed for 2 sentence(s)", message)
+            self.assertIn("blank: each side needs a word or number", message)
+            self.assertIn("punctuation_only: each side needs a word or number", message)
+            self.assertEqual(output.read_text(encoding="utf-8"), "previous dataset\n")
+            self.assertEqual(manifest.read_text(encoding="utf-8"), "previous manifest\n")
+            self.assertFalse(list(root.glob("*.tmp")))
+
+    def test_cli_allows_empty_export_only_with_explicit_override(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(root / "zamanalif.sqlite", [])
+            output = root / "training.jsonl"
+            manifest = root / "training.jsonl.manifest.json"
+            args = ["training-export", "--db", str(db_path), "--output", str(output)]
+            stdout = StringIO()
+
+            with redirect_stdout(stdout):
+                self.assertEqual(main(args), 1)
+                self.assertFalse(output.exists())
+                self.assertFalse(manifest.exists())
+                self.assertEqual(main([*args, "--allow-empty"]), 0)
+
+            self.assertIn("zero usable pairs", stdout.getvalue())
+            self.assertEqual(output.read_text(encoding="utf-8"), "")
+            counts = json.loads(manifest.read_text(encoding="utf-8"))["counts"]
+            self.assertEqual(counts["exported_sentences"], 0)
 
     def test_reviewed_abbreviation_restores_trailing_parenthesis_and_case(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

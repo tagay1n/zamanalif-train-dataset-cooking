@@ -132,6 +132,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     training_export.add_argument("--output", required=True, help="Training JSONL output.")
     training_export.add_argument(
+        "--allow-empty", action="store_true", help="Allow an intentional zero-row export.",
+    )
+    training_export.add_argument(
         "--choice",
         action="append",
         default=[],
@@ -351,6 +354,7 @@ def _training_export(args: argparse.Namespace) -> int:
             args.db,
             args.output,
             choice_overrides=args.choice,
+            allow_empty=args.allow_empty,
         )
     except (OSError, sqlite3.Error, TrainingExportError) as exc:
         print(f"training export failed: {exc}")
