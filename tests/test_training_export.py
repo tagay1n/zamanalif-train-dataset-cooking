@@ -592,6 +592,7 @@ class TrainingExportTests(unittest.TestCase):
             ])
             save_reviewed_word(db_path, "мин", "min min", "N")
             save_reviewed_word(db_path, "шат", "-", "N")
+            save_reviewed_word(db_path, "һ.б", "h.b", "N")
             output = root / "training.jsonl"
             manifest = root / "training.jsonl.manifest.json"
             output.write_text("previous dataset\n", encoding="utf-8")
@@ -606,6 +607,9 @@ class TrainingExportTests(unittest.TestCase):
             self.assertIn("Word alignment failed for 2 sentence(s)", message)
             self.assertIn("extra: word alignment mismatch (Cyrillic=2, Zamanalif=3)", message)
             self.assertIn("missing: word alignment mismatch (Cyrillic=1, Zamanalif=0)", message)
+            self.assertIn("Punctuation and whitespace failed for 2 sentence(s)", message)
+            self.assertIn("extra: punctuation or whitespace mismatch", message)
+            self.assertIn("missing: punctuation or whitespace mismatch", message)
             self.assertIn("extra: unresolved Cyrillic", message)
             self.assertNotIn("clean:", message)
             self.assertEqual(output.read_text(encoding="utf-8"), "previous dataset\n")
@@ -631,6 +635,56 @@ class TrainingExportTests(unittest.TestCase):
             self.assertIn("balanced: word alignment mismatch (Cyrillic=2, Zamanalif=2)", message)
             self.assertIn("token 0 'Мин' -> 'Min min' (Cyrillic=1, Zamanalif=2)", message)
             self.assertIn("token 1 'шат' -> '-' (Cyrillic=1, Zamanalif=0)", message)
+            self.assertFalse(output.exists())
+            self.assertFalse((root / "training.jsonl.manifest.json").exists())
+
+    def test_punctuation_gate_preserves_exact_whitespace_across_transliteration(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            text = "\t«Цирк»,\xa0  мәсьәлә!\r\n37°C — e\u0301  "
+            db_path = _write_db(root / "zamanalif.sqlite", [{
+                "id": "exact", "text": text, "tokens": [
+                    {"text": "Цирк", "label": "N"}, {"text": "мәсьәлә", "label": "N"},
+                ],
+            }])
+            output = root / "training.jsonl"
+
+            export_training_dataset(db_path, output)
+
+            self.assertEqual(_read_jsonl(output), [{
+                "id": "exact", "cyrillic": text,
+                "zamanalif": "\t«Tsirk»,\xa0  mäsʼälä!\r\n37°C — e\u0301  ",
+            }])
+
+    def test_punctuation_gate_rejects_lost_added_replaced_and_moved_marks(self) -> None:
+        cases = {
+            "lost_period": ("һ.б.", None),
+            "added_hyphen": ("миң", "mi-ñ"),
+            "replaced_slash": ("ай/көн", "ay-kön"),
+            "shifted_hyphen": ("кил-мә", "ki-lmä"),
+            "shifted_space": ("мин- син", "min -sin"),
+            "replaced_space": ("мин\xa0син", "min sin"),
+            "lost_space": ("мин  син", "min sin"),
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(root / "zamanalif.sqlite", [
+                {"id": sample_id, "text": text, "tokens": [{"text": text, "label": "N"}]}
+                for sample_id, (text, _) in cases.items()
+            ])
+            for text, target in cases.values():
+                if target is not None:
+                    save_reviewed_word(db_path, text, target, "N")
+            output = root / "training.jsonl"
+
+            with self.assertRaises(TrainingExportError) as failure:
+                export_training_dataset(db_path, output)
+
+            message = str(failure.exception)
+            self.assertIn(f"Punctuation and whitespace failed for {len(cases)} sentence(s)", message)
+            for sample_id in cases:
+                self.assertIn(f"{sample_id}: punctuation or whitespace mismatch at token 0", message)
+            self.assertNotIn("Word alignment failed", message)
             self.assertFalse(output.exists())
             self.assertFalse((root / "training.jsonl.manifest.json").exists())
 

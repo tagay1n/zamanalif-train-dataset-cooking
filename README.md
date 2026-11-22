@@ -937,6 +937,9 @@ The exporter:
 - checks that each resolved sentence and converted token span keep the same
   word count on both sides. It counts whitespace-delimited fields containing
   letters or numbers, keeping compounds and dotted abbreviations together;
+- checks for identical punctuation and whitespace at corresponding boundaries
+  in each converted token span and full sentence. Zamanalif's modifier letter
+  `ʼ` is part of the spelling;
 - fails without replacing the existing output on malformed DSL, invalid
   policy choices, converter failures, or quality check failures;
 - rejects any final target containing DSL delimiters or Cyrillic letters.

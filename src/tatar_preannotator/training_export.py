@@ -3,12 +3,14 @@ from __future__ import annotations
 from collections import Counter
 from contextlib import closing
 from dataclasses import dataclass
+from itertools import groupby, zip_longest
 import json
 import os
 from pathlib import Path
 import re
 import sqlite3
 import tempfile
+import unicodedata
 from typing import Iterable
 
 from .conversion import (
@@ -73,6 +75,7 @@ class _NotReady:
 class _ConvertedSentence:
     text: str
     word_alignment_error: str | None = None
+    punctuation_error: str | None = None
 
 
 def parse_policy_overrides(values: Iterable[str]) -> tuple[dict[str, str], dict[str, str]]:
@@ -131,6 +134,7 @@ def export_training_dataset(
     non_tatar_sentences = 0
     exported_count = 0
     word_alignment_errors: list[str] = []
+    punctuation_errors: list[str] = []
     target_errors: list[str] = []
     conversion_errors: list[str] = []
 
@@ -162,12 +166,14 @@ def export_training_dataset(
                     continue
                 if converted.word_alignment_error:
                     word_alignment_errors.append(converted.word_alignment_error)
+                if converted.punctuation_error:
+                    punctuation_errors.append(converted.punctuation_error)
                 try:
                     _validate_resolved_sentence(record.sample_id, converted.text)
                 except TrainingExportError as exc:
                     target_errors.append(str(exc))
                     continue
-                if converted.word_alignment_error:
+                if converted.word_alignment_error or converted.punctuation_error:
                     continue
                 handle.write(
                     json.dumps(
@@ -185,6 +191,7 @@ def export_training_dataset(
 
         error_groups = (
             ("Word alignment", word_alignment_errors),
+            ("Punctuation and whitespace", punctuation_errors),
             ("Target validation", target_errors),
             ("Conversion", conversion_errors),
         )
@@ -274,6 +281,7 @@ def _convert_sentence(
 ) -> _ConvertedSentence | _NotReady:
     pieces: list[str] = []
     token_count_changes: list[str] = []
+    punctuation_error = None
     cursor = 0
     for token_index, token in enumerate(record.tokens):
         if not isinstance(token, dict):
@@ -310,6 +318,11 @@ def _convert_sentence(
                 f"token {token_index} {text!r} -> {conversion.text!r} "
                 f"(Cyrillic={source_count}, Zamanalif={target_count})"
             )
+        if punctuation_error is None and not _token_punctuation_matches(text, conversion, policy):
+            punctuation_error = (
+                f"{record.sample_id}: punctuation or whitespace mismatch at token {token_index} "
+                f"{text!r} -> {conversion.text!r}"
+            )
         pieces.append(conversion.text)
         cursor = found + len(text)
 
@@ -317,16 +330,26 @@ def _convert_sentence(
     converted = "".join(pieces)
     source_count = _count_words(record.text)
     target_count = _count_words(converted)
-    if source_count == target_count and not token_count_changes:
-        return _ConvertedSentence(converted)
-
-    error = (
-        f"{record.sample_id}: word alignment mismatch "
-        f"(Cyrillic={source_count}, Zamanalif={target_count})"
-    )
-    if token_count_changes:
-        error += ". " + "; ".join(token_count_changes)
-    return _ConvertedSentence(converted, error)
+    alignment_error = None
+    if source_count != target_count or token_count_changes:
+        alignment_error = (
+            f"{record.sample_id}: word alignment mismatch "
+            f"(Cyrillic={source_count}, Zamanalif={target_count})"
+        )
+        if token_count_changes:
+            alignment_error += ". " + "; ".join(token_count_changes)
+    if punctuation_error is None:
+        boundaries = zip_longest(
+            _punctuation_layout(record.text), _punctuation_layout(converted),
+        )
+        for boundary, (source_marks, target_marks) in enumerate(boundaries):
+            if source_marks != target_marks:
+                punctuation_error = (
+                    f"{record.sample_id}: punctuation or whitespace mismatch after "
+                    f"{boundary} text run(s) (Cyrillic={source_marks!r}, Zamanalif={target_marks!r})"
+                )
+                break
+    return _ConvertedSentence(converted, alignment_error, punctuation_error)
 
 
 def _count_words(value: str) -> int:
@@ -343,6 +366,50 @@ class TokenConversion:
     text: str | None
     origin: str
     source: str
+
+
+def _is_text_character(char: str) -> bool:
+    return char.isalnum() or unicodedata.category(char).startswith("M")
+
+
+def _punctuation_layout(value: str) -> list[str]:
+    """Collect exact separators at the start, between text runs, and at the end."""
+    layout = [""]
+    for is_text, chars in groupby(value, _is_text_character):
+        if is_text:
+            layout.append("")
+        else:
+            layout[-1] = "".join(chars)
+    return layout
+
+
+def _token_punctuation_matches(
+    source: str, conversion: TokenConversion, policy: dict[str, str],
+) -> bool:
+    target = conversion.text
+    assert target is not None
+    if source == target or (source.isalnum() and target.isalnum()):
+        return True
+    source_layout = _punctuation_layout(source)
+    if source_layout != _punctuation_layout(target):
+        return False
+    if len(source_layout) < 3 or conversion.source not in {"dictionary", "contextual"}:
+        return True
+
+    # Anchor internal marks to the converter's letter positions when a review
+    # uses the same spelling. This catches shifts within a single token.
+    suggestion = conversion_branches(conversion.normalized_word).suggestion(conversion.origin)
+    if not suggestion:
+        return True
+    reference = _restore_edge_punctuation(source, resolve_dsl(suggestion, policy))
+    if _punctuation_layout(reference) != source_layout:
+        return True
+    reference_letters = _zamanalif_upper("".join(filter(_is_text_character, reference)))
+    target_letters = _zamanalif_upper("".join(filter(_is_text_character, target)))
+    return (
+        reference_letters != target_letters
+        or _zamanalif_upper(reference) == _zamanalif_upper(target)
+    )
 
 
 def resolve_training_token(
