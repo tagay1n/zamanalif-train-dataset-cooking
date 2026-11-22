@@ -11,6 +11,7 @@ import unicodedata
 from .conflict_resolver import ensure_word_resolution_schema
 from .contextual_review import ContextualReview, ContextualReviewError, OccurrenceKey, _token_spans, ensure_contextual_review_schema
 from .training_export import TokenConversion, TrainingExportError, parse_policy_overrides, resolve_training_token
+from .literal_projection import literal_source_view
 from .word_export import ensure_review_state_schema, load_reviewed_words, normalize_word
 
 
@@ -119,20 +120,22 @@ class CorpusResolver:
         self.policy = policy
         self.ordinary = lru_cache(maxsize=200_000)(self._ordinary)
 
-    def _ordinary(self, text: str, label: str, homonym: bool):
+    def _ordinary(self, text: str, label: str, homonym: bool, projected_text: str | None = None):
         return resolve_training_token(
             "corpus", 0, {"text": text, "label": label, "homonym": homonym},
             self.words, {}, self.policy, self.resolutions,
+            projected_text=projected_text,
         )
 
-    def token(self, sample_id: str, index: int, token: dict):
+    def token(self, sample_id: str, index: int, token: dict, *, projected_text: str | None = None):
         contextual = self.context.get(OccurrenceKey(sample_id, index))
         try:
             if contextual is not None:
                 return resolve_training_token(
                     sample_id, index, token, self.words, self.context, self.policy, self.resolutions,
+                    projected_text=projected_text,
                 )
-            return self.ordinary(token["text"], token["label"], token.get("homonym") is True)
+            return self.ordinary(token["text"], token["label"], token.get("homonym") is True, projected_text)
         except TrainingExportError:
             word = normalize_word(token["text"])
             source = "stale_contextual" if contextual and contextual.normalized_word != word else "invalid_conversion"
@@ -140,7 +143,8 @@ class CorpusResolver:
 
     def sentence(self, sample_id: str, text: str, tokens: list[dict]):
         spans = _token_spans(sample_id, text, tokens)
-        return [(start, end, self.token(sample_id, index, token))
+        literal_view = literal_source_view(text)
+        return [(start, end, self.token(sample_id, index, token, projected_text=literal_view[start:end]))
                 for index, ((start, end), token) in enumerate(zip(spans, tokens))]
 
 

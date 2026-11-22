@@ -28,6 +28,7 @@ from .contextual_review import (
     OccurrenceKey,
     load_contextual_reviews,
 )
+from .literal_projection import literal_source_view
 from .word_export import (
     INTERNAL_DOUBLE_QUOTES,
     TATAR_SUFFIXES_AFTER_QUOTE,
@@ -45,6 +46,7 @@ DSL_DELIMITER_RE = re.compile(r"{{|}}")
 DIGIT_RUN_RE = re.compile(r"\d+")
 CASE_SEPARATORS_RE = re.compile(r"([-\u2019'()])")
 E_GLIDE_RE = re.compile(r"Y[EOI]")
+APPROVED_IDENTIFIER_CASE = {"Ц20": "Ts20"}
 MAX_FAILURE_EXAMPLES = 10
 MIXED_CASE_LETTER_VARIANTS = {
     "е": ("e", "ye", "yı", "yo"),
@@ -344,6 +346,7 @@ def _convert_sentence(
     capitalization_error = None
     digit_error = None
     cursor = 0
+    literal_view = literal_source_view(record.text)
     for token_index, token in enumerate(record.tokens):
         if not isinstance(token, dict):
             raise TrainingExportError(
@@ -364,12 +367,14 @@ def _convert_sentence(
             raise TrainingExportError(
                 f"{record.sample_id}: token {token_index} is missing or out of order: {text!r}"
             )
-        pieces.append(record.text[cursor:found])
+        pieces.append(literal_view[cursor:found])
         end = found + len(text)
+        projected_text = literal_view[found:end]
 
         conversion = resolve_training_token(
             record.sample_id, token_index, token, reviewed, contextual_reviews,
             policy, word_resolutions,
+            projected_text=projected_text,
         )
         if conversion.text is None:
             return _NotReady(conversion.source)
@@ -387,7 +392,7 @@ def _convert_sentence(
             )
         if character_count_error is None:
             expected_counts = _expected_character_counts(
-                text, conversion, policy, dotted=record.text.startswith(".", end),
+                projected_text, conversion, policy, dotted=record.text.startswith(".", end),
             )
             target_length = _spelling_length(conversion.text)
             if target_length not in expected_counts:
@@ -410,7 +415,7 @@ def _convert_sentence(
         pieces.append(conversion.text)
         cursor = end
 
-    pieces.append(record.text[cursor:])
+    pieces.append(literal_view[cursor:])
     converted = "".join(pieces)
     if digit_error is None:
         digit_error = _digit_mismatch(f"{record.sample_id}: sentence", record.text, converted)
@@ -506,6 +511,9 @@ def _capitalization_matches(source: str, target: str, origin: str) -> bool:
 
 
 def _part_capitalization_matches(source: str, target: str, origin: str) -> bool:
+    identifier = _approved_identifier_case(source, target)
+    if identifier is not None:
+        return target == identifier
     source_letters, target_letters = _cased_letters(source), _cased_letters(target)
     if not source_letters or source_letters.islower():
         return not target_letters or target_letters.islower()
@@ -568,7 +576,7 @@ def _expected_character_counts(
 ) -> set[int]:
     source_length = _spelling_length(source)
     word = normalize_word(source)
-    if conversion.source == "unchanged" or word in CYRILLIC_LETTER_REFERENCES:
+    if conversion.source in {"literal", "unchanged"} or word in CYRILLIC_LETTER_REFERENCES:
         return {source_length}
 
     branches = conversion_branches(word)
@@ -678,12 +686,22 @@ def resolve_training_token(
     contextual_reviews: dict[OccurrenceKey, ContextualReview],
     policy: dict[str, str],
     word_resolutions: dict[str, str],
+    *,
+    projected_text: str | None = None,
 ) -> TokenConversion:
     """Resolve one aligned token under the same policy used for training export."""
-    text, label = token["text"], token["label"]
+    original_text, label = token["text"], token["label"]
+    text = literal_source_view(original_text) if projected_text is None else projected_text
+    if len(text) != len(original_text):
+        raise TrainingExportError(f"{sample_id}: literal projection changed token length")
+    source_word = normalize_word(original_text)
     normalized = normalize_word(text)
     if not normalized:
-        return TokenConversion("", text, label, "unchanged")
+        if text != original_text:
+            letters = [index for index, char in enumerate(original_text) if char.isalpha()]
+            literal_word = original_text[letters[0] : letters[-1] + 1].casefold()
+            return TokenConversion(literal_word, text, label, "literal")
+        return TokenConversion(source_word, text, label, "unchanged")
     branches = conversion_branches(normalized)
     resolution = word_resolutions.get(normalized)
     is_contextual_homonym = resolution == "contextual_homonym" or (
@@ -708,7 +726,7 @@ def resolve_training_token(
         origin, source = contextual.origin, "contextual"
     else:
         if is_contextual_homonym:
-            return TokenConversion(normalized, None, origin, "contextual_homonym")
+            return TokenConversion(source_word, None, origin, "contextual_homonym")
 
         approved = reviewed.get(normalized)
         if approved is not None:
@@ -724,8 +742,8 @@ def resolve_training_token(
                     origin == "N"
                     and vowel_harmony_class(normalized) == "mixed_front_back"
                 ):
-                    return TokenConversion(normalized, None, origin, "mixed_harmony_word")
-                return TokenConversion(normalized, None, origin, "unreviewed_word")
+                    return TokenConversion(source_word, None, origin, "mixed_harmony_word")
+                return TokenConversion(source_word, None, origin, "unreviewed_word")
             dsl = branches.suggestion(origin)
             if not dsl:
                 raise TrainingExportError(
@@ -749,7 +767,7 @@ def resolve_training_token(
     rendered = _apply_source_case(
         text, _restore_edge_punctuation(text, with_internal_punctuation)
     )
-    return TokenConversion(normalized, rendered, origin, source, dsl.count("{{E_GLIDE|"))
+    return TokenConversion(source_word, rendered, origin, source, dsl.count("{{E_GLIDE|"))
 
 
 def _restore_edge_punctuation(source: str, target: str) -> str:
@@ -822,7 +840,24 @@ def _apply_source_case(source: str, target: str) -> str:
     return _apply_part_case(source, target)
 
 
+def _approved_identifier_case(source: str, target: str) -> str | None:
+    """Preserve approved model casing without changing letters or separators."""
+    for original, rendered in APPROVED_IDENTIFIER_CASE.items():
+        if source.count(original) != 1:
+            continue
+        prefix, _, suffix = source.partition(original)
+        if any(_is_text_character(char) for char in prefix + suffix):
+            continue
+        expected = prefix + rendered + suffix
+        if target.casefold() == expected.casefold():
+            return expected
+    return None
+
+
 def _apply_part_case(source: str, target: str) -> str:
+    identifier = _approved_identifier_case(source, target)
+    if identifier is not None:
+        return identifier
     letters = "".join(char for char in source if char.isalpha())
     if not letters or letters.islower():
         return target
@@ -883,15 +918,21 @@ def _reviewed_variant_for_policy(
 def _validate_resolved_sentence(sample_id: str, value: str) -> None:
     if DSL_DELIMITER_RE.search(value):
         raise TrainingExportError(f"{sample_id}: unresolved DSL remained in output")
-    for match in CYRILLIC_RE.finditer(value):
+    for index, char in enumerate(value):
         if (
-            match.group() in CYRILLIC_LETTER_REFERENCES
-            and (match.start() == 0 or not re.match(r"\w", value[match.start() - 1]))
-            and (match.end() == len(value) or not re.match(r"\w", value[match.end()]))
+            char.isascii()
+            or "CYRILLIC" not in unicodedata.name(char, "")
+            or unicodedata.category(char)[0] not in "LM"
+        ):
+            continue
+        if (
+            char in CYRILLIC_LETTER_REFERENCES
+            and (index == 0 or not re.match(r"\w", value[index - 1]))
+            and (index + 1 == len(value) or not re.match(r"\w", value[index + 1]))
         ):
             continue
         raise TrainingExportError(
-            f"{sample_id}: unresolved Cyrillic character remained in output: {match.group()!r}"
+            f"{sample_id}: unresolved Cyrillic character remained in output: {char!r}"
         )
 
 

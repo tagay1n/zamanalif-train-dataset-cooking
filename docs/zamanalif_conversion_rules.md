@@ -58,6 +58,76 @@ Important Unicode caveats:
 - `ş`, `ç`, `ğ`, `ñ`, `ä`, `ö`, `ü` must be Latin letters, not Cyrillic
   lookalikes.
 
+Final training-target validation checks Unicode Cyrillic letters and Cyrillic
+combining marks beyond the Tatar alphabet, including `Қ`, `І`, `ғ`, and `ѵ`.
+Any remaining such character blocks export until its conversion is reviewed;
+validation does not replace it or change the source. The existing standalone
+`ъ`/`ь` letter-reference exceptions remain allowed. Valid Zamanalif letters
+and Greek/math notation retain their existing handling.
+
+## Roman Numeral Literals in Sentence Export
+
+Canonical multi-character Roman numerals containing Ukrainian `І` (U+0406),
+or Cyrillic `Х` (U+0425) mixed with Latin Roman letters, use ASCII Roman
+letters in training targets and corpus projections: `ХІХ -> XIX`,
+`ХХІ -> XXI`, `ІІ -> II`, and `ХХIХ -> XXIX`. Roman `I` stays ASCII `I`,
+distinct from the phonetic conversion of Tatar `И` to `İ`.
+
+Isolated Ukrainian `І` used as a Roman or scientific literal likewise becomes
+ASCII `I`, and the historical fractional notation `ІІ1/2` becomes `II1/2`.
+Initial-like `І.` forms and foreign letters embedded in ordinary words remain
+unchanged pending separate review. Ordinary Tatar `И -> İ` is unaffected.
+
+This is a derived conversion view. Stored source sentences, annotation tokens,
+origins and reviews remain intact. Numerals are recognized across annotation
+boundaries, including unannotated literal gaps. Quotes, spacing and punctuation
+are preserved. Other single-character numerals, pure Cyrillic `Х`-only sequences,
+malformed Roman spellings, ordinary words and name initials keep their existing
+handling.
+
+## Celsius Unit Literals in Sentence Export
+
+The Celsius unit `°С` containing Cyrillic capital `С` becomes Latin `°C`
+in training targets and corpus projections. Existing Latin `°C` stays intact.
+Both source spellings remain as written; numbers, whitespace, annotation tokens,
+origins and reviews are preserved. This rule works across annotation boundaries
+and unannotated literal gaps, like the Roman numeral projection above.
+
+Ordinary Tatar `С -> S` is unaffected. Geographic abbreviations `С.Ш.`/`С.ш.`,
+embedded letters and lowercase `с` do not qualify for this unit rule.
+
+## Model Identifier Casing
+
+The reviewed voltmeter model identifier `Ц20` is rendered `Ts20` in sentence
+exports and corpus views. This is a casing convention for that exact identifier;
+its digits, surrounding punctuation and stored source remain intact. Existing
+case handling for other identifiers and all-capital words remains in effect.
+
+## Reviewed Source-Preserving Sentence Repairs
+
+The November 22, 2026 sentence audit keeps stored source text intact. Missing
+annotation coverage is restored at the original offsets, and combined tokens
+are split to retain source spaces and hyphens in the Latin output. Existing
+origin labels are retained; contextual reviews move with their tokens without
+changing their spelling, origin or timestamp.
+
+The reviewed base word is `ярдәм -> yärdäm`, consistent with
+`ярдәмендә -> yärdämendä`. This supersedes the older stored `yardäm` review.
+
+In the voltmeter instruction `sent_001132`, the two voltage abbreviations
+`3–5 В` and `6 В` use contextual Latin `3–5 V` and `6 V`. The mixed-script
+source word `плюcлы`, containing Latin `c`, has the contextual spelling
+`plyuslı`, following `плюс -> plyus`. The source word and its `RL` label remain
+unchanged; this does not establish a general replacement for Latin `c`.
+
+The source typo `жҗиңүче` in `sent_019555` is retained and rendered `jciñüçe`,
+including the initial `ж -> j`. Deferred abbreviation, initial and list-marker
+groups remain pending separate decisions.
+
+Live annotations, backups, Label Studio files and per-group audit reports remain
+in the ignored local data directories. Git records the converter changes,
+regression tests and reviewed rules; it excludes credentials and SQLite files.
+
 ## Usually Deterministic Mappings
 
 These mappings normally do not need human review by themselves:

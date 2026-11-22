@@ -19,6 +19,55 @@ def token(text, label="N", **extra):
 
 
 class CorpusAuditTests(unittest.TestCase):
+    def test_model_identifier_case_matches_export_and_preserves_source(self):
+        db = _write_db(self.root / "model.sqlite", [{
+            "id": "model", "text": "(Ц20)", "tokens": [token("Ц20", "U")],
+        }])
+        reindex(db, [])
+        with closing(connect(db)) as connection:
+            row = search(connection, "cyrillic", "exact", "ц")[0]
+            self.assertEqual(search(connection, "zamanalif", "exact", "Ts20")[0]["form_id"], row["form_id"])
+            hit = occurrences(connection, row["form_id"])[0]
+            self.assertEqual((hit["surface"], hit["zamanalif"]), ("Ц20", "Ts20"))
+        export_training_dataset(db, self.root / "model.jsonl")
+        row = json.loads((self.root / "model.jsonl").read_text())
+        self.assertEqual((row["cyrillic"], row["zamanalif"]), ("(Ц20)", "(Ts20)"))
+
+    def test_celsius_projection_matches_export_and_retains_original_surfaces(self):
+        db = _write_db(self.root / "celsius.sqlite", [{
+            "id": "celsius", "text": "37 °С; 140°С; С.", "tokens": [
+                token("С", "U"), token("140°С", "U"), token("С", "U"),
+            ],
+        }])
+        reindex(db, [])
+        with closing(connect(db)) as connection:
+            rows = search(connection, "cyrillic", "exact", "с")
+            hits = [hit for row in rows for hit in occurrences(connection, row["form_id"])]
+            self.assertEqual(
+                sorted((hit["token_index"], hit["surface"], hit["zamanalif"]) for hit in hits),
+                [(0, "С", "C"), (1, "140°С", "140°C"), (2, "С", "S")],
+            )
+        export_training_dataset(db, self.root / "celsius.jsonl")
+        row = json.loads((self.root / "celsius.jsonl").read_text())
+        self.assertEqual((row["cyrillic"], row["zamanalif"]), ("37 °С; 140°С; С.", "37 °C; 140°C; S."))
+
+    def test_roman_projection_matches_export_and_retains_original_surfaces(self):
+        db = _write_db(self.root / "romans.sqlite", [{
+            "id": "roman", "text": "ХІХ, ІІ; І!", "tokens": [
+                token("ХІХ", "U"), token("ІІ", "U"), token("І", "U"),
+            ],
+        }])
+        reindex(db, [])
+        with closing(connect(db)) as connection:
+            for source, target in (("ХІХ", "XIX"), ("ІІ", "II"), ("І", "I")):
+                row = search(connection, "cyrillic", "exact", source)[0]
+                self.assertEqual(search(connection, "zamanalif", "exact", target)[0]["form_id"], row["form_id"])
+                hit = occurrences(connection, row["form_id"])[0]
+                self.assertEqual((hit["surface"], hit["zamanalif"]), (source, target))
+        export_training_dataset(db, self.root / "roman.jsonl")
+        row = json.loads((self.root / "roman.jsonl").read_text())
+        self.assertEqual((row["cyrillic"], row["zamanalif"]), ("ХІХ, ІІ; І!", "XIX, II; I!"))
+
     def setUp(self):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)

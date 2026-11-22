@@ -14,6 +14,7 @@ from tatar_preannotator.contextual_review import ensure_contextual_review_schema
 from tatar_preannotator.conversion import PREFERRED_POLICY
 from tatar_preannotator.training_export import (
     TrainingExportError,
+    _validate_resolved_sentence,
     export_training_dataset,
     parse_policy_overrides,
 )
@@ -21,6 +22,195 @@ from tatar_preannotator.word_export import save_reviewed_word
 
 
 class TrainingExportTests(unittest.TestCase):
+    def test_reviewed_model_identifier_case_preserves_digits_and_source(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            text = "Ц20, «Ц20»; (Ц20), Ц201 — Ц-20; ц20, ЦИРК."
+            words = ("Ц20", "«Ц20»", "(Ц20)", "Ц201", "Ц-20", "ц20", "ЦИРК")
+            db = _write_db(root / "db.sqlite", [{
+                "id": "models", "text": text,
+                "tokens": [{"text": word, "label": "RL"} for word in words],
+            }])
+            export_training_dataset(db, root / "train.jsonl")
+            self.assertEqual(_read_jsonl(root / "train.jsonl"), [{
+                "id": "models", "cyrillic": text,
+                "zamanalif": "Ts20, «Ts20»; (Ts20), TS201 — TS-20; ts20, TSİRK.",
+            }])
+            with sqlite3.connect(db) as conn:
+                self.assertEqual(conn.execute("select text from samples").fetchone()[0], text)
+                self.assertEqual(
+                    [token["text"] for token in json.loads(conn.execute(
+                        "select tokens_json from preannotation_state"
+                    ).fetchone()[0])], list(words),
+                )
+
+    def test_model_casing_gate_accepts_only_the_approved_case(self) -> None:
+        from tatar_preannotator.training_export import _capitalization_matches
+
+        self.assertTrue(_capitalization_matches("Ц20", "Ts20", "RL"))
+        self.assertTrue(_capitalization_matches("«Ц20»", "«Ts20»", "RL"))
+        for target in ("TS20", "ts20", "tS20"):
+            with self.subTest(target=target):
+                self.assertFalse(_capitalization_matches("Ц20", target, "RL"))
+        self.assertTrue(_capitalization_matches("Ц201", "TS201", "RL"))
+        self.assertFalse(_capitalization_matches("Ц201", "Ts201", "RL"))
+
+    def test_celsius_export_matches_across_annotation_boundaries_and_source_scripts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            text = "37 °С; 140°С; 37 °C. С."
+            db = _write_db(root / "db.sqlite", [
+                {"id": "whole", "text": text, "tokens": [
+                    {"text": word, "label": "U"}
+                    for word in ("°С", "140°С", "°C", "С")
+                ]},
+                {"id": "split", "text": text, "tokens": [
+                    {"text": word, "label": "U"}
+                    for word in ("С", "С", "С")
+                ]},
+                {"id": "gaps", "text": text, "tokens": [{"text": "С.", "label": "N"}]},
+            ])
+            with sqlite3.connect(db) as conn:
+                before = conn.execute("select * from samples order by id").fetchall()
+                before_tokens = conn.execute(
+                    "select sample_id, tokens_json from preannotation_state order by sample_id"
+                ).fetchall()
+            summary = export_training_dataset(db, root / "train.jsonl")
+            rows = _read_jsonl(root / "train.jsonl")
+            self.assertEqual(summary.exported_count, 3)
+            self.assertEqual({row["cyrillic"] for row in rows}, {text})
+            self.assertEqual({row["zamanalif"] for row in rows}, {"37 °C; 140°C; 37 °C. S."})
+            with sqlite3.connect(db) as conn:
+                self.assertEqual(conn.execute("select * from samples order by id").fetchall(), before)
+                self.assertEqual(conn.execute(
+                    "select sample_id, tokens_json from preannotation_state order by sample_id"
+                ).fetchall(), before_tokens)
+
+    def test_celsius_projection_uses_full_source_context_for_partial_tokens(self) -> None:
+        from tatar_preannotator.training_export import _SentenceRecord, _convert_sentence
+
+        for text in ("55°С.Ш.", "°Сүз"):
+            with self.subTest(text=text):
+                value = _convert_sentence(
+                    _SentenceRecord("not_celsius", text, True, [{"text": "°С", "label": "N"}]),
+                    {}, {}, {}, {},
+                )
+                self.assertEqual(value.text, text.replace("°С", "°S"))
+
+    def test_target_validation_rejects_cyrillic_outside_the_tatar_alphabet(self) -> None:
+        for char in ("Қ", "қ", "І", "і", "ғ", "ҡ", "ѵ", "ћ", "ӊ", "\u0483", "\ua640"):
+            with self.subTest(char=char):
+                with self.assertRaisesRegex(TrainingExportError, "unresolved Cyrillic"):
+                    _validate_resolved_sentence("foreign", f"latin {char} target")
+
+    def test_unicode_validation_retains_latin_math_and_standalone_sign_references(self) -> None:
+        _validate_resolved_sentence("valid", "Ğälim, İIıi ñşçöü; α + β = Ω²; (ъ), (ь).")
+        for value in ("aь", "ъa", "ь_", "ъ1", "ть"):
+            with self.subTest(value=value):
+                with self.assertRaisesRegex(TrainingExportError, "unresolved Cyrillic"):
+                    _validate_resolved_sentence("not_reference", value)
+
+    def test_foreign_cyrillic_rejection_preserves_existing_export_and_source(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db = _write_db(root / "db.sqlite", [{
+                "id": "foreign", "text": "Қ", "tokens": [],
+            }])
+            output = root / "train.jsonl"
+            manifest = Path(str(output) + ".manifest.json")
+            output.write_text("previous dataset\n", encoding="utf-8")
+            manifest.write_text("previous manifest\n", encoding="utf-8")
+            with self.assertRaisesRegex(TrainingExportError, "unresolved Cyrillic"):
+                export_training_dataset(db, output)
+            self.assertEqual(output.read_text(encoding="utf-8"), "previous dataset\n")
+            self.assertEqual(manifest.read_text(encoding="utf-8"), "previous manifest\n")
+            with sqlite3.connect(db) as conn:
+                self.assertEqual(conn.execute("select text from samples").fetchone()[0], "Қ")
+
+    def test_isolated_i_literals_are_distinct_from_phonetic_tatar_i(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            text = "І һәм И; «ІІ1/2»лы."
+            db = _write_db(root / "db.sqlite", [
+                {"id": "tokens", "text": text, "tokens": [
+                    {"text": "І", "label": "U"},
+                    {"text": "һәм", "label": "N"},
+                    {"text": "И", "label": "N"},
+                    {"text": "ІІ1/2", "label": "U"},
+                    {"text": "лы", "label": "N"},
+                ]},
+                {"id": "gaps", "text": text, "tokens": [
+                    {"text": "һәм", "label": "N"},
+                    {"text": "И", "label": "N"},
+                    {"text": "лы", "label": "N"},
+                ]},
+                {"id": "attached", "text": "«ІІ1/2»лы.", "tokens": [
+                    {"text": "«ІІ1/2»лы", "label": "N"},
+                ]},
+            ])
+            summary = export_training_dataset(db, root / "train.jsonl")
+            rows = {row["id"]: row for row in _read_jsonl(root / "train.jsonl")}
+            self.assertEqual(summary.exported_count, 3)
+            for sid in ("tokens", "gaps"):
+                self.assertEqual(rows[sid]["cyrillic"], text)
+                self.assertEqual(rows[sid]["zamanalif"], "I häm İ; «II1/2»lı.")
+            self.assertEqual(rows["attached"]["zamanalif"], "«II1/2»lı.")
+
+    def test_roman_literals_export_identically_across_annotation_boundaries(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            text = "«ХІХ»–ХХІ; ІІ, ХХIХ!"
+            db = _write_db(root / "db.sqlite", [
+                {"id": "whole", "text": text, "tokens": [
+                    {"text": word, "label": "U"}
+                    for word in ("ХІХ", "ХХІ", "ІІ", "ХХIХ")
+                ]},
+                {"id": "split", "text": text, "tokens": [
+                    {"text": word, "label": "U"}
+                    for word in ("Х", "І", "Х", "ХХІ", "ІІ", "ХХIХ")
+                ]},
+                {"id": "gaps", "text": text, "tokens": []},
+            ])
+            with sqlite3.connect(db) as conn:
+                before = conn.execute("select * from samples order by id").fetchall()
+                before_tokens = conn.execute(
+                    "select sample_id, tokens_json from preannotation_state order by sample_id"
+                ).fetchall()
+            summary = export_training_dataset(db, root / "train.jsonl")
+            rows = _read_jsonl(root / "train.jsonl")
+            self.assertEqual(summary.exported_count, 3)
+            self.assertEqual({row["cyrillic"] for row in rows}, {text})
+            self.assertEqual({row["zamanalif"] for row in rows}, {"«XIX»–XXI; II, XXIX!"})
+            with sqlite3.connect(db) as conn:
+                self.assertEqual(conn.execute("select * from samples order by id").fetchall(), before)
+                self.assertEqual(conn.execute(
+                    "select sample_id, tokens_json from preannotation_state order by sample_id"
+                ).fetchall(), before_tokens)
+
+    def test_roman_suffix_in_reviewed_name_preserves_lexical_review(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db = _write_db(root / "db.sqlite", [{
+                "id": "name", "text": "Горки-ІІ.",
+                "tokens": [{"text": "Горки-ІІ", "label": "RL"}],
+            }])
+            save_reviewed_word(db, "горки", "gorki", "RL")
+            export_training_dataset(db, root / "train.jsonl")
+            self.assertEqual(_read_jsonl(root / "train.jsonl")[0]["zamanalif"], "Gorki-II.")
+
+    def test_roman_projection_does_not_approve_an_unreviewed_word(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db = _write_db(root / "db.sqlite", [{
+                "id": "pending", "text": "ХІХ мәгълүмат.", "tokens": [
+                    {"text": "ХІХ", "label": "U"},
+                    {"text": "мәгълүмат", "label": "N"},
+                ],
+            }])
+            summary = export_training_dataset(db, root / "train.jsonl", allow_empty=True)
+            self.assertEqual(summary.exported_count, 0)
+            self.assertEqual(summary.skipped_count, 1)
+
     def test_existing_mixed_vowel_review_keeps_approved_vowels(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
