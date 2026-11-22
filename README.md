@@ -945,7 +945,9 @@ The exporter:
   characters are accepted for each `я`. Reviewed tokens also allow compact
   `ие`, legacy `E_GLIDE` variants, `ц → s`, and one-character dotted initials.
   A reviewed sign or `е` glide can change the count when the source letters
-  and rendered spelling support it;
+  and rendered spelling support it. The same gate checks that the letters form
+  an allowed spelling under either complete origin branch. It accepts scoped,
+  verified spelling exceptions. A stored review goes through the check;
 - checks that capitals stay on the corresponding letters, including inside
   words. A single capital in a mixed-case word capitalizes the first letter of
   its expansion, as in `Цирк → Tsirk`. All-caps words use uppercase throughout,

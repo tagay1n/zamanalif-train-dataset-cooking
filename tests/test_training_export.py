@@ -7,11 +7,17 @@ from pathlib import Path
 import sqlite3
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from tatar_preannotator.cli import main
 from tatar_preannotator.conflict_resolver import save_word_resolution
 from tatar_preannotator.contextual_review import ensure_contextual_review_schema
 from tatar_preannotator.conversion import PREFERRED_POLICY
+from tatar_preannotator.spelling_validation import (
+    OCCURRENCE_SPELLING_EXCEPTIONS,
+    WORD_SPELLING_EXCEPTIONS,
+    spelling_matches,
+)
 from tatar_preannotator.training_export import (
     TrainingExportError,
     _validate_resolved_sentence,
@@ -211,6 +217,7 @@ class TrainingExportTests(unittest.TestCase):
             self.assertEqual(summary.exported_count, 0)
             self.assertEqual(summary.skipped_count, 1)
 
+    @patch.dict(WORD_SPELLING_EXCEPTIONS, {"сәгать": {"säğät"}})
     def test_existing_mixed_vowel_review_keeps_approved_vowels(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
@@ -223,6 +230,7 @@ class TrainingExportTests(unittest.TestCase):
             self.assertEqual(summary.exported_count, 1)
             self.assertEqual(_read_jsonl(root / "train.jsonl")[0]["zamanalif"], "Säğät.")
 
+    @patch.dict(WORD_SPELLING_EXCEPTIONS, {"идарә": {"idärä"}})
     def test_native_mixed_harmony_auto_converts_only_when_origin_independent(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
@@ -432,6 +440,7 @@ class TrainingExportTests(unittest.TestCase):
         self.assertEqual(manifest["overrides"], {"E_GLIDE": "plain"})
         self.assertIn("training export complete", stdout.getvalue())
 
+    @patch.dict(WORD_SPELLING_EXCEPTIONS, {"проект": {"pruyekt", "pruekt"}})
     def test_reviewed_variant_corrections_follow_policy(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
@@ -805,7 +814,7 @@ class TrainingExportTests(unittest.TestCase):
             self.assertIn("Punctuation and whitespace failed for 2 sentence(s)", message)
             self.assertIn("extra: punctuation or whitespace mismatch", message)
             self.assertIn("missing: punctuation or whitespace mismatch", message)
-            self.assertIn("Character count failed for 2 sentence(s)", message)
+            self.assertIn("Character validation failed for 2 sentence(s)", message)
             self.assertIn("Capitalization failed for 1 sentence(s)", message)
             self.assertIn("extra: unresolved Cyrillic", message)
             self.assertNotIn("clean:", message)
@@ -917,6 +926,54 @@ class TrainingExportTests(unittest.TestCase):
                 {text: expected for text, _, _, expected in cases},
             )
 
+    def test_spelling_match_accepts_either_complete_branch_and_documented_sequences(self) -> None:
+        accepted = (
+            ("вакыт", "waqıt"), ("вакыт", "vakıt"), ("Ял", "Yal"), ("Ял", "Al"),
+            ("пицца", "pitsa"), ("Нуриев", "Nuriev"), ("Игълан", "İğlan"),
+            ("мәсьәлә", "mäsʼälä"), ("металл", "metal"), ("37°C", "37°C"),
+            ("аяк-яшь", "ayaq-äş"),
+        )
+        rejected = (
+            ("вакыт", "wakıt"), ("Китап", "Kipat"), ("Китап", "Kıtap"),
+            ("яшь", "yäşa"), ("пицца", "pitstsa"), ("металл", "metall"),
+        )
+        for source, target in accepted:
+            with self.subTest(source=source, target=target):
+                self.assertTrue(spelling_matches(source, target, PREFERRED_POLICY))
+        for source, target in rejected:
+            with self.subTest(source=source, target=target):
+                self.assertFalse(spelling_matches(source, target, PREFERRED_POLICY))
+        self.assertFalse(spelling_matches("проект", "proekt", PREFERRED_POLICY))
+        self.assertTrue(spelling_matches("проект", "proekt", PREFERRED_POLICY, legacy_e_glides=1))
+
+    def test_character_gate_blocks_unlisted_spelling_and_keeps_other_gates(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db = _write_db(root / "zamanalif.sqlite", [
+                {"id": "approved", "text": "Китап.", "tokens": [{"text": "Китап", "label": "N"}]},
+                {"id": "unapproved", "text": "Китап.", "tokens": [{"text": "Китап", "label": "N"}]},
+                {"id": "punctuation", "text": "Мин.", "tokens": [{"text": "Мин", "label": "N"}]},
+            ])
+            save_reviewed_word(db, "китап", "kipat", "N")
+            save_reviewed_word(db, "мин", "mi-n", "N")
+            output = root / "training.jsonl"
+            manifest = root / "training.jsonl.manifest.json"
+            output.write_text("previous dataset", encoding="utf-8")
+            manifest.write_text("previous manifest", encoding="utf-8")
+
+            with patch.dict(OCCURRENCE_SPELLING_EXCEPTIONS, {
+                ("approved", 0, "Китап"): {"kipat"},
+                ("punctuation", 0, "Мин"): {"min"},
+            }), self.assertRaises(TrainingExportError) as error:
+                export_training_dataset(db, output)
+
+            message = str(error.exception)
+            self.assertIn("Character validation failed for 1 sentence(s)", message)
+            self.assertIn("unapproved: letter correspondence mismatch at token 0 'Китап' -> 'Kipat'", message)
+            self.assertIn("punctuation: punctuation or whitespace mismatch", message)
+            self.assertEqual(output.read_text(encoding="utf-8"), "previous dataset")
+            self.assertEqual(manifest.read_text(encoding="utf-8"), "previous manifest")
+
     def test_character_count_rejects_changes_that_preserve_words_and_punctuation(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
@@ -938,7 +995,7 @@ class TrainingExportTests(unittest.TestCase):
                 export_training_dataset(db_path, output)
 
             message = str(failure.exception)
-            self.assertIn("Character count failed for 4 sentence(s)", message)
+            self.assertIn("Character validation failed for 4 sentence(s)", message)
             self.assertIn("'Мин' -> 'Mi' (expected 3, got 2)", message)
             self.assertIn("'мин144шат' -> 'minşat' (expected 9, got 6)", message)
             self.assertIn("'Ял' -> 'Yaal' (expected 2, 3, got 4)", message)
@@ -1005,7 +1062,7 @@ class TrainingExportTests(unittest.TestCase):
                     f"{sample_id}: capitalization mismatch at token 0 {text!r} -> {rendered!r}",
                     message,
                 )
-            self.assertNotIn("Character count failed", message)
+            self.assertNotIn("Character validation failed", message)
             self.assertFalse(output.exists())
             self.assertFalse((root / "training.jsonl.manifest.json").exists())
 

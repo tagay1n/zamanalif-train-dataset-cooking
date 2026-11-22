@@ -4,10 +4,12 @@ from pathlib import Path
 import sqlite3
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from tatar_preannotator.contextual_review import ensure_contextual_review_schema
 from tatar_preannotator.corpus_corrections import correct
 from tatar_preannotator.corpus_index import CorpusAuditError, connect, occurrences, reindex, search
+from tatar_preannotator.spelling_validation import WORD_SPELLING_EXCEPTIONS
 from tatar_preannotator.training_export import export_training_dataset
 from tatar_preannotator.word_export import APERTIUM_TAT_REVISION, save_reviewed_word
 
@@ -100,6 +102,7 @@ class CorpusAuditTests(unittest.TestCase):
             self.assertEqual(search(connection, "zamanalif", "exact", "İdarä"), [])
             self.assertEqual(search(connection, "cyrillic", "contains", 'га"'), [])
 
+    @patch.dict(WORD_SPELLING_EXCEPTIONS, {"гаебе": {"ğayebe"}, "идарә": {"ıdarä"}})
     def test_preview_apply_split_merge_and_single_token_repairs(self):
         batch = [
             dict(kind="source", sample_id="repair", start=0, value="Гаебе"),

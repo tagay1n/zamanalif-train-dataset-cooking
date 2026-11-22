@@ -29,6 +29,7 @@ from .contextual_review import (
     load_contextual_reviews,
 )
 from .literal_projection import literal_source_view
+from .spelling_validation import is_approved_spelling, spelling_matches
 from .word_export import (
     INTERNAL_DOUBLE_QUOTES,
     TATAR_SUFFIXES_AFTER_QUOTE,
@@ -88,7 +89,7 @@ class _ConvertedSentence:
     text: str
     word_alignment_error: str | None = None
     punctuation_error: str | None = None
-    character_count_error: str | None = None
+    character_error: str | None = None
     capitalization_error: str | None = None
     digit_error: str | None = None
     usable_output_error: str | None = None
@@ -154,7 +155,7 @@ def export_training_dataset(
     targets_by_source: dict[str, dict[str, str]] = {}
     word_alignment_errors: list[str] = []
     punctuation_errors: list[str] = []
-    character_count_errors: list[str] = []
+    character_errors: list[str] = []
     capitalization_errors: list[str] = []
     digit_errors: list[str] = []
     usable_output_errors: list[str] = []
@@ -191,8 +192,8 @@ def export_training_dataset(
                     word_alignment_errors.append(converted.word_alignment_error)
                 if converted.punctuation_error:
                     punctuation_errors.append(converted.punctuation_error)
-                if converted.character_count_error:
-                    character_count_errors.append(converted.character_count_error)
+                if converted.character_error:
+                    character_errors.append(converted.character_error)
                 if converted.capitalization_error:
                     capitalization_errors.append(converted.capitalization_error)
                 if converted.digit_error:
@@ -213,7 +214,7 @@ def export_training_dataset(
                 if (
                     converted.word_alignment_error
                     or converted.punctuation_error
-                    or converted.character_count_error
+                    or converted.character_error
                     or converted.capitalization_error
                     or converted.digit_error
                     or converted.usable_output_error
@@ -241,7 +242,7 @@ def export_training_dataset(
         error_groups = (
             ("Word alignment", "sentence(s)", word_alignment_errors),
             ("Punctuation and whitespace", "sentence(s)", punctuation_errors),
-            ("Character count", "sentence(s)", character_count_errors),
+            ("Character validation", "sentence(s)", character_errors),
             ("Capitalization", "sentence(s)", capitalization_errors),
             ("Digit preservation", "sentence(s)", digit_errors),
             ("Conflicting duplicates", "source group(s)", duplicate_errors),
@@ -342,7 +343,7 @@ def _convert_sentence(
     pieces: list[str] = []
     token_count_changes: list[str] = []
     punctuation_error = None
-    character_count_error = None
+    character_error = None
     capitalization_error = None
     digit_error = None
     cursor = 0
@@ -390,16 +391,31 @@ def _convert_sentence(
                 f"{record.sample_id}: punctuation or whitespace mismatch at token {token_index} "
                 f"{text!r} -> {conversion.text!r}"
             )
-        if character_count_error is None:
+        if character_error is None and not is_approved_spelling(
+            record.sample_id, token_index, text, conversion.text,
+        ):
+            dotted = record.text.startswith(".", end)
             expected_counts = _expected_character_counts(
-                projected_text, conversion, policy, dotted=record.text.startswith(".", end),
+                projected_text, conversion, policy, dotted=dotted,
             )
             target_length = _spelling_length(conversion.text)
             if target_length not in expected_counts:
                 expected = ", ".join(str(count) for count in sorted(expected_counts))
-                character_count_error = (
+                character_error = (
                     f"{record.sample_id}: character count mismatch at token {token_index} "
                     f"{text!r} -> {conversion.text!r} (expected {expected}, got {target_length})"
+                )
+            elif not spelling_matches(
+                projected_text, conversion.text, policy,
+                legacy_e_glides=conversion.legacy_e_glides,
+                reviewed_initial=(
+                    conversion.source in {"dictionary", "contextual"}
+                    and text.isupper() and (dotted or text.endswith("."))
+                ),
+            ):
+                character_error = (
+                    f"{record.sample_id}: letter correspondence mismatch at token {token_index} "
+                    f"{text!r} -> {conversion.text!r}"
                 )
         if capitalization_error is None and not _capitalization_matches(
             text, conversion.text, conversion.origin,
@@ -450,7 +466,7 @@ def _convert_sentence(
         text=converted,
         word_alignment_error=alignment_error,
         punctuation_error=punctuation_error,
-        character_count_error=character_count_error,
+        character_error=character_error,
         capitalization_error=capitalization_error,
         digit_error=digit_error,
         usable_output_error=usable_output_error,
@@ -580,10 +596,7 @@ def _expected_character_counts(
         return {source_length}
 
     branches = conversion_branches(word)
-    if conversion.origin == "U":
-        references = {branches.native_dsl, branches.loanword_dsl}
-    else:
-        references = {branches.suggestion(conversion.origin)}
+    references = {branches.native_dsl, branches.loanword_dsl}
     references.discard("")
     ya_count = word.count("я")
     ts_runs = len(re.findall("ц+", word))
