@@ -934,9 +934,16 @@ The exporter:
 - skips sentences that still contain unreviewed origin-dependent words,
   origin-dependent or unconvertible mixed-harmony native words, or unresolved
   contextual occurrences;
+- checks that each resolved sentence and converted token span keep the same
+  word count on both sides. It counts whitespace-delimited fields containing
+  letters or numbers, keeping compounds and dotted abbreviations together;
 - fails without replacing the existing output on malformed DSL, invalid
-  policy choices, converter failures, or token alignment errors;
+  policy choices, converter failures, or quality check failures;
 - rejects any final target containing DSL delimiters or Cyrillic letters.
+
+The exporter checks all convertible pairs before publishing the JSONL and
+manifest. If a check fails, it reports counts and example sentence IDs for each
+failed check and exits with a nonzero status.
 
 It automatically writes `<output>.manifest.json` with the effective policy,
 CLI overrides, exported counts, and not-ready skip counts. Abbreviation-specific

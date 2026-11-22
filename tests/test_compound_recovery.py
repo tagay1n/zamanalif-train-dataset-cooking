@@ -43,7 +43,7 @@ class CompoundRecoveryTests(unittest.TestCase):
         return _convert_sentence(record, load_reviewed_words(self.db), {}, policy, {})
 
     def test_derived_compound_preserves_human_correction_and_source_case(self):
-        self.assertEqual(self.convert(), "Azığ-tölek.")
+        self.assertEqual(self.convert().text, "Azığ-tölek.")
         self.assertEqual(load_reviewed_words(self.db)["азык-төлек"].origin, "U")
 
     def test_changed_human_component_invalidates_dependent_compound(self):
@@ -58,7 +58,7 @@ class CompoundRecoveryTests(unittest.TestCase):
     def test_direct_whole_word_review_overrides_derivation(self):
         save_reviewed_word(self.db, "азык", "azıq", "N")
         save_reviewed_word(self.db, "азык-төлек", "azıq-töläk", "N")
-        self.assertEqual(self.convert(), "Azıq-töläk.")
+        self.assertEqual(self.convert().text, "Azıq-töläk.")
         with sqlite3.connect(self.db) as conn:
             self.assertEqual(conn.execute("select count(*) from reviewed_word_compound_derivations").fetchone()[0], 0)
 

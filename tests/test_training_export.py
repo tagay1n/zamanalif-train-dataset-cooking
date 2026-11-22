@@ -580,6 +580,60 @@ class TrainingExportTests(unittest.TestCase):
         self.assertFalse(output.exists())
         self.assertFalse(Path(str(output) + ".manifest.json").exists())
 
+    def test_quality_checks_report_added_and_dropped_words_and_invalid_targets(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(root / "zamanalif.sqlite", [
+                {"id": "clean", "text": "Һәм — һ.б.", "tokens": [
+                    {"text": "Һәм", "label": "N"}, {"text": "һ.б.", "label": "N"},
+                ]},
+                {"id": "extra", "text": "Мин Ш.", "tokens": [{"text": "Мин", "label": "N"}]},
+                {"id": "missing", "text": "Шат.", "tokens": [{"text": "Шат", "label": "N"}]},
+            ])
+            save_reviewed_word(db_path, "мин", "min min", "N")
+            save_reviewed_word(db_path, "шат", "-", "N")
+            output = root / "training.jsonl"
+            manifest = root / "training.jsonl.manifest.json"
+            output.write_text("previous dataset\n", encoding="utf-8")
+            manifest.write_text("previous manifest\n", encoding="utf-8")
+            stdout = StringIO()
+
+            with redirect_stdout(stdout):
+                exit_code = main(["training-export", "--db", str(db_path), "--output", str(output)])
+
+            self.assertEqual(exit_code, 1)
+            message = stdout.getvalue()
+            self.assertIn("Word alignment failed for 2 sentence(s)", message)
+            self.assertIn("extra: word alignment mismatch (Cyrillic=2, Zamanalif=3)", message)
+            self.assertIn("missing: word alignment mismatch (Cyrillic=1, Zamanalif=0)", message)
+            self.assertIn("extra: unresolved Cyrillic", message)
+            self.assertNotIn("clean:", message)
+            self.assertEqual(output.read_text(encoding="utf-8"), "previous dataset\n")
+            self.assertEqual(manifest.read_text(encoding="utf-8"), "previous manifest\n")
+            self.assertFalse(list(root.glob("*.tmp")))
+
+    def test_added_word_cannot_offset_dropped_word_in_same_sentence(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(root / "zamanalif.sqlite", [{
+                "id": "balanced", "text": "Мин шат.", "tokens": [
+                    {"text": "Мин", "label": "N"}, {"text": "шат", "label": "N"},
+                ],
+            }])
+            save_reviewed_word(db_path, "мин", "min min", "N")
+            save_reviewed_word(db_path, "шат", "-", "N")
+            output = root / "training.jsonl"
+
+            with self.assertRaises(TrainingExportError) as failure:
+                export_training_dataset(db_path, output)
+
+            message = str(failure.exception)
+            self.assertIn("balanced: word alignment mismatch (Cyrillic=2, Zamanalif=2)", message)
+            self.assertIn("token 0 'Мин' -> 'Min min' (Cyrillic=1, Zamanalif=2)", message)
+            self.assertIn("token 1 'шат' -> '-' (Cyrillic=1, Zamanalif=0)", message)
+            self.assertFalse(output.exists())
+            self.assertFalse((root / "training.jsonl.manifest.json").exists())
+
     def test_reviewed_abbreviation_restores_trailing_parenthesis_and_case(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

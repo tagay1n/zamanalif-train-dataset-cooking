@@ -11,7 +11,14 @@ import sqlite3
 import tempfile
 from typing import Iterable
 
-from .conversion import CYRILLIC_LETTER_REFERENCES, DslError, RULES, parse_dsl, resolve_dsl
+from .conversion import (
+    CYRILLIC_LETTER_REFERENCES,
+    ZAMANALIF_APOSTROPHE,
+    DslError,
+    RULES,
+    parse_dsl,
+    resolve_dsl,
+)
 from .conflict_resolver import load_word_resolutions
 from .contextual_review import (
     ContextualReview,
@@ -32,6 +39,7 @@ from .word_export import (
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
 DSL_DELIMITER_RE = re.compile(r"{{|}}")
 CASE_SEPARATORS_RE = re.compile(r"([-\u2019'()])")
+MAX_FAILURE_EXAMPLES = 10
 
 
 class TrainingExportError(ValueError):
@@ -59,6 +67,12 @@ class _SentenceRecord:
 @dataclass(frozen=True)
 class _NotReady:
     reason: str
+
+
+@dataclass(frozen=True)
+class _ConvertedSentence:
+    text: str
+    word_alignment_error: str | None = None
 
 
 def parse_policy_overrides(values: Iterable[str]) -> tuple[dict[str, str], dict[str, str]]:
@@ -116,6 +130,9 @@ def export_training_dataset(
     tatar_sentences = 0
     non_tatar_sentences = 0
     exported_count = 0
+    word_alignment_errors: list[str] = []
+    target_errors: list[str] = []
+    conversion_errors: list[str] = []
 
     output_temp = _temporary_path(output)
     manifest_temp = _temporary_path(manifest)
@@ -127,23 +144,37 @@ def export_training_dataset(
                     non_tatar_sentences += 1
                     continue
                 tatar_sentences += 1
-                converted = _convert_sentence(
-                    record,
-                    reviewed,
-                    contextual_reviews,
-                    effective_policy,
-                    word_resolutions,
-                )
+                try:
+                    converted = _convert_sentence(
+                        record,
+                        reviewed,
+                        contextual_reviews,
+                        effective_policy,
+                        word_resolutions,
+                    )
+                except TrainingExportError as exc:
+                    message = str(exc)
+                    prefix = f"{record.sample_id}: "
+                    conversion_errors.append(prefix + message.removeprefix(prefix))
+                    continue
                 if isinstance(converted, _NotReady):
                     skipped[converted.reason] += 1
                     continue
-                _validate_resolved_sentence(record.sample_id, converted)
+                if converted.word_alignment_error:
+                    word_alignment_errors.append(converted.word_alignment_error)
+                try:
+                    _validate_resolved_sentence(record.sample_id, converted.text)
+                except TrainingExportError as exc:
+                    target_errors.append(str(exc))
+                    continue
+                if converted.word_alignment_error:
+                    continue
                 handle.write(
                     json.dumps(
                         {
                             "id": record.sample_id,
                             "cyrillic": record.text,
-                            "zamanalif": converted,
+                            "zamanalif": converted.text,
                         },
                         ensure_ascii=False,
                         separators=(",", ":"),
@@ -151,6 +182,22 @@ def export_training_dataset(
                     + "\n"
                 )
                 exported_count += 1
+
+        error_groups = (
+            ("Word alignment", word_alignment_errors),
+            ("Target validation", target_errors),
+            ("Conversion", conversion_errors),
+        )
+        failures: list[str] = []
+        for check, errors in error_groups:
+            if errors:
+                examples = errors[:MAX_FAILURE_EXAMPLES]
+                failures.append(f"{check} failed for {len(errors)} sentence(s):")
+                failures.extend(f"  {error}" for error in examples)
+                if len(errors) > len(examples):
+                    failures.append(f"  … {len(errors) - len(examples)} more")
+        if failures:
+            raise TrainingExportError("\n".join(failures))
 
         manifest_data = {
             "effective_policy": dict(sorted(effective_policy.items())),
@@ -224,8 +271,9 @@ def _convert_sentence(
     contextual_reviews: dict[OccurrenceKey, ContextualReview],
     policy: dict[str, str],
     word_resolutions: dict[str, str],
-) -> str | _NotReady:
+) -> _ConvertedSentence | _NotReady:
     pieces: list[str] = []
+    token_count_changes: list[str] = []
     cursor = 0
     for token_index, token in enumerate(record.tokens):
         if not isinstance(token, dict):
@@ -255,11 +303,38 @@ def _convert_sentence(
         )
         if conversion.text is None:
             return _NotReady(conversion.source)
+        source_count = _count_words(text)
+        target_count = _count_words(conversion.text)
+        if source_count != target_count:
+            token_count_changes.append(
+                f"token {token_index} {text!r} -> {conversion.text!r} "
+                f"(Cyrillic={source_count}, Zamanalif={target_count})"
+            )
         pieces.append(conversion.text)
         cursor = found + len(text)
 
     pieces.append(record.text[cursor:])
-    return "".join(pieces)
+    converted = "".join(pieces)
+    source_count = _count_words(record.text)
+    target_count = _count_words(converted)
+    if source_count == target_count and not token_count_changes:
+        return _ConvertedSentence(converted)
+
+    error = (
+        f"{record.sample_id}: word alignment mismatch "
+        f"(Cyrillic={source_count}, Zamanalif={target_count})"
+    )
+    if token_count_changes:
+        error += ". " + "; ".join(token_count_changes)
+    return _ConvertedSentence(converted, error)
+
+
+def _count_words(value: str) -> int:
+    # Keep compounds and dotted abbreviations together and ignore punctuation-only fields.
+    return sum(
+        any(char.isalnum() and char != ZAMANALIF_APOSTROPHE for char in field)
+        for field in value.split()
+    )
 
 
 @dataclass(frozen=True)
