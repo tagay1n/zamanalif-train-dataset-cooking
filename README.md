@@ -946,6 +946,11 @@ The exporter:
   `ие`, legacy `E_GLIDE` variants, `ц → s`, and one-character dotted initials.
   A reviewed sign or `е` glide can change the count when the source letters
   and rendered spelling support it;
+- checks that capitals stay on the corresponding letters, including inside
+  words. A single capital in a mixed-case word capitalizes the first letter of
+  its expansion, as in `Цирк → Tsirk`. All-caps words use uppercase throughout,
+  as in `ЦИРК → TSİRK`. A run of capitals inside a mixed-case word can use
+  either style for its expanded letters.
 - fails without replacing the existing output on malformed DSL, invalid
   policy choices, converter failures, or quality check failures;
 - rejects any final target containing DSL delimiters or Cyrillic letters.

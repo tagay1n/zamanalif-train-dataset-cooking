@@ -611,6 +611,7 @@ class TrainingExportTests(unittest.TestCase):
             self.assertIn("extra: punctuation or whitespace mismatch", message)
             self.assertIn("missing: punctuation or whitespace mismatch", message)
             self.assertIn("Character count failed for 2 sentence(s)", message)
+            self.assertIn("Capitalization failed for 1 sentence(s)", message)
             self.assertIn("extra: unresolved Cyrillic", message)
             self.assertNotIn("clean:", message)
             self.assertEqual(output.read_text(encoding="utf-8"), "previous dataset\n")
@@ -749,6 +750,67 @@ class TrainingExportTests(unittest.TestCase):
             self.assertIn("'Эльмира' -> 'Emira' (expected 6, 7, got 5)", message)
             self.assertNotIn("Word alignment failed", message)
             self.assertNotIn("Punctuation and whitespace failed", message)
+            self.assertFalse(output.exists())
+            self.assertFalse((root / "training.jsonl.manifest.json").exists())
+
+    def test_capitalization_gate_accepts_title_all_caps_and_mixed_case(self) -> None:
+        cases = [
+            ("Цирк", None, "Tsirk"),
+            ("ЦИРК", None, "TSİRK"),
+            ("таЦа", "taTsa", "taTsa"),
+            ("цяМ", "tsyaM", "tsyaM"),
+            ("аЯта", "aAta", "aAta"),
+            ("аЦФта", "aTSFta", "aTSFta"),
+            ("Ил-ЦИРК", "il-tsirk", "İl-TSİRK"),
+        ]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(root / "zamanalif.sqlite", [
+                {"id": text, "text": text, "tokens": [{"text": text, "label": "N"}]}
+                for text, _, _ in cases
+            ])
+            for text, reviewed, _ in cases:
+                if reviewed is not None:
+                    save_reviewed_word(db_path, text.lower(), reviewed, "N")
+            output = root / "training.jsonl"
+
+            export_training_dataset(db_path, output)
+
+            self.assertEqual(
+                {row["id"]: row["zamanalif"] for row in _read_jsonl(output)},
+                {text: expected for text, _, expected in cases},
+            )
+
+    def test_capitalization_gate_rejects_lost_shifted_and_extra_capitals(self) -> None:
+        cases = {
+            "lost_middle": ("таЦа", None, "tatsa"),
+            "shifted_middle": ("саЦа", "sAtsa", "sAtsa"),
+            "overcapitalized_middle": ("баЦа", "baTSa", "baTSa"),
+            "overcapitalized_title": ("Цирк", "tSirk", "TSirk"),
+            "extra_capital": ("тарихи", "Tarixi", "Tarixi"),
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(root / "zamanalif.sqlite", [
+                {"id": sample_id, "text": text, "tokens": [{"text": text, "label": "N"}]}
+                for sample_id, (text, _, _) in cases.items()
+            ])
+            for text, reviewed, _ in cases.values():
+                if reviewed is not None:
+                    save_reviewed_word(db_path, text.lower(), reviewed, "N")
+            output = root / "training.jsonl"
+
+            with self.assertRaises(TrainingExportError) as failure:
+                export_training_dataset(db_path, output)
+
+            message = str(failure.exception)
+            self.assertIn(f"Capitalization failed for {len(cases)} sentence(s)", message)
+            for sample_id, (text, _, rendered) in cases.items():
+                self.assertIn(
+                    f"{sample_id}: capitalization mismatch at token 0 {text!r} -> {rendered!r}",
+                    message,
+                )
+            self.assertNotIn("Character count failed", message)
             self.assertFalse(output.exists())
             self.assertFalse((root / "training.jsonl.manifest.json").exists())
 

@@ -5,6 +5,7 @@ from contextlib import closing
 from dataclasses import dataclass
 from itertools import groupby, zip_longest
 import json
+from math import inf
 import os
 from pathlib import Path
 import re
@@ -31,6 +32,7 @@ from .word_export import (
     INTERNAL_DOUBLE_QUOTES,
     TATAR_SUFFIXES_AFTER_QUOTE,
     ReviewedWord,
+    _char_conversion,
     conversion_branches,
     load_reviewed_words,
     normalize_word,
@@ -43,6 +45,12 @@ DSL_DELIMITER_RE = re.compile(r"{{|}}")
 CASE_SEPARATORS_RE = re.compile(r"([-\u2019'()])")
 E_GLIDE_RE = re.compile(r"Y[EOI]")
 MAX_FAILURE_EXAMPLES = 10
+MIXED_CASE_LETTER_VARIANTS = {
+    "е": ("e", "ye", "yı", "yo"),
+    "ц": ("ts", "s"),
+    "ю": ("yu", "yü"),
+    "я": ("ya", "yä", "a", "ä"),
+}
 
 
 class TrainingExportError(ValueError):
@@ -78,6 +86,7 @@ class _ConvertedSentence:
     word_alignment_error: str | None = None
     punctuation_error: str | None = None
     character_count_error: str | None = None
+    capitalization_error: str | None = None
 
 
 def parse_policy_overrides(values: Iterable[str]) -> tuple[dict[str, str], dict[str, str]]:
@@ -138,6 +147,7 @@ def export_training_dataset(
     word_alignment_errors: list[str] = []
     punctuation_errors: list[str] = []
     character_count_errors: list[str] = []
+    capitalization_errors: list[str] = []
     target_errors: list[str] = []
     conversion_errors: list[str] = []
 
@@ -173,6 +183,8 @@ def export_training_dataset(
                     punctuation_errors.append(converted.punctuation_error)
                 if converted.character_count_error:
                     character_count_errors.append(converted.character_count_error)
+                if converted.capitalization_error:
+                    capitalization_errors.append(converted.capitalization_error)
                 try:
                     _validate_resolved_sentence(record.sample_id, converted.text)
                 except TrainingExportError as exc:
@@ -182,6 +194,7 @@ def export_training_dataset(
                     converted.word_alignment_error
                     or converted.punctuation_error
                     or converted.character_count_error
+                    or converted.capitalization_error
                 ):
                     continue
                 handle.write(
@@ -202,6 +215,7 @@ def export_training_dataset(
             ("Word alignment", word_alignment_errors),
             ("Punctuation and whitespace", punctuation_errors),
             ("Character count", character_count_errors),
+            ("Capitalization", capitalization_errors),
             ("Target validation", target_errors),
             ("Conversion", conversion_errors),
         )
@@ -293,6 +307,7 @@ def _convert_sentence(
     token_count_changes: list[str] = []
     punctuation_error = None
     character_count_error = None
+    capitalization_error = None
     cursor = 0
     for token_index, token in enumerate(record.tokens):
         if not isinstance(token, dict):
@@ -346,6 +361,13 @@ def _convert_sentence(
                     f"{record.sample_id}: character count mismatch at token {token_index} "
                     f"{text!r} -> {conversion.text!r} (expected {expected}, got {target_length})"
                 )
+        if capitalization_error is None and not _capitalization_matches(
+            text, conversion.text, conversion.origin,
+        ):
+            capitalization_error = (
+                f"{record.sample_id}: capitalization mismatch at token {token_index} "
+                f"{text!r} -> {conversion.text!r}"
+            )
         pieces.append(conversion.text)
         cursor = end
 
@@ -374,6 +396,7 @@ def _convert_sentence(
                 break
     return _ConvertedSentence(
         converted, alignment_error, punctuation_error, character_count_error,
+        capitalization_error,
     )
 
 
@@ -401,6 +424,83 @@ def _is_text_character(char: str) -> bool:
 def _spelling_length(value: str) -> int:
     value = unicodedata.normalize("NFC", value)
     return len(value) if value.isalnum() else sum(map(_is_text_character, value))
+
+
+def _cased_letters(value: str) -> str:
+    return "".join(char for char in value if char.lower() != char.upper())
+
+
+def _capitalization_matches(source: str, target: str, origin: str) -> bool:
+    if source == target:
+        return True
+    if source.isalpha() and target.isalpha():
+        return _part_capitalization_matches(source, target, origin)
+    source_parts = ["".join(run) for is_text, run in groupby(source, _is_text_character) if is_text]
+    target_parts = ["".join(run) for is_text, run in groupby(target, _is_text_character) if is_text]
+    if len(source_parts) != len(target_parts):
+        return _part_capitalization_matches(source, target, origin)
+    return all(
+        _part_capitalization_matches(left, right, origin)
+        for left, right in zip(source_parts, target_parts)
+    )
+
+
+def _part_capitalization_matches(source: str, target: str, origin: str) -> bool:
+    source_letters, target_letters = _cased_letters(source), _cased_letters(target)
+    if not source_letters or source_letters.islower():
+        return not target_letters or target_letters.islower()
+    if source_letters.isupper():
+        return target_letters.isupper()
+    if source_letters.istitle():
+        return target_letters.istitle()
+
+    origins = ("N", "RL") if origin == "U" else (origin,)
+    return any(_mixed_capitalization_matches(source, target_letters, label) for label in origins)
+
+
+def _mixed_capitalization_matches(source: str, target: str, label: str) -> bool:
+    """Align letters using transliteration fragments before checking their case."""
+    word = source.replace("İ", "i").lower()
+    source_letters = [(index, char) for index, char in enumerate(source) if _cased_letters(char)]
+    # Compare the best spelling alignment with the best alignment that also
+    # respects case, so a poorer spelling alignment cannot hide a moved capital.
+    scores: dict[int, tuple[float, float]] = {0: (0, 0)}
+    for position, (index, char) in enumerate(source_letters):
+        lower = word[index]
+        canonical = char
+        if CYRILLIC_RE.fullmatch(char):
+            canonical = _char_conversion(lower, word, index, label)
+        variants = MIXED_CASE_LETTER_VARIANTS.get(lower, ()) if canonical else ()
+        spellings = {_zamanalif_upper(_cased_letters(form)) for form in (canonical, *variants)}
+        widths = {len(spelling) for spelling in spellings}
+        upper = not char.islower()
+        upper_run = upper and any(
+            not source_letters[neighbor][1].islower()
+            for neighbor in (position - 1, position + 1)
+            if 0 <= neighbor < len(source_letters)
+        )
+
+        next_scores: dict[int, tuple[float, float]] = {}
+        for start, (spelling_score, case_score) in scores.items():
+            for end in range(start, min(start + 2, len(target)) + 1):
+                fragment = target[start:end]
+                cost = 0
+                if _zamanalif_upper(fragment) not in spellings:
+                    cost = 1 + min(abs(len(fragment) - width) for width in widths)
+                best_spelling, best_case = next_scores.get(end, (inf, inf))
+                case_matches = (
+                    not fragment
+                    or (not upper and fragment.islower())
+                    or (upper and fragment.istitle())
+                    or (upper_run and fragment.isupper())
+                )
+                if case_matches:
+                    best_case = min(best_case, case_score + cost)
+                next_scores[end] = (min(best_spelling, spelling_score + cost), best_case)
+        scores = next_scores
+
+    spelling_score, case_score = scores.get(len(target), (inf, inf))
+    return spelling_score < inf and spelling_score == case_score
 
 
 def _expected_character_counts(
