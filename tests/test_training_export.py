@@ -610,6 +610,7 @@ class TrainingExportTests(unittest.TestCase):
             self.assertIn("Punctuation and whitespace failed for 2 sentence(s)", message)
             self.assertIn("extra: punctuation or whitespace mismatch", message)
             self.assertIn("missing: punctuation or whitespace mismatch", message)
+            self.assertIn("Character count failed for 2 sentence(s)", message)
             self.assertIn("extra: unresolved Cyrillic", message)
             self.assertNotIn("clean:", message)
             self.assertEqual(output.read_text(encoding="utf-8"), "previous dataset\n")
@@ -685,6 +686,69 @@ class TrainingExportTests(unittest.TestCase):
             for sample_id in cases:
                 self.assertIn(f"{sample_id}: punctuation or whitespace mismatch at token 0", message)
             self.assertNotIn("Word alignment failed", message)
+            self.assertFalse(output.exists())
+            self.assertFalse((root / "training.jsonl.manifest.json").exists())
+
+    def test_character_count_accepts_both_ya_lengths_and_known_exceptions(self) -> None:
+        cases = [
+            ("Цирк", "N", None, "Tsirk"),
+            ("Як", "N", "yaq", "Yaq"),
+            ("Ял", "N", "al", "Al"),
+            ("Ерзя", "RL", "erz{{YA|ya=ya|ya_front=yä|a=a|ae=ä}}", "Erzä"),
+            ("Игълан", "N", "iğlan", "İğlan"),
+            ("Герцог", "RL", "gersog", "Gersog"),
+            ("Эльмира", "RL", "elmira", "Elmira"),
+            ("Актер", "RL", "aktyor", "Aktyor"),
+            ("ВН-5507-МР", "RL", "vn-5507-mr", "VN-5507-MR"),
+            ("Г", "N", "ğ", "Ğ"),
+            ("Ю.", "RL", "y", "Y."),
+        ]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(root / "zamanalif.sqlite", [
+                {"id": text, "text": text, "tokens": [{"text": text, "label": origin}]}
+                for text, origin, _, _ in cases
+            ])
+            for text, origin, reviewed, _ in cases:
+                if reviewed is not None:
+                    save_reviewed_word(db_path, text.rstrip(".").lower(), reviewed, origin)
+            output = root / "training.jsonl"
+
+            export_training_dataset(db_path, output, choice_overrides=["YA=ae"])
+
+            self.assertEqual(
+                {row["id"]: row["zamanalif"] for row in _read_jsonl(output)},
+                {text: expected for text, _, _, expected in cases},
+            )
+
+    def test_character_count_rejects_changes_that_preserve_words_and_punctuation(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(root / "zamanalif.sqlite", [
+                {"id": "balanced", "text": "Мин шат.", "tokens": [
+                    {"text": "Мин", "label": "N"}, {"text": "шат", "label": "N"},
+                ]},
+                {"id": "digits", "text": "мин144шат", "tokens": [{"text": "мин144шат", "label": "N"}]},
+                {"id": "overlong", "text": "Ял", "tokens": [{"text": "Ял", "label": "N"}]},
+                {"id": "short_review", "text": "Эльмира", "tokens": [{"text": "Эльмира", "label": "RL"}]},
+            ])
+            save_reviewed_word(db_path, "мин", "mi", "N")
+            save_reviewed_word(db_path, "шат", "şaat", "N")
+            save_reviewed_word(db_path, "ял", "yaal", "N")
+            save_reviewed_word(db_path, "эльмира", "emira", "RL")
+            output = root / "training.jsonl"
+
+            with self.assertRaises(TrainingExportError) as failure:
+                export_training_dataset(db_path, output)
+
+            message = str(failure.exception)
+            self.assertIn("Character count failed for 4 sentence(s)", message)
+            self.assertIn("'Мин' -> 'Mi' (expected 3, got 2)", message)
+            self.assertIn("'мин144шат' -> 'minşat' (expected 9, got 6)", message)
+            self.assertIn("'Ял' -> 'Yaal' (expected 2, 3, got 4)", message)
+            self.assertIn("'Эльмира' -> 'Emira' (expected 6, 7, got 5)", message)
+            self.assertNotIn("Word alignment failed", message)
+            self.assertNotIn("Punctuation and whitespace failed", message)
             self.assertFalse(output.exists())
             self.assertFalse((root / "training.jsonl.manifest.json").exists())
 

@@ -940,6 +940,12 @@ The exporter:
 - checks for identical punctuation and whitespace at corresponding boundaries
   in each converted token span and full sentence. Zamanalif's modifier letter
   `ʼ` is part of the spelling;
+- checks the spelling character count of each converted token against the
+  Cyrillic source, conversion rules, and selected policy. Either one or two
+  characters are accepted for each `я`. Reviewed tokens also allow compact
+  `ие`, legacy `E_GLIDE` variants, `ц → s`, and one-character dotted initials.
+  A reviewed sign or `е` glide can change the count when the source letters
+  and rendered spelling support it;
 - fails without replacing the existing output on malformed DSL, invalid
   policy choices, converter failures, or quality check failures;
 - rejects any final target containing DSL delimiters or Cyrillic letters.

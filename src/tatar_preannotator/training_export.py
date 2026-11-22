@@ -41,6 +41,7 @@ from .word_export import (
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
 DSL_DELIMITER_RE = re.compile(r"{{|}}")
 CASE_SEPARATORS_RE = re.compile(r"([-\u2019'()])")
+E_GLIDE_RE = re.compile(r"Y[EOI]")
 MAX_FAILURE_EXAMPLES = 10
 
 
@@ -76,6 +77,7 @@ class _ConvertedSentence:
     text: str
     word_alignment_error: str | None = None
     punctuation_error: str | None = None
+    character_count_error: str | None = None
 
 
 def parse_policy_overrides(values: Iterable[str]) -> tuple[dict[str, str], dict[str, str]]:
@@ -135,6 +137,7 @@ def export_training_dataset(
     exported_count = 0
     word_alignment_errors: list[str] = []
     punctuation_errors: list[str] = []
+    character_count_errors: list[str] = []
     target_errors: list[str] = []
     conversion_errors: list[str] = []
 
@@ -168,12 +171,18 @@ def export_training_dataset(
                     word_alignment_errors.append(converted.word_alignment_error)
                 if converted.punctuation_error:
                     punctuation_errors.append(converted.punctuation_error)
+                if converted.character_count_error:
+                    character_count_errors.append(converted.character_count_error)
                 try:
                     _validate_resolved_sentence(record.sample_id, converted.text)
                 except TrainingExportError as exc:
                     target_errors.append(str(exc))
                     continue
-                if converted.word_alignment_error or converted.punctuation_error:
+                if (
+                    converted.word_alignment_error
+                    or converted.punctuation_error
+                    or converted.character_count_error
+                ):
                     continue
                 handle.write(
                     json.dumps(
@@ -192,6 +201,7 @@ def export_training_dataset(
         error_groups = (
             ("Word alignment", word_alignment_errors),
             ("Punctuation and whitespace", punctuation_errors),
+            ("Character count", character_count_errors),
             ("Target validation", target_errors),
             ("Conversion", conversion_errors),
         )
@@ -282,6 +292,7 @@ def _convert_sentence(
     pieces: list[str] = []
     token_count_changes: list[str] = []
     punctuation_error = None
+    character_count_error = None
     cursor = 0
     for token_index, token in enumerate(record.tokens):
         if not isinstance(token, dict):
@@ -304,6 +315,7 @@ def _convert_sentence(
                 f"{record.sample_id}: token {token_index} is missing or out of order: {text!r}"
             )
         pieces.append(record.text[cursor:found])
+        end = found + len(text)
 
         conversion = resolve_training_token(
             record.sample_id, token_index, token, reviewed, contextual_reviews,
@@ -323,8 +335,19 @@ def _convert_sentence(
                 f"{record.sample_id}: punctuation or whitespace mismatch at token {token_index} "
                 f"{text!r} -> {conversion.text!r}"
             )
+        if character_count_error is None:
+            expected_counts = _expected_character_counts(
+                text, conversion, policy, dotted=record.text.startswith(".", end),
+            )
+            target_length = _spelling_length(conversion.text)
+            if target_length not in expected_counts:
+                expected = ", ".join(str(count) for count in sorted(expected_counts))
+                character_count_error = (
+                    f"{record.sample_id}: character count mismatch at token {token_index} "
+                    f"{text!r} -> {conversion.text!r} (expected {expected}, got {target_length})"
+                )
         pieces.append(conversion.text)
-        cursor = found + len(text)
+        cursor = end
 
     pieces.append(record.text[cursor:])
     converted = "".join(pieces)
@@ -349,7 +372,9 @@ def _convert_sentence(
                     f"{boundary} text run(s) (Cyrillic={source_marks!r}, Zamanalif={target_marks!r})"
                 )
                 break
-    return _ConvertedSentence(converted, alignment_error, punctuation_error)
+    return _ConvertedSentence(
+        converted, alignment_error, punctuation_error, character_count_error,
+    )
 
 
 def _count_words(value: str) -> int:
@@ -366,10 +391,83 @@ class TokenConversion:
     text: str | None
     origin: str
     source: str
+    legacy_e_glides: int = 0
 
 
 def _is_text_character(char: str) -> bool:
     return char.isalnum() or unicodedata.category(char).startswith("M")
+
+
+def _spelling_length(value: str) -> int:
+    value = unicodedata.normalize("NFC", value)
+    return len(value) if value.isalnum() else sum(map(_is_text_character, value))
+
+
+def _expected_character_counts(
+    source: str, conversion: TokenConversion, policy: dict[str, str], *, dotted: bool,
+) -> set[int]:
+    source_length = _spelling_length(source)
+    word = normalize_word(source)
+    if conversion.source == "unchanged" or word in CYRILLIC_LETTER_REFERENCES:
+        return {source_length}
+
+    branches = conversion_branches(word)
+    if conversion.origin == "U":
+        references = {branches.native_dsl, branches.loanword_dsl}
+    else:
+        references = {branches.suggestion(conversion.origin)}
+    references.discard("")
+    ya_count = word.count("я")
+    ts_runs = len(re.findall("ц+", word))
+    reviewed = conversion.source in {"dictionary", "contextual"}
+    e_count = word.count("е")
+    sign_count = word.count("ь") + word.count("ъ")
+
+    if not references:
+        # A review may supply a spelling where context leaves the automatic
+        # branch unresolved. Use bounds from the letters present in the source.
+        fixed = source_length - sum(word.count(char) for char in "ьъц")
+        minimum = fixed + sum(word.count(char) for char in "ёющ") + ts_runs
+        optional = ya_count + e_count + ts_runs + sign_count
+        maximum = minimum + optional
+        return set(range(minimum, maximum + 1))
+
+    # The converter can drop characters that have no mapping inside its
+    # Cyrillic span. Count those characters from the source independently.
+    edge_length = _spelling_length(_restore_edge_punctuation(source, ""))
+    internal_literals = CYRILLIC_RE.sub("", word).replace(ZAMANALIF_APOSTROPHE, "")
+    literal_length = edge_length + _spelling_length(internal_literals)
+    expected: set[int] = set()
+    for dsl in references:
+        # Start with the longest form of я, then allow one fewer character per я.
+        reference = dsl
+        if DSL_DELIMITER_RE.search(dsl):
+            reference = resolve_dsl(dsl, {**policy, "YA": "ya"})
+        baseline = literal_length + _spelling_length(reference)
+        shorter = ya_count
+        longer = 0
+        if reviewed:
+            target = conversion.text
+            assert target is not None
+            # Preserve documented compact е forms and reviewed ц → s spellings.
+            compact_ie = min(word.count("ие"), reference.count("iye"))
+            legacy_e = min(conversion.legacy_e_glides, e_count, reference.count("ye"))
+            shorter += max(compact_ie, legacy_e)
+            shorter += min(ts_runs, reference.count("ts"))
+            if sign_count:
+                sign_change = target.count(ZAMANALIF_APOSTROPHE) - reference.count(ZAMANALIF_APOSTROPHE)
+                shorter += min(sign_count, max(0, -sign_change))
+                longer += min(sign_count, max(0, sign_change))
+            if e_count:
+                plain_e = reference.count("e") - reference.count("ye")
+                review_glides = len(E_GLIDE_RE.findall(_zamanalif_upper(target)))
+                reference_glides = len(E_GLIDE_RE.findall(_zamanalif_upper(reference)))
+                longer += min(e_count, plain_e, max(0, review_glides - reference_glides))
+        expected.update(range(baseline - shorter, baseline + longer + 1))
+
+    if reviewed and source_length == 1 and source.isupper() and (dotted or source.endswith(".")):
+        expected.add(1)
+    return expected
 
 
 def _punctuation_layout(value: str) -> list[str]:
@@ -491,7 +589,7 @@ def resolve_training_token(
     rendered = _apply_source_case(
         text, _restore_edge_punctuation(text, with_internal_punctuation)
     )
-    return TokenConversion(normalized, rendered, origin, source)
+    return TokenConversion(normalized, rendered, origin, source, dsl.count("{{E_GLIDE|"))
 
 
 def _restore_edge_punctuation(source: str, target: str) -> str:
