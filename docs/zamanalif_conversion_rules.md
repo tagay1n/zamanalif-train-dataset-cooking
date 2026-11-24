@@ -126,6 +126,11 @@ Dotted initials joined to a name retain source capitalization and periods in
 training export. Examples include `Ф.Ә.Ганиева -> F.Ä.Ğaniyeva`,
 `К.Газим -> Q.Ğazim`, and `Х.Халиковның -> X.Xalikovnıñ`.
 
+The reviewed `Ф.Г.Галимуллин -> F.Ğ.Ğalimullin` follows the existing
+spellings of `Галимулла` and `Галимуллин`. Four reviewed company abbreviations
+`ГАҖ` use `ĞAC` in their specific contexts. The inflected `ГАҖнең` uses
+`ĞACneñ`, retaining the original uppercase stem and lowercase ending.
+
 The joined source tokens `галәмин.Уәссаләтү` and `әҗмәгыйн.Бөтен` retain
 their periods and following capitals as `ğalämin.Uässalätü` and
 `äcmäğıyn.Böten`.
@@ -325,6 +330,27 @@ The latter follows the reviewed stem `меңьеллык -> meñyıllıq`.
 The related place names `Карамас-Пельга -> Qaramas-Pelʼga` and
 `Баржы-Пельга -> Barjı-Pelʼga` both retain the written soft sign with `ʼ`.
 The validator accepts both exact pairs.
+
+The joined place name `Кошкиавыл -> Koşkiawıl` retains the reviewed component
+spellings `Koşki` and `awıl` and the written boundary. In `sent_022606`,
+the repaired `Корбангалиев` uses the existing `Korbanğaliev` review, and
+the repaired `Курмаев` uses the occurrence spelling `Kurmayev`.
+
+The full invocation `Әгууҙү -> Äğuuzü` in `sent_016121` keeps its written
+source and is annotated as one token. The exact review permits `ҙ -> z`
+in this spelling. In `sent_029514`, the clipped opening `к-көнбатыш` is
+repaired to `көнбатыш -> könbatış` in both the source and token list.
+
+The sample count label `с-алынган -> c-alınğan` treats `с` as a variable
+in this exact spelling. The semiconductor passages in `sent_000592` and
+`sent_014526` use Latin `n` and `p` in the source and token lists so training
+output keeps the distinction in `n-tip`, `p-tip`, `n-tiptağı` and `p-tiptağı`.
+
+The final Project 59 source repairs replace `узоклегендә` with
+`үзәнлегендә -> üzänlegendä` in `sent_008331` and `исәбенка` with
+`исәбеннән -> isäbennän` in `sent_025196`. The corresponding tokens are
+repaired in place and use the ordinary conversion rules. The crop following
+the `750 центнер` figure in `sent_025196` is not reconstructed.
 
 The reviewed words `гаярь -> ğayär` and `гаять -> ğayät` start with `ğay-`,
 as do the Project 59 forms `гаярьләренең -> ğayärläreneñ` and

@@ -53,6 +53,7 @@ DOTTED_INITIAL_NAME_RE = re.compile(
 )
 REVIEWED_JOINED_SENTENCE_FORMS = frozenset({"галәмин.Уәссаләтү", "әҗмәгыйн.Бөтен"})
 REVIEWED_JOINED_CASE_FORMS = {
+    "ГАҖнең": "ĞACneñ",
     "июнендәгеОАО": "iyünendägeOAO",
     "мөмкинГади": "mömkinĞadi",
     "МӨХӘММӘДИЕВлар": "MÖXÄMMÄDİYEVlar",

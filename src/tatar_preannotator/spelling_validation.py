@@ -89,6 +89,9 @@ WORD_SPELLING_EXCEPTIONS = {
     "әгъгләмовның": {"äğğlämovnıñ"},
     "эсләкавыл": {"esläkawıl"},
     "үрнәкавыл": {"ürnäkawıl"},
+    "әгууҙү": {"äğuuzü"},
+    "кошкиавыл": {"koşkiawıl"},
+    "корбангалиев": {"korbanğaliev"},
     "кирәкяраклары": {"kiräkyaraqları"},
     "истәлек-ядкаремне": {"istälek-yädqaremne"},
     "сергачка": {"sergaçqa"},
@@ -107,6 +110,7 @@ WORD_SPELLING_EXCEPTIONS = {
     "доерфер": {"doerfer"},
     "кадаʻүк": {"qadaʼük"},
     "сәг.кадәр": {"säğ.qadär"},
+    "с-алынган": {"c-alınğan"},
     "сәнгатьҝә": {"sänğatkä"},
     "дәгваларын": {"däğwaların"},
     "мөстәкыйльлегебезне": {"möstäqıyllegebezne"},
@@ -237,6 +241,11 @@ WORD_SPELLING_EXCEPTIONS = {
 }
 OCCURRENCE_SPELLING_EXCEPTIONS = {
     ("sent_001132", 28, "плюcлы"): {"plyuslı"},
+    # Company abbreviations for гавами акционерлык җәмгыяте.
+    ("sent_001575", 9, "ГАҖ"): {"ğac"},
+    ("sent_001575", 23, "ГАҖ"): {"ğac"},
+    ("sent_015386", 4, "ГАҖ"): {"ğac"},
+    ("sent_015488", 1, "ГАҖ"): {"ğac"},
     # References to the poet in Tatar prose use the reviewed Tuqay stem.
     ("sent_001343", 16, "Тукаев"): {"tuqayev"},
     ("sent_002768", 14, "Тукаев"): {"tuqayev"},
