@@ -45,7 +45,19 @@ from .word_export import (
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
 DSL_DELIMITER_RE = re.compile(r"{{|}}")
 DIGIT_RUN_RE = re.compile(r"\d+")
+WORD_INTERNAL_SOFT_HYPHEN_RE = re.compile(r"(?<=[^\W\d_])\u00ad(?=[^\W\d_])")
 CASE_SEPARATORS_RE = re.compile(r"([-\u2019'()])")
+DOTTED_CASE_SEPARATORS_RE = re.compile(r"([-.\u2019'()])")
+DOTTED_INITIAL_NAME_RE = re.compile(
+    r"[^\w.]*(?:[А-ЯЁӘӨҮҖҢҺ]\.)+[А-ЯЁӘӨҮҖҢҺ][а-яёәөүҗңһ]"
+)
+REVIEWED_JOINED_SENTENCE_FORMS = frozenset({"галәмин.Уәссаләтү", "әҗмәгыйн.Бөтен"})
+REVIEWED_JOINED_CASE_FORMS = {
+    "июнендәгеОАО": "iyünendägeOAO",
+    "мөмкинГади": "mömkinĞadi",
+    "МӨХӘММӘДИЕВлар": "MÖXÄMMÄDİYEVlar",
+    "ФәритЯхинныукыйбыз": "FäritYäxinnıuqıybız",
+}
 E_GLIDE_RE = re.compile(r"Y[EOI]")
 APPROVED_IDENTIFIER_CASE = {"Ц20": "Ts20"}
 MAX_FAILURE_EXAMPLES = 10
@@ -652,7 +664,8 @@ def _expected_character_counts(
 
 
 def _punctuation_layout(value: str) -> list[str]:
-    """Collect exact separators at the start, between text runs, and at the end."""
+    """Collect separators while ignoring discretionary breaks inside words."""
+    value = WORD_INTERNAL_SOFT_HYPHEN_RE.sub("", value)
     layout = [""]
     for is_text, chars in groupby(value, _is_text_character):
         if is_text:
@@ -843,8 +856,13 @@ def _restore_internal_word_punctuation(
 
 
 def _apply_source_case(source: str, target: str) -> str:
-    source_parts = CASE_SEPARATORS_RE.split(source)
-    target_parts = CASE_SEPARATORS_RE.split(target)
+    reviewed_case = REVIEWED_JOINED_CASE_FORMS.get(source)
+    if reviewed_case and _zamanalif_upper(target) == _zamanalif_upper(reviewed_case):
+        return reviewed_case
+    split_on_dots = source in REVIEWED_JOINED_SENTENCE_FORMS or DOTTED_INITIAL_NAME_RE.match(source)
+    separators = DOTTED_CASE_SEPARATORS_RE if split_on_dots else CASE_SEPARATORS_RE
+    source_parts = separators.split(source)
+    target_parts = separators.split(target)
     if len(source_parts) == len(target_parts) and source_parts[1::2] == target_parts[1::2]:
         return "".join(
             target_part if index % 2 else _apply_part_case(source_parts[index], target_part)

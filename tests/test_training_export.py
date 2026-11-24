@@ -28,6 +28,46 @@ from tatar_preannotator.word_export import save_reviewed_word
 
 
 class TrainingExportTests(unittest.TestCase):
+    def test_dotted_names_and_reviewed_sentences_keep_their_case(self) -> None:
+        cases = (
+            ("Ф.Ә.Ганиева", "ф.ә.ганиева", "f.ä.ğaniyeva", "F.Ä.Ğaniyeva"),
+            ("Х.Бәди-гый", "х.бәди-гый", "x.bädi-ğıy", "X.Bädi-ğıy"),
+            ("галәмин.Уәссаләтү", "галәмин.уәссаләтү", "ğalämin.uässalätü", "ğalämin.Uässalätü"),
+            ("әҗмәгыйн.Бөтен", "әҗмәгыйн.бөтен", "äcmäğıyn.böten", "äcmäğıyn.Böten"),
+        )
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(root / "zamanalif.sqlite", [
+                {"id": str(i), "text": source, "tokens": [{"text": source, "label": "N"}]}
+                for i, (source, _, _, _) in enumerate(cases)
+            ])
+            for _, word, spelling, _ in cases:
+                save_reviewed_word(db_path, word, spelling, "N")
+            output = root / "training.jsonl"
+
+            export_training_dataset(db_path, output)
+
+            self.assertEqual(_read_jsonl(output), [
+                {"id": str(i), "cyrillic": source, "zamanalif": target}
+                for i, (source, _, _, target) in enumerate(cases)
+            ])
+
+    def test_reviewed_paper_spelling_exports_using_the_existing_review(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(root / "zamanalif.sqlite", [{
+                "id": "paper", "text": "Қәгазь.",
+                "tokens": [{"text": "Қәгазь", "label": "N"}],
+            }])
+            save_reviewed_word(db_path, "кәгазь", "käğaz", "N")
+            output = root / "training.jsonl"
+
+            export_training_dataset(db_path, output)
+
+            self.assertEqual(_read_jsonl(output), [{
+                "id": "paper", "cyrillic": "Қәгазь.", "zamanalif": "Käğaz.",
+            }])
+
     def test_reviewed_model_identifier_case_preserves_digits_and_source(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
@@ -860,6 +900,26 @@ class TrainingExportTests(unittest.TestCase):
             self.assertEqual(_read_jsonl(output), [{
                 "id": "exact", "cyrillic": text,
                 "zamanalif": "\t«Tsirk»,\xa0  mäsʼälä!\r\n37°C — e\u0301  ",
+            }])
+
+    def test_punctuation_gate_accepts_omitted_soft_hyphens_inside_words(self) -> None:
+        tokens = ["ка\u00adдәр\u00adге", "һәр\u00adвакыт"]
+        text = f"{tokens[0]}, {tokens[1]}."
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db_path = _write_db(root / "zamanalif.sqlite", [{
+                "id": "soft-hyphens", "text": text,
+                "tokens": [{"text": token, "label": "N"} for token in tokens],
+            }])
+            save_reviewed_word(db_path, tokens[0], "qadärge", "N")
+            save_reviewed_word(db_path, tokens[1], "härwaqıt", "N")
+            output = root / "training.jsonl"
+
+            export_training_dataset(db_path, output)
+
+            self.assertEqual(_read_jsonl(output), [{
+                "id": "soft-hyphens", "cyrillic": text,
+                "zamanalif": "qadärge, härwaqıt.",
             }])
 
     def test_punctuation_gate_rejects_lost_added_replaced_and_moved_marks(self) -> None:

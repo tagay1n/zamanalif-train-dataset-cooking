@@ -118,6 +118,23 @@ four exact pairs.
 Literal dictionary spellings can retain an en dash `–` from the source. For
 example, `иҗтимагый–сәяси -> ictimağıy–säyäsi` preserves the written separator.
 
+Soft hyphens (`U+00AD`) between letters represent discretionary line breaks.
+Training export's punctuation check accepts their omission in Zamanalif, as in
+`дөнья\u00ADдан -> dönyadan`, while preserving the exact Cyrillic source.
+
+Dotted initials joined to a name retain source capitalization and periods in
+training export. Examples include `Ф.Ә.Ганиева -> F.Ä.Ğaniyeva`,
+`К.Газим -> Q.Ğazim`, and `Х.Халиковның -> X.Xalikovnıñ`.
+
+The joined source tokens `галәмин.Уәссаләтү` and `әҗмәгыйн.Бөтен` retain
+their periods and following capitals as `ğalämin.Uässalätü` and
+`äcmäğıyn.Böten`.
+
+The reviewed joined forms retain their original boundaries and capital runs.
+Training export renders `июнендәгеОАО -> iyünendägeOAO`,
+`мөмкинГади -> mömkinĞadi`, `МӨХӘММӘДИЕВлар -> MÖXÄMMÄDİYEVlar`,
+and `#ФәритЯхинныукыйбыз -> #FäritYäxinnıuqıybız`.
+
 The spelling validator recognizes the reviewed stem `җинаять -> cinayät` and
 the written variants `жинаять -> jinayät` and `җиңаять -> ciñayät`. The rest of
 each word still follows the ordinary letter checks, including written endings.
@@ -160,6 +177,10 @@ Project 59 reviews retain surname-final `v` before the Tatar dative
 `шәймиевка -> şäymiyevqa`. The spelling validator accepts the exact
 reviewed pairs. It also accepts reviewed `v` before other Tatar endings,
 as in `галиевне -> ğaliyevne` and `гариповларга -> ğaripovlarğa`.
+
+The spelling validator accepts the 17 exact Project 59 reviews with
+`-ayev` or `-ıyev`, including `Гыймаев -> Ğıymayev`,
+`Капкаевның -> Qapqayevnıñ`, and `Сәгыевләр -> Säğıyevlär`.
 
 Tatar contexts referring to the poet use `Тукаев -> Tuqayev` and
 `Тукаевның -> Tuqayevnıñ` through contextual reviews. Other reviewed people
@@ -209,6 +230,101 @@ The five reviewed `Жаек` and `Җаек` family forms retain `q` in the stem.
 `Жаек -> Jayıq`, `Жаек-Идел -> Jayıq-İdel`, and `Җаектагы -> Cayıqtağı`
 follow the earlier reviews `Җаек -> Cayıq` and `Жаекта -> Jayıqta`.
 The dative forms are `Жаекка -> Jayıqqa` and `Җаекка -> Cayıqqa`.
+
+The Project 59 submission `фидакярлекләр -> fidaqärleklär` uses `fidaqär-`.
+The validator accepts this exact pair.
+
+The reviewed compound `шагыйрь-шагыйрәләр -> şağiyr-şağıyrälär` retains the
+submitted spelling and the written hyphen. The validator accepts this exact pair.
+
+The reviewed form `хосусыятьләре -> xosusıyätläre` uses `-ıyät-`, as in
+`җәмгыять -> cämğıyät`. The validator accepts this exact pair.
+
+The reviewed forms `жөнгыятьне -> jönğıyätne`,
+`муаффәкыятьсез -> muaffäqıyätsez`, and `табигыят -> tabiğıyät` also
+use `-ıyät-`. The validator accepts those exact pairs.
+
+The Project 59 submissions `кярханәләрен -> qärxanälären` and
+`сәнгатькяр -> sänğatqär` retain `qär`. The earlier review of
+`сәнгатькярләребез` uses `sänğatkärlärebez`, following stored forms with
+`сәнгатькәр-`. The validator accepts these three exact pairs.
+
+The reviewed names `Гаптерәүф -> Ğapteräüf` and `Гауни -> Ğauni` retain
+`äü` and `au`, respectively. The validator accepts those exact pairs.
+
+The reviews `калямне -> qalämne`, `Тәгаля -> Täğalä`, and
+`Әбел-Галя -> Äbel-Ğalä` use `lä` for written `ля`. The validator accepts
+these exact pairs. The earlier `кәлям` review uses `käläm`, matching
+`кәляме -> käläme`.
+
+The reviewed forms `Мүгькыйл -> Müğqıyl`, `мәгьсуд -> mäğsud`, and
+`Рафигь -> Rafiğ` use `ğ` for written `гь`. The validator accepts these exact
+pairs.
+
+The reviewed forms `кагидәләрен -> qağidälären` and
+`кагидәсен -> qağidäsen` share the `qağidä-` stem with written `и`.
+The validator accepts both exact pairs.
+
+The reviewed forms `Ниязкол -> Niyazqol`, `Ниязколый -> Niyazqolıy`, and
+`Ниязкулидан -> Niyazqulidan` share `Niyaz-` and preserve the written
+`-кол` and `-кули` distinction. The validator accepts those exact pairs.
+
+The reviewed forms `саеккан -> sayıqqan` and
+`Әгъгләмовның -> Äğğlämovnıñ` retain the doubled consonants. The validator
+accepts both exact pairs.
+
+The joined forms `Эсләкавыл -> Esläkawıl` and `Үрнәкавыл -> Ürnäkawıl`
+retain the final `k` of the village names and the written join before `awıl`.
+The validator accepts both exact pairs.
+
+The exact compound reviews `кирәкяраклары -> kiräkyaraqları` and
+`истәлек-ядкаремне -> istälek-yädqaremne` follow the written word boundaries.
+
+The reviewed forms `Сергачка -> Sergaçqa` and `хокуки -> xoquqi` preserve
+the stems `Sergaç` and `xoquq` and their written endings. The validator
+accepts both exact pairs.
+
+The reviewed `Илялова -> İlälova` and `мөляеманә -> möläyemanä` forms
+also use `lä` for written `ля`. The validator accepts both exact pairs.
+
+The reviewed names `Мәрьям -> Märyäm` and `Мәрьямбану -> Märyämbanu` share
+`Märyäm-`, as in `Мәрьямбикә`. The reviewed `Мәүликов -> Mäwlikov` matches
+the Latin spelling of `Мәвликов`. The validator accepts these exact pairs.
+
+The reviewed surnames `Галимзянов -> Ğalimzyanov` and
+`Иштиряков -> İştiräkov` retain the reviewed `-zyanov` ending and the `k`
+of the earlier `Иштирәков` forms, respectively. The validator accepts both
+exact pairs.
+
+The reviewed sound imitation `мияу-мияу -> miyaw-miyaw` uses `aw` in both
+parts. The validator accepts this exact compound.
+
+The validator accepts `Гатауллинның -> Ğataullinnıñ`,
+`Гафиятуллиннан -> Ğafiyatullinnan`, `Корганбековның -> Qorğanbekovnıñ`,
+and `Доерфер -> Doerfer` as exact surname reviews.
+
+The exact reviews `кадаʻүк -> qadaʼük`, `сәг.кадәр -> säğ.qadär`, and
+`сәнгатьҝә -> sänğatkä` preserve the original source forms and use the
+standard hamza mark, written dot, and contextual `k`, respectively.
+
+The validator accepts `дәгваларын -> däğwaların`,
+`мөстәкыйльлегебезне -> möstäqıyllegebezne`, and `тирәякта -> tiräyaqta`.
+Each follows earlier reviewed spellings and preserves the written endings
+and boundaries.
+
+The exact source token `Қәгазь` renders as `Käğaz` through an offset-preserving
+projection to `Кәгазь` and its existing dictionary review. The stored source
+spelling is retained. The source and preannotation in `sent_024416` and
+`sent_005485` use the corrected `Җыелышта` and `җыелышы` and their existing
+reviews `Cıyılışta` and `cıyılışı`.
+
+The source and preannotation in `sent_018782` and `sent_024206` use
+`күрсәтелә -> kürsätelä` and `меңьеллыкка -> meñyıllıqqa`, respectively.
+The latter follows the reviewed stem `меңьеллык -> meñyıllıq`.
+
+The related place names `Карамас-Пельга -> Qaramas-Pelʼga` and
+`Баржы-Пельга -> Barjı-Pelʼga` both retain the written soft sign with `ʼ`.
+The validator accepts both exact pairs.
 
 The reviewed words `гаярь -> ğayär` and `гаять -> ğayät` start with `ğay-`,
 as do the Project 59 forms `гаярьләренең -> ğayärläreneñ` and

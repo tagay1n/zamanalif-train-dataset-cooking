@@ -4,6 +4,12 @@ from tatar_preannotator.literal_projection import literal_source_view
 
 
 class LiteralProjectionTests(unittest.TestCase):
+    def test_reviewed_paper_spelling_projects_only_the_exact_token(self):
+        source = "«Қәгазь», Қәгазьләр, Қыелышта, аҚәгазь."
+        expected = "«Кәгазь», Қәгазьләр, Қыелышта, аҚәгазь."
+        self.assertEqual(literal_source_view(source), expected)
+        self.assertEqual(len(source), len(expected))
+
     def test_celsius_units_preserve_spacing_offsets_and_latin_sources(self):
         for source, expected in (
             ("37 °С; 140°С.", "37 °C; 140°C."),
