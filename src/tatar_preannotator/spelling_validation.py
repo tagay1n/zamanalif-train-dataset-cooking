@@ -21,8 +21,189 @@ from .word_export import (
 )
 
 
-WORD_SPELLING_EXCEPTIONS = {"герцог": {"gersog"}, "актер": {"aktyor"}}
-OCCURRENCE_SPELLING_EXCEPTIONS = {("sent_001132", 28, "плюcлы"): {"plyuslı"}}
+WORD_SPELLING_EXCEPTIONS = {
+    "герцог": {"gersog"},
+    "актер": {"aktyor"},
+    "зачет-ларга": {"zaçyot-larğa"},
+    "галимовалардан": {"ğalimovalardan"},
+    "галимовка": {"ğalimovqa"},
+    "галимҗанованың": {"ğalimcanovanıñ"},
+    "гаяр": {"ğayar"},
+    "гаярь": {"ğayär"},
+    "гаярьләренең": {"ğayärläreneñ"},
+    "гаят": {"ğayät"},
+    "гаять": {"ğayät"},
+    "гаятьтән": {"ğayättän"},
+    "корьән": {"qorʼän"},
+    "корьәнгә": {"qorʼängä"},
+    "корьәндә": {"qorʼändä"},
+    "тукаевага": {"tuqayevağa"},
+    "тукаевка": {"tuqayevqa"},
+    "тукаевларның": {"tuqayevlarnıñ"},
+    "хәкыйкәт": {"xäqıyqät"},
+    "хәкыйкәтнең": {"xäqıyqätneñ"},
+    "әүвәл": {"äüwäl"},
+    "рабигыль-әүвәл": {"rabiğıl-äüwäl"},
+    "рабигыльәүвәл": {"rabiğıläüwäl"},
+    "фәүкылгадә": {"fäüqılğadä"},
+    "фәүкыльгадә": {"fäüqılğadä"},
+    "тәсаувыр": {"täsauwır"},
+    "тәсаувыф": {"täsauwıf"},
+    "мəгарифен": {"mäğarifen"},
+    "мөстəкыйль": {"möstäqıyl"},
+    "игтибарлыкларын": {"iğtibarlıqların"},
+    "игьтибар": {"iğtibar"},
+    "игьтибарны": {"iğtibarnı"},
+    "диккатъ": {"diqqat"},
+    "диккать": {"diqqat"},
+    "еглавы": {"yığlawı"},
+    "еглаучыларны": {"yığlawçılarnı"},
+    "жаек": {"jayıq"},
+    "жаек-идел": {"jayıq-idel"},
+    "жаекка": {"jayıqqa"},
+    "җаекка": {"cayıqqa"},
+    "җаектагы": {"cayıqtağı"},
+    "галим-шәркыятче": {"ğalim-şärqıyätçe"},
+    "шәркыять": {"şärqıyät"},
+    "шәркыятьче": {"şärqıyätçe"},
+    "шәркыятьчесе": {"şärqıyätçese"},
+    # Project 59 reviews that use iye in the written -иев/-иева endings.
+    "гарәфиева": {"ğaräfiyeva"},
+    "гый-мадиева": {"ğıy-madiyeva"},
+    "гыйльмиева": {"ğıylmiyeva"},
+    "корбангалиева": {"qorbanğaliyeva"},
+    "миннегалиев": {"minneğaliyev"},
+    "миңневолиев": {"miñnewoliyev"},
+    "миңневэлиева": {"miñneweliyeva"},
+    "муллагалиева": {"mullağaliyeva"},
+    "р.ганиева": {"r.ğaniyeva"},
+    "сәфәргалиев": {"säfärğaliyev"},
+    "туктиев": {"tuqtiyev"},
+    "ф.ә.ганиева": {"f.ä.ğaniyeva"},
+    "шагалиев": {"şağaliyev"},
+    "шәйхелгалиев": {"şäyxelğaliyev"},
+    "әхмәтвәлиева": {"äxmätwäliyeva"},
+    "әхмәтгалиев": {"äxmätğaliyev"},
+    # Project 59 surname reviews with an explicit glide in -еев/-еева.
+    "галеев": {"ğaleyev"},
+    "камбеева": {"qambeyeva"},
+    "кыдыкеева": {"qıdıkeyeva"},
+    "миргалеев": {"mirğaleyev"},
+    # Reviewed Project 59 surnames retaining v before the Tatar dative.
+    "ганиевка": {"ğaniyevqa"},
+    "енгалычевка": {"yınğalıçevqa"},
+    "искәндәровка": {"iskändärovqa"},
+    "кәримовка": {"kärimovqa"},
+    "лаисовка": {"laisovqa"},
+    "минзариповка": {"minzaripovqa"},
+    "миннехановка": {"minnexanovqa"},
+    "миңнегуловка": {"miñneğulovqa"},
+    "мөхетдиновка": {"möxetdinovqa"},
+    "нургалиевка": {"nurğaliyevqa"},
+    "рафиковка": {"rafiqovqa"},
+    "ризвановка": {"rizwanovqa"},
+    "ситдыйковка": {"sitdıyqovqa"},
+    "солтанбековка": {"soltanbekovqa"},
+    "сәлаховка": {"sälaxovqa"},
+    "терегуловка": {"teregulovqa"},
+    "фәрвазетдиновка": {"färwazetdinovqa"},
+    "фәрраховка": {"färraxovqa"},
+    "фәхртдиновка": {"fäxrtdinovqa"},
+    "харисовка": {"xarisovqa"},
+    "хисамовка": {"xisamovqa"},
+    "хәбировка": {"xäbirovqa"},
+    "хәйретдиновка": {"xäyretdinovqa"},
+    "хәлимовка": {"xälimovqa"},
+    "хәсәновка": {"xäsänovqa"},
+    "шаһиевка": {"şahiyevqa"},
+    "шәймиевка": {"şäymiyevqa"},
+    "шәймәрдәновка": {"şäymärdänovqa"},
+    "шәяхмәтовка": {"şäyäxmätovqa"},
+    "юлашевка": {"yulaşevqa"},
+    "җамалетдиновка": {"camaletdinovqa"},
+    "җиһановка": {"cihanovqa"},
+    "җәлиловка": {"cälilovqa"},
+    "әминовка": {"äminovqa"},
+    "әфләтуновка": {"äflätunovqa"},
+    "әхметовка": {"äxmetovqa"},
+    # Reviewed surname forms with v before other Tatar endings.
+    "галиеваның": {"ğaliyevanıñ"},
+    "галиевне": {"ğaliyevne"},
+    "галиәкбәрованың": {"ğaliäkbärovanıñ"},
+    "галәветдиновага": {"ğaläwetdinovağa"},
+    "ганиевлар": {"ğaniyevlar"},
+    "гариповага": {"ğaripovağa"},
+    "гариповларга": {"ğaripovlarğa"},
+    "гомәркәевнең": {"ğomärkäyevneñ"},
+    "гыйльмиевнең": {"ğıylmiyevneñ"},
+    "гыймазетдиновлар": {"ğıymazetdinovlar"},
+    "гыйниятовның": {"ğıyniyätovnıñ"},
+    "зәкуановның": {"zäquanovnıñ"},
+    "ильясовларның": {"ilyasovlarnıñ"},
+    "исмәгыйлеваның": {"ismäğıylevanıñ"},
+    "камалетдиновны": {"qamaletdinovnı"},
+    "каһировларның": {"qahirovlarnıñ"},
+    "корбангалиевның": {"qorbanğaliyevnıñ"},
+    "кудашеваның": {"qudaşevanıñ"},
+    "мингалимовның": {"minğalimovnıñ"},
+    "миңнегалиевага": {"miñneğaliyevağa"},
+    "мәүлиевлар": {"mäwliyevlar"},
+    "мөхәммәдьяровлар": {"möxämmädyarovlar"},
+    "мөхәммәдьяровның": {"möxämmädyarovnıñ"},
+    "нургалиевнең": {"nurğaliyevneñ"},
+    "нургалиевның": {"nurğaliyevnıñ"},
+    "рәкыйповның": {"räqıypovnıñ"},
+    "рәхимкулованың": {"räximqulovanıñ"},
+    "солтангалиевнең": {"soltanğaliyevneñ"},
+    "х.халиковның": {"x.xaliqovnıñ"},
+    "шәяхмәтовны": {"şäyäxmätovnı"},
+    "әгъләмовның": {"äğlämovnıñ"},
+    # Project 59 number compounds with separately reviewed yıl/yul components.
+    "дүртъюллык": {"dürtyullıq"},
+    "жедееллыкта": {"jedeyıllıqta"},
+    "икееллыгы": {"ikeyıllığı"},
+    "икеюллыклары": {"ikeyullıqları"},
+    "икеюллыкны": {"ikeyullıqnı"},
+    "йөзъеллыкның": {"yözyıllıqnıñ"},
+    "сигезьюллык": {"sigezyullıq"},
+    "унъеллыгына": {"unyıllığına"},
+}
+OCCURRENCE_SPELLING_EXCEPTIONS = {
+    ("sent_001132", 28, "плюcлы"): {"plyuslı"},
+    # References to the poet in Tatar prose use the reviewed Tuqay stem.
+    ("sent_001343", 16, "Тукаев"): {"tuqayev"},
+    ("sent_002768", 14, "Тукаев"): {"tuqayev"},
+    ("sent_004378", 4, "Тукаев"): {"tuqayev"},
+    ("sent_005831", 3, "Тукаев"): {"tuqayev"},
+    ("sent_007962", 16, "Тукаев"): {"tuqayev"},
+    ("sent_008149", 31, "Тукаевның"): {"tuqayevnıñ"},
+    ("sent_008752", 19, "Тукаев"): {"tuqayev"},
+    ("sent_009860", 26, "Тукаев"): {"tuqayev"},
+    ("sent_009860", 37, "Тукаев"): {"tuqayev"},
+    ("sent_010223", 35, "Тукаев"): {"tuqayev"},
+    ("sent_011918", 11, "Тукаев"): {"tuqayev"},
+    ("sent_012259", 19, "Тукаев"): {"tuqayev"},
+    ("sent_013125", 27, "Тукаев"): {"tuqayev"},
+    ("sent_013858", 19, "Тукаев"): {"tuqayev"},
+    ("sent_024066", 14, "Тукаев"): {"tuqayev"},
+    ("sent_024066", 32, "Тукаев"): {"tuqayev"},
+    ("sent_028693", 10, "Тукаев"): {"tuqayev"},
+}
+REVIEWED_STEM_SPELLINGS = {
+    "кыяфәт": ("qıyäfät", "qıyafät"),
+    "калып-кыяфәт": ("qalıpqıyäfät", "qalıpqıyafät"),
+    "шикаят": ("şiqayät", "şiqayat"),
+    "тәрәкъкыят": ("täräqqıyät", "täräqqıyat"),
+    "тәрәккыят": ("täräqqıyät", "täräkqıyat"),
+    "җәмгыят": ("cämğıyät", "cämğıyat"),
+    "жәмгыят": ("jämğıyät", "jämğıyat"),
+    "жҗәмгыят": ("jcämğıyät", "jcämğıyat"),
+    "хуҗалыкҗәмгыят": ("xucalıqcämğıyät", "xucalıqcämğıyat"),
+    "риваят": ("riwayät", "riwayat"),
+    "җинаять": ("cinayät", "cinayat"),
+    "жинаять": ("jinayät", "jinayat"),
+    "җиңаять": ("ciñayät", "ciñayat"),
+}
 UNRESOLVED_VARIANTS = {
     "г": ("g", "ğ"),
     "к": ("k", "q"),
@@ -53,7 +234,12 @@ def is_approved_spelling(sample_id: str, token_index: int, source: str, target: 
     if not word_forms and not occurrence_forms:
         return False
     spelling = _spelling(target)
-    return spelling in word_forms or spelling in occurrence_forms
+    # Separator layout is checked separately from letter correspondence.
+    return any(
+        spelling == _spelling(form)
+        for forms in (word_forms, occurrence_forms)
+        for form in forms
+    )
 
 
 def _match_path(path: Path, target: str, offsets: Offsets, budget: int) -> Offsets:
@@ -174,4 +360,13 @@ def spelling_matches(
                 break
         if any(offset == len(core) for offset, _ in offsets):
             return True
+    # Compare the complete word against the regular paths after substituting
+    # the reference spelling for a reviewed source stem.
+    for root, (reviewed, reference) in REVIEWED_STEM_SPELLINGS.items():
+        if word.startswith(root) and core.startswith(reviewed):
+            reference_target = prefix + reference + core[len(reviewed):] + suffix
+            return spelling_matches(
+                source, reference_target, policy,
+                legacy_e_glides=legacy_e_glides, reviewed_initial=reviewed_initial,
+            )
     return False

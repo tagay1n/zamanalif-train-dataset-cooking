@@ -105,6 +105,8 @@ class ConditionalConversionDslTests(unittest.TestCase):
 
     def test_deterministic_words_are_origin_independent(self) -> None:
         for word, expected in [
+            ("казыят", "qazıyät"),
+            ("казыятләр", "qazıyätlär"),
             ("шәһәр", "şähär"),
             ("әни", "äni"),
             ("зәңгәр", "zäñgär"),
@@ -395,6 +397,16 @@ class ConditionalConversionDslTests(unittest.TestCase):
                 dsl = convert_for_annotation_dsl(word, "N")
                 self.assertEqual(dsl, expected)
                 self.assertNotIn("{{", dsl)
+
+    def test_taufiq_uses_reviewed_front_vowel_in_names_and_inflections(self) -> None:
+        for word, expected in (
+            ("тәүфикъ", "täüfiq"),
+            ("тәүфикъка", "täüfiqqa"),
+            ("тәүфыйкъ", "täüfıyq"),
+            ("тәүфыйксызлыкта", "täüfıyqsızlıqta"),
+        ):
+            with self.subTest(word=word):
+                self.assertEqual(convert_for_annotation(word, "N"), expected)
 
     def test_native_u_before_e_keeps_existing_e_glide_rule(self) -> None:
         self.assertEqual(convert_for_annotation("куелган", "N"), "quyılğan")

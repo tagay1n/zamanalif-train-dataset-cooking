@@ -105,6 +105,116 @@ case handling for other identifiers and all-capital words remains in effect.
 
 ## Reviewed Source-Preserving Sentence Repairs
 
+The Project 59 surname reviews use `RL` for `галимовалардан -> ğalimovalardan`,
+`галимовка -> ğalimovqa`, and `галимҗанованың -> ğalimcanovanıñ`, following the
+reviewed surname forms `галимова`, `галимов`, and `галимҗанова`. The spelling
+validator accepts these exact pairs with their Tatar endings.
+
+The reviewed `шәркыятьче -> şärqıyätçe` stem also appears in Project 59 as
+`шәркыять -> şärqıyät`, `шәркыятьчесе -> şärqıyätçese`, and
+`галим-шәркыятче -> ğalim-şärqıyätçe`. The spelling validator accepts these
+four exact pairs.
+
+Literal dictionary spellings can retain an en dash `–` from the source. For
+example, `иҗтимагый–сәяси -> ictimağıy–säyäsi` preserves the written separator.
+
+The spelling validator recognizes the reviewed stem `җинаять -> cinayät` and
+the written variants `жинаять -> jinayät` and `җиңаять -> ciñayät`. The rest of
+each word still follows the ordinary letter checks, including written endings.
+
+The reviewed `җәмгыят -> cämğıyät` stem keeps dotless `ı` and `yä`. The spelling
+validator also recognizes `жәмгыят -> jämğıyät`, `жҗәмгыят -> jcämğıyät`, and
+the joined `хуҗалыкҗәмгыят -> xucalıqcämğıyät` stem. Each form retains the
+consonants and endings written in the source.
+
+Project 59 retains the reviewed second `q` and written `ә` in
+`хәкыйкәт -> xäqıyqät` and `хәкыйкәтнең -> xäqıyqätneñ`. The spelling
+validator accepts these two exact pairs.
+
+The spelling validator recognizes the reviewed stem `риваят -> riwayät`,
+including `риваяте -> riwayäte` and `риваятендә -> riwayätendä`. It checks
+each ending against the corresponding source letters.
+
+The spelling validator recognizes reviewed `кыяфәт -> qıyäfät`, including
+`калып-кыяфәт` compounds, `шикаят -> şiqayät`, and the two written stems
+`тәрәккыят` and `тәрәкъкыят` with `täräqqıyät`. It checks their endings against
+the corresponding source letters.
+
+The Project 59 number compounds retain the separate `yıl` and `yul`
+components, for example `икееллыгы -> ikeyıllığı`,
+`йөзъеллыкның -> yözyıllıqnıñ`, and `икеюллыкны -> ikeyullıqnı`. The spelling
+validator accepts the eight exact reviews, including `жедееллыкта -> jedeyıllıqta`
+with its written initial consonant.
+
+Sixteen Project 59 surname reviews explicitly use `iye` in `-иев` or `-иева`,
+for example `шагалиев -> şağaliyev` and `гарәфиева -> ğaräfiyeva`. The spelling
+validator accepts the exact reviewed pairs. The default surname convention
+still supplies the initial annotation suggestions.
+
+The spelling validator also accepts the reviewed `eye` in
+`галеев -> ğaleyev`, `камбеева -> qambeyeva`, `кыдыкеева -> qıdıkeyeva`, and
+`миргалеев -> mirğaleyev`.
+
+Project 59 reviews retain surname-final `v` before the Tatar dative
+`-ка -> -qa`, as in `искәндәровка -> iskändärovqa` and
+`шәймиевка -> şäymiyevqa`. The spelling validator accepts the exact
+reviewed pairs. It also accepts reviewed `v` before other Tatar endings,
+as in `галиевне -> ğaliyevne` and `гариповларга -> ğaripovlarğa`.
+
+Tatar contexts referring to the poet use `Тукаев -> Tuqayev` and
+`Тукаевның -> Tuqayevnıñ` through contextual reviews. Other reviewed people
+sharing the surname use `Tukayev` in their bare-surname occurrences. The Russian
+quotation `Габдуллы Тукая` uses `Tukaya` for `Тукая`. The three Project 59
+submissions retain `tuqayevağa`, `tuqayevqa`, and `tuqayevlarnıñ`.
+
+The reviewed stem `казыят -> qazıyät` is used in both the singular and forms
+with endings, including `казыятләр -> qazıyätlär`.
+
+The reviewed `әүвәл -> äüwäl` spelling also appears in both forms of the
+same month, `рабигыль-әүвәл -> rabiğıl-äüwäl` and
+`рабигыльәүвәл -> rabiğıläüwäl`. The spelling validator accepts all three
+exact pairs, with each compound retaining its written separator layout.
+
+The reviewed `тәүфикъ` and `тәүфыйк` stems use `täüf-`, as in `täüfiq`,
+`täüfıyq`, `täüfiqqa`, and `täüfıyqsızlıqta`. Each form keeps the written
+distinction between `и` and `ый` and its own ending.
+
+The two written forms `фәүкылгадә` and `фәүкыльгадә` use the reviewed
+spelling `fäüqılğadä`. The validator accepts that exact spelling for each.
+
+The reviewed forms `тәсаувыр -> täsauwır` and `тәсаувыф -> täsauwıf`
+render written `ув` as `uw`. The separate form `тәсаввыф -> täsawwıf`
+renders written `вв` as `ww`.
+
+In the two reviewed mixed-script forms `мəгарифен -> mäğarifen` and
+`мөстəкыйль -> möstäqıyl`, Latin `ə` renders as `ä`, matching the reviewed
+Cyrillic equivalents. The validator accepts each exact pair.
+
+The reviewed `iğtibar` stem also appears with a soft sign or with neither
+sign in `игьтибар -> iğtibar`, `игьтибарны -> iğtibarnı`, and
+`игтибарлыкларын -> iğtibarlıqların`. The validator accepts those exact pairs.
+
+The reviewed `зачет-ларга -> zaçyot-larğa` reflects Russian `зачёт` in an
+academic context. The validator accepts this exact pair with the written hyphen.
+
+The reviewed written forms `диккатъ` and `диккать` both use `diqqat`,
+matching the earlier `дикъкать -> diqqat` review. The validator accepts both
+exact pairs.
+
+The reviewed forms `еглавы -> yığlawı` and `еглаучыларны -> yığlawçılarnı`
+use the `yığla-` stem from `еглаган -> yığlağan`. The validator accepts both
+exact pairs.
+
+The five reviewed `Жаек` and `Җаек` family forms retain `q` in the stem.
+`Жаек -> Jayıq`, `Жаек-Идел -> Jayıq-İdel`, and `Җаектагы -> Cayıqtağı`
+follow the earlier reviews `Җаек -> Cayıq` and `Жаекта -> Jayıqta`.
+The dative forms are `Жаекка -> Jayıqqa` and `Җаекка -> Cayıqqa`.
+
+The reviewed words `гаярь -> ğayär` and `гаять -> ğayät` start with `ğay-`,
+as do the Project 59 forms `гаярьләренең -> ğayärläreneñ` and
+`гаятьтән -> ğayättän`. The separate written forms `гаяр` and `гаят` keep their
+reviewed `ğayar` and `ğayät` spellings.
+
 The November 22, 2026 sentence audit keeps stored source text intact. Missing
 annotation coverage is restored at the original offsets, and combined tokens
 are split to retain source spaces and hyphens in the Latin output. Existing
@@ -214,6 +324,10 @@ text, never a DSL choice or a focused annotation project. The retired `HAMZA`
 rule remains unsupported. This is a lexical allowlist; arbitrary Cyrillic
 `э`, `ь`, or `ъ` does not establish a hamza position. Existing approved reviews
 continue to take precedence over automatic conversion in training export.
+
+The reviewed source variant `корьән` also retains the hamza in `qorʼän`,
+`корьәнгә -> qorʼängä`, and `корьәндә -> qorʼändä`. The spelling validator
+accepts these three exact pairs.
 
 ## Russian-Loan Review Cases
 

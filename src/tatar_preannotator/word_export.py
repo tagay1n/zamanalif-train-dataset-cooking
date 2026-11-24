@@ -2036,6 +2036,15 @@ def _char_conversion(char: str, word: str, index: int, label: str) -> str:
         return ZAMANALIF_APOSTROPHE
     if char == "ц" and index > 0 and word[index - 1] == "ц":
         return ""
+    if char in {"к", "я"}:
+        stem_start = index if char == "к" else index - 4
+        if (stem_start >= 0 and word.startswith("казыят", stem_start)
+                and (stem_start == 0 or word[stem_start - 1] in "-.")):
+            return "q" if char == "к" else "yä"
+    if (char == "ү" and index >= 2
+            and word.startswith(("тәүфик", "тәүфыйк"), index - 2)
+            and (index == 2 or word[index - 3] in "-.")):
+        return "ü"
     if char in CONDITIONAL_LETTERS:
         # An unresolved conditional letter must invalidate the suggestion,
         # rather than disappear from an otherwise clean-looking Latin word.

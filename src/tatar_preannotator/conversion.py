@@ -16,7 +16,7 @@ ZAMANALIF_CHARACTERS = frozenset(
     "äÄöÖüÜñÑıİğĞşŞçÇ"
     f"-./{ZAMANALIF_APOSTROPHE}—()"
 )
-ZAMANALIF_LITERAL_CHARACTERS = ZAMANALIF_CHARACTERS | {" "}
+ZAMANALIF_LITERAL_CHARACTERS = ZAMANALIF_CHARACTERS | {" ", "–"}
 # Metalinguistic references to Cyrillic hard/soft signs retain the named letter.
 # This exception applies to a whole token, never to letters within a word.
 CYRILLIC_LETTER_REFERENCES = frozenset({"ъ", "Ъ", "ь", "Ь"})
