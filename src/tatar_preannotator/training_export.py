@@ -44,6 +44,7 @@ from .word_export import (
 
 CYRILLIC_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]")
 DSL_DELIMITER_RE = re.compile(r"{{|}}")
+_TEX_FRACTION_NUMERATOR_RE = re.compile(r"\\frac\{[A-Za-z][A-Za-z0-9]*_\{\d+\}\}(?=\{)")
 DIGIT_RUN_RE = re.compile(r"\d+")
 WORD_INTERNAL_SOFT_HYPHEN_RE = re.compile(r"(?<=[^\W\d_])\u00ad(?=[^\W\d_])")
 CASE_SEPARATORS_RE = re.compile(r"([-\u2019'()])")
@@ -61,6 +62,17 @@ REVIEWED_JOINED_CASE_FORMS = {
 }
 E_GLIDE_RE = re.compile(r"Y[EOI]")
 APPROVED_IDENTIFIER_CASE = {"Ц20": "Ts20"}
+REVIEWED_MIXED_STEM_RE = re.compile(r"([^\w]*)КамАЗ([а-яёәөүҗңһ]*)([^\w]*)")
+UPPERCASE_PREFIX_LETTER_VARIANTS = {
+    "А": "a", "Ә": "ä", "Б": "b", "В": "vw", "Г": "gğ", "Д": "d",
+    "Ж": "j", "Җ": "c", "З": "z", "И": "i", "Й": "y", "К": "kq",
+    "Л": "l", "М": "m", "Н": "n", "Ң": "ñ", "О": "o", "Ө": "ö",
+    "П": "p", "Р": "r", "С": "s", "Т": "t", "У": "uw", "Ү": "üw",
+    "Ф": "f", "Х": "x", "Һ": "h", "Ч": "ç", "Ш": "ş", "Ы": "ı", "Э": "e",
+}
+UPPERCASE_PREFIX_WITH_SUFFIX_RE = re.compile(
+    "([" + "".join(UPPERCASE_PREFIX_LETTER_VARIANTS) + "]{2,})([а-яёәөүҗңһ]+)"
+)
 MAX_FAILURE_EXAMPLES = 10
 MIXED_CASE_LETTER_VARIANTS = {
     "е": ("e", "ye", "yı", "yo"),
@@ -886,6 +898,40 @@ def _approved_identifier_case(source: str, target: str) -> str | None:
     return None
 
 
+def _uppercase_prefix_case(source: str, target: str) -> str | None:
+    """Restore one-to-one uppercase stems while retaining the chosen spelling."""
+    match = UPPERCASE_PREFIX_WITH_SUFFIX_RE.fullmatch(source)
+    if not match or not target.isalpha() or not target.islower():
+        return None
+    prefix = match.group(1)
+    if len(target) <= len(prefix):
+        return None
+    if not all(char in UPPERCASE_PREFIX_LETTER_VARIANTS[cyr]
+               for cyr, char in zip(prefix, target)):
+        return None
+    rendered = _zamanalif_upper(target[:len(prefix)]) + target[len(prefix):]
+    if not all(_capitalization_matches(source, rendered, origin) for origin in ("N", "RL")):
+        return None
+    return rendered
+
+
+def _reviewed_stem_case(source: str, target: str) -> str | None:
+    """Retain the reviewed КамАЗ stem case without changing its spelling."""
+    match = REVIEWED_MIXED_STEM_RE.fullmatch(source)
+    if not match:
+        return None
+    prefix, _, suffix = match.groups()
+    if not target.startswith(prefix + "kamaz") or (suffix and not target.endswith(suffix)):
+        return None
+    body = target[len(prefix):len(target) - len(suffix) if suffix else len(target)]
+    if not body.isalpha() or not body.islower():
+        return None
+    rendered = prefix + "KamAZ" + body[5:] + suffix
+    if not all(_capitalization_matches(source, rendered, origin) for origin in ("N", "RL")):
+        return None
+    return rendered
+
+
 def _apply_part_case(source: str, target: str) -> str:
     identifier = _approved_identifier_case(source, target)
     if identifier is not None:
@@ -897,7 +943,7 @@ def _apply_part_case(source: str, target: str) -> str:
         return _zamanalif_upper(target)
     if letters[0].isupper() and letters[1:].islower():
         return _uppercase_first(target)
-    return target
+    return _reviewed_stem_case(source, target) or _uppercase_prefix_case(source, target) or target
 
 
 def _uppercase_first(value: str) -> str:
@@ -948,7 +994,8 @@ def _reviewed_variant_for_policy(
 
 
 def _validate_resolved_sentence(sample_id: str, value: str) -> None:
-    if DSL_DELIMITER_RE.search(value):
+    text_for_dsl_check = _TEX_FRACTION_NUMERATOR_RE.sub(" ", value)
+    if DSL_DELIMITER_RE.search(text_for_dsl_check):
         raise TrainingExportError(f"{sample_id}: unresolved DSL remained in output")
     for index, char in enumerate(value):
         if (

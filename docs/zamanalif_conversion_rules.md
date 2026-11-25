@@ -78,6 +78,15 @@ ASCII `I`, and the historical fractional notation `ІІ1/2` becomes `II1/2`.
 Initial-like `І.` forms and foreign letters embedded in ordinary words remain
 unchanged pending separate review. Ordinary Tatar `И -> İ` is unaffected.
 
+Four exact contexts also convert damaged numeral glyphs: `ІЇ -> II` in
+the brigade list, `Ѵ -> V` in the conference title and agreement section, and
+`XXѴ -> XXV` in the October Revolution anniversary. Other occurrences of
+these glyphs retain their existing handling.
+
+Century ranges before `гасыр` or `йөз` use Latin Roman numerals at both
+ends, including endpoints written only with Cyrillic `Х`. Examples include
+`ХІХ-ХХ → XIX-XX` and `ІХ–Х → IX–X`. The written dash and spacing are preserved.
+
 This is a derived conversion view. Stored source sentences, annotation tokens,
 origins and reviews remain intact. Numerals are recognized across annotation
 boundaries, including unannotated literal gaps. Quotes, spacing and punctuation
@@ -95,6 +104,139 @@ and unannotated literal gaps, like the Roman numeral projection above.
 
 Ordinary Tatar `С -> S` is unaffected. Geographic abbreviations `С.Ш.`/`С.ш.`,
 embedded letters and lowercase `с` do not qualify for this unit rule.
+
+Metre measurements use the Latin symbol `m` when a number is followed by
+whitespace and a standalone, undotted `м`. For example, `550 м` becomes
+`550 m` and `0,3 м` becomes `0,3 m`. The source and spacing are preserved.
+
+The reviewed chemical formulas use Latin element symbols in the conversion
+view: `НСІ -> HCl` after `хлороводород`, and `$СО_2$ -> $CO_2$`,
+`$СО$ -> $CO$`, `$Н_2СО_3$ -> $H_2CO_3$`, and `$СаСО_3$ -> $CaCO_3$`.
+The stored source, math delimiters, subscripts, and offsets stay intact.
+
+Six reviewed math expressions likewise use Latin variables: `$М_1$` and
+`$М_2$` use `M`, `$у = kx + b$` and `$у = kx$` use `y`, and
+`$х^2$` and `$x, y, 3xy, -5х²$` use `x` for the Cyrillic `х`.
+Other symbols and spacing remain as written.
+
+In the reviewed column descriptions, the Cyrillic column labels `А`, `В`,
+`С`, and `Е` use Latin `A`, `B`, `C`, and `E`. The magnetic induction passage
+uses Latin `B` for the vector, as in its formula. The cost calculation
+`10 кеше х 2 500 сум` uses Latin `x` for the multiplication marker.
+
+In the reviewed addresses, house-number suffixes use `А → A`, `а → a`,
+`В → V`, and `в → v`. The slash in `47/а → 47/a` and the dots in
+`25А.й. → 25A.y.` are preserved. The `й.` abbreviates `йорт`.
+
+The reviewed list labels `а)` and `б)` use Latin `a)` and `b)` at the start
+of a line or after a colon or semicolon. The rule also covers labels at the
+start of a line after a dash or opening quote, such as `— д)` and `"е)`,
+and inline labels followed by a dash after a colon or semicolon, such as
+`а —` and `б –`. Quoted point labels such as `«б» пунктчасында` follow the
+same rule. In those contexts, `в -> v`,
+`г -> g`, `д -> d`, `е -> e`, `ж -> j`, `з -> z`, `и -> i`, `р -> r`,
+and `һ -> h` also preserve label identity. The source, punctuation, spacing,
+and offsets remain intact.
+
+Figure panel letters use the same mapping in references such as
+`(рәс. 103, б) → (räs. 103, b)` and `(рәс. 111, а, б) → (räs. 111, a, b)`.
+
+Table row headings use `п/п → p/p` after `№`, `N`, or `No`, keeping the
+written number marker, slash, and spacing.
+
+In references to numbered orders, `пр` uses `pr`, as in `344/пр → 344/pr`
+and `66/2-пр → 66/2-pr`. The written digits, slashes, and hyphens are preserved.
+The reviewed tariff decision numbers use `кс → ks` and `тэ → te`, as in
+`№ 10-171/кс → № 10-171/ks` and `№ 5-53/тэ → № 5-53/te`.
+Decree numbers retain their prefix order, as in `ПУ-1129 → PU-1129` and
+`УП-572 → UP-572`.
+The reviewed document identifiers use `ММВ-7-6/529 → MMV-7-6/529`,
+`ФС77-60244 → FS77-60244`, and `П/103 → P/103`.
+The same treatment applies to `№ММВ-7-8 / 164 @ → №MMV-7-8 / 164 @`,
+`УЛ-1821 → UL-1821`, `УП-21 → UP-21`, and `ПГ-5 → PG-5`.
+The reviewed transport references use `М-7 → M-7`, `Р-239 → R-239`,
+and `ДТ-54 → DT-54`. The road classification `Іб-техник` becomes
+`Ib-texnik` in the reviewed reference.
+The reviewed planning and zoning codes use `Ж1 → J1`, `Д1 → D1`, and
+`П4 → P4`, preserving the digits and adjoining punctuation.
+Form and reporting labels use `Т-2 → T-2`, `П2.2 → P2.2`, `А1 → A1`,
+`В → V`, and `В1 → V1` in their reviewed contexts.
+The same letter mapping applies to reviewed list items with unusual
+punctuation and to quoted sequences of legal subparagraphs. Other reviewed
+references include `39й. → 39y.`, `з/у 64Е → z/u 64E`, `К1 → K1`,
+`1.5 п.да → 1.5 p.da`, and `3.5. п. → 3.5. p.`. The digits, spacing, and
+punctuation are preserved.
+
+In the reviewed technical passages, use `1 м² → 1 m²`, `м.оз. → m.oz.`,
+`Р≤0,6 → P≤0,6`, and `IIБ-III → IIB-III`. The multiplication sign in the
+reviewed `графа` calculation uses `x`. The quoted grades `“2”ле` through
+`“5”ле` followed by `куела` use the original quotes and the suffix `le`.
+The closing braces of a TeX fraction numerator such as `\frac{OD_{540}}`
+are part of the formula and are preserved in export.
+
+The exact dotted abbreviations `Ф.И.О.` and `ш.т.п.` use `F.İ.O.` and
+`ş.t.p.` in sentence export, preserving every written dot.
+
+The standalone dotted abbreviation `һ.б.` uses `h.b.`, and `һ. б.` uses
+`h. b.`. The conversion view preserves the dots and spacing whether the
+letters are annotated as tokens or fall in a gap.
+
+The honorific abbreviation `с.г.в.` uses `s.ğ.w.` from `салләллаһу галәйһи
+вә сәлләм`, and `һ. ш. о.` uses `h. ş. o.` from `һәм шуңа охшашлар`.
+Keep the written dots and spacing in either form. In `sent_006552`, the
+ending in `(с.г.в.)нең` is annotated separately and renders as `(s.ğ.w.)neñ`.
+
+Page references use `b.` in forms such as `(93 б.)` and `(б. 5–4а)`.
+Bracketed citations follow the same rule, as in `[13, б. 114–115] →
+[13, b. 114–115]` and `[17; 113-114б.] → [17; 113-114b.]`. Citations
+with `шунда ук` also use `b.`. Combined volume and page references use
+`t.` and `b.`, as in `(т. 1, б. 247) → (t. 1, b. 247)`.
+
+The reviewed manuscript excerpts keep omission markers as `[lakuna]` from
+`[лакуна]`. Their folio references use `16-2a` and `5–4a`, preserving the
+numbers, punctuation, and written dashes.
+
+The Russian year marker in `2017г.` uses Latin `g.`. A year marker before
+a closing parenthesis remains undotted when written that way: `2023 г)`
+becomes `2023 g)`.
+
+## Reviewed Foreign-Letter Conjunction
+
+The exact standalone source spelling `ћәм` renders as `häm`. This reviewed
+conjunction contains foreign Cyrillic `ћ` in place of Tatar `һ`. Only the
+derived conversion view replaces it with Latin `h`, preserving source offsets.
+Stored source text, annotation tokens, origins and reviews remain unchanged.
+This does not establish a general mapping for `ћ` in other words or names.
+
+The separately reviewed name `Шићапова` in `sent_006932`, token 21, renders
+as `Şihapova` through an occurrence-specific contextual review. Its source
+spelling and `N` label remain unchanged. An exact occurrence spelling exception
+allows this approved replacement of foreign `ћ` with Latin `h`; other spellings
+and occurrences continue through ordinary validation.
+
+## Uppercase Stems with Lowercase Endings
+
+An initial run of at least two uppercase Cyrillic letters keeps uppercase Latin
+stem letters before a lowercase ending: `АКШның -> AQŞnıñ`,
+`СССРның -> SSSRnıñ`, `КПССның -> KPSSnıñ`, and
+`ВЛКСМның -> VLKSMnıñ`. The ending stays lowercase. This also applies to
+hyphen-separated components and uses normal Zamanalif capitalization,
+including `i -> İ` and `ı -> I`.
+
+This rule is limited to one-to-one stem mappings whose chosen Latin letters
+already match the Cyrillic prefix. It changes only case, retaining spelling
+choices such as `v/w`, `g/ğ` and `k/q`. Other mixed-case interiors
+and prefixes containing multi-letter expansions remain for separate review.
+Stored sources, annotation tokens, origins and reviews remain intact.
+
+## Reviewed Mixed-Case Stems
+
+The exact source stem `КамАЗ` retains the Latin case `KamAZ`, including forms
+such as `КамАЗның -> KamAZnıñ`, `КамАЗлар -> KamAZlar` and
+`КамАЗ-Капитал -> KamAZ-Kapital`. Quotes, hyphens and lowercase endings are
+preserved. The rule applies only where the existing Latin stem is `kamaz`;
+it does not choose new letters or change source text, tokens, origins or reviews.
+Other source casing, such as `Камаз` or `КАМАЗ`, keeps its existing handling.
 
 ## Model Identifier Casing
 
@@ -357,14 +499,74 @@ as do the Project 59 forms `гаярьләренең -> ğayärläreneñ` and
 `гаятьтән -> ğayättän`. The separate written forms `гаяр` and `гаят` keep their
 reviewed `ğayar` and `ğayät` spellings.
 
+Newly discovered ordinary word spellings follow the normal Label Studio review
+workflow. Keep them pending until the existing annotation batches have been
+returned and imported, then regenerate supplementary dictionary and contextual
+batches using the resulting review state and family propagation. Do not approve
+these spellings one by one in chat unless the user explicitly requests it.
+Technical alignment and converter repairs remain separate discussion items.
+
 The November 22, 2026 sentence audit keeps stored source text intact. Missing
 annotation coverage is restored at the original offsets, and combined tokens
 are split to retain source spaces and hyphens in the Latin output. Existing
 origin labels are retained; contextual reviews move with their tokens without
 changing their spelling, origin or timestamp.
 
+Recovered endings after closing quotes retain the quote and the reviewed
+stem. The written `»е` in `sent_000381` and `»ен` in `sent_001897` use `»e`
+and `»en` as contextual endings.
+
+Recovered endings after numbers preserve the written digits, spaces, percent
+signs, and hyphens. Examples include `3 %тан -> 3 %tan`,
+`2-3-нче -> 2-3-nçe`, `30%ыннан -> 30%ınnan`, and `1/I-на -> 1/I-na`.
+The restored `ы` in `12,6%ы` and `26%ы` gives `12,6%ı` and `26%ı`.
+The contextual ending in `13728енең` uses `eneñ`.
+
+Restored initials use the established spelling for the same person when a
+matching reviewed occurrence is available. For the reviewed `Ш. Қамал`
+occurrence, the conversion uses the approved `Камал → Qamal` spelling.
+
+The reviewed grammar examples preserve their notation. The possessive
+endings `(-ы/-е; -сы/-се)` become `(-ı/-e; -sı/-se)`, and the dialect
+diphthongs `-ай/-әй` become `-ay/-äy` in the examples describing them.
+The reviewed consonant list `қ, ғ, х` uses `q, ğ, x`, and the dialect
+suffix `-сығыз` uses `-sığız`. In the reviewed vowel example, `\]ө\]`
+becomes `\]ö\]`, retaining the written brackets and backslashes.
+
+The restored site name `Матбугат.ру -> Matbuğat.ru` is one token and retains
+its dot. In `sent_024208`, the restored surname `Коршуновка -> Korşunovqa`
+retains the Russian stem `Korşunov` and the Tatar dative ending `-qa`.
+
+The restored tokens `Қыйммәтле`, `Қырым`, `руҳланган`, and `ОҚ` keep their
+stored spelling. Their exact conversion views use `Кыйммәтле`, `Кырым`,
+`рухланган`, and `ОК`, yielding `Qıymmätle`, `Qırım`, `ruxlanğan`, and `OK`.
+
 The reviewed base word is `ярдәм -> yärdäm`, consistent with
 `ярдәмендә -> yärdämendä`. This supersedes the older stored `yardäm` review.
+
+The Russian book-title quotations in `sent_001395` use the reviewed spellings
+`стать -> statʼ`, `вопросах -> voprosax` and `ответах -> otvetax`, all with
+their previously approved `RL` origin. Source text and annotation tokens stay
+unchanged; these approvals do not propagate to additional family members.
+
+The restored native words `тормаганлыктан`, `баскычларда`, `акылыңа`,
+`кысырлык`, `ышкырту` and `сыкрануларында` have the reviewed spellings
+`tormağanlıqtan`, `basqıçlarda`, `aqılıña`, `qısırlıq`, `ışqırtu` and
+`sıqranularında`, respectively. Their `N` origin and stored source forms remain
+unchanged. These are exact dictionary approvals, without additional family
+propagation.
+
+The restored native forms `тоемчанлыгының -> toyımçanlığınıñ` and
+`җинаятьләренә -> cinayätlärenä` follow the reviewed roots `тоем -> toyım`
+and `җинаять -> cinayät`. The latter has an exact-word spelling-validation
+exception for `cinayätlärenä`; it does not change the general `я` rule or
+approve other family forms. Both source spellings and `N` labels are retained.
+
+The remaining restored loanword reviews use `оговорки -> ogovorki` and
+`заказчысына -> zakazçısına`, both with `RL` origin. The two `клубы` tokens in
+`авыл клубы бинасы` in `sent_026053` (indices 33 and 42) use contextual
+`klubı` with `RL` origin. The latter reviews apply only to those occurrences;
+the existing homonym flags and all source text remain unchanged.
 
 In the voltmeter instruction `sent_001132`, the two voltage abbreviations
 `3–5 В` and `6 В` use contextual Latin `3–5 V` and `6 V`. The mixed-script

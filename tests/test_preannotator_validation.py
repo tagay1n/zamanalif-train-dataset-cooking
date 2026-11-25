@@ -69,6 +69,21 @@ class ValidationTests(unittest.TestCase):
         self.assertFalse(result.ok)
         self.assertIn("out of order", "; ".join(result.errors))
 
+    def test_rejects_tokens_that_cover_only_part_of_a_cyrillic_word(self) -> None:
+        for sentence, tokens, partial in (
+            ("Авыл җирлеге җирле үзидарә.", ("Авыл", "җирле", "җирле", "үзидарә"), "җирлеге"),
+            ("Дәүләт Думасының милләтләр эшләре", ("Дәүләт", "Думасы", "милләтләр", "эшләре"), "Думасының"),
+            ("Казан шәһәре", ("зан", "шәһәре"), "Казан"),
+        ):
+            with self.subTest(sentence=sentence):
+                raw = json.dumps([{
+                    "id": "sample", "tatar": True,
+                    "tokens": [{"text": word, "label": "N"} for word in tokens],
+                }])
+                result = validate_response(raw, [Sample("sample", sentence)])
+                self.assertFalse(result.ok)
+                self.assertIn(f"partially covered Cyrillic word {partial!r}", result.errors[0])
+
     def test_missing_duplicate_and_unknown_ids_are_reported(self) -> None:
         result = validate_response(
             '[{"id":"sent_000001","tatar":false,"tokens":[]},{"id":"sent_000001","tatar":false,"tokens":[]},{"id":"sent_x","tatar":false,"tokens":[]}]',

@@ -18,7 +18,7 @@ def build_prompt(samples: Iterable[Sample]) -> str:
         "2. If uncertain whether it is mostly Tatar, set \"tatar\": false.\n"
         "3. If \"tatar\": false, return \"tokens\": [].\n"
         "4. If \"tatar\": true, output word tokens only, in the same order.\n"
-        "5. Preserve original token text exactly. Do not output punctuation tokens.\n"
+        "5. Copy complete words exactly, including all their letters and endings. Do not output punctuation tokens.\n"
         "6. Keep hyphenated written words as one token if they appear as one written word.\n"
         "7. Label each token with exactly one of: \"RL\", \"N\", \"U\".\n"
         "\"RL\" = Russian loanword, Russian word, or Russian/international word likely entering Tatar through Russian.\n"

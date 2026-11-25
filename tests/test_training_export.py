@@ -16,6 +16,7 @@ from tatar_preannotator.conversion import PREFERRED_POLICY
 from tatar_preannotator.spelling_validation import (
     OCCURRENCE_SPELLING_EXCEPTIONS,
     WORD_SPELLING_EXCEPTIONS,
+    is_approved_spelling,
     spelling_matches,
 )
 from tatar_preannotator.training_export import (
@@ -28,6 +29,14 @@ from tatar_preannotator.word_export import save_reviewed_word
 
 
 class TrainingExportTests(unittest.TestCase):
+    def test_tex_fraction_braces_are_distinct_from_unresolved_dsl(self) -> None:
+        formula = r"$$ \frac{OD_{540}}{(0,01 \times \text{reaktsiyä waqıtı})} $$"
+        _validate_resolved_sentence("formula", formula)
+        with self.assertRaisesRegex(TrainingExportError, "unresolved DSL"):
+            _validate_resolved_sentence("formula", formula + " {{E_GLIDE|unresolved}}")
+        with self.assertRaisesRegex(TrainingExportError, "unresolved DSL"):
+            _validate_resolved_sentence("text", "Qazan}}")
+
     def test_dotted_names_and_reviewed_sentences_keep_their_case(self) -> None:
         cases = (
             ("Ф.Ә.Ганиева", "ф.ә.ганиева", "f.ä.ğaniyeva", "F.Ä.Ğaniyeva"),
@@ -67,6 +76,158 @@ class TrainingExportTests(unittest.TestCase):
             self.assertEqual(_read_jsonl(output), [{
                 "id": "paper", "cyrillic": "Қәгазь.", "zamanalif": "Käğaz.",
             }])
+
+    def test_reviewed_native_roots_export_with_exact_cinayat_exception(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            cases = (
+                ("тоемчанлыгының", "toyımçanlığınıñ"),
+                ("җинаятьләренә", "cinayätlärenä"),
+            )
+            db = _write_db(root / "db.sqlite", [
+                {"id": source, "text": source + ".", "tokens": [{"text": source, "label": "N"}]}
+                for source, _ in cases
+            ])
+            for source, target in cases:
+                save_reviewed_word(db, source, target, "N")
+            output = root / "training.jsonl"
+            export_training_dataset(db, output)
+            self.assertEqual(
+                {(row["cyrillic"], row["zamanalif"]) for row in _read_jsonl(output)},
+                {(source + ".", target + ".") for source, target in cases},
+            )
+            with sqlite3.connect(db) as connection:
+                for source, _ in cases:
+                    row = connection.execute(
+                        "select s.text, p.tokens_json from samples s join preannotation_state p "
+                        "on s.id=p.sample_id where s.id=?", (source,),
+                    ).fetchone()
+                    self.assertEqual(row[0], source + ".")
+                    self.assertEqual(json.loads(row[1]), [{"text": source, "label": "N"}])
+        self.assertTrue(is_approved_spelling("any", 0, "җинаятьләренә", "cinayätlärenä"))
+        self.assertFalse(is_approved_spelling("any", 0, "җинаятьләренә", "cinayätlärendä"))
+        self.assertFalse(is_approved_spelling("any", 0, "җинаятьләрендә", "cinayätlärendä"))
+
+    def test_reviewed_shihapova_occurrence_retains_source_and_has_exact_scope(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            tokens = [{"text": "эш", "label": "N"} for _ in range(21)]
+            tokens.append({"text": "Шићапова", "label": "N"})
+            text = "эш " * 21 + "Шићапова."
+            db = _write_db(root / "db.sqlite", [{
+                "id": "sent_006932", "text": text, "tokens": tokens,
+            }])
+            with sqlite3.connect(db) as connection:
+                ensure_contextual_review_schema(connection)
+                connection.execute(
+                    "insert into contextual_reviews values (?, ?, ?, ?, ?, ?)",
+                    ("sent_006932", 21, "шићапова", "şihapova", "N", "now"),
+                )
+            output = root / "training.jsonl"
+            export_training_dataset(db, output)
+            row = _read_jsonl(output)[0]
+            self.assertEqual((row["cyrillic"], row["zamanalif"]), (text, "eş " * 21 + "Şihapova."))
+            with sqlite3.connect(db) as connection:
+                self.assertEqual(connection.execute("select text from samples").fetchone()[0], text)
+                self.assertEqual(json.loads(connection.execute(
+                    "select tokens_json from preannotation_state"
+                ).fetchone()[0]), tokens)
+            for sample, index, source, target in (
+                ("other", 21, "Шићапова", "Şihapova"),
+                ("sent_006932", 20, "Шићапова", "Şihapova"),
+                ("sent_006932", 21, "Шиһапова", "Şihapova"),
+                ("sent_006932", 21, "Шићапова", "Şiapova"),
+            ):
+                self.assertFalse(is_approved_spelling(sample, index, source, target))
+
+    def test_reviewed_kamaz_family_keeps_source_and_lowercase_endings(self) -> None:
+        cases = [
+            ("КамАЗ", "kamaz", "KamAZ"),
+            ("КамАЗның", "kamaznıñ", "KamAZnıñ"),
+            ("КамАЗлар", "kamazlar", "KamAZlar"),
+            ("КамАЗны", "kamaznı", "KamAZnı"),
+            ("КамАЗ-Капитал", "kamaz-kapital", "KamAZ-Kapital"),
+            ("«КамАЗ»", "kamaz", "«KamAZ»"),
+        ]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db = _write_db(root / "db.sqlite", [
+                {"id": source, "text": source + ".", "tokens": [{"text": source, "label": "RL"}]}
+                for source, _, _ in cases
+            ])
+            for source, review, _ in cases:
+                save_reviewed_word(db, source.strip("«»").lower(), review, "RL")
+            with sqlite3.connect(db) as conn:
+                before = {table: conn.execute(f"select * from {table} order by 1").fetchall()
+                          for table in ("samples", "preannotation_state", "reviewed_words")}
+            export_training_dataset(db, root / "train.jsonl")
+            self.assertEqual(
+                {row["id"]: (row["cyrillic"], row["zamanalif"]) for row in _read_jsonl(root / "train.jsonl")},
+                {source: (source + ".", expected + ".") for source, _, expected in cases},
+            )
+            with sqlite3.connect(db) as conn:
+                for table, rows in before.items():
+                    self.assertEqual(conn.execute(f"select * from {table} order by 1").fetchall(), rows)
+
+    def test_kamaz_casing_does_not_change_other_source_cases_or_letters(self) -> None:
+        from tatar_preannotator.training_export import _apply_source_case
+
+        for source, target, expected in (
+            ("Камаз", "kamaz", "Kamaz"),
+            ("КАМАЗ", "kamaz", "KAMAZ"),
+            ("камаз", "kamaz", "kamaz"),
+            ("МосКамАЗ", "moskamaz", "moskamaz"),
+            ("КамАЗ", "qamaz", "qamaz"),
+            ("КамАЗ", "KamAZ", "KamAZ"),
+            ("КамАЗов", "kamazov", "KamAZov"),
+        ):
+            with self.subTest(source=source, target=target):
+                self.assertEqual(_apply_source_case(source, target), expected)
+
+    def test_uppercase_stems_keep_lowercase_suffixes_and_reviewed_letters(self) -> None:
+        cases = [
+            ("АКШның", "aqşnıñ", "N", "AQŞnıñ"),
+            ("СССРның", "sssrnıñ", "RL", "SSSRnıñ"),
+            ("КПССның", "kpssnıñ", "RL", "KPSSnıñ"),
+            ("РСФСРның", "rsfsrnıñ", "RL", "RSFSRnıñ"),
+            ("ВЛКСМның", "vlksmnıñ", "RL", "VLKSMnıñ"),
+            ("ДНКасында", "dnkasında", "RL", "DNKasında"),
+            ("МИДның", "midnıñ", "RL", "MİDnıñ"),
+            ("ГКның", "ğqnıñ", "N", "ĞQnıñ"),
+            ("АКШның-СССРның", "aqşnıñ-sssrnıñ", "N", "AQŞnıñ-SSSRnıñ"),
+        ]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            db = _write_db(root / "db.sqlite", [
+                {"id": source, "text": source + ".", "tokens": [{"text": source, "label": origin}]}
+                for source, _, origin, _ in cases
+            ])
+            for source, review, origin, _ in cases:
+                save_reviewed_word(db, source.lower(), review, origin)
+            with sqlite3.connect(db) as conn:
+                before = {table: conn.execute(f"select * from {table} order by 1").fetchall()
+                          for table in ("samples", "preannotation_state", "reviewed_words")}
+            export_training_dataset(db, root / "train.jsonl")
+            self.assertEqual(
+                {row["id"]: (row["cyrillic"], row["zamanalif"]) for row in _read_jsonl(root / "train.jsonl")},
+                {source: (source + ".", expected + ".") for source, _, _, expected in cases},
+            )
+            with sqlite3.connect(db) as conn:
+                for table, rows in before.items():
+                    self.assertEqual(conn.execute(f"select * from {table} order by 1").fetchall(), rows)
+
+    def test_uppercase_prefix_case_stays_within_the_reviewed_scope(self) -> None:
+        from tatar_preannotator.training_export import _apply_source_case
+
+        for source, target in (
+            ("ИнтелСет", "intelset"), ("ЕГРЮЛның", "yegryulnıñ"),
+            ("ЦКның", "tsknıñ"), ("АКШның", "abşnıñ"),
+        ):
+            with self.subTest(source=source):
+                self.assertEqual(_apply_source_case(source, target), target)
+        self.assertEqual(_apply_source_case("АКШның", "AQŞnıñ"), "AQŞnıñ")
+        self.assertEqual(_apply_source_case("Акшның", "aqşnıñ"), "Aqşnıñ")
+        self.assertEqual(_apply_source_case("Ц20", "ts20"), "Ts20")
 
     def test_reviewed_model_identifier_case_preserves_digits_and_source(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -924,7 +1085,7 @@ class TrainingExportTests(unittest.TestCase):
 
     def test_punctuation_gate_rejects_lost_added_replaced_and_moved_marks(self) -> None:
         cases = {
-            "lost_period": ("һ.б.", None),
+            "lost_period": ("т.п.", None),
             "added_hyphen": ("миң", "mi-ñ"),
             "replaced_slash": ("ай/көн", "ay-kön"),
             "shifted_hyphen": ("кил-мә", "ki-lmä"),

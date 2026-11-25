@@ -45,3 +45,16 @@ class RomanLiteralTests(unittest.TestCase):
         for source in ("ІІІІ", "ХХХХI", "ХVX", "ІC", "abcХІХ", "ХІХabc"):
             with self.subTest(source=source):
                 self.assertEqual(roman_literal_view(source), source)
+
+    def test_century_ranges_project_both_endpoints(self):
+        for source, expected in (
+            ("ХІХ-ХХ гасыр", "XIX-XX гасыр"),
+            ("ХХ-ХХІ гасыр", "XX-XXI гасыр"),
+            ("ІХ – Х йөзләрдә", "IX – X йөзләрдә"),
+            ("VIII–Х гасырларга", "VIII–X гасырларга"),
+            ("Х–ХХ тигезләмә; ХХХХ–Х гасыр", "Х–ХХ тигезләмә; ХХХХ–Х гасыр"),
+        ):
+            with self.subTest(source=source):
+                actual = roman_literal_view(source)
+                self.assertEqual(actual, expected)
+                self.assertEqual(len(actual), len(source))

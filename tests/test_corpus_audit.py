@@ -21,6 +21,64 @@ def token(text, label="N", **extra):
 
 
 class CorpusAuditTests(unittest.TestCase):
+    def test_reviewed_conjunction_matches_export_and_preserves_source_tokens(self):
+        tokens = [token("ћәм"), token("һәм")]
+        db = _write_db(self.root / "conjunction.sqlite", [{
+            "id": "conjunction", "text": "ћәм һәм.", "tokens": tokens,
+        }])
+        reindex(db, [])
+        with closing(connect(db)) as connection:
+            rows = search(connection, "zamanalif", "exact", "häm")
+            hits = [hit for row in rows for hit in occurrences(connection, row["form_id"])]
+            self.assertEqual(
+                sorted((hit["token_index"], hit["surface"], hit["zamanalif"]) for hit in hits),
+                [(0, "ћәм", "häm"), (1, "һәм", "häm")],
+            )
+        output = self.root / "conjunction.jsonl"
+        export_training_dataset(db, output)
+        row = json.loads(output.read_text())
+        self.assertEqual((row["cyrillic"], row["zamanalif"]), ("ћәм һәм.", "häm häm."))
+        with sqlite3.connect(db) as connection:
+            self.assertEqual(connection.execute("select text from samples").fetchone()[0], "ћәм һәм.")
+            self.assertEqual(json.loads(connection.execute(
+                "select tokens_json from preannotation_state"
+            ).fetchone()[0]), tokens)
+            self.assertEqual(connection.execute("select count(*) from contextual_reviews").fetchone()[0], 0)
+
+    def test_kamaz_case_matches_export_and_retains_stored_spelling(self):
+        db = _write_db(self.root / "kamaz.sqlite", [{
+            "id": "kamaz", "text": "КамАЗның.", "tokens": [token("КамАЗның", "RL")],
+        }])
+        save_reviewed_word(db, "камазның", "kamaznıñ", "RL")
+        reindex(db, [])
+        with closing(connect(db)) as connection:
+            row = search(connection, "cyrillic", "exact", "камазның")[0]
+            hit = occurrences(connection, row["form_id"])[0]
+            self.assertEqual((hit["surface"], hit["zamanalif"]), ("КамАЗның", "KamAZnıñ"))
+            self.assertEqual(connection.execute(
+                "select zamanalif_dsl from reviewed_words where normalized_word='камазның'"
+            ).fetchone()[0], "kamaznıñ")
+        export_training_dataset(db, self.root / "kamaz.jsonl")
+        row = json.loads((self.root / "kamaz.jsonl").read_text())
+        self.assertEqual((row["cyrillic"], row["zamanalif"]), ("КамАЗның.", "KamAZnıñ."))
+
+    def test_uppercase_prefix_matches_export_without_changing_stored_review(self):
+        db = _write_db(self.root / "prefix.sqlite", [{
+            "id": "prefix", "text": "АКШның.", "tokens": [token("АКШның")],
+        }])
+        save_reviewed_word(db, "акшның", "aqşnıñ", "N")
+        reindex(db, [])
+        with closing(connect(db)) as connection:
+            row = search(connection, "cyrillic", "exact", "акшның")[0]
+            hit = occurrences(connection, row["form_id"])[0]
+            self.assertEqual((hit["surface"], hit["zamanalif"]), ("АКШның", "AQŞnıñ"))
+            self.assertEqual(connection.execute(
+                "select zamanalif_dsl from reviewed_words where normalized_word='акшның'"
+            ).fetchone()[0], "aqşnıñ")
+        export_training_dataset(db, self.root / "prefix.jsonl")
+        row = json.loads((self.root / "prefix.jsonl").read_text())
+        self.assertEqual((row["cyrillic"], row["zamanalif"]), ("АКШның.", "AQŞnıñ."))
+
     def test_model_identifier_case_matches_export_and_preserves_source(self):
         db = _write_db(self.root / "model.sqlite", [{
             "id": "model", "text": "(Ц20)", "tokens": [token("Ц20", "U")],

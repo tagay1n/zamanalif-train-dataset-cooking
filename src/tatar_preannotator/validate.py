@@ -8,6 +8,22 @@ from .schema import ALLOWED_LABELS, Sample, ValidationResult
 
 
 PUNCT_ONLY_RE = re.compile(r"^\W+$", re.UNICODE)
+CYRILLIC_WORD_RE = re.compile(r"[А-Яа-яЁёӘәӨөҮүҖҗҢңҺһ]+")
+
+
+def partially_covered_words(
+    sentence: str, spans: Iterable[tuple[int, int]],
+) -> list[tuple[int, str]]:
+    """Find Cyrillic word runs that have some letters outside the token spans."""
+    covered = bytearray(len(sentence))
+    for start, end in spans:
+        covered[start:end] = b"\x01" * (end - start)
+    partial = []
+    for word in CYRILLIC_WORD_RE.finditer(sentence):
+        start, end = word.span()
+        if 0 < covered.count(1, start, end) < end - start:
+            partial.append((start, word.group()))
+    return partial
 
 
 def validate_response(raw: str, samples: Iterable[Sample]) -> ValidationResult:
@@ -72,6 +88,8 @@ def _validate_tokens(
     warnings: list[str],
 ) -> list[dict[str, Any]]:
     normalized: list[dict[str, Any]] = []
+    spans: list[tuple[int, int]] = []
+    initial_error_count = len(errors)
     cursor = 0
     for token_index, token in enumerate(tokens):
         if not isinstance(token, dict):
@@ -103,8 +121,12 @@ def _validate_tokens(
             errors.append(f"{sample_id}: token {token_index} text is missing or out of order: {text}")
             continue
         cursor = found + len(text)
+        spans.append((found, cursor))
         normalized_token: dict[str, Any] = {"text": text, "label": label}
         if homonym is True:
             normalized_token["homonym"] = True
         normalized.append(normalized_token)
+    if len(errors) == initial_error_count:
+        for offset, word in partially_covered_words(sentence, spans):
+            errors.append(f"{sample_id}: partially covered Cyrillic word {word!r} at character {offset}")
     return normalized
